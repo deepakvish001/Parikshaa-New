@@ -1138,6 +1138,54 @@ export type Database = {
         }
         Relationships: []
       }
+      contest_code_provenance: {
+        Row: {
+          char_count: number | null
+          client_ts: string
+          contest_id: string
+          diff_summary: Json | null
+          event_type: string
+          id: string
+          paste_size: number | null
+          problem_id: string
+          reason: string | null
+          server_ts: string
+          session_id: string
+          suspicious: boolean
+          user_id: string
+        }
+        Insert: {
+          char_count?: number | null
+          client_ts: string
+          contest_id: string
+          diff_summary?: Json | null
+          event_type: string
+          id?: string
+          paste_size?: number | null
+          problem_id: string
+          reason?: string | null
+          server_ts?: string
+          session_id: string
+          suspicious?: boolean
+          user_id: string
+        }
+        Update: {
+          char_count?: number | null
+          client_ts?: string
+          contest_id?: string
+          diff_summary?: Json | null
+          event_type?: string
+          id?: string
+          paste_size?: number | null
+          problem_id?: string
+          reason?: string | null
+          server_ts?: string
+          session_id?: string
+          suspicious?: boolean
+          user_id?: string
+        }
+        Relationships: []
+      }
       contest_leaderboard_cache: {
         Row: {
           contest_id: string
@@ -1172,6 +1220,50 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "contest_leaderboard_cache_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contest_problem_variants: {
+        Row: {
+          contest_id: string
+          created_at: string
+          hidden_test_seed: string | null
+          id: string
+          problem_slug: string
+          statement_md: string | null
+          title: string | null
+          variant_key: string
+          weight: number
+        }
+        Insert: {
+          contest_id: string
+          created_at?: string
+          hidden_test_seed?: string | null
+          id?: string
+          problem_slug: string
+          statement_md?: string | null
+          title?: string | null
+          variant_key: string
+          weight?: number
+        }
+        Update: {
+          contest_id?: string
+          created_at?: string
+          hidden_test_seed?: string | null
+          id?: string
+          problem_slug?: string
+          statement_md?: string | null
+          title?: string | null
+          variant_key?: string
+          weight?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contest_problem_variants_contest_id_fkey"
             columns: ["contest_id"]
             isOneToOne: false
             referencedRelation: "contests"
@@ -1636,6 +1728,51 @@ export type Database = {
           },
         ]
       }
+      contest_user_variants: {
+        Row: {
+          assigned_at: string
+          contest_id: string
+          id: string
+          problem_slug: string
+          user_id: string
+          variant_id: string
+          variant_key: string
+        }
+        Insert: {
+          assigned_at?: string
+          contest_id: string
+          id?: string
+          problem_slug: string
+          user_id: string
+          variant_id: string
+          variant_key: string
+        }
+        Update: {
+          assigned_at?: string
+          contest_id?: string
+          id?: string
+          problem_slug?: string
+          user_id?: string
+          variant_id?: string
+          variant_key?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contest_user_variants_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contest_user_variants_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: false
+            referencedRelation: "contest_problem_variants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contest_violations: {
         Row: {
           contest_id: string
@@ -1837,6 +1974,82 @@ export type Database = {
         }
         Relationships: []
       }
+      experience_reports: {
+        Row: {
+          created_at: string
+          details: string | null
+          experience_id: string
+          id: string
+          reason: Database["public"]["Enums"]["experience_report_reason"]
+          reporter_id: string
+          resolution_notes: string | null
+          resolved_at: string | null
+          resolved_by: string | null
+          status: Database["public"]["Enums"]["experience_report_status"]
+        }
+        Insert: {
+          created_at?: string
+          details?: string | null
+          experience_id: string
+          id?: string
+          reason: Database["public"]["Enums"]["experience_report_reason"]
+          reporter_id: string
+          resolution_notes?: string | null
+          resolved_at?: string | null
+          resolved_by?: string | null
+          status?: Database["public"]["Enums"]["experience_report_status"]
+        }
+        Update: {
+          created_at?: string
+          details?: string | null
+          experience_id?: string
+          id?: string
+          reason?: Database["public"]["Enums"]["experience_report_reason"]
+          reporter_id?: string
+          resolution_notes?: string | null
+          resolved_at?: string | null
+          resolved_by?: string | null
+          status?: Database["public"]["Enums"]["experience_report_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "experience_reports_experience_id_fkey"
+            columns: ["experience_id"]
+            isOneToOne: false
+            referencedRelation: "interview_experiences"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      experience_votes: {
+        Row: {
+          created_at: string
+          experience_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          experience_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          experience_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "experience_votes_experience_id_fkey"
+            columns: ["experience_id"]
+            isOneToOne: false
+            referencedRelation: "interview_experiences"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       featured_content: {
         Row: {
           ends_at: string | null
@@ -1897,6 +2110,78 @@ export type Database = {
           note?: string | null
           old_value?: Json | null
           rule_key?: string
+        }
+        Relationships: []
+      }
+      interview_experiences: {
+        Row: {
+          company_name: string
+          created_at: string
+          ctc_lpa: number | null
+          difficulty: string
+          experience_type: Database["public"]["Enums"]["experience_type"]
+          id: string
+          location: string | null
+          moderated_at: string | null
+          moderated_by: string | null
+          moderation_notes: string | null
+          offer_status: Database["public"]["Enums"]["offer_status"]
+          overall_text: string
+          role: string
+          rounds: Json
+          status: Database["public"]["Enums"]["experience_status"]
+          tips: string | null
+          updated_at: string
+          upvotes: number
+          user_id: string
+          views: number
+          year: number
+        }
+        Insert: {
+          company_name: string
+          created_at?: string
+          ctc_lpa?: number | null
+          difficulty?: string
+          experience_type?: Database["public"]["Enums"]["experience_type"]
+          id?: string
+          location?: string | null
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_notes?: string | null
+          offer_status?: Database["public"]["Enums"]["offer_status"]
+          overall_text: string
+          role: string
+          rounds?: Json
+          status?: Database["public"]["Enums"]["experience_status"]
+          tips?: string | null
+          updated_at?: string
+          upvotes?: number
+          user_id: string
+          views?: number
+          year: number
+        }
+        Update: {
+          company_name?: string
+          created_at?: string
+          ctc_lpa?: number | null
+          difficulty?: string
+          experience_type?: Database["public"]["Enums"]["experience_type"]
+          id?: string
+          location?: string | null
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_notes?: string | null
+          offer_status?: Database["public"]["Enums"]["offer_status"]
+          overall_text?: string
+          role?: string
+          rounds?: Json
+          status?: Database["public"]["Enums"]["experience_status"]
+          tips?: string | null
+          updated_at?: string
+          upvotes?: number
+          user_id?: string
+          views?: number
+          year?: number
         }
         Relationships: []
       }
@@ -2827,6 +3112,42 @@ export type Database = {
         }
         Relationships: []
       }
+      user_study_focus_sessions: {
+        Row: {
+          actual_minutes: number | null
+          completed_cycles: number
+          created_at: string
+          ended_at: string | null
+          id: string
+          notes: string | null
+          started_at: string
+          task_id: string | null
+          user_id: string
+        }
+        Insert: {
+          actual_minutes?: number | null
+          completed_cycles?: number
+          created_at?: string
+          ended_at?: string | null
+          id?: string
+          notes?: string | null
+          started_at?: string
+          task_id?: string | null
+          user_id: string
+        }
+        Update: {
+          actual_minutes?: number | null
+          completed_cycles?: number
+          created_at?: string
+          ended_at?: string | null
+          id?: string
+          notes?: string | null
+          started_at?: string
+          task_id?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_topic_progress: {
         Row: {
           completed: boolean
@@ -3202,6 +3523,24 @@ export type Database = {
       }
       admin_unsuspend_user: { Args: { _user_id: string }; Returns: undefined }
       admin_user_detail: { Args: { _user_id: string }; Returns: Json }
+      assign_contest_variant: {
+        Args: { _contest_id: string; _problem_slug: string }
+        Returns: {
+          assigned_at: string
+          contest_id: string
+          id: string
+          problem_slug: string
+          user_id: string
+          variant_id: string
+          variant_key: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "contest_user_variants"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       audit_daily_completions: { Args: never; Returns: Json }
       audit_daily_completions_all: { Args: never; Returns: Json }
       blog_increment_view: {
@@ -3274,6 +3613,10 @@ export type Database = {
           total_participants: number
           total_problems_solved: number
         }[]
+      }
+      get_contest_registered_count: {
+        Args: { _contest_id: string }
+        Returns: number
       }
       get_daily_challenge_leaderboard: {
         Args: { _limit?: number }
@@ -3364,6 +3707,17 @@ export type Database = {
         | "weekly_sunday"
         | "biweekly"
         | "other"
+      experience_report_reason:
+        | "spam"
+        | "misinformation"
+        | "plagiarism"
+        | "offensive"
+        | "personal_info"
+        | "other"
+      experience_report_status: "open" | "resolved" | "dismissed"
+      experience_status: "pending" | "approved" | "rejected"
+      experience_type: "on_campus" | "off_campus" | "internship" | "referral"
+      offer_status: "selected" | "rejected" | "waitlisted" | "in_progress"
       study_year:
         | "1st Year"
         | "2nd Year"
@@ -3509,6 +3863,18 @@ export const Constants = {
         "biweekly",
         "other",
       ],
+      experience_report_reason: [
+        "spam",
+        "misinformation",
+        "plagiarism",
+        "offensive",
+        "personal_info",
+        "other",
+      ],
+      experience_report_status: ["open", "resolved", "dismissed"],
+      experience_status: ["pending", "approved", "rejected"],
+      experience_type: ["on_campus", "off_campus", "internship", "referral"],
+      offer_status: ["selected", "rejected", "waitlisted", "in_progress"],
       study_year: [
         "1st Year",
         "2nd Year",

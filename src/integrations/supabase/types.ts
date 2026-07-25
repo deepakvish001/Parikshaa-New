@@ -182,6 +182,66 @@ export type Database = {
         }
         Relationships: []
       }
+      ai_insight_feedback: {
+        Row: {
+          comment: string | null
+          created_at: string
+          id: string
+          insight_key: string
+          insight_title: string
+          org_id: string
+          rating: Database["public"]["Enums"]["ai_insight_rating"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          insight_key: string
+          insight_title: string
+          org_id: string
+          rating: Database["public"]["Enums"]["ai_insight_rating"]
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          insight_key?: string
+          insight_title?: string
+          org_id?: string
+          rating?: Database["public"]["Enums"]["ai_insight_rating"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      ai_insight_flags: {
+        Row: {
+          created_at: string
+          flagged_by: string
+          insight_key: string
+          insight_title: string
+          reason: string | null
+        }
+        Insert: {
+          created_at?: string
+          flagged_by?: string
+          insight_key: string
+          insight_title: string
+          reason?: string | null
+        }
+        Update: {
+          created_at?: string
+          flagged_by?: string
+          insight_key?: string
+          insight_title?: string
+          reason?: string | null
+        }
+        Relationships: []
+      }
       blog_bookmarks: {
         Row: {
           created_at: string
@@ -2057,8 +2117,47 @@ export type Database = {
         }
         Relationships: []
       }
+      demo_request_status_history: {
+        Row: {
+          changed_by: string | null
+          created_at: string
+          from_status: string | null
+          id: string
+          note: string | null
+          request_id: string
+          to_status: string
+        }
+        Insert: {
+          changed_by?: string | null
+          created_at?: string
+          from_status?: string | null
+          id?: string
+          note?: string | null
+          request_id: string
+          to_status: string
+        }
+        Update: {
+          changed_by?: string | null
+          created_at?: string
+          from_status?: string | null
+          id?: string
+          note?: string | null
+          request_id?: string
+          to_status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "demo_request_status_history_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "demo_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       demo_requests: {
         Row: {
+          admin_notes: string | null
           candidates: string
           created_at: string
           email: string
@@ -2071,6 +2170,7 @@ export type Database = {
           referrer: string | null
           reporting: string[]
           status: string
+          status_updated_at: string | null
           use_case: string
           user_agent: string | null
           utm_campaign: string | null
@@ -2080,6 +2180,7 @@ export type Database = {
           utm_term: string | null
         }
         Insert: {
+          admin_notes?: string | null
           candidates: string
           created_at?: string
           email: string
@@ -2092,6 +2193,7 @@ export type Database = {
           referrer?: string | null
           reporting?: string[]
           status?: string
+          status_updated_at?: string | null
           use_case: string
           user_agent?: string | null
           utm_campaign?: string | null
@@ -2101,6 +2203,7 @@ export type Database = {
           utm_term?: string | null
         }
         Update: {
+          admin_notes?: string | null
           candidates?: string
           created_at?: string
           email?: string
@@ -2113,6 +2216,7 @@ export type Database = {
           referrer?: string | null
           reporting?: string[]
           status?: string
+          status_updated_at?: string | null
           use_case?: string
           user_agent?: string | null
           utm_campaign?: string | null
@@ -2472,6 +2576,27 @@ export type Database = {
         }
         Relationships: []
       }
+      newsletter_subscribers: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          source: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          source?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          source?: string | null
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           created_at: string
@@ -2502,6 +2627,71 @@ export type Database = {
           title?: string
           type?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      org_members: {
+        Row: {
+          created_at: string
+          id: string
+          org_id: string
+          role: Database["public"]["Enums"]["org_member_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          org_id: string
+          role?: Database["public"]["Enums"]["org_member_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          org_id?: string
+          role?: Database["public"]["Enums"]["org_member_role"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "org_members_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      organizations: {
+        Row: {
+          created_at: string
+          id: string
+          logo_url: string | null
+          name: string
+          owner_id: string
+          slug: string
+          type: Database["public"]["Enums"]["org_type"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          logo_url?: string | null
+          name: string
+          owner_id: string
+          slug: string
+          type: Database["public"]["Enums"]["org_type"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          logo_url?: string | null
+          name?: string
+          owner_id?: string
+          slug?: string
+          type?: Database["public"]["Enums"]["org_type"]
+          updated_at?: string
         }
         Relationships: []
       }
@@ -3397,6 +3587,8 @@ export type Database = {
           mobile_number: string | null
           new_feature_alerts_enabled: boolean | null
           notify_achievement_unlock: boolean | null
+          notify_discussion_like: boolean
+          notify_discussion_reply: boolean
           notify_emails: string[] | null
           notify_goal_milestone: boolean | null
           notify_new_follower: boolean | null
@@ -3461,6 +3653,8 @@ export type Database = {
           mobile_number?: string | null
           new_feature_alerts_enabled?: boolean | null
           notify_achievement_unlock?: boolean | null
+          notify_discussion_like?: boolean
+          notify_discussion_reply?: boolean
           notify_emails?: string[] | null
           notify_goal_milestone?: boolean | null
           notify_new_follower?: boolean | null
@@ -3525,6 +3719,8 @@ export type Database = {
           mobile_number?: string | null
           new_feature_alerts_enabled?: boolean | null
           notify_achievement_unlock?: boolean | null
+          notify_discussion_like?: boolean
+          notify_discussion_reply?: boolean
           notify_emails?: string[] | null
           notify_goal_milestone?: boolean | null
           notify_new_follower?: boolean | null
@@ -3956,6 +4152,22 @@ export type Database = {
           rule_key: string
         }[]
       }
+      admin_get_ai_insight_overview: {
+        Args: { _days?: number }
+        Returns: {
+          down_count: number
+          flag_reason: string
+          flagged_at: string
+          insight_key: string
+          insight_title: string
+          is_flagged: boolean
+          last_at: string
+          net_score: number
+          org_count: number
+          total_count: number
+          up_count: number
+        }[]
+      }
       admin_get_full_problem: { Args: { _slug: string }; Returns: Json }
       admin_get_gamification_rules: { Args: never; Returns: Json }
       admin_grant_achievement: {
@@ -3980,6 +4192,31 @@ export type Database = {
           user_id: string
           username: string
           xp_this_week: number
+        }[]
+      }
+      admin_list_ai_insight_feedback: {
+        Args: {
+          _insight_key?: string
+          _limit?: number
+          _offset?: number
+          _org_id?: string
+          _rating?: Database["public"]["Enums"]["ai_insight_rating"]
+        }
+        Returns: {
+          comment: string
+          created_at: string
+          id: string
+          insight_key: string
+          insight_title: string
+          org_id: string
+          org_name: string
+          rating: Database["public"]["Enums"]["ai_insight_rating"]
+          total_count: number
+          updated_at: string
+          user_avatar_url: string
+          user_email: string
+          user_full_name: string
+          user_id: string
         }[]
       }
       admin_list_public_tables: {
@@ -4083,6 +4320,15 @@ export type Database = {
       admin_set_gamification_rule: {
         Args: { _key: string; _note?: string; _value: Json }
         Returns: undefined
+      }
+      admin_set_insight_flag: {
+        Args: {
+          _flagged?: boolean
+          _insight_key: string
+          _insight_title: string
+          _reason?: string
+        }
+        Returns: boolean
       }
       admin_set_leaderboard_hidden: {
         Args: { _hidden: boolean; _user_id: string }
@@ -4298,6 +4544,7 @@ export type Database = {
       }
     }
     Enums: {
+      ai_insight_rating: "up" | "down"
       app_role: "admin" | "owner" | "moderator" | "user"
       blog_comment_status: "visible" | "hidden" | "reported" | "deleted"
       blog_post_status: "draft" | "scheduled" | "published" | "archived"
@@ -4318,6 +4565,8 @@ export type Database = {
       experience_status: "pending" | "approved" | "rejected"
       experience_type: "on_campus" | "off_campus" | "internship" | "referral"
       offer_status: "selected" | "rejected" | "waitlisted" | "in_progress"
+      org_member_role: "owner" | "admin" | "recruiter" | "viewer"
+      org_type: "college" | "company"
       study_year:
         | "1st Year"
         | "2nd Year"
@@ -4453,6 +4702,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      ai_insight_rating: ["up", "down"],
       app_role: ["admin", "owner", "moderator", "user"],
       blog_comment_status: ["visible", "hidden", "reported", "deleted"],
       blog_post_status: ["draft", "scheduled", "published", "archived"],
@@ -4475,6 +4725,8 @@ export const Constants = {
       experience_status: ["pending", "approved", "rejected"],
       experience_type: ["on_campus", "off_campus", "internship", "referral"],
       offer_status: ["selected", "rejected", "waitlisted", "in_progress"],
+      org_member_role: ["owner", "admin", "recruiter", "viewer"],
+      org_type: ["college", "company"],
       study_year: [
         "1st Year",
         "2nd Year",

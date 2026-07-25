@@ -158,7 +158,7 @@ const JobPortals: React.FC = () => {
           .update({
             [type === "solved" ? "completed" : "is_revision"]: newValue,
             [type === "solved" ? "completed_at" : "updated_at"]: newValue ? new Date().toISOString() : null,
-          })
+          } as never)
           .eq("id", existing.id);
       } else {
         await supabase.from("user_topic_progress").insert({

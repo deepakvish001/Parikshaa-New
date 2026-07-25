@@ -14,16 +14,776 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      chat_messages: {
+        Row: {
+          content: string
+          conversation_id: string
+          created_at: string
+          id: string
+          role: string
+        }
+        Insert: {
+          content: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          role: string
+        }
+        Update: {
+          content?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          role?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      conversations: {
+        Row: {
+          created_at: string
+          id: string
+          title: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          title?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          title?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          created_at: string
+          data: Json | null
+          id: string
+          message: string
+          read: boolean
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          data?: Json | null
+          id?: string
+          message: string
+          read?: boolean
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          data?: Json | null
+          id?: string
+          message?: string
+          read?: boolean
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      quiz_question_responses: {
+        Row: {
+          created_at: string
+          id: string
+          is_correct: boolean
+          question_category: string
+          question_id: number
+          question_index: number
+          quiz_result_id: string
+          selected_answer_index: number | null
+          time_taken_seconds: number | null
+          was_flagged: boolean
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_correct?: boolean
+          question_category: string
+          question_id: number
+          question_index: number
+          quiz_result_id: string
+          selected_answer_index?: number | null
+          time_taken_seconds?: number | null
+          was_flagged?: boolean
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_correct?: boolean
+          question_category?: string
+          question_id?: number
+          question_index?: number
+          quiz_result_id?: string
+          selected_answer_index?: number | null
+          time_taken_seconds?: number | null
+          was_flagged?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quiz_question_responses_quiz_result_id_fkey"
+            columns: ["quiz_result_id"]
+            isOneToOne: false
+            referencedRelation: "quiz_results"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      quiz_results: {
+        Row: {
+          accuracy: number
+          avg_time_seconds: number
+          category: string | null
+          completed_at: string
+          created_at: string
+          difficulty: string | null
+          id: string
+          quiz_type: string
+          score: number
+          total_questions: number
+          total_time_seconds: number
+          user_id: string
+        }
+        Insert: {
+          accuracy: number
+          avg_time_seconds: number
+          category?: string | null
+          completed_at?: string
+          created_at?: string
+          difficulty?: string | null
+          id?: string
+          quiz_type: string
+          score: number
+          total_questions: number
+          total_time_seconds: number
+          user_id: string
+        }
+        Update: {
+          accuracy?: number
+          avg_time_seconds?: number
+          category?: string | null
+          completed_at?: string
+          created_at?: string
+          difficulty?: string | null
+          id?: string
+          quiz_type?: string
+          score?: number
+          total_questions?: number
+          total_time_seconds?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      quiz_spaced_repetition: {
+        Row: {
+          correct_streak: number
+          created_at: string
+          id: string
+          last_answered_at: string
+          next_review_at: string
+          question_category: string
+          question_id: number
+          question_title: string
+          review_count: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          correct_streak?: number
+          created_at?: string
+          id?: string
+          last_answered_at?: string
+          next_review_at: string
+          question_category: string
+          question_id: number
+          question_title: string
+          review_count?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          correct_streak?: number
+          created_at?: string
+          id?: string
+          last_answered_at?: string
+          next_review_at?: string
+          question_category?: string
+          question_id?: number
+          question_title?: string
+          review_count?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      shared_folders: {
+        Row: {
+          allow_copy: boolean
+          created_at: string
+          expires_at: string | null
+          folder_id: string
+          id: string
+          is_public: boolean
+          share_code: string
+        }
+        Insert: {
+          allow_copy?: boolean
+          created_at?: string
+          expires_at?: string | null
+          folder_id: string
+          id?: string
+          is_public?: boolean
+          share_code: string
+        }
+        Update: {
+          allow_copy?: boolean
+          created_at?: string
+          expires_at?: string | null
+          folder_id?: string
+          id?: string
+          is_public?: boolean
+          share_code?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shared_folders_folder_id_fkey"
+            columns: ["folder_id"]
+            isOneToOne: false
+            referencedRelation: "user_folders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      study_plan_goals: {
+        Row: {
+          category: string
+          completed_at: string | null
+          id: string
+          is_completed: boolean
+          questions_practiced: number
+          started_at: string
+          target_questions: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category: string
+          completed_at?: string | null
+          id?: string
+          is_completed?: boolean
+          questions_practiced?: number
+          started_at?: string
+          target_questions?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: string
+          completed_at?: string | null
+          id?: string
+          is_completed?: boolean
+          questions_practiced?: number
+          started_at?: string
+          target_questions?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_achievements: {
+        Row: {
+          achievement_id: string
+          earned_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          achievement_id: string
+          earned_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          achievement_id?: string
+          earned_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_company_progress: {
+        Row: {
+          company_id: string
+          created_at: string
+          id: string
+          item_id: number
+          revision: boolean
+          solved: boolean
+          tab_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          id?: string
+          item_id: number
+          revision?: boolean
+          solved?: boolean
+          tab_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          id?: string
+          item_id?: number
+          revision?: boolean
+          solved?: boolean
+          tab_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_folder_items: {
+        Row: {
+          created_at: string
+          folder_id: string
+          id: string
+          question_id: number
+          question_source: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          folder_id: string
+          id?: string
+          question_id: number
+          question_source?: string
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          folder_id?: string
+          id?: string
+          question_id?: number
+          question_source?: string
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_folder_items_folder_id_fkey"
+            columns: ["folder_id"]
+            isOneToOne: false
+            referencedRelation: "user_folders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_folders: {
+        Row: {
+          color: string | null
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_follows: {
+        Row: {
+          created_at: string
+          follower_id: string
+          following_id: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          follower_id: string
+          following_id: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          follower_id?: string
+          following_id?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      user_goals: {
+        Row: {
+          created_at: string
+          daily_target: number
+          daily_xp_target: number | null
+          id: string
+          updated_at: string
+          user_id: string
+          weekly_target: number
+          weekly_xp_target: number | null
+        }
+        Insert: {
+          created_at?: string
+          daily_target?: number
+          daily_xp_target?: number | null
+          id?: string
+          updated_at?: string
+          user_id: string
+          weekly_target?: number
+          weekly_xp_target?: number | null
+        }
+        Update: {
+          created_at?: string
+          daily_target?: number
+          daily_xp_target?: number | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+          weekly_target?: number
+          weekly_xp_target?: number | null
+        }
+        Relationships: []
+      }
+      user_profiles_extended: {
+        Row: {
+          aspirations: string[] | null
+          bio: string | null
+          branch: string | null
+          codechef_url: string | null
+          codeforces_url: string | null
+          college_name: string | null
+          company_name: string | null
+          course_name: string | null
+          created_at: string
+          current_experience: string | null
+          current_level: number | null
+          email_notifications_enabled: boolean | null
+          experience: string | null
+          geeksforgeeks_url: string | null
+          github_url: string | null
+          goals: string[] | null
+          hackerrank_url: string | null
+          id: string
+          instagram_url: string | null
+          interested_features: string[] | null
+          interests: string[] | null
+          last_xp_reset_at: string | null
+          leetcode_url: string | null
+          linkedin_url: string | null
+          location: string | null
+          marketing_emails_enabled: boolean | null
+          mobile_number: string | null
+          new_feature_alerts_enabled: boolean | null
+          occupation: string | null
+          onboarding_completed: boolean | null
+          other_description: string | null
+          other_links: Json | null
+          profile_completion_percentage: number | null
+          referral_source: string | null
+          resume_url: string | null
+          role: string | null
+          skills: string[] | null
+          srs_intervals: number[] | null
+          srs_mastery_threshold: number | null
+          study_year: Database["public"]["Enums"]["study_year"] | null
+          target_goal: string | null
+          total_xp: number | null
+          twitter_url: string | null
+          updated_at: string
+          user_id: string
+          user_type: Database["public"]["Enums"]["user_type"]
+          username: string | null
+          website: string | null
+          weekly_digest_enabled: boolean | null
+          xp_this_week: number | null
+        }
+        Insert: {
+          aspirations?: string[] | null
+          bio?: string | null
+          branch?: string | null
+          codechef_url?: string | null
+          codeforces_url?: string | null
+          college_name?: string | null
+          company_name?: string | null
+          course_name?: string | null
+          created_at?: string
+          current_experience?: string | null
+          current_level?: number | null
+          email_notifications_enabled?: boolean | null
+          experience?: string | null
+          geeksforgeeks_url?: string | null
+          github_url?: string | null
+          goals?: string[] | null
+          hackerrank_url?: string | null
+          id?: string
+          instagram_url?: string | null
+          interested_features?: string[] | null
+          interests?: string[] | null
+          last_xp_reset_at?: string | null
+          leetcode_url?: string | null
+          linkedin_url?: string | null
+          location?: string | null
+          marketing_emails_enabled?: boolean | null
+          mobile_number?: string | null
+          new_feature_alerts_enabled?: boolean | null
+          occupation?: string | null
+          onboarding_completed?: boolean | null
+          other_description?: string | null
+          other_links?: Json | null
+          profile_completion_percentage?: number | null
+          referral_source?: string | null
+          resume_url?: string | null
+          role?: string | null
+          skills?: string[] | null
+          srs_intervals?: number[] | null
+          srs_mastery_threshold?: number | null
+          study_year?: Database["public"]["Enums"]["study_year"] | null
+          target_goal?: string | null
+          total_xp?: number | null
+          twitter_url?: string | null
+          updated_at?: string
+          user_id: string
+          user_type: Database["public"]["Enums"]["user_type"]
+          username?: string | null
+          website?: string | null
+          weekly_digest_enabled?: boolean | null
+          xp_this_week?: number | null
+        }
+        Update: {
+          aspirations?: string[] | null
+          bio?: string | null
+          branch?: string | null
+          codechef_url?: string | null
+          codeforces_url?: string | null
+          college_name?: string | null
+          company_name?: string | null
+          course_name?: string | null
+          created_at?: string
+          current_experience?: string | null
+          current_level?: number | null
+          email_notifications_enabled?: boolean | null
+          experience?: string | null
+          geeksforgeeks_url?: string | null
+          github_url?: string | null
+          goals?: string[] | null
+          hackerrank_url?: string | null
+          id?: string
+          instagram_url?: string | null
+          interested_features?: string[] | null
+          interests?: string[] | null
+          last_xp_reset_at?: string | null
+          leetcode_url?: string | null
+          linkedin_url?: string | null
+          location?: string | null
+          marketing_emails_enabled?: boolean | null
+          mobile_number?: string | null
+          new_feature_alerts_enabled?: boolean | null
+          occupation?: string | null
+          onboarding_completed?: boolean | null
+          other_description?: string | null
+          other_links?: Json | null
+          profile_completion_percentage?: number | null
+          referral_source?: string | null
+          resume_url?: string | null
+          role?: string | null
+          skills?: string[] | null
+          srs_intervals?: number[] | null
+          srs_mastery_threshold?: number | null
+          study_year?: Database["public"]["Enums"]["study_year"] | null
+          target_goal?: string | null
+          total_xp?: number | null
+          twitter_url?: string | null
+          updated_at?: string
+          user_id?: string
+          user_type?: Database["public"]["Enums"]["user_type"]
+          username?: string | null
+          website?: string | null
+          weekly_digest_enabled?: boolean | null
+          xp_this_week?: number | null
+        }
+        Relationships: []
+      }
+      user_topic_progress: {
+        Row: {
+          completed: boolean
+          completed_at: string | null
+          created_at: string
+          id: string
+          is_revision: boolean
+          note: string | null
+          review_count: number
+          sheet_id: string
+          topic_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          is_revision?: boolean
+          note?: string | null
+          review_count?: number
+          sheet_id: string
+          topic_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed?: boolean
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          is_revision?: boolean
+          note?: string | null
+          review_count?: number
+          sheet_id?: string
+          topic_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      xp_transactions: {
+        Row: {
+          amount: number
+          created_at: string
+          description: string | null
+          id: string
+          source: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          source: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          source?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
-      [_ in never]: never
+      leaderboard_view: {
+        Row: {
+          avatar_url: string | null
+          completed_count: number | null
+          full_name: string | null
+          revision_count: number | null
+          user_id: string | null
+        }
+        Relationships: []
+      }
+      xp_leaderboard_view: {
+        Row: {
+          avatar_url: string | null
+          current_level: number | null
+          full_name: string | null
+          total_xp: number | null
+          user_id: string | null
+          username: string | null
+          xp_this_week: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
-      [_ in never]: never
+      calculate_profile_completion: {
+        Args: {
+          profile_row: Database["public"]["Tables"]["user_profiles_extended"]["Row"]
+        }
+        Returns: number
+      }
     }
     Enums: {
-      [_ in never]: never
+      study_year:
+        | "1st Year"
+        | "2nd Year"
+        | "3rd Year"
+        | "4th Year"
+        | "5th Year"
+        | "Other"
+      user_type: "student" | "professional" | "other"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +910,16 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      study_year: [
+        "1st Year",
+        "2nd Year",
+        "3rd Year",
+        "4th Year",
+        "5th Year",
+        "Other",
+      ],
+      user_type: ["student", "professional", "other"],
+    },
   },
 } as const

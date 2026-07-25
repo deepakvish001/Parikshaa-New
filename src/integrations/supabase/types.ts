@@ -1078,6 +1078,7 @@ export type Database = {
       coding_problems_meta: {
         Row: {
           acceptance_rate: number
+          difficulty: string
           problem_slug: string
           total_accepted: number
           total_submissions: number
@@ -1085,6 +1086,7 @@ export type Database = {
         }
         Insert: {
           acceptance_rate?: number
+          difficulty?: string
           problem_slug: string
           total_accepted?: number
           total_submissions?: number
@@ -1092,6 +1094,7 @@ export type Database = {
         }
         Update: {
           acceptance_rate?: number
+          difficulty?: string
           problem_slug?: string
           total_accepted?: number
           total_submissions?: number
@@ -1132,6 +1135,54 @@ export type Database = {
           status?: string
           target_id?: string
           target_type?: string
+        }
+        Relationships: []
+      }
+      contest_code_provenance: {
+        Row: {
+          char_count: number | null
+          client_ts: string
+          contest_id: string
+          diff_summary: Json | null
+          event_type: string
+          id: string
+          paste_size: number | null
+          problem_id: string
+          reason: string | null
+          server_ts: string
+          session_id: string
+          suspicious: boolean
+          user_id: string
+        }
+        Insert: {
+          char_count?: number | null
+          client_ts: string
+          contest_id: string
+          diff_summary?: Json | null
+          event_type: string
+          id?: string
+          paste_size?: number | null
+          problem_id: string
+          reason?: string | null
+          server_ts?: string
+          session_id: string
+          suspicious?: boolean
+          user_id: string
+        }
+        Update: {
+          char_count?: number | null
+          client_ts?: string
+          contest_id?: string
+          diff_summary?: Json | null
+          event_type?: string
+          id?: string
+          paste_size?: number | null
+          problem_id?: string
+          reason?: string | null
+          server_ts?: string
+          session_id?: string
+          suspicious?: boolean
+          user_id?: string
         }
         Relationships: []
       }
@@ -1176,6 +1227,50 @@ export type Database = {
           },
         ]
       }
+      contest_problem_variants: {
+        Row: {
+          contest_id: string
+          created_at: string
+          hidden_test_seed: string | null
+          id: string
+          problem_slug: string
+          statement_md: string | null
+          title: string | null
+          variant_key: string
+          weight: number
+        }
+        Insert: {
+          contest_id: string
+          created_at?: string
+          hidden_test_seed?: string | null
+          id?: string
+          problem_slug: string
+          statement_md?: string | null
+          title?: string | null
+          variant_key: string
+          weight?: number
+        }
+        Update: {
+          contest_id?: string
+          created_at?: string
+          hidden_test_seed?: string | null
+          id?: string
+          problem_slug?: string
+          statement_md?: string | null
+          title?: string | null
+          variant_key?: string
+          weight?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contest_problem_variants_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contest_problems: {
         Row: {
           contest_id: string
@@ -1211,33 +1306,90 @@ export type Database = {
           },
         ]
       }
+      contest_proctor_snapshots: {
+        Row: {
+          captured_at: string
+          contest_id: string
+          id: string
+          session_id: string | null
+          storage_path: string
+          user_id: string
+        }
+        Insert: {
+          captured_at?: string
+          contest_id: string
+          id?: string
+          session_id?: string | null
+          storage_path: string
+          user_id: string
+        }
+        Update: {
+          captured_at?: string
+          contest_id?: string
+          id?: string
+          session_id?: string | null
+          storage_path?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contest_proctor_snapshots_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contest_proctor_snapshots_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "contest_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contest_registrations: {
         Row: {
           contest_id: string
           display_name: string | null
+          disqualified_at: string | null
+          disqualified_reason: string | null
+          flagged: boolean
+          honor_code_accepted_at: string | null
           id: string
           registered_at: string
           status: string
           team_name: string | null
           user_id: string
+          violation_count: number
         }
         Insert: {
           contest_id: string
           display_name?: string | null
+          disqualified_at?: string | null
+          disqualified_reason?: string | null
+          flagged?: boolean
+          honor_code_accepted_at?: string | null
           id?: string
           registered_at?: string
           status?: string
           team_name?: string | null
           user_id: string
+          violation_count?: number
         }
         Update: {
           contest_id?: string
           display_name?: string | null
+          disqualified_at?: string | null
+          disqualified_reason?: string | null
+          flagged?: boolean
+          honor_code_accepted_at?: string | null
           id?: string
           registered_at?: string
           status?: string
           team_name?: string | null
           user_id?: string
+          violation_count?: number
         }
         Relationships: [
           {
@@ -1245,6 +1397,161 @@ export type Database = {
             columns: ["contest_id"]
             isOneToOne: false
             referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contest_screen_recordings: {
+        Row: {
+          contest_id: string
+          created_at: string
+          duration_sec: number
+          id: string
+          session_id: string | null
+          started_at: string
+          storage_path: string
+          user_id: string
+        }
+        Insert: {
+          contest_id: string
+          created_at?: string
+          duration_sec?: number
+          id?: string
+          session_id?: string | null
+          started_at?: string
+          storage_path: string
+          user_id: string
+        }
+        Update: {
+          contest_id?: string
+          created_at?: string
+          duration_sec?: number
+          id?: string
+          session_id?: string | null
+          started_at?: string
+          storage_path?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contest_screen_recordings_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contest_screen_recordings_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "contest_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contest_sessions: {
+        Row: {
+          client_fingerprint: Json | null
+          contest_id: string
+          device_meta: Json
+          id: string
+          invalidated_at: string | null
+          ip_address: unknown
+          ip_hash: string | null
+          is_active: boolean
+          last_heartbeat_at: string | null
+          last_seen_at: string
+          session_token: string
+          started_at: string
+          stream_grace_until: string | null
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          client_fingerprint?: Json | null
+          contest_id: string
+          device_meta?: Json
+          id?: string
+          invalidated_at?: string | null
+          ip_address?: unknown
+          ip_hash?: string | null
+          is_active?: boolean
+          last_heartbeat_at?: string | null
+          last_seen_at?: string
+          session_token?: string
+          started_at?: string
+          stream_grace_until?: string | null
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          client_fingerprint?: Json | null
+          contest_id?: string
+          device_meta?: Json
+          id?: string
+          invalidated_at?: string | null
+          ip_address?: unknown
+          ip_hash?: string | null
+          is_active?: boolean
+          last_heartbeat_at?: string | null
+          last_seen_at?: string
+          session_token?: string
+          started_at?: string
+          stream_grace_until?: string | null
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contest_sessions_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contest_stream_health: {
+        Row: {
+          contest_id: string
+          created_at: string
+          healthy: boolean
+          id: string
+          session_id: string | null
+          stream_kind: string
+          user_id: string
+        }
+        Insert: {
+          contest_id: string
+          created_at?: string
+          healthy: boolean
+          id?: string
+          session_id?: string | null
+          stream_kind: string
+          user_id: string
+        }
+        Update: {
+          contest_id?: string
+          created_at?: string
+          healthy?: boolean
+          id?: string
+          session_id?: string | null
+          stream_kind?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contest_stream_health_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contest_stream_health_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "contest_sessions"
             referencedColumns: ["id"]
           },
         ]
@@ -1293,6 +1600,227 @@ export type Database = {
           },
         ]
       }
+      contest_tab_locks: {
+        Row: {
+          claimed_at: string
+          contest_id: string
+          tab_id: string
+          user_id: string
+        }
+        Insert: {
+          claimed_at?: string
+          contest_id: string
+          tab_id: string
+          user_id: string
+        }
+        Update: {
+          claimed_at?: string
+          contest_id?: string
+          tab_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contest_tab_locks_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contest_trust_scores: {
+        Row: {
+          computed_at: string
+          contest_id: string
+          id: string
+          reasons: Json
+          risk: string
+          score: number
+          session_id: string | null
+          user_id: string
+        }
+        Insert: {
+          computed_at?: string
+          contest_id: string
+          id?: string
+          reasons?: Json
+          risk: string
+          score: number
+          session_id?: string | null
+          user_id: string
+        }
+        Update: {
+          computed_at?: string
+          contest_id?: string
+          id?: string
+          reasons?: Json
+          risk?: string
+          score?: number
+          session_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contest_trust_scores_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contest_trust_scores_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "contest_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contest_typing_events: {
+        Row: {
+          char_count: number
+          contest_id: string
+          created_at: string
+          dt_ms: number
+          id: string
+          is_burst: boolean
+          problem_slug: string
+          session_id: string | null
+          user_id: string
+        }
+        Insert: {
+          char_count: number
+          contest_id: string
+          created_at?: string
+          dt_ms: number
+          id?: string
+          is_burst?: boolean
+          problem_slug: string
+          session_id?: string | null
+          user_id: string
+        }
+        Update: {
+          char_count?: number
+          contest_id?: string
+          created_at?: string
+          dt_ms?: number
+          id?: string
+          is_burst?: boolean
+          problem_slug?: string
+          session_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contest_typing_events_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contest_typing_events_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "contest_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contest_user_variants: {
+        Row: {
+          assigned_at: string
+          contest_id: string
+          id: string
+          problem_slug: string
+          user_id: string
+          variant_id: string
+          variant_key: string
+        }
+        Insert: {
+          assigned_at?: string
+          contest_id: string
+          id?: string
+          problem_slug: string
+          user_id: string
+          variant_id: string
+          variant_key: string
+        }
+        Update: {
+          assigned_at?: string
+          contest_id?: string
+          id?: string
+          problem_slug?: string
+          user_id?: string
+          variant_id?: string
+          variant_key?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contest_user_variants_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contest_user_variants_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: false
+            referencedRelation: "contest_problem_variants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contest_violations: {
+        Row: {
+          contest_id: string
+          created_at: string
+          id: string
+          meta: Json
+          session_id: string | null
+          severity: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          contest_id: string
+          created_at?: string
+          id?: string
+          meta?: Json
+          session_id?: string | null
+          severity?: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          contest_id?: string
+          created_at?: string
+          id?: string
+          meta?: Json
+          session_id?: string | null
+          severity?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contest_violations_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contest_violations_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "contest_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contests: {
         Row: {
           banner_url: string | null
@@ -1304,9 +1832,11 @@ export type Database = {
           invite_code: string | null
           kind: string | null
           max_participants: number | null
+          min_trust_score: number
           penalty_minutes: number
           registration_closes_at: string | null
           registration_opens_at: string | null
+          require_screen_share: boolean
           rules_md: string | null
           scoring_mode: string
           sequence_no: number | null
@@ -1327,9 +1857,11 @@ export type Database = {
           invite_code?: string | null
           kind?: string | null
           max_participants?: number | null
+          min_trust_score?: number
           penalty_minutes?: number
           registration_closes_at?: string | null
           registration_opens_at?: string | null
+          require_screen_share?: boolean
           rules_md?: string | null
           scoring_mode?: string
           sequence_no?: number | null
@@ -1350,9 +1882,11 @@ export type Database = {
           invite_code?: string | null
           kind?: string | null
           max_participants?: number | null
+          min_trust_score?: number
           penalty_minutes?: number
           registration_closes_at?: string | null
           registration_opens_at?: string | null
+          require_screen_share?: boolean
           rules_md?: string | null
           scoring_mode?: string
           sequence_no?: number | null
@@ -1440,6 +1974,82 @@ export type Database = {
         }
         Relationships: []
       }
+      experience_reports: {
+        Row: {
+          created_at: string
+          details: string | null
+          experience_id: string
+          id: string
+          reason: Database["public"]["Enums"]["experience_report_reason"]
+          reporter_id: string
+          resolution_notes: string | null
+          resolved_at: string | null
+          resolved_by: string | null
+          status: Database["public"]["Enums"]["experience_report_status"]
+        }
+        Insert: {
+          created_at?: string
+          details?: string | null
+          experience_id: string
+          id?: string
+          reason: Database["public"]["Enums"]["experience_report_reason"]
+          reporter_id: string
+          resolution_notes?: string | null
+          resolved_at?: string | null
+          resolved_by?: string | null
+          status?: Database["public"]["Enums"]["experience_report_status"]
+        }
+        Update: {
+          created_at?: string
+          details?: string | null
+          experience_id?: string
+          id?: string
+          reason?: Database["public"]["Enums"]["experience_report_reason"]
+          reporter_id?: string
+          resolution_notes?: string | null
+          resolved_at?: string | null
+          resolved_by?: string | null
+          status?: Database["public"]["Enums"]["experience_report_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "experience_reports_experience_id_fkey"
+            columns: ["experience_id"]
+            isOneToOne: false
+            referencedRelation: "interview_experiences"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      experience_votes: {
+        Row: {
+          created_at: string
+          experience_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          experience_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          experience_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "experience_votes_experience_id_fkey"
+            columns: ["experience_id"]
+            isOneToOne: false
+            referencedRelation: "interview_experiences"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       featured_content: {
         Row: {
           ends_at: string | null
@@ -1503,6 +2113,78 @@ export type Database = {
         }
         Relationships: []
       }
+      interview_experiences: {
+        Row: {
+          company_name: string
+          created_at: string
+          ctc_lpa: number | null
+          difficulty: string
+          experience_type: Database["public"]["Enums"]["experience_type"]
+          id: string
+          location: string | null
+          moderated_at: string | null
+          moderated_by: string | null
+          moderation_notes: string | null
+          offer_status: Database["public"]["Enums"]["offer_status"]
+          overall_text: string
+          role: string
+          rounds: Json
+          status: Database["public"]["Enums"]["experience_status"]
+          tips: string | null
+          updated_at: string
+          upvotes: number
+          user_id: string
+          views: number
+          year: number
+        }
+        Insert: {
+          company_name: string
+          created_at?: string
+          ctc_lpa?: number | null
+          difficulty?: string
+          experience_type?: Database["public"]["Enums"]["experience_type"]
+          id?: string
+          location?: string | null
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_notes?: string | null
+          offer_status?: Database["public"]["Enums"]["offer_status"]
+          overall_text: string
+          role: string
+          rounds?: Json
+          status?: Database["public"]["Enums"]["experience_status"]
+          tips?: string | null
+          updated_at?: string
+          upvotes?: number
+          user_id: string
+          views?: number
+          year: number
+        }
+        Update: {
+          company_name?: string
+          created_at?: string
+          ctc_lpa?: number | null
+          difficulty?: string
+          experience_type?: Database["public"]["Enums"]["experience_type"]
+          id?: string
+          location?: string | null
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_notes?: string | null
+          offer_status?: Database["public"]["Enums"]["offer_status"]
+          overall_text?: string
+          role?: string
+          rounds?: Json
+          status?: Database["public"]["Enums"]["experience_status"]
+          tips?: string | null
+          updated_at?: string
+          upvotes?: number
+          user_id?: string
+          views?: number
+          year?: number
+        }
+        Relationships: []
+      }
       library_hidden_items: {
         Row: {
           category: string
@@ -1553,6 +2235,48 @@ export type Database = {
           read?: boolean
           title?: string
           type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      outreach_favorites: {
+        Row: {
+          created_at: string | null
+          id: string
+          template_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          template_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          template_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      outreach_usage: {
+        Row: {
+          copied_at: string | null
+          id: string
+          template_id: string
+          user_id: string
+        }
+        Insert: {
+          copied_at?: string | null
+          id?: string
+          template_id: string
+          user_id: string
+        }
+        Update: {
+          copied_at?: string | null
+          id?: string
+          template_id?: string
           user_id?: string
         }
         Relationships: []
@@ -1735,6 +2459,54 @@ export type Database = {
           question_title?: string
           review_count?: number
           updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      resume_downloads: {
+        Row: {
+          created_at: string
+          downloaded_at: string
+          id: string
+          template_id: number
+          template_name: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          downloaded_at?: string
+          id?: string
+          template_id: number
+          template_name: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          downloaded_at?: string
+          id?: string
+          template_id?: number
+          template_name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      resume_favorites: {
+        Row: {
+          created_at: string
+          id: string
+          template_id: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          template_id: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          template_id?: number
           user_id?: string
         }
         Relationships: []
@@ -2340,6 +3112,42 @@ export type Database = {
         }
         Relationships: []
       }
+      user_study_focus_sessions: {
+        Row: {
+          actual_minutes: number | null
+          completed_cycles: number
+          created_at: string
+          ended_at: string | null
+          id: string
+          notes: string | null
+          started_at: string
+          task_id: string | null
+          user_id: string
+        }
+        Insert: {
+          actual_minutes?: number | null
+          completed_cycles?: number
+          created_at?: string
+          ended_at?: string | null
+          id?: string
+          notes?: string | null
+          started_at?: string
+          task_id?: string | null
+          user_id: string
+        }
+        Update: {
+          actual_minutes?: number | null
+          completed_cycles?: number
+          created_at?: string
+          ended_at?: string | null
+          id?: string
+          notes?: string | null
+          started_at?: string
+          task_id?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_topic_progress: {
         Row: {
           completed: boolean
@@ -2421,6 +3229,93 @@ export type Database = {
         }
         Relationships: []
       }
+      public_user_profiles: {
+        Row: {
+          aspirations: string[] | null
+          bio: string | null
+          codechef_url: string | null
+          codeforces_url: string | null
+          created_at: string | null
+          current_level: number | null
+          github_url: string | null
+          goals: string[] | null
+          hackerrank_url: string | null
+          instagram_url: string | null
+          interests: string[] | null
+          leetcode_url: string | null
+          linkedin_url: string | null
+          location: string | null
+          occupation: string | null
+          profile_completion_percentage: number | null
+          skills: string[] | null
+          total_xp: number | null
+          twitter_url: string | null
+          user_id: string | null
+          username: string | null
+          website: string | null
+          xp_this_week: number | null
+        }
+        Insert: {
+          aspirations?: string[] | null
+          bio?: string | null
+          codechef_url?: string | null
+          codeforces_url?: string | null
+          created_at?: string | null
+          current_level?: number | null
+          github_url?: string | null
+          goals?: string[] | null
+          hackerrank_url?: string | null
+          instagram_url?: string | null
+          interests?: string[] | null
+          leetcode_url?: string | null
+          linkedin_url?: string | null
+          location?: string | null
+          occupation?: string | null
+          profile_completion_percentage?: number | null
+          skills?: string[] | null
+          total_xp?: number | null
+          twitter_url?: string | null
+          user_id?: string | null
+          username?: string | null
+          website?: string | null
+          xp_this_week?: number | null
+        }
+        Update: {
+          aspirations?: string[] | null
+          bio?: string | null
+          codechef_url?: string | null
+          codeforces_url?: string | null
+          created_at?: string | null
+          current_level?: number | null
+          github_url?: string | null
+          goals?: string[] | null
+          hackerrank_url?: string | null
+          instagram_url?: string | null
+          interests?: string[] | null
+          leetcode_url?: string | null
+          linkedin_url?: string | null
+          location?: string | null
+          occupation?: string | null
+          profile_completion_percentage?: number | null
+          skills?: string[] | null
+          total_xp?: number | null
+          twitter_url?: string | null
+          user_id?: string | null
+          username?: string | null
+          website?: string | null
+          xp_this_week?: number | null
+        }
+        Relationships: []
+      }
+      roadmap_leaderboard_view: {
+        Row: {
+          completed_topics: number | null
+          last_completed_at: string | null
+          roadmaps_started: number | null
+          user_id: string | null
+        }
+        Relationships: []
+      }
       xp_leaderboard_view: {
         Row: {
           avatar_url: string | null
@@ -2497,6 +3392,25 @@ export type Database = {
           xp_this_week: number
         }[]
       }
+      admin_list_public_tables: {
+        Args: never
+        Returns: {
+          policy_count: number
+          rls_enabled: boolean
+          table_name: string
+        }[]
+      }
+      admin_list_table_policies: {
+        Args: { _table: string }
+        Returns: {
+          check_expr: string
+          command: string
+          permissive: string
+          policy_name: string
+          roles: string[]
+          using_expr: string
+        }[]
+      }
       admin_list_users: {
         Args: { _limit?: number; _offset?: number; _search?: string }
         Returns: {
@@ -2541,6 +3455,22 @@ export type Database = {
           _user_id: string
         }
         Returns: undefined
+      }
+      admin_role_audit: {
+        Args: { _action?: string; _limit?: number; _user_id?: string }
+        Returns: {
+          action: string
+          actor_email: string
+          actor_id: string
+          actor_name: string
+          created_at: string
+          diff: Json
+          id: string
+          role: string
+          target_email: string
+          target_name: string
+          target_user_id: string
+        }[]
       }
       admin_save_problem: { Args: { payload: Json }; Returns: Json }
       admin_schedule_daily_challenge: {
@@ -2593,6 +3523,24 @@ export type Database = {
       }
       admin_unsuspend_user: { Args: { _user_id: string }; Returns: undefined }
       admin_user_detail: { Args: { _user_id: string }; Returns: Json }
+      assign_contest_variant: {
+        Args: { _contest_id: string; _problem_slug: string }
+        Returns: {
+          assigned_at: string
+          contest_id: string
+          id: string
+          problem_slug: string
+          user_id: string
+          variant_id: string
+          variant_key: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "contest_user_variants"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       audit_daily_completions: { Args: never; Returns: Json }
       audit_daily_completions_all: { Args: never; Returns: Json }
       blog_increment_view: {
@@ -2604,6 +3552,70 @@ export type Database = {
         Args: {
           profile_row: Database["public"]["Tables"]["user_profiles_extended"]["Row"]
         }
+        Returns: number
+      }
+      contest_accept_honor_code: {
+        Args: { _contest_id: string }
+        Returns: undefined
+      }
+      contest_aux_unlocked: { Args: { _contest_id: string }; Returns: boolean }
+      contest_claim_tab_lock: {
+        Args: { _contest_id: string; _tab_id: string }
+        Returns: Json
+      }
+      contest_log_violation: {
+        Args: {
+          _contest_id: string
+          _meta?: Json
+          _session_id: string
+          _severity?: string
+          _type: string
+        }
+        Returns: Json
+      }
+      contest_report_stream_health: {
+        Args: { _healthy: boolean; _kind: string; _session_id: string }
+        Returns: Json
+      }
+      contest_session_heartbeat:
+        | { Args: { _session_id: string }; Returns: Json }
+        | { Args: { _fingerprint: Json; _session_id: string }; Returns: Json }
+      contest_start_secure_session: {
+        Args: { _contest_id: string; _user_agent?: string }
+        Returns: string
+      }
+      get_coding_leaderboard: {
+        Args: {
+          _limit?: number
+          _offset?: number
+          _search?: string
+          _window?: string
+        }
+        Returns: {
+          acceptance_rate: number
+          avatar_url: string
+          display_name: string
+          fastest_avg_runtime: number
+          last_accepted_at: string
+          problems_solved: number
+          rank: number
+          total_accepted: number
+          user_id: string
+          username: string
+          weighted_score: number
+        }[]
+      }
+      get_coding_leaderboard_stats: {
+        Args: never
+        Returns: {
+          total_accepted_today: number
+          total_accepted_week: number
+          total_participants: number
+          total_problems_solved: number
+        }[]
+      }
+      get_contest_registered_count: {
+        Args: { _contest_id: string }
         Returns: number
       }
       get_daily_challenge_leaderboard: {
@@ -2680,6 +3692,10 @@ export type Database = {
         Args: { _contest_id: string; _invite_code?: string }
         Returns: string
       }
+      validate_contest_submission: {
+        Args: { _contest_id: string; _problem_slug: string }
+        Returns: Json
+      }
     }
     Enums: {
       app_role: "admin" | "owner" | "moderator" | "user"
@@ -2691,6 +3707,17 @@ export type Database = {
         | "weekly_sunday"
         | "biweekly"
         | "other"
+      experience_report_reason:
+        | "spam"
+        | "misinformation"
+        | "plagiarism"
+        | "offensive"
+        | "personal_info"
+        | "other"
+      experience_report_status: "open" | "resolved" | "dismissed"
+      experience_status: "pending" | "approved" | "rejected"
+      experience_type: "on_campus" | "off_campus" | "internship" | "referral"
+      offer_status: "selected" | "rejected" | "waitlisted" | "in_progress"
       study_year:
         | "1st Year"
         | "2nd Year"
@@ -2836,6 +3863,18 @@ export const Constants = {
         "biweekly",
         "other",
       ],
+      experience_report_reason: [
+        "spam",
+        "misinformation",
+        "plagiarism",
+        "offensive",
+        "personal_info",
+        "other",
+      ],
+      experience_report_status: ["open", "resolved", "dismissed"],
+      experience_status: ["pending", "approved", "rejected"],
+      experience_type: ["on_campus", "off_campus", "internship", "referral"],
+      offer_status: ["selected", "rejected", "waitlisted", "in_progress"],
       study_year: [
         "1st Year",
         "2nd Year",

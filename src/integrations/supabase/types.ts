@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_audit_log: {
+        Row: {
+          action: string
+          actor_id: string
+          created_at: string
+          diff: Json | null
+          entity_slug: string | null
+          entity_type: string
+          id: string
+        }
+        Insert: {
+          action: string
+          actor_id: string
+          created_at?: string
+          diff?: Json | null
+          entity_slug?: string | null
+          entity_type: string
+          id?: string
+        }
+        Update: {
+          action?: string
+          actor_id?: string
+          created_at?: string
+          diff?: Json | null
+          entity_slug?: string | null
+          entity_type?: string
+          id?: string
+        }
+        Relationships: []
+      }
       blog_bookmarks: {
         Row: {
           created_at: string
@@ -257,6 +287,7 @@ export type Database = {
           allow_comments: boolean
           author_id: string | null
           auto_approve_comments: boolean
+          bookmark_count: number
           canonical_url: string | null
           comment_count: number
           content_md: string
@@ -282,6 +313,7 @@ export type Database = {
           allow_comments?: boolean
           author_id?: string | null
           auto_approve_comments?: boolean
+          bookmark_count?: number
           canonical_url?: string | null
           comment_count?: number
           content_md?: string
@@ -307,6 +339,7 @@ export type Database = {
           allow_comments?: boolean
           author_id?: string | null
           auto_approve_comments?: boolean
+          bookmark_count?: number
           canonical_url?: string | null
           comment_count?: number
           content_md?: string
@@ -713,6 +746,197 @@ export type Database = {
           },
         ]
       }
+      coding_problem_reference_solutions: {
+        Row: {
+          code: string
+          id: string
+          lang_id: string
+          problem_slug: string
+          updated_at: string
+        }
+        Insert: {
+          code?: string
+          id?: string
+          lang_id: string
+          problem_slug: string
+          updated_at?: string
+        }
+        Update: {
+          code?: string
+          id?: string
+          lang_id?: string
+          problem_slug?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coding_problem_reference_solutions_problem_slug_fkey"
+            columns: ["problem_slug"]
+            isOneToOne: false
+            referencedRelation: "coding_problems"
+            referencedColumns: ["slug"]
+          },
+        ]
+      }
+      coding_problem_sql_specs: {
+        Row: {
+          order_matters: boolean
+          problem_slug: string
+          reference_query: string
+          schema_sql: string
+          seed_sql: string
+          starter: string
+          updated_at: string
+        }
+        Insert: {
+          order_matters?: boolean
+          problem_slug: string
+          reference_query?: string
+          schema_sql?: string
+          seed_sql?: string
+          starter?: string
+          updated_at?: string
+        }
+        Update: {
+          order_matters?: boolean
+          problem_slug?: string
+          reference_query?: string
+          schema_sql?: string
+          seed_sql?: string
+          starter?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coding_problem_sql_specs_problem_slug_fkey"
+            columns: ["problem_slug"]
+            isOneToOne: true
+            referencedRelation: "coding_problems"
+            referencedColumns: ["slug"]
+          },
+        ]
+      }
+      coding_problem_starter_code: {
+        Row: {
+          code: string
+          id: string
+          lang_id: string
+          problem_slug: string
+          updated_at: string
+        }
+        Insert: {
+          code?: string
+          id?: string
+          lang_id: string
+          problem_slug: string
+          updated_at?: string
+        }
+        Update: {
+          code?: string
+          id?: string
+          lang_id?: string
+          problem_slug?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coding_problem_starter_code_problem_slug_fkey"
+            columns: ["problem_slug"]
+            isOneToOne: false
+            referencedRelation: "coding_problems"
+            referencedColumns: ["slug"]
+          },
+        ]
+      }
+      coding_problem_tests: {
+        Row: {
+          created_at: string
+          expected: string
+          id: string
+          input: string
+          kind: string
+          ord: number
+          problem_slug: string
+        }
+        Insert: {
+          created_at?: string
+          expected?: string
+          id?: string
+          input?: string
+          kind: string
+          ord?: number
+          problem_slug: string
+        }
+        Update: {
+          created_at?: string
+          expected?: string
+          id?: string
+          input?: string
+          kind?: string
+          ord?: number
+          problem_slug?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coding_problem_tests_problem_slug_fkey"
+            columns: ["problem_slug"]
+            isOneToOne: false
+            referencedRelation: "coding_problems"
+            referencedColumns: ["slug"]
+          },
+        ]
+      }
+      coding_problems: {
+        Row: {
+          constraints: string[]
+          cpu_time_limit_sec: number | null
+          created_at: string
+          created_by: string | null
+          description: string
+          difficulty: string
+          examples: Json
+          hints: string[]
+          is_published: boolean
+          memory_limit_kb: number | null
+          slug: string
+          title: string
+          topics: string[]
+          updated_at: string
+        }
+        Insert: {
+          constraints?: string[]
+          cpu_time_limit_sec?: number | null
+          created_at?: string
+          created_by?: string | null
+          description?: string
+          difficulty?: string
+          examples?: Json
+          hints?: string[]
+          is_published?: boolean
+          memory_limit_kb?: number | null
+          slug: string
+          title: string
+          topics?: string[]
+          updated_at?: string
+        }
+        Update: {
+          constraints?: string[]
+          cpu_time_limit_sec?: number | null
+          created_at?: string
+          created_by?: string | null
+          description?: string
+          difficulty?: string
+          examples?: Json
+          hints?: string[]
+          is_published?: boolean
+          memory_limit_kb?: number | null
+          slug?: string
+          title?: string
+          topics?: string[]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       coding_problems_meta: {
         Row: {
           acceptance_rate: number
@@ -734,6 +958,233 @@ export type Database = {
           total_accepted?: number
           total_submissions?: number
           updated_at?: string
+        }
+        Relationships: []
+      }
+      contest_leaderboard_cache: {
+        Row: {
+          contest_id: string
+          last_solve_at: string | null
+          problems_solved: number
+          rank: number
+          total_penalty_seconds: number
+          total_points: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          contest_id: string
+          last_solve_at?: string | null
+          problems_solved?: number
+          rank?: number
+          total_penalty_seconds?: number
+          total_points?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          contest_id?: string
+          last_solve_at?: string | null
+          problems_solved?: number
+          rank?: number
+          total_penalty_seconds?: number
+          total_points?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contest_leaderboard_cache_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contest_problems: {
+        Row: {
+          contest_id: string
+          created_at: string
+          order_index: number
+          points: number
+          problem_slug: string
+          unlock_at: string | null
+        }
+        Insert: {
+          contest_id: string
+          created_at?: string
+          order_index?: number
+          points?: number
+          problem_slug: string
+          unlock_at?: string | null
+        }
+        Update: {
+          contest_id?: string
+          created_at?: string
+          order_index?: number
+          points?: number
+          problem_slug?: string
+          unlock_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contest_problems_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contest_registrations: {
+        Row: {
+          contest_id: string
+          display_name: string | null
+          id: string
+          registered_at: string
+          status: string
+          team_name: string | null
+          user_id: string
+        }
+        Insert: {
+          contest_id: string
+          display_name?: string | null
+          id?: string
+          registered_at?: string
+          status?: string
+          team_name?: string | null
+          user_id: string
+        }
+        Update: {
+          contest_id?: string
+          display_name?: string | null
+          id?: string
+          registered_at?: string
+          status?: string
+          team_name?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contest_registrations_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contest_submissions: {
+        Row: {
+          contest_id: string
+          id: string
+          penalty_seconds: number
+          points_awarded: number
+          problem_slug: string
+          submission_id: string | null
+          submitted_at: string
+          user_id: string
+          verdict: string
+        }
+        Insert: {
+          contest_id: string
+          id?: string
+          penalty_seconds?: number
+          points_awarded?: number
+          problem_slug: string
+          submission_id?: string | null
+          submitted_at?: string
+          user_id: string
+          verdict: string
+        }
+        Update: {
+          contest_id?: string
+          id?: string
+          penalty_seconds?: number
+          points_awarded?: number
+          problem_slug?: string
+          submission_id?: string | null
+          submitted_at?: string
+          user_id?: string
+          verdict?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contest_submissions_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contests: {
+        Row: {
+          banner_url: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          ends_at: string
+          id: string
+          invite_code: string | null
+          kind: string | null
+          max_participants: number | null
+          penalty_minutes: number
+          registration_closes_at: string | null
+          registration_opens_at: string | null
+          rules_md: string | null
+          scoring_mode: string
+          slug: string
+          starts_at: string
+          status: string
+          title: string
+          updated_at: string
+          visibility: string
+        }
+        Insert: {
+          banner_url?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          ends_at: string
+          id?: string
+          invite_code?: string | null
+          kind?: string | null
+          max_participants?: number | null
+          penalty_minutes?: number
+          registration_closes_at?: string | null
+          registration_opens_at?: string | null
+          rules_md?: string | null
+          scoring_mode?: string
+          slug: string
+          starts_at: string
+          status?: string
+          title: string
+          updated_at?: string
+          visibility?: string
+        }
+        Update: {
+          banner_url?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          ends_at?: string
+          id?: string
+          invite_code?: string | null
+          kind?: string | null
+          max_participants?: number | null
+          penalty_minutes?: number
+          registration_closes_at?: string | null
+          registration_opens_at?: string | null
+          rules_md?: string | null
+          scoring_mode?: string
+          slug?: string
+          starts_at?: string
+          status?: string
+          title?: string
+          updated_at?: string
+          visibility?: string
         }
         Relationships: []
       }
@@ -1621,6 +2072,8 @@ export type Database = {
       }
     }
     Functions: {
+      admin_get_full_problem: { Args: { _slug: string }; Returns: Json }
+      admin_save_problem: { Args: { payload: Json }; Returns: Json }
       audit_daily_completions: { Args: never; Returns: Json }
       audit_daily_completions_all: { Args: never; Returns: Json }
       blog_increment_view: {
@@ -1700,6 +2153,14 @@ export type Database = {
         Returns: boolean
       }
       is_blog_editor: { Args: { _uid: string }; Returns: boolean }
+      recompute_contest_leaderboard: {
+        Args: { _contest_id: string }
+        Returns: undefined
+      }
+      register_for_contest: {
+        Args: { _contest_id: string; _invite_code?: string }
+        Returns: string
+      }
     }
     Enums: {
       app_role: "admin" | "owner" | "moderator" | "user"

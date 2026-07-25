@@ -6,7 +6,7 @@
 import { auth, defineMcp } from "npm:@lovable.dev/mcp-js@0.20.1";
 
 // src/lib/mcp/tools/whoami.ts
-import { createClient } from "npm:@supabase/supabase-js@^2.94.0";
+import { createClient } from "npm:@supabase/supabase-js@^2.110.8";
 import { defineTool } from "npm:@lovable.dev/mcp-js@0.20.1";
 var getEnv = (name) => {
   const deno = globalThis.Deno;
@@ -51,7 +51,7 @@ var whoami_default = defineTool({
 });
 
 // src/lib/mcp/tools/list-folders.ts
-import { createClient as createClient2 } from "npm:@supabase/supabase-js@^2.94.0";
+import { createClient as createClient2 } from "npm:@supabase/supabase-js@^2.110.8";
 import { defineTool as defineTool2 } from "npm:@lovable.dev/mcp-js@0.20.1";
 import { z } from "npm:zod@^3.23.8";
 var getEnv2 = (name) => {
@@ -106,7 +106,7 @@ import { defineTool as defineTool3 } from "npm:@lovable.dev/mcp-js@0.20.1";
 import { z as z2 } from "npm:zod@^3.23.8";
 
 // src/lib/mcp/tools/_shared.ts
-import { createClient as createClient3 } from "npm:@supabase/supabase-js@^2.94.0";
+import { createClient as createClient3 } from "npm:@supabase/supabase-js@^2.110.8";
 var getEnv3 = (name) => {
   const deno = globalThis.Deno;
   return deno?.env?.get?.(name) ?? process.env[name];
@@ -678,7 +678,7 @@ var rollbackCodingProblemTool = defineTool18({
 });
 
 // src/lib/mcp/index.ts
-var projectRef = "lvnpvfxlmzbnylwkvgnq";
+var projectRef = "elzftqnehcmnouptaqee";
 var mcp_default = defineMcp({
   name: "parikshaa-mcp",
   title: "Parikshaa",

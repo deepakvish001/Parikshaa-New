@@ -1,0 +1,1001 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 0 0% 9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
+
+    --primary: 22 95% 53%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 94%;
+    --secondary-foreground: 0 0% 9%;
+
+    --muted: 0 0% 90%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 22 95% 53%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 22 95% 53%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 96%;
+    --sidebar-foreground: 0 0% 9%;
+    --sidebar-primary: 22 95% 53%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 90%;
+    --sidebar-accent-foreground: 0 0% 9%;
+    --sidebar-border: 0 0% 88%;
+    --sidebar-ring: 22 95% 53%;
+
+    /* Custom design tokens */
+    --gradient-fire: linear-gradient(180deg, hsl(22 95% 53% / 0.2) 0%, hsl(0 0% 98%) 100%);
+    --gradient-orange: linear-gradient(135deg, hsl(22 95% 53%) 0%, hsl(22 95% 53%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(0 0% 96%) 100%);
+    --shadow-glow: 0 0 40px hsl(22 95% 53% / 0.2);
+    --shadow-card: 0 4px 24px hsl(0 0% 0% / 0.08);
+
+    /* Parikshaa brand tokens — orange → amber, applied across /learn and future pages. */
+    --parikshaa-orange-strong: 22 95% 53%;
+    --parikshaa-orange: 27 96% 61%;
+    --parikshaa-amber: 43 96% 56%;
+    --parikshaa-amber-soft: 46 97% 65%;
+    --parikshaa-amber-mist: 48 96% 76%;
+    --parikshaa-gradient: linear-gradient(135deg, hsl(var(--parikshaa-orange-strong)) 0%, hsl(var(--parikshaa-amber)) 100%);
+    --parikshaa-gradient-soft: linear-gradient(135deg, hsl(var(--parikshaa-orange) / 0.9) 0%, hsl(var(--parikshaa-amber-soft) / 0.7) 100%);
+    --parikshaa-gradient-mist: linear-gradient(135deg, hsl(var(--parikshaa-amber-soft) / 0.25) 0%, hsl(var(--parikshaa-orange) / 0.18) 100%);
+    --parikshaa-ring: hsl(var(--parikshaa-amber) / 0.55);
+    --parikshaa-shadow: 0 8px 30px -12px hsl(var(--parikshaa-orange-strong) / 0.35);
+    --parikshaa-shadow-glow: 0 0 28px hsl(var(--parikshaa-amber) / 0.35);
+  }
+
+  .dark {
+    /* Homepage canonical deep-black: #030305 */
+    --background: 240 25% 1.6%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 22 95% 53%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 22 95% 53%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 22 95% 53%;
+
+    --sidebar-background: 240 20% 3%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 22 95% 53%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: 22 95% 53%;
+
+    /* Custom design tokens - dark mode */
+    --gradient-fire: linear-gradient(180deg, hsl(22 95% 53% / 0.3) 0%, hsl(var(--background)) 100%);
+    --gradient-orange: linear-gradient(135deg, hsl(22 95% 53%) 0%, hsl(22 95% 53%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 10%) 0%, hsl(0 0% 7%) 100%);
+    --shadow-glow: 0 0 40px hsl(22 95% 53% / 0.3);
+    --shadow-card: 0 4px 24px hsl(0 0% 0% / 0.4);
+
+    /* Parikshaa brand tokens — dark mode keeps the same hues; adjust shadow intensity. */
+    --parikshaa-shadow: 0 10px 36px -14px hsl(var(--parikshaa-orange-strong) / 0.55);
+    --parikshaa-shadow-glow: 0 0 32px hsl(var(--parikshaa-amber) / 0.45);
+
+    /* Apex/Nexus landing typography */
+    --font-apex-sans: 'Manrope', 'Inter', system-ui, sans-serif;
+    --font-apex-display: 'Cal Sans', 'Manrope', system-ui, sans-serif;
+    --font-apex-heading: 'Instrument Sans', 'Manrope', system-ui, sans-serif;
+  }
+}
+
+@layer utilities {
+  .font-apex-sans { font-family: var(--font-apex-sans); }
+  .font-apex-display { font-family: var(--font-apex-display); letter-spacing: -0.02em; }
+  .font-apex-heading { font-family: var(--font-apex-heading); letter-spacing: -0.01em; }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    /* Prevent any page-level left-right scrolling; content should wrap/truncate responsively. */
+    @apply bg-background text-foreground antialiased overflow-x-hidden;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+  }
+}
+
+@layer components {
+  .section-container {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .learn-dark-surface {
+    /* Match homepage dark theme exactly so /learn and / share one palette */
+    --learn-black: 240 25% 1.6%;
+    --learn-surface: 0 0% 7%;
+    --learn-surface-raised: 0 0% 7%;
+    --learn-border: 0 0% 18%;
+    --background: var(--learn-black);
+    --foreground: 0 0% 98%;
+    --card: var(--learn-surface);
+    --card-foreground: 0 0% 98%;
+    --popover: var(--learn-surface-raised);
+    --popover-foreground: 0 0% 98%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 64%;
+    --border: var(--learn-border);
+    --input: var(--learn-border);
+    --primary: 22 95% 53%;
+    --ring: 22 95% 53%;
+    --shadow-glow: none;
+    --shadow-card: none;
+    --parikshaa-shadow: none;
+    --parikshaa-shadow-glow: none;
+    background: hsl(var(--learn-black));
+    background-color: hsl(var(--learn-black));
+    color: hsl(var(--foreground));
+  }
+
+  html:has(.learn-dark-surface),
+  body:has(.learn-dark-surface),
+  #root:has(.learn-dark-surface) {
+    background: hsl(240 25% 1.6%);
+    background-color: hsl(240 25% 1.6%);
+  }
+
+
+  .learn-home-panel,
+  .learn-home-card,
+  .learn-dark-surface .learn-card-surface {
+    background-color: hsl(var(--card) / 0.6) !important;
+    background-image: none !important;
+    border-color: hsl(var(--border) / 0.6) !important;
+    box-shadow: none !important;
+  }
+  .learn-home-panel:hover,
+  .learn-home-card:hover,
+  .learn-dark-surface .learn-card-surface:hover {
+    background-color: hsl(var(--card) / 0.6) !important;
+    background-image: none !important;
+    border-color: hsl(var(--border) / 0.6) !important;
+    box-shadow: none !important;
+  }
+
+  .learn-dark-surface .learn-frame,
+  .learn-dark-surface .learn-rail-surface {
+    background-color: hsl(var(--background)) !important;
+    background-image: none !important;
+    border-color: hsl(var(--border) / 0.5) !important;
+    box-shadow: none !important;
+  }
+
+  .learn-dark-surface [class*="shadow-["],
+  .learn-dark-surface [class*="shadow-primary"],
+  .learn-dark-surface [class*="shadow-lg"],
+  .learn-dark-surface [class*="shadow-xl"],
+  .learn-dark-surface [class*="shadow-2xl"],
+  .learn-dark-surface [class*="drop-shadow-"] {
+    box-shadow: none !important;
+    filter: none !important;
+  }
+
+  .learn-dark-surface .bg-gradient-to-br,
+  .learn-dark-surface .bg-gradient-to-r,
+  .learn-dark-surface .bg-gradient-to-b {
+    background-image: none !important;
+  }
+
+  .learn-dark-surface .text-transparent.bg-clip-text {
+    color: hsl(var(--foreground)) !important;
+    background-image: none !important;
+    -webkit-text-fill-color: currentColor !important;
+  }
+
+  .learn-dark-surface .learn-card-surface,
+  .learn-dark-surface .learn-home-card,
+  .learn-dark-surface .learn-home-panel {
+    background-color: hsl(var(--card) / 0.6) !important;
+    border-color: hsl(0 0% 100% / 0.12) !important;
+    box-shadow: 0 0 0 1px hsl(0 0% 100% / 0.05), 0 8px 28px -18px hsl(0 0% 0% / 0.5) !important;
+    backdrop-filter: blur(4px);
+  }
+
+  .learn-dark-surface .learn-card-hover-wash {
+    display: none !important;
+  }
+
+  /* Right-rail info/share buttons: center without Tailwind transforms, never move on hover/focus/active */
+  .rr-static-btn,
+  .rr-static-btn:hover,
+  .rr-static-btn:focus,
+  .rr-static-btn:focus-visible,
+  .rr-static-btn:active,
+  .rr-static-btn[data-state],
+  .rr-static-btn[data-state="open"] {
+    top: 0 !important;
+    margin-top: 0 !important;
+    transform: none !important;
+    translate: none !important;
+    scale: none !important;
+    rotate: none !important;
+    --tw-scale-x: 1 !important;
+    --tw-scale-y: 1 !important;
+    --tw-translate-x: 0 !important;
+    --tw-translate-y: 0 !important;
+    --tw-rotate: 0 !important;
+    transition: background-color 200ms ease, color 200ms ease, box-shadow 200ms ease !important;
+    animation: none !important;
+    will-change: auto !important;
+  }
+
+  /* Right-rail widgets: neutralize any hover/focus/active transform utilities
+     (hover:scale-*, hover:translate-*, focus:*, active:*) so interactive
+     elements never shift. Base non-hover translates (e.g. -translate-y-1/2)
+     remain intact — we only reset the Tailwind transform vars that those
+     stateful utilities would mutate. */
+  .learn-home-panel [class*="hover:scale-"]:hover,
+  .learn-home-panel [class*="hover:-scale-"]:hover,
+  .learn-home-panel [class*="hover:translate-"]:hover,
+  .learn-home-panel [class*="hover:-translate-"]:hover,
+  .learn-home-panel [class*="hover:rotate-"]:hover,
+  .learn-home-panel [class*="focus:scale-"]:focus,
+  .learn-home-panel [class*="focus:translate-"]:focus,
+  .learn-home-panel [class*="focus-visible:scale-"]:focus-visible,
+  .learn-home-panel [class*="focus-visible:translate-"]:focus-visible,
+  .learn-home-panel [class*="active:scale-"]:active,
+  .learn-home-panel [class*="active:translate-"]:active {
+    --tw-scale-x: 1 !important;
+    --tw-scale-y: 1 !important;
+    --tw-translate-x: 0 !important;
+    --tw-translate-y: 0 !important;
+    --tw-rotate: 0 !important;
+  }
+
+
+  /* Broaden the transform-lock to include data-state variants (Radix uses
+     data-[state=open]:scale-* etc.) so animated popovers/tabs inside a
+     right-rail widget don't shift their trigger. */
+  .learn-home-panel [class*=":scale-"][data-state]:not([data-state="closed"]),
+  .learn-home-panel [class*=":translate-"][data-state]:not([data-state="closed"]) {
+    --tw-scale-x: 1 !important;
+    --tw-scale-y: 1 !important;
+    --tw-translate-x: 0 !important;
+    --tw-translate-y: 0 !important;
+  }
+
+  /* ==========================================================================
+     Shared right-rail hero typography + framing tokens
+     Applied to widget headings/labels/values so they always match the
+     home-page hero (Space Grotesk + semantic tokens, no ad-hoc greys).
+     Also provides responsive padding for hero-framed widget cards.
+     ========================================================================== */
+  .rr-hero-frame { padding: 1rem; }
+  @media (min-width: 640px) { .rr-hero-frame { padding: 1.25rem; } }
+  @media (min-width: 1024px) { .rr-hero-frame { padding: 1.5rem; } }
+
+  .rr-progress-card {
+    padding-block: 1rem !important;
+    overflow: visible !important;
+  }
+  .rr-progress-header {
+    margin-bottom: 0.75rem;
+  }
+  .rr-progress-body {
+    align-items: center;
+    min-height: 7.5rem;
+  }
+  .rr-progress-ring {
+    width: 6.5rem;
+    height: 6.5rem;
+  }
+  .rr-progress-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    min-height: 6rem;
+    justify-content: center;
+  }
+  @media (min-width: 1024px) {
+    .rr-progress-card {
+      padding-block: 1.125rem !important;
+    }
+    .rr-progress-header {
+      margin-bottom: 0.625rem;
+    }
+    .rr-progress-body {
+      min-height: 7rem;
+    }
+    .rr-progress-ring {
+      width: 6.25rem;
+      height: 6.25rem;
+    }
+    .rr-progress-stats {
+      gap: 0.3125rem;
+      min-height: 5.75rem;
+    }
+  }
+
+
+  .rr-hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    border-radius: 9999px;
+    border: 1px solid hsl(var(--border) / 0.6);
+    background: hsl(var(--card) / 0.5);
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: hsl(var(--foreground) / 0.9);
+    letter-spacing: 0.02em;
+    backdrop-filter: blur(4px);
+  }
+  .rr-hero-heading {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: hsl(var(--foreground));
+    line-height: 1.1;
+  }
+  .rr-hero-label {
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+    letter-spacing: 0.01em;
+  }
+  .rr-hero-value {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-variant-numeric: tabular-nums;
+    color: hsl(var(--primary));
+    font-weight: 700;
+  }
+
+
+  .learn-dark-surface .learn-primary-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    background-image: linear-gradient(90deg, hsl(var(--primary)), hsl(22 95% 53%)) !important;
+    color: hsl(var(--primary-foreground)) !important;
+    font-weight: 700;
+    box-shadow: 0 25px 50px -12px hsl(var(--primary) / 0.3) !important;
+    transition: transform 300ms ease, box-shadow 300ms ease;
+  }
+
+  .learn-dark-surface .learn-primary-cta:hover {
+    box-shadow: 0 25px 50px -12px hsl(var(--primary) / 0.5) !important;
+    transform: scale(1.05);
+  }
+
+
+  .learn-dark-surface .learn-secondary-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    border: 2px solid hsl(var(--primary) / 0.5);
+    background-color: hsl(var(--card) / 0.5) !important;
+    color: hsl(var(--foreground)) !important;
+    font-weight: 600;
+    transition: background-color 300ms ease, border-color 300ms ease, color 300ms ease;
+  }
+
+  .learn-dark-surface .learn-secondary-cta:hover {
+    background-color: hsl(var(--card)) !important;
+    border-color: hsl(var(--primary) / 0.8);
+  }
+
+  .learn-dark-surface .border-amber-400\/30,
+  .learn-dark-surface .border-amber-400\/40,
+  .learn-dark-surface .border-amber-500\/30,
+  .learn-dark-surface .border-amber-500\/40,
+  .learn-dark-surface .border-orange-500\/30,
+  .learn-dark-surface .ring-amber-400\/10,
+  .learn-dark-surface .ring-amber-400\/20,
+  .learn-dark-surface .ring-primary\/15 {
+    border-color: hsl(0 0% 100% / 0.12) !important;
+    --tw-ring-color: hsl(0 0% 100% / 0.08) !important;
+  }
+
+  /* Universal subtle white/gray border on Learn surface. */
+  .learn-dark-surface *,
+  .learn-dark-surface *::before,
+  .learn-dark-surface *::after {
+    border-color: hsl(0 0% 100% / 0.1);
+  }
+
+  .learn-dark-surface [class*="border-"]:not([class*="border-transparent"]):not([class*="border-primary"]):not([class*="border-destructive"]):not([class*="border-emerald"]):not([class*="border-rose"]):not([class*="border-red"]):not([class*="border-green"]):not([class*="border-yellow"]):not([class*="border-blue"]) {
+    border-color: hsl(0 0% 100% / 0.12) !important;
+  }
+
+  .learn-dark-surface [class*="divide-"] > * + * {
+    border-color: hsl(0 0% 100% / 0.08) !important;
+  }
+
+  .learn-dark-surface hr {
+    border-color: hsl(0 0% 100% / 0.1) !important;
+    background-color: hsl(0 0% 100% / 0.1) !important;
+  }
+
+
+  /* Neutralize hover effects on the Learn surface without destroying base
+     positioning transforms like top-1/2 + -translate-y-1/2 icon controls. */
+  .learn-dark-surface *:hover {
+    background-image: none !important;
+    box-shadow: none !important;
+    --tw-ring-shadow: 0 0 #0000 !important;
+    --tw-ring-color: transparent !important;
+    --tw-scale-x: 1 !important;
+    --tw-scale-y: 1 !important;
+  }
+
+
+  .learn-dark-surface *:focus-visible {
+    outline: none !important;
+    border-color: hsl(var(--primary) / 0.85) !important;
+    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.55), 0 0 24px -4px hsl(var(--primary) / 0.45) !important;
+  }
+
+
+
+
+
+
+  .learn-dark-surface .bg-background\/90,
+  .learn-dark-surface .bg-background\/85,
+  .learn-dark-surface .bg-background\/75,
+  .learn-dark-surface .bg-background\/70,
+  .learn-dark-surface .bg-background\/55 {
+    background-color: hsl(var(--background)) !important;
+  }
+
+  .learn-dark-surface .bg-card\/40,
+  .learn-dark-surface .bg-card\/45,
+  .learn-dark-surface .bg-card\/50,
+  .learn-dark-surface .bg-card\/60,
+  .learn-dark-surface .bg-card\/70,
+  .learn-dark-surface .bg-card\/75,
+  .learn-dark-surface .bg-amber-500\/10,
+  .learn-dark-surface .bg-amber-500\/15,
+  .learn-dark-surface .bg-amber-500\/20,
+  .learn-dark-surface .bg-orange-500\/10,
+  .learn-dark-surface .bg-orange-500\/15 {
+    background-color: hsl(var(--card) / 0.5) !important;
+  }
+
+  /* ─── Parikshaa brand helpers (orange → amber) ────────────────────────
+     Use these utility classes on any /learn (or future) component to
+     stay aligned with the Parikshaa logo palette. They expand to amber/
+     orange Tailwind-equivalent values driven by the --parikshaa-* tokens
+     defined in :root, so dark / light modes stay in sync automatically. */
+  .bg-parikshaa-gradient {
+    background-image: var(--parikshaa-gradient);
+  }
+  .bg-parikshaa-gradient-soft {
+    background-image: var(--parikshaa-gradient-soft);
+  }
+  .bg-parikshaa-gradient-mist {
+    background-image: var(--parikshaa-gradient-mist);
+  }
+  .text-parikshaa-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--parikshaa-gradient);
+  }
+  .ring-parikshaa {
+    box-shadow: 0 0 0 1px var(--parikshaa-ring);
+  }
+  .shadow-parikshaa {
+    box-shadow: var(--parikshaa-shadow);
+  }
+  .shadow-parikshaa-glow {
+    box-shadow: var(--parikshaa-shadow-glow);
+  }
+  /* Focus ring used by every interactive chip / icon button on /learn. */
+  .focus-parikshaa {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/60 focus-visible:ring-offset-1 focus-visible:ring-offset-background;
+  }
+  /* Standard interactive chip — hover & active stay inside orange/amber. */
+  .chip-parikshaa {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-amber-400/30 bg-amber-500/5 text-amber-200/90 transition-colors duration-200
+           hover:border-amber-400/60 hover:bg-amber-500/15 hover:text-amber-100
+           active:bg-orange-500/25 active:text-orange-50
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/60;
+  }
+  .chip-parikshaa[data-active="true"],
+  .chip-parikshaa.is-active {
+    @apply border-amber-400/60 bg-gradient-to-r from-orange-500/25 to-amber-400/25 text-amber-50 shadow-[0_0_0_1px_hsl(var(--parikshaa-amber)/0.45)];
+  }
+
+
+  .card-dark {
+    @apply bg-card border border-border rounded-xl p-6;
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-feature {
+    @apply bg-card border border-border rounded-xl p-5 transition-all duration-300;
+  }
+
+  .card-feature:hover {
+    @apply border-primary/50;
+    box-shadow: var(--shadow-glow);
+  }
+
+  .btn-primary {
+    @apply bg-primary text-primary-foreground font-semibold px-6 py-3 rounded-full transition-all duration-300;
+  }
+
+  .btn-primary:hover {
+    @apply scale-105;
+    box-shadow: var(--shadow-glow);
+  }
+
+  .bg-gradient-orange {
+    background: var(--gradient-orange);
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-orange);
+  }
+
+  .section-title {
+    @apply text-3xl sm:text-4xl font-bold text-foreground text-center mb-4;
+  }
+
+  .section-subtitle {
+    @apply text-muted-foreground text-center max-w-2xl mx-auto mb-12;
+  }
+
+  .icon-box {
+    @apply w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary;
+  }
+
+  .stat-card {
+    @apply bg-secondary/50 rounded-xl p-4 border border-border;
+  }
+
+  .pricing-card {
+    @apply bg-card border border-border rounded-2xl p-6 transition-all duration-300;
+  }
+
+  .pricing-card:hover {
+    @apply border-primary/50;
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-glow);
+  }
+
+  .pricing-card.featured {
+    @apply border-primary;
+    box-shadow: var(--shadow-glow);
+  }
+
+  .feature-tab {
+    @apply px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 text-muted-foreground;
+  }
+
+  .feature-tab:hover {
+    @apply text-foreground;
+  }
+
+  .feature-tab.active {
+    @apply bg-primary text-primary-foreground;
+  }
+
+  .checklist-item {
+    @apply flex items-center gap-3 py-3 border-b border-border last:border-0;
+  }
+
+  .progress-ring {
+    @apply stroke-primary;
+    stroke-linecap: round;
+  }
+
+  .upcoming-card {
+    @apply bg-card border border-border rounded-xl p-4 flex items-start gap-4 transition-all duration-300;
+  }
+
+  .upcoming-card:hover {
+    @apply border-primary/30;
+  }
+}
+
+@layer utilities {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s ease-in-out infinite;
+  }
+
+  .animate-spin {
+    display: none !important;
+    animation: none !important;
+  }
+
+  .animate-pulse[class*="bg-muted"],
+  [class*="bg-muted"].animate-pulse {
+    display: none !important;
+    animation: none !important;
+  }
+
+  .glass-effect {
+    @apply backdrop-blur-lg bg-background/80;
+  }
+
+  /* Glassmorphism card */
+  .glass-card {
+    @apply backdrop-blur-xl bg-background/80 border border-border/50;
+  }
+
+  /* Shimmer effect overlay */
+  .shimmer-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%
+    );
+    animation: shimmer 2.5s ease-in-out infinite;
+  }
+
+  /* Animated glow border */
+  .glow-border {
+    position: relative;
+  }
+  
+  .glow-border::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: linear-gradient(
+      135deg,
+      hsl(22 95% 53% / 0.4),
+      hsl(22 95% 53% / 0.2),
+      hsl(22 95% 53% / 0.4)
+    );
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .glow-border:hover::before {
+    opacity: 1;
+  }
+
+  /* Tabular numbers for counters */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Gradient text animation */
+  @keyframes gradient-shift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .gradient-text-animated {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-orange);
+    background-size: 200% 200%;
+    animation: gradient-shift 3s ease infinite;
+  }
+
+  /* Scale hover utility */
+  .hover-scale-102:hover {
+    transform: scale(1.02);
+  }
+}
+
+@layer utilities {
+  @keyframes admin-nav-flash {
+    0%   { background-color: hsl(var(--primary) / 0.35); }
+    60%  { background-color: hsl(var(--primary) / 0.18); }
+    100% { background-color: hsl(var(--primary) / 0.10); }
+  }
+  .admin-nav-flash { animation: admin-nav-flash 1.4s ease-out; }
+}
+
+/* ---------------------------------------------------------------------------
+ * Admin Cockpit — scoped redesign
+ * ---------------------------------------------------------------------------
+ * Admin pages render inside `.admin-surface`. This block only adds motion &
+ * a11y polish — the admin console inherits the brand amber theme from the
+ * root so it matches the home page (Parikshaa landing) exactly.
+ * ------------------------------------------------------------------------- */
+@layer components {
+  .admin-surface {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  /* Reduced-motion: neutralise entry animations inside admin only */
+  @media (prefers-reduced-motion: reduce) {
+    .admin-surface,
+    .admin-surface * {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Keyboard focus ring inside admin */
+  .admin-surface :focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .admin-surface h1 { letter-spacing: -0.02em; }
+  .admin-surface h2 { letter-spacing: -0.015em; }
+
+  /* Mobile: tighten the base type so tables/cards breathe on <640px */
+  @media (max-width: 640px) {
+    .admin-surface { font-size: 14px; line-height: 1.5; }
+  }
+
+  /* Flat sales-ops tables — subtle secondary header, hover row tint */
+  .admin-surface table thead {
+    background: hsl(var(--secondary));
+  }
+  .admin-surface table thead th {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: hsl(var(--muted-foreground));
+  }
+  .admin-surface table tbody tr {
+    border-color: hsl(var(--border));
+  }
+  .admin-surface table tbody tr:hover {
+    background: hsl(var(--secondary) / 0.55);
+  }
+
+  /* Tabs — solid amber pill on active, flat otherwise */
+  .admin-surface [role="tablist"] {
+    background: hsl(var(--secondary));
+    border: 1px solid hsl(var(--border));
+    border-radius: 8px;
+    padding: 3px;
+    gap: 2px;
+  }
+  .admin-surface [role="tab"] {
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: hsl(var(--muted-foreground));
+  }
+  .admin-surface [role="tab"][data-state="active"] {
+    background: hsl(var(--primary) / 0.12);
+    color: hsl(var(--primary));
+    box-shadow: none;
+  }
+
+  /* Badges default to a flat outlined chip — override with variants */
+  .admin-surface .admin-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    border: 1px solid hsl(var(--border));
+    background: hsl(var(--secondary));
+    color: hsl(var(--muted-foreground));
+  }
+}
+
+/* Blog post heading anchor links (rehype-autolink-headings appends a span with class .heading-anchor-icon inside an anchor.heading-anchor) */
+.prose .heading-anchor {
+  margin-left: 0.5rem;
+  opacity: 0;
+  transition: opacity 150ms ease;
+  text-decoration: none !important;
+  color: hsl(var(--primary));
+  font-weight: 400;
+}
+.prose h1:hover .heading-anchor,
+.prose h2:hover .heading-anchor,
+.prose h3:hover .heading-anchor,
+.prose h4:hover .heading-anchor,
+.prose .heading-anchor:focus,
+.prose .heading-anchor:focus-visible {
+  opacity: 1;
+}
+.prose .heading-anchor:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.prose .heading-anchor-icon { font-size: 0.85em; }
+.prose :target {
+  scroll-margin-top: 6rem;
+}
+
+/* KaTeX block-math should not overflow on small screens */
+.prose .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+}
+.prose .katex-display > .katex {
+  white-space: nowrap;
+}
+
+/* Print stylesheet — hide non-essential UI when printing a blog post */
+@media print {
+  body { background: #fff !important; color: #000 !important; }
+  [data-section="comments"],
+  [data-embed],
+  aside[aria-label="Article actions"],
+  aside[aria-label="Table of contents"],
+  nav[aria-label="Table of contents"],
+  .lg\:hidden[aria-label="Article actions"] { display: none !important; }
+  [data-code-block] { break-inside: avoid; box-shadow: none !important; }
+  .prose a { color: inherit !important; text-decoration: underline !important; }
+}
+
+
+/* ===== Apex-style landing page animations ===== */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+@keyframes apex-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.apex-shimmer-btn { position: relative; overflow: hidden; }
+.apex-shimmer-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.12) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: apex-shimmer 3s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes apex-pulse-glow {
+  0%, 100% { opacity: 1; box-shadow: 0 0 4px currentColor; }
+  50% { opacity: 0.6; box-shadow: 0 0 8px currentColor; }
+}
+.apex-pulse-glow { animation: apex-pulse-glow 2s ease-in-out infinite; }
+@keyframes apex-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.apex-marquee { animation: apex-marquee 30s linear infinite; }
+@keyframes apex-draw-line {
+  to { stroke-dashoffset: 0; }
+}
+.apex-draw-line {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: apex-draw-line 2s ease-out forwards;
+}
+
+/* Respect prefers-reduced-motion: scale down hero shimmer/glow/marquee */
+@media (prefers-reduced-motion: reduce) {
+  .apex-shimmer-btn::before,
+  .apex-pulse-glow,
+  .apex-marquee {
+    animation: none !important;
+  }
+  .apex-draw-line {
+    stroke-dashoffset: 0 !important;
+    animation: none !important;
+  }
+  /* Kill inline shimmer on gradient headline */
+  [style*="apex-shimmer"] {
+    animation: none !important;
+    background-position: 0 0 !important;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Utility: hide scrollbar chrome while keeping scroll behavior */
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }

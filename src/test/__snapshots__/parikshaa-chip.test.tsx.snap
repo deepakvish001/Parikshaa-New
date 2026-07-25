@@ -1,0 +1,61 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ParikshaaChip — snapshots (idle / selected per variant) > ghost variant (selected=false) 1`] = `
+<button
+  class="inline-flex items-center gap-1.5 rounded-full border border-transparent px-2.5 py-1 text-[11px] font-semibold antialiased transition-colors duration-200 focus-parikshaa text-muted-foreground hover:text-amber-200 hover:bg-amber-500/10 hover:border-amber-400/30 active:text-orange-100 active:bg-orange-500/15 data-[active=true]:text-amber-100 data-[active=true]:bg-amber-500/15 data-[active=true]:border-amber-400/40"
+  type="button"
+>
+  Chip
+</button>
+`;
+
+exports[`ParikshaaChip — snapshots (idle / selected per variant) > ghost variant (selected=true) 1`] = `
+<button
+  aria-pressed="true"
+  class="inline-flex items-center gap-1.5 rounded-full border border-transparent px-2.5 py-1 text-[11px] font-semibold antialiased transition-colors duration-200 focus-parikshaa text-muted-foreground hover:text-amber-200 hover:bg-amber-500/10 hover:border-amber-400/30 active:text-orange-100 active:bg-orange-500/15 data-[active=true]:text-amber-100 data-[active=true]:bg-amber-500/15 data-[active=true]:border-amber-400/40"
+  data-active="true"
+  type="button"
+>
+  Chip
+</button>
+`;
+
+exports[`ParikshaaChip — snapshots (idle / selected per variant) > outline variant (selected=false) 1`] = `
+<button
+  class="inline-flex items-center gap-1.5 rounded-full border bg-transparent px-2.5 py-1 text-[11px] font-semibold antialiased transition-colors duration-200 focus-parikshaa border-amber-400/40 text-amber-200 hover:border-amber-400/70 hover:bg-amber-500/10 hover:text-amber-100 active:bg-orange-500/20 active:text-orange-50 data-[active=true]:border-amber-400/70 data-[active=true]:bg-gradient-to-r data-[active=true]:from-orange-500/25 data-[active=true]:to-amber-400/25 data-[active=true]:text-amber-50"
+  type="button"
+>
+  Chip
+</button>
+`;
+
+exports[`ParikshaaChip — snapshots (idle / selected per variant) > outline variant (selected=true) 1`] = `
+<button
+  aria-pressed="true"
+  class="inline-flex items-center gap-1.5 rounded-full border bg-transparent px-2.5 py-1 text-[11px] font-semibold antialiased transition-colors duration-200 focus-parikshaa border-amber-400/40 text-amber-200 hover:border-amber-400/70 hover:bg-amber-500/10 hover:text-amber-100 active:bg-orange-500/20 active:text-orange-50 data-[active=true]:border-amber-400/70 data-[active=true]:bg-gradient-to-r data-[active=true]:from-orange-500/25 data-[active=true]:to-amber-400/25 data-[active=true]:text-amber-50"
+  data-active="true"
+  type="button"
+>
+  Chip
+</button>
+`;
+
+exports[`ParikshaaChip — snapshots (idle / selected per variant) > solid variant (selected=false) 1`] = `
+<button
+  class="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold antialiased transition-colors duration-200 focus-parikshaa border-amber-400/30 bg-amber-500/5 text-amber-200/90 hover:border-amber-400/60 hover:bg-amber-500/15 hover:text-amber-100 active:bg-orange-500/25 active:text-orange-50 data-[active=true]:border-amber-400/60 data-[active=true]:bg-gradient-to-r data-[active=true]:from-orange-500/25 data-[active=true]:to-amber-400/25 data-[active=true]:text-amber-50"
+  type="button"
+>
+  Chip
+</button>
+`;
+
+exports[`ParikshaaChip — snapshots (idle / selected per variant) > solid variant (selected=true) 1`] = `
+<button
+  aria-pressed="true"
+  class="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold antialiased transition-colors duration-200 focus-parikshaa border-amber-400/30 bg-amber-500/5 text-amber-200/90 hover:border-amber-400/60 hover:bg-amber-500/15 hover:text-amber-100 active:bg-orange-500/25 active:text-orange-50 data-[active=true]:border-amber-400/60 data-[active=true]:bg-gradient-to-r data-[active=true]:from-orange-500/25 data-[active=true]:to-amber-400/25 data-[active=true]:text-amber-50"
+  data-active="true"
+  type="button"
+>
+  Chip
+</button>
+`;

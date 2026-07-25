@@ -1,0 +1,1 @@
+DELETE FROM auth.users WHERE id IN (SELECT user_id FROM public.profiles WHERE full_name IS NULL OR trim(full_name) = '');

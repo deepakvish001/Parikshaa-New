@@ -14,6 +14,471 @@ export type Database = {
   }
   public: {
     Tables: {
+      blog_bookmarks: {
+        Row: {
+          created_at: string
+          post_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          post_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          post_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_bookmarks_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      blog_categories: {
+        Row: {
+          color: string | null
+          created_at: string
+          description: string | null
+          icon: string | null
+          id: string
+          name: string
+          slug: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name: string
+          slug: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name?: string
+          slug?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      blog_comment_audit: {
+        Row: {
+          action: string
+          actor_id: string | null
+          comment_id: string
+          comment_snapshot: string | null
+          created_at: string
+          id: string
+          new_status: string | null
+          old_status: string | null
+          post_id: string | null
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          comment_id: string
+          comment_snapshot?: string | null
+          created_at?: string
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
+          post_id?: string | null
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          comment_id?: string
+          comment_snapshot?: string | null
+          created_at?: string
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
+          post_id?: string | null
+        }
+        Relationships: []
+      }
+      blog_comments: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          body: string
+          created_at: string
+          id: string
+          parent_id: string | null
+          post_id: string
+          status: Database["public"]["Enums"]["blog_comment_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          body: string
+          created_at?: string
+          id?: string
+          parent_id?: string | null
+          post_id: string
+          status?: Database["public"]["Enums"]["blog_comment_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          body?: string
+          created_at?: string
+          id?: string
+          parent_id?: string | null
+          post_id?: string
+          status?: Database["public"]["Enums"]["blog_comment_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_comments_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "blog_comments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_comments_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      blog_likes: {
+        Row: {
+          created_at: string
+          post_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          post_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          post_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_likes_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      blog_post_categories: {
+        Row: {
+          category_id: string
+          post_id: string
+        }
+        Insert: {
+          category_id: string
+          post_id: string
+        }
+        Update: {
+          category_id?: string
+          post_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_post_categories_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "blog_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_post_categories_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      blog_post_tags: {
+        Row: {
+          post_id: string
+          tag_id: string
+        }
+        Insert: {
+          post_id: string
+          tag_id: string
+        }
+        Update: {
+          post_id?: string
+          tag_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_post_tags_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_post_tags_tag_id_fkey"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "blog_tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      blog_posts: {
+        Row: {
+          allow_comments: boolean
+          author_id: string | null
+          auto_approve_comments: boolean
+          canonical_url: string | null
+          comment_count: number
+          content_md: string
+          cover_image_url: string | null
+          created_at: string
+          excerpt: string | null
+          id: string
+          is_featured: boolean
+          like_count: number
+          og_image_url: string | null
+          published_at: string | null
+          reading_time_min: number
+          scheduled_for: string | null
+          seo_description: string | null
+          seo_title: string | null
+          slug: string
+          status: Database["public"]["Enums"]["blog_post_status"]
+          title: string
+          updated_at: string
+          view_count: number
+        }
+        Insert: {
+          allow_comments?: boolean
+          author_id?: string | null
+          auto_approve_comments?: boolean
+          canonical_url?: string | null
+          comment_count?: number
+          content_md?: string
+          cover_image_url?: string | null
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          is_featured?: boolean
+          like_count?: number
+          og_image_url?: string | null
+          published_at?: string | null
+          reading_time_min?: number
+          scheduled_for?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
+          slug: string
+          status?: Database["public"]["Enums"]["blog_post_status"]
+          title: string
+          updated_at?: string
+          view_count?: number
+        }
+        Update: {
+          allow_comments?: boolean
+          author_id?: string | null
+          auto_approve_comments?: boolean
+          canonical_url?: string | null
+          comment_count?: number
+          content_md?: string
+          cover_image_url?: string | null
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          is_featured?: boolean
+          like_count?: number
+          og_image_url?: string | null
+          published_at?: string | null
+          reading_time_min?: number
+          scheduled_for?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
+          slug?: string
+          status?: Database["public"]["Enums"]["blog_post_status"]
+          title?: string
+          updated_at?: string
+          view_count?: number
+        }
+        Relationships: []
+      }
+      blog_revision_audit: {
+        Row: {
+          action: string
+          actor_id: string | null
+          compare_revision_id: string | null
+          created_at: string
+          id: string
+          meta: Json
+          post_id: string
+          revision_id: string | null
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          compare_revision_id?: string | null
+          created_at?: string
+          id?: string
+          meta?: Json
+          post_id: string
+          revision_id?: string | null
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          compare_revision_id?: string | null
+          created_at?: string
+          id?: string
+          meta?: Json
+          post_id?: string
+          revision_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_revision_audit_compare_revision_id_fkey"
+            columns: ["compare_revision_id"]
+            isOneToOne: false
+            referencedRelation: "blog_revisions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_revision_audit_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_revision_audit_revision_id_fkey"
+            columns: ["revision_id"]
+            isOneToOne: false
+            referencedRelation: "blog_revisions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      blog_revisions: {
+        Row: {
+          content_md: string
+          created_at: string
+          id: string
+          post_id: string
+          saved_by: string | null
+          title: string
+        }
+        Insert: {
+          content_md: string
+          created_at?: string
+          id?: string
+          post_id: string
+          saved_by?: string | null
+          title: string
+        }
+        Update: {
+          content_md?: string
+          created_at?: string
+          id?: string
+          post_id?: string
+          saved_by?: string | null
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_revisions_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      blog_tags: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      blog_views: {
+        Row: {
+          dedup_key: string | null
+          id: number
+          post_id: string
+          session_id: string | null
+          user_id: string | null
+          viewed_at: string
+          viewed_on: string
+        }
+        Insert: {
+          dedup_key?: string | null
+          id?: number
+          post_id: string
+          session_id?: string | null
+          user_id?: string | null
+          viewed_at?: string
+          viewed_on?: string
+        }
+        Update: {
+          dedup_key?: string | null
+          id?: number
+          post_id?: string
+          session_id?: string | null
+          user_id?: string | null
+          viewed_at?: string
+          viewed_on?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_views_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       chat_messages: {
         Row: {
           content: string
@@ -1016,6 +1481,27 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_sheet_prefs: {
         Row: {
           created_at: string
@@ -1137,6 +1623,11 @@ export type Database = {
     Functions: {
       audit_daily_completions: { Args: never; Returns: Json }
       audit_daily_completions_all: { Args: never; Returns: Json }
+      blog_increment_view: {
+        Args: { _post_id: string; _session_id: string }
+        Returns: undefined
+      }
+      blog_publish_scheduled: { Args: never; Returns: number }
       calculate_profile_completion: {
         Args: {
           profile_row: Database["public"]["Tables"]["user_profiles_extended"]["Row"]
@@ -1201,8 +1692,19 @@ export type Database = {
           total_users: number
         }[]
       }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_blog_editor: { Args: { _uid: string }; Returns: boolean }
     }
     Enums: {
+      app_role: "admin" | "owner" | "moderator" | "user"
+      blog_comment_status: "visible" | "hidden" | "reported" | "deleted"
+      blog_post_status: "draft" | "scheduled" | "published" | "archived"
       study_year:
         | "1st Year"
         | "2nd Year"
@@ -1338,6 +1840,9 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      app_role: ["admin", "owner", "moderator", "user"],
+      blog_comment_status: ["visible", "hidden", "reported", "deleted"],
+      blog_post_status: ["draft", "scheduled", "published", "archived"],
       study_year: [
         "1st Year",
         "2nd Year",

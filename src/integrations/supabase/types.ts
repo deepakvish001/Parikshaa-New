@@ -44,6 +44,144 @@ export type Database = {
         }
         Relationships: []
       }
+      admin_daily_challenge_schedule: {
+        Row: {
+          challenge_date: string
+          created_at: string
+          problem_slug: string
+          set_by: string | null
+        }
+        Insert: {
+          challenge_date: string
+          created_at?: string
+          problem_slug: string
+          set_by?: string | null
+        }
+        Update: {
+          challenge_date?: string
+          created_at?: string
+          problem_slug?: string
+          set_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "admin_daily_challenge_schedule_problem_slug_fkey"
+            columns: ["problem_slug"]
+            isOneToOne: false
+            referencedRelation: "coding_problems"
+            referencedColumns: ["slug"]
+          },
+        ]
+      }
+      ai_content_likes: {
+        Row: {
+          content_id: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          content_id: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          content_id?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_content_likes_content_id_fkey"
+            columns: ["content_id"]
+            isOneToOne: false
+            referencedRelation: "ai_generated_content"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_content_progress: {
+        Row: {
+          completed_at: string | null
+          content_id: string
+          created_at: string
+          id: string
+          last_accessed_at: string
+          progress: Json
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          content_id: string
+          created_at?: string
+          id?: string
+          last_accessed_at?: string
+          progress?: Json
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          content_id?: string
+          created_at?: string
+          id?: string
+          last_accessed_at?: string
+          progress?: Json
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_content_progress_content_id_fkey"
+            columns: ["content_id"]
+            isOneToOne: false
+            referencedRelation: "ai_generated_content"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_generated_content: {
+        Row: {
+          content: Json
+          content_type: string
+          created_at: string
+          id: string
+          is_public: boolean
+          likes_count: number
+          title: string
+          topic: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content?: Json
+          content_type: string
+          created_at?: string
+          id?: string
+          is_public?: boolean
+          likes_count?: number
+          title: string
+          topic: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: Json
+          content_type?: string
+          created_at?: string
+          id?: string
+          is_public?: boolean
+          likes_count?: number
+          title?: string
+          topic?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       blog_bookmarks: {
         Row: {
           created_at: string
@@ -961,6 +1099,42 @@ export type Database = {
         }
         Relationships: []
       }
+      content_reports: {
+        Row: {
+          created_at: string
+          id: string
+          reason: string
+          reporter_id: string
+          resolved_at: string | null
+          resolved_by: string | null
+          status: string
+          target_id: string
+          target_type: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          reason: string
+          reporter_id: string
+          resolved_at?: string | null
+          resolved_by?: string | null
+          status?: string
+          target_id: string
+          target_type: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          reason?: string
+          reporter_id?: string
+          resolved_at?: string | null
+          resolved_by?: string | null
+          status?: string
+          target_id?: string
+          target_type?: string
+        }
+        Relationships: []
+      }
       contest_leaderboard_cache: {
         Row: {
           contest_id: string
@@ -1135,6 +1309,7 @@ export type Database = {
           registration_opens_at: string | null
           rules_md: string | null
           scoring_mode: string
+          sequence_no: number | null
           slug: string
           starts_at: string
           status: string
@@ -1157,6 +1332,7 @@ export type Database = {
           registration_opens_at?: string | null
           rules_md?: string | null
           scoring_mode?: string
+          sequence_no?: number | null
           slug: string
           starts_at: string
           status?: string
@@ -1179,6 +1355,7 @@ export type Database = {
           registration_opens_at?: string | null
           rules_md?: string | null
           scoring_mode?: string
+          sequence_no?: number | null
           slug?: string
           starts_at?: string
           status?: string
@@ -1263,6 +1440,90 @@ export type Database = {
         }
         Relationships: []
       }
+      featured_content: {
+        Row: {
+          ends_at: string | null
+          slot: string
+          starts_at: string | null
+          target_id: string
+          target_type: string
+          updated_at: string
+          updated_by: string | null
+          weight: number
+        }
+        Insert: {
+          ends_at?: string | null
+          slot: string
+          starts_at?: string | null
+          target_id: string
+          target_type: string
+          updated_at?: string
+          updated_by?: string | null
+          weight?: number
+        }
+        Update: {
+          ends_at?: string | null
+          slot?: string
+          starts_at?: string | null
+          target_id?: string
+          target_type?: string
+          updated_at?: string
+          updated_by?: string | null
+          weight?: number
+        }
+        Relationships: []
+      }
+      gamification_rule_history: {
+        Row: {
+          changed_at: string
+          changed_by: string | null
+          id: string
+          new_value: Json
+          note: string | null
+          old_value: Json | null
+          rule_key: string
+        }
+        Insert: {
+          changed_at?: string
+          changed_by?: string | null
+          id?: string
+          new_value: Json
+          note?: string | null
+          old_value?: Json | null
+          rule_key: string
+        }
+        Update: {
+          changed_at?: string
+          changed_by?: string | null
+          id?: string
+          new_value?: Json
+          note?: string | null
+          old_value?: Json | null
+          rule_key?: string
+        }
+        Relationships: []
+      }
+      library_hidden_items: {
+        Row: {
+          category: string
+          hidden_at: string
+          hidden_by: string | null
+          item_id: string
+        }
+        Insert: {
+          category: string
+          hidden_at?: string
+          hidden_by?: string | null
+          item_id: string
+        }
+        Update: {
+          category?: string
+          hidden_at?: string
+          hidden_by?: string | null
+          item_id?: string
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           created_at: string
@@ -1293,6 +1554,27 @@ export type Database = {
           title?: string
           type?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      platform_settings: {
+        Row: {
+          key: string
+          updated_at: string
+          updated_by: string | null
+          value: Json
+        }
+        Insert: {
+          key: string
+          updated_at?: string
+          updated_by?: string | null
+          value?: Json
+        }
+        Update: {
+          key?: string
+          updated_at?: string
+          updated_by?: string | null
+          value?: Json
         }
         Relationships: []
       }
@@ -1457,6 +1739,33 @@ export type Database = {
         }
         Relationships: []
       }
+      roadmap_overrides: {
+        Row: {
+          is_featured: boolean
+          is_published: boolean
+          roadmap_id: string
+          sort_order: number
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          is_featured?: boolean
+          is_published?: boolean
+          roadmap_id: string
+          sort_order?: number
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          is_featured?: boolean
+          is_published?: boolean
+          roadmap_id?: string
+          sort_order?: number
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       shared_folders: {
         Row: {
           allow_copy: boolean
@@ -1528,6 +1837,45 @@ export type Database = {
           target_questions?: number
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      support_messages: {
+        Row: {
+          body: string
+          created_at: string
+          email: string
+          id: string
+          replied_at: string | null
+          replied_by: string | null
+          reply_body: string | null
+          status: string
+          subject: string
+          user_id: string | null
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          email: string
+          id?: string
+          replied_at?: string | null
+          replied_by?: string | null
+          reply_body?: string | null
+          status?: string
+          subject: string
+          user_id?: string | null
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          email?: string
+          id?: string
+          replied_at?: string | null
+          replied_by?: string | null
+          reply_body?: string | null
+          status?: string
+          subject?: string
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -1780,6 +2128,7 @@ export type Database = {
           branch: string | null
           codechef_url: string | null
           codeforces_url: string | null
+          coding_leaderboard_hidden: boolean
           college_name: string | null
           company_name: string | null
           course_name: string | null
@@ -1796,7 +2145,9 @@ export type Database = {
           instagram_url: string | null
           interested_features: string[] | null
           interests: string[] | null
+          is_suspended: boolean
           last_xp_reset_at: string | null
+          leaderboard_hidden: boolean
           leetcode_url: string | null
           linkedin_url: string | null
           location: string | null
@@ -1815,6 +2166,8 @@ export type Database = {
           srs_intervals: number[] | null
           srs_mastery_threshold: number | null
           study_year: Database["public"]["Enums"]["study_year"] | null
+          suspended_at: string | null
+          suspended_reason: string | null
           target_goal: string | null
           total_xp: number | null
           twitter_url: string | null
@@ -1832,6 +2185,7 @@ export type Database = {
           branch?: string | null
           codechef_url?: string | null
           codeforces_url?: string | null
+          coding_leaderboard_hidden?: boolean
           college_name?: string | null
           company_name?: string | null
           course_name?: string | null
@@ -1848,7 +2202,9 @@ export type Database = {
           instagram_url?: string | null
           interested_features?: string[] | null
           interests?: string[] | null
+          is_suspended?: boolean
           last_xp_reset_at?: string | null
+          leaderboard_hidden?: boolean
           leetcode_url?: string | null
           linkedin_url?: string | null
           location?: string | null
@@ -1867,6 +2223,8 @@ export type Database = {
           srs_intervals?: number[] | null
           srs_mastery_threshold?: number | null
           study_year?: Database["public"]["Enums"]["study_year"] | null
+          suspended_at?: string | null
+          suspended_reason?: string | null
           target_goal?: string | null
           total_xp?: number | null
           twitter_url?: string | null
@@ -1884,6 +2242,7 @@ export type Database = {
           branch?: string | null
           codechef_url?: string | null
           codeforces_url?: string | null
+          coding_leaderboard_hidden?: boolean
           college_name?: string | null
           company_name?: string | null
           course_name?: string | null
@@ -1900,7 +2259,9 @@ export type Database = {
           instagram_url?: string | null
           interested_features?: string[] | null
           interests?: string[] | null
+          is_suspended?: boolean
           last_xp_reset_at?: string | null
+          leaderboard_hidden?: boolean
           leetcode_url?: string | null
           linkedin_url?: string | null
           location?: string | null
@@ -1919,6 +2280,8 @@ export type Database = {
           srs_intervals?: number[] | null
           srs_mastery_threshold?: number | null
           study_year?: Database["public"]["Enums"]["study_year"] | null
+          suspended_at?: string | null
+          suspended_reason?: string | null
           target_goal?: string | null
           total_xp?: number | null
           twitter_url?: string | null
@@ -2072,8 +2435,164 @@ export type Database = {
       }
     }
     Functions: {
+      admin_achievement_stats: {
+        Args: never
+        Returns: {
+          achievement_id: string
+          earned_count: number
+          last_earned: string
+        }[]
+      }
+      admin_adjust_xp: {
+        Args: { _amount: number; _reason: string; _user_id: string }
+        Returns: undefined
+      }
+      admin_broadcast_notification: {
+        Args: {
+          _audience: Json
+          _data?: Json
+          _message: string
+          _title: string
+        }
+        Returns: number
+      }
+      admin_dashboard_kpis: { Args: never; Returns: Json }
+      admin_delete_ai_content: { Args: { _id: string }; Returns: undefined }
+      admin_gamification_history: {
+        Args: { _key?: string; _limit?: number }
+        Returns: {
+          actor_name: string
+          changed_at: string
+          changed_by: string
+          id: string
+          new_value: Json
+          note: string
+          old_value: Json
+          rule_key: string
+        }[]
+      }
       admin_get_full_problem: { Args: { _slug: string }; Returns: Json }
+      admin_get_gamification_rules: { Args: never; Returns: Json }
+      admin_grant_achievement: {
+        Args: { _achievement_id: string; _user_id: string }
+        Returns: undefined
+      }
+      admin_grant_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: undefined
+      }
+      admin_leaderboard_top: {
+        Args: { _limit?: number; _window?: string }
+        Returns: {
+          avatar_url: string
+          current_level: number
+          full_name: string
+          leaderboard_hidden: boolean
+          total_xp: number
+          user_id: string
+          username: string
+          xp_this_week: number
+        }[]
+      }
+      admin_list_users: {
+        Args: { _limit?: number; _offset?: number; _search?: string }
+        Returns: {
+          avatar_url: string
+          current_level: number
+          email: string
+          full_name: string
+          is_suspended: boolean
+          joined_at: string
+          last_active_at: string
+          roles: string[]
+          total_xp: number
+          user_id: string
+          username: string
+        }[]
+      }
+      admin_recent_auth_events: {
+        Args: { _limit?: number }
+        Returns: {
+          action: string
+          created_at: string
+          id: string
+          ip_address: string
+          payload: Json
+        }[]
+      }
+      admin_recompute_achievements: {
+        Args: { _user_id: string }
+        Returns: number
+      }
+      admin_resolve_report: {
+        Args: { _id: string; _new_status: string }
+        Returns: undefined
+      }
+      admin_revoke_achievement: {
+        Args: { _achievement_id: string; _user_id: string }
+        Returns: undefined
+      }
+      admin_revoke_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: undefined
+      }
       admin_save_problem: { Args: { payload: Json }; Returns: Json }
+      admin_schedule_daily_challenge: {
+        Args: { _date: string; _slug: string }
+        Returns: undefined
+      }
+      admin_search_users: {
+        Args: { _limit?: number; _q: string }
+        Returns: {
+          avatar_url: string
+          full_name: string
+          user_id: string
+          username: string
+        }[]
+      }
+      admin_set_ai_content_visibility: {
+        Args: { _id: string; _is_public: boolean }
+        Returns: undefined
+      }
+      admin_set_gamification_rule: {
+        Args: { _key: string; _note?: string; _value: Json }
+        Returns: undefined
+      }
+      admin_set_leaderboard_hidden: {
+        Args: { _hidden: boolean; _user_id: string }
+        Returns: undefined
+      }
+      admin_set_setting: {
+        Args: { _key: string; _value: Json }
+        Returns: undefined
+      }
+      admin_suspend_user: {
+        Args: { _reason: string; _user_id: string }
+        Returns: undefined
+      }
+      admin_trend_signups: {
+        Args: { _days?: number }
+        Returns: {
+          day: string
+          signups: number
+        }[]
+      }
+      admin_trend_submissions: {
+        Args: { _days?: number }
+        Returns: {
+          accepted: number
+          day: string
+          total: number
+        }[]
+      }
+      admin_unsuspend_user: { Args: { _user_id: string }; Returns: undefined }
+      admin_user_detail: { Args: { _user_id: string }; Returns: Json }
       audit_daily_completions: { Args: never; Returns: Json }
       audit_daily_completions_all: { Args: never; Returns: Json }
       blog_increment_view: {
@@ -2166,6 +2685,12 @@ export type Database = {
       app_role: "admin" | "owner" | "moderator" | "user"
       blog_comment_status: "visible" | "hidden" | "reported" | "deleted"
       blog_post_status: "draft" | "scheduled" | "published" | "archived"
+      contest_kind:
+        | "monthly_long"
+        | "weekly_saturday"
+        | "weekly_sunday"
+        | "biweekly"
+        | "other"
       study_year:
         | "1st Year"
         | "2nd Year"
@@ -2304,6 +2829,13 @@ export const Constants = {
       app_role: ["admin", "owner", "moderator", "user"],
       blog_comment_status: ["visible", "hidden", "reported", "deleted"],
       blog_post_status: ["draft", "scheduled", "published", "archived"],
+      contest_kind: [
+        "monthly_long",
+        "weekly_saturday",
+        "weekly_sunday",
+        "biweekly",
+        "other",
+      ],
       study_year: [
         "1st Year",
         "2nd Year",

@@ -46,6 +46,33 @@ export type Database = {
           },
         ]
       }
+      code_drafts: {
+        Row: {
+          id: string
+          language: string
+          problem_slug: string
+          source_code: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          language: string
+          problem_slug: string
+          source_code?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          language?: string
+          problem_slug?: string
+          source_code?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       code_runs: {
         Row: {
           compile_output: string | null
@@ -97,6 +124,151 @@ export type Database = {
           stdout?: string | null
           time_ms?: number | null
           user_id?: string
+        }
+        Relationships: []
+      }
+      code_submissions: {
+        Row: {
+          created_at: string
+          failing_case: Json | null
+          id: string
+          is_submission: boolean
+          language: string
+          language_id: number
+          memory_kb: number | null
+          passed_tests: number
+          problem_slug: string
+          runtime_ms: number | null
+          source_code: string
+          stderr: string | null
+          total_tests: number
+          user_id: string
+          verdict: string
+        }
+        Insert: {
+          created_at?: string
+          failing_case?: Json | null
+          id?: string
+          is_submission?: boolean
+          language: string
+          language_id: number
+          memory_kb?: number | null
+          passed_tests?: number
+          problem_slug: string
+          runtime_ms?: number | null
+          source_code: string
+          stderr?: string | null
+          total_tests?: number
+          user_id: string
+          verdict: string
+        }
+        Update: {
+          created_at?: string
+          failing_case?: Json | null
+          id?: string
+          is_submission?: boolean
+          language?: string
+          language_id?: number
+          memory_kb?: number | null
+          passed_tests?: number
+          problem_slug?: string
+          runtime_ms?: number | null
+          source_code?: string
+          stderr?: string | null
+          total_tests?: number
+          user_id?: string
+          verdict?: string
+        }
+        Relationships: []
+      }
+      coding_problem_discussion_likes: {
+        Row: {
+          created_at: string
+          discussion_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          discussion_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          discussion_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coding_problem_discussion_likes_discussion_id_fkey"
+            columns: ["discussion_id"]
+            isOneToOne: false
+            referencedRelation: "coding_problem_discussions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      coding_problem_discussions: {
+        Row: {
+          content: string
+          created_at: string
+          deleted_at: string | null
+          id: string
+          parent_id: string | null
+          problem_slug: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          parent_id?: string | null
+          problem_slug: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          parent_id?: string | null
+          problem_slug?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coding_problem_discussions_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "coding_problem_discussions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      coding_problems_meta: {
+        Row: {
+          acceptance_rate: number
+          problem_slug: string
+          total_accepted: number
+          total_submissions: number
+          updated_at: string
+        }
+        Insert: {
+          acceptance_rate?: number
+          problem_slug: string
+          total_accepted?: number
+          total_submissions?: number
+          updated_at?: string
+        }
+        Update: {
+          acceptance_rate?: number
+          problem_slug?: string
+          total_accepted?: number
+          total_submissions?: number
+          updated_at?: string
         }
         Relationships: []
       }
@@ -464,6 +636,36 @@ export type Database = {
         }
         Relationships: []
       }
+      user_activity_log: {
+        Row: {
+          activity_type: string
+          created_at: string | null
+          description: string | null
+          id: string
+          metadata: Json | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          activity_type: string
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          metadata?: Json | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          activity_type?: string
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          metadata?: Json | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_company_progress: {
         Row: {
           company_id: string
@@ -814,6 +1016,30 @@ export type Database = {
         }
         Relationships: []
       }
+      user_sheet_prefs: {
+        Row: {
+          created_at: string
+          prefs: Json
+          sheet_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          prefs?: Json
+          sheet_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          prefs?: Json
+          sheet_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_topic_progress: {
         Row: {
           completed: boolean
@@ -928,6 +1154,41 @@ export type Database = {
           user_id: string
           username: string
           weekly_completions: number
+        }[]
+      }
+      get_fundamentals_leaderboard: {
+        Args: { p_limit?: number; p_since?: string; p_type?: string }
+        Returns: {
+          avatar_url: string
+          avg_accuracy: number
+          best_accuracy: number
+          full_name: string
+          total_questions: number
+          total_quizzes: number
+          total_score: number
+          user_id: string
+        }[]
+      }
+      get_quiz_leaderboard: {
+        Args: {
+          p_difficulty?: string
+          p_limit?: number
+          p_order_by_total?: boolean
+          p_quiz_type: string
+          p_since?: string
+        }
+        Returns: {
+          accuracy: number
+          avatar_url: string
+          avg_time_seconds: number
+          completed_at: string
+          full_name: string
+          id: string
+          quiz_type: string
+          score: number
+          total_questions: number
+          total_time_seconds: number
+          user_id: string
         }[]
       }
       get_submission_percentiles: {

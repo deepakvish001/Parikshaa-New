@@ -27,7 +27,7 @@ export const useThemeSync = () => {
     try {
       await supabase
         .from("user_profiles_extended")
-        .update({ theme_preference: newTheme } as Record<string, unknown>)
+        .update({ theme_preference: newTheme } as never)
         .eq("user_id", user.id);
     } catch (error) {
       console.error("Failed to sync theme preference:", error);

@@ -46,6 +46,60 @@ export type Database = {
           },
         ]
       }
+      code_runs: {
+        Row: {
+          compile_output: string | null
+          created_at: string
+          id: string
+          language: string
+          language_id: number
+          memory_kb: number | null
+          problem_slug: string
+          source_code: string
+          status: string | null
+          status_id: number | null
+          stderr: string | null
+          stdin: string
+          stdout: string | null
+          time_ms: number | null
+          user_id: string
+        }
+        Insert: {
+          compile_output?: string | null
+          created_at?: string
+          id?: string
+          language: string
+          language_id: number
+          memory_kb?: number | null
+          problem_slug: string
+          source_code?: string
+          status?: string | null
+          status_id?: number | null
+          stderr?: string | null
+          stdin?: string
+          stdout?: string | null
+          time_ms?: number | null
+          user_id: string
+        }
+        Update: {
+          compile_output?: string | null
+          created_at?: string
+          id?: string
+          language?: string
+          language_id?: number
+          memory_kb?: number | null
+          problem_slug?: string
+          source_code?: string
+          status?: string | null
+          status_id?: number | null
+          stderr?: string | null
+          stdin?: string
+          stdout?: string | null
+          time_ms?: number | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       conversations: {
         Row: {
           created_at: string
@@ -65,6 +119,57 @@ export type Database = {
           created_at?: string
           id?: string
           title?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      daily_challenge_completions: {
+        Row: {
+          challenge_date: string
+          completed_at: string
+          created_at: string
+          id: string
+          problem_slug: string
+          user_id: string
+        }
+        Insert: {
+          challenge_date: string
+          completed_at?: string
+          created_at?: string
+          id?: string
+          problem_slug: string
+          user_id: string
+        }
+        Update: {
+          challenge_date?: string
+          completed_at?: string
+          created_at?: string
+          id?: string
+          problem_slug?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      daily_challenge_leaderboard_optin: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          opted_in: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          opted_in?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          opted_in?: boolean
           updated_at?: string
           user_id?: string
         }
@@ -514,6 +619,42 @@ export type Database = {
         }
         Relationships: []
       }
+      user_problem_solutions: {
+        Row: {
+          code: Json
+          code_updated_at: Json
+          created_at: string
+          id: string
+          notes: string
+          notes_updated_at: string | null
+          problem_slug: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          code?: Json
+          code_updated_at?: Json
+          created_at?: string
+          id?: string
+          notes?: string
+          notes_updated_at?: string | null
+          problem_slug: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          code?: Json
+          code_updated_at?: Json
+          created_at?: string
+          id?: string
+          notes?: string
+          notes_updated_at?: string | null
+          problem_slug?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_profiles_extended: {
         Row: {
           aspirations: string[] | null
@@ -768,11 +909,36 @@ export type Database = {
       }
     }
     Functions: {
+      audit_daily_completions: { Args: never; Returns: Json }
+      audit_daily_completions_all: { Args: never; Returns: Json }
       calculate_profile_completion: {
         Args: {
           profile_row: Database["public"]["Tables"]["user_profiles_extended"]["Row"]
         }
         Returns: number
+      }
+      get_daily_challenge_leaderboard: {
+        Args: { _limit?: number }
+        Returns: {
+          avatar_url: string
+          current_streak: number
+          display_name: string
+          last_completed_at: string
+          total_completions: number
+          user_id: string
+          username: string
+          weekly_completions: number
+        }[]
+      }
+      get_submission_percentiles: {
+        Args: { _submission_id: string }
+        Returns: {
+          memory_beats: number
+          memory_kb: number
+          runtime_beats: number
+          runtime_ms: number
+          total_users: number
+        }[]
       }
     }
     Enums: {

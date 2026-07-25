@@ -2057,6 +2057,72 @@ export type Database = {
         }
         Relationships: []
       }
+      demo_requests: {
+        Row: {
+          candidates: string
+          created_at: string
+          email: string
+          id: string
+          landing_page: string | null
+          name: string
+          notes: string | null
+          org: string
+          proctoring: string[]
+          referrer: string | null
+          reporting: string[]
+          status: string
+          use_case: string
+          user_agent: string | null
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          utm_term: string | null
+        }
+        Insert: {
+          candidates: string
+          created_at?: string
+          email: string
+          id?: string
+          landing_page?: string | null
+          name: string
+          notes?: string | null
+          org: string
+          proctoring?: string[]
+          referrer?: string | null
+          reporting?: string[]
+          status?: string
+          use_case: string
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Update: {
+          candidates?: string
+          created_at?: string
+          email?: string
+          id?: string
+          landing_page?: string | null
+          name?: string
+          notes?: string | null
+          org?: string
+          proctoring?: string[]
+          referrer?: string | null
+          reporting?: string[]
+          status?: string
+          use_case?: string
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Relationships: []
+      }
       experience_reports: {
         Row: {
           created_at: string
@@ -2265,6 +2331,123 @@ export type Database = {
           user_id?: string
           views?: number
           year?: number
+        }
+        Relationships: []
+      }
+      job_openings: {
+        Row: {
+          apply_url: string
+          company: string
+          company_logo_url: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          expires_at: string | null
+          id: string
+          is_active: boolean
+          is_remote: boolean
+          location: string | null
+          posted_at: string
+          role_type: string
+          salary: string | null
+          source: string
+          source_id: string | null
+          tags: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          apply_url: string
+          company: string
+          company_logo_url?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          is_remote?: boolean
+          location?: string | null
+          posted_at?: string
+          role_type?: string
+          salary?: string | null
+          source?: string
+          source_id?: string | null
+          tags?: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          apply_url?: string
+          company?: string
+          company_logo_url?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          is_remote?: boolean
+          location?: string | null
+          posted_at?: string
+          role_type?: string
+          salary?: string | null
+          source?: string
+          source_id?: string | null
+          tags?: string[]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      lead_events: {
+        Row: {
+          created_at: string
+          event_type: string
+          id: string
+          metadata: Json
+          page: string | null
+          referrer: string | null
+          session_id: string | null
+          user_agent: string | null
+          user_id: string | null
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          utm_term: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_type: string
+          id?: string
+          metadata?: Json
+          page?: string | null
+          referrer?: string | null
+          session_id?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_type?: string
+          id?: string
+          metadata?: Json
+          page?: string | null
+          referrer?: string | null
+          session_id?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
         }
         Relationships: []
       }
@@ -3213,6 +3396,13 @@ export type Database = {
           marketing_emails_enabled: boolean | null
           mobile_number: string | null
           new_feature_alerts_enabled: boolean | null
+          notify_achievement_unlock: boolean | null
+          notify_emails: string[] | null
+          notify_goal_milestone: boolean | null
+          notify_new_follower: boolean | null
+          notify_rare_achievement: boolean | null
+          notify_streak_reminder: boolean | null
+          notify_velocity_reminder: boolean | null
           occupation: string | null
           onboarding_completed: boolean | null
           other_description: string | null
@@ -3270,6 +3460,13 @@ export type Database = {
           marketing_emails_enabled?: boolean | null
           mobile_number?: string | null
           new_feature_alerts_enabled?: boolean | null
+          notify_achievement_unlock?: boolean | null
+          notify_emails?: string[] | null
+          notify_goal_milestone?: boolean | null
+          notify_new_follower?: boolean | null
+          notify_rare_achievement?: boolean | null
+          notify_streak_reminder?: boolean | null
+          notify_velocity_reminder?: boolean | null
           occupation?: string | null
           onboarding_completed?: boolean | null
           other_description?: string | null
@@ -3327,6 +3524,13 @@ export type Database = {
           marketing_emails_enabled?: boolean | null
           mobile_number?: string | null
           new_feature_alerts_enabled?: boolean | null
+          notify_achievement_unlock?: boolean | null
+          notify_emails?: string[] | null
+          notify_goal_milestone?: boolean | null
+          notify_new_follower?: boolean | null
+          notify_rare_achievement?: boolean | null
+          notify_streak_reminder?: boolean | null
+          notify_velocity_reminder?: boolean | null
           occupation?: string | null
           onboarding_completed?: boolean | null
           other_description?: string | null
@@ -3532,8 +3736,11 @@ export type Database = {
           created_at: string
           id: string
           is_revision: boolean
+          last_revised_at: string | null
           note: string | null
           review_count: number
+          revision_count: number
+          revision_history: Json
           sheet_id: string
           topic_id: string
           updated_at: string
@@ -3545,8 +3752,11 @@ export type Database = {
           created_at?: string
           id?: string
           is_revision?: boolean
+          last_revised_at?: string | null
           note?: string | null
           review_count?: number
+          revision_count?: number
+          revision_history?: Json
           sheet_id: string
           topic_id: string
           updated_at?: string
@@ -3558,8 +3768,11 @@ export type Database = {
           created_at?: string
           id?: string
           is_revision?: boolean
+          last_revised_at?: string | null
           note?: string | null
           review_count?: number
+          revision_count?: number
+          revision_history?: Json
           sheet_id?: string
           topic_id?: string
           updated_at?: string
@@ -3921,6 +4134,15 @@ export type Database = {
       audit_daily_completions: { Args: never; Returns: Json }
       audit_daily_completions_all: { Args: never; Returns: Json }
       award_earned_achievements: { Args: never; Returns: string[] }
+      award_xp: {
+        Args: {
+          _amount: number
+          _description?: string
+          _source: string
+          _user_id: string
+        }
+        Returns: Json
+      }
       blog_increment_view: {
         Args: { _post_id: string; _session_id: string }
         Returns: undefined

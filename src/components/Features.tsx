@@ -1,0 +1,219 @@
+import { 
+  Code2, 
+  BarChart3, 
+  Flame, 
+  FileSpreadsheet,
+  
+  Brain,
+  Trophy,
+  FileText,
+  Sparkles,
+  Layers,
+  Zap,
+  ArrowRight,
+  Lock
+} from "lucide-react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import ScrollReveal from "./ScrollReveal";
+
+const features = [
+  {
+    icon: FileSpreadsheet,
+    title: "Curated DSA Sheets",
+    description: "500+ problems from Striver's SDE Sheet, Love Babbar, NeetCode 150 & more — all with progress tracking, notes, and revision markers.",
+    gradient: "from-amber-500 to-amber-500",
+    bgGlow: "bg-amber-500/20",
+    size: "large" as const,
+    active: true,
+  },
+  {
+    icon: BarChart3,
+    title: "Progress Dashboard",
+    description: "Visualize your growth with a GitHub-style heatmap, daily/weekly goals, streaks, and detailed analytics to keep you on track.",
+    gradient: "from-emerald-500 to-amber-500",
+    bgGlow: "bg-emerald-500/20",
+    size: "large" as const,
+    active: true,
+  },
+  {
+    icon: Flame,
+    title: "Streak System",
+    description: "Build consistency with daily streaks and stay motivated",
+    gradient: "from-amber-500 to-orange-500",
+    bgGlow: "bg-amber-500/20",
+    size: "medium" as const,
+    active: true,
+  },
+  {
+    icon: Trophy,
+    title: "Profile & XP",
+    description: "Showcase your journey with a public profile and XP levels",
+    gradient: "from-yellow-500 to-amber-500",
+    bgGlow: "bg-yellow-500/20",
+    size: "medium" as const,
+    active: true,
+  },
+  {
+    icon: Brain,
+    title: "AI Assistant",
+    description: "Get instant help with coding problems and career guidance",
+    gradient: "from-orange-500 to-orange-500",
+    bgGlow: "bg-orange-500/20",
+    size: "medium" as const,
+    active: false,
+  },
+  {
+    icon: Code2,
+    title: "Core CS Subjects",
+    description: "Master OS, DBMS, CN & OOPs",
+    gradient: "from-orange-500 to-orange-500",
+    bgGlow: "bg-orange-500/20",
+    size: "small" as const,
+    active: false,
+  },
+  {
+    icon: FileText,
+    title: "Resume Builder",
+    description: "ATS-friendly templates & AI analysis",
+    gradient: "from-rose-500 to-orange-500",
+    bgGlow: "bg-rose-500/20",
+    size: "small" as const,
+    active: false,
+  },
+  {
+    icon: Sparkles,
+    title: "Interview Prep",
+    description: "Company-wise questions & tips",
+    gradient: "from-amber-500 to-amber-500",
+    bgGlow: "bg-amber-500/20",
+    size: "small" as const,
+    active: false,
+  },
+];
+
+const FeatureCard = ({ feature, index }: { feature: typeof features[0]; index: number }) => {
+  const isLarge = feature.size === "large";
+  const isMedium = feature.size === "medium";
+  
+  return (
+    <ScrollReveal delay={index * 0.05}>
+      <motion.div 
+        className={`group relative h-full rounded-2xl bg-card/50 border border-border/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 overflow-hidden ${
+          isLarge ? "p-6 sm:p-8" : isMedium ? "p-5" : "p-4"
+        } ${!feature.active ? "opacity-60" : ""}`}
+        whileHover={{ y: -4, scale: 1.01 }}
+        transition={{ type: "spring", stiffness: 400 }}
+      >
+        <div className={`absolute inset-0 ${feature.bgGlow} opacity-0 group-hover:opacity-30 blur-2xl transition-opacity duration-500`} />
+        
+        <div className="relative">
+          <div className="flex items-start justify-between mb-4">
+            <div className={`rounded-xl bg-gradient-to-br ${feature.gradient} shadow-lg inline-flex items-center justify-center ${
+              isLarge ? "w-14 h-14 p-3" : isMedium ? "w-12 h-12 p-2.5" : "w-10 h-10 p-2"
+            }`}>
+              <feature.icon className="w-full h-full text-white" />
+            </div>
+            {!feature.active && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-muted border border-border text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
+                <Lock className="w-3 h-3" />
+                Coming Soon
+              </span>
+            )}
+          </div>
+          
+          <h3 className={`font-bold text-foreground mb-2 group-hover:text-primary transition-colors ${
+            isLarge ? "text-xl sm:text-2xl" : isMedium ? "text-lg" : "text-base"
+          }`}>
+            {feature.title}
+          </h3>
+          <p className={`text-muted-foreground leading-relaxed ${
+            isLarge ? "text-base" : "text-sm"
+          }`}>
+            {feature.description}
+          </p>
+        </div>
+      </motion.div>
+    </ScrollReveal>
+  );
+};
+
+const Features = () => {
+  const largeFeatures = features.filter(f => f.size === "large");
+  const mediumFeatures = features.filter(f => f.size === "medium");
+  const smallFeatures = features.filter(f => f.size === "small");
+
+  return (
+    <section className="py-24 bg-background relative overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[150px]" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-orange-500/5 rounded-full blur-[120px]" />
+      </div>
+
+      <div className="section-container relative z-10">
+        <ScrollReveal>
+          <div className="text-center mb-16">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
+            >
+              <Layers className="w-4 h-4 text-primary" />
+              <span className="text-sm font-semibold text-primary">All-in-One Platform</span>
+            </motion.div>
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-foreground mb-4">
+              Everything You Need to
+              <span className="block bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent">
+                Crack Tech Interviews
+              </span>
+            </h2>
+            <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
+              Start with curated DSA sheets and progress tracking — more features launching soon.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {largeFeatures.map((feature, index) => (
+              <FeatureCard key={feature.title} feature={feature} index={index} />
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {mediumFeatures.map((feature, index) => (
+              <FeatureCard key={feature.title} feature={feature} index={index + 2} />
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {smallFeatures.map((feature, index) => (
+              <FeatureCard key={feature.title} feature={feature} index={index + 6} />
+            ))}
+          </div>
+        </div>
+
+        <ScrollReveal delay={0.3}>
+          <motion.div 
+            className="mt-16 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <Link 
+              to="/signup"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-primary/10 to-orange-500/10 border border-primary/30 hover:border-primary/50 transition-all duration-300 group"
+            >
+              <Zap className="w-5 h-5 text-primary" />
+              <span className="text-foreground font-semibold">Start exploring all features for free</span>
+              <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </motion.div>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+};
+
+export default Features;

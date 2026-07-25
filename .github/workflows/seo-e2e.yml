@@ -1,0 +1,85 @@
+name: SEO E2E
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  playwright-seo:
+    name: Playwright SEO spec
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      # Cache Bun's global dependency store keyed on the lockfile.
+      # bun install is still invoked so node_modules/ is materialized,
+      # but network fetches are skipped when the cache hits.
+      - name: Cache Bun dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.bun/install/cache
+            node_modules
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock', 'bun.lockb', 'package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # Cache the Playwright browser bundle so we skip the ~150 MB Chromium
+      # download on every PR. Key on the installed Playwright version.
+      - name: Resolve Playwright version
+        id: pw
+        run: |
+          VERSION=$(node -p "require('@playwright/test/package.json').version")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Playwright browsers
+        id: pw-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ steps.pw.outputs.version }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      - name: Install Playwright browsers
+        # On a cache hit we still need the OS deps; skip the browser download itself.
+        run: |
+          if [ "${{ steps.pw-cache.outputs.cache-hit }}" = "true" ]; then
+            bunx playwright install-deps chromium
+          else
+            bunx playwright install --with-deps chromium
+          fi
+
+      # Rebuild the sitemap with the latest routes + jobs so the sitemap
+      # assertions run against the same artifact production ships.
+      - name: Generate sitemap (jobs + categories)
+        run: |
+          mkdir -p dist
+          cp public/sitemap.xml dist/sitemap.xml
+          node scripts/generate-jobs-sitemap.mjs || true
+          cp dist/sitemap.xml public/sitemap.xml
+
+      # Run only the SEO spec — fail the build on any canonical / og:url /
+      # redirect / JSON-LD / sitemap regression.
+      - name: Run Playwright SEO spec
+        run: bunx playwright test e2e/jobs-seo.spec.ts --reporter=list
+        env:
+          CI: "true"
+
+      - name: Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report
+          retention-days: 7

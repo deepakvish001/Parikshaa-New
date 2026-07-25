@@ -1078,6 +1078,7 @@ export type Database = {
       coding_problems_meta: {
         Row: {
           acceptance_rate: number
+          difficulty: string
           problem_slug: string
           total_accepted: number
           total_submissions: number
@@ -1085,6 +1086,7 @@ export type Database = {
         }
         Insert: {
           acceptance_rate?: number
+          difficulty?: string
           problem_slug: string
           total_accepted?: number
           total_submissions?: number
@@ -1092,6 +1094,7 @@ export type Database = {
         }
         Update: {
           acceptance_rate?: number
+          difficulty?: string
           problem_slug?: string
           total_accepted?: number
           total_submissions?: number
@@ -1557,6 +1560,48 @@ export type Database = {
         }
         Relationships: []
       }
+      outreach_favorites: {
+        Row: {
+          created_at: string | null
+          id: string
+          template_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          template_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          template_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      outreach_usage: {
+        Row: {
+          copied_at: string | null
+          id: string
+          template_id: string
+          user_id: string
+        }
+        Insert: {
+          copied_at?: string | null
+          id?: string
+          template_id: string
+          user_id: string
+        }
+        Update: {
+          copied_at?: string | null
+          id?: string
+          template_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       platform_settings: {
         Row: {
           key: string
@@ -1735,6 +1780,54 @@ export type Database = {
           question_title?: string
           review_count?: number
           updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      resume_downloads: {
+        Row: {
+          created_at: string
+          downloaded_at: string
+          id: string
+          template_id: number
+          template_name: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          downloaded_at?: string
+          id?: string
+          template_id: number
+          template_name: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          downloaded_at?: string
+          id?: string
+          template_id?: number
+          template_name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      resume_favorites: {
+        Row: {
+          created_at: string
+          id: string
+          template_id: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          template_id: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          template_id?: number
           user_id?: string
         }
         Relationships: []
@@ -2421,6 +2514,93 @@ export type Database = {
         }
         Relationships: []
       }
+      public_user_profiles: {
+        Row: {
+          aspirations: string[] | null
+          bio: string | null
+          codechef_url: string | null
+          codeforces_url: string | null
+          created_at: string | null
+          current_level: number | null
+          github_url: string | null
+          goals: string[] | null
+          hackerrank_url: string | null
+          instagram_url: string | null
+          interests: string[] | null
+          leetcode_url: string | null
+          linkedin_url: string | null
+          location: string | null
+          occupation: string | null
+          profile_completion_percentage: number | null
+          skills: string[] | null
+          total_xp: number | null
+          twitter_url: string | null
+          user_id: string | null
+          username: string | null
+          website: string | null
+          xp_this_week: number | null
+        }
+        Insert: {
+          aspirations?: string[] | null
+          bio?: string | null
+          codechef_url?: string | null
+          codeforces_url?: string | null
+          created_at?: string | null
+          current_level?: number | null
+          github_url?: string | null
+          goals?: string[] | null
+          hackerrank_url?: string | null
+          instagram_url?: string | null
+          interests?: string[] | null
+          leetcode_url?: string | null
+          linkedin_url?: string | null
+          location?: string | null
+          occupation?: string | null
+          profile_completion_percentage?: number | null
+          skills?: string[] | null
+          total_xp?: number | null
+          twitter_url?: string | null
+          user_id?: string | null
+          username?: string | null
+          website?: string | null
+          xp_this_week?: number | null
+        }
+        Update: {
+          aspirations?: string[] | null
+          bio?: string | null
+          codechef_url?: string | null
+          codeforces_url?: string | null
+          created_at?: string | null
+          current_level?: number | null
+          github_url?: string | null
+          goals?: string[] | null
+          hackerrank_url?: string | null
+          instagram_url?: string | null
+          interests?: string[] | null
+          leetcode_url?: string | null
+          linkedin_url?: string | null
+          location?: string | null
+          occupation?: string | null
+          profile_completion_percentage?: number | null
+          skills?: string[] | null
+          total_xp?: number | null
+          twitter_url?: string | null
+          user_id?: string | null
+          username?: string | null
+          website?: string | null
+          xp_this_week?: number | null
+        }
+        Relationships: []
+      }
+      roadmap_leaderboard_view: {
+        Row: {
+          completed_topics: number | null
+          last_completed_at: string | null
+          roadmaps_started: number | null
+          user_id: string | null
+        }
+        Relationships: []
+      }
       xp_leaderboard_view: {
         Row: {
           avatar_url: string | null
@@ -2605,6 +2785,36 @@ export type Database = {
           profile_row: Database["public"]["Tables"]["user_profiles_extended"]["Row"]
         }
         Returns: number
+      }
+      get_coding_leaderboard: {
+        Args: {
+          _limit?: number
+          _offset?: number
+          _search?: string
+          _window?: string
+        }
+        Returns: {
+          acceptance_rate: number
+          avatar_url: string
+          display_name: string
+          fastest_avg_runtime: number
+          last_accepted_at: string
+          problems_solved: number
+          rank: number
+          total_accepted: number
+          user_id: string
+          username: string
+          weighted_score: number
+        }[]
+      }
+      get_coding_leaderboard_stats: {
+        Args: never
+        Returns: {
+          total_accepted_today: number
+          total_accepted_week: number
+          total_participants: number
+          total_problems_solved: number
+        }[]
       }
       get_daily_challenge_leaderboard: {
         Args: { _limit?: number }

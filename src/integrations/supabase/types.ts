@@ -884,6 +884,33 @@ export type Database = {
           },
         ]
       }
+      coding_problem_mcq_attempts: {
+        Row: {
+          created_at: string
+          id: string
+          is_correct: boolean
+          problem_slug: string
+          selected_index: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_correct: boolean
+          problem_slug: string
+          selected_index: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_correct?: boolean
+          problem_slug?: string
+          selected_index?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
       coding_problem_reference_solutions: {
         Row: {
           code: string
@@ -1035,6 +1062,7 @@ export type Database = {
           examples: Json
           hints: string[]
           is_published: boolean
+          mcq: Json | null
           memory_limit_kb: number | null
           slug: string
           title: string
@@ -1051,6 +1079,7 @@ export type Database = {
           examples?: Json
           hints?: string[]
           is_published?: boolean
+          mcq?: Json | null
           memory_limit_kb?: number | null
           slug: string
           title: string
@@ -1067,6 +1096,7 @@ export type Database = {
           examples?: Json
           hints?: string[]
           is_published?: boolean
+          mcq?: Json | null
           memory_limit_kb?: number | null
           slug?: string
           title?: string
@@ -2302,6 +2332,33 @@ export type Database = {
         }
         Relationships: []
       }
+      problem_companies: {
+        Row: {
+          company_domain: string
+          company_name: string
+          created_at: string
+          frequency: number
+          id: string
+          problem_slug: string
+        }
+        Insert: {
+          company_domain: string
+          company_name: string
+          created_at?: string
+          frequency?: number
+          id?: string
+          problem_slug: string
+        }
+        Update: {
+          company_domain?: string
+          company_name?: string
+          created_at?: string
+          frequency?: number
+          id?: string
+          problem_slug?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -2325,6 +2382,36 @@ export type Database = {
           full_name?: string | null
           id?: string
           updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      push_subscriptions: {
+        Row: {
+          auth: string
+          created_at: string
+          endpoint: string
+          id: string
+          is_active: boolean
+          p256dh: string
+          user_id: string
+        }
+        Insert: {
+          auth: string
+          created_at?: string
+          endpoint: string
+          id?: string
+          is_active?: boolean
+          p256dh: string
+          user_id: string
+        }
+        Update: {
+          auth?: string
+          created_at?: string
+          endpoint?: string
+          id?: string
+          is_active?: boolean
+          p256dh?: string
           user_id?: string
         }
         Relationships: []
@@ -2854,6 +2941,102 @@ export type Database = {
           user_id?: string
           weekly_target?: number
           weekly_xp_target?: number | null
+        }
+        Relationships: []
+      }
+      user_platform_stats: {
+        Row: {
+          created_at: string
+          handle: string
+          id: string
+          last_synced_at: string
+          platform: string
+          rating: number | null
+          raw: Json
+          solved_easy: number
+          solved_hard: number
+          solved_medium: number
+          solved_total: number
+          sync_error: string | null
+          sync_status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          handle: string
+          id?: string
+          last_synced_at?: string
+          platform: string
+          rating?: number | null
+          raw?: Json
+          solved_easy?: number
+          solved_hard?: number
+          solved_medium?: number
+          solved_total?: number
+          sync_error?: string | null
+          sync_status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          handle?: string
+          id?: string
+          last_synced_at?: string
+          platform?: string
+          rating?: number | null
+          raw?: Json
+          solved_easy?: number
+          solved_hard?: number
+          solved_medium?: number
+          solved_total?: number
+          sync_error?: string | null
+          sync_status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_platform_sync_jobs: {
+        Row: {
+          created_at: string
+          enabled: boolean
+          handle: string
+          interval_hours: number
+          last_error: string | null
+          last_run_at: string | null
+          last_status: string | null
+          next_run_at: string
+          platform: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          enabled?: boolean
+          handle: string
+          interval_hours?: number
+          last_error?: string | null
+          last_run_at?: string | null
+          last_status?: string | null
+          next_run_at?: string
+          platform: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          enabled?: boolean
+          handle?: string
+          interval_hours?: number
+          last_error?: string | null
+          last_run_at?: string | null
+          last_status?: string | null
+          next_run_at?: string
+          platform?: string
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }

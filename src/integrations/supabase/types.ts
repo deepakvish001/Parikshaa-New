@@ -1491,9 +1491,14 @@ export type Database = {
           is_active: boolean
           last_heartbeat_at: string | null
           last_seen_at: string
+          risk_score: number
           session_token: string
+          side_camera_required: boolean
+          side_camera_status: string
           started_at: string
           stream_grace_until: string | null
+          terminated_at: string | null
+          terminated_reason: string | null
           user_agent: string | null
           user_id: string
         }
@@ -1508,9 +1513,14 @@ export type Database = {
           is_active?: boolean
           last_heartbeat_at?: string | null
           last_seen_at?: string
+          risk_score?: number
           session_token?: string
+          side_camera_required?: boolean
+          side_camera_status?: string
           started_at?: string
           stream_grace_until?: string | null
+          terminated_at?: string | null
+          terminated_reason?: string | null
           user_agent?: string | null
           user_id: string
         }
@@ -1525,9 +1535,14 @@ export type Database = {
           is_active?: boolean
           last_heartbeat_at?: string | null
           last_seen_at?: string
+          risk_score?: number
           session_token?: string
+          side_camera_required?: boolean
+          side_camera_status?: string
           started_at?: string
           stream_grace_until?: string | null
+          terminated_at?: string | null
+          terminated_reason?: string | null
           user_agent?: string | null
           user_id?: string
         }
@@ -1537,6 +1552,44 @@ export type Database = {
             columns: ["contest_id"]
             isOneToOne: false
             referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contest_side_camera_audit_logs: {
+        Row: {
+          created_at: string
+          detail: Json
+          event_type: string
+          id: string
+          session_id: string
+          severity: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          detail?: Json
+          event_type: string
+          id?: string
+          session_id: string
+          severity?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          detail?: Json
+          event_type?: string
+          id?: string
+          session_id?: string
+          severity?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contest_side_camera_audit_logs_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "contest_sessions"
             referencedColumns: ["id"]
           },
         ]
@@ -2550,6 +2603,57 @@ export type Database = {
         }
         Relationships: []
       }
+      resume_analyses: {
+        Row: {
+          ats_score: number | null
+          content_score: number | null
+          created_at: string | null
+          file_name: string
+          file_url: string
+          format_score: number | null
+          id: string
+          keyword_score: number | null
+          keywords_found: Json | null
+          overall_score: number | null
+          strengths: Json | null
+          suggestions: Json | null
+          summary: string | null
+          user_id: string
+        }
+        Insert: {
+          ats_score?: number | null
+          content_score?: number | null
+          created_at?: string | null
+          file_name: string
+          file_url: string
+          format_score?: number | null
+          id?: string
+          keyword_score?: number | null
+          keywords_found?: Json | null
+          overall_score?: number | null
+          strengths?: Json | null
+          suggestions?: Json | null
+          summary?: string | null
+          user_id: string
+        }
+        Update: {
+          ats_score?: number | null
+          content_score?: number | null
+          created_at?: string | null
+          file_name?: string
+          file_url?: string
+          format_score?: number | null
+          id?: string
+          keyword_score?: number | null
+          keywords_found?: Json | null
+          overall_score?: number | null
+          strengths?: Json | null
+          suggestions?: Json | null
+          summary?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       resume_downloads: {
         Row: {
           created_at: string
@@ -3250,6 +3354,57 @@ export type Database = {
         }
         Relationships: []
       }
+      user_projects: {
+        Row: {
+          cover_image_url: string | null
+          created_at: string
+          description: string | null
+          external_id: string | null
+          id: string
+          live_url: string | null
+          pinned: boolean
+          repo_url: string | null
+          sort_order: number
+          source: string
+          tech_stack: string[]
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cover_image_url?: string | null
+          created_at?: string
+          description?: string | null
+          external_id?: string | null
+          id?: string
+          live_url?: string | null
+          pinned?: boolean
+          repo_url?: string | null
+          sort_order?: number
+          source?: string
+          tech_stack?: string[]
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          cover_image_url?: string | null
+          created_at?: string
+          description?: string | null
+          external_id?: string | null
+          id?: string
+          live_url?: string | null
+          pinned?: boolean
+          repo_url?: string | null
+          sort_order?: number
+          source?: string
+          tech_stack?: string[]
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -3328,6 +3483,45 @@ export type Database = {
           started_at?: string
           task_id?: string | null
           user_id?: string
+        }
+        Relationships: []
+      }
+      user_study_profile: {
+        Row: {
+          created_at: string
+          goal: string
+          level: string
+          notes: string | null
+          target_date: string | null
+          topics_known: string[]
+          updated_at: string
+          user_id: string
+          weekday_minutes: number
+          weekend_minutes: number
+        }
+        Insert: {
+          created_at?: string
+          goal: string
+          level?: string
+          notes?: string | null
+          target_date?: string | null
+          topics_known?: string[]
+          updated_at?: string
+          user_id: string
+          weekday_minutes?: number
+          weekend_minutes?: number
+        }
+        Update: {
+          created_at?: string
+          goal?: string
+          level?: string
+          notes?: string | null
+          target_date?: string | null
+          topics_known?: string[]
+          updated_at?: string
+          user_id?: string
+          weekday_minutes?: number
+          weekend_minutes?: number
         }
         Relationships: []
       }
@@ -3726,6 +3920,7 @@ export type Database = {
       }
       audit_daily_completions: { Args: never; Returns: Json }
       audit_daily_completions_all: { Args: never; Returns: Json }
+      award_earned_achievements: { Args: never; Returns: string[] }
       blog_increment_view: {
         Args: { _post_id: string; _session_id: string }
         Returns: undefined

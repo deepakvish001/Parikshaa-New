@@ -6964,6 +6964,171 @@ var adminDeleteSheetTool = defineTool36({
   }
 });
 
+// src/lib/mcp/tools/auth-diagnostics.ts
+import { defineTool as defineTool37 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z32 } from "npm:zod@^3.23.8";
+var BUILTINS = [
+  { slug: "dbms-sheet", route: "/learn/sheets/dbms-sheet", title: dbmsMeta.title, sections: dbmsSections },
+  { slug: "cn-sheet", route: "/learn/sheets/cn-sheet", title: cnMeta.title, sections: cnSections },
+  { slug: "os-sheet", route: "/learn/sheets/os-sheet", title: osMeta.title, sections: osSections }
+];
+async function getRoles(ctx) {
+  const sb = createUserSupabaseClient3(ctx);
+  const uid = ctx.getUserId();
+  const [{ data: isAdmin }, { data: isOwner }] = await Promise.all([
+    sb.rpc("has_role", { _user_id: uid, _role: "admin" }),
+    sb.rpc("has_role", { _user_id: uid, _role: "owner" })
+  ]);
+  return { sb, uid, isAdmin: Boolean(isAdmin), isOwner: Boolean(isOwner) };
+}
+var sheetAccessMatrixTool = defineTool37({
+  name: "sheet_access_matrix",
+  title: "Sheet access matrix",
+  description: "List every built-in sheet slug (DBMS / CN / OS) and whether the current caller can read it, with the RLS decision reason for each row.",
+  inputSchema: {
+    include_overrides_check: z32.boolean().optional().describe("Also probe builtin_sheet_overrides read access per slug. Defaults to true.")
+  },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ include_overrides_check }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const { sb, uid, isAdmin, isOwner } = await getRoles(ctx);
+    const checkOverrides = include_overrides_check ?? true;
+    const rows = [];
+    for (const b of BUILTINS) {
+      const row = {
+        slug: b.slug,
+        title: b.title,
+        route: b.route,
+        source: "static-frontend",
+        can_read: true,
+        // static bundle — always readable to any authed caller
+        reason: "Static frontend data bundled with the app. Any signed-in user can read via get_builtin_sheet."
+      };
+      if (checkOverrides) {
+        const { data, error } = await sb.from("builtin_sheet_overrides").select("slug").eq("slug", b.slug).maybeSingle();
+        row.overrides_readable = !error;
+        row.overrides_present = Boolean(data);
+        row.overrides_error = error?.message ?? null;
+      }
+      rows.push(row);
+    }
+    return jsonResult(`Access matrix for ${rows.length} built-in sheet(s).`, {
+      caller: { auth_uid: uid, is_admin: isAdmin, is_owner: isOwner, can_write: isAdmin || isOwner },
+      sheets: rows
+    });
+  }
+});
+var debugMcpReadFailureTool = defineTool37({
+  name: "debug_mcp_read_failure",
+  title: "Debug MCP read failure",
+  description: "Explain the RLS/authorization decision path for a failed read: given a table + optional row filter (or a built-in sheet slug), report the requested resource, caller identity, roles, and the likely policy path that blocked it.",
+  inputSchema: {
+    resource_kind: z32.enum(["table", "builtin_sheet", "user_folder", "topic_article"]).describe("Category of resource that returned empty/denied."),
+    resource: z32.string().min(1).describe("Table name, sheet slug, folder id, or article slug."),
+    filter: z32.record(z32.string(), z32.union([z32.string(), z32.number(), z32.boolean(), z32.null()])).optional().describe("Optional column=value filter to re-run and observe.")
+  },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ resource_kind, resource, filter }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated (no OAuth token).");
+    const { sb, uid, isAdmin, isOwner } = await getRoles(ctx);
+    const steps = [];
+    steps.push(`caller auth.uid()=${uid}, is_admin=${isAdmin}, is_owner=${isOwner}`);
+    let probe = {
+      ok: false,
+      error: null,
+      count: null
+    };
+    let policyPath = [];
+    if (resource_kind === "builtin_sheet") {
+      const b = BUILTINS.find((x) => x.slug === resource.trim().toLowerCase());
+      probe = { ok: Boolean(b), error: b ? null : "unknown builtin slug", count: b ? 1 : 0 };
+      policyPath = [
+        "resource type: static-frontend bundle (no RLS)",
+        b ? "found in BUILTIN_SHEETS map \u2192 readable" : "slug not in BUILTIN_SHEETS map \u2192 404-equivalent"
+      ];
+    } else {
+      let q = sb.from(resource).select("*", { count: "exact", head: true });
+      if (filter) for (const [k, v] of Object.entries(filter)) q = q.eq(k, v);
+      const { error, count } = await q;
+      probe = { ok: !error, error: error?.message ?? null, count: count ?? null };
+      if (resource_kind === "user_folder") {
+        policyPath = [
+          "table: public.user_folders",
+          "policy: 'Users can view their own folders' USING (user_id = auth.uid())",
+          "policy: 'Admins can view all' USING (has_role(auth.uid(),'admin') OR has_role(auth.uid(),'owner'))",
+          isAdmin || isOwner ? "\u2192 admin/owner branch should allow; if blocked, check RLS enabled + row exists" : "\u2192 caller is not admin/owner; only rows where user_id = auth.uid() are visible"
+        ];
+      } else if (resource_kind === "topic_article") {
+        policyPath = [
+          "table: topic_articles (published articles readable to authenticated)",
+          "draft/archived: admin/owner only",
+          isAdmin || isOwner ? "\u2192 admin/owner: full read" : "\u2192 non-admin: only status='published' visible"
+        ];
+      } else {
+        policyPath = [
+          `table: public.${resource}`,
+          "Inspect via db_query('SELECT policyname, cmd, qual FROM pg_policies WHERE tablename=$1', [resource])",
+          isAdmin || isOwner ? "caller has admin/owner role" : "caller has only 'authenticated' role"
+        ];
+      }
+    }
+    return jsonResult(`Auth-debug log for ${resource_kind}:${resource}`, {
+      requested_resource: { kind: resource_kind, id: resource, filter: filter ?? null },
+      caller: { auth_uid: uid, is_admin: isAdmin, is_owner: isOwner },
+      probe_result: probe,
+      rls_decision_path: policyPath,
+      steps,
+      hint: probe.ok && (probe.count ?? 0) > 0 ? "Read succeeded at DB level; if the tool still returned empty, check tool-side filters." : "Read denied or empty. Verify the row exists and that a policy grants the caller's role."
+    });
+  }
+});
+var verifySheetArticleAccessTool = defineTool37({
+  name: "verify_sheet_article_access",
+  title: "Verify sheet article read access",
+  description: "For every topic_article linked to the given sheet slug, check whether the current caller can read it. Returns blocked articles with the reason (draft/archived, RLS, missing link).",
+  inputSchema: {
+    sheet_slug: z32.string().min(1).describe("Sheet slug, e.g. dbms-sheet.")
+  },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ sheet_slug }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const { sb, uid, isAdmin, isOwner } = await getRoles(ctx);
+    const slug = sheet_slug.trim().toLowerCase();
+    const { data: articles, error } = await sb.from("topic_articles").select("slug, title, status, tags, sheet_slug, section_title").or(`sheet_slug.eq.${slug},tags.cs.{${slug}}`);
+    if (error) {
+      return jsonResult(`Could not list articles for ${slug}: ${error.message}`, {
+        sheet_slug: slug,
+        caller: { auth_uid: uid, is_admin: isAdmin, is_owner: isOwner },
+        error: error.message
+      });
+    }
+    const linked = articles ?? [];
+    const results = linked.map((a) => {
+      const status = String(a.status ?? "unknown");
+      const canRead = status === "published" || isAdmin || isOwner;
+      return {
+        slug: a.slug,
+        title: a.title,
+        status,
+        can_read: canRead,
+        blocked_reason: canRead ? null : status === "draft" ? "Draft article \u2014 only admin/owner can read." : status === "archived" ? "Archived \u2014 only admin/owner can read." : `Status '${status}' not visible to non-admin caller.`
+      };
+    });
+    const blocked = results.filter((r) => !r.can_read);
+    return jsonResult(
+      `Checked ${results.length} article(s) linked to ${slug}. ${blocked.length} blocked.`,
+      {
+        sheet_slug: slug,
+        caller: { auth_uid: uid, is_admin: isAdmin, is_owner: isOwner },
+        total: results.length,
+        readable: results.length - blocked.length,
+        blocked,
+        all: results
+      }
+    );
+  }
+});
+
 // src/lib/mcp/index.ts
 var projectRef = "elzftqnehcmnouptaqee";
 var mcp_default = defineMcp({
@@ -7019,6 +7184,9 @@ var mcp_default = defineMcp({
     listAllSheetsAdminTool,
     adminUpdateSheetTool,
     adminDeleteSheetTool,
+    sheetAccessMatrixTool,
+    debugMcpReadFailureTool,
+    verifySheetArticleAccessTool,
     createSheetTool,
     listSheetsTool,
     addProblemsToSheetTool,

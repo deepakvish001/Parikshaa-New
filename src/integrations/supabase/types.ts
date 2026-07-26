@@ -420,6 +420,66 @@ export type Database = {
           },
         ]
       }
+      blog_media_upload_queue: {
+        Row: {
+          attempts: number
+          base64_data: string
+          content_type: string
+          created_at: string
+          file_name: string
+          folder: string
+          id: string
+          last_error: string | null
+          max_attempts: number
+          next_attempt_at: string
+          requested_by: string | null
+          resolved_path: string | null
+          resolved_signed_url: string | null
+          status: string
+          target_field: string | null
+          target_post_slug: string | null
+          updated_at: string
+        }
+        Insert: {
+          attempts?: number
+          base64_data: string
+          content_type?: string
+          created_at?: string
+          file_name: string
+          folder?: string
+          id?: string
+          last_error?: string | null
+          max_attempts?: number
+          next_attempt_at?: string
+          requested_by?: string | null
+          resolved_path?: string | null
+          resolved_signed_url?: string | null
+          status?: string
+          target_field?: string | null
+          target_post_slug?: string | null
+          updated_at?: string
+        }
+        Update: {
+          attempts?: number
+          base64_data?: string
+          content_type?: string
+          created_at?: string
+          file_name?: string
+          folder?: string
+          id?: string
+          last_error?: string | null
+          max_attempts?: number
+          next_attempt_at?: string
+          requested_by?: string | null
+          resolved_path?: string | null
+          resolved_signed_url?: string | null
+          status?: string
+          target_field?: string | null
+          target_post_slug?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       blog_post_categories: {
         Row: {
           category_id: string

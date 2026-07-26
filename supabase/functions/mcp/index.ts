@@ -2524,6 +2524,298 @@ var deleteTopicArticleTool = defineTool32({
     return jsonResult(`Deleted '${post.title}'.`, { post_slug });
   }
 });
+var setTopicArticleStatusTool = defineTool32({
+  name: "set_topic_article_status",
+  title: "Change draft/published status of a topic article",
+  description: "Flip a topic article between 'draft' and 'published'. Sets published_at on first publish, clears it when moved back to draft. Idempotent.",
+  inputSchema: {
+    post_slug: z27.string().min(1),
+    status: z27.enum(["draft", "published", "archived"])
+  },
+  annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
+  handler: async ({ post_slug, status }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const { data: post } = await sb.from("blog_posts").select("id,status,published_at,title").eq("slug", post_slug).maybeSingle();
+    if (!post) return errResult(`Post '${post_slug}' not found.`);
+    const now = (/* @__PURE__ */ new Date()).toISOString();
+    const patch = { status, updated_at: now };
+    if (status === "published" && !post.published_at) patch.published_at = now;
+    if (status === "draft") patch.published_at = null;
+    const { error } = await sb.from("blog_posts").update(patch).eq("id", post.id);
+    if (error) return errResult(`status update: ${error.message}`);
+    return jsonResult(`'${post.title}' \u2192 ${status}.`, {
+      post_slug,
+      previous_status: post.status,
+      new_status: status,
+      published_at: patch.published_at ?? post.published_at ?? null
+    });
+  }
+});
+var updateTopicArticleTool = defineTool32({
+  name: "update_topic_article",
+  title: "Update a published topic article (idempotent by slug)",
+  description: "Patch a topic article's content, images, metadata, and/or tags without breaking its existing sheet+section linkage. Pass only the fields you want to change. Sheet/section link is preserved unless you pass new sheet_folder_id/section_title to re-link.",
+  inputSchema: {
+    slug: z27.string().min(1).describe("Existing post slug (identity)."),
+    title: z27.string().min(3).max(200).optional(),
+    content_md: z27.string().min(50).optional(),
+    excerpt: z27.string().max(400).nullable().optional(),
+    cover_image_url: z27.string().url().nullable().optional(),
+    status: z27.enum(["draft", "published", "archived"]).optional(),
+    is_featured: z27.boolean().optional(),
+    seo_title: z27.string().max(200).nullable().optional(),
+    seo_description: z27.string().max(400).nullable().optional(),
+    add_tags: z27.array(z27.string()).max(20).optional(),
+    remove_tags: z27.array(z27.string()).max(20).optional(),
+    category_slug: z27.string().optional(),
+    category_name: z27.string().optional(),
+    sheet_folder_id: z27.string().uuid().optional().describe("Re-link to this sheet (optional)."),
+    section_title: z27.string().optional().describe("Re-link to this section (optional).")
+  },
+  annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
+  handler: async (input, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const {
+      slug,
+      add_tags = [],
+      remove_tags = [],
+      sheet_folder_id,
+      section_title,
+      category_slug,
+      category_name,
+      content_md,
+      ...rest
+    } = input;
+    const { data: post } = await sb.from("blog_posts").select("id,title,status,published_at").eq("slug", slug).maybeSingle();
+    if (!post) return errResult(`Post '${slug}' not found.`);
+    const now = (/* @__PURE__ */ new Date()).toISOString();
+    const patch = { updated_at: now };
+    for (const k of Object.keys(rest)) if (rest[k] !== void 0) patch[k] = rest[k];
+    if (content_md !== void 0) {
+      patch.content_md = content_md;
+      patch.reading_time_min = readingTime(content_md);
+    }
+    if (patch.status === "published" && !post.published_at) patch.published_at = now;
+    if (patch.status === "draft") patch.published_at = null;
+    const { error: upErr } = await sb.from("blog_posts").update(patch).eq("id", post.id);
+    if (upErr) return errResult(`update: ${upErr.message}`);
+    let categoryId = null;
+    if (category_slug) {
+      const { data: cat } = await sb.from("blog_categories").select("id").eq("slug", category_slug).maybeSingle();
+      categoryId = cat?.id ?? null;
+      if (!categoryId) {
+        const { data: newCat, error } = await sb.from("blog_categories").insert({ slug: category_slug, name: category_name ?? category_slug.toUpperCase() }).select("id").single();
+        if (error) return errResult(`category: ${error.message}`);
+        categoryId = newCat.id;
+      }
+      await sb.from("blog_post_categories").upsert(
+        { post_id: post.id, category_id: categoryId },
+        { onConflict: "post_id,category_id" }
+      );
+    }
+    let relinked = null;
+    if (sheet_folder_id && section_title) {
+      const { data: folder } = await sb.from("user_folders").select("id,name").eq("id", sheet_folder_id).maybeSingle();
+      if (!folder) return errResult(`Sheet folder ${sheet_folder_id} not found.`);
+      const sectionSlug = kebab(section_title);
+      const sheetTagId = await ensureTag(sb, sheetTagSlug(sheet_folder_id), `Sheet: ${folder.name}`);
+      const topicTagId = await ensureTag(sb, topicTagSlug(sectionSlug), section_title);
+      await attachTag(sb, post.id, sheetTagId);
+      await attachTag(sb, post.id, topicTagId);
+      relinked = { sheet: sheetTagSlug(sheet_folder_id), topic: topicTagSlug(sectionSlug) };
+    }
+    const added = [];
+    for (const t of add_tags) {
+      const s = kebab(t);
+      if (!s) continue;
+      const id = await ensureTag(sb, s, t);
+      await attachTag(sb, post.id, id);
+      added.push(t);
+    }
+    const removed = [];
+    for (const t of remove_tags) {
+      const s = kebab(t);
+      if (!s) continue;
+      const { data: tag } = await sb.from("blog_tags").select("id").eq("slug", s).maybeSingle();
+      if (tag?.id) {
+        await detachTag(sb, post.id, tag.id);
+        removed.push(t);
+      }
+    }
+    return jsonResult(`Updated '${post.title}'.`, {
+      post_id: post.id,
+      slug,
+      patched_fields: Object.keys(patch),
+      relinked,
+      added_tags: added,
+      removed_tags: removed,
+      category_id: categoryId
+    });
+  }
+});
+var getTopicArticleDetailsTool = defineTool32({
+  name: "get_topic_article_details",
+  title: "Get full details of a topic article",
+  description: "Return complete article details in one call: post row, extracted inline images, all tags (including sheet/topic linkage), categories, and resolved sheet+section metadata.",
+  inputSchema: { post_slug: z27.string().min(1) },
+  annotations: { readOnlyHint: true, openWorldHint: false },
+  handler: async ({ post_slug }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const { data: post, error } = await sb.from("blog_posts").select("id,slug,title,excerpt,content_md,cover_image_url,status,published_at,updated_at,reading_time_min,is_featured,seo_title,seo_description,author_id").eq("slug", post_slug).maybeSingle();
+    if (error) return errResult(error.message);
+    if (!post) return errResult(`Post '${post_slug}' not found.`);
+    const { data: tagLinks } = await sb.from("blog_post_tags").select("tag_id").eq("post_id", post.id);
+    const tagIds = (tagLinks ?? []).map((r) => r.tag_id);
+    let tags = [];
+    if (tagIds.length) {
+      const { data } = await sb.from("blog_tags").select("id,slug,name").in("id", tagIds);
+      tags = data ?? [];
+    }
+    const { data: catLinks } = await sb.from("blog_post_categories").select("category_id").eq("post_id", post.id);
+    const catIds = (catLinks ?? []).map((r) => r.category_id);
+    let categories = [];
+    if (catIds.length) {
+      const { data } = await sb.from("blog_categories").select("id,slug,name").in("id", catIds);
+      categories = data ?? [];
+    }
+    const sheetTag = tags.find((t) => t.slug?.startsWith("sheet-"));
+    const topicTag = tags.find((t) => t.slug?.startsWith("topic-"));
+    let sheet = null;
+    if (sheetTag) {
+      const folderId = sheetTag.slug.replace(/^sheet-/, "");
+      const { data: f } = await sb.from("user_folders").select("id,name").eq("id", folderId).maybeSingle();
+      if (f) sheet = f;
+    }
+    const images = [];
+    const re = /!\[([^\]]*)\]\(([^)]+)\)/g;
+    let m;
+    while ((m = re.exec(post.content_md ?? "")) !== null) images.push({ alt: m[1], url: m[2] });
+    return jsonResult(`Details for '${post.title}'.`, {
+      post: { ...post, url: `/blog/${post.slug}` },
+      images,
+      tags,
+      categories,
+      linkage: {
+        sheet,
+        section_title: topicTag?.name ?? null,
+        section_slug: topicTag?.slug?.replace(/^topic-/, "") ?? null
+      }
+    });
+  }
+});
+var bulkPublishTopicArticlesTool = defineTool32({
+  name: "bulk_publish_topic_articles",
+  title: "Publish multiple topic articles at once (linked to a sheet)",
+  description: "Upsert an array of long-form topic articles in one call. Each is linked to its own section inside the given sheet. Per-article success/failure report. Ideal for seeding a full DBMS/CN/OS sheet with articles.",
+  inputSchema: {
+    sheet_folder_id: z27.string().uuid(),
+    category_slug: z27.string().optional(),
+    category_name: z27.string().optional(),
+    default_status: z27.enum(["draft", "published"]).optional(),
+    articles: z27.array(z27.object({
+      slug: z27.string().min(3).max(120),
+      title: z27.string().min(3).max(200),
+      section_title: z27.string().min(1),
+      content_md: z27.string().min(50),
+      excerpt: z27.string().max(400).optional(),
+      cover_image_url: z27.string().url().optional(),
+      status: z27.enum(["draft", "published"]).optional(),
+      is_featured: z27.boolean().optional(),
+      seo_title: z27.string().max(200).optional(),
+      seo_description: z27.string().max(400).optional(),
+      tags: z27.array(z27.string()).max(20).optional()
+    })).min(1).max(50)
+  },
+  annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
+  handler: async (input, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const { sheet_folder_id, category_slug, category_name, default_status = "published", articles } = input;
+    const { data: folder } = await sb.from("user_folders").select("id,name").eq("id", sheet_folder_id).maybeSingle();
+    if (!folder) return errResult(`Sheet folder ${sheet_folder_id} not found.`);
+    let categoryId = null;
+    if (category_slug) {
+      const { data: cat } = await sb.from("blog_categories").select("id").eq("slug", category_slug).maybeSingle();
+      categoryId = cat?.id ?? null;
+      if (!categoryId) {
+        const { data: newCat, error } = await sb.from("blog_categories").insert({ slug: category_slug, name: category_name ?? category_slug.toUpperCase() }).select("id").single();
+        if (error) return errResult(`category: ${error.message}`);
+        categoryId = newCat.id;
+      }
+    }
+    const sheetTagId = await ensureTag(sb, sheetTagSlug(sheet_folder_id), `Sheet: ${folder.name}`);
+    const results = [];
+    let created = 0, updated = 0, failed = 0;
+    for (const a of articles) {
+      try {
+        const now = (/* @__PURE__ */ new Date()).toISOString();
+        const status = a.status ?? default_status;
+        const payload = {
+          slug: a.slug,
+          title: a.title,
+          content_md: a.content_md,
+          excerpt: a.excerpt ?? null,
+          cover_image_url: a.cover_image_url ?? null,
+          status,
+          published_at: status === "published" ? now : null,
+          reading_time_min: readingTime(a.content_md),
+          seo_title: a.seo_title ?? a.title,
+          seo_description: a.seo_description ?? a.excerpt ?? null,
+          is_featured: a.is_featured ?? false,
+          author_id: ctx.getUserId(),
+          updated_at: now
+        };
+        const { data: existing } = await sb.from("blog_posts").select("id").eq("slug", a.slug).maybeSingle();
+        let postId;
+        let action;
+        if (existing?.id) {
+          const { error } = await sb.from("blog_posts").update(payload).eq("id", existing.id);
+          if (error) throw new Error(error.message);
+          postId = existing.id;
+          action = "updated";
+          updated++;
+        } else {
+          const { data, error } = await sb.from("blog_posts").insert(payload).select("id").single();
+          if (error) throw new Error(error.message);
+          postId = data.id;
+          action = "created";
+          created++;
+        }
+        if (categoryId) {
+          await sb.from("blog_post_categories").upsert(
+            { post_id: postId, category_id: categoryId },
+            { onConflict: "post_id,category_id" }
+          );
+        }
+        const sectionSlug = kebab(a.section_title);
+        const topicTagId = await ensureTag(sb, topicTagSlug(sectionSlug), a.section_title);
+        await attachTag(sb, postId, sheetTagId);
+        await attachTag(sb, postId, topicTagId);
+        for (const t of a.tags ?? []) {
+          const s = kebab(t);
+          if (!s) continue;
+          const id = await ensureTag(sb, s, t);
+          await attachTag(sb, postId, id);
+        }
+        results.push({ slug: a.slug, status: action, post_id: postId, section: a.section_title, url: `/blog/${a.slug}` });
+      } catch (e) {
+        failed++;
+        results.push({ slug: a.slug, status: "failed", error: e?.message ?? String(e) });
+      }
+    }
+    return jsonResult(
+      `Bulk publish: ${created} created, ${updated} updated, ${failed} failed \u2192 ${folder.name}.`,
+      { sheet_folder_id, sheet_name: folder.name, created, updated, failed, results }
+    );
+  }
+});
 
 // src/lib/mcp/index.ts
 var projectRef = "elzftqnehcmnouptaqee";
@@ -2600,7 +2892,11 @@ var mcp_default = defineMcp({
     linkArticleToSheetTopicTool,
     unlinkArticleFromSheetTopicTool,
     uploadArticleImageTool,
-    deleteTopicArticleTool
+    deleteTopicArticleTool,
+    setTopicArticleStatusTool,
+    updateTopicArticleTool,
+    getTopicArticleDetailsTool,
+    bulkPublishTopicArticlesTool
   ]
 });
 

@@ -70,6 +70,10 @@ import {
   unlinkArticleFromSheetTopicTool,
   uploadArticleImageTool,
   deleteTopicArticleTool,
+  setTopicArticleStatusTool,
+  updateTopicArticleTool,
+  getTopicArticleDetailsTool,
+  bulkPublishTopicArticlesTool,
 } from "./tools/topic-articles";
 
 // The OAuth issuer MUST be the direct Supabase host, built from the project ref,
@@ -152,5 +156,9 @@ export default defineMcp({
     unlinkArticleFromSheetTopicTool,
     uploadArticleImageTool,
     deleteTopicArticleTool,
+    setTopicArticleStatusTool,
+    updateTopicArticleTool,
+    getTopicArticleDetailsTool,
+    bulkPublishTopicArticlesTool,
   ],
 });

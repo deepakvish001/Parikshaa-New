@@ -2252,9 +2252,20 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   };
 
   if (!sheetData) {
+    const kind: "builtin_sheet" | "user_folder" =
+      slug && ["dbms-sheet", "cn-sheet", "os-sheet"].includes(slug)
+        ? "builtin_sheet"
+        : "user_folder";
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <p className="text-muted-foreground">Sheet not found</p>
+      <div className="min-h-screen bg-background flex items-center justify-center p-6">
+        <div className="w-full max-w-2xl">
+          <AccessErrorPanel
+            resourceKind={kind}
+            resource={slug ?? "(unknown)"}
+            message="This sheet could not be loaded. It may be blocked by RLS or the slug may be wrong."
+            onRetry={() => window.location.reload()}
+          />
+        </div>
       </div>
     );
   }

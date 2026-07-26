@@ -6967,6 +6967,23 @@ var adminDeleteSheetTool = defineTool36({
 // src/lib/mcp/tools/auth-diagnostics.ts
 import { defineTool as defineTool37 } from "npm:@lovable.dev/mcp-js@0.20.1";
 import { z as z32 } from "npm:zod@^3.23.8";
+
+// src/lib/mcp/tools/_cache.ts
+var store = globalThis.__mcpCache ?? (globalThis.__mcpCache = /* @__PURE__ */ new Map());
+function cacheGet(key) {
+  const hit = store.get(key);
+  if (!hit) return void 0;
+  if (hit.expiresAt < Date.now()) {
+    store.delete(key);
+    return void 0;
+  }
+  return hit.value;
+}
+function cacheKey(user, tool, args) {
+  return `${user}::${tool}::${JSON.stringify(args ?? {})}`;
+}
+
+// src/lib/mcp/tools/auth-diagnostics.ts
 var BUILTINS = [
   { slug: "dbms-sheet", route: "/learn/sheets/dbms-sheet", title: dbmsMeta.title, sections: dbmsSections },
   { slug: "cn-sheet", route: "/learn/sheets/cn-sheet", title: cnMeta.title, sections: cnSections },
@@ -6991,7 +7008,11 @@ var sheetAccessMatrixTool = defineTool37({
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ include_overrides_check }, ctx) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const { sb, uid, isAdmin, isOwner } = await getRoles(ctx);
+    const uid = ctx.getUserId() ?? "anon";
+    const ck = cacheKey(uid, "sheet_access_matrix", { include_overrides_check });
+    const cached = cacheGet(ck);
+    if (cached) return jsonResult(cached.label + " (cached)", cached.payload);
+    const { sb, isAdmin, isOwner } = await getRoles(ctx);
     const checkOverrides = include_overrides_check ?? true;
     const rows = [];
     for (const b of BUILTINS) {

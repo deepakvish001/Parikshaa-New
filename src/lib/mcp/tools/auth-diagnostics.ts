@@ -39,7 +39,11 @@ export const sheetAccessMatrixTool = defineTool({
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ include_overrides_check }, ctx: ToolContext) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const { sb, uid, isAdmin, isOwner } = await getRoles(ctx);
+    const uid = ctx.getUserId() ?? "anon";
+    const ck = cacheKey(uid, "sheet_access_matrix", { include_overrides_check });
+    const cached = cacheGet<{ label: string; payload: unknown }>(ck);
+    if (cached) return jsonResult(cached.label + " (cached)", cached.payload);
+    const { sb, isAdmin, isOwner } = await getRoles(ctx);
     const checkOverrides = include_overrides_check ?? true;
 
     const rows = [];

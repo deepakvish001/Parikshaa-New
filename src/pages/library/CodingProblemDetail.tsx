@@ -76,6 +76,16 @@ import { VerdictBadge } from "@/components/coding/VerdictBadge";
 import { CodeExecutionError, useCodeRunner, type RunResult, type SubmitResult, type CaseResult } from "@/hooks/useCodeRunner";
 import { getExecLimitsForLang, formatLimits } from "@/lib/coding/executionLimits";
 
+const humanRunErrorTitle = (stage?: string) => {
+  switch (stage) {
+    case "config": return "Code runner isn't configured";
+    case "validation": return "Invalid run request";
+    case "submit": return "Provider rejected the run";
+    case "poll": return "Provider timed out";
+    default: return "Run failed";
+  }
+};
+
 import { Cpu, Info } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useCodeDraft } from "@/hooks/useCodeDraft";

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Home, User as UserIcon, Briefcase } from "lucide-react";
+import { Home, User as UserIcon, Briefcase, Swords, Eye, Map as MapIcon, Bell } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ProfileMenuContent } from "@/components/profile/ProfileMenuContent";
@@ -54,15 +54,36 @@ export function ProfileRailLayout({ children }: { children: ReactNode }) {
             active={location.pathname === "/learn" || location.pathname === "/dashboard"}
             onClick={() => navigate("/learn")}
           />
-
-
+          <RailItem
+            icon={<Swords className="h-[18px] w-[18px]" />}
+            label="Contest"
+            active={location.pathname.startsWith("/contests")}
+            onClick={() => navigate("/contests")}
+          />
           <RailItem
             icon={<Briefcase className="h-[18px] w-[18px]" />}
             label="Jobs"
             active={location.pathname.startsWith("/jobs")}
             onClick={() => navigate("/jobs")}
           />
-
+          <RailItem
+            icon={<Eye className="h-[18px] w-[18px]" />}
+            label="Visualize"
+            active={location.pathname.startsWith("/learn/visualize")}
+            onClick={() => navigate("/learn/visualize")}
+          />
+          <RailItem
+            icon={<MapIcon className="h-[18px] w-[18px]" />}
+            label="Roadmap"
+            active={location.pathname.startsWith("/roadmaps")}
+            onClick={() => navigate("/roadmaps")}
+          />
+          <RailItem
+            icon={<Bell className="h-[18px] w-[18px]" />}
+            label="Notifier"
+            active={location.pathname.startsWith("/contest-notifier")}
+            onClick={() => navigate("/contest-notifier")}
+          />
           <RailItem
             icon={<UserIcon className="h-[18px] w-[18px]" />}
             label="Profile"

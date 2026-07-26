@@ -27,6 +27,8 @@ import {
   Settings,
   Sparkles,
   Map as MapIcon,
+  Eye,
+
 
   Sun,
   Moon,
@@ -756,8 +758,8 @@ function LeftRail() {
   const railItems = [
     { icon: HomeIcon, label: "Home", to: "/learn", active: pathname === "/learn" },
     { icon: Swords, label: "Contest", to: "/contests", active: pathname.startsWith("/contests") },
-    
     { icon: Briefcase, label: "Jobs", to: "/jobs", active: pathname.startsWith("/jobs") },
+    { icon: Eye, label: "Visualize", to: "/learn/visualize", active: pathname.startsWith("/learn/visualize") },
     { icon: MapIcon, label: "Roadmap", to: "/roadmaps", active: pathname.startsWith("/roadmaps") },
     { icon: Bell, label: "Notifier", to: "/contest-notifier", active: pathname.startsWith("/contest-notifier") },
     ...(activeSheetId

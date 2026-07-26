@@ -2253,7 +2253,7 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
 
   if (!sheetData) {
     const kind: "builtin_sheet" | "user_folder" =
-      slug && ["dbms-sheet", "cn-sheet", "os-sheet"].includes(slug)
+      currentSheetId && ["dbms-sheet", "cn-sheet", "os-sheet"].includes(currentSheetId)
         ? "builtin_sheet"
         : "user_folder";
     return (

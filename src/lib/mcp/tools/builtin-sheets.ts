@@ -95,17 +95,39 @@ export const getBuiltinSheetTool = defineTool({
     include_topics: z.boolean().optional().describe("Defaults to true. Set false for structure only."),
   },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
-  handler: ({ slug, topic_search, include_topics }, ctx: ToolContext) => {
+  handler: async ({ slug, topic_search, include_topics }, ctx: ToolContext) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
     const key = normalize(slug);
-    const sheet = BUILTIN_SHEETS[key];
-    if (!sheet) {
+    const base = BUILTIN_SHEETS[key];
+    if (!base) {
       return errResult(`Unknown built-in sheet "${slug}". Call list_builtin_sheets first.`);
+    }
+
+    // Merge admin overrides if present
+    let meta = base.meta;
+    let sourceSections: Section[] = base.sections;
+    try {
+      const sb = createUserSupabaseClient(ctx);
+      const { data: ov } = await sb
+        .from("builtin_sheet_overrides")
+        .select("title, description, sections")
+        .eq("slug", key)
+        .maybeSingle();
+      if (ov) {
+        meta = {
+          ...meta,
+          title: ov.title ?? meta.title,
+          description: ov.description ?? meta.description,
+        };
+        if (Array.isArray(ov.sections)) sourceSections = ov.sections as Section[];
+      }
+    } catch {
+      // Overrides table not readable (non-admin) — fall back to static content silently.
     }
 
     const includeTopics = include_topics ?? true;
     const q = topic_search ? normalize(topic_search) : "";
-    const sections = sheet.sections
+    const sections = sourceSections
       .map((section) => {
         const sectionMatches = q && normalize(section.title).includes(q);
         const subSections = section.subSections
@@ -130,18 +152,14 @@ export const getBuiltinSheetTool = defineTool({
           })
           .filter((subSection) => !q || sectionMatches || normalize(subSection.title).includes(q) || subSection.topicCount > 0);
 
-        return {
-          id: section.id,
-          title: section.title,
-          subSections,
-        };
+        return { id: section.id, title: section.title, subSections };
       })
       .filter((section) => !q || normalize(section.title).includes(q) || section.subSections.length > 0);
 
-    return jsonResult(`Built-in sheet "${sheet.meta.title}" (${sheet.route}).`, {
-      slug: sheet.slug,
-      route: sheet.route,
-      meta: sheet.meta,
+    return jsonResult(`Built-in sheet "${meta.title}" (${base.route}).`, {
+      slug: base.slug,
+      route: base.route,
+      meta,
       sections,
     });
   },

@@ -861,6 +861,187 @@
           "$schema": "http://json-schema.org/draft-07/schema#"
         },
         "outputSchema": null
+      },
+      {
+        "name": "publish_coding_bundle",
+        "title": "Publish coding problem + solutions bundle",
+        "description": "One-shot publish: problem + tests + starter code + reference solutions for multiple languages. Snapshots the previous version when overwriting. Use this instead of calling publish_coding_problem and publish_coding_solution separately.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "problem": {
+              "type": "object",
+              "properties": {
+                "slug": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "difficulty": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "topics": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "examples": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": {}
+                  }
+                },
+                "constraints": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "hints": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "cpu_time_limit_sec": {
+                  "type": "number"
+                },
+                "memory_limit_kb": {
+                  "type": "integer"
+                },
+                "mcq": {
+                  "type": "object",
+                  "additionalProperties": {}
+                },
+                "is_contest_pool": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "slug",
+                "title",
+                "difficulty",
+                "description",
+                "topics",
+                "examples"
+              ],
+              "additionalProperties": false
+            },
+            "tests": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "input": {
+                    "type": "string"
+                  },
+                  "expected_output": {
+                    "type": "string"
+                  },
+                  "is_sample": {
+                    "type": "boolean"
+                  },
+                  "weight": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "input",
+                  "expected_output"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 2
+            },
+            "starter_code": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "language": {
+                    "type": "string"
+                  },
+                  "code": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "language",
+                  "code"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "solutions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "lang_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "code": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "lang_id",
+                  "code"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            },
+            "if_exists": {
+              "type": "string",
+              "enum": [
+                "error",
+                "update"
+              ]
+            },
+            "version_note": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "problem",
+            "tests",
+            "solutions"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "ensure_admin_access",
+        "title": "Ensure admin access for this MCP client",
+        "description": "Grant the signed-in MCP user the 'admin' role so publish tools work. Idempotent — safe to call at the start of every session. Only OAuth-client tokens (Claude, ChatGPT connectors) are allowed; regular app sessions are rejected.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
       }
     ]
   }

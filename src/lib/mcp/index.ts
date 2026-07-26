@@ -22,6 +22,8 @@ import {
   rollbackCodingProblemTool,
 } from "./tools/publish-coding-problem";
 import { publishCodingSolutionTool } from "./tools/publish-coding-solution";
+import { publishCodingBundleTool } from "./tools/publish-coding-bundle";
+import { ensureAdminAccessTool } from "./tools/ensure-admin-access";
 
 // The OAuth issuer MUST be the direct Supabase host, built from the project ref,
 // not from SUPABASE_URL (which may be the Lovable Cloud proxy).
@@ -63,5 +65,7 @@ export default defineMcp({
     listCodingProblemVersionsTool,
     rollbackCodingProblemTool,
     publishCodingSolutionTool,
+    publishCodingBundleTool,
+    ensureAdminAccessTool,
   ],
 });

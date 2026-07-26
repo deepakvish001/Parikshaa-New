@@ -119,7 +119,7 @@ export function GlobalLeftRail() {
   const railItems = [
     { icon: HomeIcon, label: "Home", to: "/learn", active: pathname === "/learn" },
     { icon: Swords, label: "Contest", to: "/contests", active: pathname.startsWith("/contests") },
-    { icon: Sparkles, label: "Planner", to: "/learn/planner", active: pathname.startsWith("/learn/planner") },
+    
     { icon: Briefcase, label: "Jobs", to: "/jobs", active: pathname.startsWith("/jobs") },
     { icon: Eye, label: "Visualize", to: "/learn/visualize", active: pathname.startsWith("/learn/visualize") },
     { icon: MapIcon, label: "Roadmap", to: "/roadmaps", active: pathname.startsWith("/roadmaps") },

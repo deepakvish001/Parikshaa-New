@@ -6650,16 +6650,31 @@ var getBuiltinSheetTool = defineTool34({
     include_topics: z29.boolean().optional().describe("Defaults to true. Set false for structure only.")
   },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
-  handler: ({ slug, topic_search, include_topics }, ctx) => {
+  handler: async ({ slug, topic_search, include_topics }, ctx) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
     const key = normalize(slug);
-    const sheet = BUILTIN_SHEETS[key];
-    if (!sheet) {
+    const base = BUILTIN_SHEETS[key];
+    if (!base) {
       return errResult(`Unknown built-in sheet "${slug}". Call list_builtin_sheets first.`);
+    }
+    let meta = base.meta;
+    let sourceSections = base.sections;
+    try {
+      const sb = createUserSupabaseClient3(ctx);
+      const { data: ov } = await sb.from("builtin_sheet_overrides").select("title, description, sections").eq("slug", key).maybeSingle();
+      if (ov) {
+        meta = {
+          ...meta,
+          title: ov.title ?? meta.title,
+          description: ov.description ?? meta.description
+        };
+        if (Array.isArray(ov.sections)) sourceSections = ov.sections;
+      }
+    } catch {
     }
     const includeTopics = include_topics ?? true;
     const q = topic_search ? normalize(topic_search) : "";
-    const sections = sheet.sections.map((section) => {
+    const sections = sourceSections.map((section) => {
       const sectionMatches = q && normalize(section.title).includes(q);
       const subSections = section.subSections.map((subSection) => {
         const subMatches = q && normalize(subSection.title).includes(q);
@@ -6674,16 +6689,12 @@ var getBuiltinSheetTool = defineTool34({
           topics: includeTopics ? topics : void 0
         };
       }).filter((subSection) => !q || sectionMatches || normalize(subSection.title).includes(q) || subSection.topicCount > 0);
-      return {
-        id: section.id,
-        title: section.title,
-        subSections
-      };
+      return { id: section.id, title: section.title, subSections };
     }).filter((section) => !q || normalize(section.title).includes(q) || section.subSections.length > 0);
-    return jsonResult(`Built-in sheet "${sheet.meta.title}" (${sheet.route}).`, {
-      slug: sheet.slug,
-      route: sheet.route,
-      meta: sheet.meta,
+    return jsonResult(`Built-in sheet "${meta.title}" (${base.route}).`, {
+      slug: base.slug,
+      route: base.route,
+      meta,
       sections
     });
   }
@@ -6753,18 +6764,17 @@ ${REAUTH_HINT}`);
     const isAdmin = Boolean(adminRes.data);
     const isOwner = Boolean(ownerRes.data);
     const isBuiltin = BUILTIN.has(normalized);
-    const { data: folder, error: folderErr } = await sb.from("user_folders").select("id, name, user_id, is_public, created_at").or(`slug.eq.${normalized},name.ilike.%${normalized}%`).limit(1).maybeSingle();
+    const { data: folder, error: folderErr } = await sb.from("user_folders").select("id, name, user_id, created_at").ilike("name", `%${normalized.replace(/-/g, " ")}%`).limit(1).maybeSingle();
     let itemCount = null;
     if (folder?.id) {
       const { count } = await sb.from("user_folder_items").select("*", { count: "exact", head: true }).eq("folder_id", folder.id);
       itemCount = count ?? 0;
     }
-    const canRead = isBuiltin || isAdmin || isOwner || Boolean(folder?.is_public) || folder?.user_id && folder.user_id === uid;
+    const canRead = isBuiltin || isAdmin || isOwner || folder?.user_id && folder.user_id === uid;
     const reasons = [];
     if (isBuiltin) reasons.push("Slug is a built-in frontend sheet \u2014 always readable via get_builtin_sheet.");
     if (isAdmin) reasons.push("Caller has admin role (RLS admin policy allows read).");
     if (isOwner) reasons.push("Caller has owner role (RLS admin policy allows read).");
-    if (folder?.is_public) reasons.push("Folder is marked public.");
     if (folder?.user_id === uid) reasons.push("Caller owns this folder.");
     if (!canRead) reasons.push("No matching access rule \u2014 read denied by RLS.");
     if (folderErr) reasons.push(`user_folders query error: ${folderErr.message}`);
@@ -6780,6 +6790,177 @@ ${REAUTH_HINT}`);
       can_read: canRead,
       reasons
     });
+  }
+});
+
+// src/lib/mcp/tools/admin-sheets-all.ts
+import { defineTool as defineTool36 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z31 } from "npm:zod@^3.23.8";
+var STATIC = {
+  "dbms-sheet": { meta: dbmsMeta, sections: dbmsSections },
+  "cn-sheet": { meta: cnMeta, sections: cnSections },
+  "os-sheet": { meta: osMeta, sections: osSections }
+};
+var updateBuiltinSheetTool = defineTool36({
+  name: "update_builtin_sheet",
+  title: "Update built-in sheet (admin)",
+  description: "Admin/owner-only. Persist edits to a built-in frontend sheet (dbms-sheet, cn-sheet, os-sheet). Overrides title/description/sections and is merged into get_builtin_sheet responses. Pass reset=true to clear overrides.",
+  inputSchema: {
+    slug: z31.string().min(1),
+    title: z31.string().optional(),
+    description: z31.string().optional(),
+    sections: z31.array(z31.any()).optional().describe("Full replacement for sections array."),
+    reset: z31.boolean().optional()
+  },
+  annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
+  handler: async ({ slug, title, description, sections, reset }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const key = slug.trim().toLowerCase();
+    if (!STATIC[key]) return errResult(`Unknown built-in sheet "${slug}".`);
+    if (reset) {
+      const { error: error2 } = await sb.from("builtin_sheet_overrides").delete().eq("slug", key);
+      if (error2) return errResult(error2.message);
+      return jsonResult("Override cleared.", { slug: key });
+    }
+    const patch = { slug: key, updated_by: ctx.getUserId() };
+    if (title !== void 0) patch.title = title;
+    if (description !== void 0) patch.description = description;
+    if (sections !== void 0) patch.sections = sections;
+    const { data, error } = await sb.from("builtin_sheet_overrides").upsert(patch, { onConflict: "slug" }).select().single();
+    if (error) return errResult(error.message);
+    return jsonResult("Override saved.", data);
+  }
+});
+var syncBuiltinSheetToDbTool = defineTool36({
+  name: "sync_builtin_sheet_to_db",
+  title: "Sync built-in sheet into DB folder (admin)",
+  description: "Admin/owner-only. Create or refresh a user_folders row (owned by caller) mirroring a built-in sheet's topics as folder items. After sync, use all existing sheet tools (add_problems_to_sheet, reorder_sheet_items, share_sheet, etc.) against the returned folder_id.",
+  inputSchema: {
+    slug: z31.string().min(1).describe("dbms-sheet, cn-sheet, or os-sheet"),
+    replace_items: z31.boolean().optional().describe("Default true. Wipes existing items before re-inserting.")
+  },
+  annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
+  handler: async ({ slug, replace_items }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const key = slug.trim().toLowerCase();
+    const src = STATIC[key];
+    if (!src) return errResult(`Unknown built-in sheet "${slug}".`);
+    const uid = ctx.getUserId();
+    const name = `[Builtin] ${src.meta.title}`;
+    const existing = await sb.from("user_folders").select("id").eq("user_id", uid).eq("name", name).maybeSingle();
+    let folderId = existing.data?.id;
+    if (!folderId) {
+      const ins = await sb.from("user_folders").insert({ user_id: uid, name, description: src.meta.description, color: "#f97316" }).select("id").single();
+      if (ins.error) return errResult(ins.error.message);
+      folderId = ins.data.id;
+    }
+    if (replace_items !== false) {
+      await sb.from("user_folder_items").delete().eq("folder_id", folderId);
+    }
+    const items = [];
+    let ord = 0;
+    for (const section of src.sections) {
+      for (const sub of section.subSections ?? []) {
+        for (const topic of sub.topics ?? []) {
+          items.push({
+            folder_id: folderId,
+            question_source: "builtin",
+            question_slug: topic.id ?? topic.slug ?? `${section.id}-${sub.id}-${ord}`,
+            sort_order: ord++
+          });
+        }
+      }
+    }
+    let inserted = 0;
+    if (items.length) {
+      const { error, count } = await sb.from("user_folder_items").insert(items, { count: "exact" });
+      if (error) return errResult(error.message);
+      inserted = count ?? items.length;
+    }
+    return jsonResult(`Synced "${src.meta.title}" into folder ${folderId}.`, {
+      folder_id: folderId,
+      folder_name: name,
+      items_inserted: inserted,
+      slug: key
+    });
+  }
+});
+var listAllSheetsAdminTool = defineTool36({
+  name: "list_all_sheets_admin",
+  title: "List every sheet (admin)",
+  description: "Admin/owner-only. Returns every built-in frontend sheet plus every user_folders row across all users, with owner user_id and item counts. Use to discover sheets you did not create.",
+  inputSchema: {
+    search: z31.string().optional(),
+    limit: z31.number().int().min(1).max(1e3).optional()
+  },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ search, limit }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const q = (search ?? "").trim().toLowerCase();
+    const builtins = Object.entries(STATIC).filter(([k, v]) => !q || `${k} ${v.meta.title}`.toLowerCase().includes(q)).map(([k, v]) => ({
+      kind: "builtin",
+      slug: k,
+      name: v.meta.title,
+      route: `/learn/sheets/${k}`,
+      total_topics: v.meta.totalProblems
+    }));
+    let folderQuery = sb.from("user_folders").select("id, user_id, name, description, color, created_at, updated_at").order("updated_at", { ascending: false }).limit(limit ?? 200);
+    if (q) folderQuery = folderQuery.ilike("name", `%${q}%`);
+    const { data: folders, error } = await folderQuery;
+    if (error) return errResult(error.message);
+    const results = [];
+    for (const f of folders ?? []) {
+      const { count } = await sb.from("user_folder_items").select("*", { count: "exact", head: true }).eq("folder_id", f.id);
+      results.push({ kind: "db_folder", ...f, item_count: count ?? 0 });
+    }
+    return jsonResult(`Found ${builtins.length} built-in + ${results.length} DB sheets.`, {
+      builtins,
+      db_folders: results
+    });
+  }
+});
+var adminUpdateSheetTool = defineTool36({
+  name: "admin_update_sheet",
+  title: "Update any sheet (admin)",
+  description: "Admin/owner-only. Update name/description/color on any user_folders row across owners. Use folder_id from list_all_sheets_admin.",
+  inputSchema: {
+    folder_id: z31.string().uuid(),
+    name: z31.string().optional(),
+    description: z31.string().optional(),
+    color: z31.string().optional()
+  },
+  annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
+  handler: async ({ folder_id, name, description, color }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const patch = { updated_at: (/* @__PURE__ */ new Date()).toISOString() };
+    if (name !== void 0) patch.name = name;
+    if (description !== void 0) patch.description = description;
+    if (color !== void 0) patch.color = color;
+    const { data, error } = await gate.sb.from("user_folders").update(patch).eq("id", folder_id).select().single();
+    if (error) return errResult(error.message);
+    return jsonResult("Sheet updated.", data);
+  }
+});
+var adminDeleteSheetTool = defineTool36({
+  name: "admin_delete_sheet",
+  title: "Delete any sheet (admin)",
+  description: "Admin/owner-only. Permanently deletes a user_folders row (and its items via cascade) regardless of owner.",
+  inputSchema: { folder_id: z31.string().uuid() },
+  annotations: { readOnlyHint: false, idempotentHint: false, openWorldHint: false, destructiveHint: true },
+  handler: async ({ folder_id }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    await gate.sb.from("user_folder_items").delete().eq("folder_id", folder_id);
+    const { error } = await gate.sb.from("user_folders").delete().eq("id", folder_id);
+    if (error) return errResult(error.message);
+    return jsonResult("Sheet deleted.", { folder_id });
   }
 });
 
@@ -6833,6 +7014,11 @@ var mcp_default = defineMcp({
     getBuiltinSheetTool,
     getCurrentUserContextTool,
     testSheetAccessTool,
+    updateBuiltinSheetTool,
+    syncBuiltinSheetToDbTool,
+    listAllSheetsAdminTool,
+    adminUpdateSheetTool,
+    adminDeleteSheetTool,
     createSheetTool,
     listSheetsTool,
     addProblemsToSheetTool,

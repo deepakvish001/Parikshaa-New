@@ -87,6 +87,13 @@ import {
 } from "./tools/topic-articles-extra";
 import { listBuiltinSheetsTool, getBuiltinSheetTool } from "./tools/builtin-sheets";
 import { getCurrentUserContextTool, testSheetAccessTool } from "./tools/auth-debug";
+import {
+  updateBuiltinSheetTool,
+  syncBuiltinSheetToDbTool,
+  listAllSheetsAdminTool,
+  adminUpdateSheetTool,
+  adminDeleteSheetTool,
+} from "./tools/admin-sheets-all";
 
 // The OAuth issuer MUST be the direct Supabase host, built from the project ref,
 // not from SUPABASE_URL (which may be the Lovable Cloud proxy).
@@ -142,6 +149,11 @@ export default defineMcp({
     getBuiltinSheetTool,
     getCurrentUserContextTool,
     testSheetAccessTool,
+    updateBuiltinSheetTool,
+    syncBuiltinSheetToDbTool,
+    listAllSheetsAdminTool,
+    adminUpdateSheetTool,
+    adminDeleteSheetTool,
     createSheetTool,
     listSheetsTool,
     addProblemsToSheetTool,

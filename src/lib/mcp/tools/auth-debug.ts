@@ -76,8 +76,8 @@ export const testSheetAccessTool = defineTool({
 
     const { data: folder, error: folderErr } = await sb
       .from("user_folders")
-      .select("id, name, user_id, is_public, created_at")
-      .or(`slug.eq.${normalized},name.ilike.%${normalized}%`)
+      .select("id, name, user_id, created_at")
+      .ilike("name", `%${normalized.replace(/-/g, " ")}%`)
       .limit(1)
       .maybeSingle();
 
@@ -94,14 +94,12 @@ export const testSheetAccessTool = defineTool({
       isBuiltin ||
       isAdmin ||
       isOwner ||
-      Boolean(folder?.is_public) ||
       (folder?.user_id && folder.user_id === uid);
 
     const reasons: string[] = [];
     if (isBuiltin) reasons.push("Slug is a built-in frontend sheet — always readable via get_builtin_sheet.");
     if (isAdmin) reasons.push("Caller has admin role (RLS admin policy allows read).");
     if (isOwner) reasons.push("Caller has owner role (RLS admin policy allows read).");
-    if (folder?.is_public) reasons.push("Folder is marked public.");
     if (folder?.user_id === uid) reasons.push("Caller owns this folder.");
     if (!canRead) reasons.push("No matching access rule — read denied by RLS.");
     if (folderErr) reasons.push(`user_folders query error: ${folderErr.message}`);

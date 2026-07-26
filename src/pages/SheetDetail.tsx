@@ -127,6 +127,7 @@ import ACMPaceCalculator from "@/components/sheets/ACMPaceCalculator";
 import Blind75StudyPlan, { Blind75Prefs, loadBlind75Prefs, parseEstMinutes } from "@/components/sheets/Blind75StudyPlan";
 import { bucketByWeeks } from "@/lib/blind75Schedule";
 import { CollapsibleSection } from "@/components/shell/CollapsibleSection";
+import { AccessErrorPanel } from "@/components/access/AccessErrorPanel";
 import { Info, Activity, Clock, CalendarClock, CalendarDays, ClipboardCheck, HelpCircle } from "lucide-react";
 
 // Types

@@ -25,6 +25,7 @@ import SettingsCard from "./SettingsCard";
 interface ExtendedProfile {
   id: string;
   user_type: string;
+  username?: string;
   current_experience?: string;
   target_goal?: string;
   college_name?: string;
@@ -37,6 +38,7 @@ interface ExtendedProfile {
   mobile_number?: string;
   interested_features?: string[];
 }
+
 
 const experienceOptions = [
   { value: "student", label: "Student (College/University)", type: "student" },

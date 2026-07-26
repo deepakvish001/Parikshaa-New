@@ -164,5 +164,9 @@ export default defineMcp({
     updateTopicArticleTool,
     getTopicArticleDetailsTool,
     bulkPublishTopicArticlesTool,
+    bulkSetTopicArticleStatusTool,
+    previewTopicArticleTool,
+    searchTopicArticlesTool,
+    verifyTopicArticleLinkageTool,
   ],
 });

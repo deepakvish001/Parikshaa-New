@@ -3151,7 +3151,11 @@ var mcp_default = defineMcp({
     setTopicArticleStatusTool,
     updateTopicArticleTool,
     getTopicArticleDetailsTool,
-    bulkPublishTopicArticlesTool
+    bulkPublishTopicArticlesTool,
+    bulkSetTopicArticleStatusTool,
+    previewTopicArticleTool,
+    searchTopicArticlesTool,
+    verifyTopicArticleLinkageTool
   ]
 });
 

@@ -2165,8 +2165,48 @@ const CodingProblemDetail = () => {
                       )}
                     </div>
                   ) : executionErrorDetails ? (
-                    <div className="space-y-3">
-                      <p className="text-sm text-destructive">Execution failed before a result was produced.</p>
+                    <div className="space-y-3 rounded-md border border-destructive/40 bg-destructive/5 p-3">
+                      <div>
+                        <p className="text-sm font-semibold text-destructive">
+                          {humanRunErrorTitle(runError?.stage)}
+                        </p>
+                        <p className="text-sm text-destructive/90 mt-1">
+                          {runError?.message ?? "Execution failed before a result was produced."}
+                        </p>
+                      </div>
+                      {(runError?.stage || runError?.providerStatus) && (
+                        <div className="flex flex-wrap gap-2 text-[11px] text-muted-foreground">
+                          {runError?.stage && (
+                            <span className="rounded bg-background/80 px-1.5 py-0.5 border">
+                              stage: {runError.stage}
+                            </span>
+                          )}
+                          {runError?.providerStatus != null && (
+                            <span className="rounded bg-background/80 px-1.5 py-0.5 border">
+                              provider status: {runError.providerStatus}
+                            </span>
+                          )}
+                          {runError?.requestedUrl && (
+                            <span className="rounded bg-background/80 px-1.5 py-0.5 border truncate max-w-full">
+                              {runError.requestedUrl}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                      {runError?.providerBody && (
+                        <div>
+                          <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-1">
+                            Provider response
+                          </p>
+                          <pre className="text-xs bg-background/70 p-2 rounded border overflow-x-auto whitespace-pre-wrap max-h-48">
+                            {runError.providerBody.slice(0, 4000)}
+                          </pre>
+                        </div>
+                      )}
+                      <p className="text-xs text-muted-foreground">
+                        Tip: check your code for syntax errors, then hit Run again. If this keeps
+                        happening, the execution provider may be temporarily unavailable.
+                      </p>
                     </div>
                   ) : (
                     <div className="text-sm text-muted-foreground text-center py-8">

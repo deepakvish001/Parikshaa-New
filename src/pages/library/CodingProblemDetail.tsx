@@ -76,6 +76,16 @@ import { VerdictBadge } from "@/components/coding/VerdictBadge";
 import { CodeExecutionError, useCodeRunner, type RunResult, type SubmitResult, type CaseResult } from "@/hooks/useCodeRunner";
 import { getExecLimitsForLang, formatLimits } from "@/lib/coding/executionLimits";
 
+const humanRunErrorTitle = (stage?: string) => {
+  switch (stage) {
+    case "config": return "Code runner isn't configured";
+    case "validation": return "Invalid run request";
+    case "submit": return "Provider rejected the run";
+    case "poll": return "Provider timed out";
+    default: return "Run failed";
+  }
+};
+
 import { Cpu, Info } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useCodeDraft } from "@/hooks/useCodeDraft";
@@ -305,6 +315,13 @@ const CodingProblemDetail = () => {
     toast({ title: "Results reset", description: "All case statuses cleared for this problem." });
   };
   const [executionErrorDetails, setExecutionErrorDetails] = useState<boolean>(false);
+  const [runError, setRunError] = useState<{
+    message: string;
+    stage?: string;
+    providerStatus?: number;
+    providerBody?: string;
+    requestedUrl?: string;
+  } | null>(null);
   const [showLogin, setShowLogin] = useState(false);
   const [loginAction, setLoginAction] = useState<"run" | "submit" | null>(null);
   const [showShortcuts, setShowShortcuts] = useState(false);
@@ -1058,13 +1075,24 @@ const CodingProblemDetail = () => {
       refetchRuns();
     } catch (err) {
       setExecutionErrorDetails(true);
+      const ce = err as CodeExecutionError;
+      const message = ce?.message || "Something went wrong while running your code.";
+      const d = ce?.diagnostics;
+      setRunError({
+        message,
+        stage: d?.error_stage,
+        providerStatus: d?.judge0_status,
+        providerBody: d?.judge0_body,
+        requestedUrl: d?.requested_url,
+      });
       toast({
-        title: "Run failed",
-        description: (err as Error).message,
+        title: humanRunErrorTitle(d?.error_stage),
+        description: message,
         variant: "destructive",
       });
     }
   };
+
 
   const handleSubmit = async () => {
     if (!user) {
@@ -1208,9 +1236,18 @@ const CodingProblemDetail = () => {
       }
     } catch (err) {
       setExecutionErrorDetails(true);
+      const ce = err as CodeExecutionError;
+      const d = ce?.diagnostics;
+      setRunError({
+        message: ce?.message || "Something went wrong while grading your submission.",
+        stage: d?.error_stage,
+        providerStatus: d?.judge0_status,
+        providerBody: d?.judge0_body,
+        requestedUrl: d?.requested_url,
+      });
       toast({
-        title: "Submit failed",
-        description: (err as Error).message,
+        title: humanRunErrorTitle(d?.error_stage) || "Submit failed",
+        description: ce?.message || "Unknown error",
         variant: "destructive",
       });
     }
@@ -2128,8 +2165,48 @@ const CodingProblemDetail = () => {
                       )}
                     </div>
                   ) : executionErrorDetails ? (
-                    <div className="space-y-3">
-                      <p className="text-sm text-destructive">Execution failed before a result was produced.</p>
+                    <div className="space-y-3 rounded-md border border-destructive/40 bg-destructive/5 p-3">
+                      <div>
+                        <p className="text-sm font-semibold text-destructive">
+                          {humanRunErrorTitle(runError?.stage)}
+                        </p>
+                        <p className="text-sm text-destructive/90 mt-1">
+                          {runError?.message ?? "Execution failed before a result was produced."}
+                        </p>
+                      </div>
+                      {(runError?.stage || runError?.providerStatus) && (
+                        <div className="flex flex-wrap gap-2 text-[11px] text-muted-foreground">
+                          {runError?.stage && (
+                            <span className="rounded bg-background/80 px-1.5 py-0.5 border">
+                              stage: {runError.stage}
+                            </span>
+                          )}
+                          {runError?.providerStatus != null && (
+                            <span className="rounded bg-background/80 px-1.5 py-0.5 border">
+                              provider status: {runError.providerStatus}
+                            </span>
+                          )}
+                          {runError?.requestedUrl && (
+                            <span className="rounded bg-background/80 px-1.5 py-0.5 border truncate max-w-full">
+                              {runError.requestedUrl}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                      {runError?.providerBody && (
+                        <div>
+                          <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-1">
+                            Provider response
+                          </p>
+                          <pre className="text-xs bg-background/70 p-2 rounded border overflow-x-auto whitespace-pre-wrap max-h-48">
+                            {runError.providerBody.slice(0, 4000)}
+                          </pre>
+                        </div>
+                      )}
+                      <p className="text-xs text-muted-foreground">
+                        Tip: check your code for syntax errors, then hit Run again. If this keeps
+                        happening, the execution provider may be temporarily unavailable.
+                      </p>
                     </div>
                   ) : (
                     <div className="text-sm text-muted-foreground text-center py-8">

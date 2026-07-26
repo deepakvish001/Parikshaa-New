@@ -6970,6 +6970,7 @@ import { z as z32 } from "npm:zod@^3.23.8";
 
 // src/lib/mcp/tools/_cache.ts
 var store = globalThis.__mcpCache ?? (globalThis.__mcpCache = /* @__PURE__ */ new Map());
+var DEFAULT_TTL_MS = 6e4;
 function cacheGet(key) {
   const hit = store.get(key);
   if (!hit) return void 0;
@@ -6978,6 +6979,10 @@ function cacheGet(key) {
     return void 0;
   }
   return hit.value;
+}
+function cacheSet(key, value, ttlMs = DEFAULT_TTL_MS) {
+  store.set(key, { value, expiresAt: Date.now() + ttlMs });
+  return value;
 }
 function cacheKey(user, tool, args) {
   return `${user}::${tool}::${JSON.stringify(args ?? {})}`;
@@ -7033,10 +7038,13 @@ var sheetAccessMatrixTool = defineTool37({
       }
       rows.push(row);
     }
-    return jsonResult(`Access matrix for ${rows.length} built-in sheet(s).`, {
+    const label = `Access matrix for ${rows.length} built-in sheet(s).`;
+    const payload = {
       caller: { auth_uid: uid, is_admin: isAdmin, is_owner: isOwner, can_write: isAdmin || isOwner },
       sheets: rows
-    });
+    };
+    cacheSet(ck, { label, payload }, 6e4);
+    return jsonResult(label, payload);
   }
 });
 var debugMcpReadFailureTool = defineTool37({

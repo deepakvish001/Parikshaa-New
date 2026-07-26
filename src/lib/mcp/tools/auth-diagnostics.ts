@@ -70,10 +70,13 @@ export const sheetAccessMatrixTool = defineTool({
       rows.push(row);
     }
 
-    return jsonResult(`Access matrix for ${rows.length} built-in sheet(s).`, {
+    const label = `Access matrix for ${rows.length} built-in sheet(s).`;
+    const payload = {
       caller: { auth_uid: uid, is_admin: isAdmin, is_owner: isOwner, can_write: isAdmin || isOwner },
       sheets: rows,
-    });
+    };
+    cacheSet(ck, { label, payload }, 60_000);
+    return jsonResult(label, payload);
   },
 });
 

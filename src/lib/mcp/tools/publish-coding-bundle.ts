@@ -1,6 +1,77 @@
 import { defineTool, type ToolContext } from "@lovable.dev/mcp-js";
 import { z } from "zod";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { errResult, jsonResult, requireAdmin } from "./_shared";
+
+/**
+ * Core bundle-publish logic, reusable by other MCP tools (e.g. publish_sheet_bundle).
+ * Returns `{ ok, slug, snapshotVersion?, error? }`. Does NOT gate — caller must gate.
+ */
+export async function publishBundleCore(
+  sb: SupabaseClient,
+  uid: string,
+  input: {
+    problem: Record<string, unknown> & { slug: string };
+    tests: Array<{ input: string; expected_output: string; is_sample?: boolean; weight?: number }>;
+    starter_code?: Array<{ language: string; code: string }>;
+    solutions: Array<{ lang_id: string; code: string }>;
+    if_exists?: "error" | "update";
+    version_note?: string;
+  },
+): Promise<{ ok: boolean; slug: string; snapshotVersion: number | null; error?: string; overwritten?: boolean }> {
+  const p = input.problem;
+  const { data: existing, error: exErr } = await sb
+    .from("coding_problems").select("slug").eq("slug", p.slug).maybeSingle();
+  if (exErr) return { ok: false, slug: p.slug, snapshotVersion: null, error: `Slug check: ${exErr.message}` };
+  if (existing && (input.if_exists ?? "error") === "error") {
+    return { ok: false, slug: p.slug, snapshotVersion: null, error: `Slug "${p.slug}" exists — pass if_exists:"update".` };
+  }
+  let snapshotVersion: number | null = null;
+  if (existing) {
+    const [{ data: fullRow }, { data: curTests }, { data: curStarter }, { data: curSolutions }, { data: latest }] =
+      await Promise.all([
+        sb.from("coding_problems").select("*").eq("slug", p.slug).maybeSingle(),
+        sb.from("coding_problem_tests").select("*").eq("problem_slug", p.slug),
+        sb.from("coding_problem_starter_code").select("*").eq("problem_slug", p.slug),
+        sb.from("coding_problem_reference_solutions").select("*").eq("problem_slug", p.slug),
+        sb.from("coding_problem_versions").select("version_number").eq("slug", p.slug)
+          .order("version_number", { ascending: false }).limit(1).maybeSingle(),
+      ]);
+    snapshotVersion = ((latest?.version_number as number | undefined) ?? 0) + 1;
+    const { error: snapErr } = await sb.from("coding_problem_versions").insert({
+      slug: p.slug, version_number: snapshotVersion,
+      snapshot: { ...(fullRow ?? {}), _solutions: curSolutions ?? [] },
+      tests_snapshot: curTests ?? [], starter_snapshot: curStarter ?? [],
+      note: input.version_note ?? "Auto snapshot before bundle overwrite",
+      created_by: uid,
+    });
+    if (snapErr) return { ok: false, slug: p.slug, snapshotVersion, error: `Snapshot: ${snapErr.message}` };
+  }
+  const { error: upErr } = await sb.from("coding_problems")
+    .upsert({ ...p, is_published: true, created_by: uid }, { onConflict: "slug" });
+  if (upErr) return { ok: false, slug: p.slug, snapshotVersion, error: `Publish: ${upErr.message}` };
+
+  await sb.from("coding_problem_tests").delete().eq("problem_slug", p.slug);
+  const { error: tErr } = await sb.from("coding_problem_tests")
+    .insert(input.tests.map((t) => ({ ...t, problem_slug: p.slug })));
+  if (tErr) return { ok: false, slug: p.slug, snapshotVersion, error: `Tests: ${tErr.message}` };
+
+  if (input.starter_code?.length) {
+    await sb.from("coding_problem_starter_code").delete().eq("problem_slug", p.slug);
+    const { error: sErr } = await sb.from("coding_problem_starter_code")
+      .insert(input.starter_code.map((s) => ({ ...s, problem_slug: p.slug })));
+    if (sErr) return { ok: false, slug: p.slug, snapshotVersion, error: `Starter: ${sErr.message}` };
+  }
+  const solRows = input.solutions.map((s) => ({
+    problem_slug: p.slug, lang_id: s.lang_id, code: s.code, updated_at: new Date().toISOString(),
+  }));
+  const { error: solErr } = await sb.from("coding_problem_reference_solutions")
+    .upsert(solRows, { onConflict: "problem_slug,lang_id" });
+  if (solErr) return { ok: false, slug: p.slug, snapshotVersion, error: `Solutions: ${solErr.message}` };
+
+  return { ok: true, slug: p.slug, snapshotVersion, overwritten: !!existing };
+}
+
 
 /**
  * Batch workflow tool: publish a coding problem AND its reference solutions

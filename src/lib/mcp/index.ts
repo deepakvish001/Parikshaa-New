@@ -90,5 +90,13 @@ export default defineMcp({
     publishCodingSolutionTool,
     publishCodingBundleTool,
     ensureAdminAccessTool,
+    createSheetTool,
+    listSheetsTool,
+    addProblemsToSheetTool,
+    removeProblemFromSheetTool,
+    listSheetItemsTool,
+    shareSheetTool,
+    publishRoadmapTool,
+    listRoadmapsTool,
   ],
 });

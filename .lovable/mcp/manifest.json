@@ -1422,6 +1422,237 @@
           "properties": {}
         },
         "outputSchema": null
+      },
+      {
+        "name": "create_sheet",
+        "title": "Create sheet (folder of problems)",
+        "description": "Create a new sheet (curated folder) owned by the calling admin. Returns the folder id to use with add_problems_to_sheet.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 120
+            },
+            "description": {
+              "type": "string",
+              "maxLength": 1000
+            },
+            "color": {
+              "type": "string",
+              "maxLength": 20,
+              "description": "Optional hex or tailwind token."
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_sheets",
+        "title": "List sheets",
+        "description": "List sheets visible to the caller (own folders). Use to check for an existing sheet before creating a duplicate.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "search": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "add_problems_to_sheet",
+        "title": "Add coding problems to a sheet",
+        "description": "Batch-add Parikshaa coding problems (by slug) to an existing sheet. Skips slugs that don't exist and slugs already present. Returns per-slug status.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "slugs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1,
+              "maxItems": 200
+            },
+            "source": {
+              "type": "string",
+              "description": "Question source tag. Defaults to 'parikshaa'."
+            }
+          },
+          "required": [
+            "folder_id",
+            "slugs"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "remove_problem_from_sheet",
+        "title": "Remove a problem from a sheet",
+        "description": "Remove one problem (by slug) from a sheet.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "slug": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "folder_id",
+            "slug"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_sheet_items",
+        "title": "List problems in a sheet",
+        "description": "List all coding problems inside a given sheet, ordered by sort_order.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "required": [
+            "folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "share_sheet",
+        "title": "Create/refresh a public share link for a sheet",
+        "description": "Generate a shareable code for a sheet. If a share row already exists it's reused. Returns the share code.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "is_public": {
+              "type": "boolean"
+            },
+            "allow_copy": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "publish_roadmap",
+        "title": "Publish / feature a roadmap",
+        "description": "Toggle publish + feature flags for a roadmap by id in roadmap_overrides (upsert). Sort order optional.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "roadmap_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "is_published": {
+              "type": "boolean"
+            },
+            "is_featured": {
+              "type": "boolean"
+            },
+            "sort_order": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "roadmap_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_roadmap_overrides",
+        "title": "List roadmap overrides",
+        "description": "List all roadmap_overrides rows (publish/feature flags per roadmap id).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
       }
     ]
   }

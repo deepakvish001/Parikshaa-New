@@ -99,6 +99,7 @@ import { AdminRoute } from "@/components/AdminRoute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import { AdminShell } from "./components/admin/AdminShell";
 import AdminProblemsList from "./pages/admin/AdminProblemsList";
+import PublishHistory from "./pages/admin/PublishHistory";
 import ProblemEditor from "./pages/admin/ProblemEditor";
 import BulkImport from "./pages/admin/BulkImport";
 
@@ -387,6 +388,7 @@ const App = () => (
                   <Route path="problems/new" element={<ProblemEditor />} />
                   <Route path="problems/import" element={<BulkImport />} />
                   <Route path="problems/:slug/edit" element={<ProblemEditor />} />
+                  <Route path="problems/publish-history" element={<PublishHistory />} />
 
                   <Route path="users" element={<AdminUsers />} />
 

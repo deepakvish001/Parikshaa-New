@@ -93,6 +93,7 @@ const GROUPS: NavGroup[] = [
         { to: "/admin/problems", label: "All problems", icon: FileCode2, end: true },
         { to: "/admin/problems/new", label: "New problem", icon: Sparkles, end: true },
         { to: "/admin/problems/import", label: "Bulk Import", icon: Upload, end: true },
+        { to: "/admin/problems/publish-history", label: "Publish History", icon: HistoryIcon, end: true },
       ],
     },
     {

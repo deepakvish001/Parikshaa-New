@@ -715,6 +715,150 @@ var publishCodingSolutionTool = defineTool19({
   }
 });
 
+// src/lib/mcp/tools/publish-coding-bundle.ts
+import { defineTool as defineTool20 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z16 } from "npm:zod@^3.23.8";
+var problemSchema2 = z16.object({
+  slug: z16.string().min(2).max(80).regex(/^[a-z0-9-]+$/, "slug must be lowercase-with-dashes"),
+  title: z16.string().min(3).max(150),
+  difficulty: z16.enum(["easy", "medium", "hard"]),
+  description: z16.string().min(30),
+  topics: z16.array(z16.string().min(1)).min(1),
+  examples: z16.array(z16.record(z16.unknown())).min(1),
+  constraints: z16.array(z16.string()).optional(),
+  hints: z16.array(z16.string()).optional(),
+  cpu_time_limit_sec: z16.number().positive().optional(),
+  memory_limit_kb: z16.number().int().positive().optional(),
+  mcq: z16.record(z16.unknown()).optional(),
+  is_contest_pool: z16.boolean().optional()
+});
+var testSchema2 = z16.object({
+  input: z16.string(),
+  expected_output: z16.string(),
+  is_sample: z16.boolean().optional(),
+  weight: z16.number().optional()
+});
+var publishCodingBundleTool = defineTool20({
+  name: "publish_coding_bundle",
+  title: "Publish coding problem + solutions bundle",
+  description: "One-shot publish: problem + tests + starter code + reference solutions for multiple languages. Snapshots the previous version when overwriting. Use this instead of calling publish_coding_problem and publish_coding_solution separately.",
+  inputSchema: {
+    problem: z16.object({
+      slug: z16.string(),
+      title: z16.string(),
+      difficulty: z16.string(),
+      description: z16.string(),
+      topics: z16.array(z16.string()),
+      examples: z16.array(z16.record(z16.unknown())),
+      constraints: z16.array(z16.string()).optional(),
+      hints: z16.array(z16.string()).optional(),
+      cpu_time_limit_sec: z16.number().optional(),
+      memory_limit_kb: z16.number().int().optional(),
+      mcq: z16.record(z16.unknown()).optional(),
+      is_contest_pool: z16.boolean().optional()
+    }),
+    tests: z16.array(testSchema2).min(2, "at least 2 tests required"),
+    starter_code: z16.array(z16.object({ language: z16.string(), code: z16.string() })).optional(),
+    solutions: z16.array(z16.object({ lang_id: z16.string().min(1), code: z16.string().min(1) })).min(1, "at least one reference solution required"),
+    if_exists: z16.enum(["error", "update"]).optional(),
+    version_note: z16.string().optional()
+  },
+  annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
+  handler: async ({ problem, tests, starter_code, solutions, if_exists, version_note }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const parsed = problemSchema2.safeParse(problem);
+    if (!parsed.success) {
+      return errResult(
+        "Validation failed:\n" + JSON.stringify(parsed.error.flatten().fieldErrors, null, 2)
+      );
+    }
+    const p = parsed.data;
+    const sb = createUserSupabaseClient3(ctx);
+    const { data: existing, error: exErr } = await sb.from("coding_problems").select("slug, title").eq("slug", p.slug).maybeSingle();
+    if (exErr) return errResult(`Slug check failed: ${exErr.message}`);
+    if (existing && (if_exists ?? "error") === "error") {
+      return errResult(
+        `Slug "${p.slug}" already exists. Re-call with if_exists="update" to overwrite (a version snapshot will be saved).`
+      );
+    }
+    let snapshotVersion = null;
+    if (existing) {
+      const [{ data: fullRow }, { data: curTests }, { data: curStarter }, { data: curSolutions }, { data: latest }] = await Promise.all([
+        sb.from("coding_problems").select("*").eq("slug", p.slug).maybeSingle(),
+        sb.from("coding_problem_tests").select("*").eq("problem_slug", p.slug),
+        sb.from("coding_problem_starter_code").select("*").eq("problem_slug", p.slug),
+        sb.from("coding_problem_reference_solutions").select("*").eq("problem_slug", p.slug),
+        sb.from("coding_problem_versions").select("version_number").eq("slug", p.slug).order("version_number", { ascending: false }).limit(1).maybeSingle()
+      ]);
+      snapshotVersion = (latest?.version_number ?? 0) + 1;
+      const { error: snapErr } = await sb.from("coding_problem_versions").insert({
+        slug: p.slug,
+        version_number: snapshotVersion,
+        snapshot: { ...fullRow ?? {}, _solutions: curSolutions ?? [] },
+        tests_snapshot: curTests ?? [],
+        starter_snapshot: curStarter ?? [],
+        note: version_note ?? "Auto snapshot before bundle overwrite",
+        created_by: ctx.getUserId()
+      });
+      if (snapErr) return errResult(`Snapshot failed (aborted): ${snapErr.message}`);
+    }
+    const { error: upErr } = await sb.from("coding_problems").upsert({ ...p, is_published: true, created_by: ctx.getUserId() }, { onConflict: "slug" });
+    if (upErr) return errResult(`Publish failed: ${upErr.message}`);
+    await sb.from("coding_problem_tests").delete().eq("problem_slug", p.slug);
+    const { error: tErr } = await sb.from("coding_problem_tests").insert(tests.map((t) => ({ ...t, problem_slug: p.slug })));
+    if (tErr) return errResult(`Tests insert failed: ${tErr.message}`);
+    if (starter_code?.length) {
+      await sb.from("coding_problem_starter_code").delete().eq("problem_slug", p.slug);
+      const { error: sErr } = await sb.from("coding_problem_starter_code").insert(starter_code.map((s) => ({ ...s, problem_slug: p.slug })));
+      if (sErr) return errResult(`Starter code insert failed: ${sErr.message}`);
+    }
+    const solRows = solutions.map((s) => ({
+      problem_slug: p.slug,
+      lang_id: s.lang_id,
+      code: s.code,
+      updated_at: (/* @__PURE__ */ new Date()).toISOString()
+    }));
+    const { error: solErr } = await sb.from("coding_problem_reference_solutions").upsert(solRows, { onConflict: "problem_slug,lang_id" });
+    if (solErr) return errResult(`Solutions upsert failed: ${solErr.message}`);
+    return jsonResult(
+      existing ? `Bundle overwritten "${p.slug}" (previous saved as v${snapshotVersion}). Tests=${tests.length}, starters=${starter_code?.length ?? 0}, solutions=${solRows.length}.` : `Bundle published "${p.slug}" \u2014 ${tests.length} tests, ${starter_code?.length ?? 0} starters, ${solRows.length} solutions.`,
+      {
+        slug: p.slug,
+        snapshotVersion,
+        tests: tests.length,
+        starters: starter_code?.length ?? 0,
+        solutions: solRows.map((r) => r.lang_id)
+      }
+    );
+  }
+});
+
+// src/lib/mcp/tools/ensure-admin-access.ts
+import { defineTool as defineTool21 } from "npm:@lovable.dev/mcp-js@0.20.1";
+var ensureAdminAccessTool = defineTool21({
+  name: "ensure_admin_access",
+  title: "Ensure admin access for this MCP client",
+  description: "Grant the signed-in MCP user the 'admin' role so publish tools work. Idempotent \u2014 safe to call at the start of every session. Only OAuth-client tokens (Claude, ChatGPT connectors) are allowed; regular app sessions are rejected.",
+  inputSchema: {},
+  annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+  handler: async (_input, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const clientId = ctx.getClientId?.();
+    if (!clientId) {
+      return errResult(
+        "This tool is only callable by OAuth MCP clients (Claude, ChatGPT). Your token has no client_id claim."
+      );
+    }
+    const sb = createUserSupabaseClient3(ctx);
+    const { error } = await sb.rpc("grant_admin_to_self");
+    if (error) return errResult(`grant_admin_to_self failed: ${error.message}`);
+    return jsonResult(
+      `Admin role ensured for user ${ctx.getUserId()} (client=${clientId}).`,
+      { user_id: ctx.getUserId(), client_id: clientId, role: "admin" }
+    );
+  }
+});
+
 // src/lib/mcp/index.ts
 var projectRef = "elzftqnehcmnouptaqee";
 var mcp_default = defineMcp({
@@ -750,7 +894,9 @@ var mcp_default = defineMcp({
     publishCodingProblemTool,
     listCodingProblemVersionsTool,
     rollbackCodingProblemTool,
-    publishCodingSolutionTool
+    publishCodingSolutionTool,
+    publishCodingBundleTool,
+    ensureAdminAccessTool
   ]
 });
 

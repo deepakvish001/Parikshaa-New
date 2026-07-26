@@ -1480,6 +1480,11 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   // Expand/Collapse all
   const [expandAllSignal, setExpandAllSignal] = useState<{ expanded: boolean; timestamp: number } | null>(null);
 
+  // Lazy reveal for sections to speed up initial paint after login.
+  const SECTIONS_BATCH = 6;
+  const [visibleSectionCount, setVisibleSectionCount] = useState(SECTIONS_BATCH);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+
   // Blind 75 study plan prefs
   const [blind75Prefs, setBlind75Prefs] = useState<Blind75Prefs | null>(null);
   const [difficultyFilter, setDifficultyFilter] = useState("all");

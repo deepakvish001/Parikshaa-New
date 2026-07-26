@@ -79,6 +79,12 @@ import {
   searchTopicArticlesTool,
   verifyTopicArticleLinkageTool,
 } from "./tools/topic-articles";
+import {
+  getTopicArticlesDetailsBySlugsTool,
+  exportTopicArticlesSitemapTool,
+  reresolveTopicArticleImagesTool,
+  fixTopicArticleLinkageTool,
+} from "./tools/topic-articles-extra";
 
 // The OAuth issuer MUST be the direct Supabase host, built from the project ref,
 // not from SUPABASE_URL (which may be the Lovable Cloud proxy).

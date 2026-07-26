@@ -233,16 +233,36 @@ const BulkImport = () => {
     };
   };
 
-  const handleFile = async (file: File) => {
-    try {
-      const text = await file.text();
-      const parsed = JSON.parse(text);
-      const arr = Array.isArray(parsed) ? parsed : [parsed];
-      setRows(arr.map((raw, i) => parseRow(raw, i)));
-    } catch (e: any) {
-      toast({ title: "Invalid JSON", description: e.message, variant: "destructive" });
+  const handleFiles = async (files: File[]) => {
+    if (files.length === 0) return;
+    const all: any[] = [];
+    const failedFiles: string[] = [];
+    for (const file of files) {
+      try {
+        const text = await file.text();
+        const parsed = JSON.parse(text);
+        if (Array.isArray(parsed)) all.push(...parsed);
+        else all.push(parsed);
+      } catch (e: any) {
+        failedFiles.push(`${file.name}: ${e.message}`);
+      }
+    }
+    if (failedFiles.length > 0) {
+      toast({
+        title: `Skipped ${failedFiles.length} invalid file${failedFiles.length === 1 ? "" : "s"}`,
+        description: failedFiles.join(" • "),
+        variant: "destructive",
+      });
+    }
+    if (all.length > 0) {
+      setRows(all.map((raw, i) => parseRow(raw, i)));
+      toast({
+        title: `Loaded ${all.length} problem${all.length === 1 ? "" : "s"}`,
+        description: `From ${files.length - failedFiles.length} file${files.length - failedFiles.length === 1 ? "" : "s"}.`,
+      });
     }
   };
+
 
   const importValid = async () => {
     const valid = rows.filter((r) => r.ok);

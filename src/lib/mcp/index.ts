@@ -94,6 +94,11 @@ import {
   adminUpdateSheetTool,
   adminDeleteSheetTool,
 } from "./tools/admin-sheets-all";
+import {
+  sheetAccessMatrixTool,
+  debugMcpReadFailureTool,
+  verifySheetArticleAccessTool,
+} from "./tools/auth-diagnostics";
 
 // The OAuth issuer MUST be the direct Supabase host, built from the project ref,
 // not from SUPABASE_URL (which may be the Lovable Cloud proxy).

@@ -1128,7 +1128,7 @@ function SubSectionCard({
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {subSection.topics.map((topic, index) => (
+                    {topicsToRender.map((topic) => (
                       <TopicRow 
                         key={topic.id} 
                         topic={topic} 
@@ -1143,6 +1143,24 @@ function SubSectionCard({
                     ))}
                   </TableBody>
                 </Table>
+                {visibleTopics < subSection.topics.length && (
+                  <div className="flex items-center justify-between gap-2 px-4 py-3 border-t border-border/30 bg-muted/20">
+                    <p className="text-xs text-muted-foreground">
+                      Showing {visibleTopics} of {subSection.topics.length} problems
+                    </p>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() =>
+                        setVisibleTopics((c) =>
+                          Math.min(c + TOPICS_BATCH, subSection.topics.length),
+                        )
+                      }
+                    >
+                      Load more problems
+                    </Button>
+                  </div>
+                )}
               </div>
             </motion.div>
           </CollapsibleContent>

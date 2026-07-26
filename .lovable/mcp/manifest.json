@@ -1653,6 +1653,343 @@
           "properties": {}
         },
         "outputSchema": null
+      },
+      {
+        "name": "list_sheet_templates",
+        "title": "List predefined sheet templates",
+        "description": "Return all built-in sheet templates (key, name, description, section titles, slug counts). Use before create_sheet_from_template.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "create_sheet_from_template",
+        "title": "One-click sheet from a template",
+        "description": "Generate a new sheet using a predefined template. Validates slugs against coding_problems, inserts existing ones in template order, reports missing. Optionally publishes the linked roadmap.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "template_key": {
+              "type": "string",
+              "minLength": 1
+            },
+            "name_override": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "publish_roadmap": {
+              "type": "boolean",
+              "description": "If template defines a roadmap_id, also mark it published."
+            }
+          },
+          "required": [
+            "template_key"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "clone_sheet",
+        "title": "Clone an existing sheet",
+        "description": "Duplicate an existing sheet's structure and items into a new sheet owned by the caller. Useful to snapshot a template sheet.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "source_folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "new_name": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 120
+            }
+          },
+          "required": [
+            "source_folder_id",
+            "new_name"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "reorder_sheet_items",
+        "title": "Reorder problems in a sheet (drag-drop equivalent)",
+        "description": "Set the exact order of problems in a sheet by passing slugs in the desired order. Any slug in the sheet but omitted from `order` is appended at the end preserving its relative order.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "order": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1,
+              "maxItems": 500
+            }
+          },
+          "required": [
+            "folder_id",
+            "order"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "publish_sheet_bundle",
+        "title": "Publish coding problems + sheet + roadmap (mega)",
+        "description": "One-shot: publish an array of coding_problem bundles (problem + tests + starter + solutions), then create (or reuse) a sheet and add all successfully-published slugs in order, and optionally publish a roadmap. Returns per-slug outcome.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "sheet": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 120
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 2000
+                },
+                "color": {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                "reuse_folder_id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": "If passed, add problems to this existing sheet instead of creating a new one."
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "additionalProperties": false
+            },
+            "problems": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "problem": {
+                    "type": "object",
+                    "properties": {
+                      "slug": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "difficulty": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "topics": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "examples": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": {}
+                        }
+                      },
+                      "constraints": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "hints": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "cpu_time_limit_sec": {
+                        "type": "number"
+                      },
+                      "memory_limit_kb": {
+                        "type": "integer"
+                      },
+                      "mcq": {
+                        "type": "object",
+                        "additionalProperties": {}
+                      },
+                      "is_contest_pool": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "slug",
+                      "title",
+                      "difficulty",
+                      "description",
+                      "topics",
+                      "examples"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "tests": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "input": {
+                          "type": "string"
+                        },
+                        "expected_output": {
+                          "type": "string"
+                        },
+                        "is_sample": {
+                          "type": "boolean"
+                        },
+                        "weight": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "input",
+                        "expected_output"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 2
+                  },
+                  "starter_code": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "language": {
+                          "type": "string"
+                        },
+                        "code": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "language",
+                        "code"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "solutions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "lang_id": {
+                          "type": "string"
+                        },
+                        "code": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "lang_id",
+                        "code"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 1
+                  }
+                },
+                "required": [
+                  "problem",
+                  "tests",
+                  "solutions"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1,
+              "maxItems": 50
+            },
+            "if_exists": {
+              "type": "string",
+              "enum": [
+                "error",
+                "update"
+              ]
+            },
+            "roadmap": {
+              "type": "object",
+              "properties": {
+                "roadmap_id": {
+                  "type": "string"
+                },
+                "is_published": {
+                  "type": "boolean"
+                },
+                "is_featured": {
+                  "type": "boolean"
+                },
+                "sort_order": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "roadmap_id"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "sheet",
+            "problems"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
       }
     ]
   }

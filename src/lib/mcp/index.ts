@@ -39,6 +39,13 @@ import {
   publishRoadmapTool,
   listRoadmapsTool,
 } from "./tools/sheets";
+import {
+  listSheetTemplatesTool,
+  createSheetFromTemplateTool,
+  cloneSheetTool,
+  reorderSheetItemsTool,
+  publishSheetBundleTool,
+} from "./tools/sheet-templates";
 
 // The OAuth issuer MUST be the direct Supabase host, built from the project ref,
 // not from SUPABASE_URL (which may be the Lovable Cloud proxy).
@@ -98,5 +105,10 @@ export default defineMcp({
     shareSheetTool,
     publishRoadmapTool,
     listRoadmapsTool,
+    listSheetTemplatesTool,
+    createSheetFromTemplateTool,
+    cloneSheetTool,
+    reorderSheetItemsTool,
+    publishSheetBundleTool,
   ],
 });

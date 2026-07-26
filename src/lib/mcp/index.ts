@@ -116,5 +116,9 @@ export default defineMcp({
     cloneSheetTool,
     reorderSheetItemsTool,
     publishSheetBundleTool,
+    regenerateShareSheetLinkTool,
+    updateSheetSectionsTool,
+    getSheetDetailsTool,
+    previewPublishSheetBundleTool,
   ],
 });

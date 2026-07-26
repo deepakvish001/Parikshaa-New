@@ -1646,6 +1646,271 @@ ${JSON.stringify(perProblem, null, 2)}`);
   }
 });
 
+// src/lib/mcp/tools/sheet-manage.ts
+import { defineTool as defineTool29 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z24 } from "npm:zod@^3.23.8";
+var parseSections = (description) => {
+  const text = description ?? "";
+  const firstHeader = text.search(/(^|\n)## /);
+  if (firstHeader === -1) return { intro: text.trim(), sections: [] };
+  const intro = text.slice(0, firstHeader).trim();
+  const rest = text.slice(firstHeader).replace(/^\n/, "");
+  const blocks = rest.split(/\n(?=## )/);
+  const sections = blocks.map((b) => {
+    const [head, ...lines] = b.split("\n");
+    const title = head.replace(/^##\s+/, "").trim();
+    const slugs = lines.map((l) => l.trim()).filter((l) => l.startsWith("- ")).map((l) => l.slice(2).replace(/\s*\(missing\)\s*$/i, "").trim()).filter(Boolean);
+    return { title, slugs };
+  }).filter((s) => s.title);
+  return { intro, sections };
+};
+var renderSections = (intro, sections, missingSet) => {
+  const body = sections.map(
+    (s) => `## ${s.title}
+${s.slugs.map((sl) => `- ${sl}${missingSet && !missingSet.has(sl) ? "" : ""}${missingSet && missingSet.has(sl) === false ? " (missing)" : ""}`).join("\n")}`
+  ).join("\n\n");
+  return intro ? `${intro}
+
+${body}` : body;
+};
+var regenerateShareSheetLinkTool = defineTool29({
+  name: "regenerate_share_sheet_link",
+  title: "Revoke + regenerate a sheet's public share link",
+  description: "Delete any existing shared_folders row for the sheet and issue a fresh share code. Old links stop working immediately.",
+  inputSchema: {
+    folder_id: z24.string().uuid(),
+    is_public: z24.boolean().optional(),
+    allow_copy: z24.boolean().optional(),
+    expires_at: z24.string().datetime().optional().describe("ISO timestamp for expiry (optional).")
+  },
+  annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
+  handler: async ({ folder_id, is_public, allow_copy, expires_at }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const { data: folder, error: fErr } = await sb.from("user_folders").select("id, name").eq("id", folder_id).maybeSingle();
+    if (fErr) return errResult(fErr.message);
+    if (!folder) return errResult(`Folder ${folder_id} not found.`);
+    const { data: oldRows, error: delErr } = await sb.from("shared_folders").delete().eq("folder_id", folder_id).select("share_code");
+    if (delErr) return errResult(`Revoke failed: ${delErr.message}`);
+    const code = Math.random().toString(36).slice(2, 10) + Math.random().toString(36).slice(2, 6);
+    const row = {
+      folder_id,
+      share_code: code,
+      is_public: is_public ?? true,
+      allow_copy: allow_copy ?? true
+    };
+    if (expires_at) row.expires_at = expires_at;
+    const { data, error } = await sb.from("shared_folders").insert(row).select("id, share_code, is_public, allow_copy, expires_at").single();
+    if (error) return errResult(`New share failed: ${error.message}`);
+    return jsonResult(
+      `Share link regenerated for "${folder.name}". Revoked ${oldRows?.length ?? 0} old code(s).`,
+      { folder: folder.name, revoked: (oldRows ?? []).map((r) => r.share_code), new_share: data }
+    );
+  }
+});
+var updateSheetSectionsTool = defineTool29({
+  name: "update_sheet_sections",
+  title: "Edit a sheet's section outline (add/remove/rename/reorder)",
+  description: "Persist a new section outline into the sheet's description and, when requested, reorder actual sheet items to match section order (unlisted items append at end). Also inserts any missing slugs (that exist in coding_problems) referenced by the new outline.",
+  inputSchema: {
+    folder_id: z24.string().uuid(),
+    sections: z24.array(z24.object({ title: z24.string().min(1).max(120), slugs: z24.array(z24.string().min(1)).default([]) })).min(1).max(50),
+    intro: z24.string().max(2e3).optional().describe("Optional replacement intro (before section list)."),
+    apply_to_items: z24.boolean().optional().describe("If true (default), also reorder existing sheet items and insert any new outline slugs.")
+  },
+  annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: false },
+  handler: async ({ folder_id, sections, intro, apply_to_items }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const doApply = apply_to_items ?? true;
+    const { data: folder, error: fErr } = await sb.from("user_folders").select("id, name, description").eq("id", folder_id).maybeSingle();
+    if (fErr) return errResult(fErr.message);
+    if (!folder) return errResult(`Folder ${folder_id} not found.`);
+    const preservedIntro = intro !== void 0 ? intro : parseSections(folder.description).intro;
+    const allSlugs = Array.from(new Set(sections.flatMap((s) => s.slugs)));
+    let foundSet = /* @__PURE__ */ new Set();
+    if (allSlugs.length > 0) {
+      const { data: found, error: pErr } = await sb.from("coding_problems").select("slug").in("slug", allSlugs);
+      if (pErr) return errResult(`Slug lookup failed: ${pErr.message}`);
+      foundSet = new Set((found ?? []).map((r) => r.slug));
+    }
+    const missing = allSlugs.filter((s) => !foundSet.has(s));
+    const newDesc = renderSections(preservedIntro, sections, foundSet);
+    const { error: upErr } = await sb.from("user_folders").update({ description: newDesc, updated_at: (/* @__PURE__ */ new Date()).toISOString() }).eq("id", folder_id);
+    if (upErr) return errResult(`Description update failed: ${upErr.message}`);
+    const summary = {
+      folder_id,
+      folder_name: folder.name,
+      sections_written: sections.length,
+      missing_slugs: missing
+    };
+    if (doApply) {
+      const { data: existingItems } = await sb.from("user_folder_items").select("question_slug, sort_order").eq("folder_id", folder_id);
+      const existingSet = new Set((existingItems ?? []).map((r) => r.question_slug));
+      const orderedOutlineSlugs = sections.flatMap((s) => s.slugs).filter((s) => foundSet.has(s));
+      const toInsert = orderedOutlineSlugs.filter((s) => !existingSet.has(s));
+      if (toInsert.length > 0) {
+        const rows = toInsert.map((slug) => ({
+          folder_id,
+          question_slug: slug,
+          question_source: "parikshaa",
+          sort_order: 0
+        }));
+        const { error: iErr } = await sb.from("user_folder_items").insert(rows);
+        if (iErr) return errResult(`Insert missing items failed: ${iErr.message}`);
+        toInsert.forEach((s) => existingSet.add(s));
+      }
+      const listed = orderedOutlineSlugs.filter((s) => existingSet.has(s));
+      const tail = (existingItems ?? []).filter((r) => !listed.includes(r.question_slug)).sort((a, b) => a.sort_order - b.sort_order).map((r) => r.question_slug);
+      const finalOrder = [...listed, ...tail];
+      for (let i = 0; i < finalOrder.length; i++) {
+        const { error } = await sb.from("user_folder_items").update({ sort_order: i }).eq("folder_id", folder_id).eq("question_slug", finalOrder[i]);
+        if (error) return errResult(`Reorder failed at "${finalOrder[i]}": ${error.message}`);
+      }
+      summary.items_inserted = toInsert.length;
+      summary.items_reordered = finalOrder.length;
+      summary.unlisted_tail = tail.length;
+    }
+    return jsonResult(`Outline updated for "${folder.name}" (${sections.length} sections).`, summary);
+  }
+});
+var getSheetDetailsTool = defineTool29({
+  name: "get_sheet_details",
+  title: "Get full sheet structure + ordered items",
+  description: "Return sheet metadata, parsed section outline from description, all ordered sheet items with problem metadata (title, difficulty, topics), and any active share code. Ready for direct UI rendering.",
+  inputSchema: { folder_id: z24.string().uuid() },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ folder_id }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const sb = createUserSupabaseClient3(ctx);
+    const { data: folder, error: fErr } = await sb.from("user_folders").select("id, name, description, color, created_at, updated_at, user_id").eq("id", folder_id).maybeSingle();
+    if (fErr) return errResult(fErr.message);
+    if (!folder) return errResult(`Folder ${folder_id} not found.`);
+    const { data: items, error: iErr } = await sb.from("user_folder_items").select("question_slug, question_id, question_source, sort_order, created_at").eq("folder_id", folder_id).order("sort_order", { ascending: true });
+    if (iErr) return errResult(iErr.message);
+    const slugs = (items ?? []).map((r) => r.question_slug).filter(Boolean);
+    let problemMeta = {};
+    if (slugs.length > 0) {
+      const { data: probs } = await sb.from("coding_problems").select("slug, title, difficulty, topics, is_published").in("slug", slugs);
+      problemMeta = Object.fromEntries((probs ?? []).map((p) => [p.slug, p]));
+    }
+    const enrichedItems = (items ?? []).map((it) => ({
+      slug: it.question_slug,
+      sort_order: it.sort_order,
+      source: it.question_source,
+      created_at: it.created_at,
+      problem: problemMeta[it.question_slug] ?? null
+    }));
+    const { intro, sections } = parseSections(folder.description);
+    const inSheet = new Set(slugs);
+    const sectionsAnnotated = sections.map((s) => ({
+      title: s.title,
+      slugs: s.slugs.map((sl) => ({
+        slug: sl,
+        in_sheet: inSheet.has(sl),
+        problem: problemMeta[sl] ?? null
+      }))
+    }));
+    const { data: share } = await sb.from("shared_folders").select("share_code, is_public, allow_copy, expires_at, created_at").eq("folder_id", folder_id).maybeSingle();
+    return jsonResult(`Sheet "${folder.name}" \u2014 ${enrichedItems.length} items, ${sections.length} sections.`, {
+      folder: {
+        id: folder.id,
+        name: folder.name,
+        color: folder.color,
+        created_at: folder.created_at,
+        updated_at: folder.updated_at,
+        owner_id: folder.user_id
+      },
+      intro,
+      sections: sectionsAnnotated,
+      items: enrichedItems,
+      share: share ?? null
+    });
+  }
+});
+var previewPublishSheetBundleTool = defineTool29({
+  name: "preview_publish_sheet_bundle",
+  title: "Dry-run preview of publish_sheet_bundle",
+  description: "Decode a publish_sheet_bundle payload and report exactly what would happen \u2014 sheets created/reused, problems inserted vs overwritten, items added vs already-in-sheet, and any validation failures \u2014 WITHOUT writing anything.",
+  inputSchema: {
+    sheet: z24.object({
+      name: z24.string().min(2).max(120),
+      description: z24.string().max(2e3).optional(),
+      color: z24.string().max(20).optional(),
+      reuse_folder_id: z24.string().uuid().optional()
+    }),
+    problems: z24.array(
+      z24.object({
+        problem: z24.object({
+          slug: z24.string(),
+          title: z24.string().optional(),
+          difficulty: z24.string().optional()
+        }).passthrough(),
+        tests: z24.array(z24.record(z24.unknown())).optional(),
+        starter_code: z24.array(z24.record(z24.unknown())).optional(),
+        solutions: z24.array(z24.record(z24.unknown())).optional()
+      })
+    ).min(1).max(50),
+    if_exists: z24.enum(["error", "update"]).optional(),
+    roadmap: z24.object({ roadmap_id: z24.string() }).passthrough().optional()
+  },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ sheet, problems, if_exists, roadmap }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const sb = createUserSupabaseClient3(ctx);
+    const perProblem = [];
+    const slugs = problems.map((p) => p.problem.slug);
+    const dupSlugs = slugs.filter((s, i) => slugs.indexOf(s) !== i);
+    const { data: existing } = await sb.from("coding_problems").select("slug").in("slug", slugs);
+    const existingSet = new Set((existing ?? []).map((r) => r.slug));
+    for (const p of problems) {
+      const issues = [];
+      if (!p.problem.slug || !/^[a-z0-9-]+$/.test(p.problem.slug))
+        issues.push("slug must be lowercase-with-dashes");
+      if (!p.tests || p.tests.length < 2) issues.push("needs >= 2 tests");
+      if (!p.solutions || p.solutions.length < 1) issues.push("needs >= 1 solution");
+      const conflictExists = existingSet.has(p.problem.slug);
+      const wouldError = conflictExists && (if_exists ?? "error") === "error";
+      perProblem.push({
+        slug: p.problem.slug,
+        action: wouldError ? "would_fail_slug_exists" : conflictExists ? "would_overwrite_with_snapshot" : "would_create",
+        validation_issues: issues,
+        would_publish: issues.length === 0 && !wouldError
+      });
+    }
+    let sheetInfo = { action: "would_create", name: sheet.name };
+    let existingSheetItems = [];
+    if (sheet.reuse_folder_id) {
+      const { data: folder } = await sb.from("user_folders").select("id, name").eq("id", sheet.reuse_folder_id).maybeSingle();
+      if (!folder) sheetInfo = { action: "reuse_failed_not_found", folder_id: sheet.reuse_folder_id };
+      else {
+        const { data: items } = await sb.from("user_folder_items").select("question_slug").eq("folder_id", folder.id);
+        existingSheetItems = (items ?? []).map((r) => r.question_slug);
+        sheetInfo = { action: "would_reuse", folder_id: folder.id, folder_name: folder.name, current_items: existingSheetItems.length };
+      }
+    }
+    const publishableSlugs = perProblem.filter((r) => r.would_publish).map((r) => r.slug);
+    const alreadyInSheet = publishableSlugs.filter((s) => existingSheetItems.includes(s));
+    const toAdd = publishableSlugs.filter((s) => !existingSheetItems.includes(s));
+    return jsonResult(
+      `Preview: ${perProblem.filter((r) => r.would_publish).length}/${problems.length} would publish, ${toAdd.length} would be added to sheet.`,
+      {
+        sheet: sheetInfo,
+        problems: perProblem,
+        duplicate_slugs_in_payload: Array.from(new Set(dupSlugs)),
+        sheet_add_plan: { would_add: toAdd, already_in_sheet: alreadyInSheet },
+        roadmap: roadmap ? { action: "would_upsert", roadmap_id: roadmap.roadmap_id } : null,
+        dry_run: true,
+        _note: "No writes performed. Call publish_sheet_bundle to apply.",
+        // Reuse imported helper to keep tree-shaking honest — noop:
+        _coreLoaded: typeof publishBundleCore === "function"
+      }
+    );
+  }
+});
+
 // src/lib/mcp/index.ts
 var projectRef = "elzftqnehcmnouptaqee";
 var mcp_default = defineMcp({
@@ -1704,7 +1969,11 @@ var mcp_default = defineMcp({
     createSheetFromTemplateTool,
     cloneSheetTool,
     reorderSheetItemsTool,
-    publishSheetBundleTool
+    publishSheetBundleTool,
+    regenerateShareSheetLinkTool,
+    updateSheetSectionsTool,
+    getSheetDetailsTool,
+    previewPublishSheetBundleTool
   ]
 });
 

@@ -7162,6 +7162,163 @@ var verifySheetArticleAccessTool = defineTool37({
   }
 });
 
+// src/lib/mcp/tools/sheet-write-access.ts
+import { defineTool as defineTool38 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z33 } from "npm:zod@^3.23.8";
+var verifySheetWriteAccessTool = defineTool38({
+  name: "verify_sheet_write_access",
+  title: "Verify sheet write access",
+  description: "For a given sheet slug, check whether the current caller can create/update/delete sections and every linked topic_article. Returns per-item allow/block with reasons.",
+  inputSchema: {
+    sheet_slug: z33.string().min(1).describe("Sheet slug (built-in like dbms-sheet, or DB folder slug).")
+  },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ sheet_slug }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const sb = createUserSupabaseClient3(ctx);
+    const uid = ctx.getUserId();
+    const [{ data: isAdmin }, { data: isOwner }] = await Promise.all([
+      sb.rpc("has_role", { _user_id: uid, _role: "admin" }),
+      sb.rpc("has_role", { _user_id: uid, _role: "owner" })
+    ]);
+    const canWriteRole = Boolean(isAdmin || isOwner);
+    const results = [];
+    const { error: ovErr } = await sb.from("builtin_sheet_overrides").select("slug", { head: true, count: "exact" }).eq("slug", sheet_slug);
+    results.push({
+      target: "builtin_sheet_overrides",
+      op: "update/delete",
+      allowed: canWriteRole && !ovErr,
+      reason: canWriteRole ? ovErr?.message ?? "admin/owner policy grants write" : "requires admin or owner role"
+    });
+    const { data: folder, error: fErr } = await sb.from("user_folders").select("id, name, user_id").eq("slug", sheet_slug).maybeSingle();
+    if (folder) {
+      const canFolder = canWriteRole || folder.user_id === uid;
+      results.push({
+        target: `user_folders:${folder.id}`,
+        op: "update/delete",
+        allowed: canFolder,
+        reason: canFolder ? "owner of folder or admin/owner role" : "not folder owner and not admin/owner"
+      });
+    } else if (fErr) {
+      results.push({ target: "user_folders", op: "lookup", allowed: false, reason: fErr.message });
+    }
+    const linked = await sb.from("topic_articles").select("id, slug, status, sheet_slug").eq("sheet_slug", sheet_slug);
+    const articles = linked.data ?? [];
+    for (const a of articles) {
+      const canRead = canWriteRole || a.status === "published";
+      const canWrite = canWriteRole;
+      results.push({
+        target: `topic_articles:${a.slug}`,
+        op: "update/delete",
+        allowed: canWrite,
+        reason: canWrite ? "admin/owner policy grants write" : `blocked: needs admin/owner (status=${a.status}, readable=${canRead})`
+      });
+    }
+    const blocked = results.filter((r) => !r.allowed);
+    return jsonResult(
+      `Write-access probe for "${sheet_slug}": ${results.length - blocked.length}/${results.length} allowed.`,
+      {
+        caller: { auth_uid: uid, is_admin: !!isAdmin, is_owner: !!isOwner, can_write: canWriteRole },
+        sheet_slug,
+        checked: results.length,
+        blocked_count: blocked.length,
+        blocked,
+        all: results
+      }
+    );
+  }
+});
+
+// src/lib/mcp/tools/share-links.ts
+import { defineTool as defineTool39 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z34 } from "npm:zod@^3.23.8";
+var genToken = () => (globalThis.crypto?.randomUUID?.() ?? Math.random().toString(36).slice(2)).replace(/-/g, "") + Math.random().toString(36).slice(2, 8);
+var KNOWN_BUILTINS = /* @__PURE__ */ new Set(["dbms-sheet", "cn-sheet", "os-sheet"]);
+var createBuiltinShareLinkTool = defineTool39({
+  name: "create_builtin_share_link",
+  title: "Create read-only share link for a built-in sheet",
+  description: "Generate a public read-only share token for a built-in sheet slug (dbms-sheet, cn-sheet, os-sheet). Optionally include linked articles and set an expiry.",
+  inputSchema: {
+    slug: z34.string().min(1),
+    include_articles: z34.boolean().optional().default(true),
+    expires_in_hours: z34.number().int().positive().optional(),
+    label: z34.string().optional()
+  },
+  annotations: { readOnlyHint: false, idempotentHint: false, openWorldHint: false },
+  handler: async ({ slug, include_articles, expires_in_hours, label }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    if (!KNOWN_BUILTINS.has(slug))
+      return errResult(`Unknown built-in slug "${slug}". Expected one of ${[...KNOWN_BUILTINS].join(", ")}.`);
+    const token = genToken();
+    const expires_at = expires_in_hours ? new Date(Date.now() + expires_in_hours * 36e5).toISOString() : null;
+    const { data, error } = await gate.sb.from("builtin_sheet_share_links").insert({
+      slug,
+      token,
+      include_articles: include_articles ?? true,
+      expires_at,
+      label: label ?? null,
+      created_by: ctx.getUserId()
+    }).select("*").single();
+    if (error) return errResult(error.message);
+    return jsonResult("Share link created.", {
+      link: data,
+      public_url: `/share/sheet/${token}`
+    });
+  }
+});
+var revokeBuiltinShareLinkTool = defineTool39({
+  name: "revoke_builtin_share_link",
+  title: "Revoke a built-in sheet share link",
+  description: "Set revoked=true on the given share token so it stops resolving.",
+  inputSchema: { token: z34.string().min(1) },
+  annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
+  handler: async ({ token }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const { data, error } = await gate.sb.from("builtin_sheet_share_links").update({ revoked: true }).eq("token", token).select("*").single();
+    if (error) return errResult(error.message);
+    return jsonResult("Revoked.", { link: data });
+  }
+});
+var listBuiltinShareLinksTool = defineTool39({
+  name: "list_builtin_share_links",
+  title: "List built-in sheet share links",
+  description: "List all share links (optionally filter by slug).",
+  inputSchema: { slug: z34.string().optional() },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ slug }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    let q = gate.sb.from("builtin_sheet_share_links").select("*").order("created_at", { ascending: false });
+    if (slug) q = q.eq("slug", slug);
+    const { data, error } = await q;
+    if (error) return errResult(error.message);
+    return jsonResult(`Found ${data?.length ?? 0} link(s).`, { links: data ?? [] });
+  }
+});
+var validateShareLinkAccessTool = defineTool39({
+  name: "validate_share_link_access",
+  title: "Validate a share link",
+  description: "Public: check whether a share token resolves. Returns the slug, include_articles flag, expiry, revoked state, and whether the caller can currently open it.",
+  inputSchema: { token: z34.string().min(1) },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ token }, ctx) => {
+    const sb = createUserSupabaseClient3(ctx);
+    const { data, error } = await sb.from("builtin_sheet_share_links").select("id, slug, include_articles, expires_at, revoked, view_count, label, created_at").eq("token", token).maybeSingle();
+    if (error) return errResult(error.message);
+    if (!data) return jsonResult("Not found.", { valid: false, reason: "no_such_token" });
+    const expired = data.expires_at && new Date(data.expires_at) < /* @__PURE__ */ new Date();
+    const valid = !data.revoked && !expired;
+    return jsonResult(valid ? "Valid." : "Invalid.", {
+      valid,
+      reason: data.revoked ? "revoked" : expired ? "expired" : "ok",
+      link: data,
+      public_url: `/share/sheet/${token}`
+    });
+  }
+});
+
 // src/lib/mcp/index.ts
 var projectRef = "elzftqnehcmnouptaqee";
 var mcp_default = defineMcp({
@@ -7261,7 +7418,12 @@ var mcp_default = defineMcp({
     getTopicArticlesDetailsBySlugsTool,
     exportTopicArticlesSitemapTool,
     reresolveTopicArticleImagesTool,
-    fixTopicArticleLinkageTool
+    fixTopicArticleLinkageTool,
+    verifySheetWriteAccessTool,
+    createBuiltinShareLinkTool,
+    revokeBuiltinShareLinkTool,
+    listBuiltinShareLinksTool,
+    validateShareLinkAccessTool
   ]
 });
 

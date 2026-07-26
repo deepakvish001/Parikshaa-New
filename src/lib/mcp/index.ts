@@ -211,5 +211,10 @@ export default defineMcp({
     exportTopicArticlesSitemapTool,
     reresolveTopicArticleImagesTool,
     fixTopicArticleLinkageTool,
+    verifySheetWriteAccessTool,
+    createBuiltinShareLinkTool,
+    revokeBuiltinShareLinkTool,
+    listBuiltinShareLinksTool,
+    validateShareLinkAccessTool,
   ],
 });

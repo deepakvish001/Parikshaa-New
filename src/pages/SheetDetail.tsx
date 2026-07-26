@@ -2622,23 +2622,43 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
           <Card className="overflow-hidden">
             <CardContent className="p-0">
               {filteredSections.length > 0 ? (
-                filteredSections.map((section) => (
-                  <SectionCard 
-                    key={section.id} 
-                    section={section} 
-                    onToggleTopic={handleToggleTopic} 
-                    onOpenNote={handleOpenNote}
-                    onToggleRevision={handleToggleRevision}
-                    onSectionComplete={handleSectionComplete}
-                    expandAllSignal={expandAllSignal}
-                    showRevisionControl={activeTab === "revision"}
-                    onMarkRevised={handleMarkRevised}
-                    onUndoLastPass={handleUndoLastPass}
-                    onResetPasses={handleResetPasses}
-                    onResetSection={handleResetSection}
-                    onJumpToTopic={scrollToTopic}
-                  />
-                ))
+                <>
+                  {filteredSections.slice(0, visibleSectionCount).map((section) => (
+                    <SectionCard 
+                      key={section.id} 
+                      section={section} 
+                      onToggleTopic={handleToggleTopic} 
+                      onOpenNote={handleOpenNote}
+                      onToggleRevision={handleToggleRevision}
+                      onSectionComplete={handleSectionComplete}
+                      expandAllSignal={expandAllSignal}
+                      showRevisionControl={activeTab === "revision"}
+                      onMarkRevised={handleMarkRevised}
+                      onUndoLastPass={handleUndoLastPass}
+                      onResetPasses={handleResetPasses}
+                      onResetSection={handleResetSection}
+                      onJumpToTopic={scrollToTopic}
+                    />
+                  ))}
+                  {visibleSectionCount < filteredSections.length && (
+                    <div ref={loadMoreRef} className="flex flex-col items-center gap-2 py-6 border-t border-border/30">
+                      <p className="text-xs text-muted-foreground">
+                        Showing {visibleSectionCount} of {filteredSections.length} sections
+                      </p>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() =>
+                          setVisibleSectionCount((c) =>
+                            Math.min(c + SECTIONS_BATCH, filteredSections.length),
+                          )
+                        }
+                      >
+                        Load more sections
+                      </Button>
+                    </div>
+                  )}
+                </>
               ) : weekViewEmpty === "no-weeks" ? (
                 <div className="p-12 text-center">
                   <CalendarDays className="h-12 w-12 text-muted-foreground mx-auto mb-4" />

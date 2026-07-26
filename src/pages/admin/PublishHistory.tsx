@@ -52,22 +52,30 @@ export default function PublishHistory() {
 
   async function load() {
     setLoading(true);
-    const [{ data: probs }, { data: vers }, { data: sols }] = await Promise.all([
-      supabase
+    const sb = supabase as unknown as {
+      from: (t: string) => {
+        select: (c: string) => {
+          order?: (col: string, opts: { ascending: boolean }) => any;
+          limit?: (n: number) => any;
+        };
+      };
+    };
+    const [probsRes, versRes, solsRes] = await Promise.all([
+      sb
         .from("coding_problems")
         .select("slug, title, difficulty, is_published, updated_at, created_at")
-        .order("updated_at", { ascending: false })
+        .order!("updated_at", { ascending: false })
         .limit(200),
-      supabase
+      sb
         .from("coding_problem_versions")
         .select("id, slug, version_number, note, created_at, created_by")
-        .order("created_at", { ascending: false })
+        .order!("created_at", { ascending: false })
         .limit(1000),
-      supabase
-        .from("coding_problem_reference_solutions")
-        .select("problem_slug, lang_id, updated_at"),
+      sb.from("coding_problem_reference_solutions").select("problem_slug, lang_id, updated_at"),
     ]);
-    setProblems((probs ?? []) as ProblemRow[]);
+    setProblems(((probsRes as { data: ProblemRow[] | null }).data ?? []) as ProblemRow[]);
+    const vers = (versRes as { data: VersionRow[] | null }).data ?? [];
+    const sols = (solsRes as { data: SolutionRow[] | null }).data ?? [];
     const vMap: Record<string, VersionRow[]> = {};
     for (const v of (vers ?? []) as VersionRow[]) {
       (vMap[v.slug] ||= []).push(v);

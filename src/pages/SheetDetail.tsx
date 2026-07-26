@@ -1808,6 +1808,28 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   const filteredSections = weekView.sections;
   const weekProgress = weekView.weekProgress;
   const weekViewEmpty = weekView.emptyReason;
+
+  // Reset lazy window when filters/search/tab change.
+  useEffect(() => {
+    setVisibleSectionCount(SECTIONS_BATCH);
+  }, [activeTab, deferredSearch, difficultyFilter, categoryFilter, selectedWeek, currentSheetId]);
+
+  // Auto-reveal more sections when sentinel enters viewport.
+  useEffect(() => {
+    const node = loadMoreRef.current;
+    if (!node) return;
+    if (visibleSectionCount >= filteredSections.length) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setVisibleSectionCount((c) => Math.min(c + SECTIONS_BATCH, filteredSections.length));
+        }
+      },
+      { rootMargin: "600px 0px" },
+    );
+    io.observe(node);
+    return () => io.disconnect();
+  }, [visibleSectionCount, filteredSections.length]);
   const showWeekPanel =
     currentSheetId === "blind-75" &&
     !!blind75Prefs &&

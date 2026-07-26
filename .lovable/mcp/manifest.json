@@ -618,6 +618,386 @@
         "outputSchema": null
       },
       {
+        "name": "db_query",
+        "title": "Advanced query on any table",
+        "description": "Advanced SELECT with rich filter operators (eq, neq, gt, gte, lt, lte, like, ilike, in, is, contains). RLS applies — as admin/owner you can read across users where policies allow. Use this instead of db_select when you need range, pattern, or IN filters.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "table": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "pattern": "^[a-z_][a-z0-9_]*$"
+            },
+            "columns": {
+              "type": "string"
+            },
+            "filters": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "column": {
+                    "type": "string"
+                  },
+                  "op": {
+                    "type": "string",
+                    "enum": [
+                      "eq",
+                      "neq",
+                      "gt",
+                      "gte",
+                      "lt",
+                      "lte",
+                      "like",
+                      "ilike",
+                      "in",
+                      "is",
+                      "contains",
+                      "cs",
+                      "cd"
+                    ]
+                  },
+                  "value": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": [
+                            "string",
+                            "number"
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "column",
+                  "op",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "order_by": {
+              "type": "string"
+            },
+            "ascending": {
+              "type": "boolean"
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "offset": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "count": {
+              "type": "string",
+              "enum": [
+                "exact",
+                "planned",
+                "estimated"
+              ]
+            }
+          },
+          "required": [
+            "table"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "db_rpc",
+        "title": "Call any database function (RPC)",
+        "description": "Invoke any Postgres function exposed via PostgREST. Use for admin RPCs like admin_list_users, award_xp, get_quiz_leaderboard, grant_admin_to_self, etc. Access is enforced by GRANT + SECURITY DEFINER checks in the DB.",
+        "annotations": {
+          "readOnlyHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[a-z_][a-z0-9_]*$"
+            },
+            "args": {
+              "type": "object",
+              "additionalProperties": {},
+              "description": "Named arguments for the RPC (matches function parameters)."
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "storage_list",
+        "title": "List files in a storage bucket",
+        "description": "List files/folders inside a Supabase Storage bucket path. Bucket RLS applies.",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "bucket": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "path": {
+              "type": "string"
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "offset": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "search": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "bucket"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "storage_upload",
+        "title": "Upload a file to storage",
+        "description": "Upload text or base64 content to a storage bucket path. Use `encoding: base64` for binary; otherwise text is stored as UTF-8.",
+        "annotations": {
+          "readOnlyHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "bucket": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "content": {
+              "type": "string"
+            },
+            "encoding": {
+              "type": "string",
+              "enum": [
+                "utf8",
+                "base64"
+              ]
+            },
+            "content_type": {
+              "type": "string"
+            },
+            "upsert": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "bucket",
+            "path",
+            "content"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "storage_delete",
+        "title": "Delete files from storage",
+        "description": "Delete one or more files by path from a bucket.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "bucket": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "paths": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "bucket",
+            "paths"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "storage_signed_url",
+        "title": "Create a signed URL for a stored file",
+        "description": "Return a time-limited signed URL for downloading a file from a private bucket.",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "bucket": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expires_in_seconds": {
+              "type": "integer",
+              "minimum": 60,
+              "maximum": 604800
+            }
+          },
+          "required": [
+            "bucket",
+            "path"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "invoke_edge_function",
+        "title": "Invoke an edge function",
+        "description": "Call any deployed Supabase edge function as the signed-in user. Use for run-code, admin utilities, integrations, etc. The function receives the caller's JWT via Authorization header.",
+        "annotations": {
+          "readOnlyHint": false,
+          "openWorldHint": true
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "body": {},
+            "method": {
+              "type": "string",
+              "enum": [
+                "GET",
+                "POST",
+                "PUT",
+                "PATCH",
+                "DELETE"
+              ]
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "admin_manage_role",
+        "title": "Assign or remove a role for any user",
+        "description": "Grant or revoke a role on public.user_roles for any user. Caller must be admin/owner (RLS enforced). Use action='grant' or 'revoke'.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "user_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "role": {
+              "type": "string",
+              "enum": [
+                "admin",
+                "owner",
+                "moderator",
+                "user"
+              ]
+            },
+            "action": {
+              "type": "string",
+              "enum": [
+                "grant",
+                "revoke"
+              ]
+            }
+          },
+          "required": [
+            "user_id",
+            "role",
+            "action"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
         "name": "publish_coding_problem",
         "title": "Publish coding problem (validated)",
         "description": "Validate + publish a coding problem. Enforces required fields, requires ≥2 tests, and handles slug conflicts. If the slug already exists, use if_exists='update' to overwrite (auto-snapshots current version first) or if_exists='error' (default) to abort and prompt the caller.",

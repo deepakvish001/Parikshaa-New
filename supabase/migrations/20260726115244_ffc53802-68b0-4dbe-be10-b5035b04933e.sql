@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "registrations public read for visible contests" ON public.contest_registrations;

@@ -4096,6 +4096,42 @@ export type Database = {
         }
         Relationships: []
       }
+      quiz_leaderboard_public: {
+        Row: {
+          accuracy: number | null
+          avg_time_seconds: number | null
+          category: string | null
+          completed_at: string | null
+          difficulty: string | null
+          quiz_type: string | null
+          score: number | null
+          total_questions: number | null
+          total_time_seconds: number | null
+        }
+        Insert: {
+          accuracy?: number | null
+          avg_time_seconds?: number | null
+          category?: string | null
+          completed_at?: string | null
+          difficulty?: string | null
+          quiz_type?: string | null
+          score?: number | null
+          total_questions?: number | null
+          total_time_seconds?: number | null
+        }
+        Update: {
+          accuracy?: number | null
+          avg_time_seconds?: number | null
+          category?: string | null
+          completed_at?: string | null
+          difficulty?: string | null
+          quiz_type?: string | null
+          score?: number | null
+          total_questions?: number | null
+          total_time_seconds?: number | null
+        }
+        Relationships: []
+      }
       roadmap_leaderboard_view: {
         Row: {
           completed_topics: number | null

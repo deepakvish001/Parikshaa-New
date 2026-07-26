@@ -2333,6 +2333,139 @@
           "$schema": "http://json-schema.org/draft-07/schema#"
         },
         "outputSchema": null
+      },
+      {
+        "name": "update_sheet_share_settings",
+        "title": "Update share settings without regenerating share_code",
+        "description": "Patch is_public / allow_copy / expires_at on the existing shared_folders row. share_code stays the same unless regenerate:true is set.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "is_public": {
+              "type": "boolean"
+            },
+            "allow_copy": {
+              "type": "boolean"
+            },
+            "expires_at": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "ISO timestamp, or null to clear expiry."
+            },
+            "regenerate": {
+              "type": "boolean",
+              "description": "If true, also rotate share_code."
+            }
+          },
+          "required": [
+            "folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "duplicate_sheet",
+        "title": "Duplicate a sheet (section template + ordered items)",
+        "description": "Create a new user_folder that copies the source sheet's description (section outline) and all sheet items in the same sort_order. Does not copy share links.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "source_folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "new_name": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 120,
+              "description": "Defaults to '<source name> (Copy)'."
+            },
+            "new_color": {
+              "type": "string",
+              "maxLength": 20
+            }
+          },
+          "required": [
+            "source_folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "export_sheet_items_csv",
+        "title": "Export sheet items to CSV (title, slug, sort_order, section)",
+        "description": "Return the sheet's items as a CSV string with columns: sort_order, section, slug, title, difficulty, topics, is_published. Section is derived from the sheet description outline.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "required": [
+            "folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_public_share_codes",
+        "title": "List all active public share codes for my sheets",
+        "description": "Return every shared_folders row for the caller's sheets with share_code, is_public, allow_copy, expires_at, and computed is_expired / is_active flags.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "include_private": {
+              "type": "boolean",
+              "description": "If true, also include is_public=false rows."
+            },
+            "include_expired": {
+              "type": "boolean",
+              "description": "If true, include already-expired rows."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
       }
     ]
   }

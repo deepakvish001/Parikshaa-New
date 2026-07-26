@@ -71,6 +71,7 @@ import Quiz from "./pages/library/Quiz";
 import QuizHistory from "./pages/library/QuizHistory";
 import CodingProblems from "./pages/library/CodingProblems";
 import CodingProblemDetail from "./pages/library/CodingProblemDetail";
+import RunHistory from "./pages/library/RunHistory";
 
 // Fundamentals Pages
 import Language from "./pages/fundamentals/Language";

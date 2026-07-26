@@ -77,12 +77,12 @@ export default function PublishHistory() {
     const vers = (versRes as { data: VersionRow[] | null }).data ?? [];
     const sols = (solsRes as { data: SolutionRow[] | null }).data ?? [];
     const vMap: Record<string, VersionRow[]> = {};
-    for (const v of (vers ?? []) as VersionRow[]) {
+    for (const v of vers) {
       (vMap[v.slug] ||= []).push(v);
     }
     setVersions(vMap);
     const sMap: Record<string, SolutionRow[]> = {};
-    for (const s of (sols ?? []) as SolutionRow[]) {
+    for (const s of sols) {
       (sMap[s.problem_slug] ||= []).push(s);
     }
     setSolutions(sMap);

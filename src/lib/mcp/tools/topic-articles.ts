@@ -653,3 +653,259 @@ export const bulkPublishTopicArticlesTool = defineTool({
     );
   },
 });
+
+/* ─────────────────  bulk_set_topic_article_status  ───────────────── */
+export const bulkSetTopicArticleStatusTool = defineTool({
+  name: "bulk_set_topic_article_status",
+  title: "Change status of multiple topic articles at once",
+  description:
+    "Set draft/published/archived for many articles by slug in a single call. Per-slug result: status/previous_status or error.",
+  inputSchema: {
+    slugs: z.array(z.string().min(1)).min(1).max(100),
+    status: z.enum(["draft", "published", "archived"]),
+  },
+  annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
+  handler: async ({ slugs, status }, ctx: ToolContext) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const now = new Date().toISOString();
+    const results: any[] = [];
+    let ok = 0, failed = 0, notFound = 0;
+    for (const slug of slugs) {
+      const { data: post } = await sb.from("blog_posts")
+        .select("id,status,published_at").eq("slug", slug).maybeSingle();
+      if (!post) { notFound++; results.push({ slug, status: "not_found" }); continue; }
+      const patch: Record<string, unknown> = { status, updated_at: now };
+      if (status === "published" && !post.published_at) patch.published_at = now;
+      if (status === "draft") patch.published_at = null;
+      const { error } = await sb.from("blog_posts").update(patch).eq("id", post.id);
+      if (error) { failed++; results.push({ slug, status: "error", error: error.message }); continue; }
+      ok++; results.push({ slug, status: "ok", previous_status: post.status, new_status: status });
+    }
+    return jsonResult(`Bulk status → ${status}: ${ok} ok, ${notFound} not_found, ${failed} failed.`,
+      { requested: slugs.length, ok, not_found: notFound, failed, results });
+  },
+});
+
+/* ─────────────────  preview_topic_article  ───────────────── */
+export const previewTopicArticleTool = defineTool({
+  name: "preview_topic_article",
+  title: "Render a topic article to sanitized HTML for visual review",
+  description:
+    "Render the article markdown to HTML (with a strict sanitizer: strips <script>/<iframe>/on*=/javascript: URLs) and returns resolved inline image URLs, so you can eyeball it before publishing. Does not modify anything.",
+  inputSchema: {
+    post_slug: z.string().min(1),
+    include_toc: z.boolean().optional(),
+  },
+  annotations: { readOnlyHint: true, openWorldHint: false },
+  handler: async ({ post_slug, include_toc }, ctx: ToolContext) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const { data: post } = await sb.from("blog_posts")
+      .select("id,slug,title,excerpt,content_md,cover_image_url,status,updated_at,reading_time_min")
+      .eq("slug", post_slug).maybeSingle();
+    if (!post) return errResult(`Post '${post_slug}' not found.`);
+
+    // @ts-ignore npm: specifier resolved by Deno at runtime
+    const { marked } = await import(/* @vite-ignore */ "npm:marked@12");
+    let html = await marked.parse(post.content_md ?? "", { async: true });
+    // strict sanitizer: kill dangerous constructs
+    html = String(html)
+      .replace(/<script[\s\S]*?<\/script>/gi, "")
+      .replace(/<iframe[\s\S]*?<\/iframe>/gi, "")
+      .replace(/<style[\s\S]*?<\/style>/gi, "")
+      .replace(/ on[a-z]+="[^"]*"/gi, "")
+      .replace(/ on[a-z]+='[^']*'/gi, "")
+      .replace(/javascript:/gi, "");
+
+    const images: { alt: string; url: string }[] = [];
+    const re = /!\[([^\]]*)\]\(([^)]+)\)/g;
+    let m: RegExpExecArray | null;
+    while ((m = re.exec(post.content_md ?? "")) !== null) images.push({ alt: m[1], url: m[2] });
+
+    let toc: { level: number; text: string; id: string }[] | undefined;
+    if (include_toc) {
+      toc = [];
+      const hRe = /^(#{1,6})\s+(.+)$/gm;
+      let h: RegExpExecArray | null;
+      while ((h = hRe.exec(post.content_md ?? "")) !== null) {
+        toc.push({ level: h[1].length, text: h[2].trim(), id: kebab(h[2]) });
+      }
+    }
+
+    return jsonResult(`Preview for '${post.title}'.`, {
+      post: { slug: post.slug, title: post.title, status: post.status, updated_at: post.updated_at,
+        reading_time_min: post.reading_time_min, cover_image_url: post.cover_image_url },
+      html, images, toc,
+    });
+  },
+});
+
+/* ─────────────────  search_topic_articles  ───────────────── */
+export const searchTopicArticlesTool = defineTool({
+  name: "search_topic_articles",
+  title: "Search topic articles by category / sheet / section",
+  description:
+    "Filter topic articles by any combination of category slug (dbms/cn/os), sheet folder id, section title, status, and free-text title query. Paginated.",
+  inputSchema: {
+    category_slug: z.string().optional(),
+    sheet_folder_id: z.string().uuid().optional(),
+    section_title: z.string().optional(),
+    status: z.enum(["draft", "published", "archived"]).optional(),
+    query: z.string().optional().describe("Case-insensitive substring match on title."),
+    limit: z.number().int().min(1).max(100).optional(),
+    offset: z.number().int().min(0).optional(),
+  },
+  annotations: { readOnlyHint: true, openWorldHint: false },
+  handler: async (input, ctx: ToolContext) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const { category_slug, sheet_folder_id, section_title, status, query,
+      limit = 25, offset = 0 } = input;
+
+    let idsFilter: string[] | null = null;
+    const intersect = (next: string[]) => {
+      idsFilter = idsFilter === null ? next : idsFilter.filter((x) => next.includes(x));
+    };
+
+    if (sheet_folder_id) {
+      const { data: st } = await sb.from("blog_tags").select("id")
+        .eq("slug", sheetTagSlug(sheet_folder_id)).maybeSingle();
+      if (!st) return jsonResult("No articles for this sheet.", { total: 0, items: [] });
+      const { data: links } = await sb.from("blog_post_tags").select("post_id").eq("tag_id", st.id);
+      intersect((links ?? []).map((r: any) => r.post_id));
+    }
+    if (section_title) {
+      const { data: tt } = await sb.from("blog_tags").select("id")
+        .eq("slug", topicTagSlug(kebab(section_title))).maybeSingle();
+      if (!tt) return jsonResult("No articles for this section.", { total: 0, items: [] });
+      const { data: links } = await sb.from("blog_post_tags").select("post_id").eq("tag_id", tt.id);
+      intersect((links ?? []).map((r: any) => r.post_id));
+    }
+    if (category_slug) {
+      const { data: cat } = await sb.from("blog_categories").select("id").eq("slug", category_slug).maybeSingle();
+      if (!cat) return jsonResult("No such category.", { total: 0, items: [] });
+      const { data: links } = await sb.from("blog_post_categories").select("post_id").eq("category_id", cat.id);
+      intersect((links ?? []).map((r: any) => r.post_id));
+    }
+    if (idsFilter !== null && idsFilter.length === 0) {
+      return jsonResult("No matching articles.", { total: 0, items: [] });
+    }
+
+    let q = sb.from("blog_posts")
+      .select("id,slug,title,excerpt,status,published_at,updated_at,cover_image_url,reading_time_min,is_featured",
+        { count: "exact" });
+    if (idsFilter) q = q.in("id", idsFilter);
+    if (status) q = q.eq("status", status);
+    if (query) q = q.ilike("title", `%${query}%`);
+    q = q.order("updated_at", { ascending: false }).range(offset, offset + limit - 1);
+    const { data, count, error } = await q;
+    if (error) return errResult(error.message);
+    return jsonResult(`Found ${count ?? data?.length ?? 0} article(s).`, {
+      total: count ?? data?.length ?? 0, limit, offset,
+      items: (data ?? []).map((p: any) => ({ ...p, url: `/blog/${p.slug}` })),
+    });
+  },
+});
+
+/* ─────────────────  verify_topic_article_linkage  ───────────────── */
+export const verifyTopicArticleLinkageTool = defineTool({
+  name: "verify_topic_article_linkage",
+  title: "Audit topic article linkage for a sheet",
+  description:
+    "Scan all articles tagged for a sheet (and optionally a section) and report link health: missing sheet tag, missing topic tag, orphaned topic tags whose section no longer exists in the sheet outline, and articles with no category.",
+  inputSchema: {
+    sheet_folder_id: z.string().uuid(),
+    section_title: z.string().optional(),
+  },
+  annotations: { readOnlyHint: true, openWorldHint: false },
+  handler: async ({ sheet_folder_id, section_title }, ctx: ToolContext) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+
+    const { data: folder } = await sb.from("user_folders")
+      .select("id,name,description").eq("id", sheet_folder_id).maybeSingle();
+    if (!folder) return errResult(`Sheet folder ${sheet_folder_id} not found.`);
+
+    // Extract known section slugs from the folder description outline
+    const knownSections = new Set<string>();
+    const desc: string = folder.description ?? "";
+    for (const line of desc.split("\n")) {
+      const m = line.match(/^#{1,6}\s+(.+?)\s*$/);
+      if (m) knownSections.add(kebab(m[1]));
+    }
+
+    const { data: sheetTag } = await sb.from("blog_tags")
+      .select("id").eq("slug", sheetTagSlug(sheet_folder_id)).maybeSingle();
+    if (!sheetTag) return jsonResult("No sheet tag exists yet — no articles linked.",
+      { sheet_folder_id, healthy: 0, issues: [], articles_checked: 0 });
+
+    const { data: links } = await sb.from("blog_post_tags").select("post_id").eq("tag_id", sheetTag.id);
+    let postIds = (links ?? []).map((r: any) => r.post_id);
+
+    let targetTopicSlug: string | null = null;
+    if (section_title) {
+      targetTopicSlug = topicTagSlug(kebab(section_title));
+      const { data: tt } = await sb.from("blog_tags").select("id").eq("slug", targetTopicSlug).maybeSingle();
+      if (tt) {
+        const { data: tLinks } = await sb.from("blog_post_tags")
+          .select("post_id").eq("tag_id", tt.id).in("post_id", postIds);
+        postIds = (tLinks ?? []).map((r: any) => r.post_id);
+      } else {
+        postIds = [];
+      }
+    }
+    if (!postIds.length) return jsonResult("No articles to audit.",
+      { sheet_folder_id, sheet_name: folder.name, healthy: 0, issues: [], articles_checked: 0 });
+
+    const { data: posts } = await sb.from("blog_posts")
+      .select("id,slug,title,status").in("id", postIds);
+
+    // Gather each post's tags + categories in bulk
+    const { data: allTagLinks } = await sb.from("blog_post_tags").select("post_id,tag_id").in("post_id", postIds);
+    const tagIdSet = new Set((allTagLinks ?? []).map((r: any) => r.tag_id));
+    const { data: tagRows } = await sb.from("blog_tags").select("id,slug,name").in("id", Array.from(tagIdSet));
+    const tagById = new Map((tagRows ?? []).map((t: any) => [t.id, t]));
+    const tagsByPost = new Map<string, any[]>();
+    for (const l of allTagLinks ?? []) {
+      const t = tagById.get(l.tag_id); if (!t) continue;
+      if (!tagsByPost.has(l.post_id)) tagsByPost.set(l.post_id, []);
+      tagsByPost.get(l.post_id)!.push(t);
+    }
+    const { data: catLinks } = await sb.from("blog_post_categories").select("post_id").in("post_id", postIds);
+    const hasCat = new Set((catLinks ?? []).map((r: any) => r.post_id));
+
+    const issues: any[] = [];
+    let healthy = 0;
+    for (const p of posts ?? []) {
+      const tags = tagsByPost.get(p.id) ?? [];
+      const sheetTagPresent = tags.some((t) => t.slug === sheetTagSlug(sheet_folder_id));
+      const topicTags = tags.filter((t) => t.slug?.startsWith("topic-"));
+      const problems: string[] = [];
+      if (!sheetTagPresent) problems.push("missing_sheet_tag");
+      if (topicTags.length === 0) problems.push("missing_topic_tag");
+      const orphaned = topicTags
+        .map((t) => t.slug.replace(/^topic-/, ""))
+        .filter((slug) => knownSections.size > 0 && !knownSections.has(slug));
+      if (orphaned.length) problems.push(`orphaned_topics:${orphaned.join(",")}`);
+      if (!hasCat.has(p.id)) problems.push("no_category");
+      if (targetTopicSlug && !tags.some((t) => t.slug === targetTopicSlug)) problems.push("missing_requested_topic_tag");
+      if (problems.length === 0) { healthy++; continue; }
+      issues.push({
+        slug: p.slug, title: p.title, status: p.status,
+        problems, topic_tags: topicTags.map((t) => t.slug),
+      });
+    }
+
+    return jsonResult(
+      `Audited ${posts?.length ?? 0} article(s): ${healthy} healthy, ${issues.length} with issues.`,
+      { sheet_folder_id, sheet_name: folder.name,
+        known_sections: Array.from(knownSections),
+        articles_checked: posts?.length ?? 0, healthy, issues },
+    );
+  },
+});

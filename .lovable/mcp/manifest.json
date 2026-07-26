@@ -3012,6 +3012,147 @@
           "$schema": "http://json-schema.org/draft-07/schema#"
         },
         "outputSchema": null
+      },
+      {
+        "name": "bulk_set_topic_article_status",
+        "title": "Change status of multiple topic articles at once",
+        "description": "Set draft/published/archived for many articles by slug in a single call. Per-slug result: status/previous_status or error.",
+        "annotations": {
+          "readOnlyHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "slugs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1,
+              "maxItems": 100
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "draft",
+                "published",
+                "archived"
+              ]
+            }
+          },
+          "required": [
+            "slugs",
+            "status"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "preview_topic_article",
+        "title": "Render a topic article to sanitized HTML for visual review",
+        "description": "Render the article markdown to HTML (with a strict sanitizer: strips <script>/<iframe>/on*=/javascript: URLs) and returns resolved inline image URLs, so you can eyeball it before publishing. Does not modify anything.",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "post_slug": {
+              "type": "string",
+              "minLength": 1
+            },
+            "include_toc": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "post_slug"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "search_topic_articles",
+        "title": "Search topic articles by category / sheet / section",
+        "description": "Filter topic articles by any combination of category slug (dbms/cn/os), sheet folder id, section title, status, and free-text title query. Paginated.",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "category_slug": {
+              "type": "string"
+            },
+            "sheet_folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "section_title": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "draft",
+                "published",
+                "archived"
+              ]
+            },
+            "query": {
+              "type": "string",
+              "description": "Case-insensitive substring match on title."
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            },
+            "offset": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "verify_topic_article_linkage",
+        "title": "Audit topic article linkage for a sheet",
+        "description": "Scan all articles tagged for a sheet (and optionally a section) and report link health: missing sheet tag, missing topic tag, orphaned topic tags whose section no longer exists in the sheet outline, and articles with no category.",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "sheet_folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "section_title": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "sheet_folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
       }
     ]
   }

@@ -140,6 +140,8 @@ export default defineMcp({
     ensureAdminAccessTool,
     listBuiltinSheetsTool,
     getBuiltinSheetTool,
+    getCurrentUserContextTool,
+    testSheetAccessTool,
     createSheetTool,
     listSheetsTool,
     addProblemsToSheetTool,

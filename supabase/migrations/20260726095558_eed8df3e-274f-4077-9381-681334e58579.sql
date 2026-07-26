@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "System can insert activities" ON public.user_activity_log;

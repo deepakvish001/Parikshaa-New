@@ -486,21 +486,24 @@ const BulkImport = () => {
       <Card className="p-6">
         <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-muted py-10 text-center transition-colors hover:border-primary">
           <Upload className="h-8 w-8 text-muted-foreground" />
-          <span className="text-sm font-medium">Drop or click to upload JSON</span>
+          <span className="text-sm font-medium">Drop or click to upload JSON files</span>
           <span className="text-xs text-muted-foreground">
-            Array of problems matching the template schema.
+            Select one or many .json files — each may be a single problem or an array. All are merged.
           </span>
           <input
             type="file"
             accept="application/json,.json"
+            multiple
             className="hidden"
             onChange={(e) => {
-              const f = e.target.files?.[0];
-              if (f) handleFile(f);
+              const files = Array.from(e.target.files ?? []);
+              if (files.length) handleFiles(files);
+              e.target.value = "";
             }}
           />
         </label>
       </Card>
+
 
       {rows.length > 0 && (
         <Card className="mt-4 p-4">

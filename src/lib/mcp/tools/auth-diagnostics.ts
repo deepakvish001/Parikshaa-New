@@ -1,6 +1,7 @@
 import { defineTool, type ToolContext } from "@lovable.dev/mcp-js";
 import { z } from "zod";
 import { createUserSupabaseClient, errResult, jsonResult } from "./_shared";
+import { cacheGet, cacheKey, cacheSet } from "./_cache";
 import { dbmsSections, dbmsMeta } from "../../../data/dbmsData";
 import { cnSections, cnMeta } from "../../../data/cnData";
 import { osSections, osMeta } from "../../../data/osData";

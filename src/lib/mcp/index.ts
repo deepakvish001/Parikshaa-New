@@ -174,5 +174,9 @@ export default defineMcp({
     previewTopicArticleTool,
     searchTopicArticlesTool,
     verifyTopicArticleLinkageTool,
+    getTopicArticlesDetailsBySlugsTool,
+    exportTopicArticlesSitemapTool,
+    reresolveTopicArticleImagesTool,
+    fixTopicArticleLinkageTool,
   ],
 });

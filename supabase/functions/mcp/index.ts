@@ -3072,6 +3072,374 @@ var verifyTopicArticleLinkageTool = defineTool32({
   }
 });
 
+// src/lib/mcp/tools/topic-articles-extra.ts
+import { defineTool as defineTool33 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z28 } from "npm:zod@^3.23.8";
+var kebab2 = (s) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 80);
+var sheetTagSlug2 = (folderId) => `sheet-${folderId}`;
+var topicTagSlug2 = (sectionSlug) => `topic-${sectionSlug}`;
+async function ensureTag2(sb, slug, name) {
+  const { data: existing } = await sb.from("blog_tags").select("id").eq("slug", slug).maybeSingle();
+  if (existing?.id) return existing.id;
+  const { data, error } = await sb.from("blog_tags").insert({ slug, name }).select("id").single();
+  if (error) throw new Error(`tag ${slug}: ${error.message}`);
+  return data.id;
+}
+async function attachTag2(sb, postId, tagId) {
+  await sb.from("blog_post_tags").upsert({ post_id: postId, tag_id: tagId }, { onConflict: "post_id,tag_id" });
+}
+async function detachTag2(sb, postId, tagId) {
+  await sb.from("blog_post_tags").delete().eq("post_id", postId).eq("tag_id", tagId);
+}
+var extractImageRefs = (md) => {
+  const out = [];
+  const re = /!\[([^\]]*)\]\(([^)]+)\)/g;
+  let m;
+  while ((m = re.exec(md ?? "")) !== null) out.push({ alt: m[1], url: m[2], full: m[0] });
+  return out;
+};
+var getTopicArticlesDetailsBySlugsTool = defineTool33({
+  name: "get_topic_articles_details_by_slugs",
+  title: "Get details for many topic articles at once",
+  description: "Return summary + status + tags + linked sheet/section for a list of article slugs in one call. Missing slugs are reported as not_found.",
+  inputSchema: {
+    slugs: z28.array(z28.string().min(1)).min(1).max(100),
+    include_content: z28.boolean().optional().describe("Include full content_md (default: excerpt/summary only).")
+  },
+  annotations: { readOnlyHint: true, openWorldHint: false },
+  handler: async ({ slugs, include_content }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const sel = include_content ? "id,slug,title,excerpt,content_md,status,published_at,updated_at,cover_image_url,reading_time_min" : "id,slug,title,excerpt,status,published_at,updated_at,cover_image_url,reading_time_min";
+    const { data: posts, error } = await sb.from("blog_posts").select(sel).in("slug", slugs);
+    if (error) return errResult(error.message);
+    const bySlug = new Map((posts ?? []).map((p) => [p.slug, p]));
+    const postIds = (posts ?? []).map((p) => p.id);
+    const tagsByPost = /* @__PURE__ */ new Map();
+    if (postIds.length) {
+      const { data: tagLinks } = await sb.from("blog_post_tags").select("post_id,tag_id").in("post_id", postIds);
+      const tagIds = Array.from(new Set((tagLinks ?? []).map((r) => r.tag_id)));
+      const { data: tagRows } = tagIds.length ? await sb.from("blog_tags").select("id,slug,name").in("id", tagIds) : { data: [] };
+      const tagById = new Map((tagRows ?? []).map((t) => [t.id, t]));
+      for (const l of tagLinks ?? []) {
+        const t = tagById.get(l.tag_id);
+        if (!t) continue;
+        if (!tagsByPost.has(l.post_id)) tagsByPost.set(l.post_id, []);
+        tagsByPost.get(l.post_id).push(t);
+      }
+    }
+    const folderIds = /* @__PURE__ */ new Set();
+    for (const [, tags] of tagsByPost) {
+      for (const t of tags) if (t.slug?.startsWith("sheet-")) folderIds.add(t.slug.replace(/^sheet-/, ""));
+    }
+    const folderById = /* @__PURE__ */ new Map();
+    if (folderIds.size) {
+      const { data: fRows } = await sb.from("user_folders").select("id,name").in("id", Array.from(folderIds));
+      for (const f of fRows ?? []) folderById.set(f.id, f);
+    }
+    const items = slugs.map((slug) => {
+      const p = bySlug.get(slug);
+      if (!p) return { slug, status: "not_found" };
+      const tags = tagsByPost.get(p.id) ?? [];
+      const sheetTag = tags.find((t) => t.slug?.startsWith("sheet-"));
+      const topicTag = tags.find((t) => t.slug?.startsWith("topic-"));
+      const folderId = sheetTag?.slug?.replace(/^sheet-/, "") ?? null;
+      return {
+        slug,
+        status: "ok",
+        post: { ...p, url: `/blog/${p.slug}` },
+        tags,
+        linkage: {
+          sheet: folderId ? folderById.get(folderId) ?? { id: folderId } : null,
+          section_title: topicTag?.name ?? null,
+          section_slug: topicTag?.slug?.replace(/^topic-/, "") ?? null
+        }
+      };
+    });
+    const found = items.filter((i) => i.status === "ok").length;
+    return jsonResult(`Fetched ${found}/${slugs.length} article(s).`, {
+      requested: slugs.length,
+      found,
+      not_found: slugs.length - found,
+      items
+    });
+  }
+});
+var exportTopicArticlesSitemapTool = defineTool33({
+  name: "export_topic_articles_sitemap",
+  title: "Export XML sitemap for topic articles",
+  description: "Generate an XML sitemap (Sitemap 0.9 spec) for published topic articles. Filter by category slug(s) (e.g. dbms/cn/os) or by sheet. Returns raw XML you can save to public/sitemap-articles.xml or serve directly.",
+  inputSchema: {
+    base_url: z28.string().url().describe("e.g. https://www.parikshaa.org"),
+    category_slugs: z28.array(z28.string()).max(20).optional().describe("Restrict to these categories. Default: all."),
+    sheet_folder_id: z28.string().uuid().optional(),
+    path_prefix: z28.string().optional().describe("Path prefix for URLs (default '/blog/')."),
+    include_lastmod: z28.boolean().optional()
+  },
+  annotations: { readOnlyHint: true, openWorldHint: false },
+  handler: async (input, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const { base_url, category_slugs, sheet_folder_id, path_prefix = "/blog/", include_lastmod = true } = input;
+    let idsFilter = null;
+    const intersect = (next) => {
+      idsFilter = idsFilter === null ? next : idsFilter.filter((x) => next.includes(x));
+    };
+    if (category_slugs?.length) {
+      const { data: cats } = await sb.from("blog_categories").select("id,slug").in("slug", category_slugs);
+      const catIds = (cats ?? []).map((c) => c.id);
+      if (!catIds.length) return jsonResult("No matching categories.", { xml: "", url_count: 0 });
+      const { data: cLinks } = await sb.from("blog_post_categories").select("post_id").in("category_id", catIds);
+      intersect((cLinks ?? []).map((r) => r.post_id));
+    }
+    if (sheet_folder_id) {
+      const { data: st } = await sb.from("blog_tags").select("id").eq("slug", sheetTagSlug2(sheet_folder_id)).maybeSingle();
+      if (!st) return jsonResult("No articles for this sheet.", { xml: "", url_count: 0 });
+      const { data: links } = await sb.from("blog_post_tags").select("post_id").eq("tag_id", st.id);
+      intersect((links ?? []).map((r) => r.post_id));
+    }
+    if (idsFilter !== null && idsFilter.length === 0) {
+      return jsonResult("No matching articles.", { xml: "", url_count: 0 });
+    }
+    let q = sb.from("blog_posts").select("slug,updated_at,published_at").eq("status", "published");
+    if (idsFilter) q = q.in("id", idsFilter);
+    const { data: posts, error } = await q.order("updated_at", { ascending: false });
+    if (error) return errResult(error.message);
+    const base = base_url.replace(/\/+$/, "");
+    const prefix = path_prefix.startsWith("/") ? path_prefix : `/${path_prefix}`;
+    const urls = (posts ?? []).map((p) => {
+      const lastmod = include_lastmod ? p.updated_at ?? p.published_at : null;
+      const loc = `${base}${prefix}${p.slug}`;
+      return `  <url>
+    <loc>${loc}</loc>${lastmod ? `
+    <lastmod>${new Date(lastmod).toISOString()}</lastmod>` : ""}
+  </url>`;
+    }).join("\n");
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls}
+</urlset>
+`;
+    return jsonResult(`Sitemap generated with ${posts?.length ?? 0} URL(s).`, {
+      xml,
+      url_count: posts?.length ?? 0,
+      base_url: base
+    });
+  }
+});
+var reresolveTopicArticleImagesTool = defineTool33({
+  name: "reresolve_topic_article_images",
+  title: "Re-resolve inline image URLs for a topic article",
+  description: "Scan inline markdown images in a topic article, re-issue fresh signed URLs for images stored in the blog-media bucket, and rewrite the article body. Slug-idempotent (same post, updated content). External URLs are left untouched.",
+  inputSchema: {
+    post_slug: z28.string().min(1),
+    bucket: z28.string().optional().describe("Storage bucket to re-sign against. Default: 'blog-media'."),
+    expires_in_seconds: z28.number().int().min(3600).max(60 * 60 * 24 * 365).optional(),
+    dry_run: z28.boolean().optional()
+  },
+  annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
+  handler: async ({ post_slug, bucket: bucket2 = "blog-media", expires_in_seconds, dry_run }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const { data: post } = await sb.from("blog_posts").select("id,title,content_md,cover_image_url").eq("slug", post_slug).maybeSingle();
+    if (!post) return errResult(`Post '${post_slug}' not found.`);
+    const md = post.content_md ?? "";
+    const refs = extractImageRefs(md);
+    const expires = expires_in_seconds ?? 60 * 60 * 24 * 365;
+    const results = [];
+    let updatedMd = md;
+    let coverUrl = post.cover_image_url ?? null;
+    const bucketMarker = `/storage/v1/object/`;
+    const extractPath = (url) => {
+      const idx = url.indexOf(bucketMarker);
+      if (idx === -1) return null;
+      const tail = url.slice(idx + bucketMarker.length);
+      const parts = tail.split("?")[0].split("/");
+      if (parts.length < 3) return null;
+      const [, b, ...rest] = parts;
+      if (b !== bucket2) return null;
+      return rest.join("/");
+    };
+    const resign = async (path) => {
+      const { data, error } = await sb.storage.from(bucket2).createSignedUrl(path, expires);
+      if (error) throw new Error(error.message);
+      return data?.signedUrl;
+    };
+    for (const ref of refs) {
+      const path = extractPath(ref.url);
+      if (!path) {
+        results.push({ url: ref.url, status: "external_skip" });
+        continue;
+      }
+      try {
+        const fresh = await resign(path);
+        if (fresh && fresh !== ref.url) {
+          const replacement = `![${ref.alt}](${fresh})`;
+          updatedMd = updatedMd.split(ref.full).join(replacement);
+          results.push({ url: ref.url, new_url: fresh, path, status: "resigned" });
+        } else {
+          results.push({ url: ref.url, path, status: "unchanged" });
+        }
+      } catch (e) {
+        results.push({ url: ref.url, path, status: "error", error: e?.message ?? String(e) });
+      }
+    }
+    if (coverUrl) {
+      const path = extractPath(coverUrl);
+      if (path) {
+        try {
+          const fresh = await resign(path);
+          if (fresh && fresh !== coverUrl) coverUrl = fresh;
+        } catch (e) {
+          results.push({ url: coverUrl, path, status: "cover_error", error: e?.message ?? String(e) });
+        }
+      }
+    }
+    const changed = updatedMd !== md || coverUrl !== (post.cover_image_url ?? null);
+    if (!dry_run && changed) {
+      const { error } = await sb.from("blog_posts").update({
+        content_md: updatedMd,
+        cover_image_url: coverUrl,
+        updated_at: (/* @__PURE__ */ new Date()).toISOString()
+      }).eq("id", post.id);
+      if (error) return errResult(`update: ${error.message}`);
+    }
+    return jsonResult(
+      `${dry_run ? "(dry_run) " : ""}Processed ${refs.length} image(s) for '${post.title}'.`,
+      { post_slug, changed, dry_run: !!dry_run, image_count: refs.length, results }
+    );
+  }
+});
+var fixTopicArticleLinkageTool = defineTool33({
+  name: "fix_topic_article_linkage",
+  title: "Auto-repair sheet+section linkage issues for topic articles",
+  description: "Fix issues surfaced by verify_topic_article_linkage: attach missing sheet tag, attach a topic tag when a target section_title is provided, and remove orphaned topic tags whose slug is not present in the sheet outline. Optionally attach a category to articles missing one.",
+  inputSchema: {
+    sheet_folder_id: z28.string().uuid(),
+    section_title: z28.string().optional().describe("When set, ensures every audited article carries this topic tag."),
+    default_category_slug: z28.string().optional().describe("Attach this category to articles missing any category."),
+    default_category_name: z28.string().optional(),
+    remove_orphan_topic_tags: z28.boolean().optional().describe("Default: true. Detach topic tags not in sheet outline."),
+    dry_run: z28.boolean().optional()
+  },
+  annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
+  handler: async (input, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const {
+      sheet_folder_id,
+      section_title,
+      default_category_slug,
+      default_category_name,
+      remove_orphan_topic_tags = true,
+      dry_run
+    } = input;
+    const { data: folder } = await sb.from("user_folders").select("id,name,description").eq("id", sheet_folder_id).maybeSingle();
+    if (!folder) return errResult(`Sheet folder ${sheet_folder_id} not found.`);
+    const knownSections = /* @__PURE__ */ new Set();
+    for (const line of (folder.description ?? "").split("\n")) {
+      const m = line.match(/^#{1,6}\s+(.+?)\s*$/);
+      if (m) knownSections.add(kebab2(m[1]));
+    }
+    const sheetTagId = await ensureTag2(sb, sheetTagSlug2(sheet_folder_id), `Sheet: ${folder.name}`);
+    let targetTopicSlug = null;
+    let targetTopicTagId = null;
+    if (section_title) {
+      targetTopicSlug = topicTagSlug2(kebab2(section_title));
+      targetTopicTagId = await ensureTag2(sb, targetTopicSlug, section_title);
+    }
+    let defaultCategoryId = null;
+    if (default_category_slug) {
+      const { data: cat } = await sb.from("blog_categories").select("id").eq("slug", default_category_slug).maybeSingle();
+      defaultCategoryId = cat?.id ?? null;
+      if (!defaultCategoryId && !dry_run) {
+        const { data: newCat, error } = await sb.from("blog_categories").insert({ slug: default_category_slug, name: default_category_name ?? default_category_slug.toUpperCase() }).select("id").single();
+        if (error) return errResult(`category: ${error.message}`);
+        defaultCategoryId = newCat.id;
+      }
+    }
+    const candidateIds = /* @__PURE__ */ new Set();
+    const { data: sLinks } = await sb.from("blog_post_tags").select("post_id").eq("tag_id", sheetTagId);
+    (sLinks ?? []).forEach((r) => candidateIds.add(r.post_id));
+    if (targetTopicTagId) {
+      const { data: tLinks } = await sb.from("blog_post_tags").select("post_id").eq("tag_id", targetTopicTagId);
+      (tLinks ?? []).forEach((r) => candidateIds.add(r.post_id));
+    }
+    const postIds = Array.from(candidateIds);
+    if (!postIds.length) {
+      return jsonResult("No articles to repair.", { sheet_folder_id, fixed: 0, actions: [] });
+    }
+    const { data: posts } = await sb.from("blog_posts").select("id,slug,title").in("id", postIds);
+    const { data: allTagLinks } = await sb.from("blog_post_tags").select("post_id,tag_id").in("post_id", postIds);
+    const tagIdSet = Array.from(new Set((allTagLinks ?? []).map((r) => r.tag_id)));
+    const { data: tagRows } = tagIdSet.length ? await sb.from("blog_tags").select("id,slug,name").in("id", tagIdSet) : { data: [] };
+    const tagById = new Map((tagRows ?? []).map((t) => [t.id, t]));
+    const tagsByPost = /* @__PURE__ */ new Map();
+    for (const l of allTagLinks ?? []) {
+      const t = tagById.get(l.tag_id);
+      if (!t) continue;
+      if (!tagsByPost.has(l.post_id)) tagsByPost.set(l.post_id, []);
+      tagsByPost.get(l.post_id).push(t);
+    }
+    const { data: catLinks } = await sb.from("blog_post_categories").select("post_id").in("post_id", postIds);
+    const hasCat = new Set((catLinks ?? []).map((r) => r.post_id));
+    const actions = [];
+    let fixed = 0;
+    for (const p of posts ?? []) {
+      const tags = tagsByPost.get(p.id) ?? [];
+      const perPost = [];
+      const sheetPresent = tags.some((t) => t.slug === sheetTagSlug2(sheet_folder_id));
+      const topicTags = tags.filter((t) => t.slug?.startsWith("topic-"));
+      if (!sheetPresent) {
+        if (!dry_run) await attachTag2(sb, p.id, sheetTagId);
+        perPost.push("attached_sheet_tag");
+      }
+      if (targetTopicTagId && !tags.some((t) => t.id === targetTopicTagId)) {
+        if (!dry_run) await attachTag2(sb, p.id, targetTopicTagId);
+        perPost.push(`attached_topic_tag:${section_title}`);
+      }
+      if (remove_orphan_topic_tags && knownSections.size > 0) {
+        for (const tt of topicTags) {
+          const slug = tt.slug.replace(/^topic-/, "");
+          if (!knownSections.has(slug)) {
+            if (!dry_run) await detachTag2(sb, p.id, tt.id);
+            perPost.push(`detached_orphan:${slug}`);
+          }
+        }
+      }
+      if (defaultCategoryId && !hasCat.has(p.id)) {
+        if (!dry_run) {
+          await sb.from("blog_post_categories").upsert(
+            { post_id: p.id, category_id: defaultCategoryId },
+            { onConflict: "post_id,category_id" }
+          );
+        }
+        perPost.push(`attached_category:${default_category_slug}`);
+      }
+      if (perPost.length) {
+        fixed++;
+        actions.push({ slug: p.slug, title: p.title, actions: perPost });
+      }
+    }
+    return jsonResult(
+      `${dry_run ? "(dry_run) " : ""}Repaired ${fixed}/${posts?.length ?? 0} article(s) in ${folder.name}.`,
+      {
+        sheet_folder_id,
+        sheet_name: folder.name,
+        dry_run: !!dry_run,
+        articles_scanned: posts?.length ?? 0,
+        fixed,
+        actions,
+        known_sections: Array.from(knownSections)
+      }
+    );
+  }
+});
+
 // src/lib/mcp/index.ts
 var projectRef = "elzftqnehcmnouptaqee";
 var mcp_default = defineMcp({
@@ -3155,7 +3523,11 @@ var mcp_default = defineMcp({
     bulkSetTopicArticleStatusTool,
     previewTopicArticleTool,
     searchTopicArticlesTool,
-    verifyTopicArticleLinkageTool
+    verifyTopicArticleLinkageTool,
+    getTopicArticlesDetailsBySlugsTool,
+    exportTopicArticlesSitemapTool,
+    reresolveTopicArticleImagesTool,
+    fixTopicArticleLinkageTool
   ]
 });
 

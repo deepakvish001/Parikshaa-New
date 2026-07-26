@@ -3153,6 +3153,163 @@
           "$schema": "http://json-schema.org/draft-07/schema#"
         },
         "outputSchema": null
+      },
+      {
+        "name": "get_topic_articles_details_by_slugs",
+        "title": "Get details for many topic articles at once",
+        "description": "Return summary + status + tags + linked sheet/section for a list of article slugs in one call. Missing slugs are reported as not_found.",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "slugs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1,
+              "maxItems": 100
+            },
+            "include_content": {
+              "type": "boolean",
+              "description": "Include full content_md (default: excerpt/summary only)."
+            }
+          },
+          "required": [
+            "slugs"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "export_topic_articles_sitemap",
+        "title": "Export XML sitemap for topic articles",
+        "description": "Generate an XML sitemap (Sitemap 0.9 spec) for published topic articles. Filter by category slug(s) (e.g. dbms/cn/os) or by sheet. Returns raw XML you can save to public/sitemap-articles.xml or serve directly.",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "base_url": {
+              "type": "string",
+              "format": "uri",
+              "description": "e.g. https://www.parikshaa.org"
+            },
+            "category_slugs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 20,
+              "description": "Restrict to these categories. Default: all."
+            },
+            "sheet_folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "path_prefix": {
+              "type": "string",
+              "description": "Path prefix for URLs (default '/blog/')."
+            },
+            "include_lastmod": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "base_url"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "reresolve_topic_article_images",
+        "title": "Re-resolve inline image URLs for a topic article",
+        "description": "Scan inline markdown images in a topic article, re-issue fresh signed URLs for images stored in the blog-media bucket, and rewrite the article body. Slug-idempotent (same post, updated content). External URLs are left untouched.",
+        "annotations": {
+          "readOnlyHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "post_slug": {
+              "type": "string",
+              "minLength": 1
+            },
+            "bucket": {
+              "type": "string",
+              "description": "Storage bucket to re-sign against. Default: 'blog-media'."
+            },
+            "expires_in_seconds": {
+              "type": "integer",
+              "minimum": 3600,
+              "maximum": 31536000
+            },
+            "dry_run": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "post_slug"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "fix_topic_article_linkage",
+        "title": "Auto-repair sheet+section linkage issues for topic articles",
+        "description": "Fix issues surfaced by verify_topic_article_linkage: attach missing sheet tag, attach a topic tag when a target section_title is provided, and remove orphaned topic tags whose slug is not present in the sheet outline. Optionally attach a category to articles missing one.",
+        "annotations": {
+          "readOnlyHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "sheet_folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "section_title": {
+              "type": "string",
+              "description": "When set, ensures every audited article carries this topic tag."
+            },
+            "default_category_slug": {
+              "type": "string",
+              "description": "Attach this category to articles missing any category."
+            },
+            "default_category_name": {
+              "type": "string"
+            },
+            "remove_orphan_topic_tags": {
+              "type": "boolean",
+              "description": "Default: true. Detach topic tags not in sheet outline."
+            },
+            "dry_run": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "sheet_folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
       }
     ]
   }

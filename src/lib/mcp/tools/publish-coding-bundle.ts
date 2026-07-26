@@ -63,7 +63,8 @@ export const publishCodingBundleTool = defineTool({
     { problem, tests, starter_code, solutions, if_exists, version_note },
     ctx: ToolContext,
   ) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
 
     const parsed = problemSchema.safeParse(problem);
     if (!parsed.success) {
@@ -72,7 +73,7 @@ export const publishCodingBundleTool = defineTool({
       );
     }
     const p = parsed.data;
-    const sb = createUserSupabaseClient(ctx);
+    const sb = _gate.sb;
 
     // 1. Conflict check + optional snapshot.
     const { data: existing, error: exErr } = await sb

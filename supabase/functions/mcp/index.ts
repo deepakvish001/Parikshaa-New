@@ -1003,7 +1003,8 @@ var publishCodingBundleTool = defineTool25({
   },
   annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
   handler: async ({ problem, tests, starter_code, solutions, if_exists, version_note }, ctx) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
     const parsed = problemSchema2.safeParse(problem);
     if (!parsed.success) {
       return errResult(
@@ -1011,7 +1012,7 @@ var publishCodingBundleTool = defineTool25({
       );
     }
     const p = parsed.data;
-    const sb = createUserSupabaseClient(ctx);
+    const sb = _gate.sb;
     const { data: existing, error: exErr } = await sb.from("coding_problems").select("slug, title").eq("slug", p.slug).maybeSingle();
     if (exErr) return errResult(`Slug check failed: ${exErr.message}`);
     if (existing && (if_exists ?? "error") === "error") {

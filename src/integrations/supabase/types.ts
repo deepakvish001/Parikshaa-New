@@ -3307,7 +3307,8 @@ export type Database = {
           created_at: string
           folder_id: string
           id: string
-          question_id: number
+          question_id: number | null
+          question_slug: string | null
           question_source: string
           sort_order: number
         }
@@ -3315,7 +3316,8 @@ export type Database = {
           created_at?: string
           folder_id: string
           id?: string
-          question_id: number
+          question_id?: number | null
+          question_slug?: string | null
           question_source?: string
           sort_order?: number
         }
@@ -3323,7 +3325,8 @@ export type Database = {
           created_at?: string
           folder_id?: string
           id?: string
-          question_id?: number
+          question_id?: number | null
+          question_slug?: string | null
           question_source?: string
           sort_order?: number
         }

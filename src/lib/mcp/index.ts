@@ -134,5 +134,9 @@ export default defineMcp({
     bulkRemoveProblemsFromSheetTool,
     getSheetShareStatusTool,
     deleteOrArchiveSheetTool,
+    updateSheetShareSettingsTool,
+    duplicateSheetTool,
+    exportSheetItemsCsvTool,
+    listPublicShareCodesTool,
   ],
 });

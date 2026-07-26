@@ -1,6 +1,7 @@
 import { defineTool, type ToolContext } from "@lovable.dev/mcp-js";
 import { z } from "zod";
 import { createUserSupabaseClient, errResult, jsonResult } from "./_shared";
+import { cacheGet, cacheKey, cacheSet } from "./_cache";
 import { dbmsSections, dbmsMeta } from "../../../data/dbmsData";
 import { cnSections, cnMeta } from "../../../data/cnData";
 import { osSections, osMeta } from "../../../data/osData";
@@ -38,7 +39,11 @@ export const sheetAccessMatrixTool = defineTool({
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ include_overrides_check }, ctx: ToolContext) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const { sb, uid, isAdmin, isOwner } = await getRoles(ctx);
+    const uid = ctx.getUserId() ?? "anon";
+    const ck = cacheKey(uid, "sheet_access_matrix", { include_overrides_check });
+    const cached = cacheGet<{ label: string; payload: unknown }>(ck);
+    if (cached) return jsonResult(cached.label + " (cached)", cached.payload);
+    const { sb, isAdmin, isOwner } = await getRoles(ctx);
     const checkOverrides = include_overrides_check ?? true;
 
     const rows = [];
@@ -65,10 +70,13 @@ export const sheetAccessMatrixTool = defineTool({
       rows.push(row);
     }
 
-    return jsonResult(`Access matrix for ${rows.length} built-in sheet(s).`, {
+    const label = `Access matrix for ${rows.length} built-in sheet(s).`;
+    const payload = {
       caller: { auth_uid: uid, is_admin: isAdmin, is_owner: isOwner, can_write: isAdmin || isOwner },
       sheets: rows,
-    });
+    };
+    cacheSet(ck, { label, payload }, 60_000);
+    return jsonResult(label, payload);
   },
 });
 
@@ -165,8 +173,13 @@ export const verifySheetArticleAccessTool = defineTool({
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ sheet_slug }, ctx: ToolContext) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const { sb, uid, isAdmin, isOwner } = await getRoles(ctx);
+    const uid0 = ctx.getUserId() ?? "anon";
     const slug = sheet_slug.trim().toLowerCase();
+    const ck = cacheKey(uid0, "verify_sheet_article_access", { slug });
+    const cached = cacheGet<{ label: string; payload: unknown }>(ck);
+    if (cached) return jsonResult(cached.label + " (cached)", cached.payload);
+
+    const { sb, uid, isAdmin, isOwner } = await getRoles(ctx);
 
     // Articles linked via tags array containing the sheet slug.
     const { data: articles, error } = await sb
@@ -202,16 +215,16 @@ export const verifySheetArticleAccessTool = defineTool({
     });
 
     const blocked = results.filter((r) => !r.can_read);
-    return jsonResult(
-      `Checked ${results.length} article(s) linked to ${slug}. ${blocked.length} blocked.`,
-      {
-        sheet_slug: slug,
-        caller: { auth_uid: uid, is_admin: isAdmin, is_owner: isOwner },
-        total: results.length,
-        readable: results.length - blocked.length,
-        blocked,
-        all: results,
-      },
-    );
+    const label = `Checked ${results.length} article(s) linked to ${slug}. ${blocked.length} blocked.`;
+    const payload = {
+      sheet_slug: slug,
+      caller: { auth_uid: uid, is_admin: isAdmin, is_owner: isOwner },
+      total: results.length,
+      readable: results.length - blocked.length,
+      blocked,
+      all: results,
+    };
+    cacheSet(ck, { label, payload }, 60_000);
+    return jsonResult(label, payload);
   },
 });

@@ -127,6 +127,7 @@ import ACMPaceCalculator from "@/components/sheets/ACMPaceCalculator";
 import Blind75StudyPlan, { Blind75Prefs, loadBlind75Prefs, parseEstMinutes } from "@/components/sheets/Blind75StudyPlan";
 import { bucketByWeeks } from "@/lib/blind75Schedule";
 import { CollapsibleSection } from "@/components/shell/CollapsibleSection";
+import { AccessErrorPanel } from "@/components/access/AccessErrorPanel";
 import { Info, Activity, Clock, CalendarClock, CalendarDays, ClipboardCheck, HelpCircle } from "lucide-react";
 
 // Types
@@ -1015,6 +1016,10 @@ function SubSectionCard({
   const total = subSection.topics.length;
   const prevCompletedRef = useRef(completed);
   const isComplete = completed === total && total > 0;
+  // Lazy-load topics in batches of 25. Preserves scroll because we only append.
+  const TOPICS_BATCH = 25;
+  const [visibleTopics, setVisibleTopics] = useState(TOPICS_BATCH);
+  const topicsToRender = subSection.topics.slice(0, visibleTopics);
 
   // React to expand/collapse all signal
   useEffect(() => {
@@ -1123,7 +1128,7 @@ function SubSectionCard({
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {subSection.topics.map((topic, index) => (
+                    {topicsToRender.map((topic) => (
                       <TopicRow 
                         key={topic.id} 
                         topic={topic} 
@@ -1138,6 +1143,24 @@ function SubSectionCard({
                     ))}
                   </TableBody>
                 </Table>
+                {visibleTopics < subSection.topics.length && (
+                  <div className="flex items-center justify-between gap-2 px-4 py-3 border-t border-border/30 bg-muted/20">
+                    <p className="text-xs text-muted-foreground">
+                      Showing {visibleTopics} of {subSection.topics.length} problems
+                    </p>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() =>
+                        setVisibleTopics((c) =>
+                          Math.min(c + TOPICS_BATCH, subSection.topics.length),
+                        )
+                      }
+                    >
+                      Load more problems
+                    </Button>
+                  </div>
+                )}
               </div>
             </motion.div>
           </CollapsibleContent>
@@ -2252,9 +2275,20 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   };
 
   if (!sheetData) {
+    const kind: "builtin_sheet" | "user_folder" =
+      currentSheetId && ["dbms-sheet", "cn-sheet", "os-sheet"].includes(currentSheetId)
+        ? "builtin_sheet"
+        : "user_folder";
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <p className="text-muted-foreground">Sheet not found</p>
+      <div className="min-h-screen bg-background flex items-center justify-center p-6">
+        <div className="w-full max-w-2xl">
+          <AccessErrorPanel
+            resourceKind={kind}
+            resource={currentSheetId ?? "(unknown)"}
+            message="This sheet could not be loaded. It may be blocked by RLS or the slug may be wrong."
+            onRetry={() => window.location.reload()}
+          />
+        </div>
       </div>
     );
   }

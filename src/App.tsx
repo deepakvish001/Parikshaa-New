@@ -112,6 +112,7 @@ import AiInsightFeedback from "./pages/admin/AiInsightFeedback";
 import LeadsInbox from "./pages/admin/LeadsInbox";
 
 import SharedFolder from "./pages/SharedFolder";
+import PublicSheetShare from "./pages/PublicSheetShare";
 import Achievements from "./pages/Achievements";
 import NotificationCenter from "./pages/NotificationCenter";
 import NotificationPreferences from "./pages/NotificationPreferences";
@@ -216,6 +217,7 @@ const App = () => (
                 <Route path="/connect" element={<Connect />} />
 
                 <Route path="/shared/:shareCode" element={<SharedFolder />} />
+                <Route path="/share/sheet/:token" element={<PublicSheetShare />} />
                 <Route
                   path="/onboarding"
                   element={

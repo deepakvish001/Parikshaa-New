@@ -740,6 +740,51 @@ export type Database = {
         }
         Relationships: []
       }
+      builtin_sheet_share_links: {
+        Row: {
+          created_at: string
+          created_by: string
+          expires_at: string | null
+          id: string
+          include_articles: boolean
+          label: string | null
+          last_viewed_at: string | null
+          revoked: boolean
+          slug: string
+          token: string
+          updated_at: string
+          view_count: number
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          expires_at?: string | null
+          id?: string
+          include_articles?: boolean
+          label?: string | null
+          last_viewed_at?: string | null
+          revoked?: boolean
+          slug: string
+          token: string
+          updated_at?: string
+          view_count?: number
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          expires_at?: string | null
+          id?: string
+          include_articles?: boolean
+          label?: string | null
+          last_viewed_at?: string | null
+          revoked?: boolean
+          slug?: string
+          token?: string
+          updated_at?: string
+          view_count?: number
+        }
+        Relationships: []
+      }
       chat_messages: {
         Row: {
           content: string

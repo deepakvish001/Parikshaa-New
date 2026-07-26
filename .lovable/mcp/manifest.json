@@ -3659,6 +3659,139 @@
           "$schema": "http://json-schema.org/draft-07/schema#"
         },
         "outputSchema": null
+      },
+      {
+        "name": "verify_sheet_write_access",
+        "title": "Verify sheet write access",
+        "description": "For a given sheet slug, check whether the current caller can create/update/delete sections and every linked topic_article. Returns per-item allow/block with reasons.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "sheet_slug": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Sheet slug (built-in like dbms-sheet, or DB folder slug)."
+            }
+          },
+          "required": [
+            "sheet_slug"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "create_builtin_share_link",
+        "title": "Create read-only share link for a built-in sheet",
+        "description": "Generate a public read-only share token for a built-in sheet slug (dbms-sheet, cn-sheet, os-sheet). Optionally include linked articles and set an expiry.",
+        "annotations": {
+          "readOnlyHint": false,
+          "idempotentHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "minLength": 1
+            },
+            "include_articles": {
+              "type": "boolean",
+              "default": true
+            },
+            "expires_in_hours": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "label": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "slug"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "revoke_builtin_share_link",
+        "title": "Revoke a built-in sheet share link",
+        "description": "Set revoked=true on the given share token so it stops resolving.",
+        "annotations": {
+          "readOnlyHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "token"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_builtin_share_links",
+        "title": "List built-in sheet share links",
+        "description": "List all share links (optionally filter by slug).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "validate_share_link_access",
+        "title": "Validate a share link",
+        "description": "Public: check whether a share token resolves. Returns the slug, include_articles flag, expiry, revoked state, and whether the caller can currently open it.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "token"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
       }
     ]
   }

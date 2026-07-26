@@ -63,8 +63,7 @@ export function AccessErrorPanel({ resourceKind, resource, message, onRetry }: P
           probe_ok ? "slug found → readable to any signed-in user" : "unknown slug",
         );
       } else if (resourceKind === "user_folder") {
-        const q = await supabase
-          .from("user_folders")
+        const q = await (supabase.from("user_folders") as any)
           .select("id", { count: "exact", head: true })
           .eq("slug", resource);
         probe_ok = !q.error;
@@ -78,8 +77,7 @@ export function AccessErrorPanel({ resourceKind, resource, message, onRetry }: P
             : "→ non-admin: only rows you own are visible",
         );
       } else if (resourceKind === "topic_article") {
-        const q = await supabase
-          .from("topic_articles")
+        const q = await (supabase.from as any)("topic_articles")
           .select("id,status", { count: "exact", head: true })
           .eq("slug", resource);
         probe_ok = !q.error;

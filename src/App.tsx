@@ -287,6 +287,7 @@ const App = () => (
                   <Route path="quiz-history" element={<QuizHistory />} />
                   <Route path="problems" element={<CodingProblems />} />
                   <Route path="problems/:slug" element={<CodingProblemDetail />} />
+                  <Route path="runs" element={<RunHistory />} />
                 </Route>
 
                 {/* Retired routes — redirect to /learn */}

@@ -305,6 +305,13 @@ const CodingProblemDetail = () => {
     toast({ title: "Results reset", description: "All case statuses cleared for this problem." });
   };
   const [executionErrorDetails, setExecutionErrorDetails] = useState<boolean>(false);
+  const [runError, setRunError] = useState<{
+    message: string;
+    stage?: string;
+    providerStatus?: number;
+    providerBody?: string;
+    requestedUrl?: string;
+  } | null>(null);
   const [showLogin, setShowLogin] = useState(false);
   const [loginAction, setLoginAction] = useState<"run" | "submit" | null>(null);
   const [showShortcuts, setShowShortcuts] = useState(false);

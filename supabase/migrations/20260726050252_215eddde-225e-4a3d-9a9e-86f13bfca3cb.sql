@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Anyone can view profiles with username set" ON public.user_profiles_extended;

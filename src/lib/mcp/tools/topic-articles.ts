@@ -708,7 +708,8 @@ export const previewTopicArticleTool = defineTool({
       .eq("slug", post_slug).maybeSingle();
     if (!post) return errResult(`Post '${post_slug}' not found.`);
 
-    const { marked } = await import("npm:marked@12");
+    // @ts-ignore npm: specifier resolved by Deno at runtime
+    const { marked } = await import(/* @vite-ignore */ "npm:marked@12");
     let html = await marked.parse(post.content_md ?? "", { async: true });
     // strict sanitizer: kill dangerous constructs
     html = String(html)

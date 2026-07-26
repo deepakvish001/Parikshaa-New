@@ -2872,7 +2872,10 @@ var previewTopicArticleTool = defineTool32({
     const sb = gate.sb;
     const { data: post } = await sb.from("blog_posts").select("id,slug,title,excerpt,content_md,cover_image_url,status,updated_at,reading_time_min").eq("slug", post_slug).maybeSingle();
     if (!post) return errResult(`Post '${post_slug}' not found.`);
-    const { marked } = await import("npm:marked@12");
+    const { marked } = await import(
+      /* @vite-ignore */
+      "npm:marked@12"
+    );
     let html = await marked.parse(post.content_md ?? "", { async: true });
     html = String(html).replace(/<script[\s\S]*?<\/script>/gi, "").replace(/<iframe[\s\S]*?<\/iframe>/gi, "").replace(/<style[\s\S]*?<\/style>/gi, "").replace(/ on[a-z]+="[^"]*"/gi, "").replace(/ on[a-z]+='[^']*'/gi, "").replace(/javascript:/gi, "");
     const images = [];

@@ -217,6 +217,7 @@ const App = () => (
                 <Route path="/connect" element={<Connect />} />
 
                 <Route path="/shared/:shareCode" element={<SharedFolder />} />
+                <Route path="/share/sheet/:token" element={<PublicSheetShare />} />
                 <Route
                   path="/onboarding"
                   element={

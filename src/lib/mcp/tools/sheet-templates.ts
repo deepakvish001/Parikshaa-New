@@ -333,10 +333,10 @@ export const publishSheetBundleTool = defineTool({
     const perProblem: Array<{ slug: string; ok: boolean; snapshotVersion?: number | null; error?: string }> = [];
     for (const p of problems) {
       const r = await publishBundleCore(sb, uid, {
-        problem: p.problem,
-        tests: p.tests,
-        starter_code: p.starter_code,
-        solutions: p.solutions,
+        problem: p.problem as Record<string, unknown> & { slug: string },
+        tests: p.tests as Array<{ input: string; expected_output: string; is_sample?: boolean; weight?: number }>,
+        starter_code: p.starter_code as Array<{ language: string; code: string }> | undefined,
+        solutions: p.solutions as Array<{ lang_id: string; code: string }>,
         if_exists,
       });
       perProblem.push({ slug: r.slug, ok: r.ok, snapshotVersion: r.snapshotVersion, error: r.error });

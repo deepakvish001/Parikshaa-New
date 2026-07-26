@@ -865,7 +865,7 @@ var mcp_default = defineMcp({
   name: "parikshaa-mcp",
   title: "Parikshaa",
   version: "0.1.0",
-  instructions: "Parikshaa MCP server. Tools act as the signed-in user (RLS enforced). Start with `whoami`. Use the feature-specific tools (list_folders, list_quiz_attempts, etc.) for common tasks, and the universal `db_select` / `db_insert` / `db_update` / `db_delete` tools to read or write ANY other table in the app.",
+  instructions: "Parikshaa MCP server for admins/owners. Tools act as the signed-in user (RLS enforced) but admin/owner roles have broad read/write across all features. Start with `ensure_admin_access` then `whoami`. For any table: db_select (simple), db_query (advanced filters), db_insert/db_update/db_delete. For DB functions: db_rpc. For files: storage_list/upload/delete/signed_url. For business logic: invoke_edge_function. For access control: admin_manage_role. Coding-content publishing: publish_coding_bundle / publish_coding_problem / publish_coding_solution.",
   auth: auth.oauth.issuer({
     issuer: `https://${projectRef}.supabase.co/auth/v1`,
     acceptedAudiences: "authenticated"

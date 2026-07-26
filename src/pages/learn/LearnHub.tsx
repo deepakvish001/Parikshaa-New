@@ -120,7 +120,6 @@ import {
 import {
   ProgressRing,
   CalendarRoadmap,
-  DailyPlanner,
 } from "@/components/learn/RightRailWidgets";
 import { ParikshaLevelsTimeline } from "@/components/learn/ParikshaLevelsTimeline";
 
@@ -757,7 +756,7 @@ function LeftRail() {
   const railItems = [
     { icon: HomeIcon, label: "Home", to: "/learn", active: pathname === "/learn" },
     { icon: Swords, label: "Contest", to: "/contests", active: pathname.startsWith("/contests") },
-    { icon: Sparkles, label: "Planner", to: "/learn/planner", active: pathname.startsWith("/learn/planner") },
+    
     { icon: Briefcase, label: "Jobs", to: "/jobs", active: pathname.startsWith("/jobs") },
     { icon: MapIcon, label: "Roadmap", to: "/roadmaps", active: pathname.startsWith("/roadmaps") },
     { icon: Bell, label: "Notifier", to: "/contest-notifier", active: pathname.startsWith("/contest-notifier") },
@@ -937,7 +936,7 @@ export default function LearnHub() {
   const navigate = useNavigate();
   const mainRef = useRef<HTMLDivElement>(null);
   const [activeGroup, setActiveGroup] = useState<GroupId>("sheets");
-  const [plannerExpanded, setPlannerExpanded] = useState(false);
+  
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -1300,39 +1299,17 @@ export default function LearnHub() {
 
 
           {/* Right rail */}
-          <aside className={cn(
-            "h-full min-h-0 pr-1 [scrollbar-width:thin]",
-            plannerExpanded ? "overflow-hidden flex flex-col" : "overflow-y-auto space-y-3",
-          )}>
-            {plannerExpanded ? (
-              <div className="flex-1 min-h-0">
-                <DailyPlanner
-                  expanded
-                  onExpand={() => setPlannerExpanded(true)}
-                  onCollapse={() => setPlannerExpanded(false)}
-                />
-              </div>
-            ) : (
-              <>
-                <ProgressRing />
-                <CalendarRoadmap />
-                
-                <DailyPlanner
-                  expanded={false}
-                  onExpand={() => setPlannerExpanded(true)}
-                  onCollapse={() => setPlannerExpanded(false)}
-                />
-
-                {!user && (
-                  <Link
-                    to="/login"
-                    className="learn-primary-cta w-full px-5 py-3 text-sm"
-                  >
-                    <BookOpen className="h-4 w-4" />
-                    Sign in to save sheet progress
-                  </Link>
-                )}
-              </>
+          <aside className="h-full min-h-0 pr-1 [scrollbar-width:thin] overflow-y-auto space-y-3">
+            <ProgressRing />
+            <CalendarRoadmap />
+            {!user && (
+              <Link
+                to="/login"
+                className="learn-primary-cta w-full px-5 py-3 text-sm"
+              >
+                <BookOpen className="h-4 w-4" />
+                Sign in to save sheet progress
+              </Link>
             )}
           </aside>
         </div>

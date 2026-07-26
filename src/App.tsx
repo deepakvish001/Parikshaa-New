@@ -34,7 +34,7 @@ import DsaStudioPatternsPage from "./pages/learn/dsa-studio/PatternsPage";
 import DsaStudioTricksPage from "./pages/learn/dsa-studio/TricksPage";
 import DsaStudioEdgePage from "./pages/learn/dsa-studio/EdgePage";
 import DsaStudioJournalPage from "./pages/learn/dsa-studio/JournalPage";
-import StudyPlanner from "./pages/learn/StudyPlanner";
+
 import VisualizeHub from "./pages/learn/visualize/VisualizeHub";
 import VisualizeTrack from "./pages/learn/visualize/VisualizeTrack";
 import VisualizePlayer from "./pages/learn/visualize/VisualizePlayer";
@@ -246,7 +246,7 @@ const App = () => (
                     <Route path="dsa-studio/pattern/:patternId" element={<DsaStudioPattern />} />
                     <Route path="dsa-studio/:slug" element={<DsaStudioProblem />} />
                     <Route path="leaderboard" element={<Leaderboard />} />
-                    <Route path="planner" element={<ProtectedRoute requireOnboarding><StudyPlanner /></ProtectedRoute>} />
+                    
                     <Route path="playground" element={<CodePlayground />} />
                     <Route path="visualize" element={<VisualizeHub />} />
                     <Route path="visualize/algo/:algoId" element={<VisualizePlayer />} />

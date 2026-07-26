@@ -4,7 +4,6 @@ import { PanelRightClose, PanelRightOpen } from "lucide-react";
 import {
   ProgressRing,
   CalendarRoadmap,
-  DailyPlanner,
 } from "@/components/learn/RightRailWidgets";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { HeroAmbientLayers } from "@/components/landing/HeroAmbientLayers";
@@ -26,7 +25,7 @@ export function GlobalRightRail() {
   const [hidden, setHidden] = useState<boolean>(() => {
     try { return localStorage.getItem(RAIL_HIDDEN_KEY) === "1"; } catch { return false; }
   });
-  const [plannerExpanded, setPlannerExpanded] = useState(false);
+  
 
   const blocked = useMemo(() => {
     const blocklist = [
@@ -117,25 +116,8 @@ export function GlobalRightRail() {
               </span>
             </div>
 
-            {plannerExpanded ? (
-              <div className="flex-1 min-h-0">
-                <DailyPlanner
-                  expanded
-                  onExpand={() => setPlannerExpanded(true)}
-                  onCollapse={() => setPlannerExpanded(false)}
-                />
-              </div>
-            ) : (
-              <>
-                <ProgressRing />
-                <CalendarRoadmap />
-                <DailyPlanner
-                  expanded={false}
-                  onExpand={() => setPlannerExpanded(true)}
-                  onCollapse={() => setPlannerExpanded(false)}
-                />
-              </>
-            )}
+            <ProgressRing />
+            <CalendarRoadmap />
           </div>
         </div>
       </aside>

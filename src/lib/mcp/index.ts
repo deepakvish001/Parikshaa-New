@@ -63,6 +63,14 @@ import {
   exportSheetItemsCsvTool,
   listPublicShareCodesTool,
 } from "./tools/sheet-share-ops";
+import {
+  publishTopicArticleTool,
+  listTopicArticlesTool,
+  linkArticleToSheetTopicTool,
+  unlinkArticleFromSheetTopicTool,
+  uploadArticleImageTool,
+  deleteTopicArticleTool,
+} from "./tools/topic-articles";
 
 // The OAuth issuer MUST be the direct Supabase host, built from the project ref,
 // not from SUPABASE_URL (which may be the Lovable Cloud proxy).
@@ -138,5 +146,11 @@ export default defineMcp({
     duplicateSheetTool,
     exportSheetItemsCsvTool,
     listPublicShareCodesTool,
+    publishTopicArticleTool,
+    listTopicArticlesTool,
+    linkArticleToSheetTopicTool,
+    unlinkArticleFromSheetTopicTool,
+    uploadArticleImageTool,
+    deleteTopicArticleTool,
   ],
 });

@@ -74,6 +74,10 @@ import {
   updateTopicArticleTool,
   getTopicArticleDetailsTool,
   bulkPublishTopicArticlesTool,
+  bulkSetTopicArticleStatusTool,
+  previewTopicArticleTool,
+  searchTopicArticlesTool,
+  verifyTopicArticleLinkageTool,
 } from "./tools/topic-articles";
 
 // The OAuth issuer MUST be the direct Supabase host, built from the project ref,

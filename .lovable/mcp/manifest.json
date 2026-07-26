@@ -1990,6 +1990,249 @@
           "$schema": "http://json-schema.org/draft-07/schema#"
         },
         "outputSchema": null
+      },
+      {
+        "name": "regenerate_share_sheet_link",
+        "title": "Revoke + regenerate a sheet's public share link",
+        "description": "Delete any existing shared_folders row for the sheet and issue a fresh share code. Old links stop working immediately.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "is_public": {
+              "type": "boolean"
+            },
+            "allow_copy": {
+              "type": "boolean"
+            },
+            "expires_at": {
+              "type": "string",
+              "format": "date-time",
+              "description": "ISO timestamp for expiry (optional)."
+            }
+          },
+          "required": [
+            "folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "update_sheet_sections",
+        "title": "Edit a sheet's section outline (add/remove/rename/reorder)",
+        "description": "Persist a new section outline into the sheet's description and, when requested, reorder actual sheet items to match section order (unlisted items append at end). Also inserts any missing slugs (that exist in coding_problems) referenced by the new outline.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "sections": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  },
+                  "slugs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "default": []
+                  }
+                },
+                "required": [
+                  "title"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1,
+              "maxItems": 50
+            },
+            "intro": {
+              "type": "string",
+              "maxLength": 2000,
+              "description": "Optional replacement intro (before section list)."
+            },
+            "apply_to_items": {
+              "type": "boolean",
+              "description": "If true (default), also reorder existing sheet items and insert any new outline slugs."
+            }
+          },
+          "required": [
+            "folder_id",
+            "sections"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_sheet_details",
+        "title": "Get full sheet structure + ordered items",
+        "description": "Return sheet metadata, parsed section outline from description, all ordered sheet items with problem metadata (title, difficulty, topics), and any active share code. Ready for direct UI rendering.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "required": [
+            "folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "preview_publish_sheet_bundle",
+        "title": "Dry-run preview of publish_sheet_bundle",
+        "description": "Decode a publish_sheet_bundle payload and report exactly what would happen — sheets created/reused, problems inserted vs overwritten, items added vs already-in-sheet, and any validation failures — WITHOUT writing anything.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "sheet": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 120
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 2000
+                },
+                "color": {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                "reuse_folder_id": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "additionalProperties": false
+            },
+            "problems": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "problem": {
+                    "type": "object",
+                    "properties": {
+                      "slug": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "difficulty": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "slug"
+                    ],
+                    "additionalProperties": true
+                  },
+                  "tests": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": {}
+                    }
+                  },
+                  "starter_code": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": {}
+                    }
+                  },
+                  "solutions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": {}
+                    }
+                  }
+                },
+                "required": [
+                  "problem"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1,
+              "maxItems": 50
+            },
+            "if_exists": {
+              "type": "string",
+              "enum": [
+                "error",
+                "update"
+              ]
+            },
+            "roadmap": {
+              "type": "object",
+              "properties": {
+                "roadmap_id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "roadmap_id"
+              ],
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "sheet",
+            "problems"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
       }
     ]
   }

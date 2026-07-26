@@ -403,6 +403,25 @@ const SettingsProfileTab = () => {
             <p className="text-xs text-muted-foreground">Email cannot be changed</p>
           </div>
 
+          {/* Public profile link */}
+          {extendedProfile?.username && (
+            <div className="flex items-center justify-between p-3 rounded-lg border border-border bg-secondary/30">
+              <div className="min-w-0">
+                <p className="text-sm font-medium text-foreground">Public profile</p>
+                <p className="text-xs text-muted-foreground truncate">/u/{extendedProfile.username}</p>
+              </div>
+              <a
+                href={`/u/${extendedProfile.username}`}
+                target="_blank"
+                rel="noreferrer"
+                className="text-xs font-medium text-primary hover:underline shrink-0 ml-3"
+              >
+                View →
+              </a>
+            </div>
+          )}
+
+
           {/* Phone */}
           <div className="space-y-2">
             <Label className="text-muted-foreground">Mobile Number</Label>

@@ -1480,6 +1480,48 @@
         "outputSchema": null
       },
       {
+        "name": "get_current_user_context",
+        "title": "Get current user context",
+        "description": "Return the caller's auth.uid(), email, and role flags (admin/owner). Use this to debug 401s and confirm the MCP OAuth token is valid.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "test_sheet_access",
+        "title": "Test sheet read access",
+        "description": "Check whether the caller can read a sheet by slug. Checks built-in frontend sheets (dbms-sheet, cn-sheet, os-sheet) and DB-backed sheets in user_folders. Explains why access is or is not granted.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Sheet slug, e.g. dbms-sheet"
+            }
+          },
+          "required": [
+            "slug"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
         "name": "create_sheet",
         "title": "Create sheet (folder of problems)",
         "description": "Create a new sheet (curated folder) owned by the calling admin. Returns the folder id to use with add_problems_to_sheet.",

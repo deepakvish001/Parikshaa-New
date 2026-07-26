@@ -9,7 +9,7 @@ export const useAdminContests = () => {
   const qc = useQueryClient();
   useEffect(() => {
     const ch = supabase
-      .channel("admin-contests-live")
+      .channel(`admin-contests-live-${Math.random().toString(36).slice(2)}`)
       .on("postgres_changes", { event: "*", schema: "public", table: "contests" }, () => {
         qc.invalidateQueries({ queryKey: ["admin-contests"] });
       })

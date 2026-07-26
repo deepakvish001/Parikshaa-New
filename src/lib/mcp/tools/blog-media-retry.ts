@@ -15,10 +15,9 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const isRlsError = (msg: string) =>
   /row-level security|permission denied|not authorized|unauthorized|403/i.test(msg);
 
-type SbLike = Awaited<ReturnType<typeof requireAdmin>> extends { sb: infer S } ? S : never;
-
 const attemptUpload = async (
-  sb: NonNullable<SbLike>,
+  // deno-lint-ignore no-explicit-any
+  sb: any,
   path: string,
   bytes: Uint8Array,
   contentType: string,

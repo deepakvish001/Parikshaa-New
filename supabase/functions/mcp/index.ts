@@ -14,7 +14,7 @@ var getEnv = (name) => {
   if (denoValue) return denoValue;
   return process.env[name];
 };
-var createUserSupabaseClient2 = (ctx) => {
+var createUserSupabaseClient = (ctx) => {
   const supabaseUrl = getEnv("SUPABASE_URL");
   const supabaseKey = getEnv("SUPABASE_PUBLISHABLE_KEY") ?? getEnv("SUPABASE_ANON_KEY");
   if (!supabaseUrl || !supabaseKey) {
@@ -37,7 +37,7 @@ var whoami_default = defineTool({
     }
     const userId = ctx.getUserId();
     const email = ctx.getUserEmail() ?? null;
-    const supabase = createUserSupabaseClient2(ctx);
+    const supabase = createUserSupabaseClient(ctx);
     const { data: profile, error } = await supabase.from("profiles").select("full_name, avatar_url").eq("user_id", userId).maybeSingle();
     if (error) {
       return { content: [{ type: "text", text: error.message }], isError: true };
@@ -60,7 +60,7 @@ var getEnv2 = (name) => {
   if (denoValue) return denoValue;
   return process.env[name];
 };
-var createUserSupabaseClient3 = (ctx) => {
+var createUserSupabaseClient2 = (ctx) => {
   const supabaseUrl = getEnv2("SUPABASE_URL");
   const supabaseKey = getEnv2("SUPABASE_PUBLISHABLE_KEY") ?? getEnv2("SUPABASE_ANON_KEY");
   if (!supabaseUrl || !supabaseKey) {
@@ -83,7 +83,7 @@ var list_folders_default = defineTool2({
     if (!ctx.isAuthenticated()) {
       return { content: [{ type: "text", text: "Not authenticated" }], isError: true };
     }
-    const supabase = createUserSupabaseClient3(ctx);
+    const supabase = createUserSupabaseClient2(ctx);
     const { data, error } = await supabase.from("user_folders").select("id, name, description, color, created_at, updated_at").order("updated_at", { ascending: false }).limit(limit ?? 50);
     if (error) {
       return { content: [{ type: "text", text: error.message }], isError: true };
@@ -111,7 +111,7 @@ var getEnv3 = (name) => {
   const deno = globalThis.Deno;
   return deno?.env?.get?.(name) ?? process.env[name];
 };
-var createUserSupabaseClient4 = (ctx) => {
+var createUserSupabaseClient3 = (ctx) => {
   const url = getEnv3("SUPABASE_URL");
   const key = getEnv3("SUPABASE_PUBLISHABLE_KEY") ?? getEnv3("SUPABASE_ANON_KEY");
   if (!url || !key) throw new Error("Backend env missing SUPABASE_URL or anon key.");
@@ -133,7 +133,7 @@ var requireAdmin = async (ctx) => {
   if (!ctx.isAuthenticated()) {
     return { ok: false, error: errResult("Not authenticated") };
   }
-  const sb = createUserSupabaseClient4(ctx);
+  const sb = createUserSupabaseClient3(ctx);
   const uid = ctx.getUserId();
   const [{ data: isAdmin }, { data: isOwner }] = await Promise.all([
     sb.rpc("has_role", { _user_id: uid, _role: "admin" }),
@@ -159,7 +159,7 @@ var list_quiz_attempts_default = defineTool3({
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ limit }, ctx) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient4(ctx);
+    const sb = createUserSupabaseClient3(ctx);
     const { data, error } = await sb.from("quiz_results").select("*").order("created_at", { ascending: false }).limit(limit ?? 20);
     if (error) return errResult(error.message);
     return jsonResult(`Found ${data?.length ?? 0} quiz attempts:`, data);
@@ -176,7 +176,7 @@ var get_progress_stats_default = defineTool4({
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async (_input, ctx) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient4(ctx);
+    const sb = createUserSupabaseClient3(ctx);
     const userId = ctx.getUserId();
     const [txRes, recentRes] = await Promise.all([
       sb.from("xp_transactions").select("amount").eq("user_id", userId),
@@ -202,7 +202,7 @@ var list_folder_items_default = defineTool5({
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ folder_id, limit }, ctx) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient4(ctx);
+    const sb = createUserSupabaseClient3(ctx);
     const { data, error } = await sb.from("user_folder_items").select("*").eq("folder_id", folder_id).order("created_at", { ascending: false }).limit(limit ?? 100);
     if (error) return errResult(error.message);
     return jsonResult(`Found ${data?.length ?? 0} items:`, data);
@@ -220,7 +220,7 @@ var list_solved_problems_default = defineTool6({
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ limit }, ctx) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient4(ctx);
+    const sb = createUserSupabaseClient3(ctx);
     const { data, error } = await sb.from("user_problem_solutions").select("*").order("updated_at", { ascending: false }).limit(limit ?? 50);
     if (error) return errResult(error.message);
     return jsonResult(`Found ${data?.length ?? 0} solutions:`, data);
@@ -238,7 +238,7 @@ var list_topic_progress_default = defineTool7({
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ limit }, ctx) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient4(ctx);
+    const sb = createUserSupabaseClient3(ctx);
     const { data, error } = await sb.from("user_topic_progress").select("*").order("updated_at", { ascending: false }).limit(limit ?? 100);
     if (error) return errResult(error.message);
     return jsonResult(`Found ${data?.length ?? 0} topics:`, data);
@@ -259,7 +259,7 @@ var list_journal_entries_default = defineTool8({
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ limit, status }, ctx) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient4(ctx);
+    const sb = createUserSupabaseClient3(ctx);
     let q = sb.from("practice_journal_entries").select("id,title,topic,pattern,difficulty,status,tags,solved_clean,time_taken_min,next_revision_at,is_favorite,created_at").order("created_at", { ascending: false }).limit(limit ?? 50);
     if (status) q = q.eq("status", status);
     const { data, error } = await q;
@@ -282,7 +282,7 @@ var list_notifications_default = defineTool9({
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ limit, unread_only }, ctx) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient4(ctx);
+    const sb = createUserSupabaseClient3(ctx);
     let q = sb.from("notifications").select("*").order("created_at", { ascending: false }).limit(limit ?? 25);
     if (unread_only) q = q.eq("read", false);
     const { data, error } = await q;
@@ -301,7 +301,7 @@ var list_goals_default = defineTool10({
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async (_i, ctx) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient4(ctx);
+    const sb = createUserSupabaseClient3(ctx);
     const { data, error } = await sb.from("user_goals").select("*").order("created_at", { ascending: false });
     if (error) return errResult(error.message);
     return jsonResult(`Found ${data?.length ?? 0} goals:`, data);
@@ -323,7 +323,7 @@ var search_coding_problems_default = defineTool11({
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ query, difficulty, limit }, ctx) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient4(ctx);
+    const sb = createUserSupabaseClient3(ctx);
     let q = sb.from("coding_problems").select("slug,title,difficulty,topics").eq("is_published", true).limit(limit ?? 25);
     if (query) q = q.ilike("title", `%${query}%`);
     if (difficulty) q = q.eq("difficulty", difficulty);
@@ -343,7 +343,7 @@ var list_platform_stats_default = defineTool12({
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async (_i, ctx) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient4(ctx);
+    const sb = createUserSupabaseClient3(ctx);
     const { data, error } = await sb.from("user_platform_stats").select("*");
     if (error) return errResult(error.message);
     return jsonResult(`Found ${data?.length ?? 0} platform rows:`, data);
@@ -365,7 +365,7 @@ var create_folder_default = defineTool13({
   annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: false },
   handler: async ({ name, description, color }, ctx) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient4(ctx);
+    const sb = createUserSupabaseClient3(ctx);
     const { data, error } = await sb.from("user_folders").insert({ user_id: ctx.getUserId(), name, description, color }).select().single();
     if (error) return errResult(error.message);
     return jsonResult("Folder created:", data);
@@ -387,7 +387,7 @@ var add_folder_item_default = defineTool14({
   annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: false },
   handler: async ({ folder_id, item_type, item_id }, ctx) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient4(ctx);
+    const sb = createUserSupabaseClient3(ctx);
     const { data, error } = await sb.from("user_folder_items").insert({ folder_id, item_type, item_id }).select().single();
     if (error) return errResult(error.message);
     return jsonResult("Item added:", data);
@@ -414,7 +414,7 @@ var create_journal_entry_default = defineTool15({
   annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: false },
   handler: async (input, ctx) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient4(ctx);
+    const sb = createUserSupabaseClient3(ctx);
     const { data, error } = await sb.from("practice_journal_entries").insert({ user_id: ctx.getUserId(), ...input }).select().single();
     if (error) return errResult(error.message);
     return jsonResult("Entry created:", data);
@@ -434,7 +434,7 @@ var mark_notifications_read_default = defineTool16({
   annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   handler: async ({ notification_ids }, ctx) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient4(ctx);
+    const sb = createUserSupabaseClient3(ctx);
     let q = sb.from("notifications").update({ read: true }).eq("user_id", ctx.getUserId()).eq("read", false);
     if (notification_ids?.length) q = q.in("id", notification_ids);
     const { data, error } = await q.select("id");
@@ -564,7 +564,7 @@ var dbQueryTool = defineTool18({
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ table, columns, filters, order_by, ascending, limit, offset, count }, ctx) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient4(ctx);
+    const sb = createUserSupabaseClient3(ctx);
     let q = sb.from(table).select(columns ?? "*", count ? { count } : void 0);
     for (const f of filters ?? []) {
       q = q[f.op](f.column, f.value);
@@ -798,7 +798,8 @@ var publishCodingProblemTool = defineTool23({
   },
   annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
   handler: async ({ problem, tests, starter_code, if_exists, version_note }, ctx) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
     const parsed = problemSchema.safeParse(problem);
     if (!parsed.success) {
       return errResult(
@@ -806,7 +807,7 @@ var publishCodingProblemTool = defineTool23({
       );
     }
     const p = parsed.data;
-    const sb = createUserSupabaseClient(ctx);
+    const sb = _gate.sb;
     const { data: existing, error: exErr } = await sb.from("coding_problems").select("slug, title, is_published").eq("slug", p.slug).maybeSingle();
     if (exErr) return errResult(`Slug check failed: ${exErr.message}`);
     if (existing && (if_exists ?? "error") === "error") {
@@ -1089,7 +1090,7 @@ var ensureAdminAccessTool = defineTool26({
         "This tool is only callable by OAuth MCP clients (Claude, ChatGPT). Your token has no client_id claim."
       );
     }
-    const sb = createUserSupabaseClient4(ctx);
+    const sb = createUserSupabaseClient3(ctx);
     const { error } = await sb.rpc("grant_admin_to_self");
     if (error) return errResult(`grant_admin_to_self failed: ${error.message}`);
     return jsonResult(

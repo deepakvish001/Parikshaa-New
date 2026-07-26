@@ -57,7 +57,8 @@ export const publishCodingProblemTool = defineTool({
   },
   annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
   handler: async ({ problem, tests, starter_code, if_exists, version_note }, ctx: ToolContext) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
 
     // 1. Schema validation — hard-fail before touching DB.
     const parsed = problemSchema.safeParse(problem);
@@ -68,7 +69,7 @@ export const publishCodingProblemTool = defineTool({
       );
     }
     const p = parsed.data;
-    const sb = createUserSupabaseClient(ctx);
+    const sb = _gate.sb;
 
     // 2. Slug conflict check.
     const { data: existing, error: exErr } = await sb

@@ -46,6 +46,12 @@ import {
   reorderSheetItemsTool,
   publishSheetBundleTool,
 } from "./tools/sheet-templates";
+import {
+  regenerateShareSheetLinkTool,
+  updateSheetSectionsTool,
+  getSheetDetailsTool,
+  previewPublishSheetBundleTool,
+} from "./tools/sheet-manage";
 
 // The OAuth issuer MUST be the direct Supabase host, built from the project ref,
 // not from SUPABASE_URL (which may be the Lovable Cloud proxy).

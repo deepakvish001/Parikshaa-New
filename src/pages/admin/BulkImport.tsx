@@ -233,16 +233,36 @@ const BulkImport = () => {
     };
   };
 
-  const handleFile = async (file: File) => {
-    try {
-      const text = await file.text();
-      const parsed = JSON.parse(text);
-      const arr = Array.isArray(parsed) ? parsed : [parsed];
-      setRows(arr.map((raw, i) => parseRow(raw, i)));
-    } catch (e: any) {
-      toast({ title: "Invalid JSON", description: e.message, variant: "destructive" });
+  const handleFiles = async (files: File[]) => {
+    if (files.length === 0) return;
+    const all: any[] = [];
+    const failedFiles: string[] = [];
+    for (const file of files) {
+      try {
+        const text = await file.text();
+        const parsed = JSON.parse(text);
+        if (Array.isArray(parsed)) all.push(...parsed);
+        else all.push(parsed);
+      } catch (e: any) {
+        failedFiles.push(`${file.name}: ${e.message}`);
+      }
+    }
+    if (failedFiles.length > 0) {
+      toast({
+        title: `Skipped ${failedFiles.length} invalid file${failedFiles.length === 1 ? "" : "s"}`,
+        description: failedFiles.join(" • "),
+        variant: "destructive",
+      });
+    }
+    if (all.length > 0) {
+      setRows(all.map((raw, i) => parseRow(raw, i)));
+      toast({
+        title: `Loaded ${all.length} problem${all.length === 1 ? "" : "s"}`,
+        description: `From ${files.length - failedFiles.length} file${files.length - failedFiles.length === 1 ? "" : "s"}.`,
+      });
     }
   };
+
 
   const importValid = async () => {
     const valid = rows.filter((r) => r.ok);
@@ -466,21 +486,24 @@ const BulkImport = () => {
       <Card className="p-6">
         <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-muted py-10 text-center transition-colors hover:border-primary">
           <Upload className="h-8 w-8 text-muted-foreground" />
-          <span className="text-sm font-medium">Drop or click to upload JSON</span>
+          <span className="text-sm font-medium">Drop or click to upload JSON files</span>
           <span className="text-xs text-muted-foreground">
-            Array of problems matching the template schema.
+            Select one or many .json files — each may be a single problem or an array. All are merged.
           </span>
           <input
             type="file"
             accept="application/json,.json"
+            multiple
             className="hidden"
             onChange={(e) => {
-              const f = e.target.files?.[0];
-              if (f) handleFile(f);
+              const files = Array.from(e.target.files ?? []);
+              if (files.length) handleFiles(files);
+              e.target.value = "";
             }}
           />
         </label>
       </Card>
+
 
       {rows.length > 0 && (
         <Card className="mt-4 p-4">

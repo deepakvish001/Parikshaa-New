@@ -30,70 +30,87 @@ interface PublicProfileData {
   resume_url: string | null;
 }
 
+type LoadState =
+  | { status: "loading" }
+  | { status: "ok"; profile: PublicProfileData }
+  | { status: "not_found" }
+  | { status: "error"; code: string; message: string };
+
 const PublicProfile = () => {
   const { username } = useParams<{ username: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
   const { toast } = useToast();
   const { isFollowing, followUser, unfollowUser } = useFollows();
-  const [profile, setProfile] = useState<PublicProfileData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
+  const [state, setState] = useState<LoadState>({ status: "loading" });
   const [isFollowLoading, setIsFollowLoading] = useState(false);
   const [counts, setCounts] = useState<{ followers: number; following: number }>({ followers: 0, following: 0 });
 
+  const profile = state.status === "ok" ? state.profile : null;
+  const isLoading = state.status === "loading";
 
   useEffect(() => {
     const fetchProfile = async () => {
-      if (!username) { setNotFound(true); setIsLoading(false); return; }
+      if (!username) { setState({ status: "not_found" }); return; }
+      setState({ status: "loading" });
       try {
-        const { data: ext } = await supabase
+        const { data: ext, error: extErr } = await supabase
           .from("public_user_profiles" as any)
           .select("*")
           .eq("username", username)
-          .maybeSingle() as { data: any };
-        if (!ext) { setNotFound(true); setIsLoading(false); return; }
+          .maybeSingle() as { data: any; error: any };
+        if (extErr) {
+          setState({ status: "error", code: extErr.code ?? "profile_fetch_failed", message: extErr.message ?? "Failed to load profile." });
+          return;
+        }
+        if (!ext) { setState({ status: "not_found" }); return; }
 
-        const { data: basic } = await supabase
+        const { data: basic, error: basicErr } = await supabase
           .from("profiles")
           .select("full_name, avatar_url")
           .eq("user_id", ext.user_id)
           .maybeSingle();
-        if (!basic) { setNotFound(true); setIsLoading(false); return; }
+        if (basicErr) {
+          setState({ status: "error", code: basicErr.code ?? "basic_profile_fetch_failed", message: basicErr.message ?? "Failed to load basic profile." });
+          return;
+        }
+        if (!basic) { setState({ status: "not_found" }); return; }
 
-        setProfile({
-          username: ext.username || username,
-          user_id: ext.user_id,
-          full_name: basic.full_name || "Anonymous",
-          avatar_url: basic.avatar_url,
-          bio: ext.bio, location: ext.location, occupation: ext.occupation,
-          website: ext.website ?? null,
-          college: ext.college_name ?? null,
-          branch: ext.branch ?? null,
-          study_year: ext.study_year ?? null,
-          skills: ext.skills ?? [],
-          interests: ext.interests ?? [],
-          goals: ext.goals ?? [],
-          aspirations: ext.aspirations ?? [],
-          subjects: ext.profile_subjects ?? [],
-          twitter_url: ext.twitter_url, linkedin_url: ext.linkedin_url, github_url: ext.github_url,
-          instagram_url: ext.instagram_url ?? null,
-          leetcode_url: ext.leetcode_url, hackerrank_url: ext.hackerrank_url,
-          codeforces_url: ext.codeforces_url, codechef_url: ext.codechef_url,
-          geeksforgeeks_url: ext.geeksforgeeks_url,
-          resume_url: ext.resume_url ?? null,
+        setState({
+          status: "ok",
+          profile: {
+            username: ext.username || username,
+            user_id: ext.user_id,
+            full_name: basic.full_name || "Anonymous",
+            avatar_url: basic.avatar_url,
+            bio: ext.bio, location: ext.location, occupation: ext.occupation,
+            website: ext.website ?? null,
+            college: ext.college_name ?? null,
+            branch: ext.branch ?? null,
+            study_year: ext.study_year ?? null,
+            skills: ext.skills ?? [],
+            interests: ext.interests ?? [],
+            goals: ext.goals ?? [],
+            aspirations: ext.aspirations ?? [],
+            subjects: ext.profile_subjects ?? [],
+            twitter_url: ext.twitter_url, linkedin_url: ext.linkedin_url, github_url: ext.github_url,
+            instagram_url: ext.instagram_url ?? null,
+            leetcode_url: ext.leetcode_url, hackerrank_url: ext.hackerrank_url,
+            codeforces_url: ext.codeforces_url, codechef_url: ext.codechef_url,
+            geeksforgeeks_url: ext.geeksforgeeks_url,
+            resume_url: ext.resume_url ?? null,
+          },
         });
 
-        // fetch follow counts in parallel
+        // fetch follow counts in parallel (best-effort)
         const [{ count: followers }, { count: following }] = await Promise.all([
           supabase.from("user_follows").select("*", { count: "exact", head: true }).eq("following_id", ext.user_id),
           supabase.from("user_follows").select("*", { count: "exact", head: true }).eq("follower_id", ext.user_id),
         ]);
         setCounts({ followers: followers ?? 0, following: following ?? 0 });
-      } catch (e) {
-        console.error(e); setNotFound(true);
-      } finally {
-        setIsLoading(false);
+      } catch (e: any) {
+        console.error("PublicProfile fetch failed", e);
+        setState({ status: "error", code: e?.code ?? "unknown", message: e?.message ?? "Unexpected error loading profile." });
       }
     };
     fetchProfile();
@@ -137,11 +154,41 @@ const PublicProfile = () => {
 
 
   if (isLoading) {
-    return <div className="flex items-center justify-center py-24"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>;
-  }
-  if (notFound || !profile) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
+      <div
+        data-testid="public-profile-loading"
+        aria-busy="true"
+        className="mx-auto max-w-6xl px-4 md:px-6 pt-8 pb-16 grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-6"
+      >
+        <div className="rounded-2xl border border-border/60 bg-card/40 p-5 space-y-5 animate-pulse">
+          <div className="flex items-center gap-3">
+            <div className="h-14 w-14 rounded-full bg-muted" />
+            <div className="flex-1 space-y-2">
+              <div className="h-4 w-3/4 rounded bg-muted" />
+              <div className="h-3 w-1/2 rounded bg-muted/70" />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <div className="h-3 w-full rounded bg-muted/70" />
+            <div className="h-3 w-5/6 rounded bg-muted/70" />
+            <div className="h-3 w-2/3 rounded bg-muted/70" />
+          </div>
+          <div className="h-9 w-full rounded-lg bg-muted/60" />
+          <div className="h-9 w-full rounded-lg bg-muted/40" />
+        </div>
+        <div className="space-y-4">
+          <div className="h-40 rounded-2xl bg-card/30 border border-border/60 animate-pulse" />
+          <div className="h-64 rounded-2xl bg-card/30 border border-border/60 animate-pulse" />
+        </div>
+      </div>
+    );
+  }
+  if (state.status === "not_found") {
+    return (
+      <div
+        data-testid="public-profile-not-found"
+        className="flex flex-col items-center justify-center min-h-[60vh] px-4"
+      >
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
           <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center mx-auto mb-6">
             <UserX className="w-12 h-12 text-muted-foreground" />
@@ -153,6 +200,31 @@ const PublicProfile = () => {
       </div>
     );
   }
+  if (state.status === "error") {
+    const rlsBlocked = /permission|rls|denied|policy/i.test(state.message) || state.code === "42501" || state.code === "PGRST301";
+    return (
+      <div
+        data-testid="public-profile-error"
+        data-error-code={state.code}
+        className="flex flex-col items-center justify-center min-h-[60vh] px-4"
+      >
+        <div className="max-w-md w-full rounded-xl border border-destructive/30 bg-destructive/5 p-6 text-center">
+          <h1 className="text-xl font-semibold mb-2 text-destructive">
+            {rlsBlocked ? "This profile is private" : "Couldn't load this profile"}
+          </h1>
+          <p className="text-sm text-muted-foreground mb-1">{state.message}</p>
+          <p className="text-[11px] font-mono text-muted-foreground/70 mb-4">code: {state.code}</p>
+          <div className="flex gap-2 justify-center">
+            <Button variant="outline" size="sm" onClick={() => window.location.reload()}>Retry</Button>
+            <Link to="/"><Button size="sm" className="gap-2"><ArrowLeft className="w-4 h-4" />Go Home</Button></Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  if (!profile) return null;
+
+
 
   // Owner: show full editable private view
   if (user?.id === profile.user_id) return <DashboardProfile />;

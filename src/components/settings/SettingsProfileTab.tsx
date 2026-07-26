@@ -25,6 +25,7 @@ import SettingsCard from "./SettingsCard";
 interface ExtendedProfile {
   id: string;
   user_type: string;
+  username?: string;
   current_experience?: string;
   target_goal?: string;
   college_name?: string;
@@ -37,6 +38,7 @@ interface ExtendedProfile {
   mobile_number?: string;
   interested_features?: string[];
 }
+
 
 const experienceOptions = [
   { value: "student", label: "Student (College/University)", type: "student" },
@@ -402,6 +404,25 @@ const SettingsProfileTab = () => {
             />
             <p className="text-xs text-muted-foreground">Email cannot be changed</p>
           </div>
+
+          {/* Public profile link */}
+          {extendedProfile?.username && (
+            <div className="flex items-center justify-between p-3 rounded-lg border border-border bg-secondary/30">
+              <div className="min-w-0">
+                <p className="text-sm font-medium text-foreground">Public profile</p>
+                <p className="text-xs text-muted-foreground truncate">/u/{extendedProfile.username}</p>
+              </div>
+              <a
+                href={`/u/${extendedProfile.username}`}
+                target="_blank"
+                rel="noreferrer"
+                className="text-xs font-medium text-primary hover:underline shrink-0 ml-3"
+              >
+                View →
+              </a>
+            </div>
+          )}
+
 
           {/* Phone */}
           <div className="space-y-2">

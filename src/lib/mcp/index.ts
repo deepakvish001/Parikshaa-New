@@ -156,5 +156,9 @@ export default defineMcp({
     unlinkArticleFromSheetTopicTool,
     uploadArticleImageTool,
     deleteTopicArticleTool,
+    setTopicArticleStatusTool,
+    updateTopicArticleTool,
+    getTopicArticleDetailsTool,
+    bulkPublishTopicArticlesTool,
   ],
 });

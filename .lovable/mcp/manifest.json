@@ -812,6 +812,55 @@
           "$schema": "http://json-schema.org/draft-07/schema#"
         },
         "outputSchema": null
+      },
+      {
+        "name": "publish_coding_solution",
+        "title": "Publish coding problem reference solution",
+        "description": "Upsert reference solution(s) for a published coding problem. Provide `problem_slug` and one or more `{ lang_id, code }` entries. Common lang_id values: 'python', 'javascript', 'cpp', 'java'. Existing solutions for the same (slug, lang_id) are overwritten.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "problem_slug": {
+              "type": "string",
+              "minLength": 2
+            },
+            "solutions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "lang_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Language identifier (e.g. python, javascript, cpp, java)"
+                  },
+                  "code": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "lang_id",
+                  "code"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "problem_slug",
+            "solutions"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
       }
     ]
   }

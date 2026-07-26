@@ -129,6 +129,26 @@ var errResult = (msg) => ({
   content: [{ type: "text", text: msg }],
   isError: true
 });
+var requireAdmin = async (ctx) => {
+  if (!ctx.isAuthenticated()) {
+    return { ok: false, error: errResult("Not authenticated") };
+  }
+  const sb = createUserSupabaseClient3(ctx);
+  const uid = ctx.getUserId();
+  const [{ data: isAdmin }, { data: isOwner }] = await Promise.all([
+    sb.rpc("has_role", { _user_id: uid, _role: "admin" }),
+    sb.rpc("has_role", { _user_id: uid, _role: "owner" })
+  ]);
+  if (!isAdmin && !isOwner) {
+    return {
+      ok: false,
+      error: errResult(
+        "Access denied: this MCP tool requires an 'admin' or 'owner' role. Call ensure_admin_access first (OAuth-client tokens only) or ask an owner to grant the role."
+      )
+    };
+  }
+  return { ok: true, sb };
+};
 
 // src/lib/mcp/tools/list-quiz-attempts.ts
 var list_quiz_attempts_default = defineTool3({
@@ -442,8 +462,9 @@ var dbSelectTool = defineTool17({
   },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ table, columns, filters, order_by, ascending, limit }, ctx) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient3(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     let q = sb.from(table).select(columns ?? "*").limit(limit ?? 50);
     if (filters) for (const [k, v] of Object.entries(filters)) q = q.eq(k, v);
     if (order_by) q = q.order(order_by, { ascending: ascending ?? false });
@@ -462,8 +483,9 @@ var dbInsertTool = defineTool17({
   },
   annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: false },
   handler: async ({ table, values }, ctx) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient3(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     const { data, error } = await sb.from(table).insert(values).select();
     if (error) return errResult(`${error.code ?? ""} ${error.message}`);
     return jsonResult(`Inserted into ${table}:`, data);
@@ -480,10 +502,11 @@ var dbUpdateTool = defineTool17({
   },
   annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
   handler: async ({ table, filters, values }, ctx) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
     if (!filters || Object.keys(filters).length === 0)
       return errResult("Refusing to update without filters.");
-    const sb = createUserSupabaseClient3(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     let q = sb.from(table).update(values);
     for (const [k, v] of Object.entries(filters)) q = q.eq(k, v);
     const { data, error } = await q.select();
@@ -501,10 +524,11 @@ var dbDeleteTool = defineTool17({
   },
   annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
   handler: async ({ table, filters }, ctx) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
     if (!filters || Object.keys(filters).length === 0)
       return errResult("Refusing to delete without filters.");
-    const sb = createUserSupabaseClient3(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     let q = sb.from(table).delete();
     for (const [k, v] of Object.entries(filters)) q = q.eq(k, v);
     const { data, error } = await q.select();
@@ -568,8 +592,9 @@ var dbRpcTool = defineTool19({
   },
   annotations: { readOnlyHint: false, openWorldHint: false },
   handler: async ({ name, args }, ctx) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient3(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     const { data, error } = await sb.rpc(name, args ?? {});
     if (error) return errResult(`${error.code ?? ""} ${error.message}${error.hint ? ` (hint: ${error.hint})` : ""}`);
     return jsonResult(`RPC ${name} returned:`, data);
@@ -593,8 +618,9 @@ var storageListTool = defineTool20({
   },
   annotations: { readOnlyHint: true, openWorldHint: false },
   handler: async ({ bucket: bucket2, path, limit, offset, search }, ctx) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient3(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     const { data, error } = await sb.storage.from(bucket2).list(path ?? "", { limit: limit ?? 100, offset: offset ?? 0, search });
     if (error) return errResult(error.message);
     return jsonResult(`Found ${data?.length ?? 0} entries in ${bucket2}/${path ?? ""}:`, data);
@@ -614,8 +640,9 @@ var storageUploadTool = defineTool20({
   },
   annotations: { readOnlyHint: false, openWorldHint: false },
   handler: async ({ bucket: bucket2, path, content, encoding, content_type, upsert }, ctx) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient3(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     let bytes;
     if (encoding === "base64") {
       const bin = atob(content);
@@ -639,8 +666,9 @@ var storageDeleteTool = defineTool20({
   inputSchema: { bucket, paths: z16.array(z16.string().min(1)).min(1) },
   annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
   handler: async ({ bucket: bucket2, paths }, ctx) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient3(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     const { data, error } = await sb.storage.from(bucket2).remove(paths);
     if (error) return errResult(error.message);
     return jsonResult(`Deleted ${data?.length ?? 0} objects from ${bucket2}:`, data);
@@ -657,8 +685,9 @@ var storageSignedUrlTool = defineTool20({
   },
   annotations: { readOnlyHint: true, openWorldHint: false },
   handler: async ({ bucket: bucket2, path, expires_in_seconds }, ctx) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient3(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     const { data, error } = await sb.storage.from(bucket2).createSignedUrl(path, expires_in_seconds ?? 3600);
     if (error) return errResult(error.message);
     return jsonResult(`Signed URL for ${bucket2}/${path}:`, data);
@@ -679,8 +708,9 @@ var invokeEdgeFunctionTool = defineTool21({
   },
   annotations: { readOnlyHint: false, openWorldHint: true },
   handler: async ({ name, body, method }, ctx) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient3(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     const { data, error } = await sb.functions.invoke(name, {
       body,
       method
@@ -705,8 +735,9 @@ var adminManageRoleTool = defineTool22({
   },
   annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
   handler: async ({ user_id, role, action }, ctx) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient3(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     if (action === "grant") {
       const { data: data2, error: error2 } = await sb.from("user_roles").upsert({ user_id, role }, { onConflict: "user_id,role" }).select();
       if (error2) return errResult(`${error2.code ?? ""} ${error2.message}`);
@@ -767,7 +798,8 @@ var publishCodingProblemTool = defineTool23({
   },
   annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
   handler: async ({ problem, tests, starter_code, if_exists, version_note }, ctx) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
     const parsed = problemSchema.safeParse(problem);
     if (!parsed.success) {
       return errResult(
@@ -775,7 +807,7 @@ var publishCodingProblemTool = defineTool23({
       );
     }
     const p = parsed.data;
-    const sb = createUserSupabaseClient3(ctx);
+    const sb = _gate.sb;
     const { data: existing, error: exErr } = await sb.from("coding_problems").select("slug, title, is_published").eq("slug", p.slug).maybeSingle();
     if (exErr) return errResult(`Slug check failed: ${exErr.message}`);
     if (existing && (if_exists ?? "error") === "error") {
@@ -826,8 +858,9 @@ var listCodingProblemVersionsTool = defineTool23({
   inputSchema: { slug: z19.string() },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ slug }, ctx) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient3(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     const { data, error } = await sb.from("coding_problem_versions").select("id, version_number, note, created_by, created_at").eq("slug", slug).order("version_number", { ascending: false });
     if (error) return errResult(error.message);
     return jsonResult(`Found ${data?.length ?? 0} versions for "${slug}":`, data);
@@ -843,8 +876,9 @@ var rollbackCodingProblemTool = defineTool23({
   },
   annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
   handler: async ({ slug, version_number }, ctx) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient3(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     const { data: ver, error: vErr } = await sb.from("coding_problem_versions").select("*").eq("slug", slug).eq("version_number", version_number).maybeSingle();
     if (vErr) return errResult(vErr.message);
     if (!ver) return errResult(`No version ${version_number} found for "${slug}".`);
@@ -900,8 +934,9 @@ var publishCodingSolutionTool = defineTool24({
   },
   annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
   handler: async ({ problem_slug, solutions }, ctx) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient3(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     const { data: exists, error: exErr } = await sb.from("coding_problems").select("slug").eq("slug", problem_slug).maybeSingle();
     if (exErr) return errResult(`Problem lookup failed: ${exErr.message}`);
     if (!exists) return errResult(`No coding problem with slug "${problem_slug}". Publish the problem first with publish_coding_problem.`);
@@ -970,7 +1005,8 @@ var publishCodingBundleTool = defineTool25({
   },
   annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
   handler: async ({ problem, tests, starter_code, solutions, if_exists, version_note }, ctx) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
     const parsed = problemSchema2.safeParse(problem);
     if (!parsed.success) {
       return errResult(
@@ -978,7 +1014,7 @@ var publishCodingBundleTool = defineTool25({
       );
     }
     const p = parsed.data;
-    const sb = createUserSupabaseClient3(ctx);
+    const sb = _gate.sb;
     const { data: existing, error: exErr } = await sb.from("coding_problems").select("slug, title").eq("slug", p.slug).maybeSingle();
     if (exErr) return errResult(`Slug check failed: ${exErr.message}`);
     if (existing && (if_exists ?? "error") === "error") {

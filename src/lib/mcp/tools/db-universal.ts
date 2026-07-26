@@ -1,6 +1,6 @@
 import { defineTool, type ToolContext } from "@lovable.dev/mcp-js";
 import { z } from "zod";
-import { createUserSupabaseClient, errResult, jsonResult } from "./_shared";
+import { errResult, jsonResult, requireAdmin } from "./_shared";
 
 const tableSchema = z.string().min(1).max(64).regex(/^[a-z_][a-z0-9_]*$/, "Invalid table name");
 const filterSchema = z
@@ -23,8 +23,9 @@ export const dbSelectTool = defineTool({
   },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ table, columns, filters, order_by, ascending, limit }, ctx: ToolContext) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     let q = sb.from(table).select(columns ?? "*").limit(limit ?? 50);
     if (filters) for (const [k, v] of Object.entries(filters)) q = q.eq(k, v as never);
     if (order_by) q = q.order(order_by, { ascending: ascending ?? false });
@@ -45,8 +46,9 @@ export const dbInsertTool = defineTool({
   },
   annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: false },
   handler: async ({ table, values }, ctx: ToolContext) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     const { data, error } = await sb.from(table).insert(values as never).select();
     if (error) return errResult(`${error.code ?? ""} ${error.message}`);
     return jsonResult(`Inserted into ${table}:`, data);
@@ -67,10 +69,11 @@ export const dbUpdateTool = defineTool({
   },
   annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
   handler: async ({ table, filters, values }, ctx: ToolContext) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
     if (!filters || Object.keys(filters).length === 0)
       return errResult("Refusing to update without filters.");
-    const sb = createUserSupabaseClient(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     let q = sb.from(table).update(values as never);
     for (const [k, v] of Object.entries(filters)) q = q.eq(k, v as never);
     const { data, error } = await q.select();
@@ -92,10 +95,11 @@ export const dbDeleteTool = defineTool({
   },
   annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
   handler: async ({ table, filters }, ctx: ToolContext) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
     if (!filters || Object.keys(filters).length === 0)
       return errResult("Refusing to delete without filters.");
-    const sb = createUserSupabaseClient(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     let q = sb.from(table).delete();
     for (const [k, v] of Object.entries(filters)) q = q.eq(k, v as never);
     const { data, error } = await q.select();

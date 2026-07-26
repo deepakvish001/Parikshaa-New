@@ -1,6 +1,6 @@
 import { defineTool, type ToolContext } from "@lovable.dev/mcp-js";
 import { z } from "zod";
-import { createUserSupabaseClient, errResult, jsonResult } from "./_shared";
+import { errResult, jsonResult, requireAdmin } from "./_shared";
 
 export const invokeEdgeFunctionTool = defineTool({
   name: "invoke_edge_function",
@@ -14,8 +14,9 @@ export const invokeEdgeFunctionTool = defineTool({
   },
   annotations: { readOnlyHint: false, openWorldHint: true },
   handler: async ({ name, body, method }, ctx: ToolContext) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     const { data, error } = await sb.functions.invoke(name, {
       body: body as never,
       method: method as never,

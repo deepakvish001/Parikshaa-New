@@ -90,12 +90,14 @@ async function anonCheck(table, expected, note) {
   const denied = !!error;
   const empty = !error && Array.isArray(data) && data.length === 0;
   let ok = false;
-  let observed;
-  if (expected === "empty") { ok = empty; observed = denied ? `denied(${error?.code})` : `rows:${data?.length ?? 0}`; }
-  else if (expected === "denied") { ok = denied; observed = denied ? `denied(${error?.code})` : `rows:${data?.length ?? 0}`; }
-  else { ok = denied || empty; observed = denied ? `denied(${error?.code})` : `rows:${data?.length ?? 0}`; }
+  let observed = denied ? `denied(${error?.code})` : `rows:${data?.length ?? 0}`;
+  if (expected === "empty") ok = empty;
+  else if (expected === "denied") ok = denied;
+  else if (expected === "public") ok = !denied; // readable, rows allowed
+  else ok = denied || empty; // empty_or_denied
   record({ table, role: "anon", expected, observed, status, ok, note });
 }
+
 
 async function authScopedCheck(client, userId, table) {
   const { data, error } = await client.from(table).select("user_id").limit(50);

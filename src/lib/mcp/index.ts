@@ -86,6 +86,7 @@ import {
   fixTopicArticleLinkageTool,
 } from "./tools/topic-articles-extra";
 import { listBuiltinSheetsTool, getBuiltinSheetTool } from "./tools/builtin-sheets";
+import { getCurrentUserContextTool, testSheetAccessTool } from "./tools/auth-debug";
 
 // The OAuth issuer MUST be the direct Supabase host, built from the project ref,
 // not from SUPABASE_URL (which may be the Lovable Cloud proxy).

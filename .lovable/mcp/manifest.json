@@ -2466,6 +2466,268 @@
           "$schema": "http://json-schema.org/draft-07/schema#"
         },
         "outputSchema": null
+      },
+      {
+        "name": "publish_topic_article",
+        "title": "Publish a long-form topic article and link it to a sheet section",
+        "description": "Upsert a long-form markdown article (with images inline via markdown) as a blog post and link it to a sheet + section. Idempotent by slug: existing post is updated. Set status='draft' to stage without publishing.",
+        "annotations": {
+          "readOnlyHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 120,
+              "description": "Unique post slug, e.g. 'dbms-normalization-deep-dive'"
+            },
+            "title": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 200
+            },
+            "content_md": {
+              "type": "string",
+              "minLength": 50,
+              "description": "Full markdown body. Reference images with normal ![alt](url) syntax."
+            },
+            "excerpt": {
+              "type": "string",
+              "maxLength": 400
+            },
+            "cover_image_url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "draft",
+                "published"
+              ]
+            },
+            "is_featured": {
+              "type": "boolean"
+            },
+            "seo_title": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "seo_description": {
+              "type": "string",
+              "maxLength": 400
+            },
+            "category_slug": {
+              "type": "string",
+              "description": "Existing blog_categories slug (e.g. 'dbms','os','cn'). Auto-created if missing."
+            },
+            "category_name": {
+              "type": "string",
+              "description": "Display name if category needs to be created."
+            },
+            "sheet_folder_id": {
+              "type": "string",
+              "format": "uuid",
+              "description": "user_folders.id for the sheet this article belongs to"
+            },
+            "section_title": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Section/topic title inside the sheet, e.g. 'Normalization'"
+            },
+            "tags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 20,
+              "description": "Extra free-form tag names to attach"
+            }
+          },
+          "required": [
+            "slug",
+            "title",
+            "content_md",
+            "sheet_folder_id",
+            "section_title"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_topic_articles",
+        "title": "List articles linked to a sheet (optionally filtered by section)",
+        "description": "Return articles linked to a given sheet folder, optionally narrowed to a specific section title.",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "sheet_folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "section_title": {
+              "type": "string"
+            },
+            "include_drafts": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "sheet_folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "link_article_to_sheet_topic",
+        "title": "Attach an existing article to a sheet section",
+        "description": "Link an already-published blog post (by slug) to a sheet folder + section by attaching the sheet/topic tags.",
+        "annotations": {
+          "readOnlyHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "post_slug": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sheet_folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "section_title": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "post_slug",
+            "sheet_folder_id",
+            "section_title"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "unlink_article_from_sheet_topic",
+        "title": "Detach an article from a sheet section",
+        "description": "Remove the sheet and/or topic tag from a post. Pass `unlink_sheet:true` to remove the sheet link entirely.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "post_slug": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sheet_folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "section_title": {
+              "type": "string"
+            },
+            "unlink_sheet": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "post_slug",
+            "sheet_folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "upload_article_image",
+        "title": "Upload an image for a topic article",
+        "description": "Upload a base64-encoded image to the blog-media bucket and return a signed URL you can embed in article markdown as ![alt](url). Signed URL default expiry: 1 year.",
+        "annotations": {
+          "readOnlyHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "filename": {
+              "type": "string",
+              "minLength": 1,
+              "description": "e.g. 'normalization-diagram.png'"
+            },
+            "base64": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Raw base64 (no data: prefix)"
+            },
+            "content_type": {
+              "type": "string"
+            },
+            "folder": {
+              "type": "string",
+              "description": "Subpath inside bucket, e.g. 'dbms/normalization'. Defaults to 'articles'."
+            },
+            "expires_in_seconds": {
+              "type": "integer",
+              "minimum": 3600,
+              "maximum": 31536000
+            }
+          },
+          "required": [
+            "filename",
+            "base64"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "delete_topic_article",
+        "title": "Delete a topic article",
+        "description": "Permanently delete a blog post (and its tag links) by slug.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "post_slug": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "post_slug"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
       }
     ]
   }

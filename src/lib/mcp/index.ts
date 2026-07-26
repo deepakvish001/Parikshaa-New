@@ -146,5 +146,11 @@ export default defineMcp({
     duplicateSheetTool,
     exportSheetItemsCsvTool,
     listPublicShareCodesTool,
+    publishTopicArticleTool,
+    listTopicArticlesTool,
+    linkArticleToSheetTopicTool,
+    unlinkArticleFromSheetTopicTool,
+    uploadArticleImageTool,
+    deleteTopicArticleTool,
   ],
 });

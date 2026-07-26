@@ -105,5 +105,10 @@ export default defineMcp({
     shareSheetTool,
     publishRoadmapTool,
     listRoadmapsTool,
+    listSheetTemplatesTool,
+    createSheetFromTemplateTool,
+    cloneSheetTool,
+    reorderSheetItemsTool,
+    publishSheetBundleTool,
   ],
 });

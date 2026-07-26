@@ -958,6 +958,54 @@ var publishCodingSolutionTool = defineTool24({
 // src/lib/mcp/tools/publish-coding-bundle.ts
 import { defineTool as defineTool25 } from "npm:@lovable.dev/mcp-js@0.20.1";
 import { z as z21 } from "npm:zod@^3.23.8";
+async function publishBundleCore(sb, uid, input) {
+  const p = input.problem;
+  const { data: existing, error: exErr } = await sb.from("coding_problems").select("slug").eq("slug", p.slug).maybeSingle();
+  if (exErr) return { ok: false, slug: p.slug, snapshotVersion: null, error: `Slug check: ${exErr.message}` };
+  if (existing && (input.if_exists ?? "error") === "error") {
+    return { ok: false, slug: p.slug, snapshotVersion: null, error: `Slug "${p.slug}" exists \u2014 pass if_exists:"update".` };
+  }
+  let snapshotVersion = null;
+  if (existing) {
+    const [{ data: fullRow }, { data: curTests }, { data: curStarter }, { data: curSolutions }, { data: latest }] = await Promise.all([
+      sb.from("coding_problems").select("*").eq("slug", p.slug).maybeSingle(),
+      sb.from("coding_problem_tests").select("*").eq("problem_slug", p.slug),
+      sb.from("coding_problem_starter_code").select("*").eq("problem_slug", p.slug),
+      sb.from("coding_problem_reference_solutions").select("*").eq("problem_slug", p.slug),
+      sb.from("coding_problem_versions").select("version_number").eq("slug", p.slug).order("version_number", { ascending: false }).limit(1).maybeSingle()
+    ]);
+    snapshotVersion = (latest?.version_number ?? 0) + 1;
+    const { error: snapErr } = await sb.from("coding_problem_versions").insert({
+      slug: p.slug,
+      version_number: snapshotVersion,
+      snapshot: { ...fullRow ?? {}, _solutions: curSolutions ?? [] },
+      tests_snapshot: curTests ?? [],
+      starter_snapshot: curStarter ?? [],
+      note: input.version_note ?? "Auto snapshot before bundle overwrite",
+      created_by: uid
+    });
+    if (snapErr) return { ok: false, slug: p.slug, snapshotVersion, error: `Snapshot: ${snapErr.message}` };
+  }
+  const { error: upErr } = await sb.from("coding_problems").upsert({ ...p, is_published: true, created_by: uid }, { onConflict: "slug" });
+  if (upErr) return { ok: false, slug: p.slug, snapshotVersion, error: `Publish: ${upErr.message}` };
+  await sb.from("coding_problem_tests").delete().eq("problem_slug", p.slug);
+  const { error: tErr } = await sb.from("coding_problem_tests").insert(input.tests.map((t) => ({ ...t, problem_slug: p.slug })));
+  if (tErr) return { ok: false, slug: p.slug, snapshotVersion, error: `Tests: ${tErr.message}` };
+  if (input.starter_code?.length) {
+    await sb.from("coding_problem_starter_code").delete().eq("problem_slug", p.slug);
+    const { error: sErr } = await sb.from("coding_problem_starter_code").insert(input.starter_code.map((s) => ({ ...s, problem_slug: p.slug })));
+    if (sErr) return { ok: false, slug: p.slug, snapshotVersion, error: `Starter: ${sErr.message}` };
+  }
+  const solRows = input.solutions.map((s) => ({
+    problem_slug: p.slug,
+    lang_id: s.lang_id,
+    code: s.code,
+    updated_at: (/* @__PURE__ */ new Date()).toISOString()
+  }));
+  const { error: solErr } = await sb.from("coding_problem_reference_solutions").upsert(solRows, { onConflict: "problem_slug,lang_id" });
+  if (solErr) return { ok: false, slug: p.slug, snapshotVersion, error: `Solutions: ${solErr.message}` };
+  return { ok: true, slug: p.slug, snapshotVersion, overwritten: !!existing };
+}
 var problemSchema2 = z21.object({
   slug: z21.string().min(2).max(80).regex(/^[a-z0-9-]+$/, "slug must be lowercase-with-dashes"),
   title: z21.string().min(3).max(150),
@@ -1285,6 +1333,319 @@ var listRoadmapsTool = defineTool27({
   }
 });
 
+// src/lib/mcp/tools/sheet-templates.ts
+import { defineTool as defineTool28 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z23 } from "npm:zod@^3.23.8";
+var TEMPLATES = [
+  {
+    key: "dsa-basics",
+    name: "DSA Basics \u2014 30 Day Starter",
+    description: "Foundational DSA problems across arrays, strings, hashing and two-pointer.",
+    color: "#3B82F6",
+    sections: [
+      { title: "Arrays", slugs: ["two-sum", "best-time-to-buy-and-sell-stock", "maximum-subarray", "move-zeroes"] },
+      { title: "Strings", slugs: ["valid-anagram", "reverse-string", "longest-common-prefix"] },
+      { title: "Hashing", slugs: ["contains-duplicate", "group-anagrams"] },
+      { title: "Two Pointers", slugs: ["valid-palindrome", "3sum"] }
+    ],
+    roadmap_id: "dsa-fundamentals"
+  },
+  {
+    key: "sde-sheet",
+    name: "SDE Sheet \u2014 Interview Ready",
+    description: "Curated problem set covering the interview loop: arrays, LL, trees, graphs, DP.",
+    color: "#8B5CF6",
+    sections: [
+      { title: "Arrays & Hashing", slugs: ["two-sum", "contains-duplicate", "group-anagrams", "top-k-frequent-elements"] },
+      { title: "Linked List", slugs: ["reverse-linked-list", "merge-two-sorted-lists", "linked-list-cycle"] },
+      { title: "Trees", slugs: ["invert-binary-tree", "maximum-depth-of-binary-tree", "same-tree", "binary-tree-level-order-traversal"] },
+      { title: "Graphs", slugs: ["number-of-islands", "clone-graph", "course-schedule"] },
+      { title: "Dynamic Programming", slugs: ["climbing-stairs", "house-robber", "longest-increasing-subsequence", "coin-change"] }
+    ],
+    roadmap_id: "sde-interview"
+  },
+  {
+    key: "top-75",
+    name: "Top 75 \u2014 Blind Curated",
+    description: "The classic 75-question interview list (subset \u2014 extend via clone).",
+    color: "#10B981",
+    sections: [
+      { title: "Array", slugs: ["two-sum", "best-time-to-buy-and-sell-stock", "product-of-array-except-self", "maximum-subarray", "3sum"] },
+      { title: "Binary", slugs: ["number-of-1-bits", "counting-bits", "missing-number", "reverse-bits"] },
+      { title: "DP", slugs: ["climbing-stairs", "coin-change", "longest-increasing-subsequence", "word-break"] },
+      { title: "Interval", slugs: ["merge-intervals", "insert-interval", "non-overlapping-intervals"] }
+    ]
+  }
+];
+var listSheetTemplatesTool = defineTool28({
+  name: "list_sheet_templates",
+  title: "List predefined sheet templates",
+  description: "Return all built-in sheet templates (key, name, description, section titles, slug counts). Use before create_sheet_from_template.",
+  inputSchema: {},
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async () => {
+    const summary = TEMPLATES.map((t) => ({
+      key: t.key,
+      name: t.name,
+      description: t.description,
+      sections: t.sections.map((s) => ({ title: s.title, slug_count: s.slugs.length })),
+      total_slugs: t.sections.reduce((n, s) => n + s.slugs.length, 0),
+      roadmap_id: t.roadmap_id
+    }));
+    return jsonResult(`Available templates: ${TEMPLATES.length}`, summary);
+  }
+});
+var createSheetFromTemplateTool = defineTool28({
+  name: "create_sheet_from_template",
+  title: "One-click sheet from a template",
+  description: "Generate a new sheet using a predefined template. Validates slugs against coding_problems, inserts existing ones in template order, reports missing. Optionally publishes the linked roadmap.",
+  inputSchema: {
+    template_key: z23.string().min(1),
+    name_override: z23.string().max(120).optional(),
+    publish_roadmap: z23.boolean().optional().describe("If template defines a roadmap_id, also mark it published.")
+  },
+  annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: false },
+  handler: async ({ template_key, name_override, publish_roadmap }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const tpl = TEMPLATES.find((t) => t.key === template_key);
+    if (!tpl) return errResult(`Unknown template "${template_key}". Call list_sheet_templates.`);
+    const allSlugs = tpl.sections.flatMap((s) => s.slugs);
+    const { data: found, error: pErr } = await sb.from("coding_problems").select("slug").in("slug", allSlugs);
+    if (pErr) return errResult(`Slug lookup failed: ${pErr.message}`);
+    const foundSet = new Set((found ?? []).map((r) => r.slug));
+    const missing = allSlugs.filter((s) => !foundSet.has(s));
+    const outline = tpl.sections.map((s) => `## ${s.title}
+${s.slugs.map((sl) => `- ${sl}${foundSet.has(sl) ? "" : " (missing)"}`).join("\n")}`).join("\n\n");
+    const { data: folder, error: fErr } = await sb.from("user_folders").insert({
+      user_id: ctx.getUserId(),
+      name: name_override ?? tpl.name,
+      description: `${tpl.description}
+
+${outline}`,
+      color: tpl.color
+    }).select("id, name").single();
+    if (fErr) return errResult(`Folder create failed: ${fErr.message}`);
+    let order = 0;
+    const rows = [];
+    for (const section of tpl.sections) {
+      for (const slug of section.slugs) {
+        if (!foundSet.has(slug)) continue;
+        rows.push({
+          folder_id: folder.id,
+          question_slug: slug,
+          question_source: "parikshaa",
+          sort_order: order++
+        });
+      }
+    }
+    if (rows.length > 0) {
+      const { error: iErr } = await sb.from("user_folder_items").insert(rows);
+      if (iErr) return errResult(`Items insert failed (folder created): ${iErr.message}`);
+    }
+    let roadmapResult = null;
+    if (publish_roadmap && tpl.roadmap_id) {
+      const { data: rm } = await sb.from("roadmap_overrides").upsert(
+        { roadmap_id: tpl.roadmap_id, is_published: true, is_featured: true, updated_by: ctx.getUserId() },
+        { onConflict: "roadmap_id" }
+      ).select();
+      roadmapResult = rm;
+    }
+    return jsonResult(
+      `Created sheet "${folder.name}" from template "${tpl.key}" \u2014 ${rows.length} problems added, ${missing.length} missing.`,
+      { folder_id: folder.id, added: rows.length, missing, roadmap: roadmapResult }
+    );
+  }
+});
+var cloneSheetTool = defineTool28({
+  name: "clone_sheet",
+  title: "Clone an existing sheet",
+  description: "Duplicate an existing sheet's structure and items into a new sheet owned by the caller. Useful to snapshot a template sheet.",
+  inputSchema: {
+    source_folder_id: z23.string().uuid(),
+    new_name: z23.string().min(2).max(120)
+  },
+  annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: false },
+  handler: async ({ source_folder_id, new_name }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const { data: src, error: srcErr } = await sb.from("user_folders").select("description, color").eq("id", source_folder_id).maybeSingle();
+    if (srcErr) return errResult(srcErr.message);
+    if (!src) return errResult(`Source folder ${source_folder_id} not found.`);
+    const { data: items, error: itErr } = await sb.from("user_folder_items").select("question_slug, question_id, question_source, sort_order").eq("folder_id", source_folder_id).order("sort_order", { ascending: true });
+    if (itErr) return errResult(itErr.message);
+    const { data: folder, error: fErr } = await sb.from("user_folders").insert({ user_id: ctx.getUserId(), name: new_name, description: src.description, color: src.color }).select("id, name").single();
+    if (fErr) return errResult(fErr.message);
+    if (items && items.length > 0) {
+      const rows = items.map((i, idx) => ({
+        folder_id: folder.id,
+        question_slug: i.question_slug,
+        question_id: i.question_id,
+        question_source: i.question_source,
+        sort_order: idx
+      }));
+      const { error: iErr } = await sb.from("user_folder_items").insert(rows);
+      if (iErr) return errResult(`Items copy failed (folder created): ${iErr.message}`);
+    }
+    return jsonResult(`Cloned to "${folder.name}" \u2014 ${items?.length ?? 0} items copied.`, {
+      new_folder_id: folder.id,
+      cloned_items: items?.length ?? 0
+    });
+  }
+});
+var reorderSheetItemsTool = defineTool28({
+  name: "reorder_sheet_items",
+  title: "Reorder problems in a sheet (drag-drop equivalent)",
+  description: "Set the exact order of problems in a sheet by passing slugs in the desired order. Any slug in the sheet but omitted from `order` is appended at the end preserving its relative order.",
+  inputSchema: {
+    folder_id: z23.string().uuid(),
+    order: z23.array(z23.string().min(1)).min(1).max(500)
+  },
+  annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: false },
+  handler: async ({ folder_id, order }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const { data: current, error: curErr } = await sb.from("user_folder_items").select("question_slug, sort_order").eq("folder_id", folder_id);
+    if (curErr) return errResult(curErr.message);
+    if (!current || current.length === 0) return errResult("Sheet is empty or not accessible.");
+    const currentSet = new Set(current.map((r) => r.question_slug));
+    const missing = order.filter((s) => !currentSet.has(s));
+    const orderedInSheet = order.filter((s) => currentSet.has(s));
+    const tail = current.filter((r) => !orderedInSheet.includes(r.question_slug)).sort((a, b) => a.sort_order - b.sort_order).map((r) => r.question_slug);
+    const finalOrder = [...orderedInSheet, ...tail];
+    let updated = 0;
+    for (let i = 0; i < finalOrder.length; i++) {
+      const { error } = await sb.from("user_folder_items").update({ sort_order: i }).eq("folder_id", folder_id).eq("question_slug", finalOrder[i]);
+      if (error) return errResult(`Reorder failed at slug "${finalOrder[i]}": ${error.message}`);
+      updated++;
+    }
+    return jsonResult(
+      `Reordered ${updated} items. Missing from sheet (ignored): ${missing.length}. Appended tail: ${tail.length}.`,
+      { updated, missing, appended_tail: tail }
+    );
+  }
+});
+var publishSheetBundleTool = defineTool28({
+  name: "publish_sheet_bundle",
+  title: "Publish coding problems + sheet + roadmap (mega)",
+  description: "One-shot: publish an array of coding_problem bundles (problem + tests + starter + solutions), then create (or reuse) a sheet and add all successfully-published slugs in order, and optionally publish a roadmap. Returns per-slug outcome.",
+  inputSchema: {
+    sheet: z23.object({
+      name: z23.string().min(2).max(120),
+      description: z23.string().max(2e3).optional(),
+      color: z23.string().max(20).optional(),
+      reuse_folder_id: z23.string().uuid().optional().describe("If passed, add problems to this existing sheet instead of creating a new one.")
+    }),
+    problems: z23.array(
+      z23.object({
+        problem: z23.object({
+          slug: z23.string(),
+          title: z23.string(),
+          difficulty: z23.string(),
+          description: z23.string(),
+          topics: z23.array(z23.string()),
+          examples: z23.array(z23.record(z23.unknown())),
+          constraints: z23.array(z23.string()).optional(),
+          hints: z23.array(z23.string()).optional(),
+          cpu_time_limit_sec: z23.number().optional(),
+          memory_limit_kb: z23.number().int().optional(),
+          mcq: z23.record(z23.unknown()).optional(),
+          is_contest_pool: z23.boolean().optional()
+        }),
+        tests: z23.array(
+          z23.object({
+            input: z23.string(),
+            expected_output: z23.string(),
+            is_sample: z23.boolean().optional(),
+            weight: z23.number().optional()
+          })
+        ).min(2),
+        starter_code: z23.array(z23.object({ language: z23.string(), code: z23.string() })).optional(),
+        solutions: z23.array(z23.object({ lang_id: z23.string(), code: z23.string() })).min(1)
+      })
+    ).min(1).max(50),
+    if_exists: z23.enum(["error", "update"]).optional(),
+    roadmap: z23.object({
+      roadmap_id: z23.string(),
+      is_published: z23.boolean().optional(),
+      is_featured: z23.boolean().optional(),
+      sort_order: z23.number().int().optional()
+    }).optional()
+  },
+  annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
+  handler: async ({ sheet, problems, if_exists, roadmap }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const uid = ctx.getUserId();
+    const perProblem = [];
+    for (const p of problems) {
+      const r = await publishBundleCore(sb, uid, {
+        problem: p.problem,
+        tests: p.tests,
+        starter_code: p.starter_code,
+        solutions: p.solutions,
+        if_exists
+      });
+      perProblem.push({ slug: r.slug, ok: r.ok, snapshotVersion: r.snapshotVersion, error: r.error });
+    }
+    const published = perProblem.filter((r) => r.ok).map((r) => r.slug);
+    if (published.length === 0) {
+      return errResult(`All bundles failed:
+${JSON.stringify(perProblem, null, 2)}`);
+    }
+    let folderId = sheet.reuse_folder_id;
+    let folderName = sheet.name;
+    if (!folderId) {
+      const { data: folder, error: fErr } = await sb.from("user_folders").insert({ user_id: uid, name: sheet.name, description: sheet.description, color: sheet.color }).select("id, name").single();
+      if (fErr) return errResult(`Sheet create failed (bundles already published): ${fErr.message}`);
+      folderId = folder.id;
+      folderName = folder.name;
+    } else {
+      const { data: existing } = await sb.from("user_folders").select("name").eq("id", folderId).maybeSingle();
+      folderName = existing?.name ?? folderName;
+    }
+    const { data: existingItems } = await sb.from("user_folder_items").select("question_slug, sort_order").eq("folder_id", folderId);
+    const existingSet = new Set((existingItems ?? []).map((r) => r.question_slug));
+    const maxOrder = (existingItems ?? []).reduce((m, r) => Math.max(m, r.sort_order), -1);
+    const toInsert = published.filter((s) => !existingSet.has(s));
+    if (toInsert.length > 0) {
+      const rows = toInsert.map((slug, i) => ({
+        folder_id: folderId,
+        question_slug: slug,
+        question_source: "parikshaa",
+        sort_order: maxOrder + 1 + i
+      }));
+      const { error: iErr } = await sb.from("user_folder_items").insert(rows);
+      if (iErr) return errResult(`Add-to-sheet failed: ${iErr.message}`);
+    }
+    let roadmapResult = null;
+    if (roadmap) {
+      const patch = { roadmap_id: roadmap.roadmap_id, updated_by: uid };
+      if (roadmap.is_published !== void 0) patch.is_published = roadmap.is_published;
+      if (roadmap.is_featured !== void 0) patch.is_featured = roadmap.is_featured;
+      if (roadmap.sort_order !== void 0) patch.sort_order = roadmap.sort_order;
+      const { data: rm, error: rErr } = await sb.from("roadmap_overrides").upsert(patch, { onConflict: "roadmap_id" }).select();
+      roadmapResult = rErr ? { error: rErr.message } : rm;
+    }
+    return jsonResult(
+      `Mega-published: ${published.length}/${problems.length} problems, sheet "${folderName}" (+${toInsert.length}), roadmap=${roadmap ? "yes" : "no"}.`,
+      {
+        folder_id: folderId,
+        folder_name: folderName,
+        published,
+        failed: perProblem.filter((r) => !r.ok),
+        added_to_sheet: toInsert.length,
+        already_in_sheet: published.length - toInsert.length,
+        roadmap: roadmapResult
+      }
+    );
+  }
+});
+
 // src/lib/mcp/index.ts
 var projectRef = "elzftqnehcmnouptaqee";
 var mcp_default = defineMcp({
@@ -1338,7 +1699,12 @@ var mcp_default = defineMcp({
     listSheetItemsTool,
     shareSheetTool,
     publishRoadmapTool,
-    listRoadmapsTool
+    listRoadmapsTool,
+    listSheetTemplatesTool,
+    createSheetFromTemplateTool,
+    cloneSheetTool,
+    reorderSheetItemsTool,
+    publishSheetBundleTool
   ]
 });
 

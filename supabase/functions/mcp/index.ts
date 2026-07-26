@@ -6764,18 +6764,17 @@ ${REAUTH_HINT}`);
     const isAdmin = Boolean(adminRes.data);
     const isOwner = Boolean(ownerRes.data);
     const isBuiltin = BUILTIN.has(normalized);
-    const { data: folder, error: folderErr } = await sb.from("user_folders").select("id, name, user_id, is_public, created_at").or(`slug.eq.${normalized},name.ilike.%${normalized}%`).limit(1).maybeSingle();
+    const { data: folder, error: folderErr } = await sb.from("user_folders").select("id, name, user_id, created_at").ilike("name", `%${normalized.replace(/-/g, " ")}%`).limit(1).maybeSingle();
     let itemCount = null;
     if (folder?.id) {
       const { count } = await sb.from("user_folder_items").select("*", { count: "exact", head: true }).eq("folder_id", folder.id);
       itemCount = count ?? 0;
     }
-    const canRead = isBuiltin || isAdmin || isOwner || Boolean(folder?.is_public) || folder?.user_id && folder.user_id === uid;
+    const canRead = isBuiltin || isAdmin || isOwner || folder?.user_id && folder.user_id === uid;
     const reasons = [];
     if (isBuiltin) reasons.push("Slug is a built-in frontend sheet \u2014 always readable via get_builtin_sheet.");
     if (isAdmin) reasons.push("Caller has admin role (RLS admin policy allows read).");
     if (isOwner) reasons.push("Caller has owner role (RLS admin policy allows read).");
-    if (folder?.is_public) reasons.push("Folder is marked public.");
     if (folder?.user_id === uid) reasons.push("Caller owns this folder.");
     if (!canRead) reasons.push("No matching access rule \u2014 read denied by RLS.");
     if (folderErr) reasons.push(`user_folders query error: ${folderErr.message}`);

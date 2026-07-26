@@ -1,6 +1,6 @@
 import { defineTool, type ToolContext } from "@lovable.dev/mcp-js";
 import { z } from "zod";
-import { createUserSupabaseClient, errResult, jsonResult } from "./_shared";
+import { errResult, jsonResult, requireAdmin } from "./_shared";
 
 const roleEnum = z.enum(["admin", "owner", "moderator", "user"]);
 
@@ -16,8 +16,9 @@ export const adminManageRoleTool = defineTool({
   },
   annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
   handler: async ({ user_id, role, action }, ctx: ToolContext) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     if (action === "grant") {
       const { data, error } = await sb
         .from("user_roles")

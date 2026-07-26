@@ -1,6 +1,6 @@
 import { defineTool, type ToolContext } from "@lovable.dev/mcp-js";
 import { z } from "zod";
-import { createUserSupabaseClient, errResult, jsonResult } from "./_shared";
+import { errResult, jsonResult, requireAdmin } from "./_shared";
 
 /**
  * Batch workflow tool: publish a coding problem AND its reference solutions

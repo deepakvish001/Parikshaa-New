@@ -1,6 +1,6 @@
 import { defineTool, type ToolContext } from "@lovable.dev/mcp-js";
 import { z } from "zod";
-import { createUserSupabaseClient, errResult, jsonResult } from "./_shared";
+import { errResult, jsonResult, requireAdmin } from "./_shared";
 
 export const dbRpcTool = defineTool({
   name: "db_rpc",
@@ -13,8 +13,9 @@ export const dbRpcTool = defineTool({
   },
   annotations: { readOnlyHint: false, openWorldHint: false },
   handler: async ({ name, args }, ctx: ToolContext) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     const { data, error } = await sb.rpc(name, (args ?? {}) as never);
     if (error) return errResult(`${error.code ?? ""} ${error.message}${error.hint ? ` (hint: ${error.hint})` : ""}`);
     return jsonResult(`RPC ${name} returned:`, data);

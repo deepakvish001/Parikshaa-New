@@ -1,6 +1,6 @@
 import { defineTool, type ToolContext } from "@lovable.dev/mcp-js";
 import { z } from "zod";
-import { createUserSupabaseClient, errResult, jsonResult } from "./_shared";
+import { errResult, jsonResult, requireAdmin } from "./_shared";
 
 const bucket = z.string().min(1).max(128);
 
@@ -17,8 +17,9 @@ export const storageListTool = defineTool({
   },
   annotations: { readOnlyHint: true, openWorldHint: false },
   handler: async ({ bucket, path, limit, offset, search }, ctx: ToolContext) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     const { data, error } = await sb.storage.from(bucket).list(path ?? "", { limit: limit ?? 100, offset: offset ?? 0, search });
     if (error) return errResult(error.message);
     return jsonResult(`Found ${data?.length ?? 0} entries in ${bucket}/${path ?? ""}:`, data);
@@ -39,8 +40,9 @@ export const storageUploadTool = defineTool({
   },
   annotations: { readOnlyHint: false, openWorldHint: false },
   handler: async ({ bucket, path, content, encoding, content_type, upsert }, ctx: ToolContext) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     let bytes: Uint8Array;
     if (encoding === "base64") {
       const bin = atob(content);
@@ -65,8 +67,9 @@ export const storageDeleteTool = defineTool({
   inputSchema: { bucket, paths: z.array(z.string().min(1)).min(1) },
   annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
   handler: async ({ bucket, paths }, ctx: ToolContext) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     const { data, error } = await sb.storage.from(bucket).remove(paths);
     if (error) return errResult(error.message);
     return jsonResult(`Deleted ${data?.length ?? 0} objects from ${bucket}:`, data);
@@ -84,8 +87,9 @@ export const storageSignedUrlTool = defineTool({
   },
   annotations: { readOnlyHint: true, openWorldHint: false },
   handler: async ({ bucket, path, expires_in_seconds }, ctx: ToolContext) => {
-    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const sb = createUserSupabaseClient(ctx);
+    const _gate = await requireAdmin(ctx);
+    if (!_gate.ok) return _gate.error;
+    const sb = _gate.sb;
     const { data, error } = await sb.storage.from(bucket).createSignedUrl(path, expires_in_seconds ?? 3600);
     if (error) return errResult(error.message);
     return jsonResult(`Signed URL for ${bucket}/${path}:`, data);

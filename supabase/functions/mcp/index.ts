@@ -1911,6 +1911,137 @@ var previewPublishSheetBundleTool = defineTool29({
   }
 });
 
+// src/lib/mcp/tools/sheet-lifecycle.ts
+import { defineTool as defineTool30 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z25 } from "npm:zod@^3.23.8";
+var bulkRemoveProblemsFromSheetTool = defineTool30({
+  name: "bulk_remove_problems_from_sheet",
+  title: "Remove multiple problems from a sheet in one call",
+  description: "Delete multiple slugs from a sheet in a single request. Returns per-slug status (removed | not_in_sheet | error).",
+  inputSchema: {
+    folder_id: z25.string().uuid(),
+    slugs: z25.array(z25.string().min(1)).min(1).max(500),
+    resequence: z25.boolean().optional().describe("If true (default), re-pack sort_order of remaining items 0..N-1.")
+  },
+  annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
+  handler: async ({ folder_id, slugs, resequence }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const { data: folder, error: fErr } = await sb.from("user_folders").select("id, name").eq("id", folder_id).maybeSingle();
+    if (fErr) return errResult(fErr.message);
+    if (!folder) return errResult(`Folder ${folder_id} not found.`);
+    const uniq = Array.from(new Set(slugs));
+    const { data: existing, error: eErr } = await sb.from("user_folder_items").select("question_slug").eq("folder_id", folder_id).in("question_slug", uniq);
+    if (eErr) return errResult(eErr.message);
+    const inSheet = new Set((existing ?? []).map((r) => r.question_slug));
+    const results = [];
+    const toDelete = uniq.filter((s) => inSheet.has(s));
+    for (const s of uniq.filter((s2) => !inSheet.has(s2))) {
+      results.push({ slug: s, status: "not_in_sheet" });
+    }
+    if (toDelete.length > 0) {
+      const { error: dErr } = await sb.from("user_folder_items").delete().eq("folder_id", folder_id).in("question_slug", toDelete);
+      if (dErr) {
+        for (const s of toDelete) results.push({ slug: s, status: "error", error: dErr.message });
+      } else {
+        for (const s of toDelete) results.push({ slug: s, status: "removed" });
+      }
+    }
+    let resequenced = 0;
+    if ((resequence ?? true) && toDelete.length > 0) {
+      const { data: remaining } = await sb.from("user_folder_items").select("question_slug, sort_order").eq("folder_id", folder_id).order("sort_order", { ascending: true });
+      const ordered = remaining ?? [];
+      for (let i = 0; i < ordered.length; i++) {
+        if (ordered[i].sort_order !== i) {
+          const { error } = await sb.from("user_folder_items").update({ sort_order: i }).eq("folder_id", folder_id).eq("question_slug", ordered[i].question_slug);
+          if (!error) resequenced++;
+        }
+      }
+    }
+    const removed = results.filter((r) => r.status === "removed").length;
+    return jsonResult(
+      `Removed ${removed}/${uniq.length} slug(s) from "${folder.name}".`,
+      { folder_id, folder_name: folder.name, results, removed, not_in_sheet: uniq.length - toDelete.length, resequenced }
+    );
+  }
+});
+var getSheetShareStatusTool = defineTool30({
+  name: "get_sheet_share_status",
+  title: "Get a sheet's active public share status",
+  description: "Return the active share code, is_public, allow_copy, expires_at and expiry flag for a sheet. Returns share:null if the sheet has never been shared.",
+  inputSchema: { folder_id: z25.string().uuid() },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ folder_id }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const sb = createUserSupabaseClient3(ctx);
+    const { data: folder, error: fErr } = await sb.from("user_folders").select("id, name").eq("id", folder_id).maybeSingle();
+    if (fErr) return errResult(fErr.message);
+    if (!folder) return errResult(`Folder ${folder_id} not found.`);
+    const { data: share, error: sErr } = await sb.from("shared_folders").select("id, share_code, is_public, allow_copy, expires_at, created_at").eq("folder_id", folder_id).order("created_at", { ascending: false }).maybeSingle();
+    if (sErr) return errResult(sErr.message);
+    const now = Date.now();
+    const expired = share?.expires_at ? new Date(share.expires_at).getTime() < now : false;
+    return jsonResult(
+      share ? `Sheet "${folder.name}" share is ${expired ? "EXPIRED" : share.is_public ? "PUBLIC" : "PRIVATE"}.` : `Sheet "${folder.name}" has no share link.`,
+      {
+        folder_id,
+        folder_name: folder.name,
+        share: share ?? null,
+        is_expired: expired,
+        is_active: !!share && !expired && !!share.is_public
+      }
+    );
+  }
+});
+var deleteOrArchiveSheetTool = defineTool30({
+  name: "delete_or_archive_sheet",
+  title: "Delete or soft-archive a sheet",
+  description: "mode='archive' (default): mark sheet as archived by prefixing name with [Archived] and setting color to gray \u2014 items/shares preserved. mode='delete': permanently remove the sheet, all its items, and any share links.",
+  inputSchema: {
+    folder_id: z25.string().uuid(),
+    mode: z25.enum(["archive", "delete"]).optional(),
+    unarchive: z25.boolean().optional().describe("With mode='archive', if true removes the [Archived] prefix instead.")
+  },
+  annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
+  handler: async ({ folder_id, mode, unarchive }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const op = mode ?? "archive";
+    const { data: folder, error: fErr } = await sb.from("user_folders").select("id, name, color").eq("id", folder_id).maybeSingle();
+    if (fErr) return errResult(fErr.message);
+    if (!folder) return errResult(`Folder ${folder_id} not found.`);
+    if (op === "delete") {
+      const { data: items } = await sb.from("user_folder_items").select("question_slug").eq("folder_id", folder_id);
+      const { error: sErr } = await sb.from("shared_folders").delete().eq("folder_id", folder_id);
+      if (sErr) return errResult(`Share cleanup failed: ${sErr.message}`);
+      const { error: iErr } = await sb.from("user_folder_items").delete().eq("folder_id", folder_id);
+      if (iErr) return errResult(`Item cleanup failed: ${iErr.message}`);
+      const { error: dErr } = await sb.from("user_folders").delete().eq("id", folder_id);
+      if (dErr) return errResult(`Folder delete failed: ${dErr.message}`);
+      return jsonResult(`Deleted sheet "${folder.name}" and ${items?.length ?? 0} item(s).`, {
+        mode: "delete",
+        folder_id,
+        folder_name: folder.name,
+        items_deleted: items?.length ?? 0
+      });
+    }
+    const isArchived = folder.name.startsWith("[Archived] ");
+    let newName = folder.name;
+    if (unarchive && isArchived) newName = newName.replace(/^\[Archived\]\s+/, "");
+    else if (!unarchive && !isArchived) newName = `[Archived] ${newName}`;
+    const patch = { name: newName, updated_at: (/* @__PURE__ */ new Date()).toISOString() };
+    if (!unarchive) patch.color = "#6b7280";
+    const { data: updated, error: uErr } = await sb.from("user_folders").update(patch).eq("id", folder_id).select("id, name, color").single();
+    if (uErr) return errResult(`Archive update failed: ${uErr.message}`);
+    return jsonResult(
+      `${unarchive ? "Unarchived" : "Archived"} sheet "${folder.name}" \u2192 "${updated.name}".`,
+      { mode: "archive", unarchive: !!unarchive, folder: updated }
+    );
+  }
+});
+
 // src/lib/mcp/index.ts
 var projectRef = "elzftqnehcmnouptaqee";
 var mcp_default = defineMcp({
@@ -1973,7 +2104,10 @@ var mcp_default = defineMcp({
     regenerateShareSheetLinkTool,
     updateSheetSectionsTool,
     getSheetDetailsTool,
-    previewPublishSheetBundleTool
+    previewPublishSheetBundleTool,
+    bulkRemoveProblemsFromSheetTool,
+    getSheetShareStatusTool,
+    deleteOrArchiveSheetTool
   ]
 });
 

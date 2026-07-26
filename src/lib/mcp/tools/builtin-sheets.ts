@@ -1,6 +1,6 @@
 import { defineTool, type ToolContext } from "@lovable.dev/mcp-js";
 import { z } from "zod";
-import { errResult, jsonResult } from "./_shared";
+import { createUserSupabaseClient, errResult, jsonResult } from "./_shared";
 import { dbmsSections, dbmsMeta } from "../../../data/dbmsData";
 import { cnSections, cnMeta } from "../../../data/cnData";
 import { osSections, osMeta } from "../../../data/osData";

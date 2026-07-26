@@ -1016,6 +1016,10 @@ function SubSectionCard({
   const total = subSection.topics.length;
   const prevCompletedRef = useRef(completed);
   const isComplete = completed === total && total > 0;
+  // Lazy-load topics in batches of 25. Preserves scroll because we only append.
+  const TOPICS_BATCH = 25;
+  const [visibleTopics, setVisibleTopics] = useState(TOPICS_BATCH);
+  const topicsToRender = subSection.topics.slice(0, visibleTopics);
 
   // React to expand/collapse all signal
   useEffect(() => {

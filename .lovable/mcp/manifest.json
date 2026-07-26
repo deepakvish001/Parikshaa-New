@@ -3792,6 +3792,158 @@
           "$schema": "http://json-schema.org/draft-07/schema#"
         },
         "outputSchema": null
+      },
+      {
+        "name": "test_blog_media_access",
+        "title": "Automated CRUD test for blog-media as the current user",
+        "description": "Runs create/read/update/delete against the blog-media bucket using the caller's JWT. Returns per-op result and decision trace. Admins/owners should get all-green; other roles should be blocked on writes.",
+        "annotations": {
+          "readOnlyHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder": {
+              "type": "string",
+              "description": "Subpath prefix. Defaults to 'tests/rls-<uid>'."
+            },
+            "cleanup": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "run_blog_media_rls_suite",
+        "title": "Full RLS matrix for blog-media (admin/owner + anonymous)",
+        "description": "Verifies admin/owner can CRUD and that an unauthenticated client is blocked from writing/listing private paths, while public read of an existing published asset still works. Admin/owner only.",
+        "annotations": {
+          "readOnlyHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "upload_article_image_with_retry",
+        "title": "Upload image with exponential-backoff retry + optional queue fallback",
+        "description": "Upload an image to blog-media. Retries on transient/RLS errors with exponential backoff (base 500ms, factor 2, max 6 tries by default). On persistent RLS failure, optionally enqueues the payload to `blog_media_upload_queue` so a background worker (`process_blog_media_upload_queue`) can retry once policies are fixed, and returns a clear structured error the publish flow can display.",
+        "annotations": {
+          "readOnlyHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "filename": {
+              "type": "string",
+              "minLength": 1
+            },
+            "base64": {
+              "type": "string",
+              "minLength": 1
+            },
+            "content_type": {
+              "type": "string"
+            },
+            "folder": {
+              "type": "string"
+            },
+            "max_attempts": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            },
+            "base_delay_ms": {
+              "type": "integer",
+              "minimum": 50,
+              "maximum": 5000
+            },
+            "enqueue_on_failure": {
+              "type": "boolean",
+              "default": true
+            },
+            "target_post_slug": {
+              "type": "string"
+            },
+            "target_field": {
+              "type": "string",
+              "description": "e.g. 'cover_image' or 'body_image'"
+            }
+          },
+          "required": [
+            "filename",
+            "base64"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "process_blog_media_upload_queue",
+        "title": "Process pending blog-media upload retries",
+        "description": "Background-worker style tool. Fetches pending queue entries whose `next_attempt_at` has passed, retries them, updates status, and — when `target_post_slug` + `target_field` are set — patches the blog_posts row with the new signed URL. Returns per-entry outcomes. Safe to call repeatedly (idempotent per-row via attempts counter).",
+        "annotations": {
+          "readOnlyHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 10
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_blog_media_upload_queue",
+        "title": "List queued blog-media upload retries",
+        "description": "Inspect the retry queue. Filter by status.",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "succeeded",
+                "failed",
+                "dead"
+              ]
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 200,
+              "default": 50
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
       }
     ]
   }

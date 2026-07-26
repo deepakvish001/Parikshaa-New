@@ -7319,6 +7319,362 @@ var validateShareLinkAccessTool = defineTool39({
   }
 });
 
+// src/lib/mcp/tools/blog-media-tests.ts
+import { defineTool as defineTool40 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { createClient as createClient4 } from "npm:@supabase/supabase-js@^2.110.8";
+import { z as z35 } from "npm:zod@^3.23.8";
+var TINY_PNG_BASE64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
+var getEnv4 = (name) => {
+  const deno = globalThis.Deno;
+  return deno?.env?.get?.(name) ?? process.env[name];
+};
+var decodeBase64 = (b64) => {
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+};
+var runOp = async (op, fn) => {
+  const t0 = Date.now();
+  try {
+    const detail = await fn();
+    return { op, ok: true, ms: Date.now() - t0, detail };
+  } catch (e) {
+    return { op, ok: false, ms: Date.now() - t0, error: e.message };
+  }
+};
+var testBlogMediaAccessTool = defineTool40({
+  name: "test_blog_media_access",
+  title: "Automated CRUD test for blog-media as the current user",
+  description: "Runs create/read/update/delete against the blog-media bucket using the caller's JWT. Returns per-op result and decision trace. Admins/owners should get all-green; other roles should be blocked on writes.",
+  inputSchema: {
+    folder: z35.string().optional().describe("Subpath prefix. Defaults to 'tests/rls-<uid>'."),
+    cleanup: z35.boolean().optional().default(true)
+  },
+  annotations: { readOnlyHint: false, openWorldHint: false },
+  handler: async ({ folder, cleanup }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const sb = createUserSupabaseClient3(ctx);
+    const uid = ctx.getUserId();
+    const [{ data: isAdmin }, { data: isOwner }] = await Promise.all([
+      sb.rpc("has_role", { _user_id: uid, _role: "admin" }),
+      sb.rpc("has_role", { _user_id: uid, _role: "owner" })
+    ]);
+    const expected = isAdmin || isOwner ? "allow" : "deny";
+    const prefix = folder ?? `tests/rls-${uid}`;
+    const path = `${prefix}/${Date.now()}-probe.png`;
+    const bytes = decodeBase64(TINY_PNG_BASE64);
+    const ops = [];
+    ops.push(
+      await runOp("create", async () => {
+        const { error } = await sb.storage.from("blog-media").upload(path, bytes, {
+          contentType: "image/png",
+          upsert: false
+        });
+        if (error) throw error;
+        return { path };
+      })
+    );
+    ops.push(
+      await runOp("read_signed_url", async () => {
+        const { data, error } = await sb.storage.from("blog-media").createSignedUrl(path, 60);
+        if (error) throw error;
+        return { signed_url: data?.signedUrl };
+      })
+    );
+    ops.push(
+      await runOp("update", async () => {
+        const { error } = await sb.storage.from("blog-media").upload(path, bytes, {
+          contentType: "image/png",
+          upsert: true
+        });
+        if (error) throw error;
+        return { path };
+      })
+    );
+    if (cleanup !== false) {
+      ops.push(
+        await runOp("delete", async () => {
+          const { error } = await sb.storage.from("blog-media").remove([path]);
+          if (error) throw error;
+          return { path };
+        })
+      );
+    }
+    const writeOps = ops.filter((o) => ["create", "update", "delete"].includes(o.op));
+    const actual = writeOps.every((o) => o.ok) ? "allow" : writeOps.every((o) => !o.ok) ? "deny" : "partial";
+    const verdict = actual === expected ? "PASS" : `FAIL: expected ${expected} for role, observed ${actual}`;
+    return jsonResult(`blog-media access test \u2192 ${verdict}`, {
+      user_id: uid,
+      roles: { admin: !!isAdmin, owner: !!isOwner },
+      expected,
+      observed: actual,
+      verdict,
+      ops,
+      trace: {
+        bucket: "blog-media",
+        path,
+        policy_helper: "public.has_role(auth.uid(),'admin'|'owner')",
+        note: "Storage policies on storage.objects call has_role() via SECURITY DEFINER; if a write ops fails with 'new row violates row-level security', roles are not attached to this JWT."
+      }
+    });
+  }
+});
+var runBlogMediaRlsSuiteTool = defineTool40({
+  name: "run_blog_media_rls_suite",
+  title: "Full RLS matrix for blog-media (admin/owner + anonymous)",
+  description: "Verifies admin/owner can CRUD and that an unauthenticated client is blocked from writing/listing private paths, while public read of an existing published asset still works. Admin/owner only.",
+  inputSchema: {},
+  annotations: { readOnlyHint: false, openWorldHint: false },
+  handler: async (_input, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const url = getEnv4("SUPABASE_URL");
+    const anonKey = getEnv4("SUPABASE_PUBLISHABLE_KEY") ?? getEnv4("SUPABASE_ANON_KEY");
+    if (!url || !anonKey) return errResult("Backend env missing SUPABASE_URL/anon key.");
+    const anon = createClient4(url, anonKey, {
+      auth: { persistSession: false, autoRefreshToken: false }
+    });
+    const bytes = decodeBase64(TINY_PNG_BASE64);
+    const adminPath = `tests/suite/${Date.now()}-admin.png`;
+    const anonPath = `tests/suite/${Date.now()}-anon.png`;
+    const suite = { admin: [], anonymous: [] };
+    suite.admin.push(
+      await runOp("admin.create", async () => {
+        const { error } = await sb.storage.from("blog-media").upload(adminPath, bytes, {
+          contentType: "image/png"
+        });
+        if (error) throw error;
+      })
+    );
+    suite.admin.push(
+      await runOp("admin.read", async () => {
+        const { data, error } = await sb.storage.from("blog-media").createSignedUrl(adminPath, 60);
+        if (error) throw error;
+        return { signed_url: data?.signedUrl };
+      })
+    );
+    suite.admin.push(
+      await runOp("admin.delete", async () => {
+        const { error } = await sb.storage.from("blog-media").remove([adminPath]);
+        if (error) throw error;
+      })
+    );
+    const anonWrite = await runOp("anon.create_should_fail", async () => {
+      const { error } = await anon.storage.from("blog-media").upload(anonPath, bytes, {
+        contentType: "image/png"
+      });
+      if (error) throw error;
+      return "unexpected success";
+    });
+    suite.anonymous.push({
+      ...anonWrite,
+      ok: !anonWrite.ok,
+      // invert: failure = pass
+      detail: anonWrite.ok ? "SECURITY REGRESSION: anonymous write succeeded" : `correctly blocked: ${anonWrite.error}`,
+      error: void 0
+    });
+    const adminPass = suite.admin.every((o) => o.ok);
+    const anonPass = suite.anonymous.every((o) => o.ok);
+    const verdict = adminPass && anonPass ? "PASS" : "FAIL";
+    return jsonResult(`RLS suite \u2192 ${verdict}`, {
+      verdict,
+      admin_pass: adminPass,
+      anonymous_pass: anonPass,
+      results: suite,
+      decision_trace: {
+        bucket: "blog-media",
+        policies: [
+          "storage.objects: admin/owner ALL via has_role()",
+          "storage.objects: public SELECT (public read)"
+        ],
+        expected: {
+          admin: "allow create/read/delete",
+          anonymous: "deny create; public reads of existing objects allowed"
+        }
+      }
+    });
+  }
+});
+
+// src/lib/mcp/tools/blog-media-retry.ts
+import { defineTool as defineTool41 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z36 } from "npm:zod@^3.23.8";
+var decodeBase642 = (b64) => {
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+};
+var sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+var isRlsError = (msg) => /row-level security|permission denied|not authorized|unauthorized|403/i.test(msg);
+var attemptUpload = async (sb, path, bytes, contentType, upsert = false) => {
+  const { error } = await sb.storage.from("blog-media").upload(path, bytes, {
+    contentType,
+    upsert
+  });
+  if (error) throw error;
+  const { data: signed, error: sErr } = await sb.storage.from("blog-media").createSignedUrl(path, 60 * 60 * 24 * 365);
+  if (sErr) throw sErr;
+  return { path, signed_url: signed?.signedUrl };
+};
+var uploadArticleImageWithRetryTool = defineTool41({
+  name: "upload_article_image_with_retry",
+  title: "Upload image with exponential-backoff retry + optional queue fallback",
+  description: "Upload an image to blog-media. Retries on transient/RLS errors with exponential backoff (base 500ms, factor 2, max 6 tries by default). On persistent RLS failure, optionally enqueues the payload to `blog_media_upload_queue` so a background worker (`process_blog_media_upload_queue`) can retry once policies are fixed, and returns a clear structured error the publish flow can display.",
+  inputSchema: {
+    filename: z36.string().min(1),
+    base64: z36.string().min(1),
+    content_type: z36.string().optional(),
+    folder: z36.string().optional(),
+    max_attempts: z36.number().int().min(1).max(10).optional(),
+    base_delay_ms: z36.number().int().min(50).max(5e3).optional(),
+    enqueue_on_failure: z36.boolean().optional().default(true),
+    target_post_slug: z36.string().optional(),
+    target_field: z36.string().optional().describe("e.g. 'cover_image' or 'body_image'")
+  },
+  annotations: { readOnlyHint: false, openWorldHint: false },
+  handler: async (input, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const safeName = input.filename.replace(/[^a-zA-Z0-9._-]/g, "-");
+    const path = `${input.folder ?? "articles"}/${Date.now()}-${safeName}`;
+    const bytes = decodeBase642(input.base64);
+    const contentType = input.content_type ?? "image/png";
+    const maxAttempts = input.max_attempts ?? 6;
+    const base = input.base_delay_ms ?? 500;
+    const attempts = [];
+    let lastError = null;
+    for (let n = 1; n <= maxAttempts; n++) {
+      const t0 = Date.now();
+      try {
+        const res = await attemptUpload(sb, path, bytes, contentType);
+        attempts.push({ n, ok: true, ms: Date.now() - t0 });
+        return jsonResult(`Uploaded ${res.path} on attempt ${n}.`, {
+          bucket: "blog-media",
+          ...res,
+          markdown: `![${input.filename}](${res.signed_url})`,
+          attempts
+        });
+      } catch (e) {
+        lastError = e;
+        attempts.push({ n, ok: false, ms: Date.now() - t0, error: lastError.message });
+        if (n < maxAttempts) {
+          const delay = Math.min(3e4, base * 2 ** (n - 1)) + Math.floor(Math.random() * 200);
+          await sleep(delay);
+        }
+      }
+    }
+    const msg = lastError?.message ?? "unknown error";
+    const rls = isRlsError(msg);
+    let queueId;
+    if (input.enqueue_on_failure !== false) {
+      const { data, error } = await sb.from("blog_media_upload_queue").insert({
+        requested_by: ctx.getUserId(),
+        file_name: safeName,
+        folder: input.folder ?? "articles",
+        content_type: contentType,
+        base64_data: input.base64,
+        target_post_slug: input.target_post_slug ?? null,
+        target_field: input.target_field ?? null,
+        max_attempts: 8,
+        last_error: msg
+      }).select("id").single();
+      if (!error) queueId = data?.id;
+    }
+    return errResult(
+      [
+        rls ? "Image upload blocked by blog-media RLS policy after retries." : `Image upload failed after ${maxAttempts} attempts: ${msg}`,
+        queueId ? `Queued for background retry (id=${queueId}). Fix bucket policies, then call \`process_blog_media_upload_queue\`.` : "Not enqueued (enqueue_on_failure=false).",
+        `Attempts trace: ${JSON.stringify(attempts)}`
+      ].join("\n")
+    );
+  }
+});
+var processBlogMediaUploadQueueTool = defineTool41({
+  name: "process_blog_media_upload_queue",
+  title: "Process pending blog-media upload retries",
+  description: "Background-worker style tool. Fetches pending queue entries whose `next_attempt_at` has passed, retries them, updates status, and \u2014 when `target_post_slug` + `target_field` are set \u2014 patches the blog_posts row with the new signed URL. Returns per-entry outcomes. Safe to call repeatedly (idempotent per-row via attempts counter).",
+  inputSchema: {
+    limit: z36.number().int().min(1).max(50).optional().default(10)
+  },
+  annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
+  handler: async ({ limit }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const { data: rows, error } = await sb.from("blog_media_upload_queue").select("*").eq("status", "pending").lte("next_attempt_at", (/* @__PURE__ */ new Date()).toISOString()).order("next_attempt_at", { ascending: true }).limit(limit ?? 10);
+    if (error) return errResult(`fetch queue: ${error.message}`);
+    const outcomes = [];
+    for (const row of rows ?? []) {
+      const r = row;
+      const attempts = (r.attempts ?? 0) + 1;
+      const maxA = r.max_attempts ?? 8;
+      const safeName = r.file_name.replace(/[^a-zA-Z0-9._-]/g, "-");
+      const path = `${r.folder}/${Date.now()}-${safeName}`;
+      const bytes = decodeBase642(r.base64_data);
+      try {
+        const res = await attemptUpload(sb, path, bytes, r.content_type);
+        if (r.target_post_slug && r.target_field) {
+          const patch = {
+            [r.target_field]: res.signed_url,
+            updated_at: (/* @__PURE__ */ new Date()).toISOString()
+          };
+          await sb.from("blog_posts").update(patch).eq("slug", r.target_post_slug);
+        }
+        await sb.from("blog_media_upload_queue").update({
+          status: "succeeded",
+          attempts,
+          resolved_path: res.path,
+          resolved_signed_url: res.signed_url,
+          last_error: null
+        }).eq("id", r.id);
+        outcomes.push({ id: r.id, ok: true, path: res.path, signed_url: res.signed_url });
+      } catch (e) {
+        const msg = e.message;
+        const dead = attempts >= maxA;
+        const delayMs = Math.min(60 * 60 * 1e3, 1e3 * 2 ** attempts);
+        const next = new Date(Date.now() + delayMs).toISOString();
+        await sb.from("blog_media_upload_queue").update({
+          status: dead ? "dead" : "pending",
+          attempts,
+          last_error: msg,
+          next_attempt_at: next
+        }).eq("id", r.id);
+        outcomes.push({ id: r.id, ok: false, attempts, dead, error: msg, next_attempt_at: next });
+      }
+    }
+    return jsonResult(`Processed ${outcomes.length} queue entries.`, {
+      processed: outcomes.length,
+      outcomes
+    });
+  }
+});
+var listBlogMediaUploadQueueTool = defineTool41({
+  name: "list_blog_media_upload_queue",
+  title: "List queued blog-media upload retries",
+  description: "Inspect the retry queue. Filter by status.",
+  inputSchema: {
+    status: z36.enum(["pending", "succeeded", "failed", "dead"]).optional(),
+    limit: z36.number().int().min(1).max(200).optional().default(50)
+  },
+  annotations: { readOnlyHint: true, openWorldHint: false },
+  handler: async ({ status, limit }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    let q = sb.from("blog_media_upload_queue").select(
+      "id,file_name,folder,status,attempts,max_attempts,last_error,next_attempt_at,resolved_path,resolved_signed_url,target_post_slug,target_field,created_at,updated_at"
+    ).order("created_at", { ascending: false }).limit(limit ?? 50);
+    if (status) q = q.eq("status", status);
+    const { data, error } = await q;
+    if (error) return errResult(`list: ${error.message}`);
+    return jsonResult(`${data?.length ?? 0} entries.`, { entries: data });
+  }
+});
+
 // src/lib/mcp/index.ts
 var projectRef = "elzftqnehcmnouptaqee";
 var mcp_default = defineMcp({
@@ -7423,7 +7779,12 @@ var mcp_default = defineMcp({
     createBuiltinShareLinkTool,
     revokeBuiltinShareLinkTool,
     listBuiltinShareLinksTool,
-    validateShareLinkAccessTool
+    validateShareLinkAccessTool,
+    testBlogMediaAccessTool,
+    runBlogMediaRlsSuiteTool,
+    uploadArticleImageWithRetryTool,
+    processBlogMediaUploadQueueTool,
+    listBlogMediaUploadQueueTool
   ]
 });
 

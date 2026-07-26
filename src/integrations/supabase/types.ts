@@ -710,6 +710,36 @@ export type Database = {
           },
         ]
       }
+      builtin_sheet_overrides: {
+        Row: {
+          created_at: string
+          description: string | null
+          sections: Json | null
+          slug: string
+          title: string | null
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          sections?: Json | null
+          slug: string
+          title?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          sections?: Json | null
+          slug?: string
+          title?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       chat_messages: {
         Row: {
           content: string

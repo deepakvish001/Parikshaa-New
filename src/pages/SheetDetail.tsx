@@ -2261,7 +2261,7 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
         <div className="w-full max-w-2xl">
           <AccessErrorPanel
             resourceKind={kind}
-            resource={slug ?? "(unknown)"}
+            resource={currentSheetId ?? "(unknown)"}
             message="This sheet could not be loaded. It may be blocked by RLS or the slug may be wrong."
             onRetry={() => window.location.reload()}
           />

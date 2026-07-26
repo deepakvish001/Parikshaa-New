@@ -43,4 +43,4 @@ jobs:
           VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
           RLS_TEST_USER_EMAIL: ${{ secrets.RLS_TEST_USER_EMAIL }}
           RLS_TEST_USER_PASSWORD: ${{ secrets.RLS_TEST_USER_PASSWORD }}
-        run: bun run check:rls
+        run: bun run check:rls-matrix

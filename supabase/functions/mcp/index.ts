@@ -3440,13 +3440,3262 @@ var fixTopicArticleLinkageTool = defineTool33({
   }
 });
 
+// src/lib/mcp/tools/builtin-sheets.ts
+import { defineTool as defineTool34 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z29 } from "npm:zod@^3.23.8";
+
+// src/data/dbmsData.ts
+var dbmsSections = [
+  {
+    id: "dbms-sec-1",
+    title: "Introduction & Basics",
+    subSections: [
+      {
+        id: "dbms-sec-1-sub-1",
+        title: "Introduction & Basics Concepts",
+        topics: [
+          {
+            id: "1",
+            title: "What is DBMS? Mention advantages",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+DBMS?+Mention+advantages",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "2",
+            title: "What is a Database?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Database?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "3",
+            title: "What is a Database System?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Database+System?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "4",
+            title: "What is RDBMS? Properties of RDBMS",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+RDBMS?+Properties+of+RDBMS",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "5",
+            title: "Difference between DBMS and RDBMS",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+DBMS+and+RDBMS",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "6",
+            title: "Difference between DBMS and File System",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+DBMS+and+File+System",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "7",
+            title: "Types of Database Languages (DDL, DML, DCL, TCL)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Types+of+Database+Languages+(DDL,+DML,+DCL,+TCL)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "8",
+            title: "What is DDL (Data Definition Language)? Give examples",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+DDL+(Data+Definition+Language)?+Give+examples",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "9",
+            title: "What is DML (Data Manipulation Language)? Give examples",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+DML+(Data+Manipulation+Language)?+Give+examples",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "10",
+            title: "What is DCL (Data Control Language)?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+DCL+(Data+Control+Language)?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "11",
+            title: "What is TCL (Transaction Control Language)?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+TCL+(Transaction+Control+Language)?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "12",
+            title: "Difference between SQL and NoSQL",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+SQL+and+NoSQL",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "13",
+            title: "What is PostgreSQL?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+PostgreSQL?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "14",
+            title: "What is MySQL?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+MySQL?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "dbms-sec-2",
+    title: "Architecture & Abstraction",
+    subSections: [
+      {
+        id: "dbms-sec-2-sub-1",
+        title: "Architecture & Abstraction Concepts",
+        topics: [
+          {
+            id: "15",
+            title: "Data Abstraction in DBMS, Explain three levels",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Data+Abstraction+in+DBMS,+Explain+three+levels",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "16",
+            title: "What is Schema? Difference between Schema and Instance",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Schema?+Difference+between+Schema+and+Instance",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "17",
+            title: "Difference between Intension and Extension in a Database",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+Intension+and+Extension+in+a+Database",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "18",
+            title: "What is 2-Tier Architecture?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+2-Tier+Architecture?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "19",
+            title: "What is 3-Tier Architecture?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+3-Tier+Architecture?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "20",
+            title: "Difference between 2-Tier and 3-Tier Architecture",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+2-Tier+and+3-Tier+Architecture",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "dbms-sec-3",
+    title: "ER Model & Relationships",
+    subSections: [
+      {
+        id: "dbms-sec-3-sub-1",
+        title: "ER Model & Relationships Concepts",
+        topics: [
+          {
+            id: "21",
+            title: "What is ER Model? Explain its components",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+ER+Model?+Explain+its+components",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "22",
+            title: "Entity, Entity Type, Entity Set \u2014 Explain with examples",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Entity,+Entity+Type,+Entity+Set+\u2014+Explain+with+examples",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "23",
+            title: "What is a Weak Entity Set?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Weak+Entity+Set?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "24",
+            title: "Types of Relationships in DBMS (1:1, 1:N, M:N)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Types+of+Relationships+in+DBMS+(1:1,+1:N,+M:N)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "25",
+            title: "What are Attributes? Types of Attributes",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+are+Attributes?+Types+of+Attributes",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "26",
+            title: "Difference between Entity and Attribute",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+Entity+and+Attribute",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "27",
+            title: "What is Participation Constraint? (Total vs Partial)",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Participation+Constraint?+(Total+vs+Partial)",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "28",
+            title: "What is Generalization, Specialization, and Aggregation?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Generalization,+Specialization,+and+Aggregation?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "29",
+            title: "Convert ER Diagram to Relational Schema",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Convert+ER+Diagram+to+Relational+Schema",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "dbms-sec-4",
+    title: "Keys in DBMS",
+    subSections: [
+      {
+        id: "dbms-sec-4-sub-1",
+        title: "Keys in DBMS Concepts",
+        topics: [
+          {
+            id: "30",
+            title: "What are Keys in DBMS? Why are they important?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+are+Keys+in+DBMS?+Why+are+they+important?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "31",
+            title: "What is a Super Key?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Super+Key?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "32",
+            title: "What is a Candidate Key?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Candidate+Key?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "33",
+            title: "What is a Primary Key?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Primary+Key?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "34",
+            title: "What is a Foreign Key?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Foreign+Key?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "35",
+            title: "What is an Alternate Key?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+an+Alternate+Key?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "36",
+            title: "What is a Composite Key?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Composite+Key?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "37",
+            title: "What is a Unique Key? Diff between Primary Key and Unique Key",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Unique+Key?+Diff+between+Primary+Key+and+Unique+Key",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "38",
+            title: "Difference between Primary Key and Foreign Key",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+Primary+Key+and+Foreign+Key",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "dbms-sec-5",
+    title: "Normalization",
+    subSections: [
+      {
+        id: "dbms-sec-5-sub-1",
+        title: "Normalization Concepts",
+        topics: [
+          {
+            id: "39",
+            title: "What is Normalization? Why is it needed?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Normalization?+Why+is+it+needed?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "40",
+            title: "What is First Normal Form (1NF)?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+First+Normal+Form+(1NF)?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "41",
+            title: "What is Second Normal Form (2NF)?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Second+Normal+Form+(2NF)?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "42",
+            title: "What is Third Normal Form (3NF)?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Third+Normal+Form+(3NF)?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "43",
+            title: "What is BCNF (Boyce-Codd Normal Form)?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+BCNF+(Boyce-Codd+Normal+Form)?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "44",
+            title: "What is Fourth Normal Form (4NF)?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Fourth+Normal+Form+(4NF)?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "45",
+            title: "What is Denormalization? When to use it?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Denormalization?+When+to+use+it?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "46",
+            title: "What is a Functional Dependency?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Functional+Dependency?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "47",
+            title: "Types of Functional Dependencies (Partial, Transitive, Trivial)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Types+of+Functional+Dependencies+(Partial,+Transitive,+Trivial)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "48",
+            title: "What is Lossless Decomposition?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Lossless+Decomposition?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "49",
+            title: "What is Dependency Preservation?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Dependency+Preservation?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "50",
+            title: "Difference between Normalization and Denormalization",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+Normalization+and+Denormalization",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "dbms-sec-6",
+    title: "SQL Commands & Queries",
+    subSections: [
+      {
+        id: "dbms-sec-6-sub-1",
+        title: "SQL Commands & Queries Concepts",
+        topics: [
+          {
+            id: "51",
+            title: "What are SQL Commands? Types of them",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+are+SQL+Commands?+Types+of+them",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "52",
+            title: "Difference between TRUNCATE and DELETE command",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+TRUNCATE+and+DELETE+command",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "53",
+            title: "Difference between DELETE and DROP",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+DELETE+and+DROP",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "54",
+            title: "Difference between TRUNCATE, DELETE, and DROP",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+TRUNCATE,+DELETE,+and+DROP",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "55",
+            title: "What is a CLAUSE in SQL?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+CLAUSE+in+SQL?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "56",
+            title: "Difference between HAVING and WHERE clause",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+HAVING+and+WHERE+clause",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "57",
+            title: "What is GROUP BY?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+GROUP+BY?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "58",
+            title: "What is ORDER BY?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+ORDER+BY?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "59",
+            title: "What is a Subquery / Nested Query?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Subquery+/+Nested+Query?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "60",
+            title: "What is a Correlated Subquery?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Correlated+Subquery?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "61",
+            title: "What are Aggregate Functions? (COUNT, SUM, AVG, MIN, MAX)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+are+Aggregate+Functions?+(COUNT,+SUM,+AVG,+MIN,+MAX)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "62",
+            title: "What is UNION? Difference between UNION and UNION ALL",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+UNION?+Difference+between+UNION+and+UNION+ALL",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "63",
+            title: "What is Pattern Matching in SQL? (LIKE, %, _)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Pattern+Matching+in+SQL?+(LIKE,+%,+_)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "64",
+            title: "How to create empty tables with same structure as another table?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+How+to+create+empty+tables+with+same+structure+as+another+table?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "65",
+            title: "What is the difference between IN and BETWEEN?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+the+difference+between+IN+and+BETWEEN?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "66",
+            title: "What is an Alias in SQL?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+an+Alias+in+SQL?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "67",
+            title: "Difference between CHAR and VARCHAR",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+CHAR+and+VARCHAR",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "dbms-sec-7",
+    title: "Joins",
+    subSections: [
+      {
+        id: "dbms-sec-7-sub-1",
+        title: "Joins Concepts",
+        topics: [
+          {
+            id: "68",
+            title: "What is a JOIN in SQL? Why is it used?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+JOIN+in+SQL?+Why+is+it+used?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "69",
+            title: "What is INNER JOIN?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+INNER+JOIN?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "70",
+            title: "What is LEFT (OUTER) JOIN?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+LEFT+(OUTER)+JOIN?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "71",
+            title: "What is RIGHT (OUTER) JOIN?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+RIGHT+(OUTER)+JOIN?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "72",
+            title: "What is FULL (OUTER) JOIN?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+FULL+(OUTER)+JOIN?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "73",
+            title: "What is CROSS JOIN?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+CROSS+JOIN?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "74",
+            title: "What is SELF JOIN?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+SELF+JOIN?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "75",
+            title: "What is NATURAL JOIN?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+NATURAL+JOIN?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "76",
+            title: "Difference between Inner Join and Outer Join",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+Inner+Join+and+Outer+Join",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "77",
+            title: "Difference between JOIN and UNION",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+JOIN+and+UNION",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "dbms-sec-8",
+    title: "Views, Triggers, Procedures",
+    subSections: [
+      {
+        id: "dbms-sec-8-sub-1",
+        title: "Views, Triggers, Procedures Concepts",
+        topics: [
+          {
+            id: "78",
+            title: "What is a View in SQL?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+View+in+SQL?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "79",
+            title: "What are the advantages of Views?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+are+the+advantages+of+Views?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "80",
+            title: "Can we perform DML operations on Views?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Can+we+perform+DML+operations+on+Views?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "81",
+            title: "What are Triggers in SQL?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+are+Triggers+in+SQL?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "82",
+            title: "What is a Stored Procedure?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Stored+Procedure?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "83",
+            title: "Difference between Stored Procedure and Function",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+Stored+Procedure+and+Function",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "84",
+            title: "What is a Cursor in DBMS? Types of Cursors",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Cursor+in+DBMS?+Types+of+Cursors",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "dbms-sec-9",
+    title: "Transactions & ACID",
+    subSections: [
+      {
+        id: "dbms-sec-9-sub-1",
+        title: "Transactions & ACID Concepts",
+        topics: [
+          {
+            id: "85",
+            title: "What is a Transaction in DBMS?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Transaction+in+DBMS?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "86",
+            title: "What are ACID Properties? Explain each",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+are+ACID+Properties?+Explain+each",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "87",
+            title: "What is Atomicity?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Atomicity?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "88",
+            title: "What is Consistency?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Consistency?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "89",
+            title: "What is Isolation?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Isolation?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "90",
+            title: "What is Durability?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Durability?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "91",
+            title: "States of a Transaction (Active, Partially Committed, Committed, Failed, Aborted)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+States+of+a+Transaction+(Active,+Partially+Committed,+Committed,+Failed,+Aborted)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "92",
+            title: "What is COMMIT, ROLLBACK, and SAVEPOINT?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+COMMIT,+ROLLBACK,+and+SAVEPOINT?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "93",
+            title: "What is a Checkpoint in DBMS?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Checkpoint+in+DBMS?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "94",
+            title: "How to implement Atomicity and Durability (Shadow Copy)?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+How+to+implement+Atomicity+and+Durability+(Shadow+Copy)?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "dbms-sec-10",
+    title: "Concurrency Control",
+    subSections: [
+      {
+        id: "dbms-sec-10-sub-1",
+        title: "Concurrency Control Concepts",
+        topics: [
+          {
+            id: "95",
+            title: "What is Concurrency Control? Why is it needed?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Concurrency+Control?+Why+is+it+needed?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "96",
+            title: "Problems of Concurrent Transactions (Dirty Read, Lost Update, Phantom Read)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Problems+of+Concurrent+Transactions+(Dirty+Read,+Lost+Update,+Phantom+Read)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "97",
+            title: "What is a Schedule? Types of Schedules (Serial, Non-Serial)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Schedule?+Types+of+Schedules+(Serial,+Non-Serial)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "98",
+            title: "What is Serializability? Types (Conflict, View)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Serializability?+Types+(Conflict,+View)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "99",
+            title: "What is Conflict Serializability?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Conflict+Serializability?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "100",
+            title: "What is View Serializability?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+View+Serializability?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "101",
+            title: "What is a Lock? Types (Shared Lock, Exclusive Lock)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Lock?+Types+(Shared+Lock,+Exclusive+Lock)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "102",
+            title: "What is Two-Phase Locking Protocol?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Two-Phase+Locking+Protocol?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "103",
+            title: "What is a Deadlock in DBMS?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Deadlock+in+DBMS?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "104",
+            title: "Deadlock Handling Techniques (Prevention, Detection, Avoidance)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Deadlock+Handling+Techniques+(Prevention,+Detection,+Avoidance)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "105",
+            title: "What is Starvation in DBMS?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Starvation+in+DBMS?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "106",
+            title: "Difference between Shared Lock and Exclusive Lock",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+Shared+Lock+and+Exclusive+Lock",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "107",
+            title: "What are Isolation Levels? (Read Uncommitted, Read Committed, Repeatable Read, Serializable)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+are+Isolation+Levels?+(Read+Uncommitted,+Read+Committed,+Repeatable+Read,+Serializable)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "dbms-sec-11",
+    title: "Indexing & Storage",
+    subSections: [
+      {
+        id: "dbms-sec-11-sub-1",
+        title: "Indexing & Storage Concepts",
+        topics: [
+          {
+            id: "108",
+            title: "What is Indexing in DBMS? Why is it used?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Indexing+in+DBMS?+Why+is+it+used?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "109",
+            title: "Types of Indexing (Primary, Secondary, Clustered, Non-Clustered)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Types+of+Indexing+(Primary,+Secondary,+Clustered,+Non-Clustered)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "110",
+            title: "Difference between Clustered and Non-Clustered Index",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+Clustered+and+Non-Clustered+Index",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "111",
+            title: "What is a B-Tree? Why used for Indexing?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+B-Tree?+Why+used+for+Indexing?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "112",
+            title: "What is a B+ Tree? Difference from B-Tree",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+B++Tree?+Difference+from+B-Tree",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "113",
+            title: "What is Hashing in DBMS?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Hashing+in+DBMS?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "114",
+            title: "What is Dense Index vs Sparse Index?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Dense+Index+vs+Sparse+Index?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "115",
+            title: "What are the disadvantages of Indexing?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+are+the+disadvantages+of+Indexing?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "dbms-sec-12",
+    title: "Scaling & Advanced",
+    subSections: [
+      {
+        id: "dbms-sec-12-sub-1",
+        title: "Scaling & Advanced Concepts",
+        topics: [
+          {
+            id: "116",
+            title: "Difference between Vertical Scaling and Horizontal Scaling",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+Vertical+Scaling+and+Horizontal+Scaling",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "117",
+            title: "What is Sharding?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Sharding?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "118",
+            title: "What is Database Partitioning? Types (Horizontal, Vertical)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Database+Partitioning?+Types+(Horizontal,+Vertical)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "119",
+            title: "What is Replication in DBMS?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Replication+in+DBMS?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "120",
+            title: "What is CAP Theorem?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+CAP+Theorem?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "121",
+            title: "Difference between OLTP and OLAP",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+OLTP+and+OLAP",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "122",
+            title: "What is a Data Warehouse?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Data+Warehouse?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "123",
+            title: "What is Database Recovery?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Database+Recovery?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "124",
+            title: "What is a Materialized View?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Materialized+View?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  }
+];
+var dbmsMeta = {
+  id: "dbms-sheet",
+  title: "DBMS Interview Sheet",
+  description: "124 essential DBMS interview questions and concepts from basics to advanced scaling.",
+  lastUpdated: "April 9, 2026",
+  totalProblems: 124,
+  completed: 0,
+  easy: 24,
+  medium: 48,
+  hard: 52
+};
+
+// src/data/cnData.ts
+var cnSections = [
+  {
+    id: "cn-sec-1",
+    title: "Basics & Fundamentals",
+    subSections: [
+      {
+        id: "cn-sec-1-sub-1",
+        title: "Basics & Fundamentals Concepts",
+        topics: [
+          {
+            id: "1",
+            title: "What is a Computer Network?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Computer+Network?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "2",
+            title: "What is the Internet?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+the+Internet?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "3",
+            title: "What is a Protocol in networking?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Protocol+in+networking?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "4",
+            title: "What is a Node, Host, and Link?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Node,+Host,+and+Link?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "5",
+            title: "What is Bandwidth, Throughput, and Latency?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Bandwidth,+Throughput,+and+Latency?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "6",
+            title: "Difference between LAN, MAN, and WAN",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Difference+between+LAN,+MAN,+and+WAN",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "7",
+            title: "What is a Firewall? Types of Firewalls",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Firewall?+Types+of+Firewalls",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "8",
+            title: "What is a VPN? How does it work?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+VPN?+How+does+it+work?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "9",
+            title: "What is a Proxy Server?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Proxy+Server?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "10",
+            title: "What is Network Topology? Types (Bus, Star, Ring, Mesh, Hybrid)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Network+Topology?+Types+(Bus,+Star,+Ring,+Mesh,+Hybrid)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "11",
+            title: "Difference between Peer-to-Peer and Client-Server architecture",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Difference+between+Peer-to-Peer+and+Client-Server+architecture",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "12",
+            title: "What is a Gateway?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Gateway?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "13",
+            title: "What is a Modem? Difference between Modem and Router",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Modem?+Difference+between+Modem+and+Router",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cn-sec-2",
+    title: "OSI Model",
+    subSections: [
+      {
+        id: "cn-sec-2-sub-1",
+        title: "OSI Model Concepts",
+        topics: [
+          {
+            id: "14",
+            title: "What is the OSI Model? Why 7 layers?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+the+OSI+Model?+Why+7+layers?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "15",
+            title: "Explain Physical Layer (Layer 1)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Explain+Physical+Layer+(Layer+1)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "16",
+            title: "Explain Data Link Layer (Layer 2)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Explain+Data+Link+Layer+(Layer+2)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "17",
+            title: "Explain Network Layer (Layer 3)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Explain+Network+Layer+(Layer+3)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "18",
+            title: "Explain Transport Layer (Layer 4)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Explain+Transport+Layer+(Layer+4)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "19",
+            title: "Explain Session Layer (Layer 5)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Explain+Session+Layer+(Layer+5)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "20",
+            title: "Explain Presentation Layer (Layer 6)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Explain+Presentation+Layer+(Layer+6)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "21",
+            title: "Explain Application Layer (Layer 7)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Explain+Application+Layer+(Layer+7)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "22",
+            title: "What protocols work at each layer of OSI?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+protocols+work+at+each+layer+of+OSI?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "23",
+            title: "What are PDUs at each layer? (Bits, Frames, Packets, Segments, Data)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+are+PDUs+at+each+layer?+(Bits,+Frames,+Packets,+Segments,+Data)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cn-sec-3",
+    title: "TCP/IP Model",
+    subSections: [
+      {
+        id: "cn-sec-3-sub-1",
+        title: "TCP/IP Model Concepts",
+        topics: [
+          {
+            id: "24",
+            title: "What is the TCP/IP Model? How many layers?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+the+TCP/IP+Model?+How+many+layers?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "25",
+            title: "Difference between OSI Model and TCP/IP Model",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Difference+between+OSI+Model+and+TCP/IP+Model",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "26",
+            title: "Explain Network Access / Link Layer",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Explain+Network+Access+/+Link+Layer",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "27",
+            title: "Explain Internet Layer",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Explain+Internet+Layer",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "28",
+            title: "Explain Transport Layer (TCP/IP)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Explain+Transport+Layer+(TCP/IP)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "29",
+            title: "Explain Application Layer (TCP/IP)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Explain+Application+Layer+(TCP/IP)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "30",
+            title: "What is Encapsulation and Decapsulation?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Encapsulation+and+Decapsulation?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cn-sec-4",
+    title: "TCP & UDP",
+    subSections: [
+      {
+        id: "cn-sec-4-sub-1",
+        title: "TCP & UDP Concepts",
+        topics: [
+          {
+            id: "31",
+            title: "What is TCP? Features of TCP",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+TCP?+Features+of+TCP",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "32",
+            title: "What is UDP? Features of UDP",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+UDP?+Features+of+UDP",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "33",
+            title: "Difference between TCP and UDP",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Difference+between+TCP+and+UDP",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "34",
+            title: "What is the 3-Way Handshake in TCP? (SYN, SYN-ACK, ACK)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+the+3-Way+Handshake+in+TCP?+(SYN,+SYN-ACK,+ACK)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "35",
+            title: "What is the 4-Way Termination in TCP? (FIN, ACK)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+the+4-Way+Termination+in+TCP?+(FIN,+ACK)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "36",
+            title: "What is Flow Control in TCP?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Flow+Control+in+TCP?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "37",
+            title: "What is Congestion Control in TCP?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Congestion+Control+in+TCP?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "38",
+            title: "What is TCP Sliding Window Protocol?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+TCP+Sliding+Window+Protocol?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "39",
+            title: "What is Piggybacking?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Piggybacking?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "40",
+            title: "When to use TCP vs UDP? Give examples",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+When+to+use+TCP+vs+UDP?+Give+examples",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "41",
+            title: "What is a Socket? What is a Port Number?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Socket?+What+is+a+Port+Number?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "42",
+            title: "What is the difference between a Port and a Socket?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+the+difference+between+a+Port+and+a+Socket?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "43",
+            title: "What are Well-Known Ports? (HTTP-80, HTTPS-443, FTP-21, SSH-22, DNS-53)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+are+Well-Known+Ports?+(HTTP-80,+HTTPS-443,+FTP-21,+SSH-22,+DNS-53)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "44",
+            title: "What is Multiplexing and Demultiplexing in Transport Layer?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Multiplexing+and+Demultiplexing+in+Transport+Layer?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cn-sec-5",
+    title: "IP Addressing",
+    subSections: [
+      {
+        id: "cn-sec-5-sub-1",
+        title: "IP Addressing Concepts",
+        topics: [
+          {
+            id: "45",
+            title: "What is an IP Address?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+an+IP+Address?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "46",
+            title: "Difference between IPv4 and IPv6",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Difference+between+IPv4+and+IPv6",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "47",
+            title: "What are Classes of IP Addresses? (A, B, C, D, E)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+are+Classes+of+IP+Addresses?+(A,+B,+C,+D,+E)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "48",
+            title: "What is a Subnet? What is Subnet Mask?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Subnet?+What+is+Subnet+Mask?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "49",
+            title: "What is Subnetting? How to calculate?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Subnetting?+How+to+calculate?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "50",
+            title: "What is CIDR (Classless Inter-Domain Routing)?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+CIDR+(Classless+Inter-Domain+Routing)?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "51",
+            title: "What is a Private IP vs Public IP?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Private+IP+vs+Public+IP?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "52",
+            title: "What is a Loopback Address (127.0.0.1)?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Loopback+Address+(127.0.0.1)?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "53",
+            title: "What is a MAC Address?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+MAC+Address?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "54",
+            title: "Difference between IP Address and MAC Address",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Difference+between+IP+Address+and+MAC+Address",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "55",
+            title: "What is NAT (Network Address Translation)?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+NAT+(Network+Address+Translation)?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "56",
+            title: "What is APIPA?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+APIPA?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cn-sec-6",
+    title: "DNS",
+    subSections: [
+      {
+        id: "cn-sec-6-sub-1",
+        title: "DNS Concepts",
+        topics: [
+          {
+            id: "57",
+            title: "What is DNS? How does it work?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+DNS?+How+does+it+work?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "58",
+            title: "What are DNS Record Types? (A, AAAA, CNAME, MX, NS, PTR, TXT)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+are+DNS+Record+Types?+(A,+AAAA,+CNAME,+MX,+NS,+PTR,+TXT)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "59",
+            title: "What is a DNS Forwarder?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+DNS+Forwarder?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "60",
+            title: "What is a DNS Resolver?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+DNS+Resolver?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "61",
+            title: "What is Recursive vs Iterative DNS Query?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Recursive+vs+Iterative+DNS+Query?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "62",
+            title: "What is a Domain Name? Explain hierarchy (Root, TLD, SLD)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Domain+Name?+Explain+hierarchy+(Root,+TLD,+SLD)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "63",
+            title: "What happens when you type google.com in the browser?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+happens+when+you+type+google.com+in+the+browser?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cn-sec-7",
+    title: "HTTP & HTTPS",
+    subSections: [
+      {
+        id: "cn-sec-7-sub-1",
+        title: "HTTP & HTTPS Concepts",
+        topics: [
+          {
+            id: "64",
+            title: "What is HTTP? How does it work?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+HTTP?+How+does+it+work?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "65",
+            title: "What is HTTPS? How is it different from HTTP?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+HTTPS?+How+is+it+different+from+HTTP?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "66",
+            title: "What are HTTP Methods? (GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+are+HTTP+Methods?+(GET,+POST,+PUT,+DELETE,+PATCH,+HEAD,+OPTIONS)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "67",
+            title: "Difference between GET and POST",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Difference+between+GET+and+POST",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "68",
+            title: "Difference between PUT and PATCH",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Difference+between+PUT+and+PATCH",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "69",
+            title: "What are HTTP Status Codes? (1xx, 2xx, 3xx, 4xx, 5xx)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+are+HTTP+Status+Codes?+(1xx,+2xx,+3xx,+4xx,+5xx)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "70",
+            title: "What is the difference between HTTP 1.0, HTTP 1.1, and HTTP 2.0?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+the+difference+between+HTTP+1.0,+HTTP+1.1,+and+HTTP+2.0?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "71",
+            title: "What is SSL/TLS? How does SSL Handshake work?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+SSL/TLS?+How+does+SSL+Handshake+work?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "72",
+            title: "What are Cookies? Difference between Cookies and Sessions",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+are+Cookies?+Difference+between+Cookies+and+Sessions",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "73",
+            title: "What is a REST API?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+REST+API?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "74",
+            title: "Difference between Persistent and Non-Persistent HTTP connection",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Difference+between+Persistent+and+Non-Persistent+HTTP+connection",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cn-sec-8",
+    title: "DHCP, ARP, ICMP",
+    subSections: [
+      {
+        id: "cn-sec-8-sub-1",
+        title: "DHCP, ARP, ICMP Concepts",
+        topics: [
+          {
+            id: "75",
+            title: "What is DHCP? How does it work? (DORA Process)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+DHCP?+How+does+it+work?+(DORA+Process)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "76",
+            title: "What is ARP (Address Resolution Protocol)?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+ARP+(Address+Resolution+Protocol)?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "77",
+            title: "What is RARP (Reverse ARP)?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+RARP+(Reverse+ARP)?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "78",
+            title: "What is ICMP? What is its use?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+ICMP?+What+is+its+use?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "79",
+            title: "What is Ping? How does it work (uses ICMP)?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Ping?+How+does+it+work+(uses+ICMP)?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "80",
+            title: "What is Traceroute? How does it work?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Traceroute?+How+does+it+work?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cn-sec-9",
+    title: "Routing & Switching",
+    subSections: [
+      {
+        id: "cn-sec-9-sub-1",
+        title: "Routing & Switching Concepts",
+        topics: [
+          {
+            id: "81",
+            title: "What is Routing? Types of Routing (Static, Dynamic)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Routing?+Types+of+Routing+(Static,+Dynamic)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "82",
+            title: "What is a Router? How does it work?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Router?+How+does+it+work?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "83",
+            title: "What is a Switch? Difference between Hub, Switch, and Router",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Switch?+Difference+between+Hub,+Switch,+and+Router",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "84",
+            title: "What is a Bridge? Difference between Bridge and Switch",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Bridge?+Difference+between+Bridge+and+Switch",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "85",
+            title: "What is a Routing Table?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Routing+Table?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "86",
+            title: "What is Distance Vector Routing (RIP)?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Distance+Vector+Routing+(RIP)?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "87",
+            title: "What is Link State Routing (OSPF)?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Link+State+Routing+(OSPF)?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "88",
+            title: "Difference between Distance Vector and Link State Routing",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Difference+between+Distance+Vector+and+Link+State+Routing",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "89",
+            title: "What is BGP (Border Gateway Protocol)?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+BGP+(Border+Gateway+Protocol)?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "90",
+            title: "What is a Default Gateway?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Default+Gateway?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cn-sec-10",
+    title: "Data Link Layer",
+    subSections: [
+      {
+        id: "cn-sec-10-sub-1",
+        title: "Data Link Layer Concepts",
+        topics: [
+          {
+            id: "91",
+            title: "What is Framing in Data Link Layer?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Framing+in+Data+Link+Layer?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "92",
+            title: "What is Error Detection and Correction?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Error+Detection+and+Correction?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "93",
+            title: "What is CRC (Cyclic Redundancy Check)?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+CRC+(Cyclic+Redundancy+Check)?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "94",
+            title: "What is Hamming Code?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Hamming+Code?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "95",
+            title: "What is the difference between Stop-and-Wait, Go-Back-N, and Selective Repeat?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+the+difference+between+Stop-and-Wait,+Go-Back-N,+and+Selective+Repeat?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "96",
+            title: "What is CSMA/CD? (Carrier Sense Multiple Access / Collision Detection)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+CSMA/CD?+(Carrier+Sense+Multiple+Access+/+Collision+Detection)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "97",
+            title: "What is CSMA/CA? (Collision Avoidance)",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+CSMA/CA?+(Collision+Avoidance)",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "98",
+            title: "What is Ethernet?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Ethernet?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "99",
+            title: "What is a VLAN (Virtual LAN)?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+VLAN+(Virtual+LAN)?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cn-sec-11",
+    title: "Application Layer Protocols",
+    subSections: [
+      {
+        id: "cn-sec-11-sub-1",
+        title: "Application Layer Protocols Concepts",
+        topics: [
+          {
+            id: "100",
+            title: "What is FTP? How does it work?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+FTP?+How+does+it+work?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "101",
+            title: "What is SMTP? How does email work?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+SMTP?+How+does+email+work?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "102",
+            title: "What is POP3 vs IMAP?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+POP3+vs+IMAP?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "103",
+            title: "What is Telnet? Difference between Telnet and SSH",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Telnet?+Difference+between+Telnet+and+SSH",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "104",
+            title: "What is SSH?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+SSH?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "105",
+            title: "What is SNMP (Simple Network Management Protocol)?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+SNMP+(Simple+Network+Management+Protocol)?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cn-sec-12",
+    title: "Security & Encryption",
+    subSections: [
+      {
+        id: "cn-sec-12-sub-1",
+        title: "Security & Encryption Concepts",
+        topics: [
+          {
+            id: "106",
+            title: "What is Encryption? Types (Symmetric, Asymmetric)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Encryption?+Types+(Symmetric,+Asymmetric)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "107",
+            title: "Difference between Symmetric and Asymmetric Encryption",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Difference+between+Symmetric+and+Asymmetric+Encryption",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "108",
+            title: "What is RSA Algorithm?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+RSA+Algorithm?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "109",
+            title: "What is Digital Signature?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Digital+Signature?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "110",
+            title: "What is Digital Certificate?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Digital+Certificate?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "111",
+            title: "What is a Man-in-the-Middle (MITM) Attack?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Man-in-the-Middle+(MITM)+Attack?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "112",
+            title: "What is a DDoS Attack?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+DDoS+Attack?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "113",
+            title: "What is DNS Spoofing / Poisoning?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+DNS+Spoofing+/+Poisoning?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "114",
+            title: "What is Phishing?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Phishing?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "115",
+            title: "What is the difference between Authentication and Authorization?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+the+difference+between+Authentication+and+Authorization?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          }
+        ]
+      }
+    ]
+  }
+];
+var cnMeta = {
+  id: "cn-sheet",
+  title: "Computer Networks Interview Sheet",
+  description: "115 essential CN interview questions from basics to security & encryption.",
+  lastUpdated: "April 9, 2026",
+  totalProblems: 115,
+  completed: 0,
+  easy: 25,
+  medium: 48,
+  hard: 42
+};
+
+// src/data/osData.ts
+var importanceTodifficulty = (imp) => {
+  if (imp === "Very High") return "Hard";
+  if (imp === "High") return "Medium";
+  return "Easy";
+};
+var estTimeMap = {
+  Easy: "10 min",
+  Medium: "15 min",
+  Hard: "20 min"
+};
+var raw = [
+  { topic: "Introduction & Basics", question: "What is an Operating System? What is its main purpose?", importance: "Very High" },
+  { topic: "Introduction & Basics", question: "Discuss different types of OS (Batch, Distributed, Multitasking, Network, Real-Time, Mobile)", importance: "Very High" },
+  { topic: "Introduction & Basics", question: "What are the functions of an Operating System?", importance: "High" },
+  { topic: "Introduction & Basics", question: "What is a Kernel? Types of Kernels", importance: "Very High" },
+  { topic: "Introduction & Basics", question: "What is a Monolithic Kernel?", importance: "High" },
+  { topic: "Introduction & Basics", question: "What is a Microkernel? Difference between Monolithic and Microkernel", importance: "High" },
+  { topic: "Introduction & Basics", question: "What is a Socket?", importance: "High" },
+  { topic: "Introduction & Basics", question: "What is the difference between User Mode and Kernel Mode?", importance: "Very High" },
+  { topic: "Introduction & Basics", question: "What is a System Call? Give examples", importance: "Very High" },
+  { topic: "Introduction & Basics", question: "Types of System Calls (Process, File, Device, Information, Communication)", importance: "High" },
+  { topic: "Introduction & Basics", question: "What is a Shell?", importance: "Medium" },
+  { topic: "Introduction & Basics", question: "What is Bootstrapping (Booting Process)?", importance: "Medium" },
+  { topic: "Introduction & Basics", question: "What is BIOS?", importance: "Medium" },
+  { topic: "Process Management", question: "What is a Process?", importance: "Very High" },
+  { topic: "Process Management", question: "What is a Program? Difference between Process and Program", importance: "Very High" },
+  { topic: "Process Management", question: "What is a Thread? Difference between Process and Thread", importance: "Very High" },
+  { topic: "Process Management", question: "What is a PCB (Process Control Block)? What does it contain?", importance: "Very High" },
+  { topic: "Process Management", question: "What are the different states of a Process? (New, Ready, Running, Waiting, Terminated)", importance: "Very High" },
+  { topic: "Process Management", question: "What is Process Scheduling? Types of Schedulers (Long-term, Short-term, Medium-term)", importance: "Very High" },
+  { topic: "Process Management", question: "What is Context Switching?", importance: "Very High" },
+  { topic: "Process Management", question: "What is the difference between Preemptive and Non-Preemptive Scheduling?", importance: "Very High" },
+  { topic: "Process Management", question: "What is an Orphan Process?", importance: "High" },
+  { topic: "Process Management", question: "What is a Zombie Process?", importance: "High" },
+  { topic: "Process Management", question: "What is a Daemon Process?", importance: "Medium" },
+  { topic: "Process Management", question: "What is fork() system call?", importance: "High" },
+  { topic: "Process Management", question: "What is Inter-Process Communication (IPC)?", importance: "Very High" },
+  { topic: "Process Management", question: "IPC Methods: Shared Memory, Message Passing, Pipes, Sockets", importance: "Very High" },
+  { topic: "Process Management", question: "What is the difference between Shared Memory and Message Passing?", importance: "High" },
+  { topic: "Process Management", question: "What is a Pipe? Difference between Named Pipe and Unnamed Pipe", importance: "Medium" },
+  { topic: "Threads & Multithreading", question: "What is a Thread? Why use Threads?", importance: "Very High" },
+  { topic: "Threads & Multithreading", question: "Difference between Process and Thread", importance: "Very High" },
+  { topic: "Threads & Multithreading", question: "What is Multithreading?", importance: "Very High" },
+  { topic: "Threads & Multithreading", question: "Types of Threads: User-Level Threads vs Kernel-Level Threads", importance: "Very High" },
+  { topic: "Threads & Multithreading", question: "Multithreading Models: Many-to-One, One-to-One, Many-to-Many", importance: "High" },
+  { topic: "Threads & Multithreading", question: "Benefits of Multithreading", importance: "High" },
+  { topic: "Threads & Multithreading", question: "What is a Thread Pool?", importance: "High" },
+  { topic: "Threads & Multithreading", question: "Difference between Concurrency and Parallelism", importance: "Very High" },
+  { topic: "Threads & Multithreading", question: "What is a Race Condition?", importance: "Very High" },
+  { topic: "Threads & Multithreading", question: "What is Thread Safety?", importance: "High" },
+  { topic: "CPU Scheduling", question: "What is CPU Scheduling? Why is it needed?", importance: "Very High" },
+  { topic: "CPU Scheduling", question: "What is Arrival Time, Burst Time, Completion Time, Turnaround Time, Waiting Time, Response Time?", importance: "Very High" },
+  { topic: "CPU Scheduling", question: "What is FCFS (First Come First Serve) Scheduling?", importance: "Very High" },
+  { topic: "CPU Scheduling", question: "What is SJF (Shortest Job First) Scheduling? Preemptive & Non-Preemptive", importance: "Very High" },
+  { topic: "CPU Scheduling", question: "What is SRTF (Shortest Remaining Time First)?", importance: "High" },
+  { topic: "CPU Scheduling", question: "What is Round Robin Scheduling? Effect of Time Quantum", importance: "Very High" },
+  { topic: "CPU Scheduling", question: "What is Priority Scheduling? Preemptive & Non-Preemptive", importance: "Very High" },
+  { topic: "CPU Scheduling", question: "What is Multilevel Queue Scheduling?", importance: "High" },
+  { topic: "CPU Scheduling", question: "What is Multilevel Feedback Queue Scheduling?", importance: "High" },
+  { topic: "CPU Scheduling", question: "What is Starvation? How to solve it? (Aging)", importance: "Very High" },
+  { topic: "CPU Scheduling", question: "What is Convoy Effect?", importance: "High" },
+  { topic: "CPU Scheduling", question: "Comparison of all CPU Scheduling Algorithms", importance: "Very High" },
+  { topic: "Process Synchronization", question: "What is Process Synchronization? Why is it needed?", importance: "Very High" },
+  { topic: "Process Synchronization", question: "What is the Critical Section Problem?", importance: "Very High" },
+  { topic: "Process Synchronization", question: "What are the conditions for Critical Section Solution? (Mutual Exclusion, Progress, Bounded Waiting)", importance: "Very High" },
+  { topic: "Process Synchronization", question: "What is a Mutex (Mutual Exclusion)?", importance: "Very High" },
+  { topic: "Process Synchronization", question: "What is a Semaphore? Types (Binary, Counting)", importance: "Very High" },
+  { topic: "Process Synchronization", question: "Difference between Mutex and Semaphore", importance: "Very High" },
+  { topic: "Process Synchronization", question: "What is a Spin Lock?", importance: "High" },
+  { topic: "Process Synchronization", question: "Difference between Mutex and Spin Lock", importance: "High" },
+  { topic: "Process Synchronization", question: "What is Peterson's Solution?", importance: "High" },
+  { topic: "Process Synchronization", question: "What is the Producer-Consumer Problem?", importance: "Very High" },
+  { topic: "Process Synchronization", question: "What is the Readers-Writers Problem?", importance: "High" },
+  { topic: "Process Synchronization", question: "What is the Dining Philosophers Problem?", importance: "High" },
+  { topic: "Process Synchronization", question: "What is a Monitor?", importance: "High" },
+  { topic: "Process Synchronization", question: "What is Priority Inversion?", importance: "Medium" },
+  { topic: "Process Synchronization", question: "What is Priority Inheritance?", importance: "Medium" },
+  { topic: "Deadlocks", question: "What is a Deadlock?", importance: "Very High" },
+  { topic: "Deadlocks", question: "What are the necessary conditions for Deadlock? (Mutual Exclusion, Hold & Wait, No Preemption, Circular Wait)", importance: "Very High" },
+  { topic: "Deadlocks", question: "What is Deadlock Prevention? How to prevent each condition?", importance: "Very High" },
+  { topic: "Deadlocks", question: "What is Deadlock Avoidance?", importance: "Very High" },
+  { topic: "Deadlocks", question: "What is the Banker's Algorithm?", importance: "Very High" },
+  { topic: "Deadlocks", question: "What is a Safe State vs Unsafe State?", importance: "Very High" },
+  { topic: "Deadlocks", question: "What is a Resource Allocation Graph (RAG)?", importance: "High" },
+  { topic: "Deadlocks", question: "What is Deadlock Detection?", importance: "High" },
+  { topic: "Deadlocks", question: "What is Deadlock Recovery?", importance: "High" },
+  { topic: "Deadlocks", question: "Difference between Deadlock Prevention and Deadlock Avoidance", importance: "High" },
+  { topic: "Deadlocks", question: "Difference between Starvation and Deadlock", importance: "High" },
+  { topic: "Deadlocks", question: "What is Livelock?", importance: "Medium" },
+  { topic: "Memory Management", question: "What is Memory Management? Why is it needed?", importance: "Very High" },
+  { topic: "Memory Management", question: "What is Main Memory (RAM)? How is it organized?", importance: "High" },
+  { topic: "Memory Management", question: "What is Contiguous Memory Allocation?", importance: "High" },
+  { topic: "Memory Management", question: "What is Fixed Partitioning vs Variable Partitioning?", importance: "High" },
+  { topic: "Memory Management", question: "What is Internal Fragmentation?", importance: "Very High" },
+  { topic: "Memory Management", question: "What is External Fragmentation?", importance: "Very High" },
+  { topic: "Memory Management", question: "Difference between Internal and External Fragmentation", importance: "Very High" },
+  { topic: "Memory Management", question: "What is Compaction?", importance: "Medium" },
+  { topic: "Memory Management", question: "What is Paging?", importance: "Very High" },
+  { topic: "Memory Management", question: "What is a Page Table?", importance: "Very High" },
+  { topic: "Memory Management", question: "What is a Page Fault?", importance: "Very High" },
+  { topic: "Memory Management", question: "What is Segmentation?", importance: "High" },
+  { topic: "Memory Management", question: "Difference between Paging and Segmentation", importance: "Very High" },
+  { topic: "Memory Management", question: "What is Logical Address vs Physical Address?", importance: "Very High" },
+  { topic: "Memory Management", question: "What is the MMU (Memory Management Unit)?", importance: "High" },
+  { topic: "Memory Management", question: "What is a TLB (Translation Lookaside Buffer)?", importance: "Very High" },
+  { topic: "Memory Management", question: "What is Swapping?", importance: "High" },
+  { topic: "Virtual Memory", question: "What is Virtual Memory? Why is it needed?", importance: "Very High" },
+  { topic: "Virtual Memory", question: "How does Virtual Memory work?", importance: "Very High" },
+  { topic: "Virtual Memory", question: "What is Demand Paging?", importance: "Very High" },
+  { topic: "Virtual Memory", question: "Page Replacement Algorithms: FIFO, LRU, Optimal", importance: "Very High" },
+  { topic: "Virtual Memory", question: "What is FIFO Page Replacement? What is Belady's Anomaly?", importance: "Very High" },
+  { topic: "Virtual Memory", question: "What is LRU (Least Recently Used) Page Replacement?", importance: "Very High" },
+  { topic: "Virtual Memory", question: "What is Optimal Page Replacement?", importance: "High" },
+  { topic: "Virtual Memory", question: "Comparison of Page Replacement Algorithms", importance: "High" },
+  { topic: "Virtual Memory", question: "What is Thrashing? Causes and Solutions", importance: "Very High" },
+  { topic: "Virtual Memory", question: "What is the Working Set Model?", importance: "Medium" },
+  { topic: "Virtual Memory", question: "What is a Copy-on-Write (COW)?", importance: "High" },
+  { topic: "File Systems", question: "What is a File System?", importance: "High" },
+  { topic: "File Systems", question: "What are File Attributes? (Name, Type, Size, Location, Protection)", importance: "Medium" },
+  { topic: "File Systems", question: "What is a File Allocation Table (FAT)?", importance: "Medium" },
+  { topic: "File Systems", question: "File Allocation Methods: Contiguous, Linked, Indexed", importance: "High" },
+  { topic: "File Systems", question: "What is a Directory? Types (Single-Level, Two-Level, Tree-Structured)", importance: "High" },
+  { topic: "File Systems", question: "What is an Inode?", importance: "High" },
+  { topic: "File Systems", question: "What is RAID? Types of RAID (0, 1, 5, 6, 10)", importance: "Very High" },
+  { topic: "File Systems", question: "What is Journaling File System?", importance: "Medium" },
+  { topic: "File Systems", question: "Difference between ext3, ext4, NTFS, and FAT32", importance: "Medium" },
+  { topic: "Disk Scheduling", question: "What is Disk Scheduling? Why is it needed?", importance: "High" },
+  { topic: "Disk Scheduling", question: "What is FCFS Disk Scheduling?", importance: "High" },
+  { topic: "Disk Scheduling", question: "What is SSTF (Shortest Seek Time First)?", importance: "High" },
+  { topic: "Disk Scheduling", question: "What is SCAN (Elevator Algorithm)?", importance: "High" },
+  { topic: "Disk Scheduling", question: "What is C-SCAN (Circular SCAN)?", importance: "High" },
+  { topic: "Disk Scheduling", question: "What is LOOK and C-LOOK?", importance: "Medium" },
+  { topic: "Disk Scheduling", question: "Comparison of Disk Scheduling Algorithms", importance: "High" },
+  { topic: "Miscellaneous", question: "What is the difference between 32-bit and 64-bit OS?", importance: "High" },
+  { topic: "Miscellaneous", question: "What is Real-Time Operating System (RTOS)? Hard vs Soft Real-Time", importance: "High" },
+  { topic: "Miscellaneous", question: "What is a Cache? Difference between Cache and RAM", importance: "Very High" },
+  { topic: "Miscellaneous", question: "What is Cache Mapping? (Direct, Associative, Set-Associative)", importance: "High" },
+  { topic: "Miscellaneous", question: "What is Memory Hierarchy? (Registers \u2192 Cache \u2192 RAM \u2192 Disk)", importance: "High" },
+  { topic: "Miscellaneous", question: "What is DMA (Direct Memory Access)?", importance: "Medium" },
+  { topic: "Miscellaneous", question: "What is an Interrupt? Types (Hardware, Software)", importance: "High" },
+  { topic: "Miscellaneous", question: "What is Spooling?", importance: "Medium" },
+  { topic: "Miscellaneous", question: "What is the difference between Process-based and Thread-based Multitasking?", importance: "Medium" },
+  { topic: "Miscellaneous", question: "What is System Throughput?", importance: "Medium" },
+  { topic: "Miscellaneous", question: "What is Busy Waiting (Spinlock vs Sleep)?", importance: "Medium" },
+  { topic: "Miscellaneous", question: "What is Fragmentation in OS context?", importance: "High" },
+  { topic: "Miscellaneous", question: "What is the difference between Multiprogramming, Multitasking, Multiprocessing, and Multithreading?", importance: "Very High" }
+];
+var topicGroups = /* @__PURE__ */ new Map();
+raw.forEach((q) => {
+  if (!topicGroups.has(q.topic)) topicGroups.set(q.topic, []);
+  topicGroups.get(q.topic).push(q);
+});
+var globalIdx = 0;
+var osSections = Array.from(topicGroups.entries()).map(
+  ([topicName, questions], sIdx) => ({
+    id: `os-section-${sIdx + 1}`,
+    title: topicName,
+    subSections: [
+      {
+        id: `os-sub-${sIdx + 1}-1`,
+        title: topicName,
+        topics: questions.map((q) => {
+          globalIdx++;
+          const diff = importanceTodifficulty(q.importance);
+          return {
+            id: `os-${globalIdx}`,
+            title: q.question,
+            completed: false,
+            difficulty: diff,
+            resourceType: "youtube",
+            resourceUrl: `https://www.youtube.com/results?search_query=Operating+System+${encodeURIComponent(q.question.replace(/[?]/g, ""))}`,
+            articleUrl: `https://www.google.com/search?q=OS+${encodeURIComponent(q.question.replace(/[?]/g, ""))}`,
+            note: `Importance: ${q.importance}`,
+            isRevision: false,
+            estTime: estTimeMap[diff]
+          };
+        })
+      }
+    ]
+  })
+);
+var osMeta = {
+  id: "os-sheet",
+  title: "Operating Systems Interview Sheet",
+  description: "135 essential OS interview questions \u2014 from basics to disk scheduling.",
+  lastUpdated: "April 9, 2026",
+  totalProblems: raw.length,
+  completed: 0,
+  easy: raw.filter((q) => q.importance === "Medium").length,
+  medium: raw.filter((q) => q.importance === "High").length,
+  hard: raw.filter((q) => q.importance === "Very High").length
+};
+
+// src/lib/mcp/tools/builtin-sheets.ts
+var BUILTIN_SHEETS = {
+  "dbms-sheet": {
+    slug: "dbms-sheet",
+    route: "/learn/sheets/dbms-sheet",
+    meta: dbmsMeta,
+    sections: dbmsSections
+  },
+  "cn-sheet": {
+    slug: "cn-sheet",
+    route: "/learn/sheets/cn-sheet",
+    meta: cnMeta,
+    sections: cnSections
+  },
+  "os-sheet": {
+    slug: "os-sheet",
+    route: "/learn/sheets/os-sheet",
+    meta: osMeta,
+    sections: osSections
+  }
+};
+var normalize = (value) => value.trim().toLowerCase();
+var summarizeSheet = (sheet) => ({
+  slug: sheet.slug,
+  route: sheet.route,
+  title: sheet.meta.title,
+  description: sheet.meta.description,
+  totalProblems: sheet.meta.totalProblems,
+  difficulty: {
+    easy: sheet.meta.easy,
+    medium: sheet.meta.medium,
+    hard: sheet.meta.hard
+  },
+  sections: sheet.sections.map((section) => ({
+    id: section.id,
+    title: section.title,
+    subSectionCount: section.subSections.length,
+    topicCount: section.subSections.reduce((total, sub) => total + sub.topics.length, 0)
+  }))
+});
+var listBuiltinSheetsTool = defineTool34({
+  name: "list_builtin_sheets",
+  title: "List built-in learning sheets",
+  description: "List static frontend sheets that exist at /learn/sheets/:slug, such as DBMS, CN, and OS. Use this when user_folders has no DB row for an existing app sheet.",
+  inputSchema: {
+    search: z29.string().optional().describe("Optional title/slug search.")
+  },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: ({ search }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const q = search ? normalize(search) : "";
+    const sheets = Object.values(BUILTIN_SHEETS).filter((sheet) => !q || normalize(`${sheet.slug} ${sheet.meta.title}`).includes(q)).map(summarizeSheet);
+    return jsonResult(`Found ${sheets.length} built-in sheet(s).`, sheets);
+  }
+});
+var getBuiltinSheetTool = defineTool34({
+  name: "get_builtin_sheet",
+  title: "Get built-in sheet details",
+  description: "Return the actual static sheet content rendered by /learn/sheets/:slug, including sections, sub-sections, and topics. Supports optional topic search to keep responses compact.",
+  inputSchema: {
+    slug: z29.string().min(1).describe("Sheet slug, for example dbms-sheet, cn-sheet, or os-sheet."),
+    topic_search: z29.string().optional().describe("Optional filter across section, sub-section, and topic titles."),
+    include_topics: z29.boolean().optional().describe("Defaults to true. Set false for structure only.")
+  },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: ({ slug, topic_search, include_topics }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const key = normalize(slug);
+    const sheet = BUILTIN_SHEETS[key];
+    if (!sheet) {
+      return errResult(`Unknown built-in sheet "${slug}". Call list_builtin_sheets first.`);
+    }
+    const includeTopics = include_topics ?? true;
+    const q = topic_search ? normalize(topic_search) : "";
+    const sections = sheet.sections.map((section) => {
+      const sectionMatches = q && normalize(section.title).includes(q);
+      const subSections = section.subSections.map((subSection) => {
+        const subMatches = q && normalize(subSection.title).includes(q);
+        const topics = includeTopics ? subSection.topics.filter(
+          (topic) => !q || sectionMatches || subMatches || normalize(`${topic.id} ${topic.title} ${topic.note}`).includes(q)
+        ) : [];
+        return {
+          id: subSection.id,
+          title: subSection.title,
+          prerequisites: subSection.prerequisites ?? [],
+          topicCount: includeTopics ? topics.length : subSection.topics.length,
+          topics: includeTopics ? topics : void 0
+        };
+      }).filter((subSection) => !q || sectionMatches || normalize(subSection.title).includes(q) || subSection.topicCount > 0);
+      return {
+        id: section.id,
+        title: section.title,
+        subSections
+      };
+    }).filter((section) => !q || normalize(section.title).includes(q) || section.subSections.length > 0);
+    return jsonResult(`Built-in sheet "${sheet.meta.title}" (${sheet.route}).`, {
+      slug: sheet.slug,
+      route: sheet.route,
+      meta: sheet.meta,
+      sections
+    });
+  }
+});
+
 // src/lib/mcp/index.ts
 var projectRef = "elzftqnehcmnouptaqee";
 var mcp_default = defineMcp({
   name: "parikshaa-mcp",
   title: "Parikshaa",
   version: "0.1.0",
-  instructions: "Parikshaa MCP server for admins/owners. Tools act as the signed-in user (RLS enforced) but admin/owner roles have broad read/write across all features. Start with `ensure_admin_access` then `whoami`. For any table: db_select (simple), db_query (advanced filters), db_insert/db_update/db_delete. For DB functions: db_rpc. For files: storage_list/upload/delete/signed_url. For business logic: invoke_edge_function. For access control: admin_manage_role. Coding-content publishing: publish_coding_bundle / publish_coding_problem / publish_coding_solution.",
+  instructions: "Parikshaa MCP server for admins/owners. Tools act as the signed-in user (RLS enforced) but admin/owner roles have broad read/write across all features. Start with `ensure_admin_access` then `whoami`. For existing frontend-only sheets like DBMS/CN/OS, use `list_builtin_sheets` and `get_builtin_sheet` instead of checking user_folders. For database-backed folders: list_sheets/get_sheet_details. For any table: db_select (simple), db_query (advanced filters), db_insert/db_update/db_delete. For DB functions: db_rpc. For files: storage_list/upload/delete/signed_url. For business logic: invoke_edge_function. For access control: admin_manage_role. Coding-content publishing: publish_coding_bundle / publish_coding_problem / publish_coding_solution.",
   auth: auth.oauth.issuer({
     issuer: `https://${projectRef}.supabase.co/auth/v1`,
     acceptedAudiences: "authenticated"
@@ -3486,6 +6735,8 @@ var mcp_default = defineMcp({
     publishCodingSolutionTool,
     publishCodingBundleTool,
     ensureAdminAccessTool,
+    listBuiltinSheetsTool,
+    getBuiltinSheetTool,
     createSheetTool,
     listSheetsTool,
     addProblemsToSheetTool,

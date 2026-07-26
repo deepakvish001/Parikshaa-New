@@ -85,6 +85,7 @@ import {
   reresolveTopicArticleImagesTool,
   fixTopicArticleLinkageTool,
 } from "./tools/topic-articles-extra";
+import { listBuiltinSheetsTool, getBuiltinSheetTool } from "./tools/builtin-sheets";
 
 // The OAuth issuer MUST be the direct Supabase host, built from the project ref,
 // not from SUPABASE_URL (which may be the Lovable Cloud proxy).
@@ -96,7 +97,7 @@ export default defineMcp({
   title: "Parikshaa",
   version: "0.1.0",
   instructions:
-    "Parikshaa MCP server for admins/owners. Tools act as the signed-in user (RLS enforced) but admin/owner roles have broad read/write across all features. Start with `ensure_admin_access` then `whoami`. For any table: db_select (simple), db_query (advanced filters), db_insert/db_update/db_delete. For DB functions: db_rpc. For files: storage_list/upload/delete/signed_url. For business logic: invoke_edge_function. For access control: admin_manage_role. Coding-content publishing: publish_coding_bundle / publish_coding_problem / publish_coding_solution.",
+    "Parikshaa MCP server for admins/owners. Tools act as the signed-in user (RLS enforced) but admin/owner roles have broad read/write across all features. Start with `ensure_admin_access` then `whoami`. For existing frontend-only sheets like DBMS/CN/OS, use `list_builtin_sheets` and `get_builtin_sheet` instead of checking user_folders. For database-backed folders: list_sheets/get_sheet_details. For any table: db_select (simple), db_query (advanced filters), db_insert/db_update/db_delete. For DB functions: db_rpc. For files: storage_list/upload/delete/signed_url. For business logic: invoke_edge_function. For access control: admin_manage_role. Coding-content publishing: publish_coding_bundle / publish_coding_problem / publish_coding_solution.",
   auth: auth.oauth.issuer({
     issuer: `https://${projectRef}.supabase.co/auth/v1`,
     acceptedAudiences: "authenticated",
@@ -136,6 +137,8 @@ export default defineMcp({
     publishCodingSolutionTool,
     publishCodingBundleTool,
     ensureAdminAccessTool,
+    listBuiltinSheetsTool,
+    getBuiltinSheetTool,
     createSheetTool,
     listSheetsTool,
     addProblemsToSheetTool,

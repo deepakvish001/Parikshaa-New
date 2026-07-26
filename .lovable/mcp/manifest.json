@@ -1424,6 +1424,62 @@
         "outputSchema": null
       },
       {
+        "name": "list_builtin_sheets",
+        "title": "List built-in learning sheets",
+        "description": "List static frontend sheets that exist at /learn/sheets/:slug, such as DBMS, CN, and OS. Use this when user_folders has no DB row for an existing app sheet.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "search": {
+              "type": "string",
+              "description": "Optional title/slug search."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_builtin_sheet",
+        "title": "Get built-in sheet details",
+        "description": "Return the actual static sheet content rendered by /learn/sheets/:slug, including sections, sub-sections, and topics. Supports optional topic search to keep responses compact.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Sheet slug, for example dbms-sheet, cn-sheet, or os-sheet."
+            },
+            "topic_search": {
+              "type": "string",
+              "description": "Optional filter across section, sub-section, and topic titles."
+            },
+            "include_topics": {
+              "type": "boolean",
+              "description": "Defaults to true. Set false for structure only."
+            }
+          },
+          "required": [
+            "slug"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
         "name": "create_sheet",
         "title": "Create sheet (folder of problems)",
         "description": "Create a new sheet (curated folder) owned by the calling admin. Returns the folder id to use with add_problems_to_sheet.",

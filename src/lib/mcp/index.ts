@@ -99,6 +99,13 @@ import {
   debugMcpReadFailureTool,
   verifySheetArticleAccessTool,
 } from "./tools/auth-diagnostics";
+import { verifySheetWriteAccessTool } from "./tools/sheet-write-access";
+import {
+  createBuiltinShareLinkTool,
+  revokeBuiltinShareLinkTool,
+  listBuiltinShareLinksTool,
+  validateShareLinkAccessTool,
+} from "./tools/share-links";
 
 // The OAuth issuer MUST be the direct Supabase host, built from the project ref,
 // not from SUPABASE_URL (which may be the Lovable Cloud proxy).

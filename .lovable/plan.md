@@ -1,49 +1,155 @@
-# Profile & RLS Hardening Plan
+# Visualize — Next Set Plan
 
-## 1. Improve the existing /settings profile editor
-File: `src/components/settings/SettingsProfileTab.tsx`
+Current state: `/learn/visualize` has 1 live track (**DSA Visual**) with 5 algorithms (two-pointers, sliding-window, binary-search, bubble-sort, recursion-factorial). Player supports code sync, PC-line highlighting, call-stack scenes, favorites via localStorage. LLD / Networking / OS tracks are placeholders.
 
-- Add a zod schema for the editable fields (username, bio, urls, mobile, skills/interests/goals/aspirations arrays) with length caps and URL validation.
-- Save button: disabled while saving, `sonner` success/error toast, inline field-level errors from zod.
-- On successful save, call `refreshExtendedProfile()` from `AuthContext` so `IdentityCard` / `/u/:username` reflect changes without a reload.
-- Add a "View public profile" link that opens `/u/{username}` in a new tab (only when username is set).
+Goal for this next set: **10× the library, deepen the player, and turn Visualize into a course-like surface** without breaking the current aesthetic (amber/black glass, framer-motion, brand shell components).
 
-## 2. Public profile UX (`src/pages/PublicProfile.tsx`)
-- Introduce discriminated state: `loading | not_found | rls_blocked | error | ok`.
-- Loading: skeleton matching `IdentityCard` layout instead of blank screen.
-- Error banner (typed): shows Supabase error code + human message; distinguishes "profile doesn't exist", "profile is private", and "network/RLS failure".
-- Keep querying `public_user_profiles` view only (already the case) — never fall back to `user_profiles_extended` from anon.
+---
 
-## 3. E2E test — anonymous public profile
-File: `e2e/public-profile-anon.spec.ts`
+## 1. Expand DSA Visual (highest ROI)
 
-- Navigate anonymously to `/u/deepak`.
-- Assert: page renders, username visible, no `mobile_number` / `resume_url` / `suspended_reason` strings present in DOM or network responses.
-- Assert: navigating to `/u/does-not-exist` shows the not-found state (not a spinner forever).
-- Wire into existing `playwright.config.ts` (already present).
+Add 12 new algorithms across the patterns learners actually search for. Each reuses the existing `AlgoFrame` / `CallScene` engine — no new renderer work.
 
-## 4. Full RLS matrix regression script
-File: `scripts/check-rls-matrix.mjs` + `bun run check:rls`
+**Arrays / Strings**
+- Kadane's max subarray (running best highlight)
+- Dutch National Flag (3-pointer partition)
+- Longest substring without repeat (window + hashset ticker)
 
-Uses the public anon key only (no service role) and, optionally, a test-user token from env.
+**Linked List** *(new scene type: `LinkedListScene` — nodes + next-arrows)*
+- Reverse a linked list (prev/curr/next pointers)
+- Detect cycle — Floyd's tortoise & hare (two speeds)
+- Merge two sorted lists
 
-For each user-scoped table below, asserts anon SELECT is either empty or fails, and asserts authenticated SELECT only returns rows for the token's `user_id`:
+**Trees** *(new scene type: `TreeScene` — SVG binary tree with node states)*
+- BFS level-order (queue on the side)
+- DFS inorder (recursion stack + visited highlight)
+- Lowest common ancestor
 
-`profiles`, `user_profiles_extended`, `user_achievements`, `quiz_results`, `notifications`, `push_subscriptions`, `user_activity_log`, `xp_transactions`, `user_topic_progress`, `user_problem_solutions`, `user_folders`, `user_folder_items`, `user_goals`, `user_projects`, `code_submissions`, `code_drafts`, `resume_analyses`, `blog_bookmarks`, `blog_likes`, `chat_messages`, `conversations`, `user_follows` (public read allowed — asserts it), `daily_challenge_completions`, `user_sheet_prefs`.
+**Graphs** *(new scene type: `GraphScene` — force-laid nodes + edges)*
+- BFS shortest path on unweighted graph
+- Dijkstra (priority queue side panel)
+- Union-Find (parent-array morphing view)
 
-Also asserts the sensitive-fields guarantee:
-- `user_profiles_extended` anon `select *` returns `[]` for a username-having user.
-- `public_user_profiles` anon returns the row but no `mobile_number` / `resume_url` / `suspended_reason` keys.
+**DP** *(new scene: `DpTableScene` — 1D/2D grid fill)*
+- Fibonacci memo vs tab (side-by-side)
+- 0/1 Knapsack (2D grid fill with arrow to source cell)
+- Longest common subsequence
 
-Adds a lightweight GitHub Action `.github/workflows/rls-matrix.yml` that runs it on PR + nightly, gated on secrets being present so forks don't fail.
+## 2. Ship LLD Visual as v1
+
+Currently a placeholder. Ship 4 animated case studies with a new **UML scene** (class boxes + typed arrows that draw themselves):
+- SOLID walkthrough — 5 mini refactors, before/after class diagram
+- Strategy pattern (payment gateway)
+- Observer pattern (event bus with subscriber count animating)
+- Factory + Singleton (with anti-pattern callout)
+
+Each lesson uses the same player shell: code panel left, animated diagram right, step controls.
+
+## 3. Player upgrades
+
+- **Speed control**: 0.5× / 1× / 2× (already have autoplay — add speed multiplier).
+- **Step-jump timeline**: draggable scrubber above the play/pause bar with tooltips showing `explain` per frame.
+- **Compare mode**: split screen showing brute-force vs optimized side-by-side, synced steps (huge for two-pointers, DP).
+- **Complexity badge**: persistent `O(n) time · O(1) space` chip in the player header, per algorithm.
+- **Keyboard shortcuts**: ←/→ step, space play/pause, R restart, C toggle code.
+- **"Try in playground"** button — deep-links to `/learn/code-playground` prefilled with the algo's code snippet.
+
+## 4. Hub UX polish (`/learn/visualize`)
+
+- **Search bar** over algorithms (client-side fuzzy on title + track + tags).
+- **Filter chips**: track, difficulty (Easy/Med/Hard), status (New/Live/Bonus).
+- **"Continue watching"** row using localStorage last-viewed timestamp per algo.
+- **Progress ring** per track: `3 / 12 watched`, tracked in localStorage (same pattern as `useVisualizeFavorites`).
+- **Track cards** get a mini animated preview on hover (5-frame loop of the first algo).
+
+## 5. Social & sharing
+
+- **Shareable frame links**: `/learn/visualize/algo/binary-search?step=7` deep-links to a specific frame — for tweets, blog embeds, teaching.
+- **Copy-as-GIF** (client-side): capture the stage as a short animated GIF using `gif.js` — one-tap share.
+- **Embed snippet**: `<iframe>` code generator so bloggers can embed a single visualizer read-only.
+
+## 6. Persistence upgrade
+
+Move from localStorage-only to a `visualize_progress` table (opt-in, only for signed-in users):
+- Columns: `user_id`, `algo_id`, `last_step`, `favorited`, `watched_at`.
+- RLS: user reads/writes only their own rows.
+- Falls back to localStorage for guests — no regression.
+
+## 7. Networking + OS tracks (teaser only, ship later)
+
+Not building content this round. Just replace the "Preview soon" empty state with a **waitlist form** (email → `visualize_waitlist` table) so we measure demand before investing in the harder scene renderers.
+
+---
 
 ## Technical details
 
-- No schema migrations. Everything is app-side + test-side.
-- New deps: none. Playwright, zod, `@supabase/supabase-js`, sonner all present.
-- Env for the RLS script: `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` (already in `.env`), optional `RLS_TEST_USER_EMAIL` / `RLS_TEST_USER_PASSWORD`.
-- Script exits non-zero on any assertion failure and prints a table of `table | anon_result | auth_result | expected | ok`.
+**New scene types to add in `algos.ts`**
+```ts
+type Scene =
+  | CallScene        // existing
+  | LinkedListScene  // { nodes: {value, state}[], pointers: {name, index}[] }
+  | TreeScene        // { root: TreeNode, highlighted: string[], queue?, stack? }
+  | GraphScene       // { nodes: {id, x, y, state}[], edges: {from, to, weight?, state}[], side?: 'queue'|'pq'|'uf' }
+  | DpTableScene     // { rows, cols, cells: {value, state, arrowFrom?}[][] }
+  | UmlScene;        // { classes: {name, methods, x, y}[], relations: {from, to, kind}[] }
+```
+Player switch already renders `scene` if present — extend the switch in `VisualizePlayer.tsx` with one branch per new scene component. Each scene is a self-contained SVG component under `src/pages/learn/visualize/scenes/`.
+
+**File layout**
+```text
+src/pages/learn/visualize/
+  algos/
+    two-pointers.ts      (extract from algos.ts)
+    binary-search.ts
+    kadane.ts
+    ...one file per algo
+  scenes/
+    LinkedListScene.tsx
+    TreeScene.tsx
+    GraphScene.tsx
+    DpTableScene.tsx
+    UmlScene.tsx
+  hooks/
+    useVisualizeProgress.ts   (localStorage + Supabase sync)
+    useAlgoSearch.ts
+```
+
+**DB migration** (only if section 6 approved):
+```sql
+create table public.visualize_progress (
+  user_id uuid references auth.users on delete cascade,
+  algo_id text not null,
+  last_step int default 0,
+  favorited boolean default false,
+  watched_at timestamptz default now(),
+  primary key (user_id, algo_id)
+);
+grant select, insert, update, delete on public.visualize_progress to authenticated;
+grant all on public.visualize_progress to service_role;
+alter table public.visualize_progress enable row level security;
+create policy "own rows" on public.visualize_progress
+  for all to authenticated using (auth.uid() = user_id) with check (auth.uid() = user_id);
+```
+
+No breaking changes. All new work is additive; existing 5 algos keep working untouched.
+
+---
+
+## Suggested build order
+
+1. **Player upgrades** (§3) — 1 session, unlocks better UX for everything below.
+2. **Hub polish** (§4) — search + filters + progress rings.
+3. **DSA expansion wave 1** — Arrays/Strings + Linked List (6 algos, 1 new scene type).
+4. **DSA expansion wave 2** — Trees + DP (6 algos, 2 new scene types).
+5. **LLD v1** (§2) — UML scene + 4 case studies.
+6. **Social/sharing** (§5) — deep-link step, embed, copy-as-GIF.
+7. **Persistence** (§6) — table + hook, opt-in.
+8. **Graph algos + Networking/OS waitlist** — last, biggest lift.
 
 ## Out of scope
-- No new `/profile/edit` route (you chose to improve /settings).
-- No changes to existing RLS policies unless the matrix surfaces a real leak — if it does, I'll stop and ask before writing a migration.
+
+- No content for Networking / OS tracks yet — waitlist only.
+- No AI-generated explanations (separate future track).
+- No mobile-native gestures beyond what framer-motion gives us.
+
+Pick which sections you want in the first cut and I'll start on §1 order unless you say otherwise.

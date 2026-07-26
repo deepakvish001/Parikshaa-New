@@ -27,6 +27,8 @@ import {
   Settings,
   Sparkles,
   Map as MapIcon,
+  Eye,
+
 
   Sun,
   Moon,

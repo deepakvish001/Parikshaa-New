@@ -3440,13 +3440,122 @@ var fixTopicArticleLinkageTool = defineTool33({
   }
 });
 
+// src/lib/mcp/tools/builtin-sheets.ts
+import { defineTool as defineTool34 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z29 } from "npm:zod@^3.23.8";
+import { dbmsSections, dbmsMeta } from "npm:@/data/dbmsData";
+import { cnSections, cnMeta } from "npm:@/data/cnData";
+import { osSections, osMeta } from "npm:@/data/osData";
+var BUILTIN_SHEETS = {
+  "dbms-sheet": {
+    slug: "dbms-sheet",
+    route: "/learn/sheets/dbms-sheet",
+    meta: dbmsMeta,
+    sections: dbmsSections
+  },
+  "cn-sheet": {
+    slug: "cn-sheet",
+    route: "/learn/sheets/cn-sheet",
+    meta: cnMeta,
+    sections: cnSections
+  },
+  "os-sheet": {
+    slug: "os-sheet",
+    route: "/learn/sheets/os-sheet",
+    meta: osMeta,
+    sections: osSections
+  }
+};
+var normalize = (value) => value.trim().toLowerCase();
+var summarizeSheet = (sheet) => ({
+  slug: sheet.slug,
+  route: sheet.route,
+  title: sheet.meta.title,
+  description: sheet.meta.description,
+  totalProblems: sheet.meta.totalProblems,
+  difficulty: {
+    easy: sheet.meta.easy,
+    medium: sheet.meta.medium,
+    hard: sheet.meta.hard
+  },
+  sections: sheet.sections.map((section) => ({
+    id: section.id,
+    title: section.title,
+    subSectionCount: section.subSections.length,
+    topicCount: section.subSections.reduce((total, sub) => total + sub.topics.length, 0)
+  }))
+});
+var listBuiltinSheetsTool = defineTool34({
+  name: "list_builtin_sheets",
+  title: "List built-in learning sheets",
+  description: "List static frontend sheets that exist at /learn/sheets/:slug, such as DBMS, CN, and OS. Use this when user_folders has no DB row for an existing app sheet.",
+  inputSchema: {
+    search: z29.string().optional().describe("Optional title/slug search.")
+  },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: ({ search }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const q = search ? normalize(search) : "";
+    const sheets = Object.values(BUILTIN_SHEETS).filter((sheet) => !q || normalize(`${sheet.slug} ${sheet.meta.title}`).includes(q)).map(summarizeSheet);
+    return jsonResult(`Found ${sheets.length} built-in sheet(s).`, sheets);
+  }
+});
+var getBuiltinSheetTool = defineTool34({
+  name: "get_builtin_sheet",
+  title: "Get built-in sheet details",
+  description: "Return the actual static sheet content rendered by /learn/sheets/:slug, including sections, sub-sections, and topics. Supports optional topic search to keep responses compact.",
+  inputSchema: {
+    slug: z29.string().min(1).describe("Sheet slug, for example dbms-sheet, cn-sheet, or os-sheet."),
+    topic_search: z29.string().optional().describe("Optional filter across section, sub-section, and topic titles."),
+    include_topics: z29.boolean().optional().describe("Defaults to true. Set false for structure only.")
+  },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: ({ slug, topic_search, include_topics }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const key = normalize(slug);
+    const sheet = BUILTIN_SHEETS[key];
+    if (!sheet) {
+      return errResult(`Unknown built-in sheet "${slug}". Call list_builtin_sheets first.`);
+    }
+    const includeTopics = include_topics ?? true;
+    const q = topic_search ? normalize(topic_search) : "";
+    const sections = sheet.sections.map((section) => {
+      const sectionMatches = q && normalize(section.title).includes(q);
+      const subSections = section.subSections.map((subSection) => {
+        const subMatches = q && normalize(subSection.title).includes(q);
+        const topics = includeTopics ? subSection.topics.filter(
+          (topic) => !q || sectionMatches || subMatches || normalize(`${topic.id} ${topic.title} ${topic.note}`).includes(q)
+        ) : [];
+        return {
+          id: subSection.id,
+          title: subSection.title,
+          prerequisites: subSection.prerequisites ?? [],
+          topicCount: includeTopics ? topics.length : subSection.topics.length,
+          topics: includeTopics ? topics : void 0
+        };
+      }).filter((subSection) => !q || sectionMatches || normalize(subSection.title).includes(q) || subSection.topicCount > 0);
+      return {
+        id: section.id,
+        title: section.title,
+        subSections
+      };
+    }).filter((section) => !q || normalize(section.title).includes(q) || section.subSections.length > 0);
+    return jsonResult(`Built-in sheet "${sheet.meta.title}" (${sheet.route}).`, {
+      slug: sheet.slug,
+      route: sheet.route,
+      meta: sheet.meta,
+      sections
+    });
+  }
+});
+
 // src/lib/mcp/index.ts
 var projectRef = "elzftqnehcmnouptaqee";
 var mcp_default = defineMcp({
   name: "parikshaa-mcp",
   title: "Parikshaa",
   version: "0.1.0",
-  instructions: "Parikshaa MCP server for admins/owners. Tools act as the signed-in user (RLS enforced) but admin/owner roles have broad read/write across all features. Start with `ensure_admin_access` then `whoami`. For any table: db_select (simple), db_query (advanced filters), db_insert/db_update/db_delete. For DB functions: db_rpc. For files: storage_list/upload/delete/signed_url. For business logic: invoke_edge_function. For access control: admin_manage_role. Coding-content publishing: publish_coding_bundle / publish_coding_problem / publish_coding_solution.",
+  instructions: "Parikshaa MCP server for admins/owners. Tools act as the signed-in user (RLS enforced) but admin/owner roles have broad read/write across all features. Start with `ensure_admin_access` then `whoami`. For existing frontend-only sheets like DBMS/CN/OS, use `list_builtin_sheets` and `get_builtin_sheet` instead of checking user_folders. For database-backed folders: list_sheets/get_sheet_details. For any table: db_select (simple), db_query (advanced filters), db_insert/db_update/db_delete. For DB functions: db_rpc. For files: storage_list/upload/delete/signed_url. For business logic: invoke_edge_function. For access control: admin_manage_role. Coding-content publishing: publish_coding_bundle / publish_coding_problem / publish_coding_solution.",
   auth: auth.oauth.issuer({
     issuer: `https://${projectRef}.supabase.co/auth/v1`,
     acceptedAudiences: "authenticated"
@@ -3486,6 +3595,8 @@ var mcp_default = defineMcp({
     publishCodingSolutionTool,
     publishCodingBundleTool,
     ensureAdminAccessTool,
+    listBuiltinSheetsTool,
+    getBuiltinSheetTool,
     createSheetTool,
     listSheetsTool,
     addProblemsToSheetTool,

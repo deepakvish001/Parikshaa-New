@@ -57,6 +57,12 @@ import {
   getSheetShareStatusTool,
   deleteOrArchiveSheetTool,
 } from "./tools/sheet-lifecycle";
+import {
+  updateSheetShareSettingsTool,
+  duplicateSheetTool,
+  exportSheetItemsCsvTool,
+  listPublicShareCodesTool,
+} from "./tools/sheet-share-ops";
 
 // The OAuth issuer MUST be the direct Supabase host, built from the project ref,
 // not from SUPABASE_URL (which may be the Lovable Cloud proxy).

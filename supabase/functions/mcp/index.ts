@@ -513,52 +513,257 @@ var dbDeleteTool = defineTool17({
   }
 });
 
-// src/lib/mcp/tools/publish-coding-problem.ts
+// src/lib/mcp/tools/db-query-advanced.ts
 import { defineTool as defineTool18 } from "npm:@lovable.dev/mcp-js@0.20.1";
 import { z as z14 } from "npm:zod@^3.23.8";
-var problemSchema = z14.object({
-  slug: z14.string().min(2).max(80).regex(/^[a-z0-9-]+$/, "slug must be lowercase-with-dashes"),
-  title: z14.string().min(3).max(150),
-  difficulty: z14.enum(["easy", "medium", "hard"]),
-  description: z14.string().min(30, "description too short (min 30 chars)"),
-  topics: z14.array(z14.string().min(1)).min(1, "at least 1 topic required"),
-  examples: z14.array(z14.record(z14.unknown())).min(1, "at least 1 example required"),
-  constraints: z14.array(z14.string()).optional(),
-  hints: z14.array(z14.string()).optional(),
-  cpu_time_limit_sec: z14.number().positive().optional(),
-  memory_limit_kb: z14.number().int().positive().optional(),
-  mcq: z14.record(z14.unknown()).optional(),
-  is_contest_pool: z14.boolean().optional()
+var OPS = ["eq", "neq", "gt", "gte", "lt", "lte", "like", "ilike", "in", "is", "contains", "cs", "cd"];
+var dbQueryTool = defineTool18({
+  name: "db_query",
+  title: "Advanced query on any table",
+  description: "Advanced SELECT with rich filter operators (eq, neq, gt, gte, lt, lte, like, ilike, in, is, contains). RLS applies \u2014 as admin/owner you can read across users where policies allow. Use this instead of db_select when you need range, pattern, or IN filters.",
+  inputSchema: {
+    table: z14.string().min(1).max(64).regex(/^[a-z_][a-z0-9_]*$/),
+    columns: z14.string().optional(),
+    filters: z14.array(
+      z14.object({
+        column: z14.string(),
+        op: z14.enum(OPS),
+        value: z14.union([z14.string(), z14.number(), z14.boolean(), z14.null(), z14.array(z14.union([z14.string(), z14.number()]))])
+      })
+    ).optional(),
+    order_by: z14.string().optional(),
+    ascending: z14.boolean().optional(),
+    limit: z14.number().int().min(1).max(1e3).optional(),
+    offset: z14.number().int().min(0).optional(),
+    count: z14.enum(["exact", "planned", "estimated"]).optional()
+  },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ table, columns, filters, order_by, ascending, limit, offset, count }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const sb = createUserSupabaseClient3(ctx);
+    let q = sb.from(table).select(columns ?? "*", count ? { count } : void 0);
+    for (const f of filters ?? []) {
+      q = q[f.op](f.column, f.value);
+    }
+    if (order_by) q = q.order(order_by, { ascending: ascending ?? false });
+    const lim = limit ?? 100;
+    const off = offset ?? 0;
+    q = q.range(off, off + lim - 1);
+    const { data, error, count: total } = await q;
+    if (error) return errResult(`${error.code ?? ""} ${error.message}`);
+    return jsonResult(`Found ${data?.length ?? 0} rows${total != null ? ` (total ${total})` : ""} in ${table}:`, data);
+  }
 });
-var testSchema = z14.object({
-  input: z14.string(),
-  expected_output: z14.string(),
-  is_sample: z14.boolean().optional(),
-  weight: z14.number().optional()
+
+// src/lib/mcp/tools/db-rpc.ts
+import { defineTool as defineTool19 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z15 } from "npm:zod@^3.23.8";
+var dbRpcTool = defineTool19({
+  name: "db_rpc",
+  title: "Call any database function (RPC)",
+  description: "Invoke any Postgres function exposed via PostgREST. Use for admin RPCs like admin_list_users, award_xp, get_quiz_leaderboard, grant_admin_to_self, etc. Access is enforced by GRANT + SECURITY DEFINER checks in the DB.",
+  inputSchema: {
+    name: z15.string().min(1).max(128).regex(/^[a-z_][a-z0-9_]*$/, "Invalid function name"),
+    args: z15.record(z15.unknown()).optional().describe("Named arguments for the RPC (matches function parameters).")
+  },
+  annotations: { readOnlyHint: false, openWorldHint: false },
+  handler: async ({ name, args }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const sb = createUserSupabaseClient3(ctx);
+    const { data, error } = await sb.rpc(name, args ?? {});
+    if (error) return errResult(`${error.code ?? ""} ${error.message}${error.hint ? ` (hint: ${error.hint})` : ""}`);
+    return jsonResult(`RPC ${name} returned:`, data);
+  }
 });
-var publishCodingProblemTool = defineTool18({
+
+// src/lib/mcp/tools/storage.ts
+import { defineTool as defineTool20 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z16 } from "npm:zod@^3.23.8";
+var bucket = z16.string().min(1).max(128);
+var storageListTool = defineTool20({
+  name: "storage_list",
+  title: "List files in a storage bucket",
+  description: "List files/folders inside a Supabase Storage bucket path. Bucket RLS applies.",
+  inputSchema: {
+    bucket,
+    path: z16.string().optional(),
+    limit: z16.number().int().min(1).max(1e3).optional(),
+    offset: z16.number().int().min(0).optional(),
+    search: z16.string().optional()
+  },
+  annotations: { readOnlyHint: true, openWorldHint: false },
+  handler: async ({ bucket: bucket2, path, limit, offset, search }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const sb = createUserSupabaseClient3(ctx);
+    const { data, error } = await sb.storage.from(bucket2).list(path ?? "", { limit: limit ?? 100, offset: offset ?? 0, search });
+    if (error) return errResult(error.message);
+    return jsonResult(`Found ${data?.length ?? 0} entries in ${bucket2}/${path ?? ""}:`, data);
+  }
+});
+var storageUploadTool = defineTool20({
+  name: "storage_upload",
+  title: "Upload a file to storage",
+  description: "Upload text or base64 content to a storage bucket path. Use `encoding: base64` for binary; otherwise text is stored as UTF-8.",
+  inputSchema: {
+    bucket,
+    path: z16.string().min(1),
+    content: z16.string(),
+    encoding: z16.enum(["utf8", "base64"]).optional(),
+    content_type: z16.string().optional(),
+    upsert: z16.boolean().optional()
+  },
+  annotations: { readOnlyHint: false, openWorldHint: false },
+  handler: async ({ bucket: bucket2, path, content, encoding, content_type, upsert }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const sb = createUserSupabaseClient3(ctx);
+    let bytes;
+    if (encoding === "base64") {
+      const bin = atob(content);
+      bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    } else {
+      bytes = new TextEncoder().encode(content);
+    }
+    const { data, error } = await sb.storage.from(bucket2).upload(path, bytes, {
+      contentType: content_type ?? (encoding === "base64" ? "application/octet-stream" : "text/plain"),
+      upsert: upsert ?? true
+    });
+    if (error) return errResult(error.message);
+    return jsonResult(`Uploaded to ${bucket2}/${path}:`, data);
+  }
+});
+var storageDeleteTool = defineTool20({
+  name: "storage_delete",
+  title: "Delete files from storage",
+  description: "Delete one or more files by path from a bucket.",
+  inputSchema: { bucket, paths: z16.array(z16.string().min(1)).min(1) },
+  annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
+  handler: async ({ bucket: bucket2, paths }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const sb = createUserSupabaseClient3(ctx);
+    const { data, error } = await sb.storage.from(bucket2).remove(paths);
+    if (error) return errResult(error.message);
+    return jsonResult(`Deleted ${data?.length ?? 0} objects from ${bucket2}:`, data);
+  }
+});
+var storageSignedUrlTool = defineTool20({
+  name: "storage_signed_url",
+  title: "Create a signed URL for a stored file",
+  description: "Return a time-limited signed URL for downloading a file from a private bucket.",
+  inputSchema: {
+    bucket,
+    path: z16.string().min(1),
+    expires_in_seconds: z16.number().int().min(60).max(60 * 60 * 24 * 7).optional()
+  },
+  annotations: { readOnlyHint: true, openWorldHint: false },
+  handler: async ({ bucket: bucket2, path, expires_in_seconds }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const sb = createUserSupabaseClient3(ctx);
+    const { data, error } = await sb.storage.from(bucket2).createSignedUrl(path, expires_in_seconds ?? 3600);
+    if (error) return errResult(error.message);
+    return jsonResult(`Signed URL for ${bucket2}/${path}:`, data);
+  }
+});
+
+// src/lib/mcp/tools/invoke-function.ts
+import { defineTool as defineTool21 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z17 } from "npm:zod@^3.23.8";
+var invokeEdgeFunctionTool = defineTool21({
+  name: "invoke_edge_function",
+  title: "Invoke an edge function",
+  description: "Call any deployed Supabase edge function as the signed-in user. Use for run-code, admin utilities, integrations, etc. The function receives the caller's JWT via Authorization header.",
+  inputSchema: {
+    name: z17.string().min(1).max(128),
+    body: z17.unknown().optional(),
+    method: z17.enum(["GET", "POST", "PUT", "PATCH", "DELETE"]).optional()
+  },
+  annotations: { readOnlyHint: false, openWorldHint: true },
+  handler: async ({ name, body, method }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const sb = createUserSupabaseClient3(ctx);
+    const { data, error } = await sb.functions.invoke(name, {
+      body,
+      method
+    });
+    if (error) return errResult(`${error.name ?? "FunctionError"}: ${error.message}`);
+    return jsonResult(`Edge function ${name} returned:`, data);
+  }
+});
+
+// src/lib/mcp/tools/admin-manage-role.ts
+import { defineTool as defineTool22 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z18 } from "npm:zod@^3.23.8";
+var roleEnum = z18.enum(["admin", "owner", "moderator", "user"]);
+var adminManageRoleTool = defineTool22({
+  name: "admin_manage_role",
+  title: "Assign or remove a role for any user",
+  description: "Grant or revoke a role on public.user_roles for any user. Caller must be admin/owner (RLS enforced). Use action='grant' or 'revoke'.",
+  inputSchema: {
+    user_id: z18.string().uuid(),
+    role: roleEnum,
+    action: z18.enum(["grant", "revoke"])
+  },
+  annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
+  handler: async ({ user_id, role, action }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const sb = createUserSupabaseClient3(ctx);
+    if (action === "grant") {
+      const { data: data2, error: error2 } = await sb.from("user_roles").upsert({ user_id, role }, { onConflict: "user_id,role" }).select();
+      if (error2) return errResult(`${error2.code ?? ""} ${error2.message}`);
+      return jsonResult(`Granted ${role} to ${user_id}:`, data2);
+    }
+    const { data, error } = await sb.from("user_roles").delete().eq("user_id", user_id).eq("role", role).select();
+    if (error) return errResult(`${error.code ?? ""} ${error.message}`);
+    return jsonResult(`Revoked ${role} from ${user_id}:`, data);
+  }
+});
+
+// src/lib/mcp/tools/publish-coding-problem.ts
+import { defineTool as defineTool23 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z19 } from "npm:zod@^3.23.8";
+var problemSchema = z19.object({
+  slug: z19.string().min(2).max(80).regex(/^[a-z0-9-]+$/, "slug must be lowercase-with-dashes"),
+  title: z19.string().min(3).max(150),
+  difficulty: z19.enum(["easy", "medium", "hard"]),
+  description: z19.string().min(30, "description too short (min 30 chars)"),
+  topics: z19.array(z19.string().min(1)).min(1, "at least 1 topic required"),
+  examples: z19.array(z19.record(z19.unknown())).min(1, "at least 1 example required"),
+  constraints: z19.array(z19.string()).optional(),
+  hints: z19.array(z19.string()).optional(),
+  cpu_time_limit_sec: z19.number().positive().optional(),
+  memory_limit_kb: z19.number().int().positive().optional(),
+  mcq: z19.record(z19.unknown()).optional(),
+  is_contest_pool: z19.boolean().optional()
+});
+var testSchema = z19.object({
+  input: z19.string(),
+  expected_output: z19.string(),
+  is_sample: z19.boolean().optional(),
+  weight: z19.number().optional()
+});
+var publishCodingProblemTool = defineTool23({
   name: "publish_coding_problem",
   title: "Publish coding problem (validated)",
   description: "Validate + publish a coding problem. Enforces required fields, requires \u22652 tests, and handles slug conflicts. If the slug already exists, use if_exists='update' to overwrite (auto-snapshots current version first) or if_exists='error' (default) to abort and prompt the caller.",
   inputSchema: {
-    problem: z14.object({
-      slug: z14.string(),
-      title: z14.string(),
-      difficulty: z14.string(),
-      description: z14.string(),
-      topics: z14.array(z14.string()),
-      examples: z14.array(z14.record(z14.unknown())),
-      constraints: z14.array(z14.string()).optional(),
-      hints: z14.array(z14.string()).optional(),
-      cpu_time_limit_sec: z14.number().optional(),
-      memory_limit_kb: z14.number().int().optional(),
-      mcq: z14.record(z14.unknown()).optional(),
-      is_contest_pool: z14.boolean().optional()
+    problem: z19.object({
+      slug: z19.string(),
+      title: z19.string(),
+      difficulty: z19.string(),
+      description: z19.string(),
+      topics: z19.array(z19.string()),
+      examples: z19.array(z19.record(z19.unknown())),
+      constraints: z19.array(z19.string()).optional(),
+      hints: z19.array(z19.string()).optional(),
+      cpu_time_limit_sec: z19.number().optional(),
+      memory_limit_kb: z19.number().int().optional(),
+      mcq: z19.record(z19.unknown()).optional(),
+      is_contest_pool: z19.boolean().optional()
     }),
-    tests: z14.array(testSchema).min(2, "at least 2 tests required to publish"),
-    starter_code: z14.array(z14.object({ language: z14.string(), code: z14.string() })).optional(),
-    if_exists: z14.enum(["error", "update"]).optional().describe("Default 'error'. 'update' overwrites and snapshots the previous version."),
-    version_note: z14.string().optional().describe("Note stored on the snapshot when overwriting.")
+    tests: z19.array(testSchema).min(2, "at least 2 tests required to publish"),
+    starter_code: z19.array(z19.object({ language: z19.string(), code: z19.string() })).optional(),
+    if_exists: z19.enum(["error", "update"]).optional().describe("Default 'error'. 'update' overwrites and snapshots the previous version."),
+    version_note: z19.string().optional().describe("Note stored on the snapshot when overwriting.")
   },
   annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
   handler: async ({ problem, tests, starter_code, if_exists, version_note }, ctx) => {
@@ -614,11 +819,11 @@ var publishCodingProblemTool = defineTool18({
     );
   }
 });
-var listCodingProblemVersionsTool = defineTool18({
+var listCodingProblemVersionsTool = defineTool23({
   name: "list_coding_problem_versions",
   title: "List coding problem versions",
   description: "List saved version snapshots for a coding problem slug (admin only).",
-  inputSchema: { slug: z14.string() },
+  inputSchema: { slug: z19.string() },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ slug }, ctx) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
@@ -628,13 +833,13 @@ var listCodingProblemVersionsTool = defineTool18({
     return jsonResult(`Found ${data?.length ?? 0} versions for "${slug}":`, data);
   }
 });
-var rollbackCodingProblemTool = defineTool18({
+var rollbackCodingProblemTool = defineTool23({
   name: "rollback_coding_problem",
   title: "Rollback coding problem",
   description: "Restore a coding problem (and its tests + starter code) from a saved version snapshot. Also snapshots the CURRENT state before rolling back, so a rollback is itself reversible.",
   inputSchema: {
-    slug: z14.string(),
-    version_number: z14.number().int().positive()
+    slug: z19.string(),
+    version_number: z19.number().int().positive()
   },
   annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
   handler: async ({ slug, version_number }, ctx) => {
@@ -678,18 +883,18 @@ var rollbackCodingProblemTool = defineTool18({
 });
 
 // src/lib/mcp/tools/publish-coding-solution.ts
-import { defineTool as defineTool19 } from "npm:@lovable.dev/mcp-js@0.20.1";
-import { z as z15 } from "npm:zod@^3.23.8";
-var publishCodingSolutionTool = defineTool19({
+import { defineTool as defineTool24 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z20 } from "npm:zod@^3.23.8";
+var publishCodingSolutionTool = defineTool24({
   name: "publish_coding_solution",
   title: "Publish coding problem reference solution",
   description: "Upsert reference solution(s) for a published coding problem. Provide `problem_slug` and one or more `{ lang_id, code }` entries. Common lang_id values: 'python', 'javascript', 'cpp', 'java'. Existing solutions for the same (slug, lang_id) are overwritten.",
   inputSchema: {
-    problem_slug: z15.string().min(2),
-    solutions: z15.array(
-      z15.object({
-        lang_id: z15.string().min(1).describe("Language identifier (e.g. python, javascript, cpp, java)"),
-        code: z15.string().min(1)
+    problem_slug: z20.string().min(2),
+    solutions: z20.array(
+      z20.object({
+        lang_id: z20.string().min(1).describe("Language identifier (e.g. python, javascript, cpp, java)"),
+        code: z20.string().min(1)
       })
     ).min(1, "at least one solution required")
   },
@@ -716,52 +921,52 @@ var publishCodingSolutionTool = defineTool19({
 });
 
 // src/lib/mcp/tools/publish-coding-bundle.ts
-import { defineTool as defineTool20 } from "npm:@lovable.dev/mcp-js@0.20.1";
-import { z as z16 } from "npm:zod@^3.23.8";
-var problemSchema2 = z16.object({
-  slug: z16.string().min(2).max(80).regex(/^[a-z0-9-]+$/, "slug must be lowercase-with-dashes"),
-  title: z16.string().min(3).max(150),
-  difficulty: z16.enum(["easy", "medium", "hard"]),
-  description: z16.string().min(30),
-  topics: z16.array(z16.string().min(1)).min(1),
-  examples: z16.array(z16.record(z16.unknown())).min(1),
-  constraints: z16.array(z16.string()).optional(),
-  hints: z16.array(z16.string()).optional(),
-  cpu_time_limit_sec: z16.number().positive().optional(),
-  memory_limit_kb: z16.number().int().positive().optional(),
-  mcq: z16.record(z16.unknown()).optional(),
-  is_contest_pool: z16.boolean().optional()
+import { defineTool as defineTool25 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z21 } from "npm:zod@^3.23.8";
+var problemSchema2 = z21.object({
+  slug: z21.string().min(2).max(80).regex(/^[a-z0-9-]+$/, "slug must be lowercase-with-dashes"),
+  title: z21.string().min(3).max(150),
+  difficulty: z21.enum(["easy", "medium", "hard"]),
+  description: z21.string().min(30),
+  topics: z21.array(z21.string().min(1)).min(1),
+  examples: z21.array(z21.record(z21.unknown())).min(1),
+  constraints: z21.array(z21.string()).optional(),
+  hints: z21.array(z21.string()).optional(),
+  cpu_time_limit_sec: z21.number().positive().optional(),
+  memory_limit_kb: z21.number().int().positive().optional(),
+  mcq: z21.record(z21.unknown()).optional(),
+  is_contest_pool: z21.boolean().optional()
 });
-var testSchema2 = z16.object({
-  input: z16.string(),
-  expected_output: z16.string(),
-  is_sample: z16.boolean().optional(),
-  weight: z16.number().optional()
+var testSchema2 = z21.object({
+  input: z21.string(),
+  expected_output: z21.string(),
+  is_sample: z21.boolean().optional(),
+  weight: z21.number().optional()
 });
-var publishCodingBundleTool = defineTool20({
+var publishCodingBundleTool = defineTool25({
   name: "publish_coding_bundle",
   title: "Publish coding problem + solutions bundle",
   description: "One-shot publish: problem + tests + starter code + reference solutions for multiple languages. Snapshots the previous version when overwriting. Use this instead of calling publish_coding_problem and publish_coding_solution separately.",
   inputSchema: {
-    problem: z16.object({
-      slug: z16.string(),
-      title: z16.string(),
-      difficulty: z16.string(),
-      description: z16.string(),
-      topics: z16.array(z16.string()),
-      examples: z16.array(z16.record(z16.unknown())),
-      constraints: z16.array(z16.string()).optional(),
-      hints: z16.array(z16.string()).optional(),
-      cpu_time_limit_sec: z16.number().optional(),
-      memory_limit_kb: z16.number().int().optional(),
-      mcq: z16.record(z16.unknown()).optional(),
-      is_contest_pool: z16.boolean().optional()
+    problem: z21.object({
+      slug: z21.string(),
+      title: z21.string(),
+      difficulty: z21.string(),
+      description: z21.string(),
+      topics: z21.array(z21.string()),
+      examples: z21.array(z21.record(z21.unknown())),
+      constraints: z21.array(z21.string()).optional(),
+      hints: z21.array(z21.string()).optional(),
+      cpu_time_limit_sec: z21.number().optional(),
+      memory_limit_kb: z21.number().int().optional(),
+      mcq: z21.record(z21.unknown()).optional(),
+      is_contest_pool: z21.boolean().optional()
     }),
-    tests: z16.array(testSchema2).min(2, "at least 2 tests required"),
-    starter_code: z16.array(z16.object({ language: z16.string(), code: z16.string() })).optional(),
-    solutions: z16.array(z16.object({ lang_id: z16.string().min(1), code: z16.string().min(1) })).min(1, "at least one reference solution required"),
-    if_exists: z16.enum(["error", "update"]).optional(),
-    version_note: z16.string().optional()
+    tests: z21.array(testSchema2).min(2, "at least 2 tests required"),
+    starter_code: z21.array(z21.object({ language: z21.string(), code: z21.string() })).optional(),
+    solutions: z21.array(z21.object({ lang_id: z21.string().min(1), code: z21.string().min(1) })).min(1, "at least one reference solution required"),
+    if_exists: z21.enum(["error", "update"]).optional(),
+    version_note: z21.string().optional()
   },
   annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
   handler: async ({ problem, tests, starter_code, solutions, if_exists, version_note }, ctx) => {
@@ -834,8 +1039,8 @@ var publishCodingBundleTool = defineTool20({
 });
 
 // src/lib/mcp/tools/ensure-admin-access.ts
-import { defineTool as defineTool21 } from "npm:@lovable.dev/mcp-js@0.20.1";
-var ensureAdminAccessTool = defineTool21({
+import { defineTool as defineTool26 } from "npm:@lovable.dev/mcp-js@0.20.1";
+var ensureAdminAccessTool = defineTool26({
   name: "ensure_admin_access",
   title: "Ensure admin access for this MCP client",
   description: "Grant the signed-in MCP user the 'admin' role so publish tools work. Idempotent \u2014 safe to call at the start of every session. Only OAuth-client tokens (Claude, ChatGPT connectors) are allowed; regular app sessions are rejected.",
@@ -891,6 +1096,14 @@ var mcp_default = defineMcp({
     dbInsertTool,
     dbUpdateTool,
     dbDeleteTool,
+    dbQueryTool,
+    dbRpcTool,
+    storageListTool,
+    storageUploadTool,
+    storageDeleteTool,
+    storageSignedUrlTool,
+    invokeEdgeFunctionTool,
+    adminManageRoleTool,
     publishCodingProblemTool,
     listCodingProblemVersionsTool,
     rollbackCodingProblemTool,

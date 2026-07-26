@@ -1522,6 +1522,160 @@
         "outputSchema": null
       },
       {
+        "name": "update_builtin_sheet",
+        "title": "Update built-in sheet (admin)",
+        "description": "Admin/owner-only. Persist edits to a built-in frontend sheet (dbms-sheet, cn-sheet, os-sheet). Overrides title/description/sections and is merged into get_builtin_sheet responses. Pass reset=true to clear overrides.",
+        "annotations": {
+          "readOnlyHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "minLength": 1
+            },
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "sections": {
+              "type": "array",
+              "description": "Full replacement for sections array."
+            },
+            "reset": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "slug"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "sync_builtin_sheet_to_db",
+        "title": "Sync built-in sheet into DB folder (admin)",
+        "description": "Admin/owner-only. Create or refresh a user_folders row (owned by caller) mirroring a built-in sheet's topics as folder items. After sync, use all existing sheet tools (add_problems_to_sheet, reorder_sheet_items, share_sheet, etc.) against the returned folder_id.",
+        "annotations": {
+          "readOnlyHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "minLength": 1,
+              "description": "dbms-sheet, cn-sheet, or os-sheet"
+            },
+            "replace_items": {
+              "type": "boolean",
+              "description": "Default true. Wipes existing items before re-inserting."
+            }
+          },
+          "required": [
+            "slug"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_all_sheets_admin",
+        "title": "List every sheet (admin)",
+        "description": "Admin/owner-only. Returns every built-in frontend sheet plus every user_folders row across all users, with owner user_id and item counts. Use to discover sheets you did not create.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "search": {
+              "type": "string"
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "admin_update_sheet",
+        "title": "Update any sheet (admin)",
+        "description": "Admin/owner-only. Update name/description/color on any user_folders row across owners. Use folder_id from list_all_sheets_admin.",
+        "annotations": {
+          "readOnlyHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "color": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "admin_delete_sheet",
+        "title": "Delete any sheet (admin)",
+        "description": "Admin/owner-only. Permanently deletes a user_folders row (and its items via cascade) regardless of owner.",
+        "annotations": {
+          "readOnlyHint": false,
+          "idempotentHint": false,
+          "openWorldHint": false,
+          "destructiveHint": true
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "required": [
+            "folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
         "name": "create_sheet",
         "title": "Create sheet (folder of problems)",
         "description": "Create a new sheet (curated folder) owned by the calling admin. Returns the folder id to use with add_problems_to_sheet.",

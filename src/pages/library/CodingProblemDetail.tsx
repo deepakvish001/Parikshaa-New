@@ -1065,13 +1065,24 @@ const CodingProblemDetail = () => {
       refetchRuns();
     } catch (err) {
       setExecutionErrorDetails(true);
+      const ce = err as CodeExecutionError;
+      const message = ce?.message || "Something went wrong while running your code.";
+      const d = ce?.diagnostics;
+      setRunError({
+        message,
+        stage: d?.error_stage,
+        providerStatus: d?.judge0_status,
+        providerBody: d?.judge0_body,
+        requestedUrl: d?.requested_url,
+      });
       toast({
-        title: "Run failed",
-        description: (err as Error).message,
+        title: humanRunErrorTitle(d?.error_stage),
+        description: message,
         variant: "destructive",
       });
     }
   };
+
 
   const handleSubmit = async () => {
     if (!user) {

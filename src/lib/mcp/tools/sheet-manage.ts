@@ -143,7 +143,7 @@ export const updateSheetSectionsTool = defineTool({
     const missing = allSlugs.filter((s) => !foundSet.has(s));
 
     // Rewrite description outline.
-    const newDesc = renderSections(preservedIntro, sections, foundSet);
+    const newDesc = renderSections(preservedIntro, sections as Section[], foundSet);
     const { error: upErr } = await sb
       .from("user_folders").update({ description: newDesc, updated_at: new Date().toISOString() }).eq("id", folder_id);
     if (upErr) return errResult(`Description update failed: ${upErr.message}`);

@@ -2233,6 +2233,106 @@
           "$schema": "http://json-schema.org/draft-07/schema#"
         },
         "outputSchema": null
+      },
+      {
+        "name": "bulk_remove_problems_from_sheet",
+        "title": "Remove multiple problems from a sheet in one call",
+        "description": "Delete multiple slugs from a sheet in a single request. Returns per-slug status (removed | not_in_sheet | error).",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "slugs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1,
+              "maxItems": 500
+            },
+            "resequence": {
+              "type": "boolean",
+              "description": "If true (default), re-pack sort_order of remaining items 0..N-1."
+            }
+          },
+          "required": [
+            "folder_id",
+            "slugs"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_sheet_share_status",
+        "title": "Get a sheet's active public share status",
+        "description": "Return the active share code, is_public, allow_copy, expires_at and expiry flag for a sheet. Returns share:null if the sheet has never been shared.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "required": [
+            "folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "delete_or_archive_sheet",
+        "title": "Delete or soft-archive a sheet",
+        "description": "mode='archive' (default): mark sheet as archived by prefixing name with [Archived] and setting color to gray — items/shares preserved. mode='delete': permanently remove the sheet, all its items, and any share links.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "archive",
+                "delete"
+              ]
+            },
+            "unarchive": {
+              "type": "boolean",
+              "description": "With mode='archive', if true removes the [Archived] prefix instead."
+            }
+          },
+          "required": [
+            "folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
       }
     ]
   }

@@ -125,5 +125,8 @@ export default defineMcp({
     updateSheetSectionsTool,
     getSheetDetailsTool,
     previewPublishSheetBundleTool,
+    bulkRemoveProblemsFromSheetTool,
+    getSheetShareStatusTool,
+    deleteOrArchiveSheetTool,
   ],
 });

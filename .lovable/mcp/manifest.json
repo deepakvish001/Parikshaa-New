@@ -1676,6 +1676,103 @@
         "outputSchema": null
       },
       {
+        "name": "sheet_access_matrix",
+        "title": "Sheet access matrix",
+        "description": "List every built-in sheet slug (DBMS / CN / OS) and whether the current caller can read it, with the RLS decision reason for each row.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "include_overrides_check": {
+              "type": "boolean",
+              "description": "Also probe builtin_sheet_overrides read access per slug. Defaults to true."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "debug_mcp_read_failure",
+        "title": "Debug MCP read failure",
+        "description": "Explain the RLS/authorization decision path for a failed read: given a table + optional row filter (or a built-in sheet slug), report the requested resource, caller identity, roles, and the likely policy path that blocked it.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "resource_kind": {
+              "type": "string",
+              "enum": [
+                "table",
+                "builtin_sheet",
+                "user_folder",
+                "topic_article"
+              ],
+              "description": "Category of resource that returned empty/denied."
+            },
+            "resource": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Table name, sheet slug, folder id, or article slug."
+            },
+            "filter": {
+              "type": "object",
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "null"
+                ]
+              },
+              "description": "Optional column=value filter to re-run and observe."
+            }
+          },
+          "required": [
+            "resource_kind",
+            "resource"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "verify_sheet_article_access",
+        "title": "Verify sheet article read access",
+        "description": "For every topic_article linked to the given sheet slug, check whether the current caller can read it. Returns blocked articles with the reason (draft/archived, RLS, missing link).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "sheet_slug": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Sheet slug, e.g. dbms-sheet."
+            }
+          },
+          "required": [
+            "sheet_slug"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
         "name": "create_sheet",
         "title": "Create sheet (folder of problems)",
         "description": "Create a new sheet (curated folder) owned by the calling admin. Returns the folder id to use with add_problems_to_sheet.",

@@ -1480,6 +1480,11 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   // Expand/Collapse all
   const [expandAllSignal, setExpandAllSignal] = useState<{ expanded: boolean; timestamp: number } | null>(null);
 
+  // Lazy reveal for sections to speed up initial paint after login.
+  const SECTIONS_BATCH = 6;
+  const [visibleSectionCount, setVisibleSectionCount] = useState(SECTIONS_BATCH);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+
   // Blind 75 study plan prefs
   const [blind75Prefs, setBlind75Prefs] = useState<Blind75Prefs | null>(null);
   const [difficultyFilter, setDifficultyFilter] = useState("all");
@@ -1803,6 +1808,28 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   const filteredSections = weekView.sections;
   const weekProgress = weekView.weekProgress;
   const weekViewEmpty = weekView.emptyReason;
+
+  // Reset lazy window when filters/search/tab change.
+  useEffect(() => {
+    setVisibleSectionCount(SECTIONS_BATCH);
+  }, [activeTab, deferredSearch, difficultyFilter, categoryFilter, selectedWeek, currentSheetId]);
+
+  // Auto-reveal more sections when sentinel enters viewport.
+  useEffect(() => {
+    const node = loadMoreRef.current;
+    if (!node) return;
+    if (visibleSectionCount >= filteredSections.length) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setVisibleSectionCount((c) => Math.min(c + SECTIONS_BATCH, filteredSections.length));
+        }
+      },
+      { rootMargin: "600px 0px" },
+    );
+    io.observe(node);
+    return () => io.disconnect();
+  }, [visibleSectionCount, filteredSections.length]);
   const showWeekPanel =
     currentSheetId === "blind-75" &&
     !!blind75Prefs &&
@@ -2595,23 +2622,43 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
           <Card className="overflow-hidden">
             <CardContent className="p-0">
               {filteredSections.length > 0 ? (
-                filteredSections.map((section) => (
-                  <SectionCard 
-                    key={section.id} 
-                    section={section} 
-                    onToggleTopic={handleToggleTopic} 
-                    onOpenNote={handleOpenNote}
-                    onToggleRevision={handleToggleRevision}
-                    onSectionComplete={handleSectionComplete}
-                    expandAllSignal={expandAllSignal}
-                    showRevisionControl={activeTab === "revision"}
-                    onMarkRevised={handleMarkRevised}
-                    onUndoLastPass={handleUndoLastPass}
-                    onResetPasses={handleResetPasses}
-                    onResetSection={handleResetSection}
-                    onJumpToTopic={scrollToTopic}
-                  />
-                ))
+                <>
+                  {filteredSections.slice(0, visibleSectionCount).map((section) => (
+                    <SectionCard 
+                      key={section.id} 
+                      section={section} 
+                      onToggleTopic={handleToggleTopic} 
+                      onOpenNote={handleOpenNote}
+                      onToggleRevision={handleToggleRevision}
+                      onSectionComplete={handleSectionComplete}
+                      expandAllSignal={expandAllSignal}
+                      showRevisionControl={activeTab === "revision"}
+                      onMarkRevised={handleMarkRevised}
+                      onUndoLastPass={handleUndoLastPass}
+                      onResetPasses={handleResetPasses}
+                      onResetSection={handleResetSection}
+                      onJumpToTopic={scrollToTopic}
+                    />
+                  ))}
+                  {visibleSectionCount < filteredSections.length && (
+                    <div ref={loadMoreRef} className="flex flex-col items-center gap-2 py-6 border-t border-border/30">
+                      <p className="text-xs text-muted-foreground">
+                        Showing {visibleSectionCount} of {filteredSections.length} sections
+                      </p>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() =>
+                          setVisibleSectionCount((c) =>
+                            Math.min(c + SECTIONS_BATCH, filteredSections.length),
+                          )
+                        }
+                      >
+                        Load more sections
+                      </Button>
+                    </div>
+                  )}
+                </>
               ) : weekViewEmpty === "no-weeks" ? (
                 <div className="p-12 text-center">
                   <CalendarDays className="h-12 w-12 text-muted-foreground mx-auto mb-4" />

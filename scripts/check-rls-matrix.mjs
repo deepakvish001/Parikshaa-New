@@ -42,7 +42,7 @@ if (!url || !anonKey) {
 /** @type {Array<{ table: string, anon: 'empty'|'denied'|'empty_or_denied', authScoped?: boolean, note?: string }>} */
 const MATRIX = [
   // Intentionally publicly readable — no sensitive columns.
-  { table: "profiles", anon: "empty", note: "public read allowed (only full_name/avatar_url)" },
+  { table: "profiles", anon: "public", note: "public read allowed (only full_name/avatar_url)" },
   // Private per-user data — anon must get nothing; auth must only see own rows.
   { table: "user_profiles_extended", anon: "empty_or_denied", authScoped: true, note: "anon must NOT see rows even when username is set" },
 

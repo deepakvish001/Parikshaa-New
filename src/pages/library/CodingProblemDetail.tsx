@@ -1236,9 +1236,18 @@ const CodingProblemDetail = () => {
       }
     } catch (err) {
       setExecutionErrorDetails(true);
+      const ce = err as CodeExecutionError;
+      const d = ce?.diagnostics;
+      setRunError({
+        message: ce?.message || "Something went wrong while grading your submission.",
+        stage: d?.error_stage,
+        providerStatus: d?.judge0_status,
+        providerBody: d?.judge0_body,
+        requestedUrl: d?.requested_url,
+      });
       toast({
-        title: "Submit failed",
-        description: (err as Error).message,
+        title: humanRunErrorTitle(d?.error_stage) || "Submit failed",
+        description: ce?.message || "Unknown error",
         variant: "destructive",
       });
     }

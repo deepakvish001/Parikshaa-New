@@ -51,7 +51,8 @@ const SITE_URL =
   "https://www.parikshaa.org";
 
 export default function BlogPost() {
-  const { slug } = useParams();
+  const { slug: slugParam, category } = useParams();
+  const slug = category ? `${category}/${slugParam}` : slugParam;
   const { user } = useAuth();
   const { data: post, isLoading } = useBlogPost(slug);
   const trackView = useTrackBlogView();

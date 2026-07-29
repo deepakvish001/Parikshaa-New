@@ -403,6 +403,10 @@ const BulkImport = () => {
 
   const validCount = rows.filter((r) => r.ok).length;
   const invalidCount = rows.length - validCount;
+  const overwriteCount = rows.filter(
+    (r) => r.ok && existingSlugs.has(r.data.slug),
+  ).length;
+  const newCount = validCount - overwriteCount;
 
   const downloadJson = (data: unknown, filename: string) => {
     const blob = new Blob([JSON.stringify(data, null, 2)], {

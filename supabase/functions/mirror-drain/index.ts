@@ -93,6 +93,10 @@ Deno.serve(async (req) => {
     "Content-Type": "application/json",
   };
 
+  const fkFallback = (row: { table_name: string; row_pk: Record<string, unknown> | null; row_data: unknown }) =>
+    fkFallbackWith(mirrorUrl, mirrorKey, row);
+
+
   const okIds: number[] = [];
   const errored: { id: number; msg: string }[] = [];
 

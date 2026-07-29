@@ -140,10 +140,14 @@ export default function BlogPost() {
     return () => clearTimeout(t);
   }, [post?.id, post?.content_md]);
 
+  if (needsRedirect && !isLoading && post) {
+    return <Navigate to={canonicalPath} replace />;
+  }
   if (isLoading)
     return <div className="container mx-auto py-16 text-center text-muted-foreground">Loading…</div>;
   if (!post)
     return <div className="container mx-auto py-16 text-center">Post not found.</div>;
+
 
   const url = `${SITE_URL}/blog/${post.slug}`;
   const canonical = post.canonical_url || url;

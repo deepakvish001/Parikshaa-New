@@ -219,7 +219,8 @@ async function syncAuth(primary: ReturnType<typeof createClient>) {
 async function checkDrift(primary: ReturnType<typeof createClient>) {
   const colSql = `select table_name || '.' || column_name as k
                   from information_schema.columns
-                  where table_schema = 'public'`;
+                  where table_schema = 'public'
+                    and table_name not in ('mirror_outbox','mirror_sync_log')`;
 
   const { data: pRaw, error } = await primary.rpc("mirror_local_q", { q: colSql });
   if (error) return { error: error.message, missingOnMirror: [] as string[] };

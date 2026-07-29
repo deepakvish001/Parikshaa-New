@@ -279,30 +279,30 @@ const BulkImport = () => {
     };
   };
 
-  // Detect which slugs already exist in DB so we can label them "Update" vs
-  // "New" and prompt the admin before overwriting.
+  // Detect which slugs already exist in DB (and fetch key fields for diffing)
+  // so we can label them "Update" vs "New" and show old-vs-new conflicts.
   useEffect(() => {
     const slugs = Array.from(
       new Set(rows.filter((r) => r.ok && r.data?.slug).map((r) => r.data.slug as string)),
     );
     if (slugs.length === 0) {
-      setExistingSlugs(new Set());
+      setExistingRecords(new Map());
       return;
     }
     let cancelled = false;
     (async () => {
       const CHUNK = 300;
-      const found = new Set<string>();
+      const found = new Map<string, ExistingRecord>();
       for (let i = 0; i < slugs.length; i += CHUNK) {
         const chunk = slugs.slice(i, i + CHUNK);
         const { data, error } = await supabase
           .from("coding_problems")
-          .select("slug")
+          .select("slug,title,difficulty,description,topics,is_published,cpu_time_limit_sec,memory_limit_kb")
           .in("slug", chunk);
         if (error) break;
-        (data ?? []).forEach((r: any) => found.add(r.slug));
+        (data ?? []).forEach((r: any) => found.set(r.slug, r as ExistingRecord));
       }
-      if (!cancelled) setExistingSlugs(found);
+      if (!cancelled) setExistingRecords(found);
     })();
     return () => {
       cancelled = true;

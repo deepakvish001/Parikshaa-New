@@ -981,7 +981,16 @@ const BulkImport = () => {
               >
                 Skip existing · import {newCount} new
               </Button>
-            )}
+            <Button
+              variant="outline"
+              disabled={busy}
+              onClick={() => {
+                setConfirmOpen(false);
+                void runImport("update-existing");
+              }}
+            >
+              Update existing only · {overwriteCount}
+            </Button>
             <AlertDialogAction
               disabled={busy}
               onClick={() => {

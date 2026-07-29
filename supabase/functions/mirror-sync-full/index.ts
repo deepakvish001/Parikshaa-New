@@ -399,11 +399,33 @@ async function syncSchema(primary: ReturnType<typeof createClient>, apply: boole
   const ordered = [...pCons].sort((a, b) => (a.kind === "f" ? 1 : 0) - (b.kind === "f" ? 1 : 0));
   for (const c of ordered) {
     if (SKIP_TABLES.has(c.tbl) || haveCon.has(`${c.tbl}.${c.name}`)) continue;
-    await run(
-      `constraint ${c.tbl}.${c.name}`,
-      `alter table public."${c.tbl}" add constraint "${c.name}" ${c.def};`,
-    );
+    const label = `constraint ${c.tbl}.${c.name}`;
+    const base = `alter table public."${c.tbl}" add constraint "${c.name}" ${c.def};`;
+    if (!apply) {
+      pending.push(label);
+      continue;
+    }
+    const err = await mExec(base);
+    if (!err) {
+      applied.push(label);
+      continue;
+    }
+    // pre-existing rows can violate a fk/check that the primary already satisfies —
+    // add it NOT VALID so it still guards future writes
+    if ((c.kind === "f" || c.kind === "c") && /23514|23503/.test(err)) {
+      const err2 = await mExec(
+        `alter table public."${c.tbl}" add constraint "${c.name}" ${c.def} not valid;`,
+      );
+      if (!err2) {
+        applied.push(`${label} (not valid)`);
+        continue;
+      }
+      errors.push(`${label}: ${err2}`);
+    } else {
+      errors.push(`${label}: ${err}`);
+    }
   }
+
 
   // 4) indexes
   const [pIdx, mIdx] = await Promise.all([

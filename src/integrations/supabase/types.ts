@@ -2711,6 +2711,42 @@ export type Database = {
         }
         Relationships: []
       }
+      mirror_outbox: {
+        Row: {
+          attempts: number
+          created_at: string
+          id: number
+          last_error: string | null
+          op: string
+          row_data: Json | null
+          row_pk: Json | null
+          synced_at: string | null
+          table_name: string
+        }
+        Insert: {
+          attempts?: number
+          created_at?: string
+          id?: number
+          last_error?: string | null
+          op: string
+          row_data?: Json | null
+          row_pk?: Json | null
+          synced_at?: string | null
+          table_name: string
+        }
+        Update: {
+          attempts?: number
+          created_at?: string
+          id?: number
+          last_error?: string | null
+          op?: string
+          row_data?: Json | null
+          row_pk?: Json | null
+          synced_at?: string | null
+          table_name?: string
+        }
+        Relationships: []
+      }
       newsletter_subscribers: {
         Row: {
           created_at: string
@@ -4705,6 +4741,11 @@ export type Database = {
         Returns: boolean
       }
       is_blog_editor: { Args: { _uid: string }; Returns: boolean }
+      mirror_attach_all: { Args: never; Returns: number }
+      mirror_mark_failure: {
+        Args: { _err: string; _id: number }
+        Returns: undefined
+      }
       recompute_contest_leaderboard: {
         Args: { _contest_id: string }
         Returns: undefined

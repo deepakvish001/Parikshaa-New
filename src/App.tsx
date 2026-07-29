@@ -100,6 +100,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import { AdminShell } from "./components/admin/AdminShell";
 import AdminProblemsList from "./pages/admin/AdminProblemsList";
 import PublishHistory from "./pages/admin/PublishHistory";
+import MirrorHealth from "./pages/admin/MirrorHealth";
 import ProblemEditor from "./pages/admin/ProblemEditor";
 import BulkImport from "./pages/admin/BulkImport";
 
@@ -410,6 +411,7 @@ const App = () => (
                   <Route path="jobs" element={<AdminJobs />} />
                   <Route path="contests" element={<AdminContests />} />
                   <Route path="contests/:id" element={<ContestProblemsEditor />} />
+                  <Route path="mirror-health" element={<MirrorHealth />} />
                 </Route>
 
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

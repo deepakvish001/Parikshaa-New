@@ -223,12 +223,45 @@ export const SQL_TEMPLATE = JSON.stringify(
   2,
 );
 
+type ExistingRecord = {
+  slug: string;
+  title: string | null;
+  difficulty: string | null;
+  description: string | null;
+  topics: string[] | null;
+  is_published: boolean | null;
+  cpu_time_limit_sec: number | null;
+  memory_limit_kb: number | null;
+};
+
+type ImportOutcome = "created" | "updated" | "skipped" | "failed";
+type ImportResultItem = {
+  row: number;
+  slug: string;
+  title: string;
+  outcome: ImportOutcome;
+  error?: string;
+};
+type ImportResults = {
+  ran_at: string;
+  mode: "all" | "skip-existing" | "update-existing";
+  items: ImportResultItem[];
+};
+
 const BulkImport = () => {
   const [rows, setRows] = useState<Row[]>([]);
   const [busy, setBusy] = useState(false);
-  const [existingSlugs, setExistingSlugs] = useState<Set<string>>(new Set());
+  const [existingRecords, setExistingRecords] = useState<Map<string, ExistingRecord>>(new Map());
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [singleJson, setSingleJson] = useState("");
+  const [expanded, setExpanded] = useState<Set<number>>(new Set());
+  const [results, setResults] = useState<ImportResults | null>(null);
   const nav = useNavigate();
+
+  const existingSlugs = useMemo(
+    () => new Set(existingRecords.keys()),
+    [existingRecords],
+  );
 
   const parseRow = (raw: any, index: number): Row => {
     const r = ProblemSchema.safeParse(raw);

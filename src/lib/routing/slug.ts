@@ -22,6 +22,43 @@ export function slugify(input: string | null | undefined): string {
     .slice(0, 60);
 }
 
+/**
+ * Normalize a blog slug that may include category segments and/or messy input
+ * from a pasted URL. Handles:
+ *  - percent-encoded characters (%2F, spaces, accents)
+ *  - leading/trailing slashes and duplicate slashes
+ *  - uppercase, whitespace, unicode diacritics
+ *  - stray query/hash fragments accidentally included
+ *  - non-alphanumeric noise inside each segment (kept as `-`)
+ */
+export function normalizeBlogSlug(raw: string | null | undefined): string {
+  if (!raw) return "";
+  let s = String(raw).trim();
+  // Strip query/hash if a full URL or pasted path leaked in
+  s = s.split("#")[0].split("?")[0];
+  // Drop protocol + host if present
+  s = s.replace(/^https?:\/\/[^/]+/i, "");
+  // Drop leading /blog/ prefix if present
+  s = s.replace(/^\/+/, "").replace(/^blog\//i, "");
+  try {
+    s = decodeURIComponent(s);
+  } catch {
+    /* keep raw on malformed encoding */
+  }
+  const segments = s
+    .split("/")
+    .map((seg) =>
+      seg
+        .toLowerCase()
+        .normalize("NFKD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, ""),
+    )
+    .filter(Boolean);
+  return segments.join("/");
+}
+
 /** Returns the most human-readable identifier available for a record. */
 export function preferSlug<T extends { id: string; slug?: string | null }>(
   rec: T | null | undefined,

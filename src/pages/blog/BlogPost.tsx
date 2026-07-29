@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useLocation, useParams } from "react-router-dom";
+import { normalizeBlogSlug } from "@/lib/routing/slug";
+
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -51,10 +53,22 @@ const SITE_URL =
   "https://www.parikshaa.org";
 
 export default function BlogPost() {
-  const { slug: slugParam, category } = useParams();
-  const slug = category ? `${category}/${slugParam}` : slugParam;
+  const params = useParams();
+  const location = useLocation();
+  // Route uses a wildcard so we accept any depth of slug segments
+  // ("dbms/what-is-dbms", legacy flat "my-post", or messy pasted URLs).
+  const rawSlug =
+    (params["*"] as string | undefined) ??
+    (params.category ? `${params.category}/${params.slug}` : params.slug) ??
+    "";
+  const slug = useMemo(() => normalizeBlogSlug(rawSlug), [rawSlug]);
+  // If normalization changed the URL, redirect to the canonical form.
+  const canonicalPath = slug ? `/blog/${slug}` : "/blog";
+  const needsRedirect =
+    slug.length > 0 && location.pathname.replace(/\/+$/, "") !== canonicalPath;
   const { user } = useAuth();
   const { data: post, isLoading } = useBlogPost(slug);
+
   const trackView = useTrackBlogView();
   const { liked, toggle: toggleLike } = useBlogLike(post?.id);
   const { bookmarked, toggle: toggleBookmark } = useBlogBookmark(post?.id);
@@ -126,10 +140,14 @@ export default function BlogPost() {
     return () => clearTimeout(t);
   }, [post?.id, post?.content_md]);
 
+  if (needsRedirect && !isLoading && post) {
+    return <Navigate to={canonicalPath} replace />;
+  }
   if (isLoading)
     return <div className="container mx-auto py-16 text-center text-muted-foreground">Loading…</div>;
   if (!post)
     return <div className="container mx-auto py-16 text-center">Post not found.</div>;
+
 
   const url = `${SITE_URL}/blog/${post.slug}`;
   const canonical = post.canonical_url || url;

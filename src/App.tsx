@@ -340,8 +340,8 @@ const App = () => (
                 {/* Blog - public */}
                 <Route path="/blog" element={<PublicDashboardWrapper />}>
                   <Route index element={<BlogIndex />} />
-                  <Route path=":slug" element={<BlogPost />} />
-                  <Route path=":category/:slug" element={<BlogPost />} />
+                  <Route path="*" element={<BlogPost />} />
+
                 </Route>
 
                 {/* Jobs - public */}

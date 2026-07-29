@@ -205,6 +205,8 @@ const App = () => (
             <BrowserRouter>
               <RouteRestorer />
               <CrossTabAuthSync />
+              <ActivityTracker />
+
               <RouteSeo />
               <Routes>
                 <Route path="/" element={<Index />} />

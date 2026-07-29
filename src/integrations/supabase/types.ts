@@ -2747,6 +2747,30 @@ export type Database = {
         }
         Relationships: []
       }
+      mirror_sync_log: {
+        Row: {
+          created_at: string
+          details: Json
+          id: number
+          kind: string
+          ok: boolean
+        }
+        Insert: {
+          created_at?: string
+          details?: Json
+          id?: number
+          kind: string
+          ok?: boolean
+        }
+        Update: {
+          created_at?: string
+          details?: Json
+          id?: number
+          kind?: string
+          ok?: boolean
+        }
+        Relationships: []
+      }
       newsletter_subscribers: {
         Row: {
           created_at: string
@@ -4742,6 +4766,22 @@ export type Database = {
       }
       is_blog_editor: { Args: { _uid: string }; Returns: boolean }
       mirror_attach_all: { Args: never; Returns: number }
+      mirror_auth_export: {
+        Args: { _after?: string; _limit?: number }
+        Returns: {
+          created_at: string
+          email: string
+          email_confirmed_at: string
+          encrypted_password: string
+          id: string
+          phone: string
+          phone_confirmed_at: string
+          raw_app_meta_data: Json
+          raw_user_meta_data: Json
+          updated_at: string
+        }[]
+      }
+      mirror_local_q: { Args: { q: string }; Returns: Json }
       mirror_mark_failure: {
         Args: { _err: string; _id: number }
         Returns: undefined

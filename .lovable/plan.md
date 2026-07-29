@@ -1,155 +1,144 @@
-# Visualize — Next Set Plan
+# Lovable Cloud → External Supabase Hot-Mirror Plan
 
-Current state: `/learn/visualize` has 1 live track (**DSA Visual**) with 5 algorithms (two-pointers, sliding-window, binary-search, bubble-sort, recursion-factorial). Player supports code sync, PC-line highlighting, call-stack scenes, favorites via localStorage. LLD / Networking / OS tracks are placeholders.
+Primary = Lovable Cloud (aaj jaisa hai). Secondary = external Supabase project
+in your own account, kept in near-realtime sync as a warm failover.
 
-Goal for this next set: **10× the library, deepen the player, and turn Visualize into a course-like surface** without breaking the current aesthetic (amber/black glass, framer-motion, brand shell components).
+## Honest scope check
 
----
+Kya realistic hai:
+- **Data mirror via triggers + edge function**: ~5-30 sec lag per row change.
+- **Schema sync**: one-time dump + manual re-apply on future migrations.
+- **Storage sync**: hourly rclone job (files change less often than rows).
+- **Auth users mirror**: nightly export/import (Supabase auth doesn't stream).
+- **Automatic failover**: health-check cron flips a client-side flag; app re-inits Supabase client with mirror URL.
 
-## 1. Expand DSA Visual (highest ROI)
+Kya realistic **NAHI** hai on Lovable Cloud:
+- Sub-second replication (no logical replication access on managed Cloud).
+- Automatic DNS/env swap at hosting layer (Lovable hosting env is build-time baked).
+- Perfect consistency (mirror will lag; conflict-free only because it's read-only mirror, writes go to primary).
 
-Add 12 new algorithms across the patterns learners actually search for. Each reuses the existing `AlgoFrame` / `CallScene` engine — no new renderer work.
+## Architecture
 
-**Arrays / Strings**
-- Kadane's max subarray (running best highlight)
-- Dutch National Flag (3-pointer partition)
-- Longest substring without repeat (window + hashset ticker)
-
-**Linked List** *(new scene type: `LinkedListScene` — nodes + next-arrows)*
-- Reverse a linked list (prev/curr/next pointers)
-- Detect cycle — Floyd's tortoise & hare (two speeds)
-- Merge two sorted lists
-
-**Trees** *(new scene type: `TreeScene` — SVG binary tree with node states)*
-- BFS level-order (queue on the side)
-- DFS inorder (recursion stack + visited highlight)
-- Lowest common ancestor
-
-**Graphs** *(new scene type: `GraphScene` — force-laid nodes + edges)*
-- BFS shortest path on unweighted graph
-- Dijkstra (priority queue side panel)
-- Union-Find (parent-array morphing view)
-
-**DP** *(new scene: `DpTableScene` — 1D/2D grid fill)*
-- Fibonacci memo vs tab (side-by-side)
-- 0/1 Knapsack (2D grid fill with arrow to source cell)
-- Longest common subsequence
-
-## 2. Ship LLD Visual as v1
-
-Currently a placeholder. Ship 4 animated case studies with a new **UML scene** (class boxes + typed arrows that draw themselves):
-- SOLID walkthrough — 5 mini refactors, before/after class diagram
-- Strategy pattern (payment gateway)
-- Observer pattern (event bus with subscriber count animating)
-- Factory + Singleton (with anti-pattern callout)
-
-Each lesson uses the same player shell: code panel left, animated diagram right, step controls.
-
-## 3. Player upgrades
-
-- **Speed control**: 0.5× / 1× / 2× (already have autoplay — add speed multiplier).
-- **Step-jump timeline**: draggable scrubber above the play/pause bar with tooltips showing `explain` per frame.
-- **Compare mode**: split screen showing brute-force vs optimized side-by-side, synced steps (huge for two-pointers, DP).
-- **Complexity badge**: persistent `O(n) time · O(1) space` chip in the player header, per algorithm.
-- **Keyboard shortcuts**: ←/→ step, space play/pause, R restart, C toggle code.
-- **"Try in playground"** button — deep-links to `/learn/code-playground` prefilled with the algo's code snippet.
-
-## 4. Hub UX polish (`/learn/visualize`)
-
-- **Search bar** over algorithms (client-side fuzzy on title + track + tags).
-- **Filter chips**: track, difficulty (Easy/Med/Hard), status (New/Live/Bonus).
-- **"Continue watching"** row using localStorage last-viewed timestamp per algo.
-- **Progress ring** per track: `3 / 12 watched`, tracked in localStorage (same pattern as `useVisualizeFavorites`).
-- **Track cards** get a mini animated preview on hover (5-frame loop of the first algo).
-
-## 5. Social & sharing
-
-- **Shareable frame links**: `/learn/visualize/algo/binary-search?step=7` deep-links to a specific frame — for tweets, blog embeds, teaching.
-- **Copy-as-GIF** (client-side): capture the stage as a short animated GIF using `gif.js` — one-tap share.
-- **Embed snippet**: `<iframe>` code generator so bloggers can embed a single visualizer read-only.
-
-## 6. Persistence upgrade
-
-Move from localStorage-only to a `visualize_progress` table (opt-in, only for signed-in users):
-- Columns: `user_id`, `algo_id`, `last_step`, `favorited`, `watched_at`.
-- RLS: user reads/writes only their own rows.
-- Falls back to localStorage for guests — no regression.
-
-## 7. Networking + OS tracks (teaser only, ship later)
-
-Not building content this round. Just replace the "Preview soon" empty state with a **waitlist form** (email → `visualize_waitlist` table) so we measure demand before investing in the harder scene renderers.
-
----
-
-## Technical details
-
-**New scene types to add in `algos.ts`**
-```ts
-type Scene =
-  | CallScene        // existing
-  | LinkedListScene  // { nodes: {value, state}[], pointers: {name, index}[] }
-  | TreeScene        // { root: TreeNode, highlighted: string[], queue?, stack? }
-  | GraphScene       // { nodes: {id, x, y, state}[], edges: {from, to, weight?, state}[], side?: 'queue'|'pq'|'uf' }
-  | DpTableScene     // { rows, cols, cells: {value, state, arrowFrom?}[][] }
-  | UmlScene;        // { classes: {name, methods, x, y}[], relations: {from, to, kind}[] }
-```
-Player switch already renders `scene` if present — extend the switch in `VisualizePlayer.tsx` with one branch per new scene component. Each scene is a self-contained SVG component under `src/pages/learn/visualize/scenes/`.
-
-**File layout**
 ```text
-src/pages/learn/visualize/
-  algos/
-    two-pointers.ts      (extract from algos.ts)
-    binary-search.ts
-    kadane.ts
-    ...one file per algo
-  scenes/
-    LinkedListScene.tsx
-    TreeScene.tsx
-    GraphScene.tsx
-    DpTableScene.tsx
-    UmlScene.tsx
-  hooks/
-    useVisualizeProgress.ts   (localStorage + Supabase sync)
-    useAlgoSearch.ts
+┌────────────────┐   trigger    ┌──────────────────┐   HTTPS   ┌──────────────────┐
+│ Lovable Cloud  │─────────────▶│ mirror-relay     │──────────▶│ External Supabase│
+│ (primary)      │  NOTIFY      │ edge function    │  upsert   │ (warm standby)   │
+└────────────────┘              └──────────────────┘           └──────────────────┘
+        ▲                                                              ▲
+        │ writes + reads (normal)                                      │ reads only (failover)
+        │                                                              │
+        └──────────────────── React app ───────────────────────────────┘
+                                    │
+                                    ▼
+                        ┌──────────────────────┐
+                        │ health-check every    │
+                        │ 30s → localStorage    │
+                        │ flag "use_mirror"     │
+                        └──────────────────────┘
 ```
 
-**DB migration** (only if section 6 approved):
+## Phase 1 — External project setup (you do this)
+
+1. supabase.com → New project (same region as Cloud).
+2. Save: project URL, anon key, **service_role key**, DB password.
+3. Add 3 secrets to Lovable Cloud:
+   - `MIRROR_SUPABASE_URL`
+   - `MIRROR_SUPABASE_SERVICE_ROLE_KEY`
+   - `MIRROR_SUPABASE_ANON_KEY`
+
+## Phase 2 — Schema mirror (one-time)
+
+Main ek edge function banunga: `export-schema-dump` — Lovable Cloud ke current schema (tables, columns, indexes, RLS policies, functions, triggers **except the mirror triggers themselves**) ko SQL file me export karega. Aap wo SQL external project ke SQL editor me paste karke run karenge.
+
+Repeat karna hoga jab bhi Lovable Cloud pe schema change ho.
+
+## Phase 3 — Realtime data mirror
+
+**Approach**: generic trigger on every mirrorable table → writes to `public.mirror_outbox` → edge function `mirror-drain` polls outbox every 10s → pushes rows to external Supabase via REST → marks synced.
+
+Why outbox (not direct HTTP from trigger): pg_net is async & lossy on failure, outbox gives retries + backpressure + observability.
+
+New table:
 ```sql
-create table public.visualize_progress (
-  user_id uuid references auth.users on delete cascade,
-  algo_id text not null,
-  last_step int default 0,
-  favorited boolean default false,
-  watched_at timestamptz default now(),
-  primary key (user_id, algo_id)
-);
-grant select, insert, update, delete on public.visualize_progress to authenticated;
-grant all on public.visualize_progress to service_role;
-alter table public.visualize_progress enable row level security;
-create policy "own rows" on public.visualize_progress
-  for all to authenticated using (auth.uid() = user_id) with check (auth.uid() = user_id);
+public.mirror_outbox (
+  id bigserial pk,
+  table_name text,
+  op text,           -- 'insert' | 'update' | 'delete'
+  row_pk jsonb,      -- primary key(s)
+  row_data jsonb,    -- new row (null on delete)
+  created_at timestamptz default now(),
+  synced_at timestamptz,
+  attempts int default 0,
+  last_error text
+)
 ```
 
-No breaking changes. All new work is additive; existing 5 algos keep working untouched.
+Generic trigger function applied to each user-facing table via a bootstrap script. Excluded tables: audit logs, ephemeral session tables, `mirror_outbox` itself.
 
----
+Edge function `mirror-drain`:
+- Runs on pg_cron every 10 seconds.
+- Reads up to 500 unsynced rows.
+- Batches by table → PostgREST upsert to mirror.
+- Marks synced_at; on failure increments attempts + last_error.
+- Rows with attempts > 10 → alert (log + notification).
 
-## Suggested build order
+Admin page: `/admin/mirror-health` — outbox depth, last sync, error rate, per-table lag.
 
-1. **Player upgrades** (§3) — 1 session, unlocks better UX for everything below.
-2. **Hub polish** (§4) — search + filters + progress rings.
-3. **DSA expansion wave 1** — Arrays/Strings + Linked List (6 algos, 1 new scene type).
-4. **DSA expansion wave 2** — Trees + DP (6 algos, 2 new scene types).
-5. **LLD v1** (§2) — UML scene + 4 case studies.
-6. **Social/sharing** (§5) — deep-link step, embed, copy-as-GIF.
-7. **Persistence** (§6) — table + hook, opt-in.
-8. **Graph algos + Networking/OS waitlist** — last, biggest lift.
+## Phase 4 — Storage mirror
 
-## Out of scope
+Edge function `mirror-storage` runs hourly via cron:
+- Lists all buckets on primary.
+- For each object modified since last run, downloads → uploads to mirror.
+- Tracks state in `mirror_storage_cursor` table.
 
-- No content for Networking / OS tracks yet — waitlist only.
-- No AI-generated explanations (separate future track).
-- No mobile-native gestures beyond what framer-motion gives us.
+## Phase 5 — Auth users mirror
 
-Pick which sections you want in the first cut and I'll start on §1 order unless you say otherwise.
+Auth users can't stream. Nightly cron:
+- Edge function `mirror-auth-users` calls admin `listUsers()` on primary.
+- Upserts into mirror via admin `createUser()` / `updateUserById()`.
+- Password hashes preserved via `password_hash` field (Supabase admin API supports this).
+
+Caveat: users signed up in last <24h before failover won't be in mirror. Acceptable for DR.
+
+## Phase 6 — Health check + auto failover
+
+Client-side change in `src/integrations/supabase/client.ts`:
+- Wrap client init: check `localStorage.use_mirror` flag.
+- If true → build client with `MIRROR_SUPABASE_URL` + anon key.
+
+Background health monitor (`src/lib/mirrorFailover.ts`):
+- Every 30s: `fetch(PRIMARY_URL + '/rest/v1/', { method: HEAD })` with 5s timeout.
+- 3 consecutive failures → set flag → soft reload page.
+- 3 consecutive successes while on mirror → clear flag → reload.
+
+Toast banner on top: "⚠️ Running on backup — read-only mode" when mirror active.
+
+**Important**: mirror is **read-only** during failover — writes would create split-brain. `App.tsx` wraps mutations with a guard that shows "Backend recovering, try again in a minute" when mirror flag is set.
+
+## Phase 7 — Edge functions
+
+Edge function code lives in GitHub already. External project deploys same code via Supabase CLI whenever primary functions change. Secrets synced manually.
+
+Not automated — functions change less often than data.
+
+## Cost estimate
+
+- External Supabase: free tier fits until ~500MB / 50k MAU, then $25/mo Pro.
+- Extra Cloud edge function invocations: ~8,640/day for mirror-drain = well within free tier.
+- Storage double-writes: 2× bandwidth on file uploads.
+
+## What I'll build first (approve to proceed)
+
+**Milestone 1 (this turn)**: Phase 1 setup checklist + Phase 2 schema-export edge function. You run one manual step (create external project, add 3 secrets) and I hand you a SQL file to paste.
+
+**Milestone 2 (next turn)**: `mirror_outbox` table + generic trigger bootstrap + `mirror-drain` edge function + cron job. Data starts flowing.
+
+**Milestone 3**: Storage mirror + auth mirror + health check UI.
+
+## Non-negotiable warnings
+
+- Mirror is **eventual consistency** — 5-30 sec typical, more under load.
+- During failover you get **read-only** app. Writes wait for primary to recover.
+- 287 migrations already applied — future migrations must be **replayed manually** on mirror. I'll add a checklist in `/admin/mirror-health`.
+- Row-level security policies also need to match — schema export includes them.
+- Cost & credit usage go up (2× edge function calls, 2× storage bandwidth).

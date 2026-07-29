@@ -3,6 +3,48 @@ import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
 
 const BATCH = 500;
 
+const q = (s: string) => `"${String(s).replace(/"/g, '""')}"`;
+
+/**
+ * Insert a row on the mirror with FK/trigger checks disabled.
+ * Used when normal PostgREST upsert fails with 23503 (parent row not mirrored yet).
+ * Returns null on success, or an error string.
+ */
+async function fkFallbackWith(
+  mirrorUrl: string,
+  mirrorKey: string,
+  row: { table_name: string; row_pk: Record<string, unknown> | null; row_data: unknown },
+): Promise<string | null> {
+  const pkCols = Object.keys(row.row_pk ?? {});
+  const data = row.row_data as Record<string, unknown>;
+  if (!data) return "no row_data";
+  const cols = Object.keys(data);
+  const setList = cols
+    .filter((c) => !pkCols.includes(c))
+    .map((c) => `${q(c)} = excluded.${q(c)}`)
+    .join(", ");
+  const json = JSON.stringify(data).replace(/'/g, "''");
+  const tbl = `public.${q(row.table_name)}`;
+  const sql = `
+    set local session_replication_role = replica;
+    insert into ${tbl} (${cols.map(q).join(", ")})
+    select ${cols.map((c) => `x.${q(c)}`).join(", ")}
+    from jsonb_populate_record(null::${tbl}, '${json}'::jsonb) as x
+    ${pkCols.length ? `on conflict (${pkCols.map(q).join(", ")}) do ${setList ? `update set ${setList}` : "nothing"}` : ""};`;
+
+  const res = await fetch(`${mirrorUrl}/rest/v1/rpc/exec_sql`, {
+    method: "POST",
+    headers: {
+      apikey: mirrorKey,
+      Authorization: `Bearer ${mirrorKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ sql }),
+  });
+  return res.ok ? null : (await res.text()).slice(0, 300);
+}
+
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });

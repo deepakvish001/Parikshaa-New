@@ -13,6 +13,8 @@ import { FaviconNotificationProvider } from "@/contexts/FaviconNotificationConte
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { RouteRestorer } from "@/components/RouteRestorer";
 import { CrossTabAuthSync } from "@/components/CrossTabAuthSync";
+import { ActivityTracker } from "@/components/ActivityTracker";
+
 import TopicPalettePreview from "@/pages/dev/TopicPalettePreview";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import BrandAmbientBackdrop from "@/components/BrandAmbientBackdrop";
@@ -203,6 +205,8 @@ const App = () => (
             <BrowserRouter>
               <RouteRestorer />
               <CrossTabAuthSync />
+              <ActivityTracker />
+
               <RouteSeo />
               <Routes>
                 <Route path="/" element={<Index />} />

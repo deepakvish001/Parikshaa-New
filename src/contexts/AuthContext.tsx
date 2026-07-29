@@ -171,6 +171,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(nextUser);
         setAuthReady(true);
 
+        // Audit trail: record sign-in / sign-out / account update events.
+        if (event === "SIGNED_IN" && nextUser?.id !== loadedUserId) {
+          void logActivity("login", "Signed in", nextUser?.email ?? null, {
+            provider: nextUser?.app_metadata?.provider,
+            user_agent: typeof navigator !== "undefined" ? navigator.userAgent : undefined,
+          });
+        } else if (event === "SIGNED_OUT") {
+          void logActivity("logout", "Signed out");
+        } else if (event === "USER_UPDATED") {
+          void logActivity("account_update", "Updated account credentials");
+        } else if (event === "PASSWORD_RECOVERY") {
+          void logActivity("password_recovery", "Started password recovery");
+        }
+
+
         // Ignore pure token refreshes — user identity hasn't changed, no need
         // to refetch profile or flip loading. Same for USER_UPDATED metadata
         // pings that don't change the user id.

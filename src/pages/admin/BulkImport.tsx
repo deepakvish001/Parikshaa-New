@@ -340,33 +340,52 @@ const BulkImport = () => {
   };
 
 
-  const runImport = async (mode: "all" | "skip-existing") => {
+  const runImport = async (mode: "all" | "skip-existing" | "update-existing") => {
     const valid = rows.filter((r) => r.ok);
     const targets =
       mode === "skip-existing"
         ? valid.filter((r) => !existingSlugs.has(r.data.slug))
-        : valid;
+        : mode === "update-existing"
+          ? valid.filter((r) => existingSlugs.has(r.data.slug))
+          : valid;
+    const skippedRows =
+      mode === "skip-existing"
+        ? valid.filter((r) => existingSlugs.has(r.data.slug))
+        : mode === "update-existing"
+          ? valid.filter((r) => !existingSlugs.has(r.data.slug))
+          : [];
     if (targets.length === 0) {
-      toast({ title: "Nothing to import", description: "All valid rows already exist." });
+      toast({ title: "Nothing to import", description: "No rows match the selected mode." });
       return;
     }
     setBusy(true);
+    const items: ImportResultItem[] = [];
     let created = 0;
     let updated = 0;
     let failed = 0;
     for (const r of targets) {
       const wasExisting = existingSlugs.has(r.data.slug);
       const { error } = await supabase.rpc("admin_save_problem", { payload: r.data as any });
-      if (error) failed++;
-      else if (wasExisting) updated++;
-      else created++;
+      if (error) {
+        failed++;
+        items.push({ row: r.index + 1, slug: r.data.slug, title: r.data.title, outcome: "failed", error: error.message });
+      } else if (wasExisting) {
+        updated++;
+        items.push({ row: r.index + 1, slug: r.data.slug, title: r.data.title, outcome: "updated" });
+      } else {
+        created++;
+        items.push({ row: r.index + 1, slug: r.data.slug, title: r.data.title, outcome: "created" });
+      }
+    }
+    for (const r of skippedRows) {
+      items.push({ row: r.index + 1, slug: r.data.slug, title: r.data.title, outcome: "skipped" });
     }
     setBusy(false);
+    setResults({ ran_at: new Date().toISOString(), mode, items });
     toast({
       title: "Import complete",
-      description: `${created} new · ${updated} updated · ${failed} failed`,
+      description: `${created} new · ${updated} updated · ${skippedRows.length} skipped · ${failed} failed`,
     });
-    if (created + updated > 0) nav("/admin/problems");
   };
 
   const handleImportClick = () => {
@@ -378,6 +397,39 @@ const BulkImport = () => {
       return;
     }
     void runImport("all");
+  };
+
+  const importSingle = () => {
+    const text = singleJson.trim();
+    if (!text) {
+      toast({ title: "Paste a JSON object first", variant: "destructive" });
+      return;
+    }
+    let parsed: any;
+    try {
+      parsed = JSON.parse(text);
+    } catch (e: any) {
+      toast({ title: "Invalid JSON", description: e.message, variant: "destructive" });
+      return;
+    }
+    const list = Array.isArray(parsed) ? parsed : [parsed];
+    if (list.length !== 1) {
+      toast({
+        title: "Single-problem mode",
+        description: "Paste exactly one problem object (or use bulk upload above).",
+        variant: "destructive",
+      });
+      return;
+    }
+    const next = list.map((raw, i) => parseRow(raw, i));
+    setRows(next);
+    if (!next[0].ok) {
+      toast({
+        title: "Validation failed",
+        description: next[0].error ?? "Row is invalid.",
+        variant: "destructive",
+      });
+    }
   };
 
 

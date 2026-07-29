@@ -4781,6 +4781,7 @@ export type Database = {
           updated_at: string
         }[]
       }
+      mirror_local_q: { Args: { q: string }; Returns: Json }
       mirror_mark_failure: {
         Args: { _err: string; _id: number }
         Returns: undefined

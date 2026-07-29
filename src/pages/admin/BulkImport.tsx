@@ -582,6 +582,16 @@ const BulkImport = () => {
                   {invalidCount} invalid
                 </Badge>
               )}
+              {overwriteCount > 0 && (
+                <Badge variant="secondary" className="bg-amber-500/15 text-amber-500">
+                  {overwriteCount} will update
+                </Badge>
+              )}
+              {newCount > 0 && (
+                <Badge variant="secondary" className="bg-sky-500/15 text-sky-500">
+                  {newCount} new
+                </Badge>
+              )}
               <Badge variant="outline">{rows.length} total</Badge>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -598,11 +608,12 @@ const BulkImport = () => {
                   </Button>
                 </>
               )}
-              <Button onClick={importValid} disabled={busy || validCount === 0}>
+              <Button onClick={handleImportClick} disabled={busy || validCount === 0}>
                 {busy ? "Importing…" : `Import ${validCount} problems`}
               </Button>
             </div>
           </div>
+
 
           {invalidCount > 0 && (
             <div className="mb-3 rounded-md border border-rose-500/30 bg-rose-500/5 p-3 text-xs">

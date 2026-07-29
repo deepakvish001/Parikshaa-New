@@ -90,8 +90,18 @@ Deno.serve(async (req) => {
       if (res.ok) {
         okIds.push(row.id);
       } else {
-        errored.push({ id: row.id, msg: `${res.status} ${(await res.text()).slice(0, 400)}` });
+        const txt = (await res.text()).slice(0, 400);
+        // FK violation = ordering issue (parent not mirrored yet).
+        // Retry with replication-role=replica so FKs/triggers are bypassed.
+        if (res.status === 409 && txt.includes("23503") && row.op !== "delete") {
+          const fb = await fkFallback(row);
+          if (fb === null) okIds.push(row.id);
+          else errored.push({ id: row.id, msg: `fallback: ${fb}` });
+        } else {
+          errored.push({ id: row.id, msg: `${res.status} ${txt}` });
+        }
       }
+
     } catch (e) {
       errored.push({ id: row.id, msg: String(e).slice(0, 400) });
     }

@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Upload, FileJson, CheckCircle2, AlertTriangle, Database } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { Upload, FileJson, CheckCircle2, AlertTriangle, Database, ChevronDown, ChevronRight, Download, FilePlus2 } from "lucide-react";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -222,12 +223,45 @@ export const SQL_TEMPLATE = JSON.stringify(
   2,
 );
 
+type ExistingRecord = {
+  slug: string;
+  title: string | null;
+  difficulty: string | null;
+  description: string | null;
+  topics: string[] | null;
+  is_published: boolean | null;
+  cpu_time_limit_sec: number | null;
+  memory_limit_kb: number | null;
+};
+
+type ImportOutcome = "created" | "updated" | "skipped" | "failed";
+type ImportResultItem = {
+  row: number;
+  slug: string;
+  title: string;
+  outcome: ImportOutcome;
+  error?: string;
+};
+type ImportResults = {
+  ran_at: string;
+  mode: "all" | "skip-existing" | "update-existing";
+  items: ImportResultItem[];
+};
+
 const BulkImport = () => {
   const [rows, setRows] = useState<Row[]>([]);
   const [busy, setBusy] = useState(false);
-  const [existingSlugs, setExistingSlugs] = useState<Set<string>>(new Set());
+  const [existingRecords, setExistingRecords] = useState<Map<string, ExistingRecord>>(new Map());
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [singleJson, setSingleJson] = useState("");
+  const [expanded, setExpanded] = useState<Set<number>>(new Set());
+  const [results, setResults] = useState<ImportResults | null>(null);
   const nav = useNavigate();
+
+  const existingSlugs = useMemo(
+    () => new Set(existingRecords.keys()),
+    [existingRecords],
+  );
 
   const parseRow = (raw: any, index: number): Row => {
     const r = ProblemSchema.safeParse(raw);
@@ -245,30 +279,30 @@ const BulkImport = () => {
     };
   };
 
-  // Detect which slugs already exist in DB so we can label them "Update" vs
-  // "New" and prompt the admin before overwriting.
+  // Detect which slugs already exist in DB (and fetch key fields for diffing)
+  // so we can label them "Update" vs "New" and show old-vs-new conflicts.
   useEffect(() => {
     const slugs = Array.from(
       new Set(rows.filter((r) => r.ok && r.data?.slug).map((r) => r.data.slug as string)),
     );
     if (slugs.length === 0) {
-      setExistingSlugs(new Set());
+      setExistingRecords(new Map());
       return;
     }
     let cancelled = false;
     (async () => {
       const CHUNK = 300;
-      const found = new Set<string>();
+      const found = new Map<string, ExistingRecord>();
       for (let i = 0; i < slugs.length; i += CHUNK) {
         const chunk = slugs.slice(i, i + CHUNK);
         const { data, error } = await supabase
           .from("coding_problems")
-          .select("slug")
+          .select("slug,title,difficulty,description,topics,is_published,cpu_time_limit_sec,memory_limit_kb")
           .in("slug", chunk);
         if (error) break;
-        (data ?? []).forEach((r: any) => found.add(r.slug));
+        (data ?? []).forEach((r: any) => found.set(r.slug, r as ExistingRecord));
       }
-      if (!cancelled) setExistingSlugs(found);
+      if (!cancelled) setExistingRecords(found);
     })();
     return () => {
       cancelled = true;
@@ -306,33 +340,52 @@ const BulkImport = () => {
   };
 
 
-  const runImport = async (mode: "all" | "skip-existing") => {
+  const runImport = async (mode: "all" | "skip-existing" | "update-existing") => {
     const valid = rows.filter((r) => r.ok);
     const targets =
       mode === "skip-existing"
         ? valid.filter((r) => !existingSlugs.has(r.data.slug))
-        : valid;
+        : mode === "update-existing"
+          ? valid.filter((r) => existingSlugs.has(r.data.slug))
+          : valid;
+    const skippedRows =
+      mode === "skip-existing"
+        ? valid.filter((r) => existingSlugs.has(r.data.slug))
+        : mode === "update-existing"
+          ? valid.filter((r) => !existingSlugs.has(r.data.slug))
+          : [];
     if (targets.length === 0) {
-      toast({ title: "Nothing to import", description: "All valid rows already exist." });
+      toast({ title: "Nothing to import", description: "No rows match the selected mode." });
       return;
     }
     setBusy(true);
+    const items: ImportResultItem[] = [];
     let created = 0;
     let updated = 0;
     let failed = 0;
     for (const r of targets) {
       const wasExisting = existingSlugs.has(r.data.slug);
       const { error } = await supabase.rpc("admin_save_problem", { payload: r.data as any });
-      if (error) failed++;
-      else if (wasExisting) updated++;
-      else created++;
+      if (error) {
+        failed++;
+        items.push({ row: r.index + 1, slug: r.data.slug, title: r.data.title, outcome: "failed", error: error.message });
+      } else if (wasExisting) {
+        updated++;
+        items.push({ row: r.index + 1, slug: r.data.slug, title: r.data.title, outcome: "updated" });
+      } else {
+        created++;
+        items.push({ row: r.index + 1, slug: r.data.slug, title: r.data.title, outcome: "created" });
+      }
+    }
+    for (const r of skippedRows) {
+      items.push({ row: r.index + 1, slug: r.data.slug, title: r.data.title, outcome: "skipped" });
     }
     setBusy(false);
+    setResults({ ran_at: new Date().toISOString(), mode, items });
     toast({
       title: "Import complete",
-      description: `${created} new · ${updated} updated · ${failed} failed`,
+      description: `${created} new · ${updated} updated · ${skippedRows.length} skipped · ${failed} failed`,
     });
-    if (created + updated > 0) nav("/admin/problems");
   };
 
   const handleImportClick = () => {
@@ -344,6 +397,39 @@ const BulkImport = () => {
       return;
     }
     void runImport("all");
+  };
+
+  const importSingle = () => {
+    const text = singleJson.trim();
+    if (!text) {
+      toast({ title: "Paste a JSON object first", variant: "destructive" });
+      return;
+    }
+    let parsed: any;
+    try {
+      parsed = JSON.parse(text);
+    } catch (e: any) {
+      toast({ title: "Invalid JSON", description: e.message, variant: "destructive" });
+      return;
+    }
+    const list = Array.isArray(parsed) ? parsed : [parsed];
+    if (list.length !== 1) {
+      toast({
+        title: "Single-problem mode",
+        description: "Paste exactly one problem object (or use bulk upload above).",
+        variant: "destructive",
+      });
+      return;
+    }
+    const next = list.map((raw, i) => parseRow(raw, i));
+    setRows(next);
+    if (!next[0].ok) {
+      toast({
+        title: "Validation failed",
+        description: next[0].error ?? "Row is invalid.",
+        variant: "destructive",
+      });
+    }
   };
 
 
@@ -573,6 +659,115 @@ const BulkImport = () => {
         </label>
       </Card>
 
+      <Card className="mt-4 p-4">
+        <div className="mb-2 flex items-center gap-2">
+          <FilePlus2 className="h-4 w-4 text-muted-foreground" />
+          <h2 className="text-sm font-medium">Single problem — paste JSON</h2>
+        </div>
+        <p className="mb-2 text-xs text-muted-foreground">
+          Paste one problem object. If the slug already exists you'll be able to choose
+          Skip, Update, or Override with a confirmation.
+        </p>
+        <Textarea
+          value={singleJson}
+          onChange={(e) => setSingleJson(e.target.value)}
+          placeholder='{ "slug": "two-sum", "title": "Two Sum", "difficulty": "easy", ... }'
+          className="min-h-[140px] font-mono text-xs"
+        />
+        <div className="mt-2 flex justify-end">
+          <Button size="sm" variant="outline" onClick={importSingle}>
+            Load into preview
+          </Button>
+        </div>
+      </Card>
+
+      {results && (
+        <Card className="mt-4 p-4">
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <h2 className="text-sm font-semibold">Last import results</h2>
+              <Badge variant="outline" className="text-[10px]">
+                {new Date(results.ran_at).toLocaleString()} · mode: {results.mode}
+              </Badge>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => {
+                  const esc = (v: unknown) => {
+                    const s = v == null ? "" : String(v);
+                    return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+                  };
+                  const header = ["row", "slug", "title", "outcome", "error"];
+                  const lines = [header.join(",")].concat(
+                    results.items.map((it) =>
+                      [it.row, esc(it.slug), esc(it.title), it.outcome, esc(it.error ?? "")].join(","),
+                    ),
+                  );
+                  const blob = new Blob([lines.join("\n")], { type: "text/csv" });
+                  const a = document.createElement("a");
+                  a.href = URL.createObjectURL(blob);
+                  a.download = `bulk-import-results-${Date.now()}.csv`;
+                  a.click();
+                }}
+              >
+                <Download className="mr-2 h-4 w-4" /> Results CSV
+              </Button>
+              <Button size="sm" variant="ghost" onClick={() => setResults(null)}>
+                Dismiss
+              </Button>
+              <Button size="sm" onClick={() => nav("/admin/problems")}>
+                Go to problems
+              </Button>
+            </div>
+          </div>
+          {(() => {
+            const c = { created: 0, updated: 0, skipped: 0, failed: 0 };
+            results.items.forEach((it) => c[it.outcome]++);
+            return (
+              <div className="mb-3 flex flex-wrap gap-2">
+                <Badge className="bg-sky-500/15 text-sky-500">{c.created} new</Badge>
+                <Badge className="bg-amber-500/15 text-amber-500">{c.updated} updated</Badge>
+                <Badge className="bg-muted text-muted-foreground">{c.skipped} skipped</Badge>
+                <Badge className="bg-rose-500/15 text-rose-500">{c.failed} failed</Badge>
+              </div>
+            );
+          })()}
+          <div className="max-h-[280px] space-y-1 overflow-y-auto">
+            {results.items.map((it) => (
+              <div
+                key={`${it.row}-${it.slug}`}
+                className="flex items-start justify-between gap-3 rounded-md border p-2 text-xs"
+              >
+                <div className="min-w-0">
+                  <p className="truncate font-mono">
+                    Row {it.row} — {it.slug} — {it.title}
+                  </p>
+                  {it.error && (
+                    <p className="mt-0.5 text-rose-500">{it.error}</p>
+                  )}
+                </div>
+                <Badge
+                  className={
+                    it.outcome === "created"
+                      ? "bg-sky-500/15 text-sky-500"
+                      : it.outcome === "updated"
+                        ? "bg-amber-500/15 text-amber-500"
+                        : it.outcome === "skipped"
+                          ? "bg-muted text-muted-foreground"
+                          : "bg-rose-500/15 text-rose-500"
+                  }
+                >
+                  {it.outcome}
+                </Badge>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
+
+
 
       {rows.length > 0 && (
         <Card className="mt-4 p-4">
@@ -633,52 +828,133 @@ const BulkImport = () => {
           )}
 
           <div className="max-h-[480px] space-y-1 overflow-y-auto">
-            {rows.map((r) => (
-              <div
-                key={r.index}
-                className={`flex items-start gap-2 rounded-md border p-2 text-sm ${
-                  r.ok ? "border-emerald-500/30" : "border-rose-500/30 bg-rose-500/5"
-                }`}
-              >
-                {r.ok ? (
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
-                ) : (
-                  <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose-500" />
-                )}
-                <div className="min-w-0 flex-1">
-                  <p className="flex flex-wrap items-center gap-2 font-mono text-xs">
-                    <span className="text-muted-foreground">Row {r.index + 1}</span>
-                    <span>— {r.raw?.slug ?? "(no slug)"} — {r.raw?.title ?? "?"}</span>
-                    {r.ok && existingSlugs.has(r.data.slug) && (
-                      <Badge variant="secondary" className="bg-amber-500/15 text-amber-500">
-                        Update
-                      </Badge>
+            {rows.map((r) => {
+              const isExisting = r.ok && existingSlugs.has(r.data.slug);
+              const existing = isExisting ? existingRecords.get(r.data.slug) : undefined;
+              const isOpen = expanded.has(r.index);
+              const diffFields: Array<{ key: keyof ExistingRecord; label: string }> = [
+                { key: "title", label: "title" },
+                { key: "difficulty", label: "difficulty" },
+                { key: "is_published", label: "is_published" },
+                { key: "cpu_time_limit_sec", label: "cpu_time_limit_sec" },
+                { key: "memory_limit_kb", label: "memory_limit_kb" },
+                { key: "topics", label: "topics" },
+                { key: "description", label: "description" },
+              ];
+              const fmt = (v: unknown) => {
+                if (v == null) return "—";
+                if (Array.isArray(v)) return v.join(", ") || "—";
+                if (typeof v === "string") return v.length > 160 ? v.slice(0, 160) + "…" : v;
+                return String(v);
+              };
+              const eq = (a: unknown, b: unknown) => {
+                if (Array.isArray(a) && Array.isArray(b))
+                  return a.length === b.length && a.every((x, i) => x === b[i]);
+                return (a ?? null) === (b ?? null);
+              };
+              return (
+                <div
+                  key={r.index}
+                  className={`rounded-md border p-2 text-sm ${
+                    r.ok ? "border-emerald-500/30" : "border-rose-500/30 bg-rose-500/5"
+                  }`}
+                >
+                  <div className="flex items-start gap-2">
+                    {r.ok ? (
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
+                    ) : (
+                      <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose-500" />
                     )}
-                    {r.ok && !existingSlugs.has(r.data.slug) && (
-                      <Badge variant="secondary" className="bg-sky-500/15 text-sky-500">
-                        New
-                      </Badge>
-                    )}
-                  </p>
-                  {r.issues && r.issues.length > 0 && (
-                    <ul className="mt-1 space-y-0.5 text-xs text-rose-500">
-                      {r.issues.map((iss, idx) => (
-                        <li key={idx}>
-                          <code className="rounded bg-rose-500/10 px-1 py-0.5 font-mono">
-                            {iss.path}
-                          </code>{" "}
-                          {iss.message}
-                        </li>
-                      ))}
-                    </ul>
+                    <div className="min-w-0 flex-1">
+                      <p className="flex flex-wrap items-center gap-2 font-mono text-xs">
+                        <span className="text-muted-foreground">Row {r.index + 1}</span>
+                        <span>— {r.raw?.slug ?? "(no slug)"} — {r.raw?.title ?? "?"}</span>
+                        {isExisting && (
+                          <Badge variant="secondary" className="bg-amber-500/15 text-amber-500">
+                            Update
+                          </Badge>
+                        )}
+                        {r.ok && !isExisting && (
+                          <Badge variant="secondary" className="bg-sky-500/15 text-sky-500">
+                            New
+                          </Badge>
+                        )}
+                        {isExisting && existing && (
+                          <button
+                            type="button"
+                            className="ml-auto inline-flex items-center gap-1 rounded border px-1.5 py-0.5 text-[10px] text-muted-foreground hover:bg-muted"
+                            onClick={() => {
+                              setExpanded((prev) => {
+                                const next = new Set(prev);
+                                next.has(r.index) ? next.delete(r.index) : next.add(r.index);
+                                return next;
+                              });
+                            }}
+                          >
+                            {isOpen ? <ChevronDown className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
+                            {isOpen ? "Hide diff" : "View diff"}
+                          </button>
+                        )}
+                      </p>
+                      {r.issues && r.issues.length > 0 && (
+                        <ul className="mt-1 space-y-0.5 text-xs text-rose-500">
+                          {r.issues.map((iss, idx) => (
+                            <li key={idx}>
+                              <code className="rounded bg-rose-500/10 px-1 py-0.5 font-mono">
+                                {iss.path}
+                              </code>{" "}
+                              {iss.message}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </div>
+                  {isOpen && existing && r.ok && (
+                    <div className="mt-2 overflow-x-auto rounded border bg-muted/30 p-2">
+                      <table className="w-full text-[11px]">
+                        <thead className="text-muted-foreground">
+                          <tr>
+                            <th className="pr-2 text-left font-medium">Field</th>
+                            <th className="pr-2 text-left font-medium">Existing (DB)</th>
+                            <th className="text-left font-medium">Incoming</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {diffFields.map(({ key, label }) => {
+                            const oldV = (existing as any)[key];
+                            const newV = (r.data as any)[key];
+                            const changed = !eq(oldV, newV);
+                            return (
+                              <tr
+                                key={label}
+                                className={changed ? "align-top" : "align-top text-muted-foreground"}
+                              >
+                                <td className="pr-2 font-mono">{label}</td>
+                                <td className="pr-2">
+                                  <span className={changed ? "text-rose-500" : ""}>{fmt(oldV)}</span>
+                                </td>
+                                <td>
+                                  <span className={changed ? "text-emerald-500" : ""}>{fmt(newV)}</span>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                      <p className="mt-1 text-[10px] text-muted-foreground">
+                        Diff shows key metadata only. Choosing <strong>Override</strong> replaces all
+                        fields (starter code, tests, sql_spec, etc.) with the incoming payload.
+                      </p>
+                    </div>
                   )}
                 </div>
-
-              </div>
-            ))}
+              );
+            })}
           </div>
         </Card>
       )}
+
 
       <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
         <AlertDialogContent>
@@ -706,6 +982,16 @@ const BulkImport = () => {
                 Skip existing · import {newCount} new
               </Button>
             )}
+            <Button
+              variant="outline"
+              disabled={busy}
+              onClick={() => {
+                setConfirmOpen(false);
+                void runImport("update-existing");
+              }}
+            >
+              Update existing only · {overwriteCount}
+            </Button>
             <AlertDialogAction
               disabled={busy}
               onClick={() => {

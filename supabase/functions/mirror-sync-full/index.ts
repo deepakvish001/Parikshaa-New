@@ -523,14 +523,15 @@ Deno.serve(async (req) => {
   }
 
   if (want("schema")) {
-    const r = await checkDrift(primary);
+    const r = await checkDrift(primary, applySchema);
     out.schema = r as unknown as Json;
     await primary.from("mirror_sync_log").insert({
       kind: "schema",
-      ok: !r.error && (r.missingCount ?? 0) === 0,
+      ok: !r.error && r.errors.length === 0,
       details: r as unknown as Json,
     });
   }
+
 
   return json(out);
 });

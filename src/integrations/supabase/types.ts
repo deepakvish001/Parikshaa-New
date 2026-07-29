@@ -4742,6 +4742,10 @@ export type Database = {
       }
       is_blog_editor: { Args: { _uid: string }; Returns: boolean }
       mirror_attach_all: { Args: never; Returns: number }
+      mirror_mark_failure: {
+        Args: { _err: string; _id: number }
+        Returns: undefined
+      }
       recompute_contest_leaderboard: {
         Args: { _contest_id: string }
         Returns: undefined

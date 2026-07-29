@@ -4611,6 +4611,18 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      attach_activity_trigger: {
+        Args: {
+          _desccol?: string
+          _events: string
+          _table: string
+          _title: string
+          _type: string
+          _usercol?: string
+          _when?: string
+        }
+        Returns: undefined
+      }
       audit_daily_completions: { Args: never; Returns: Json }
       audit_daily_completions_all: { Args: never; Returns: Json }
       award_earned_achievements: { Args: never; Returns: string[] }
@@ -4765,6 +4777,15 @@ export type Database = {
         Returns: boolean
       }
       is_blog_editor: { Args: { _uid: string }; Returns: boolean }
+      log_client_event: {
+        Args: {
+          _activity_type: string
+          _description?: string
+          _metadata?: Json
+          _title: string
+        }
+        Returns: string
+      }
       mirror_attach_all: { Args: never; Returns: number }
       mirror_auth_export: {
         Args: { _after?: string; _limit?: number }

@@ -679,6 +679,45 @@ const BulkImport = () => {
           </div>
         </Card>
       )}
+
+      <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Override {overwriteCount} existing problem{overwriteCount === 1 ? "" : "s"}?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {overwriteCount} of {validCount} problems already exist with the same slug.
+              Overriding will replace their content (description, tests, starter code, etc.)
+              with the uploaded version. {newCount} new problem{newCount === 1 ? "" : "s"} will be created either way.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={busy}>Cancel</AlertDialogCancel>
+            {newCount > 0 && (
+              <Button
+                variant="outline"
+                disabled={busy}
+                onClick={() => {
+                  setConfirmOpen(false);
+                  void runImport("skip-existing");
+                }}
+              >
+                Skip existing · import {newCount} new
+              </Button>
+            )}
+            <AlertDialogAction
+              disabled={busy}
+              onClick={() => {
+                setConfirmOpen(false);
+                void runImport("all");
+              }}
+            >
+              Override & import all
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </AdminShell>
   );
 };

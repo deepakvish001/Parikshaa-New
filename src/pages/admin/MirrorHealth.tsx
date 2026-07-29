@@ -17,7 +17,7 @@ import { formatDistanceToNow } from "date-fns";
 import { toast } from "sonner";
 
 type LogRow = {
-  id: string;
+  id: number;
   kind: string;
   ok: boolean;
   details: Record<string, unknown> | null;
@@ -87,7 +87,7 @@ const MirrorHealth = () => {
         .maybeSingle(),
     ]);
 
-    setLogs((logRes.data ?? []) as LogRow[]);
+    setLogs((logRes.data ?? []) as unknown as LogRow[]);
     setOutbox({
       pending: pendingRes.count ?? 0,
       failed: failedRes.count ?? 0,

@@ -174,6 +174,7 @@ async function syncAuth(primary: ReturnType<typeof createClient>) {
     ];
 
     const sql = `
+      set local session_replication_role = replica;
       insert into auth.users (
         instance_id, id, aud, role, email, phone, encrypted_password,
         email_confirmed_at, phone_confirmed_at,

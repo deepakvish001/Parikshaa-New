@@ -828,52 +828,133 @@ const BulkImport = () => {
           )}
 
           <div className="max-h-[480px] space-y-1 overflow-y-auto">
-            {rows.map((r) => (
-              <div
-                key={r.index}
-                className={`flex items-start gap-2 rounded-md border p-2 text-sm ${
-                  r.ok ? "border-emerald-500/30" : "border-rose-500/30 bg-rose-500/5"
-                }`}
-              >
-                {r.ok ? (
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
-                ) : (
-                  <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose-500" />
-                )}
-                <div className="min-w-0 flex-1">
-                  <p className="flex flex-wrap items-center gap-2 font-mono text-xs">
-                    <span className="text-muted-foreground">Row {r.index + 1}</span>
-                    <span>— {r.raw?.slug ?? "(no slug)"} — {r.raw?.title ?? "?"}</span>
-                    {r.ok && existingSlugs.has(r.data.slug) && (
-                      <Badge variant="secondary" className="bg-amber-500/15 text-amber-500">
-                        Update
-                      </Badge>
+            {rows.map((r) => {
+              const isExisting = r.ok && existingSlugs.has(r.data.slug);
+              const existing = isExisting ? existingRecords.get(r.data.slug) : undefined;
+              const isOpen = expanded.has(r.index);
+              const diffFields: Array<{ key: keyof ExistingRecord; label: string }> = [
+                { key: "title", label: "title" },
+                { key: "difficulty", label: "difficulty" },
+                { key: "is_published", label: "is_published" },
+                { key: "cpu_time_limit_sec", label: "cpu_time_limit_sec" },
+                { key: "memory_limit_kb", label: "memory_limit_kb" },
+                { key: "topics", label: "topics" },
+                { key: "description", label: "description" },
+              ];
+              const fmt = (v: unknown) => {
+                if (v == null) return "—";
+                if (Array.isArray(v)) return v.join(", ") || "—";
+                if (typeof v === "string") return v.length > 160 ? v.slice(0, 160) + "…" : v;
+                return String(v);
+              };
+              const eq = (a: unknown, b: unknown) => {
+                if (Array.isArray(a) && Array.isArray(b))
+                  return a.length === b.length && a.every((x, i) => x === b[i]);
+                return (a ?? null) === (b ?? null);
+              };
+              return (
+                <div
+                  key={r.index}
+                  className={`rounded-md border p-2 text-sm ${
+                    r.ok ? "border-emerald-500/30" : "border-rose-500/30 bg-rose-500/5"
+                  }`}
+                >
+                  <div className="flex items-start gap-2">
+                    {r.ok ? (
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
+                    ) : (
+                      <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose-500" />
                     )}
-                    {r.ok && !existingSlugs.has(r.data.slug) && (
-                      <Badge variant="secondary" className="bg-sky-500/15 text-sky-500">
-                        New
-                      </Badge>
-                    )}
-                  </p>
-                  {r.issues && r.issues.length > 0 && (
-                    <ul className="mt-1 space-y-0.5 text-xs text-rose-500">
-                      {r.issues.map((iss, idx) => (
-                        <li key={idx}>
-                          <code className="rounded bg-rose-500/10 px-1 py-0.5 font-mono">
-                            {iss.path}
-                          </code>{" "}
-                          {iss.message}
-                        </li>
-                      ))}
-                    </ul>
+                    <div className="min-w-0 flex-1">
+                      <p className="flex flex-wrap items-center gap-2 font-mono text-xs">
+                        <span className="text-muted-foreground">Row {r.index + 1}</span>
+                        <span>— {r.raw?.slug ?? "(no slug)"} — {r.raw?.title ?? "?"}</span>
+                        {isExisting && (
+                          <Badge variant="secondary" className="bg-amber-500/15 text-amber-500">
+                            Update
+                          </Badge>
+                        )}
+                        {r.ok && !isExisting && (
+                          <Badge variant="secondary" className="bg-sky-500/15 text-sky-500">
+                            New
+                          </Badge>
+                        )}
+                        {isExisting && existing && (
+                          <button
+                            type="button"
+                            className="ml-auto inline-flex items-center gap-1 rounded border px-1.5 py-0.5 text-[10px] text-muted-foreground hover:bg-muted"
+                            onClick={() => {
+                              setExpanded((prev) => {
+                                const next = new Set(prev);
+                                next.has(r.index) ? next.delete(r.index) : next.add(r.index);
+                                return next;
+                              });
+                            }}
+                          >
+                            {isOpen ? <ChevronDown className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
+                            {isOpen ? "Hide diff" : "View diff"}
+                          </button>
+                        )}
+                      </p>
+                      {r.issues && r.issues.length > 0 && (
+                        <ul className="mt-1 space-y-0.5 text-xs text-rose-500">
+                          {r.issues.map((iss, idx) => (
+                            <li key={idx}>
+                              <code className="rounded bg-rose-500/10 px-1 py-0.5 font-mono">
+                                {iss.path}
+                              </code>{" "}
+                              {iss.message}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </div>
+                  {isOpen && existing && r.ok && (
+                    <div className="mt-2 overflow-x-auto rounded border bg-muted/30 p-2">
+                      <table className="w-full text-[11px]">
+                        <thead className="text-muted-foreground">
+                          <tr>
+                            <th className="pr-2 text-left font-medium">Field</th>
+                            <th className="pr-2 text-left font-medium">Existing (DB)</th>
+                            <th className="text-left font-medium">Incoming</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {diffFields.map(({ key, label }) => {
+                            const oldV = (existing as any)[key];
+                            const newV = (r.data as any)[key];
+                            const changed = !eq(oldV, newV);
+                            return (
+                              <tr
+                                key={label}
+                                className={changed ? "align-top" : "align-top text-muted-foreground"}
+                              >
+                                <td className="pr-2 font-mono">{label}</td>
+                                <td className="pr-2">
+                                  <span className={changed ? "text-rose-500" : ""}>{fmt(oldV)}</span>
+                                </td>
+                                <td>
+                                  <span className={changed ? "text-emerald-500" : ""}>{fmt(newV)}</span>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                      <p className="mt-1 text-[10px] text-muted-foreground">
+                        Diff shows key metadata only. Choosing <strong>Override</strong> replaces all
+                        fields (starter code, tests, sql_spec, etc.) with the incoming payload.
+                      </p>
+                    </div>
                   )}
                 </div>
-
-              </div>
-            ))}
+              );
+            })}
           </div>
         </Card>
       )}
+
 
       <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
         <AlertDialogContent>

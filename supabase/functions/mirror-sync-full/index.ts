@@ -491,10 +491,13 @@ Deno.serve(async (req) => {
   const primary = createClient(primaryUrl, primaryKey, { auth: { persistSession: false } });
 
   let only: string[] | null = null;
+  let applySchema = true;
   try {
     const body = await req.json();
     if (Array.isArray(body?.only)) only = body.only;
+    if (body?.applySchema === false || body?.dryRun === true) applySchema = false;
   } catch (_) { /* no body */ }
+
 
   const want = (k: string) => !only || only.includes(k);
   const out: Json = {};

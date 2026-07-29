@@ -659,6 +659,115 @@ const BulkImport = () => {
         </label>
       </Card>
 
+      <Card className="mt-4 p-4">
+        <div className="mb-2 flex items-center gap-2">
+          <FilePlus2 className="h-4 w-4 text-muted-foreground" />
+          <h2 className="text-sm font-medium">Single problem — paste JSON</h2>
+        </div>
+        <p className="mb-2 text-xs text-muted-foreground">
+          Paste one problem object. If the slug already exists you'll be able to choose
+          Skip, Update, or Override with a confirmation.
+        </p>
+        <Textarea
+          value={singleJson}
+          onChange={(e) => setSingleJson(e.target.value)}
+          placeholder='{ "slug": "two-sum", "title": "Two Sum", "difficulty": "easy", ... }'
+          className="min-h-[140px] font-mono text-xs"
+        />
+        <div className="mt-2 flex justify-end">
+          <Button size="sm" variant="outline" onClick={importSingle}>
+            Load into preview
+          </Button>
+        </div>
+      </Card>
+
+      {results && (
+        <Card className="mt-4 p-4">
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <h2 className="text-sm font-semibold">Last import results</h2>
+              <Badge variant="outline" className="text-[10px]">
+                {new Date(results.ran_at).toLocaleString()} · mode: {results.mode}
+              </Badge>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => {
+                  const esc = (v: unknown) => {
+                    const s = v == null ? "" : String(v);
+                    return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+                  };
+                  const header = ["row", "slug", "title", "outcome", "error"];
+                  const lines = [header.join(",")].concat(
+                    results.items.map((it) =>
+                      [it.row, esc(it.slug), esc(it.title), it.outcome, esc(it.error ?? "")].join(","),
+                    ),
+                  );
+                  const blob = new Blob([lines.join("\n")], { type: "text/csv" });
+                  const a = document.createElement("a");
+                  a.href = URL.createObjectURL(blob);
+                  a.download = `bulk-import-results-${Date.now()}.csv`;
+                  a.click();
+                }}
+              >
+                <Download className="mr-2 h-4 w-4" /> Results CSV
+              </Button>
+              <Button size="sm" variant="ghost" onClick={() => setResults(null)}>
+                Dismiss
+              </Button>
+              <Button size="sm" onClick={() => nav("/admin/problems")}>
+                Go to problems
+              </Button>
+            </div>
+          </div>
+          {(() => {
+            const c = { created: 0, updated: 0, skipped: 0, failed: 0 };
+            results.items.forEach((it) => c[it.outcome]++);
+            return (
+              <div className="mb-3 flex flex-wrap gap-2">
+                <Badge className="bg-sky-500/15 text-sky-500">{c.created} new</Badge>
+                <Badge className="bg-amber-500/15 text-amber-500">{c.updated} updated</Badge>
+                <Badge className="bg-muted text-muted-foreground">{c.skipped} skipped</Badge>
+                <Badge className="bg-rose-500/15 text-rose-500">{c.failed} failed</Badge>
+              </div>
+            );
+          })()}
+          <div className="max-h-[280px] space-y-1 overflow-y-auto">
+            {results.items.map((it) => (
+              <div
+                key={`${it.row}-${it.slug}`}
+                className="flex items-start justify-between gap-3 rounded-md border p-2 text-xs"
+              >
+                <div className="min-w-0">
+                  <p className="truncate font-mono">
+                    Row {it.row} — {it.slug} — {it.title}
+                  </p>
+                  {it.error && (
+                    <p className="mt-0.5 text-rose-500">{it.error}</p>
+                  )}
+                </div>
+                <Badge
+                  className={
+                    it.outcome === "created"
+                      ? "bg-sky-500/15 text-sky-500"
+                      : it.outcome === "updated"
+                        ? "bg-amber-500/15 text-amber-500"
+                        : it.outcome === "skipped"
+                          ? "bg-muted text-muted-foreground"
+                          : "bg-rose-500/15 text-rose-500"
+                  }
+                >
+                  {it.outcome}
+                </Badge>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
+
+
 
       {rows.length > 0 && (
         <Card className="mt-4 p-4">

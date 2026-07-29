@@ -225,6 +225,8 @@ export const SQL_TEMPLATE = JSON.stringify(
 const BulkImport = () => {
   const [rows, setRows] = useState<Row[]>([]);
   const [busy, setBusy] = useState(false);
+  const [existingSlugs, setExistingSlugs] = useState<Set<string>>(new Set());
+  const [confirmOpen, setConfirmOpen] = useState(false);
   const nav = useNavigate();
 
   const parseRow = (raw: any, index: number): Row => {
@@ -242,6 +244,36 @@ const BulkImport = () => {
       index,
     };
   };
+
+  // Detect which slugs already exist in DB so we can label them "Update" vs
+  // "New" and prompt the admin before overwriting.
+  useEffect(() => {
+    const slugs = Array.from(
+      new Set(rows.filter((r) => r.ok && r.data?.slug).map((r) => r.data.slug as string)),
+    );
+    if (slugs.length === 0) {
+      setExistingSlugs(new Set());
+      return;
+    }
+    let cancelled = false;
+    (async () => {
+      const CHUNK = 300;
+      const found = new Set<string>();
+      for (let i = 0; i < slugs.length; i += CHUNK) {
+        const chunk = slugs.slice(i, i + CHUNK);
+        const { data, error } = await supabase
+          .from("coding_problems")
+          .select("slug")
+          .in("slug", chunk);
+        if (error) break;
+        (data ?? []).forEach((r: any) => found.add(r.slug));
+      }
+      if (!cancelled) setExistingSlugs(found);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [rows]);
 
   const handleFiles = async (files: File[]) => {
     if (files.length === 0) return;
@@ -274,24 +306,47 @@ const BulkImport = () => {
   };
 
 
-  const importValid = async () => {
+  const runImport = async (mode: "all" | "skip-existing") => {
     const valid = rows.filter((r) => r.ok);
-    if (valid.length === 0) return;
+    const targets =
+      mode === "skip-existing"
+        ? valid.filter((r) => !existingSlugs.has(r.data.slug))
+        : valid;
+    if (targets.length === 0) {
+      toast({ title: "Nothing to import", description: "All valid rows already exist." });
+      return;
+    }
     setBusy(true);
-    let success = 0;
+    let created = 0;
+    let updated = 0;
     let failed = 0;
-    for (const r of valid) {
+    for (const r of targets) {
+      const wasExisting = existingSlugs.has(r.data.slug);
       const { error } = await supabase.rpc("admin_save_problem", { payload: r.data as any });
       if (error) failed++;
-      else success++;
+      else if (wasExisting) updated++;
+      else created++;
     }
     setBusy(false);
     toast({
       title: "Import complete",
-      description: `${success} saved, ${failed} failed.`,
+      description: `${created} new · ${updated} updated · ${failed} failed`,
     });
-    if (success > 0) nav("/admin/problems");
+    if (created + updated > 0) nav("/admin/problems");
   };
+
+  const handleImportClick = () => {
+    const valid = rows.filter((r) => r.ok);
+    if (valid.length === 0) return;
+    const overlap = valid.filter((r) => existingSlugs.has(r.data.slug)).length;
+    if (overlap > 0) {
+      setConfirmOpen(true);
+      return;
+    }
+    void runImport("all");
+  };
+
+
 
   const downloadBlob = (content: string, filename: string) => {
     const blob = new Blob([content], { type: "application/json" });

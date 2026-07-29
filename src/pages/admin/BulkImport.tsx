@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,16 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 import { CODING_PROBLEMS } from "@/data/codingProblemsData";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export const ProblemSchema = z.object({
   slug: z.string().min(1).max(120),
@@ -215,6 +225,8 @@ export const SQL_TEMPLATE = JSON.stringify(
 const BulkImport = () => {
   const [rows, setRows] = useState<Row[]>([]);
   const [busy, setBusy] = useState(false);
+  const [existingSlugs, setExistingSlugs] = useState<Set<string>>(new Set());
+  const [confirmOpen, setConfirmOpen] = useState(false);
   const nav = useNavigate();
 
   const parseRow = (raw: any, index: number): Row => {
@@ -232,6 +244,36 @@ const BulkImport = () => {
       index,
     };
   };
+
+  // Detect which slugs already exist in DB so we can label them "Update" vs
+  // "New" and prompt the admin before overwriting.
+  useEffect(() => {
+    const slugs = Array.from(
+      new Set(rows.filter((r) => r.ok && r.data?.slug).map((r) => r.data.slug as string)),
+    );
+    if (slugs.length === 0) {
+      setExistingSlugs(new Set());
+      return;
+    }
+    let cancelled = false;
+    (async () => {
+      const CHUNK = 300;
+      const found = new Set<string>();
+      for (let i = 0; i < slugs.length; i += CHUNK) {
+        const chunk = slugs.slice(i, i + CHUNK);
+        const { data, error } = await supabase
+          .from("coding_problems")
+          .select("slug")
+          .in("slug", chunk);
+        if (error) break;
+        (data ?? []).forEach((r: any) => found.add(r.slug));
+      }
+      if (!cancelled) setExistingSlugs(found);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [rows]);
 
   const handleFiles = async (files: File[]) => {
     if (files.length === 0) return;
@@ -264,24 +306,47 @@ const BulkImport = () => {
   };
 
 
-  const importValid = async () => {
+  const runImport = async (mode: "all" | "skip-existing") => {
     const valid = rows.filter((r) => r.ok);
-    if (valid.length === 0) return;
+    const targets =
+      mode === "skip-existing"
+        ? valid.filter((r) => !existingSlugs.has(r.data.slug))
+        : valid;
+    if (targets.length === 0) {
+      toast({ title: "Nothing to import", description: "All valid rows already exist." });
+      return;
+    }
     setBusy(true);
-    let success = 0;
+    let created = 0;
+    let updated = 0;
     let failed = 0;
-    for (const r of valid) {
+    for (const r of targets) {
+      const wasExisting = existingSlugs.has(r.data.slug);
       const { error } = await supabase.rpc("admin_save_problem", { payload: r.data as any });
       if (error) failed++;
-      else success++;
+      else if (wasExisting) updated++;
+      else created++;
     }
     setBusy(false);
     toast({
       title: "Import complete",
-      description: `${success} saved, ${failed} failed.`,
+      description: `${created} new · ${updated} updated · ${failed} failed`,
     });
-    if (success > 0) nav("/admin/problems");
+    if (created + updated > 0) nav("/admin/problems");
   };
+
+  const handleImportClick = () => {
+    const valid = rows.filter((r) => r.ok);
+    if (valid.length === 0) return;
+    const overlap = valid.filter((r) => existingSlugs.has(r.data.slug)).length;
+    if (overlap > 0) {
+      setConfirmOpen(true);
+      return;
+    }
+    void runImport("all");
+  };
+
+
 
   const downloadBlob = (content: string, filename: string) => {
     const blob = new Blob([content], { type: "application/json" });
@@ -338,6 +403,10 @@ const BulkImport = () => {
 
   const validCount = rows.filter((r) => r.ok).length;
   const invalidCount = rows.length - validCount;
+  const overwriteCount = rows.filter(
+    (r) => r.ok && existingSlugs.has(r.data.slug),
+  ).length;
+  const newCount = validCount - overwriteCount;
 
   const downloadJson = (data: unknown, filename: string) => {
     const blob = new Blob([JSON.stringify(data, null, 2)], {
@@ -517,6 +586,16 @@ const BulkImport = () => {
                   {invalidCount} invalid
                 </Badge>
               )}
+              {overwriteCount > 0 && (
+                <Badge variant="secondary" className="bg-amber-500/15 text-amber-500">
+                  {overwriteCount} will update
+                </Badge>
+              )}
+              {newCount > 0 && (
+                <Badge variant="secondary" className="bg-sky-500/15 text-sky-500">
+                  {newCount} new
+                </Badge>
+              )}
               <Badge variant="outline">{rows.length} total</Badge>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -533,11 +612,12 @@ const BulkImport = () => {
                   </Button>
                 </>
               )}
-              <Button onClick={importValid} disabled={busy || validCount === 0}>
+              <Button onClick={handleImportClick} disabled={busy || validCount === 0}>
                 {busy ? "Importing…" : `Import ${validCount} problems`}
               </Button>
             </div>
           </div>
+
 
           {invalidCount > 0 && (
             <div className="mb-3 rounded-md border border-rose-500/30 bg-rose-500/5 p-3 text-xs">
@@ -566,9 +646,19 @@ const BulkImport = () => {
                   <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose-500" />
                 )}
                 <div className="min-w-0 flex-1">
-                  <p className="font-mono text-xs">
-                    <span className="text-muted-foreground">Row {r.index + 1}</span> —{" "}
-                    {r.raw?.slug ?? "(no slug)"} — {r.raw?.title ?? "?"}
+                  <p className="flex flex-wrap items-center gap-2 font-mono text-xs">
+                    <span className="text-muted-foreground">Row {r.index + 1}</span>
+                    <span>— {r.raw?.slug ?? "(no slug)"} — {r.raw?.title ?? "?"}</span>
+                    {r.ok && existingSlugs.has(r.data.slug) && (
+                      <Badge variant="secondary" className="bg-amber-500/15 text-amber-500">
+                        Update
+                      </Badge>
+                    )}
+                    {r.ok && !existingSlugs.has(r.data.slug) && (
+                      <Badge variant="secondary" className="bg-sky-500/15 text-sky-500">
+                        New
+                      </Badge>
+                    )}
                   </p>
                   {r.issues && r.issues.length > 0 && (
                     <ul className="mt-1 space-y-0.5 text-xs text-rose-500">
@@ -583,11 +673,51 @@ const BulkImport = () => {
                     </ul>
                   )}
                 </div>
+
               </div>
             ))}
           </div>
         </Card>
       )}
+
+      <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Override {overwriteCount} existing problem{overwriteCount === 1 ? "" : "s"}?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {overwriteCount} of {validCount} problems already exist with the same slug.
+              Overriding will replace their content (description, tests, starter code, etc.)
+              with the uploaded version. {newCount} new problem{newCount === 1 ? "" : "s"} will be created either way.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={busy}>Cancel</AlertDialogCancel>
+            {newCount > 0 && (
+              <Button
+                variant="outline"
+                disabled={busy}
+                onClick={() => {
+                  setConfirmOpen(false);
+                  void runImport("skip-existing");
+                }}
+              >
+                Skip existing · import {newCount} new
+              </Button>
+            )}
+            <AlertDialogAction
+              disabled={busy}
+              onClick={() => {
+                setConfirmOpen(false);
+                void runImport("all");
+              }}
+            >
+              Override & import all
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </AdminShell>
   );
 };

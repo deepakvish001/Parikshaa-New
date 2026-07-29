@@ -646,9 +646,19 @@ const BulkImport = () => {
                   <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose-500" />
                 )}
                 <div className="min-w-0 flex-1">
-                  <p className="font-mono text-xs">
-                    <span className="text-muted-foreground">Row {r.index + 1}</span> —{" "}
-                    {r.raw?.slug ?? "(no slug)"} — {r.raw?.title ?? "?"}
+                  <p className="flex flex-wrap items-center gap-2 font-mono text-xs">
+                    <span className="text-muted-foreground">Row {r.index + 1}</span>
+                    <span>— {r.raw?.slug ?? "(no slug)"} — {r.raw?.title ?? "?"}</span>
+                    {r.ok && existingSlugs.has(r.data.slug) && (
+                      <Badge variant="secondary" className="bg-amber-500/15 text-amber-500">
+                        Update
+                      </Badge>
+                    )}
+                    {r.ok && !existingSlugs.has(r.data.slug) && (
+                      <Badge variant="secondary" className="bg-sky-500/15 text-sky-500">
+                        New
+                      </Badge>
+                    )}
                   </p>
                   {r.issues && r.issues.length > 0 && (
                     <ul className="mt-1 space-y-0.5 text-xs text-rose-500">
@@ -663,6 +673,7 @@ const BulkImport = () => {
                     </ul>
                   )}
                 </div>
+
               </div>
             ))}
           </div>

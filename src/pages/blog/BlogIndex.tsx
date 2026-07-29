@@ -269,7 +269,31 @@ export default function BlogIndex() {
         )}
       </div>
 
-      {/* Categories */}
+      {/* Category cards — visible browse grid (hidden when a filter is active) */}
+      {!cat && !tag && !search && selectedLangs.length === 0 && categories.length > 0 && (
+        <section aria-label="Browse by category" className="mb-6">
+          <h2 className="text-sm font-semibold text-muted-foreground mb-2 uppercase tracking-wider">
+            Browse by category
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+            {categories.map((c) => (
+              <button
+                key={c.id}
+                type="button"
+                onClick={() => updateParam("cat", c.slug)}
+                className="text-left p-3 rounded-lg border border-border/60 hover:border-primary/50 hover:bg-accent/40 transition-colors"
+              >
+                <div className="font-medium text-sm">{c.name}</div>
+                {c.description && (
+                  <div className="text-xs text-muted-foreground line-clamp-1">{c.description}</div>
+                )}
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Categories filter chips */}
       <div role="group" aria-label="Filter by category" className="flex gap-1 mb-2 flex-wrap">
         <FilterChip active={!cat} onClick={() => updateParam("cat", undefined)}>All</FilterChip>
         {categories.map((c) => (
@@ -282,6 +306,7 @@ export default function BlogIndex() {
           </FilterChip>
         ))}
       </div>
+
 
       {/* Tags */}
       {visibleTags.length > 0 && (

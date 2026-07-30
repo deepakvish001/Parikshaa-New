@@ -290,6 +290,33 @@ const Q = {
               from pg_proc p
               join pg_namespace n on n.oid = p.pronamespace
               where n.nspname = 'public' and p.prokind in ('f','p')`,
+  sequences: `select sequencename as name, start_value::text as start_value,
+                     min_value::text as min_value, max_value::text as max_value,
+                     increment_by::text as increment_by,
+                     coalesce(last_value, start_value)::text as last_value
+              from pg_sequences where schemaname = 'public'`,
+  views: `select viewname as name, definition as def, false as ismat
+          from pg_views where schemaname = 'public'
+          union all
+          select matviewname as name, definition as def, true as ismat
+          from pg_matviews where schemaname = 'public'`,
+  triggers: `select c.relname as tbl, t.tgname as name, pg_get_triggerdef(t.oid) as def
+             from pg_trigger t
+             join pg_class c on c.oid = t.tgrelid
+             join pg_namespace n on n.oid = c.relnamespace
+             where n.nspname = 'public' and not t.tgisinternal`,
+  grants: `select table_name as tbl, grantee, privilege_type as priv
+           from information_schema.role_table_grants
+           where table_schema = 'public'
+             and grantee in ('anon','authenticated','service_role')`,
+  extensions: `select e.extname as name, n.nspname as schema
+               from pg_extension e join pg_namespace n on n.oid = e.extnamespace
+               where e.extname not in ('plpgsql')`,
+  storagePolicies: `select tablename as tbl, policyname as name, permissive, roles::text as roles,
+                           cmd, coalesce(qual,'') as qual, coalesce(with_check,'') as wcheck
+                    from pg_policies where schemaname = 'storage'`,
+  cron: `select jobname as name, schedule, command, active
+         from cron.job`,
 };
 
 type ColRow = { tbl: string; col: string; coltype: string; notnull: boolean; coldefault: string | null; pos: number };
@@ -297,6 +324,13 @@ type ConRow = { tbl: string; name: string; kind: string; def: string };
 type IdxRow = { tbl: string; name: string; def: string };
 type PolRow = { tbl: string; name: string; permissive: string; roles: string; cmd: string; qual: string; wcheck: string };
 type FnRow = { name: string; args: string; def: string };
+type SeqRow = { name: string; start_value: string; min_value: string; max_value: string; increment_by: string; last_value: string };
+type ViewRow = { name: string; def: string; ismat: boolean };
+type TrgRow = { tbl: string; name: string; def: string };
+type GrantRow = { tbl: string; grantee: string; priv: string };
+type ExtRow = { name: string; schema: string };
+type CronRow = { name: string; schedule: string; command: string; active: boolean };
+
 
 function colDdl(c: ColRow) {
   let s = `"${c.col}" ${c.coltype}`;

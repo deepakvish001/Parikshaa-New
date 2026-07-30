@@ -219,13 +219,22 @@ export default function BlogPost() {
           </script>
         </Helmet>
 
-        <Button asChild variant="ghost" size="sm" className="mb-4">
-          <Link to="/blog">
-            <ArrowLeft className="mr-2 h-4 w-4" />All posts
-          </Link>
-        </Button>
+        <div className="mb-4 flex flex-wrap items-center gap-2">
+          {backTo && (
+            <Button asChild variant="outline" size="sm">
+              <Link to={backTo}>
+                <ArrowLeft className="mr-2 h-4 w-4" />Back to resources
+              </Link>
+            </Button>
+          )}
+          <Button asChild variant="ghost" size="sm">
+            <Link to="/blog">
+              <ArrowLeft className="mr-2 h-4 w-4" />All posts
+            </Link>
+          </Button>
+        </div>
 
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_220px]">
+        <div className="grid gap-10">
           <div className="min-w-0 max-w-3xl mx-auto w-full">
             <div className="flex gap-2 mb-3 flex-wrap">
               {post.categories?.map((c) => (

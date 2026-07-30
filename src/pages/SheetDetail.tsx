@@ -1597,6 +1597,33 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
     }
   }, [revisionView]);
 
+  // Remember scroll position so returning from an article lands where we left.
+  const scrollKey = `sheet:${currentSheetId}:scroll`;
+  useEffect(() => {
+    const save = () => {
+      try { sessionStorage.setItem(scrollKey, String(window.scrollY)); } catch { /* noop */ }
+    };
+    window.addEventListener("scroll", save, { passive: true });
+    window.addEventListener("pagehide", save);
+    return () => {
+      save();
+      window.removeEventListener("scroll", save);
+      window.removeEventListener("pagehide", save);
+    };
+  }, [scrollKey]);
+
+  useEffect(() => {
+    let y = 0;
+    try { y = Number(sessionStorage.getItem(scrollKey) || 0); } catch { /* noop */ }
+    if (!y) return;
+    // Wait for sections to paint before restoring.
+    const t = window.setTimeout(() => window.scrollTo({ top: y, behavior: "auto" }), 120);
+    return () => window.clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentSheetId]);
+
+
+
   // Load user progress from database
   const loadProgress = useCallback(async () => {
     if (!user || !sheetData) {

@@ -730,7 +730,9 @@ function TopicRow({
   onUndoLastPass?: (id: string) => void;
   onResetPasses?: (id: string) => void;
 }) {
+  const rowNavigate = useNavigate();
   const getEstTime = (topic: Topic) => {
+
     if (topic.estTime) return topic.estTime;
     switch (topic.difficulty) {
       case "Easy": return "15 min";

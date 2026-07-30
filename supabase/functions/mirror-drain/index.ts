@@ -139,8 +139,10 @@ Deno.serve(async (req) => {
         let payload = row.row_data as Record<string, unknown>;
         for (let i = 0; i < 8 && !res.ok; i++) {
           const t = await res.clone().text();
-          const m = t.match(/column "([^"]+)" is a generated column/i) ??
-            t.match(/cannot insert a non-DEFAULT value into column "([^"]+)"/i);
+          // Quotes arrive JSON-escaped (\"col\"), so allow an optional backslash.
+          const m = t.match(/column \\?"([^"\\]+)\\?" is a generated column/i) ??
+            t.match(/non-DEFAULT value into column \\?"([^"\\]+)\\?"/i);
+
           if (!m || !(m[1] in payload)) break;
           payload = { ...payload };
           delete payload[m[1]];

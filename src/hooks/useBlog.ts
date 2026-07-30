@@ -220,6 +220,7 @@ export const useBlogLike = (postId: string | undefined) => {
     mutationFn: async () => {
       const { data: u } = await supabase.auth.getUser();
       if (!u.user) throw new Error("Sign in to like posts");
+      // Cache is optimistically updated in onMutate, so this is the NEW state.
       const targetLiked = qc.getQueryData<boolean>(["blog-like", postId]);
       if (targetLiked) {
         const { error } = await supabase
@@ -291,6 +292,7 @@ export const useBlogBookmark = (postId: string | undefined) => {
     mutationFn: async () => {
       const { data: u } = await supabase.auth.getUser();
       if (!u.user) throw new Error("Sign in to bookmark posts");
+      // Cache is optimistically updated in onMutate, so this is the NEW state.
       const targetBookmarked = qc.getQueryData<boolean>(["blog-bookmark", postId]);
       if (targetBookmarked) {
         const { error } = await supabase

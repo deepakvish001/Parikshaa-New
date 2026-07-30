@@ -537,11 +537,6 @@ export default function BlogPost() {
               </section>
             )}
           </div>
-          <aside className="hidden lg:block">
-            <div className="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto pr-1 [scrollbar-width:thin]">
-              <TableOfContents items={toc} activeId={activeHeadingId} />
-            </div>
-          </aside>
         </div>
       </article>
     </>

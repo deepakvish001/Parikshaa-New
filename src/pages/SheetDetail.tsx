@@ -1,4 +1,8 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef, useDeferredValue } from "react";
+import React, { useState, useEffect, useCallback, useMemo, useRef, useContext, createContext, useDeferredValue } from "react";
+
+// Lets deeply-nested topic rows open an article inline (DBMS sheet only)
+// without threading a prop through every intermediate component.
+const InlineArticleContext = createContext<((url: string, topicId: string) => void) | null>(null);
 import { usePersistedDisclosure } from "@/hooks/usePersistedDisclosure";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
@@ -25,7 +29,17 @@ import {
   RotateCcw,
   CircleDot,
   ArrowRight,
+  ListTree,
+  Share2,
 } from "lucide-react";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import {
   AlertDialog,
@@ -735,6 +749,7 @@ function TopicRow({
   onResetPasses?: (id: string) => void;
 }) {
   const rowNavigate = useNavigate();
+  const openInline = useContext(InlineArticleContext);
 
   const getEstTime = (topic: Topic) => {
 
@@ -878,6 +893,10 @@ function TopicRow({
                     e.preventDefault();
                     // Always open the article on its own page URL, but remember
                     // where we came from so the reader can offer a way back.
+                    if (openInline) {
+                      openInline(url, topic.id);
+                      return;
+                    }
                     const backTo = window.location.pathname + window.location.search;
                     try {
                       sessionStorage.setItem("blog:backTo", backTo);
@@ -1213,6 +1232,7 @@ function SectionCard({
   onResetSection,
   onJumpToTopic,
   persistKey,
+  jumpSignal,
 }: { 
   section: Section; 
   onToggleTopic: (id: string) => void;
@@ -1227,9 +1247,22 @@ function SectionCard({
   onResetSection?: (sectionId: string) => void;
   onJumpToTopic?: (topicId: string) => void;
   persistKey?: string;
+  jumpSignal?: { sectionId: string; subId?: string; ts: number } | null;
 }) {
   const [isOpen, setIsOpen] = usePersistedDisclosure(persistKey ?? null, false);
   const [openSubSignal, setOpenSubSignal] = useState<{ id: string; ts: number } | null>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Quick-jump / deep link: open this module (and sub-module) and scroll to it.
+  useEffect(() => {
+    if (!jumpSignal || jumpSignal.sectionId !== section.id) return;
+    setIsOpen(true);
+    if (jumpSignal.subId) setOpenSubSignal({ id: jumpSignal.subId, ts: jumpSignal.ts });
+    const t = window.setTimeout(() => {
+      sectionRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+    }, 60);
+    return () => window.clearTimeout(t);
+  }, [jumpSignal, section.id, setIsOpen]);
   const allTopics = section.subSections.flatMap(s => s.topics);
   const completed = allTopics.filter(t => t.completed).length;
   const total = allTopics.length;
@@ -1267,6 +1300,7 @@ function SectionCard({
   }, [completed, total, section.title, onSectionComplete]);
 
   return (
+    <div ref={sectionRef} id={`section-${section.id}`} className="scroll-mt-24">
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className="border-b border-border/50">
       <CollapsibleTrigger className="flex items-center justify-between w-full py-4 px-4 hover:bg-muted/30 transition-colors group gap-3">
         <div className="flex items-center gap-3 min-w-0">
@@ -1495,6 +1529,7 @@ function SectionCard({
         )}
       </AnimatePresence>
     </Collapsible>
+    </div>
   );
 }
 
@@ -1518,9 +1553,24 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   const articleSlug = searchParams.get("article") ?? "";
   const fromTopicId = searchParams.get("from") ?? "";
   // Legacy ?article= deep links now redirect to the article's own page URL.
+  // Inline article reading is a DBMS-sheet-only experience. Every other sheet
+  // keeps sending ?article= deep links to the article's own blog page.
+  const inlineArticlesEnabled = sheetId === "dbms-sheet";
   useEffect(() => {
-    if (articleSlug) navigate(`/blog/${articleSlug}`, { replace: true });
-  }, [articleSlug, navigate]);
+    if (articleSlug && !inlineArticlesEnabled) navigate(`/blog/${articleSlug}`, { replace: true });
+  }, [articleSlug, inlineArticlesEnabled, navigate]);
+
+  const openInlineArticle = useCallback(
+    (url: string, topicId: string) => {
+      const slug = url.replace(/^\/blog\//, "").replace(/^\//, "");
+      const next = new URLSearchParams(searchParams);
+      next.set("article", slug);
+      next.set("from", topicId);
+      try { sessionStorage.setItem(`sheet:${sheetId}:scroll`, String(window.scrollY)); } catch { /* noop */ }
+      setSearchParams(next);
+    },
+    [searchParams, setSearchParams, sheetId]
+  );
   const closeArticle = useCallback(() => {
 
     // Prefer history back so forward navigation stays available.
@@ -1563,6 +1613,46 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
 
   
   const currentSheetId = sheetId;
+
+  // Quick section jump + shareable deep links (?section=&sub=)
+  const [jumpOpen, setJumpOpen] = useState(false);
+  const [jumpSignal, setJumpSignal] = useState<{ sectionId: string; subId?: string; ts: number } | null>(null);
+  const deepSection = searchParams.get("section") ?? "";
+  const deepSub = searchParams.get("sub") ?? "";
+  useEffect(() => {
+    if (!deepSection) return;
+    setJumpSignal({ sectionId: deepSection, subId: deepSub || undefined, ts: Date.now() });
+  }, [deepSection, deepSub]);
+
+  const jumpToSection = useCallback(
+    (sectionId: string, subId?: string) => {
+      setJumpSignal({ sectionId, subId, ts: Date.now() });
+      const next = new URLSearchParams(searchParams);
+      next.set("section", sectionId);
+      if (subId) next.set("sub", subId); else next.delete("sub");
+      setSearchParams(next, { replace: true });
+      setJumpOpen(false);
+    },
+    [searchParams, setSearchParams]
+  );
+
+  const copyShareLink = useCallback(async () => {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("article");
+    url.searchParams.delete("from");
+    try {
+      await navigator.clipboard.writeText(url.toString());
+      toast({
+        title: "Link copied",
+        description: deepSection
+          ? "Recipients will open this sheet at the same module."
+          : "Recipients will open this sheet.",
+      });
+    } catch {
+      toast({ title: "Copy failed", description: url.toString(), variant: "destructive" });
+    }
+  }, [deepSection, toast]);
+
   const [sheetData, setSheetData] = useState<SheetData | null>(
     mockSheetData[currentSheetId] || mockSheetData["strivers-sde-sheet"]
   );
@@ -2441,6 +2531,49 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
             </span>
           </div>
 
+          {/* Quick module jump */}
+          <Popover open={jumpOpen} onOpenChange={setJumpOpen}>
+            <PopoverTrigger asChild>
+              <Button variant="outline" size="sm" className="gap-2 shrink-0">
+                <ListTree className="h-4 w-4" />
+                <span className="hidden sm:inline">Jump to module</span>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent align="end" className="p-0 w-[320px]">
+              <Command>
+                <CommandInput placeholder="Search modules & sub-modules..." />
+                <CommandList className="max-h-80">
+                  <CommandEmpty>No module found.</CommandEmpty>
+                  {sheetData.sections.map((section) => (
+                    <CommandGroup key={section.id} heading={section.title}>
+                      <CommandItem
+                        value={`${section.title} module`}
+                        onSelect={() => jumpToSection(section.id)}
+                      >
+                        Go to {section.title}
+                      </CommandItem>
+                      {section.subSections.map((ss) => (
+                        <CommandItem
+                          key={ss.id}
+                          value={`${section.title} ${ss.title}`}
+                          onSelect={() => jumpToSection(section.id, ss.id)}
+                        >
+                          <ChevronRight className="mr-2 h-3.5 w-3.5 text-muted-foreground" />
+                          {ss.title}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  ))}
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
+
+          <Button variant="outline" size="sm" className="gap-2 shrink-0" onClick={copyShareLink}>
+            <Share2 className="h-4 w-4" />
+            <span className="hidden lg:inline">Share</span>
+          </Button>
+
           {/* Streak Counter */}
           <StreakCounter variant="mini" />
           
@@ -2761,7 +2894,7 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
           <Card className="overflow-hidden">
             <CardContent className="p-0">
               {filteredSections.length > 0 ? (
-                <>
+                <InlineArticleContext.Provider value={inlineArticlesEnabled ? openInlineArticle : null}>
                   {filteredSections.map((section) => (
                     <SectionCard 
                       key={section.id} 
@@ -2778,9 +2911,10 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
                       onResetSection={handleResetSection}
                       onJumpToTopic={scrollToTopic}
                       persistKey={`sheet:${currentSheetId}:open:${section.id}`}
+                      jumpSignal={jumpSignal}
                     />
                   ))}
-                </>
+                </InlineArticleContext.Provider>
               ) : weekViewEmpty === "no-weeks" ? (
                 <div className="p-12 text-center">
                   <CalendarDays className="h-12 w-12 text-muted-foreground mx-auto mb-4" />

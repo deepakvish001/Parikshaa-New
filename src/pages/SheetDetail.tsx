@@ -1636,6 +1636,23 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
     [searchParams, setSearchParams]
   );
 
+  const copyShareLink = useCallback(async () => {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("article");
+    url.searchParams.delete("from");
+    try {
+      await navigator.clipboard.writeText(url.toString());
+      toast({
+        title: "Link copied",
+        description: deepSection
+          ? "Recipients will open this sheet at the same module."
+          : "Recipients will open this sheet.",
+      });
+    } catch {
+      toast({ title: "Copy failed", description: url.toString(), variant: "destructive" });
+    }
+  }, [deepSection, toast]);
+
   const [sheetData, setSheetData] = useState<SheetData | null>(
     mockSheetData[currentSheetId] || mockSheetData["strivers-sde-sheet"]
   );
@@ -2514,6 +2531,49 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
             </span>
           </div>
 
+          {/* Quick module jump */}
+          <Popover open={jumpOpen} onOpenChange={setJumpOpen}>
+            <PopoverTrigger asChild>
+              <Button variant="outline" size="sm" className="gap-2 shrink-0">
+                <ListTree className="h-4 w-4" />
+                <span className="hidden sm:inline">Jump to module</span>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent align="end" className="p-0 w-[320px]">
+              <Command>
+                <CommandInput placeholder="Search modules & sub-modules..." />
+                <CommandList className="max-h-80">
+                  <CommandEmpty>No module found.</CommandEmpty>
+                  {sheetData.sections.map((section) => (
+                    <CommandGroup key={section.id} heading={section.title}>
+                      <CommandItem
+                        value={`${section.title} module`}
+                        onSelect={() => jumpToSection(section.id)}
+                      >
+                        Go to {section.title}
+                      </CommandItem>
+                      {section.subSections.map((ss) => (
+                        <CommandItem
+                          key={ss.id}
+                          value={`${section.title} ${ss.title}`}
+                          onSelect={() => jumpToSection(section.id, ss.id)}
+                        >
+                          <ChevronRight className="mr-2 h-3.5 w-3.5 text-muted-foreground" />
+                          {ss.title}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  ))}
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
+
+          <Button variant="outline" size="sm" className="gap-2 shrink-0" onClick={copyShareLink}>
+            <Share2 className="h-4 w-4" />
+            <span className="hidden lg:inline">Share</span>
+          </Button>
+
           {/* Streak Counter */}
           <StreakCounter variant="mini" />
           
@@ -2834,7 +2894,7 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
           <Card className="overflow-hidden">
             <CardContent className="p-0">
               {filteredSections.length > 0 ? (
-                <>
+                <InlineArticleContext.Provider value={inlineArticlesEnabled ? openInlineArticle : null}>
                   {filteredSections.map((section) => (
                     <SectionCard 
                       key={section.id} 
@@ -2851,9 +2911,10 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
                       onResetSection={handleResetSection}
                       onJumpToTopic={scrollToTopic}
                       persistKey={`sheet:${currentSheetId}:open:${section.id}`}
+                      jumpSignal={jumpSignal}
                     />
                   ))}
-                </>
+                </InlineArticleContext.Provider>
               ) : weekViewEmpty === "no-weeks" ? (
                 <div className="p-12 text-center">
                   <CalendarDays className="h-12 w-12 text-muted-foreground mx-auto mb-4" />

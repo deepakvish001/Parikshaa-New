@@ -49,7 +49,7 @@ function ArticleSkeleton() {
 export function SheetArticleReader({ slug, fallbackTitle, onClose }: SheetArticleReaderProps) {
   const { data: post, isLoading, isError } = useBlogPost(slug);
 
-  const toc = useMemo(() => (post?.content ? extractToc(post.content) : []), [post?.content]);
+  const toc = useMemo(() => (post?.content_md ? extractToc(post.content_md) : []), [post?.content_md]);
 
   // Start each article at the top of the reader, not wherever the sheet was.
   useEffect(() => {
@@ -87,9 +87,9 @@ export function SheetArticleReader({ slug, fallbackTitle, onClose }: SheetArticl
           <header className="space-y-3">
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">{post.title}</h1>
             <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-              {post.reading_time_minutes ? (
+              {post.reading_time_min ? (
                 <span className="inline-flex items-center gap-1">
-                  <Clock className="h-3.5 w-3.5" /> {post.reading_time_minutes} min read
+                  <Clock className="h-3.5 w-3.5" /> {post.reading_time_min} min read
                 </span>
               ) : null}
               {(post.categories ?? []).map((c: any) => (
@@ -102,7 +102,7 @@ export function SheetArticleReader({ slug, fallbackTitle, onClose }: SheetArticl
 
           {toc.length > 1 && <InlineToc items={toc} />}
 
-          <BlogContent source={post.content ?? ""} />
+          <BlogContent source={post.content_md ?? ""} />
         </article>
       )}
     </div>

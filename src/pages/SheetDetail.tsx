@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef, useDeferredValue } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { 

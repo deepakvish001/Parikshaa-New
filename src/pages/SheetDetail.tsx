@@ -2337,7 +2337,30 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
     );
   }
 
+  // Deep-linkable inline article view (?article=<slug>) — rendered in the
+  // middle content area, with browser back/forward handled by the router.
+  if (articleSlug) {
+    return (
+      <div className="min-h-screen bg-background">
+        <header className="sticky top-0 z-40 border-b border-border/40 bg-background/80 backdrop-blur-md">
+          <div className="flex h-16 items-center gap-4 px-4 sm:px-6">
+            <Button variant="ghost" size="icon" onClick={closeArticle} className="shrink-0">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <div className="flex-1 min-w-0">
+              <h1 className="text-sm sm:text-base font-semibold truncate text-muted-foreground">
+                {sheetData.title}
+              </h1>
+            </div>
+          </div>
+        </header>
+        <SheetArticleReader slug={articleSlug} onClose={closeArticle} />
+      </div>
+    );
+  }
+
   return (
+
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="sticky top-0 z-40 border-b border-border/40 bg-background/80 backdrop-blur-md">

@@ -541,7 +541,114 @@ async function syncSchema(primary: ReturnType<typeof createClient>, apply: boole
     await run(`function ${key}`, `${f.def};`);
   }
 
+  // 6b) views + materialized views
+  try {
+    const [pViews, mViews] = await Promise.all([
+      pq<ViewRow>(primary, Q.views),
+      mq<ViewRow>(Q.views),
+    ]);
+    const haveView = new Map(mViews.map((v) => [v.name, v.def]));
+    for (const v of pViews) {
+      if (haveView.get(v.name) === v.def) continue;
+      const body = v.def.trim().replace(/;\s*$/, "");
+      if (v.ismat) {
+        if (haveView.has(v.name)) continue; // matviews can't be replaced in place
+        await run(`matview ${v.name}`, `create materialized view public."${v.name}" as ${body};`);
+      } else {
+        await run(`view ${v.name}`, `create or replace view public."${v.name}" as ${body};`);
+      }
+    }
+  } catch (e) {
+    errors.push(`views: ${(e as Error).message}`);
+  }
+
+  // 6c) triggers (skip mirror capture + activity triggers we manage locally)
+  try {
+    const [pTrg, mTrg] = await Promise.all([
+      pq<TrgRow>(primary, Q.triggers),
+      mq<TrgRow>(Q.triggers),
+    ]);
+    const haveTrg = new Map(mTrg.map((t) => [`${t.tbl}.${t.name}`, t.def]));
+    for (const t of pTrg) {
+      if (SKIP_TABLES.has(t.tbl)) continue;
+      if (t.name.startsWith("zz_mirror")) continue;
+      const key = `${t.tbl}.${t.name}`;
+      if (haveTrg.get(key) === t.def) continue;
+      await run(
+        `trigger ${key}`,
+        `drop trigger if exists "${t.name}" on public."${t.tbl}"; ${t.def};`,
+      );
+    }
+  } catch (e) {
+    errors.push(`triggers: ${(e as Error).message}`);
+  }
+
+  // 6d) table grants for API roles
+  try {
+    const [pGr, mGr] = await Promise.all([
+      pq<GrantRow>(primary, Q.grants),
+      mq<GrantRow>(Q.grants),
+    ]);
+    const haveGr = new Set(mGr.map((g) => `${g.tbl}.${g.grantee}.${g.priv}`));
+    const missing = new Map<string, Set<string>>();
+    for (const g of pGr) {
+      if (SKIP_TABLES.has(g.tbl)) continue;
+      if (haveGr.has(`${g.tbl}.${g.grantee}.${g.priv}`)) continue;
+      const k = `${g.tbl}|${g.grantee}`;
+      missing.set(k, (missing.get(k) ?? new Set()).add(g.priv));
+    }
+    for (const [k, privs] of missing) {
+      const [tbl, grantee] = k.split("|");
+      await run(
+        `grant ${grantee} on ${tbl}`,
+        `grant ${[...privs].join(", ")} on public."${tbl}" to ${grantee};`,
+      );
+    }
+  } catch (e) {
+    errors.push(`grants: ${(e as Error).message}`);
+  }
+
+  // 6e) storage policies
+  try {
+    const [pSp, mSp] = await Promise.all([
+      pq<PolRow>(primary, Q.storagePolicies),
+      mq<PolRow>(Q.storagePolicies),
+    ]);
+    const haveSp = new Set(mSp.map((p) => `${p.tbl}.${p.name}`));
+    for (const p of pSp) {
+      if (haveSp.has(`${p.tbl}.${p.name}`)) continue;
+      const roles = (p.roles || "{public}").replace(/[{}]/g, "");
+      const sql =
+        `create policy "${p.name}" on storage."${p.tbl}" as ${p.permissive === "PERMISSIVE" ? "permissive" : "restrictive"} for ${p.cmd.toLowerCase()} to ${roles}` +
+        (p.qual ? ` using (${p.qual})` : "") +
+        (p.wcheck ? ` with check (${p.wcheck})` : "") + ";";
+      await run(`storage policy ${p.tbl}.${p.name}`, sql);
+    }
+  } catch (e) {
+    errors.push(`storage policies: ${(e as Error).message}`);
+  }
+
+  // 6f) cron jobs (skip mirror jobs — those must only run on the primary)
+  try {
+    const [pCron, mCron] = await Promise.all([
+      pq<CronRow>(primary, Q.cron),
+      mq<CronRow>(Q.cron),
+    ]);
+    const haveCron = new Set(mCron.map((c) => c.name));
+    for (const c of pCron) {
+      if (!c.name || haveCron.has(c.name)) continue;
+      if (c.name.startsWith("mirror-")) continue;
+      const cmd = c.command.replace(/'/g, "''");
+      const nm = c.name.replace(/'/g, "''");
+      const sch = c.schedule.replace(/'/g, "''");
+      await run(`cron ${c.name}`, `select cron.schedule('${nm}', '${sch}', '${cmd}');`);
+    }
+  } catch (e) {
+    errors.push(`cron: ${(e as Error).message}`);
+  }
+
   // 7) make sure new primary tables get capture triggers
+
   let attached: unknown = null;
   if (apply && newTables.length > 0) {
     const { data } = await primary.rpc("mirror_attach_all");

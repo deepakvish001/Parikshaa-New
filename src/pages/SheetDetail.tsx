@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef, useDeferredValue } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { 
@@ -46,6 +46,8 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { WeekProgressPanel } from "@/components/sheets/WeekProgressPanel";
+import { SheetArticleReader } from "@/components/sheets/SheetArticleReader";
+
 import { RevisionPassControl } from "@/components/sheets/RevisionPassControl";
 import { RevisionViewToggle, type RevisionView } from "@/components/sheets/RevisionViewToggle";
 import {
@@ -731,7 +733,28 @@ function TopicRow({
   onResetPasses?: (id: string) => void;
 }) {
   const rowNavigate = useNavigate();
+  const [rowSearchParams, setRowSearchParams] = useSearchParams();
+  /**
+   * Opens a blog article inside the sheet's middle content area.
+   * Pushes ?article=<slug> so browser back/forward and deep links work,
+   * and remembers the current scroll offset so closing restores the row.
+   */
+  const openArticleInline = (slug: string, topicId: string) => {
+    try {
+      sessionStorage.setItem(
+        `sheet-scroll:${window.location.pathname}`,
+        String(window.scrollY),
+      );
+    } catch {
+      /* storage unavailable — scroll restore is best-effort */
+    }
+    const next = new URLSearchParams(rowSearchParams);
+    next.set("article", slug);
+    next.set("from", topicId);
+    setRowSearchParams(next);
+  };
   const getEstTime = (topic: Topic) => {
+
 
     if (topic.estTime) return topic.estTime;
     switch (topic.difficulty) {
@@ -867,12 +890,18 @@ function TopicRow({
                   target={topic.resourceUrl.startsWith("/") ? undefined : "_blank"} 
                   rel={topic.resourceUrl.startsWith("/") ? undefined : "noopener noreferrer"}
                   onClick={(e) => {
-                    if (topic.resourceUrl?.startsWith("/")) {
-                      e.preventDefault();
-                      rowNavigate(topic.resourceUrl);
+                    const url = topic.resourceUrl;
+                    if (!url?.startsWith("/")) return;
+                    e.preventDefault();
+                    if (url.startsWith("/blog/")) {
+                      // Open inside the sheet's middle section (deep-linkable)
+                      openArticleInline(url.replace(/^\/blog\//, ""), topic.id);
+                    } else {
+                      rowNavigate(url);
                     }
                   }}
                   className="inline-flex items-center justify-center w-8 h-8 rounded bg-muted hover:bg-muted/80 transition-colors"
+
 
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.9 }}
@@ -1492,6 +1521,50 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   const { toast } = useToast();
   const { requireAuth, LoginPromptDialog } = useRequireAuth();
   const { currentStreak, todayCompleted, refreshStreak } = useStreak();
+
+  // Inline article state lives in the URL so back/forward + deep links work.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const articleSlug = searchParams.get("article") ?? "";
+  const fromTopicId = searchParams.get("from") ?? "";
+  const closeArticle = useCallback(() => {
+    // Prefer history back so forward navigation stays available.
+    if (window.history.length > 1) navigate(-1);
+    else {
+      const next = new URLSearchParams(searchParams);
+      next.delete("article");
+      next.delete("from");
+      setSearchParams(next, { replace: true });
+    }
+  }, [navigate, searchParams, setSearchParams]);
+
+  // Restore scroll (or focus the originating row) when the article closes.
+  useEffect(() => {
+    if (articleSlug) return;
+    const key = `sheet-scroll:${window.location.pathname}`;
+    let saved: string | null = null;
+    try {
+      saved = sessionStorage.getItem(key);
+    } catch {
+      /* best-effort */
+    }
+    if (saved === null) return;
+    const y = Number(saved);
+    const raf = requestAnimationFrame(() => {
+      const row = fromTopicId
+        ? document.querySelector<HTMLElement>(`[data-topic-id="${CSS.escape(fromTopicId)}"]`)
+        : null;
+      if (row) row.scrollIntoView({ block: "center", behavior: "auto" });
+      else window.scrollTo({ top: y, behavior: "auto" });
+      try {
+        sessionStorage.removeItem(key);
+      } catch {
+        /* best-effort */
+      }
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [articleSlug, fromTopicId]);
+
+
   
   const currentSheetId = sheetId;
   const [sheetData, setSheetData] = useState<SheetData | null>(
@@ -2310,7 +2383,30 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
     );
   }
 
+  // Deep-linkable inline article view (?article=<slug>) — rendered in the
+  // middle content area, with browser back/forward handled by the router.
+  if (articleSlug) {
+    return (
+      <div className="min-h-screen bg-background">
+        <header className="sticky top-0 z-40 border-b border-border/40 bg-background/80 backdrop-blur-md">
+          <div className="flex h-16 items-center gap-4 px-4 sm:px-6">
+            <Button variant="ghost" size="icon" onClick={closeArticle} className="shrink-0">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <div className="flex-1 min-w-0">
+              <h1 className="text-sm sm:text-base font-semibold truncate text-muted-foreground">
+                {sheetData.title}
+              </h1>
+            </div>
+          </div>
+        </header>
+        <SheetArticleReader slug={articleSlug} onClose={closeArticle} />
+      </div>
+    );
+  }
+
   return (
+
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="sticky top-0 z-40 border-b border-border/40 bg-background/80 backdrop-blur-md">

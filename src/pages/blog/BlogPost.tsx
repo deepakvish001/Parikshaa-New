@@ -62,6 +62,17 @@ export default function BlogPost() {
     (params.category ? `${params.category}/${params.slug}` : params.slug) ??
     "";
   const slug = useMemo(() => normalizeBlogSlug(rawSlug), [rawSlug]);
+  // Where the reader came from (e.g. a sheet's resource list), so we can offer
+  // a "Back to resources" link. Router state first, sessionStorage on reload.
+  const backTo = useMemo(() => {
+    const fromState = (location.state as { backTo?: string } | null)?.backTo;
+    if (fromState) return fromState;
+    try {
+      return sessionStorage.getItem("blog:backTo") || null;
+    } catch {
+      return null;
+    }
+  }, [location.state]);
   // If normalization changed the URL, redirect to the canonical form.
   const canonicalPath = slug ? `/blog/${slug}` : "/blog";
   const needsRedirect =

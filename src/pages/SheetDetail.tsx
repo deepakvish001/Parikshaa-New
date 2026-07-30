@@ -46,6 +46,8 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { WeekProgressPanel } from "@/components/sheets/WeekProgressPanel";
+import { SheetArticleReader } from "@/components/sheets/SheetArticleReader";
+
 import { RevisionPassControl } from "@/components/sheets/RevisionPassControl";
 import { RevisionViewToggle, type RevisionView } from "@/components/sheets/RevisionViewToggle";
 import {

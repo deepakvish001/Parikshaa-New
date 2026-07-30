@@ -733,26 +733,7 @@ function TopicRow({
   onResetPasses?: (id: string) => void;
 }) {
   const rowNavigate = useNavigate();
-  const [rowSearchParams, setRowSearchParams] = useSearchParams();
-  /**
-   * Opens a blog article inside the sheet's middle content area.
-   * Pushes ?article=<slug> so browser back/forward and deep links work,
-   * and remembers the current scroll offset so closing restores the row.
-   */
-  const openArticleInline = (slug: string, topicId: string) => {
-    try {
-      sessionStorage.setItem(
-        `sheet-scroll:${window.location.pathname}`,
-        String(window.scrollY),
-      );
-    } catch {
-      /* storage unavailable — scroll restore is best-effort */
-    }
-    const next = new URLSearchParams(rowSearchParams);
-    next.set("article", slug);
-    next.set("from", topicId);
-    setRowSearchParams(next);
-  };
+
   const getEstTime = (topic: Topic) => {
 
 

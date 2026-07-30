@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { ArrowLeft, Clock, ExternalLink } from "lucide-react";
+import { ArrowLeft, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -7,7 +7,6 @@ import { BlogContent } from "@/components/blog/BlogContent";
 import { InlineToc } from "@/components/blog/InlineToc";
 import { extractToc } from "@/lib/blog/extractToc";
 import { useBlogPost } from "@/hooks/useBlog";
-import { Link } from "react-router-dom";
 
 interface SheetArticleReaderProps {
   /** Blog slug, e.g. "dbms/what-is-dbms" */

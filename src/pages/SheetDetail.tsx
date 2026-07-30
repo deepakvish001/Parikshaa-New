@@ -1591,41 +1591,25 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
     if (articleSlug) {
       const target = `/blog/${articleSlug}`;
       if (window.location.pathname !== target) {
-        window.history.replaceState(window.history.state, "", target);
+        // Tag the entry so a back/forward landing here re-opens the article
+        // inline inside the sheet instead of the standalone blog page.
+        const state = {
+          ...(window.history.state || {}),
+          sheetInline: { sheetId, article: articleSlug, from: fromTopicId },
+        };
+        window.history.replaceState(state, "", target);
       }
     } else if (window.location.pathname.startsWith("/blog/")) {
       // Article closed — put the sheet URL back.
       const sheetUrl = `/learn/sheets/${sheetId}${searchParams.toString() ? `?${searchParams}` : ""}`;
-      window.history.replaceState(window.history.state, "", sheetUrl);
+      const { sheetInline: _drop, ...rest } = (window.history.state || {}) as Record<string, unknown>;
+      window.history.replaceState(rest, "", sheetUrl);
     }
-  }, [articleSlug, inlineArticlesEnabled, sheetId, searchParams]);
+  }, [articleSlug, fromTopicId, inlineArticlesEnabled, sheetId, searchParams]);
 
-  // Restore scroll (or focus the originating row) when the article closes.
-  useEffect(() => {
-    if (articleSlug) return;
-    const key = `sheet-scroll:${window.location.pathname}`;
-    let saved: string | null = null;
-    try {
-      saved = sessionStorage.getItem(key);
-    } catch {
-      /* best-effort */
-    }
-    if (saved === null) return;
-    const y = Number(saved);
-    const raf = requestAnimationFrame(() => {
-      const row = fromTopicId
-        ? document.querySelector<HTMLElement>(`[data-topic-id="${CSS.escape(fromTopicId)}"]`)
-        : null;
-      if (row) row.scrollIntoView({ block: "center", behavior: "auto" });
-      else window.scrollTo({ top: y, behavior: "auto" });
-      try {
-        sessionStorage.removeItem(key);
-      } catch {
-        /* best-effort */
-      }
-    });
-    return () => cancelAnimationFrame(raf);
-  }, [articleSlug, fromTopicId]);
+  // Scroll restore on article close is handled by the sheet scroll-restore
+  // effect below (it also knows the originating topic row via ?from=).
+
 
 
   
@@ -1654,21 +1638,30 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   );
 
   const copyShareLink = useCallback(async () => {
+    // While an article is open inline, the address bar already shows the
+    // article's canonical /blog/... URL — share exactly that.
     const url = new URL(window.location.href);
-    url.searchParams.delete("article");
-    url.searchParams.delete("from");
+    if (articleSlug) {
+      url.pathname = `/blog/${articleSlug}`;
+      url.search = "";
+    } else {
+      url.searchParams.delete("article");
+      url.searchParams.delete("from");
+    }
     try {
       await navigator.clipboard.writeText(url.toString());
       toast({
         title: "Link copied",
-        description: deepSection
-          ? "Recipients will open this sheet at the same module."
-          : "Recipients will open this sheet.",
+        description: articleSlug
+          ? "Recipients will open this exact article."
+          : deepSection
+            ? "Recipients will open this sheet at the same module."
+            : "Recipients will open this sheet.",
       });
     } catch {
       toast({ title: "Copy failed", description: url.toString(), variant: "destructive" });
     }
-  }, [deepSection, toast]);
+  }, [articleSlug, deepSection, toast]);
 
   const [sheetData, setSheetData] = useState<SheetData | null>(
     mockSheetData[currentSheetId] || mockSheetData["strivers-sde-sheet"]
@@ -1708,6 +1701,8 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   // so refresh / "Back to resources" lands exactly where we left off.
   const scrollKey = `sheet:${currentSheetId}:scroll`;
   useEffect(() => {
+    // Don't overwrite the sheet's saved position while an article is open.
+    if (articleSlug) return;
     const pickAnchor = (): string | null => {
       const nodes = document.querySelectorAll<HTMLElement>(
         "[id^='section-'], [data-topic-id], [data-sub-id]"
@@ -1744,14 +1739,17 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
       window.removeEventListener("scroll", save);
       window.removeEventListener("pagehide", save);
     };
-  }, [scrollKey]);
+  }, [scrollKey, articleSlug]);
 
   useEffect(() => {
+    if (articleSlug) return; // reader owns the scroll while it's open
     let saved: { y: number; anchor?: string | null } | null = null;
     try {
       const raw = localStorage.getItem(scrollKey);
       if (raw) saved = raw.startsWith("{") ? JSON.parse(raw) : { y: Number(raw) };
     } catch { /* noop */ }
+    // Coming back from an article? Prefer the row that opened it.
+    if (fromTopicId) saved = { y: saved?.y ?? 0, anchor: fromTopicId };
     if (!saved || (!saved.y && !saved.anchor)) return;
 
     let cancelled = false;
@@ -1792,7 +1790,7 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
       window.removeEventListener("keydown", stop);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentSheetId]);
+  }, [currentSheetId, articleSlug, fromTopicId]);
 
 
 

@@ -55,6 +55,16 @@ const SITE_URL =
 export default function BlogPost() {
   const params = useParams();
   const location = useLocation();
+  // If we landed here through back/forward on a URL that a sheet had rewritten
+  // for its inline reader, send the reader back into that sheet.
+  const inlineReturn = (window.history.state as
+    | { sheetInline?: { sheetId: string; article: string; from?: string } }
+    | null)?.sheetInline;
+  if (inlineReturn?.sheetId && inlineReturn.article) {
+    const qs = new URLSearchParams({ article: inlineReturn.article });
+    if (inlineReturn.from) qs.set("from", inlineReturn.from);
+    return <Navigate to={`/learn/sheets/${inlineReturn.sheetId}?${qs}`} replace />;
+  }
   // Route uses a wildcard so we accept any depth of slug segments
   // ("dbms/what-is-dbms", legacy flat "my-post", or messy pasted URLs).
   const rawSlug =

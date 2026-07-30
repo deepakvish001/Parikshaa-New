@@ -1094,7 +1094,7 @@ function SubSectionCard({
   }, [completed, total, subSection.title, onSectionComplete]);
 
   return (
-    <div ref={wrapperRef} className="scroll-mt-24">
+    <div ref={wrapperRef} data-sub-id={subSection.id} className="scroll-mt-24">
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className="border-b border-border/30 last:border-b-0">
 
       <CollapsibleTrigger className="flex items-start justify-between w-full py-4 px-4 hover:bg-muted/30 transition-colors group gap-4">
@@ -1687,11 +1687,38 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
     }
   }, [revisionView]);
 
-  // Remember scroll position so returning from an article lands where we left.
+  // Remember scroll position (plus the nearest anchor inside the open module)
+  // so refresh / "Back to resources" lands exactly where we left off.
   const scrollKey = `sheet:${currentSheetId}:scroll`;
   useEffect(() => {
+    const pickAnchor = (): string | null => {
+      const nodes = document.querySelectorAll<HTMLElement>(
+        "[id^='section-'], [data-topic-id], [data-sub-id]"
+      );
+      let best: string | null = null;
+      let bestTop = -Infinity;
+      nodes.forEach((el) => {
+        const top = el.getBoundingClientRect().top - 96;
+        if (top <= 0 && top > bestTop) {
+          bestTop = top;
+          best = el.id || el.dataset.topicId || el.dataset.subId || null;
+        }
+      });
+      return best;
+    };
+    let raf = 0;
     const save = () => {
-      try { sessionStorage.setItem(scrollKey, String(window.scrollY)); } catch { /* noop */ }
+      if (raf) return;
+      raf = window.requestAnimationFrame(() => {
+        raf = 0;
+        try {
+          const anchor = pickAnchor();
+          localStorage.setItem(
+            scrollKey,
+            JSON.stringify({ y: window.scrollY, anchor, offset: anchor ? 0 : undefined })
+          );
+        } catch { /* noop */ }
+      });
     };
     window.addEventListener("scroll", save, { passive: true });
     window.addEventListener("pagehide", save);
@@ -1703,14 +1730,53 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   }, [scrollKey]);
 
   useEffect(() => {
-    let y = 0;
-    try { y = Number(sessionStorage.getItem(scrollKey) || 0); } catch { /* noop */ }
-    if (!y) return;
-    // Wait for sections to paint before restoring.
-    const t = window.setTimeout(() => window.scrollTo({ top: y, behavior: "auto" }), 120);
-    return () => window.clearTimeout(t);
+    let saved: { y: number; anchor?: string | null } | null = null;
+    try {
+      const raw = localStorage.getItem(scrollKey);
+      if (raw) saved = raw.startsWith("{") ? JSON.parse(raw) : { y: Number(raw) };
+    } catch { /* noop */ }
+    if (!saved || (!saved.y && !saved.anchor)) return;
+
+    let cancelled = false;
+    const stop = () => { cancelled = true; };
+    // Any deliberate user input cancels the restore.
+    window.addEventListener("wheel", stop, { passive: true, once: true });
+    window.addEventListener("touchstart", stop, { passive: true, once: true });
+    window.addEventListener("keydown", stop, { once: true });
+
+    const start = Date.now();
+    const tick = () => {
+      if (cancelled) return;
+      const el = saved!.anchor
+        ? (document.getElementById(saved!.anchor) ||
+           document.querySelector<HTMLElement>(
+             `[data-topic-id="${saved!.anchor}"], [data-sub-id="${saved!.anchor}"]`
+           ))
+        : null;
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY - 96;
+        window.scrollTo({ top, behavior: "auto" });
+        return;
+      }
+      // Content still streaming in — keep nudging until the page is tall enough.
+      if (document.documentElement.scrollHeight >= saved!.y + window.innerHeight) {
+        window.scrollTo({ top: saved!.y, behavior: "auto" });
+        if (Date.now() - start > 900) return;
+      }
+      if (Date.now() - start < 3000) window.setTimeout(tick, 120);
+    };
+    const t = window.setTimeout(tick, 80);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(t);
+      window.removeEventListener("wheel", stop);
+      window.removeEventListener("touchstart", stop);
+      window.removeEventListener("keydown", stop);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentSheetId]);
+
 
 
 

@@ -1553,9 +1553,24 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   const articleSlug = searchParams.get("article") ?? "";
   const fromTopicId = searchParams.get("from") ?? "";
   // Legacy ?article= deep links now redirect to the article's own page URL.
+  // Inline article reading is a DBMS-sheet-only experience. Every other sheet
+  // keeps sending ?article= deep links to the article's own blog page.
+  const inlineArticlesEnabled = sheetId === "dbms-sheet";
   useEffect(() => {
-    if (articleSlug) navigate(`/blog/${articleSlug}`, { replace: true });
-  }, [articleSlug, navigate]);
+    if (articleSlug && !inlineArticlesEnabled) navigate(`/blog/${articleSlug}`, { replace: true });
+  }, [articleSlug, inlineArticlesEnabled, navigate]);
+
+  const openInlineArticle = useCallback(
+    (url: string, topicId: string) => {
+      const slug = url.replace(/^\/blog\//, "").replace(/^\//, "");
+      const next = new URLSearchParams(searchParams);
+      next.set("article", slug);
+      next.set("from", topicId);
+      try { sessionStorage.setItem(`sheet:${sheetId}:scroll`, String(window.scrollY)); } catch { /* noop */ }
+      setSearchParams(next);
+    },
+    [searchParams, setSearchParams, sheetId]
+  );
   const closeArticle = useCallback(() => {
 
     // Prefer history back so forward navigation stays available.
@@ -1598,6 +1613,29 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
 
   
   const currentSheetId = sheetId;
+
+  // Quick section jump + shareable deep links (?section=&sub=)
+  const [jumpOpen, setJumpOpen] = useState(false);
+  const [jumpSignal, setJumpSignal] = useState<{ sectionId: string; subId?: string; ts: number } | null>(null);
+  const deepSection = searchParams.get("section") ?? "";
+  const deepSub = searchParams.get("sub") ?? "";
+  useEffect(() => {
+    if (!deepSection) return;
+    setJumpSignal({ sectionId: deepSection, subId: deepSub || undefined, ts: Date.now() });
+  }, [deepSection, deepSub]);
+
+  const jumpToSection = useCallback(
+    (sectionId: string, subId?: string) => {
+      setJumpSignal({ sectionId, subId, ts: Date.now() });
+      const next = new URLSearchParams(searchParams);
+      next.set("section", sectionId);
+      if (subId) next.set("sub", subId); else next.delete("sub");
+      setSearchParams(next, { replace: true });
+      setJumpOpen(false);
+    },
+    [searchParams, setSearchParams]
+  );
+
   const [sheetData, setSheetData] = useState<SheetData | null>(
     mockSheetData[currentSheetId] || mockSheetData["strivers-sde-sheet"]
   );

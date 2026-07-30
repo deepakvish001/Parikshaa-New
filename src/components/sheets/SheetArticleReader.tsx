@@ -58,15 +58,10 @@ export function SheetArticleReader({ slug, fallbackTitle, onClose }: SheetArticl
 
   return (
     <div className="mx-auto w-full max-w-4xl px-4 sm:px-6 py-6">
-      <div className="mb-5 flex items-center justify-between gap-3">
+      <div className="mb-5 flex items-center gap-3">
         <Button variant="ghost" size="sm" onClick={onClose} className="gap-2">
           <ArrowLeft className="h-4 w-4" />
           Back to sheet
-        </Button>
-        <Button variant="outline" size="sm" asChild>
-          <Link to={`/blog/${slug}`} className="gap-2">
-            Open full page <ExternalLink className="h-3.5 w-3.5" />
-          </Link>
         </Button>
       </div>
 

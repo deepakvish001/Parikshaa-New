@@ -893,12 +893,8 @@ function TopicRow({
                     const url = topic.resourceUrl;
                     if (!url?.startsWith("/")) return;
                     e.preventDefault();
-                    if (url.startsWith("/blog/")) {
-                      // Open inside the sheet's middle section (deep-linkable)
-                      openArticleInline(url.replace(/^\/blog\//, ""), topic.id);
-                    } else {
-                      rowNavigate(url);
-                    }
+                    // Always open the article on its own page URL
+                    rowNavigate(url);
                   }}
                   className="inline-flex items-center justify-center w-8 h-8 rounded bg-muted hover:bg-muted/80 transition-colors"
 

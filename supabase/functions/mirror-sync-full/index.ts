@@ -354,7 +354,45 @@ async function syncSchema(primary: ReturnType<typeof createClient>, apply: boole
     else applied.push(label);
   };
 
+  // 0) extensions (must exist before functions/indexes that depend on them)
+  try {
+    const [pExt, mExt] = await Promise.all([
+      pq<ExtRow>(primary, Q.extensions),
+      mq<ExtRow>(Q.extensions),
+    ]);
+    const haveExt = new Set(mExt.map((e) => e.name));
+    for (const e of pExt) {
+      if (haveExt.has(e.name)) continue;
+      await run(
+        `extension ${e.name}`,
+        `create extension if not exists "${e.name}" with schema ${JSON.stringify(e.schema).replace(/"/g, '"')};`,
+      );
+    }
+  } catch (e) {
+    errors.push(`extensions: ${(e as Error).message}`);
+  }
+
+  // 0b) sequences
+  try {
+    const [pSeq, mSeq] = await Promise.all([
+      pq<SeqRow>(primary, Q.sequences),
+      mq<SeqRow>(Q.sequences),
+    ]);
+    const haveSeq = new Set(mSeq.map((s) => s.name));
+    for (const s of pSeq) {
+      if (haveSeq.has(s.name)) continue;
+      await run(
+        `sequence ${s.name}`,
+        `create sequence if not exists public."${s.name}" increment by ${s.increment_by} minvalue ${s.min_value} maxvalue ${s.max_value} start with ${s.start_value};
+         select setval('public."${s.name}"', ${s.last_value}, true);`,
+      );
+    }
+  } catch (e) {
+    errors.push(`sequences: ${(e as Error).message}`);
+  }
+
   // 1) enums
+
   const [pEnums, mEnums] = await Promise.all([
     pq<{ name: string; label: string }>(primary, Q.enums),
     mq<{ name: string; label: string }>(Q.enums),

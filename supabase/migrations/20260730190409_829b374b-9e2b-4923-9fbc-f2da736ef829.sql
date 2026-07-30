@@ -1,0 +1,1 @@
+UPDATE public.mirror_outbox SET attempts = 0, last_error = NULL WHERE synced_at IS NULL;

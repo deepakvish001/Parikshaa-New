@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 import { BlogContent } from "@/components/blog/BlogContent";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
-import { TableOfContents } from "@/components/blog/TableOfContents";
+
 import { InlineToc } from "@/components/blog/InlineToc";
 import { MobileTocSheet } from "@/components/blog/MobileTocSheet";
 import { TocLiveAnnouncer } from "@/components/blog/TocLiveAnnouncer";

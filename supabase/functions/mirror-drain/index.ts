@@ -119,18 +119,35 @@ Deno.serve(async (req) => {
         });
       } else {
         const pkCols = Object.keys((row.row_pk ?? {}) as Record<string, unknown>);
-        res = await fetch(
+        const target =
           `${mirrorUrl}/rest/v1/${row.table_name}` +
-            (pkCols.length ? `?on_conflict=${pkCols.join(",")}` : ""),
-          {
+          (pkCols.length ? `?on_conflict=${pkCols.join(",")}` : "");
+        const post = (body: unknown) =>
+          fetch(target, {
             method: "POST",
             headers: {
               ...mirrorHeaders,
               Prefer: "resolution=merge-duplicates,return=minimal",
             },
-            body: JSON.stringify(row.row_data),
-          },
-        );
+            body: JSON.stringify(body),
+          });
+
+        res = await post(row.row_data);
+
+        // Generated / identity columns can't be written. Drop the offending
+        // column the mirror complains about and retry (repeat for each one).
+        let payload = row.row_data as Record<string, unknown>;
+        for (let i = 0; i < 8 && !res.ok; i++) {
+          const t = await res.clone().text();
+          // Quotes arrive JSON-escaped (\"col\"), so allow an optional backslash.
+          const m = t.match(/column \\?"([^"\\]+)\\?" is a generated column/i) ??
+            t.match(/non-DEFAULT value into column \\?"([^"\\]+)\\?"/i);
+
+          if (!m || !(m[1] in payload)) break;
+          payload = { ...payload };
+          delete payload[m[1]];
+          res = await post(payload);
+        }
       }
 
       if (res.ok) {
@@ -147,6 +164,7 @@ Deno.serve(async (req) => {
           errored.push({ id: row.id, msg: `${res.status} ${txt}` });
         }
       }
+
 
     } catch (e) {
       errored.push({ id: row.id, msg: String(e).slice(0, 400) });

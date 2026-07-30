@@ -4,6 +4,8 @@ import React, { useState, useEffect, useCallback, useMemo, useRef, useContext, c
 // without threading a prop through every intermediate component.
 const InlineArticleContext = createContext<((url: string, topicId: string) => void) | null>(null);
 import { usePersistedDisclosure } from "@/hooks/usePersistedDisclosure";
+import { Helmet } from "react-helmet-async";
+import { useBlogPost } from "@/hooks/useBlog";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -1637,6 +1639,15 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
     [searchParams, setSearchParams]
   );
 
+  // Post behind the inline article (used for share title + social preview image)
+  const { data: articlePost } = useBlogPost(articleSlug || undefined);
+  const articleTitle = articlePost?.title ?? "";
+  const articleImage =
+    (articlePost as { og_image_url?: string; cover_image_url?: string } | undefined)?.og_image_url ||
+    (articlePost as { cover_image_url?: string } | undefined)?.cover_image_url ||
+    "";
+  const articleExcerpt = (articlePost as { excerpt?: string } | undefined)?.excerpt ?? "";
+
   const copyShareLink = useCallback(async () => {
     // While an article is open inline, the address bar already shows the
     // article's canonical /blog/... URL — share exactly that.
@@ -1648,20 +1659,37 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
       url.searchParams.delete("article");
       url.searchParams.delete("from");
     }
+    const href = url.toString();
+    const title = articleSlug ? (articleTitle || "Article") : (sheetData?.title ?? "Sheet");
+    const text = articleSlug ? (articleExcerpt || title) : title;
+
+    // Native share sheet carries the title + URL, and the OS/app pulls the
+    // social preview image from the article's og:image tags.
+    if (articleSlug && typeof navigator !== "undefined" && navigator.share) {
+      try {
+        await navigator.share({ title, text, url: href });
+        return;
+      } catch (err) {
+        if ((err as Error)?.name === "AbortError") return;
+      }
+    }
+
+    const payload = articleSlug ? `${title}\n${href}` : href;
     try {
-      await navigator.clipboard.writeText(url.toString());
+      await navigator.clipboard.writeText(payload);
       toast({
         title: "Link copied",
         description: articleSlug
-          ? "Recipients will open this exact article."
+          ? `“${title}” — link includes the article preview.`
           : deepSection
             ? "Recipients will open this sheet at the same module."
             : "Recipients will open this sheet.",
       });
     } catch {
-      toast({ title: "Copy failed", description: url.toString(), variant: "destructive" });
+      toast({ title: "Copy failed", description: href, variant: "destructive" });
     }
-  }, [articleSlug, deepSection, toast]);
+  }, [articleSlug, articleTitle, articleExcerpt, deepSection, toast]);
+
 
   const [sheetData, setSheetData] = useState<SheetData | null>(
     mockSheetData[currentSheetId] || mockSheetData["strivers-sde-sheet"]
@@ -2557,6 +2585,18 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   if (articleSlug) {
     return (
       <div className="min-h-screen bg-background">
+        {articleTitle && (
+          <Helmet>
+            <title>{articleTitle}</title>
+            <link rel="canonical" href={`${window.location.origin}/blog/${articleSlug}`} />
+            <meta property="og:title" content={articleTitle} />
+            {articleExcerpt && <meta property="og:description" content={articleExcerpt} />}
+            <meta property="og:type" content="article" />
+            <meta property="og:url" content={`${window.location.origin}/blog/${articleSlug}`} />
+            {articleImage && <meta property="og:image" content={articleImage} />}
+            <meta name="twitter:card" content={articleImage ? "summary_large_image" : "summary"} />
+          </Helmet>
+        )}
         <header className="sticky top-0 z-40 border-b border-border/40 bg-background/80 backdrop-blur-md">
           <div className="flex h-16 items-center gap-4 px-4 sm:px-6">
             <Button variant="ghost" size="icon" onClick={closeArticle} className="shrink-0">
@@ -2564,14 +2604,19 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
             </Button>
             <div className="flex-1 min-w-0">
               <h1 className="text-sm sm:text-base font-semibold truncate text-muted-foreground">
-                {sheetData.title}
+                {articleTitle || sheetData.title}
               </h1>
             </div>
+            <Button variant="outline" size="sm" className="gap-2 shrink-0" onClick={copyShareLink}>
+              <Share2 className="h-4 w-4" />
+              <span className="hidden sm:inline">Share</span>
+            </Button>
           </div>
         </header>
         <SheetArticleReader slug={articleSlug} onClose={closeArticle} />
       </div>
     );
+
   }
 
   return (

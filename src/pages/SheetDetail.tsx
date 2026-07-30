@@ -1519,6 +1519,50 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   const { toast } = useToast();
   const { requireAuth, LoginPromptDialog } = useRequireAuth();
   const { currentStreak, todayCompleted, refreshStreak } = useStreak();
+
+  // Inline article state lives in the URL so back/forward + deep links work.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const articleSlug = searchParams.get("article") ?? "";
+  const fromTopicId = searchParams.get("from") ?? "";
+  const closeArticle = useCallback(() => {
+    // Prefer history back so forward navigation stays available.
+    if (window.history.length > 1) navigate(-1);
+    else {
+      const next = new URLSearchParams(searchParams);
+      next.delete("article");
+      next.delete("from");
+      setSearchParams(next, { replace: true });
+    }
+  }, [navigate, searchParams, setSearchParams]);
+
+  // Restore scroll (or focus the originating row) when the article closes.
+  useEffect(() => {
+    if (articleSlug) return;
+    const key = `sheet-scroll:${window.location.pathname}`;
+    let saved: string | null = null;
+    try {
+      saved = sessionStorage.getItem(key);
+    } catch {
+      /* best-effort */
+    }
+    if (saved === null) return;
+    const y = Number(saved);
+    const raf = requestAnimationFrame(() => {
+      const row = fromTopicId
+        ? document.querySelector<HTMLElement>(`[data-topic-id="${CSS.escape(fromTopicId)}"]`)
+        : null;
+      if (row) row.scrollIntoView({ block: "center", behavior: "auto" });
+      else window.scrollTo({ top: y, behavior: "auto" });
+      try {
+        sessionStorage.removeItem(key);
+      } catch {
+        /* best-effort */
+      }
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [articleSlug, fromTopicId]);
+
+
   
   const currentSheetId = sheetId;
   const [sheetData, setSheetData] = useState<SheetData | null>(

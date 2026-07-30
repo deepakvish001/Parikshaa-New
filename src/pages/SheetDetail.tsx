@@ -1529,6 +1529,7 @@ function SectionCard({
         )}
       </AnimatePresence>
     </Collapsible>
+    </div>
   );
 }
 

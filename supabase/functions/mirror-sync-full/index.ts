@@ -290,6 +290,33 @@ const Q = {
               from pg_proc p
               join pg_namespace n on n.oid = p.pronamespace
               where n.nspname = 'public' and p.prokind in ('f','p')`,
+  sequences: `select sequencename as name, start_value::text as start_value,
+                     min_value::text as min_value, max_value::text as max_value,
+                     increment_by::text as increment_by,
+                     coalesce(last_value, start_value)::text as last_value
+              from pg_sequences where schemaname = 'public'`,
+  views: `select viewname as name, definition as def, false as ismat
+          from pg_views where schemaname = 'public'
+          union all
+          select matviewname as name, definition as def, true as ismat
+          from pg_matviews where schemaname = 'public'`,
+  triggers: `select c.relname as tbl, t.tgname as name, pg_get_triggerdef(t.oid) as def
+             from pg_trigger t
+             join pg_class c on c.oid = t.tgrelid
+             join pg_namespace n on n.oid = c.relnamespace
+             where n.nspname = 'public' and not t.tgisinternal`,
+  grants: `select table_name as tbl, grantee, privilege_type as priv
+           from information_schema.role_table_grants
+           where table_schema = 'public'
+             and grantee in ('anon','authenticated','service_role')`,
+  extensions: `select e.extname as name, n.nspname as schema
+               from pg_extension e join pg_namespace n on n.oid = e.extnamespace
+               where e.extname not in ('plpgsql')`,
+  storagePolicies: `select tablename as tbl, policyname as name, permissive, roles::text as roles,
+                           cmd, coalesce(qual,'') as qual, coalesce(with_check,'') as wcheck
+                    from pg_policies where schemaname = 'storage'`,
+  cron: `select jobname as name, schedule, command, active
+         from cron.job`,
 };
 
 type ColRow = { tbl: string; col: string; coltype: string; notnull: boolean; coldefault: string | null; pos: number };
@@ -297,6 +324,13 @@ type ConRow = { tbl: string; name: string; kind: string; def: string };
 type IdxRow = { tbl: string; name: string; def: string };
 type PolRow = { tbl: string; name: string; permissive: string; roles: string; cmd: string; qual: string; wcheck: string };
 type FnRow = { name: string; args: string; def: string };
+type SeqRow = { name: string; start_value: string; min_value: string; max_value: string; increment_by: string; last_value: string };
+type ViewRow = { name: string; def: string; ismat: boolean };
+type TrgRow = { tbl: string; name: string; def: string };
+type GrantRow = { tbl: string; grantee: string; priv: string };
+type ExtRow = { name: string; schema: string };
+type CronRow = { name: string; schedule: string; command: string; active: boolean };
+
 
 function colDdl(c: ColRow) {
   let s = `"${c.col}" ${c.coltype}`;
@@ -320,7 +354,45 @@ async function syncSchema(primary: ReturnType<typeof createClient>, apply: boole
     else applied.push(label);
   };
 
+  // 0) extensions (must exist before functions/indexes that depend on them)
+  try {
+    const [pExt, mExt] = await Promise.all([
+      pq<ExtRow>(primary, Q.extensions),
+      mq<ExtRow>(Q.extensions),
+    ]);
+    const haveExt = new Set(mExt.map((e) => e.name));
+    for (const e of pExt) {
+      if (haveExt.has(e.name)) continue;
+      await run(
+        `extension ${e.name}`,
+        `create extension if not exists "${e.name}" with schema "${e.schema}";`,
+      );
+    }
+  } catch (e) {
+    errors.push(`extensions: ${(e as Error).message}`);
+  }
+
+  // 0b) sequences
+  try {
+    const [pSeq, mSeq] = await Promise.all([
+      pq<SeqRow>(primary, Q.sequences),
+      mq<SeqRow>(Q.sequences),
+    ]);
+    const haveSeq = new Set(mSeq.map((s) => s.name));
+    for (const s of pSeq) {
+      if (haveSeq.has(s.name)) continue;
+      await run(
+        `sequence ${s.name}`,
+        `create sequence if not exists public."${s.name}" increment by ${s.increment_by} minvalue ${s.min_value} maxvalue ${s.max_value} start with ${s.start_value};
+         select setval('public."${s.name}"', ${s.last_value}, true);`,
+      );
+    }
+  } catch (e) {
+    errors.push(`sequences: ${(e as Error).message}`);
+  }
+
   // 1) enums
+
   const [pEnums, mEnums] = await Promise.all([
     pq<{ name: string; label: string }>(primary, Q.enums),
     mq<{ name: string; label: string }>(Q.enums),
@@ -469,7 +541,114 @@ async function syncSchema(primary: ReturnType<typeof createClient>, apply: boole
     await run(`function ${key}`, `${f.def};`);
   }
 
+  // 6b) views + materialized views
+  try {
+    const [pViews, mViews] = await Promise.all([
+      pq<ViewRow>(primary, Q.views),
+      mq<ViewRow>(Q.views),
+    ]);
+    const haveView = new Map(mViews.map((v) => [v.name, v.def]));
+    for (const v of pViews) {
+      if (haveView.get(v.name) === v.def) continue;
+      const body = v.def.trim().replace(/;\s*$/, "");
+      if (v.ismat) {
+        if (haveView.has(v.name)) continue; // matviews can't be replaced in place
+        await run(`matview ${v.name}`, `create materialized view public."${v.name}" as ${body};`);
+      } else {
+        await run(`view ${v.name}`, `create or replace view public."${v.name}" as ${body};`);
+      }
+    }
+  } catch (e) {
+    errors.push(`views: ${(e as Error).message}`);
+  }
+
+  // 6c) triggers (skip mirror capture + activity triggers we manage locally)
+  try {
+    const [pTrg, mTrg] = await Promise.all([
+      pq<TrgRow>(primary, Q.triggers),
+      mq<TrgRow>(Q.triggers),
+    ]);
+    const haveTrg = new Map(mTrg.map((t) => [`${t.tbl}.${t.name}`, t.def]));
+    for (const t of pTrg) {
+      if (SKIP_TABLES.has(t.tbl)) continue;
+      if (t.name.startsWith("zz_mirror")) continue;
+      const key = `${t.tbl}.${t.name}`;
+      if (haveTrg.get(key) === t.def) continue;
+      await run(
+        `trigger ${key}`,
+        `drop trigger if exists "${t.name}" on public."${t.tbl}"; ${t.def};`,
+      );
+    }
+  } catch (e) {
+    errors.push(`triggers: ${(e as Error).message}`);
+  }
+
+  // 6d) table grants for API roles
+  try {
+    const [pGr, mGr] = await Promise.all([
+      pq<GrantRow>(primary, Q.grants),
+      mq<GrantRow>(Q.grants),
+    ]);
+    const haveGr = new Set(mGr.map((g) => `${g.tbl}.${g.grantee}.${g.priv}`));
+    const missing = new Map<string, Set<string>>();
+    for (const g of pGr) {
+      if (SKIP_TABLES.has(g.tbl)) continue;
+      if (haveGr.has(`${g.tbl}.${g.grantee}.${g.priv}`)) continue;
+      const k = `${g.tbl}|${g.grantee}`;
+      missing.set(k, (missing.get(k) ?? new Set()).add(g.priv));
+    }
+    for (const [k, privs] of missing) {
+      const [tbl, grantee] = k.split("|");
+      await run(
+        `grant ${grantee} on ${tbl}`,
+        `grant ${[...privs].join(", ")} on public."${tbl}" to ${grantee};`,
+      );
+    }
+  } catch (e) {
+    errors.push(`grants: ${(e as Error).message}`);
+  }
+
+  // 6e) storage policies
+  try {
+    const [pSp, mSp] = await Promise.all([
+      pq<PolRow>(primary, Q.storagePolicies),
+      mq<PolRow>(Q.storagePolicies),
+    ]);
+    const haveSp = new Set(mSp.map((p) => `${p.tbl}.${p.name}`));
+    for (const p of pSp) {
+      if (haveSp.has(`${p.tbl}.${p.name}`)) continue;
+      const roles = (p.roles || "{public}").replace(/[{}]/g, "");
+      const sql =
+        `create policy "${p.name}" on storage."${p.tbl}" as ${p.permissive === "PERMISSIVE" ? "permissive" : "restrictive"} for ${p.cmd.toLowerCase()} to ${roles}` +
+        (p.qual ? ` using (${p.qual})` : "") +
+        (p.wcheck ? ` with check (${p.wcheck})` : "") + ";";
+      await run(`storage policy ${p.tbl}.${p.name}`, sql);
+    }
+  } catch (e) {
+    errors.push(`storage policies: ${(e as Error).message}`);
+  }
+
+  // 6f) cron jobs (skip mirror jobs — those must only run on the primary)
+  try {
+    const [pCron, mCron] = await Promise.all([
+      pq<CronRow>(primary, Q.cron),
+      mq<CronRow>(Q.cron),
+    ]);
+    const haveCron = new Set(mCron.map((c) => c.name));
+    for (const c of pCron) {
+      if (!c.name || haveCron.has(c.name)) continue;
+      if (c.name.startsWith("mirror-")) continue;
+      const cmd = c.command.replace(/'/g, "''");
+      const nm = c.name.replace(/'/g, "''");
+      const sch = c.schedule.replace(/'/g, "''");
+      await run(`cron ${c.name}`, `select cron.schedule('${nm}', '${sch}', '${cmd}');`);
+    }
+  } catch (e) {
+    errors.push(`cron: ${(e as Error).message}`);
+  }
+
   // 7) make sure new primary tables get capture triggers
+
   let attached: unknown = null;
   if (apply && newTables.length > 0) {
     const { data } = await primary.rpc("mirror_attach_all");

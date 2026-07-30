@@ -1552,13 +1552,13 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const articleSlug = searchParams.get("article") ?? "";
   const fromTopicId = searchParams.get("from") ?? "";
-  // Articles always open on their own real URL (/blog/<slug>). Any legacy
-  // ?article= deep link is redirected to that canonical page.
-  const inlineArticlesEnabled = false;
+  // Legacy ?article= deep links now redirect to the article's own page URL.
+  // Inline article reading is a DBMS-sheet-only experience. Every other sheet
+  // keeps sending ?article= deep links to the article's own blog page.
+  const inlineArticlesEnabled = sheetId === "dbms-sheet";
   useEffect(() => {
-    if (articleSlug) navigate(`/blog/${articleSlug}`, { replace: true });
-  }, [articleSlug, navigate]);
-
+    if (articleSlug && !inlineArticlesEnabled) navigate(`/blog/${articleSlug}`, { replace: true });
+  }, [articleSlug, inlineArticlesEnabled, navigate]);
 
   const openInlineArticle = useCallback(
     (url: string, topicId: string) => {

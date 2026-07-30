@@ -1,4 +1,8 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef, useDeferredValue } from "react";
+import React, { useState, useEffect, useCallback, useMemo, useRef, useContext, createContext, useDeferredValue } from "react";
+
+// Lets deeply-nested topic rows open an article inline (DBMS sheet only)
+// without threading a prop through every intermediate component.
+const InlineArticleContext = createContext<((url: string, topicId: string) => void) | null>(null);
 import { usePersistedDisclosure } from "@/hooks/usePersistedDisclosure";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
@@ -25,7 +29,17 @@ import {
   RotateCcw,
   CircleDot,
   ArrowRight,
+  ListTree,
+  Share2,
 } from "lucide-react";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import {
   AlertDialog,
@@ -735,6 +749,7 @@ function TopicRow({
   onResetPasses?: (id: string) => void;
 }) {
   const rowNavigate = useNavigate();
+  const openInline = useContext(InlineArticleContext);
 
   const getEstTime = (topic: Topic) => {
 
@@ -878,6 +893,10 @@ function TopicRow({
                     e.preventDefault();
                     // Always open the article on its own page URL, but remember
                     // where we came from so the reader can offer a way back.
+                    if (openInline) {
+                      openInline(url, topic.id);
+                      return;
+                    }
                     const backTo = window.location.pathname + window.location.search;
                     try {
                       sessionStorage.setItem("blog:backTo", backTo);
@@ -1213,6 +1232,7 @@ function SectionCard({
   onResetSection,
   onJumpToTopic,
   persistKey,
+  jumpSignal,
 }: { 
   section: Section; 
   onToggleTopic: (id: string) => void;
@@ -1227,9 +1247,22 @@ function SectionCard({
   onResetSection?: (sectionId: string) => void;
   onJumpToTopic?: (topicId: string) => void;
   persistKey?: string;
+  jumpSignal?: { sectionId: string; subId?: string; ts: number } | null;
 }) {
   const [isOpen, setIsOpen] = usePersistedDisclosure(persistKey ?? null, false);
   const [openSubSignal, setOpenSubSignal] = useState<{ id: string; ts: number } | null>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Quick-jump / deep link: open this module (and sub-module) and scroll to it.
+  useEffect(() => {
+    if (!jumpSignal || jumpSignal.sectionId !== section.id) return;
+    setIsOpen(true);
+    if (jumpSignal.subId) setOpenSubSignal({ id: jumpSignal.subId, ts: jumpSignal.ts });
+    const t = window.setTimeout(() => {
+      sectionRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+    }, 60);
+    return () => window.clearTimeout(t);
+  }, [jumpSignal, section.id, setIsOpen]);
   const allTopics = section.subSections.flatMap(s => s.topics);
   const completed = allTopics.filter(t => t.completed).length;
   const total = allTopics.length;
@@ -1267,6 +1300,7 @@ function SectionCard({
   }, [completed, total, section.title, onSectionComplete]);
 
   return (
+    <div ref={sectionRef} id={`section-${section.id}`} className="scroll-mt-24">
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className="border-b border-border/50">
       <CollapsibleTrigger className="flex items-center justify-between w-full py-4 px-4 hover:bg-muted/30 transition-colors group gap-3">
         <div className="flex items-center gap-3 min-w-0">

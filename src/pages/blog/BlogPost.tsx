@@ -159,15 +159,6 @@ export default function BlogPost() {
   return (
     <>
       <ReadingProgress totalMinutes={post.reading_time_min} />
-      <FloatingActionRail
-        liked={liked}
-        bookmarked={bookmarked}
-        likeCount={post.like_count}
-        bookmarkCount={post.bookmark_count ?? 0}
-        onToggleLike={() => toggleLike()}
-        onToggleBookmark={() => toggleBookmark()}
-        url={url}
-      />
       <MobileTocSheet items={toc} activeId={activeHeadingId} storageKey={post.slug} />
       <TocLiveAnnouncer items={toc} activeId={activeHeadingId} />
       <article className="container mx-auto px-4 py-8 pb-24 lg:pb-8 max-w-6xl">

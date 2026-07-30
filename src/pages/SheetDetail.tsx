@@ -1503,7 +1503,12 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const articleSlug = searchParams.get("article") ?? "";
   const fromTopicId = searchParams.get("from") ?? "";
+  // Legacy ?article= deep links now redirect to the article's own page URL.
+  useEffect(() => {
+    if (articleSlug) navigate(`/blog/${articleSlug}`, { replace: true });
+  }, [articleSlug, navigate]);
   const closeArticle = useCallback(() => {
+
     // Prefer history back so forward navigation stays available.
     if (window.history.length > 1) navigate(-1);
     else {

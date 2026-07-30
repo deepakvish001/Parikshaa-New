@@ -1639,6 +1639,15 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
     [searchParams, setSearchParams]
   );
 
+  // Post behind the inline article (used for share title + social preview image)
+  const { data: articlePost } = useBlogPost(articleSlug || undefined);
+  const articleTitle = articlePost?.title ?? "";
+  const articleImage =
+    (articlePost as { og_image_url?: string; cover_image_url?: string } | undefined)?.og_image_url ||
+    (articlePost as { cover_image_url?: string } | undefined)?.cover_image_url ||
+    "";
+  const articleExcerpt = (articlePost as { excerpt?: string } | undefined)?.excerpt ?? "";
+
   const copyShareLink = useCallback(async () => {
     // While an article is open inline, the address bar already shows the
     // article's canonical /blog/... URL — share exactly that.
@@ -1650,20 +1659,37 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
       url.searchParams.delete("article");
       url.searchParams.delete("from");
     }
+    const href = url.toString();
+    const title = articleSlug ? (articleTitle || "Article") : (sheetData?.title ?? "Sheet");
+    const text = articleSlug ? (articleExcerpt || title) : title;
+
+    // Native share sheet carries the title + URL, and the OS/app pulls the
+    // social preview image from the article's og:image tags.
+    if (articleSlug && typeof navigator !== "undefined" && navigator.share) {
+      try {
+        await navigator.share({ title, text, url: href });
+        return;
+      } catch (err) {
+        if ((err as Error)?.name === "AbortError") return;
+      }
+    }
+
+    const payload = articleSlug ? `${title}\n${href}` : href;
     try {
-      await navigator.clipboard.writeText(url.toString());
+      await navigator.clipboard.writeText(payload);
       toast({
         title: "Link copied",
         description: articleSlug
-          ? "Recipients will open this exact article."
+          ? `“${title}” — link includes the article preview.`
           : deepSection
             ? "Recipients will open this sheet at the same module."
             : "Recipients will open this sheet.",
       });
     } catch {
-      toast({ title: "Copy failed", description: url.toString(), variant: "destructive" });
+      toast({ title: "Copy failed", description: href, variant: "destructive" });
     }
-  }, [articleSlug, deepSection, toast]);
+  }, [articleSlug, articleTitle, articleExcerpt, deepSection, toast]);
+
 
   const [sheetData, setSheetData] = useState<SheetData | null>(
     mockSheetData[currentSheetId] || mockSheetData["strivers-sde-sheet"]

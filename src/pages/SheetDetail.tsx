@@ -1094,7 +1094,7 @@ function SubSectionCard({
   }, [completed, total, subSection.title, onSectionComplete]);
 
   return (
-    <div ref={wrapperRef} className="scroll-mt-24">
+    <div ref={wrapperRef} data-sub-id={subSection.id} className="scroll-mt-24">
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className="border-b border-border/30 last:border-b-0">
 
       <CollapsibleTrigger className="flex items-start justify-between w-full py-4 px-4 hover:bg-muted/30 transition-colors group gap-4">

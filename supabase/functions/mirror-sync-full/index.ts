@@ -365,7 +365,7 @@ async function syncSchema(primary: ReturnType<typeof createClient>, apply: boole
       if (haveExt.has(e.name)) continue;
       await run(
         `extension ${e.name}`,
-        `create extension if not exists "${e.name}" with schema ${JSON.stringify(e.schema).replace(/"/g, '"')};`,
+        `create extension if not exists "${e.name}" with schema "${e.schema}";`,
       );
     }
   } catch (e) {

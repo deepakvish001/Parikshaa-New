@@ -2585,6 +2585,18 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   if (articleSlug) {
     return (
       <div className="min-h-screen bg-background">
+        {articleTitle && (
+          <Helmet>
+            <title>{articleTitle}</title>
+            <link rel="canonical" href={`${window.location.origin}/blog/${articleSlug}`} />
+            <meta property="og:title" content={articleTitle} />
+            {articleExcerpt && <meta property="og:description" content={articleExcerpt} />}
+            <meta property="og:type" content="article" />
+            <meta property="og:url" content={`${window.location.origin}/blog/${articleSlug}`} />
+            {articleImage && <meta property="og:image" content={articleImage} />}
+            <meta name="twitter:card" content={articleImage ? "summary_large_image" : "summary"} />
+          </Helmet>
+        )}
         <header className="sticky top-0 z-40 border-b border-border/40 bg-background/80 backdrop-blur-md">
           <div className="flex h-16 items-center gap-4 px-4 sm:px-6">
             <Button variant="ghost" size="icon" onClick={closeArticle} className="shrink-0">
@@ -2592,14 +2604,19 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
             </Button>
             <div className="flex-1 min-w-0">
               <h1 className="text-sm sm:text-base font-semibold truncate text-muted-foreground">
-                {sheetData.title}
+                {articleTitle || sheetData.title}
               </h1>
             </div>
+            <Button variant="outline" size="sm" className="gap-2 shrink-0" onClick={copyShareLink}>
+              <Share2 className="h-4 w-4" />
+              <span className="hidden sm:inline">Share</span>
+            </Button>
           </div>
         </header>
         <SheetArticleReader slug={articleSlug} onClose={closeArticle} />
       </div>
     );
+
   }
 
   return (

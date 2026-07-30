@@ -1588,7 +1588,6 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   // layout — left/right rails included — remains mounted.
   useEffect(() => {
     if (!inlineArticlesEnabled) return;
-    const routerUrl = window.location.pathname + window.location.search + window.location.hash;
     if (articleSlug) {
       const target = `/blog/${articleSlug}`;
       if (window.location.pathname !== target) {
@@ -1599,7 +1598,6 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
       const sheetUrl = `/learn/sheets/${sheetId}${searchParams.toString() ? `?${searchParams}` : ""}`;
       window.history.replaceState(window.history.state, "", sheetUrl);
     }
-    void routerUrl;
   }, [articleSlug, inlineArticlesEnabled, sheetId, searchParams]);
 
   // Restore scroll (or focus the originating row) when the article closes.

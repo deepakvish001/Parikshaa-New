@@ -730,7 +730,9 @@ function TopicRow({
   onUndoLastPass?: (id: string) => void;
   onResetPasses?: (id: string) => void;
 }) {
+  const rowNavigate = useNavigate();
   const getEstTime = (topic: Topic) => {
+
     if (topic.estTime) return topic.estTime;
     switch (topic.difficulty) {
       case "Easy": return "15 min";
@@ -864,8 +866,14 @@ function TopicRow({
                   href={topic.resourceUrl} 
                   target={topic.resourceUrl.startsWith("/") ? undefined : "_blank"} 
                   rel={topic.resourceUrl.startsWith("/") ? undefined : "noopener noreferrer"}
-
+                  onClick={(e) => {
+                    if (topic.resourceUrl?.startsWith("/")) {
+                      e.preventDefault();
+                      rowNavigate(topic.resourceUrl);
+                    }
+                  }}
                   className="inline-flex items-center justify-center w-8 h-8 rounded bg-muted hover:bg-muted/80 transition-colors"
+
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.9 }}
                 >

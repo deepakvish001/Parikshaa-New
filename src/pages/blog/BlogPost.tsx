@@ -67,12 +67,19 @@ export default function BlogPost() {
   const backTo = useMemo(() => {
     const fromState = (location.state as { backTo?: string } | null)?.backTo;
     if (fromState) return fromState;
+    // Shared deep links carry ?from=<sheet path> so recipients land on the
+    // article and can jump into the exact same sheet.
+    const fromParam = new URLSearchParams(location.search).get("from");
+    if (fromParam && fromParam.startsWith("/")) {
+      try { sessionStorage.setItem("blog:backTo", fromParam); } catch { /* noop */ }
+      return fromParam;
+    }
     try {
       return sessionStorage.getItem("blog:backTo") || null;
     } catch {
       return null;
     }
-  }, [location.state]);
+  }, [location.state, location.search]);
   // If normalization changed the URL, redirect to the canonical form.
   const canonicalPath = slug ? `/blog/${slug}` : "/blog";
   const needsRedirect =
@@ -161,6 +168,8 @@ export default function BlogPost() {
 
 
   const url = `${SITE_URL}/blog/${post.slug}`;
+  // Share link keeps the originating sheet so the recipient gets the same context.
+  const shareUrl = backTo ? `${url}?from=${encodeURIComponent(backTo)}` : url;
   const canonical = post.canonical_url || url;
   const ogImage = post.og_image_url || post.cover_image_url || `${SITE_URL}/og-image.png`;
   const seoTitle = post.seo_title || `${post.title} — ${SITE_NAME}`;
@@ -311,7 +320,7 @@ export default function BlogPost() {
               bookmarkCount={post.bookmark_count ?? 0}
               onToggleLike={() => toggleLike()}
               onToggleBookmark={() => toggleBookmark()}
-              url={url}
+              url={shareUrl}
             />
 
 

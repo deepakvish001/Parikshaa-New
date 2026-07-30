@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef, useDeferredValue } from "react";
+import { usePersistedDisclosure } from "@/hooks/usePersistedDisclosure";
+import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
@@ -1019,6 +1021,7 @@ function SubSectionCard({
   onMarkRevised,
   onUndoLastPass,
   onResetPasses,
+  persistKey,
 }: { 
   subSection: SubSection; 
   onToggleTopic: (id: string) => void;
@@ -1031,8 +1034,9 @@ function SubSectionCard({
   onMarkRevised?: (id: string) => void;
   onUndoLastPass?: (id: string) => void;
   onResetPasses?: (id: string) => void;
+  persistKey?: string;
 }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = usePersistedDisclosure(persistKey ?? null, false);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const completed = subSection.topics.filter(t => t.completed).length;
   const total = subSection.topics.length;
@@ -1208,6 +1212,7 @@ function SectionCard({
   onResetPasses,
   onResetSection,
   onJumpToTopic,
+  persistKey,
 }: { 
   section: Section; 
   onToggleTopic: (id: string) => void;
@@ -1221,8 +1226,9 @@ function SectionCard({
   onResetPasses?: (id: string) => void;
   onResetSection?: (sectionId: string) => void;
   onJumpToTopic?: (topicId: string) => void;
+  persistKey?: string;
 }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = usePersistedDisclosure(persistKey ?? null, false);
   const [openSubSignal, setOpenSubSignal] = useState<{ id: string; ts: number } | null>(null);
   const allTopics = section.subSections.flatMap(s => s.topics);
   const completed = allTopics.filter(t => t.completed).length;
@@ -1479,6 +1485,7 @@ function SectionCard({
                       onMarkRevised={onMarkRevised}
                       onUndoLastPass={onUndoLastPass}
                       onResetPasses={onResetPasses}
+                      persistKey={persistKey ? `${persistKey}:${subSection.id}` : undefined}
                     />
                   </motion.div>
                 ))}
@@ -1574,10 +1581,6 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   // Expand/Collapse all
   const [expandAllSignal, setExpandAllSignal] = useState<{ expanded: boolean; timestamp: number } | null>(null);
 
-  // Lazy reveal for sections to speed up initial paint after login.
-  const SECTIONS_BATCH = 6;
-  const [visibleSectionCount, setVisibleSectionCount] = useState(SECTIONS_BATCH);
-  const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
   // Blind 75 study plan prefs
   const [blind75Prefs, setBlind75Prefs] = useState<Blind75Prefs | null>(null);
@@ -1593,6 +1596,33 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
       window.localStorage.setItem("blind75_revision_view", revisionView);
     }
   }, [revisionView]);
+
+  // Remember scroll position so returning from an article lands where we left.
+  const scrollKey = `sheet:${currentSheetId}:scroll`;
+  useEffect(() => {
+    const save = () => {
+      try { sessionStorage.setItem(scrollKey, String(window.scrollY)); } catch { /* noop */ }
+    };
+    window.addEventListener("scroll", save, { passive: true });
+    window.addEventListener("pagehide", save);
+    return () => {
+      save();
+      window.removeEventListener("scroll", save);
+      window.removeEventListener("pagehide", save);
+    };
+  }, [scrollKey]);
+
+  useEffect(() => {
+    let y = 0;
+    try { y = Number(sessionStorage.getItem(scrollKey) || 0); } catch { /* noop */ }
+    if (!y) return;
+    // Wait for sections to paint before restoring.
+    const t = window.setTimeout(() => window.scrollTo({ top: y, behavior: "auto" }), 120);
+    return () => window.clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentSheetId]);
+
+
 
   // Load user progress from database
   const loadProgress = useCallback(async () => {
@@ -1903,27 +1933,6 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   const weekProgress = weekView.weekProgress;
   const weekViewEmpty = weekView.emptyReason;
 
-  // Reset lazy window when filters/search/tab change.
-  useEffect(() => {
-    setVisibleSectionCount(SECTIONS_BATCH);
-  }, [activeTab, deferredSearch, difficultyFilter, categoryFilter, selectedWeek, currentSheetId]);
-
-  // Auto-reveal more sections when sentinel enters viewport.
-  useEffect(() => {
-    const node = loadMoreRef.current;
-    if (!node) return;
-    if (visibleSectionCount >= filteredSections.length) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setVisibleSectionCount((c) => Math.min(c + SECTIONS_BATCH, filteredSections.length));
-        }
-      },
-      { rootMargin: "600px 0px" },
-    );
-    io.observe(node);
-    return () => io.disconnect();
-  }, [visibleSectionCount, filteredSections.length]);
   const showWeekPanel =
     currentSheetId === "blind-75" &&
     !!blind75Prefs &&
@@ -2397,7 +2406,9 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   return (
 
     <div className="min-h-screen bg-background">
+      <ReadingProgress />
       {/* Header */}
+
       <header className="sticky top-0 z-40 border-b border-border/40 bg-background/80 backdrop-blur-md">
         <div className="flex h-16 items-center gap-4 px-4 sm:px-6">
           <Button
@@ -2751,7 +2762,7 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
             <CardContent className="p-0">
               {filteredSections.length > 0 ? (
                 <>
-                  {filteredSections.slice(0, visibleSectionCount).map((section) => (
+                  {filteredSections.map((section) => (
                     <SectionCard 
                       key={section.id} 
                       section={section} 
@@ -2766,26 +2777,9 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
                       onResetPasses={handleResetPasses}
                       onResetSection={handleResetSection}
                       onJumpToTopic={scrollToTopic}
+                      persistKey={`sheet:${currentSheetId}:open:${section.id}`}
                     />
                   ))}
-                  {visibleSectionCount < filteredSections.length && (
-                    <div ref={loadMoreRef} className="flex flex-col items-center gap-2 py-6 border-t border-border/30">
-                      <p className="text-xs text-muted-foreground">
-                        Showing {visibleSectionCount} of {filteredSections.length} sections
-                      </p>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() =>
-                          setVisibleSectionCount((c) =>
-                            Math.min(c + SECTIONS_BATCH, filteredSections.length),
-                          )
-                        }
-                      >
-                        Load more sections
-                      </Button>
-                    </div>
-                  )}
                 </>
               ) : weekViewEmpty === "no-weeks" ? (
                 <div className="p-12 text-center">

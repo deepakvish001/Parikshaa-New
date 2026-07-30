@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient, keepPreviousData } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "@/hooks/use-toast";
 import { toast as sonnerToast } from "sonner";
 import type { BlogPost, BlogPostWithRelations, BlogCategory, BlogTag, BlogComment, BlogPostStatus } from "@/types/blog";
@@ -199,9 +200,13 @@ const bumpBookmarkCountInCaches = (qc: ReturnType<typeof useQueryClient>, postId
 
 export const useBlogLike = (postId: string | undefined) => {
   const qc = useQueryClient();
+  // Scope the cache to the signed-in user so likes survive refresh and
+  // re-resolve correctly right after login/logout.
+  const { user } = useAuth();
+  const likeKey = ["blog-like", postId, user?.id ?? "anon"] as const;
 
   const liked = useQuery({
-    queryKey: ["blog-like", postId],
+    queryKey: likeKey,
     enabled: !!postId,
     queryFn: async () => {
       const { data: u } = await supabase.auth.getUser();
@@ -221,7 +226,7 @@ export const useBlogLike = (postId: string | undefined) => {
       const { data: u } = await supabase.auth.getUser();
       if (!u.user) throw new Error("Sign in to like posts");
       // Cache is optimistically updated in onMutate, so this is the NEW state.
-      const targetLiked = qc.getQueryData<boolean>(["blog-like", postId]);
+      const targetLiked = qc.getQueryData<boolean>(likeKey);
       if (targetLiked) {
         const { error } = await supabase
           .from("blog_likes")
@@ -239,16 +244,16 @@ export const useBlogLike = (postId: string | undefined) => {
     },
     onMutate: async () => {
       if (!postId) return;
-      await qc.cancelQueries({ queryKey: ["blog-like", postId] });
-      const prev = qc.getQueryData<boolean>(["blog-like", postId]);
+      await qc.cancelQueries({ queryKey: likeKey });
+      const prev = qc.getQueryData<boolean>(likeKey);
       const next = !prev;
-      qc.setQueryData(["blog-like", postId], next);
+      qc.setQueryData(likeKey, next);
       bumpLikeCountInCaches(qc, postId, next ? 1 : -1);
       return { prev };
     },
     onError: (e: any, _v, ctx) => {
       if (postId && ctx) {
-        qc.setQueryData(["blog-like", postId], ctx.prev);
+        qc.setQueryData(likeKey, ctx.prev);
         bumpLikeCountInCaches(qc, postId, ctx.prev ? 1 : -1);
       }
       toast({ title: "Error", description: e.message, variant: "destructive" });
@@ -263,7 +268,7 @@ export const useBlogLike = (postId: string | undefined) => {
       });
     },
     onSettled: () => {
-      qc.invalidateQueries({ queryKey: ["blog-like", postId] });
+      qc.invalidateQueries({ queryKey: likeKey });
     },
   });
 
@@ -272,8 +277,10 @@ export const useBlogLike = (postId: string | undefined) => {
 
 export const useBlogBookmark = (postId: string | undefined) => {
   const qc = useQueryClient();
+  const { user } = useAuth();
+  const bookmarkKey = ["blog-bookmark", postId, user?.id ?? "anon"] as const;
   const bookmarked = useQuery({
-    queryKey: ["blog-bookmark", postId],
+    queryKey: bookmarkKey,
     enabled: !!postId,
     queryFn: async () => {
       const { data: u } = await supabase.auth.getUser();
@@ -293,7 +300,7 @@ export const useBlogBookmark = (postId: string | undefined) => {
       const { data: u } = await supabase.auth.getUser();
       if (!u.user) throw new Error("Sign in to bookmark posts");
       // Cache is optimistically updated in onMutate, so this is the NEW state.
-      const targetBookmarked = qc.getQueryData<boolean>(["blog-bookmark", postId]);
+      const targetBookmarked = qc.getQueryData<boolean>(bookmarkKey);
       if (targetBookmarked) {
         const { error } = await supabase
           .from("blog_bookmarks")
@@ -311,16 +318,16 @@ export const useBlogBookmark = (postId: string | undefined) => {
     },
     onMutate: async () => {
       if (!postId) return;
-      await qc.cancelQueries({ queryKey: ["blog-bookmark", postId] });
-      const prev = qc.getQueryData<boolean>(["blog-bookmark", postId]);
+      await qc.cancelQueries({ queryKey: bookmarkKey });
+      const prev = qc.getQueryData<boolean>(bookmarkKey);
       const next = !prev;
-      qc.setQueryData(["blog-bookmark", postId], next);
+      qc.setQueryData(bookmarkKey, next);
       bumpBookmarkCountInCaches(qc, postId, next ? 1 : -1);
       return { prev };
     },
     onError: (e: any, _v, ctx) => {
       if (postId && ctx) {
-        qc.setQueryData(["blog-bookmark", postId], ctx.prev);
+        qc.setQueryData(bookmarkKey, ctx.prev);
         bumpBookmarkCountInCaches(qc, postId, ctx.prev ? 1 : -1);
       }
       toast({ title: "Error", description: e.message, variant: "destructive" });
@@ -334,7 +341,7 @@ export const useBlogBookmark = (postId: string | undefined) => {
         duration: 4000,
       });
     },
-    onSettled: () => qc.invalidateQueries({ queryKey: ["blog-bookmark", postId] }),
+    onSettled: () => qc.invalidateQueries({ queryKey: bookmarkKey }),
   });
 
   return { bookmarked: !!bookmarked.data, toggle: toggle.mutate };

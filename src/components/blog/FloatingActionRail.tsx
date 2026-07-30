@@ -12,6 +12,11 @@ interface Props {
   onToggleBookmark: () => void;
   url: string;
   className?: string;
+  /**
+   * "fixed" keeps the legacy left-edge floating rail.
+   * "inline" renders a horizontal toolbar in the article flow.
+   */
+  layout?: "fixed" | "inline";
 }
 
 export function FloatingActionRail({
@@ -23,6 +28,7 @@ export function FloatingActionRail({
   onToggleBookmark,
   url,
   className,
+  layout = "fixed",
 }: Props) {
   const onShare = async () => {
     if (navigator.share) {
@@ -50,12 +56,17 @@ export function FloatingActionRail({
 
   return (
     <>
-      {/* Desktop sticky rail */}
+      {/* Desktop rail — inline horizontal toolbar or legacy fixed left rail */}
       <aside
         aria-label="Article actions"
         className={cn(
-          "hidden lg:flex fixed left-4 xl:left-8 top-1/2 -translate-y-1/2 z-30",
-          "flex-col items-center gap-2 rounded-full border border-border bg-card/80 backdrop-blur p-2 shadow-lg",
+          "hidden lg:flex",
+          layout === "inline"
+            ? "sticky top-16 z-20 mb-6 flex-row items-center gap-2 rounded-full border border-border bg-card/80 backdrop-blur px-2 py-1.5 shadow-sm w-fit"
+            : cn(
+                "fixed left-4 xl:left-8 top-1/2 -translate-y-1/2 z-30",
+                "flex-col items-center gap-2 rounded-full border border-border bg-card/80 backdrop-blur p-2 shadow-lg",
+              ),
           className,
         )}
       >

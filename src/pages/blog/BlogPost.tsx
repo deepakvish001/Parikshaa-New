@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 import { BlogContent } from "@/components/blog/BlogContent";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
-import { TableOfContents } from "@/components/blog/TableOfContents";
+
 import { InlineToc } from "@/components/blog/InlineToc";
 import { MobileTocSheet } from "@/components/blog/MobileTocSheet";
 import { TocLiveAnnouncer } from "@/components/blog/TocLiveAnnouncer";
@@ -62,6 +62,17 @@ export default function BlogPost() {
     (params.category ? `${params.category}/${params.slug}` : params.slug) ??
     "";
   const slug = useMemo(() => normalizeBlogSlug(rawSlug), [rawSlug]);
+  // Where the reader came from (e.g. a sheet's resource list), so we can offer
+  // a "Back to resources" link. Router state first, sessionStorage on reload.
+  const backTo = useMemo(() => {
+    const fromState = (location.state as { backTo?: string } | null)?.backTo;
+    if (fromState) return fromState;
+    try {
+      return sessionStorage.getItem("blog:backTo") || null;
+    } catch {
+      return null;
+    }
+  }, [location.state]);
   // If normalization changed the URL, redirect to the canonical form.
   const canonicalPath = slug ? `/blog/${slug}` : "/blog";
   const needsRedirect =
@@ -159,15 +170,6 @@ export default function BlogPost() {
   return (
     <>
       <ReadingProgress totalMinutes={post.reading_time_min} />
-      <FloatingActionRail
-        liked={liked}
-        bookmarked={bookmarked}
-        likeCount={post.like_count}
-        bookmarkCount={post.bookmark_count ?? 0}
-        onToggleLike={() => toggleLike()}
-        onToggleBookmark={() => toggleBookmark()}
-        url={url}
-      />
       <MobileTocSheet items={toc} activeId={activeHeadingId} storageKey={post.slug} />
       <TocLiveAnnouncer items={toc} activeId={activeHeadingId} />
       <article className="container mx-auto px-4 py-8 pb-24 lg:pb-8 max-w-6xl">
@@ -228,13 +230,22 @@ export default function BlogPost() {
           </script>
         </Helmet>
 
-        <Button asChild variant="ghost" size="sm" className="mb-4">
-          <Link to="/blog">
-            <ArrowLeft className="mr-2 h-4 w-4" />All posts
-          </Link>
-        </Button>
+        <div className="mb-4 flex flex-wrap items-center gap-2">
+          {backTo && (
+            <Button asChild variant="outline" size="sm">
+              <Link to={backTo}>
+                <ArrowLeft className="mr-2 h-4 w-4" />Back to resources
+              </Link>
+            </Button>
+          )}
+          <Button asChild variant="ghost" size="sm">
+            <Link to="/blog">
+              <ArrowLeft className="mr-2 h-4 w-4" />All posts
+            </Link>
+          </Button>
+        </div>
 
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_220px]">
+        <div className="grid gap-10">
           <div className="min-w-0 max-w-3xl mx-auto w-full">
             <div className="flex gap-2 mb-3 flex-wrap">
               {post.categories?.map((c) => (
@@ -291,6 +302,18 @@ export default function BlogPost() {
                 className="w-full h-auto rounded-lg mb-8 border bg-muted/30 object-cover"
               />
             )}
+
+            <FloatingActionRail
+              layout="inline"
+              liked={liked}
+              bookmarked={bookmarked}
+              likeCount={post.like_count}
+              bookmarkCount={post.bookmark_count ?? 0}
+              onToggleLike={() => toggleLike()}
+              onToggleBookmark={() => toggleBookmark()}
+              url={url}
+            />
+
 
             <InlineToc
               items={toc}
@@ -514,11 +537,6 @@ export default function BlogPost() {
               </section>
             )}
           </div>
-          <aside className="hidden lg:block">
-            <div className="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto pr-1 [scrollbar-width:thin]">
-              <TableOfContents items={toc} activeId={activeHeadingId} />
-            </div>
-          </aside>
         </div>
       </article>
     </>

@@ -1591,14 +1591,21 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
     if (articleSlug) {
       const target = `/blog/${articleSlug}`;
       if (window.location.pathname !== target) {
-        window.history.replaceState(window.history.state, "", target);
+        // Tag the entry so a back/forward landing here re-opens the article
+        // inline inside the sheet instead of the standalone blog page.
+        const state = {
+          ...(window.history.state || {}),
+          sheetInline: { sheetId, article: articleSlug, from: fromTopicId },
+        };
+        window.history.replaceState(state, "", target);
       }
     } else if (window.location.pathname.startsWith("/blog/")) {
       // Article closed — put the sheet URL back.
       const sheetUrl = `/learn/sheets/${sheetId}${searchParams.toString() ? `?${searchParams}` : ""}`;
-      window.history.replaceState(window.history.state, "", sheetUrl);
+      const { sheetInline: _drop, ...rest } = (window.history.state || {}) as Record<string, unknown>;
+      window.history.replaceState(rest, "", sheetUrl);
     }
-  }, [articleSlug, inlineArticlesEnabled, sheetId, searchParams]);
+  }, [articleSlug, fromTopicId, inlineArticlesEnabled, sheetId, searchParams]);
 
   // Scroll restore on article close is handled by the sheet scroll-restore
   // effect below (it also knows the originating topic row via ?from=).

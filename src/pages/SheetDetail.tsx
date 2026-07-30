@@ -733,26 +733,7 @@ function TopicRow({
   onResetPasses?: (id: string) => void;
 }) {
   const rowNavigate = useNavigate();
-  const [rowSearchParams, setRowSearchParams] = useSearchParams();
-  /**
-   * Opens a blog article inside the sheet's middle content area.
-   * Pushes ?article=<slug> so browser back/forward and deep links work,
-   * and remembers the current scroll offset so closing restores the row.
-   */
-  const openArticleInline = (slug: string, topicId: string) => {
-    try {
-      sessionStorage.setItem(
-        `sheet-scroll:${window.location.pathname}`,
-        String(window.scrollY),
-      );
-    } catch {
-      /* storage unavailable — scroll restore is best-effort */
-    }
-    const next = new URLSearchParams(rowSearchParams);
-    next.set("article", slug);
-    next.set("from", topicId);
-    setRowSearchParams(next);
-  };
+
   const getEstTime = (topic: Topic) => {
 
 
@@ -893,12 +874,8 @@ function TopicRow({
                     const url = topic.resourceUrl;
                     if (!url?.startsWith("/")) return;
                     e.preventDefault();
-                    if (url.startsWith("/blog/")) {
-                      // Open inside the sheet's middle section (deep-linkable)
-                      openArticleInline(url.replace(/^\/blog\//, ""), topic.id);
-                    } else {
-                      rowNavigate(url);
-                    }
+                    // Always open the article on its own page URL
+                    rowNavigate(url);
                   }}
                   className="inline-flex items-center justify-center w-8 h-8 rounded bg-muted hover:bg-muted/80 transition-colors"
 
@@ -1526,7 +1503,12 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const articleSlug = searchParams.get("article") ?? "";
   const fromTopicId = searchParams.get("from") ?? "";
+  // Legacy ?article= deep links now redirect to the article's own page URL.
+  useEffect(() => {
+    if (articleSlug) navigate(`/blog/${articleSlug}`, { replace: true });
+  }, [articleSlug, navigate]);
   const closeArticle = useCallback(() => {
+
     // Prefer history back so forward navigation stays available.
     if (window.history.length > 1) navigate(-1);
     else {

@@ -4,6 +4,8 @@ import React, { useState, useEffect, useCallback, useMemo, useRef, useContext, c
 // without threading a prop through every intermediate component.
 const InlineArticleContext = createContext<((url: string, topicId: string) => void) | null>(null);
 import { usePersistedDisclosure } from "@/hooks/usePersistedDisclosure";
+import { Helmet } from "react-helmet-async";
+import { useBlogPost } from "@/hooks/useBlog";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";

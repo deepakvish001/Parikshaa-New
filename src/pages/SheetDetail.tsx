@@ -2379,7 +2379,9 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   return (
 
     <div className="min-h-screen bg-background">
+      <ReadingProgress />
       {/* Header */}
+
       <header className="sticky top-0 z-40 border-b border-border/40 bg-background/80 backdrop-blur-md">
         <div className="flex h-16 items-center gap-4 px-4 sm:px-6">
           <Button

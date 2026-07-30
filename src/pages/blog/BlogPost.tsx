@@ -303,6 +303,18 @@ export default function BlogPost() {
               />
             )}
 
+            <FloatingActionRail
+              layout="inline"
+              liked={liked}
+              bookmarked={bookmarked}
+              likeCount={post.like_count}
+              bookmarkCount={post.bookmark_count ?? 0}
+              onToggleLike={() => toggleLike()}
+              onToggleBookmark={() => toggleBookmark()}
+              url={url}
+            />
+
+
             <InlineToc
               items={toc}
               readingTimeMin={post.reading_time_min}

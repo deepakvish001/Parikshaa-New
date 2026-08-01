@@ -458,40 +458,25 @@ export default function CodeVisualizer() {
               Visualize
             </Button>
 
-            <div className="flex items-center gap-0.5 rounded-md border border-border/50 px-1">
-              <Button
-                size="sm"
-                variant="ghost"
-                className="h-7 w-7 p-0"
-                title="Zoom out"
-                onClick={() => setZoom((z) => Math.max(0.6, +(z - 0.1).toFixed(2)))}
-              >
-                <ZoomOut className="h-3.5 w-3.5" />
-              </Button>
-              <button
-                onClick={() => {
-                  setAutoFit((a) => !a);
-                  setZoom(1);
-                }}
-                className={cn(
-                  "px-1.5 text-[11px] rounded",
-                  autoFit ? "text-emerald-400" : "text-muted-foreground",
-                )}
-                title="Toggle auto fit to viewport"
-              >
-                <Maximize2 className="h-3.5 w-3.5 inline mr-1" />
-                {autoFit ? "Auto fit" : "Manual"} · {Math.round(zoom * 100)}%
-              </button>
-              <Button
-                size="sm"
-                variant="ghost"
-                className="h-7 w-7 p-0"
-                title="Zoom in"
-                onClick={() => setZoom((z) => Math.min(1.8, +(z + 0.1).toFixed(2)))}
-              >
-                <ZoomIn className="h-3.5 w-3.5" />
-              </Button>
-            </div>
+            <ZoomControl
+              label="Code"
+              autoFit={fitPrefs.codeAuto}
+              zoom={fitPrefs.codeZoom}
+              onToggleAuto={() =>
+                setPref({ codeAuto: !fitPrefs.codeAuto, codeZoom: 1 })
+              }
+              onZoom={(z) => setPref({ codeZoom: z })}
+            />
+            <ZoomControl
+              label="Vars"
+              autoFit={fitPrefs.stackAuto}
+              zoom={fitPrefs.stackZoom}
+              onToggleAuto={() =>
+                setPref({ stackAuto: !fitPrefs.stackAuto, stackZoom: 1 })
+              }
+              onZoom={(z) => setPref({ stackZoom: z })}
+            />
+
 
 
             <Button size="sm" variant="ghost" onClick={() => setExamplesOpen(true)}>

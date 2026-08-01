@@ -591,7 +591,10 @@ export default function CodeVisualizer() {
 
           {/* Compare strip */}
           {compareEntries.length === 2 && (
-            <div className="shrink-0 max-h-[38vh] overflow-auto rounded-xl border border-border/50 bg-card/40 p-3 space-y-3">
+            <div
+              ref={compareFit.ref}
+              className="shrink-0 max-h-[38vh] overflow-auto rounded-xl border border-border/50 bg-card/40 p-3 space-y-3"
+            >
 
               <div className="flex items-center gap-2">
                 <GitCompare className="h-4 w-4 text-sky-400" />
@@ -613,7 +616,15 @@ export default function CodeVisualizer() {
               </div>
               <div className="grid md:grid-cols-2 gap-3">
                 {compareEntries.map((e) => (
-                  <MiniTrace key={e.id} entry={e} idx={compareIdx} />
+                  <MiniTrace
+                    key={e.id}
+                    entry={e}
+                    idx={compareIdx}
+                    style={{
+                      fontSize: `${compareFit.fontSize}px`,
+                      transition: "font-size 260ms cubic-bezier(0.4, 0, 0.2, 1)",
+                    }}
+                  />
                 ))}
               </div>
             </div>
@@ -626,10 +637,7 @@ export default function CodeVisualizer() {
                 <div
                   ref={codeFit.ref}
                   className="font-mono py-3 flex-1 min-h-0 overflow-auto"
-                  style={{
-                    fontSize: `${codeFit.fontSize}px`,
-                    lineHeight: `${codeFit.lineHeightPx}px`,
-                  }}
+                  style={codeFit.style}
                 >
                   {lines.map((l, i) => {
                     const active = step?.line === i + 1;
@@ -666,10 +674,7 @@ export default function CodeVisualizer() {
                     spellCheck={false}
                     placeholder="Paste any code here…"
                     className="w-full flex-1 min-h-0 resize-none bg-transparent p-4 font-mono text-slate-200 outline-none"
-                    style={{
-                      fontSize: `${codeFit.fontSize}px`,
-                      lineHeight: `${codeFit.lineHeightPx}px`,
-                    }}
+                    style={codeFit.style}
                   />
                 </div>
               )}
@@ -748,7 +753,10 @@ export default function CodeVisualizer() {
                   <div
                     ref={stackFit.ref}
                     className="flex-1 min-h-0 overflow-auto rounded-xl border border-border/50 bg-card/20 p-3"
-                    style={{ fontSize: `${stackFit.fontSize}px` }}
+                    style={{
+                      fontSize: `${stackFit.fontSize}px`,
+                      transition: "font-size 260ms cubic-bezier(0.4, 0, 0.2, 1)",
+                    }}
                   >
                     <div className="flex flex-wrap gap-3 items-start">
                       {(step.frames ?? []).map((f, i) => {

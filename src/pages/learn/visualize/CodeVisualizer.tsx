@@ -516,7 +516,7 @@ export default function CodeVisualizer() {
             </div>
 
             {/* Visualization panel */}
-            <div className="space-y-4">
+            <div className="flex flex-col min-h-0 gap-3">
               {loading && (
                 <div className="rounded-xl border border-border/50 bg-card/40 p-10 text-center text-sm text-muted-foreground">
                   <Loader2 className="h-5 w-5 animate-spin mx-auto mb-3" />
@@ -525,7 +525,8 @@ export default function CodeVisualizer() {
               )}
 
               {!loading && !trace && (
-                <div className="rounded-xl border border-dashed border-border/50 bg-card/30 p-6 space-y-4">
+                <div className="rounded-xl border border-dashed border-border/50 bg-card/30 p-6 space-y-4 overflow-auto">
+
                   <div className="text-center space-y-2">
                     <div className="text-lg font-semibold">Paste code, hit Visualize</div>
                     <p className="text-sm text-muted-foreground max-w-md mx-auto">

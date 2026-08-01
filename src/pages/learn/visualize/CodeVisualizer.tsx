@@ -48,6 +48,8 @@ import { detectLanguage } from "@/lib/blog/detectLang";
 import { CODE_EXAMPLES } from "./code/examples";
 import { inferVar, TYPE_COLOR } from "./code/inferVarType";
 import { useTraceHistory, titleFromCode, type TraceHistoryEntry } from "./code/useTraceHistory";
+import { useAutoFitFont } from "./code/useAutoFit";
+
 
 interface Frame {
   name: string;

@@ -1,1 +1,4 @@
 project_id = "elzftqnehcmnouptaqee"
+
+[functions.code-trace]
+verify_jwt = false

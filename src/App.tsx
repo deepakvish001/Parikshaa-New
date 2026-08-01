@@ -40,6 +40,7 @@ import DsaStudioJournalPage from "./pages/learn/dsa-studio/JournalPage";
 import VisualizeHub from "./pages/learn/visualize/VisualizeHub";
 import VisualizeTrack from "./pages/learn/visualize/VisualizeTrack";
 import VisualizePlayer from "./pages/learn/visualize/VisualizePlayer";
+import CodeVisualizer from "./pages/learn/visualize/CodeVisualizer";
 import CodePlayground from "./pages/learn/CodePlayground";
 import WeeklyContests from "./pages/contests/WeeklyContests";
 import ContestDetails from "./pages/contests/ContestDetails";
@@ -258,6 +259,7 @@ const App = () => (
                     
                     <Route path="playground" element={<CodePlayground />} />
                     <Route path="visualize" element={<VisualizeHub />} />
+                    <Route path="visualize/code" element={<CodeVisualizer />} />
                     <Route path="visualize/algo/:algoId" element={<VisualizePlayer />} />
                     <Route path="visualize/:trackId" element={<VisualizeTrack />} />
                   </Route>

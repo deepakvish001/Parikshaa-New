@@ -140,11 +140,11 @@ const VarRow = ({
   return (
     <Tooltip delayDuration={120}>
       <TooltipTrigger asChild>
-        <div className="grid grid-cols-[1fr_auto_1.2fr] items-center gap-2 px-2.5 py-1.5 text-sm font-mono border-b border-border/50 last:border-b-0 hover:bg-muted/30 cursor-help">
+        <div className="grid grid-cols-[1fr_auto_1.2fr] items-center gap-2 px-2.5 py-[0.35em] font-mono border-b border-border/50 last:border-b-0 hover:bg-muted/30 cursor-help">
           <span className="text-muted-foreground truncate">{name}</span>
           <span
             className={cn(
-              "rounded border px-1.5 py-0.5 text-[10px] font-sans leading-none",
+              "rounded border px-1.5 py-0.5 text-[0.75em] font-sans leading-none",
               TYPE_COLOR[info.type],
             )}
           >
@@ -152,6 +152,7 @@ const VarRow = ({
           </span>
           <span className="truncate text-right">{value}</span>
         </div>
+
       </TooltipTrigger>
       <TooltipContent side="right" className="max-w-[260px] space-y-1">
         <div className="font-mono text-xs">

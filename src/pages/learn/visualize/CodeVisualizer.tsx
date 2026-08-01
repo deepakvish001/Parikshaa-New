@@ -466,7 +466,7 @@ export default function CodeVisualizer() {
 
   return (
     <TooltipProvider>
-      <div className="absolute inset-0 flex flex-col overflow-hidden bg-transparent text-foreground">
+      <div className="relative flex h-[calc(100dvh-4rem)] min-h-[560px] flex-col overflow-hidden bg-transparent text-foreground">
         <Helmet>
           <title>Code Visualizer — Step Through Any Code | Parikshaa</title>
           <meta

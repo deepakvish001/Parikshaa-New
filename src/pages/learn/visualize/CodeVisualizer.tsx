@@ -14,7 +14,11 @@ import {
   Trash2,
   GitCompare,
   X,
+  ZoomIn,
+  ZoomOut,
+  Maximize2,
 } from "lucide-react";
+
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -44,6 +48,8 @@ import { detectLanguage } from "@/lib/blog/detectLang";
 import { CODE_EXAMPLES } from "./code/examples";
 import { inferVar, TYPE_COLOR } from "./code/inferVarType";
 import { useTraceHistory, titleFromCode, type TraceHistoryEntry } from "./code/useTraceHistory";
+import { useAutoFitFont } from "./code/useAutoFit";
+
 
 interface Frame {
   name: string;
@@ -134,11 +140,11 @@ const VarRow = ({
   return (
     <Tooltip delayDuration={120}>
       <TooltipTrigger asChild>
-        <div className="grid grid-cols-[1fr_auto_1.2fr] items-center gap-2 px-2.5 py-1.5 text-sm font-mono border-b border-border/50 last:border-b-0 hover:bg-muted/30 cursor-help">
+        <div className="grid grid-cols-[1fr_auto_1.2fr] items-center gap-2 px-2.5 py-[0.35em] font-mono border-b border-border/50 last:border-b-0 hover:bg-muted/30 cursor-help">
           <span className="text-muted-foreground truncate">{name}</span>
           <span
             className={cn(
-              "rounded border px-1.5 py-0.5 text-[10px] font-sans leading-none",
+              "rounded border px-1.5 py-0.5 text-[0.75em] font-sans leading-none",
               TYPE_COLOR[info.type],
             )}
           >
@@ -146,6 +152,7 @@ const VarRow = ({
           </span>
           <span className="truncate text-right">{value}</span>
         </div>
+
       </TooltipTrigger>
       <TooltipContent side="right" className="max-w-[260px] space-y-1">
         <div className="font-mono text-xs">
@@ -227,6 +234,48 @@ export default function CodeVisualizer() {
   const steps = trace?.steps ?? [];
   const step = steps[idx];
   const lines = useMemo(() => code.replace(/\t/g, "    ").split("\n"), [code]);
+
+  /* ---- auto font / zoom fit ---- */
+  const [autoFit, setAutoFit] = useState(true);
+  const [zoom, setZoom] = useState(1);
+
+  const maxCols = useMemo(
+    () => lines.reduce((m, l) => Math.max(m, l.length), 0),
+    [lines],
+  );
+  const codeFit = useAutoFitFont({
+    rows: Math.max(lines.length, 1),
+    cols: maxCols + 4,
+    lineHeight: 1.55,
+    min: 8,
+    max: 15,
+    padY: 28,
+    padX: 60,
+    zoom,
+    enabled: autoFit,
+  });
+
+  const frames = step?.frames ?? [];
+  const stackRows = useMemo(() => {
+    const total = frames.reduce(
+      (s, f) => s + 2.4 + (f.vars?.length ?? 0) + (f.returned != null ? 1 : 0),
+      0,
+    );
+    const columns = Math.min(3, Math.max(1, frames.length));
+    return Math.max(4, Math.ceil(total / columns));
+  }, [frames]);
+  const stackFit = useAutoFitFont({
+    rows: stackRows,
+    cols: 0,
+    lineHeight: 2.1,
+    min: 9,
+    max: 14,
+    padY: 36,
+    zoom,
+    enabled: autoFit,
+  });
+
+
 
   useEffect(() => {
     if (!playing || steps.length === 0) return;
@@ -336,6 +385,42 @@ export default function CodeVisualizer() {
               )}
               Visualize
             </Button>
+
+            <div className="flex items-center gap-0.5 rounded-md border border-border/50 px-1">
+              <Button
+                size="sm"
+                variant="ghost"
+                className="h-7 w-7 p-0"
+                title="Zoom out"
+                onClick={() => setZoom((z) => Math.max(0.6, +(z - 0.1).toFixed(2)))}
+              >
+                <ZoomOut className="h-3.5 w-3.5" />
+              </Button>
+              <button
+                onClick={() => {
+                  setAutoFit((a) => !a);
+                  setZoom(1);
+                }}
+                className={cn(
+                  "px-1.5 text-[11px] rounded",
+                  autoFit ? "text-emerald-400" : "text-muted-foreground",
+                )}
+                title="Toggle auto fit to viewport"
+              >
+                <Maximize2 className="h-3.5 w-3.5 inline mr-1" />
+                {autoFit ? "Auto fit" : "Manual"} · {Math.round(zoom * 100)}%
+              </button>
+              <Button
+                size="sm"
+                variant="ghost"
+                className="h-7 w-7 p-0"
+                title="Zoom in"
+                onClick={() => setZoom((z) => Math.min(1.8, +(z + 0.1).toFixed(2)))}
+              >
+                <ZoomIn className="h-3.5 w-3.5" />
+              </Button>
+            </div>
+
 
             <Button size="sm" variant="ghost" onClick={() => setExamplesOpen(true)}>
               <Sparkles className="h-4 w-4" /> Examples
@@ -456,7 +541,14 @@ export default function CodeVisualizer() {
             {/* Code panel */}
             <div className="flex flex-col min-h-0 rounded-xl border border-border/50 bg-[#0d1117]/80 overflow-hidden">
               {trace ? (
-                <div className="font-mono text-[13px] leading-6 py-3 flex-1 min-h-0 overflow-auto">
+                <div
+                  ref={codeFit.ref}
+                  className="font-mono py-3 flex-1 min-h-0 overflow-auto"
+                  style={{
+                    fontSize: `${codeFit.fontSize}px`,
+                    lineHeight: `${codeFit.lineHeightPx}px`,
+                  }}
+                >
                   {lines.map((l, i) => {
                     const active = step?.line === i + 1;
                     return (
@@ -468,7 +560,7 @@ export default function CodeVisualizer() {
                           active && "bg-emerald-500/10 border-y border-emerald-500/40",
                         )}
                       >
-                        <span className="w-6 shrink-0 text-right text-muted-foreground/60 select-none">
+                        <span className="w-[2.4em] shrink-0 text-right text-muted-foreground/60 select-none">
                           {i + 1}
                         </span>
                         <span
@@ -485,14 +577,21 @@ export default function CodeVisualizer() {
                   })}
                 </div>
               ) : (
-                <textarea
-                  value={code}
-                  onChange={(e) => setCode(e.target.value)}
-                  spellCheck={false}
-                  placeholder="Paste any code here…"
-                  className="w-full flex-1 min-h-0 resize-none bg-transparent p-4 font-mono text-[13px] leading-6 text-slate-200 outline-none"
-                />
+                <div ref={codeFit.ref} className="flex-1 min-h-0 flex">
+                  <textarea
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
+                    spellCheck={false}
+                    placeholder="Paste any code here…"
+                    className="w-full flex-1 min-h-0 resize-none bg-transparent p-4 font-mono text-slate-200 outline-none"
+                    style={{
+                      fontSize: `${codeFit.fontSize}px`,
+                      lineHeight: `${codeFit.lineHeightPx}px`,
+                    }}
+                  />
+                </div>
               )}
+
 
               <div className="border-t border-border/50 p-2 flex items-center gap-2">
                 {trace ? (
@@ -564,8 +663,12 @@ export default function CodeVisualizer() {
 
               {step && (
                 <>
-                  <div className="flex-1 min-h-0 overflow-auto rounded-xl border border-border/50 bg-card/20 p-3">
-                    <div className="flex flex-wrap gap-4 items-start">
+                  <div
+                    ref={stackFit.ref}
+                    className="flex-1 min-h-0 overflow-auto rounded-xl border border-border/50 bg-card/20 p-3"
+                    style={{ fontSize: `${stackFit.fontSize}px` }}
+                  >
+                    <div className="flex flex-wrap gap-3 items-start">
                       {(step.frames ?? []).map((f, i) => {
                         const top = i === (step.frames?.length ?? 0) - 1;
                         const scope = f.isGlobal ? "global" : `local → ${f.name}`;
@@ -577,20 +680,21 @@ export default function CodeVisualizer() {
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             transition={{ type: "spring", damping: 20, stiffness: 220 }}
                             className={cn(
-                              "min-w-[240px] rounded-lg border border-dashed p-3 space-y-2 bg-card/40",
+                              "min-w-[16em] max-w-full rounded-lg border border-dashed p-[0.7em] space-y-[0.5em] bg-card/40",
                               top ? "border-sky-400/70" : "border-border/50",
                             )}
                           >
-                            <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
+                            <div className="flex items-center gap-2 text-[0.9em] font-mono text-muted-foreground">
                               {f.isGlobal ? "" : "function "}
                               <span className="text-foreground">{f.name}</span>
                               <Badge
                                 variant="outline"
-                                className="ml-auto text-[10px] font-sans"
+                                className="ml-auto text-[0.75em] font-sans"
                               >
                                 {f.isGlobal ? "global scope" : "local scope"}
                               </Badge>
                             </div>
+
                             {(f.vars ?? []).length > 0 && (
                               <div className="rounded-md border border-border/50 overflow-hidden">
                                 {(f.vars ?? []).map((v) => (
@@ -604,7 +708,7 @@ export default function CodeVisualizer() {
                               </div>
                             )}
                             {f.returned != null && (
-                              <div className="text-xs text-emerald-400 font-mono">
+                              <div className="text-[0.9em] text-emerald-400 font-mono">
                                 returns {f.returned}
                               </div>
                             )}
@@ -614,7 +718,7 @@ export default function CodeVisualizer() {
                     </div>
 
                     {step.callArgs?.length ? (
-                      <div className="mt-3 text-xs text-sky-400 font-mono">
+                      <div className="mt-3 text-[0.9em] text-sky-400 font-mono">
                         Calls function with arguments {step.callArgs.join(", ")}
                       </div>
                     ) : null}

@@ -541,7 +541,14 @@ export default function CodeVisualizer() {
             {/* Code panel */}
             <div className="flex flex-col min-h-0 rounded-xl border border-border/50 bg-[#0d1117]/80 overflow-hidden">
               {trace ? (
-                <div className="font-mono text-[13px] leading-6 py-3 flex-1 min-h-0 overflow-auto">
+                <div
+                  ref={codeFit.ref}
+                  className="font-mono py-3 flex-1 min-h-0 overflow-auto"
+                  style={{
+                    fontSize: `${codeFit.fontSize}px`,
+                    lineHeight: `${codeFit.lineHeightPx}px`,
+                  }}
+                >
                   {lines.map((l, i) => {
                     const active = step?.line === i + 1;
                     return (
@@ -553,7 +560,7 @@ export default function CodeVisualizer() {
                           active && "bg-emerald-500/10 border-y border-emerald-500/40",
                         )}
                       >
-                        <span className="w-6 shrink-0 text-right text-muted-foreground/60 select-none">
+                        <span className="w-[2.4em] shrink-0 text-right text-muted-foreground/60 select-none">
                           {i + 1}
                         </span>
                         <span
@@ -570,14 +577,21 @@ export default function CodeVisualizer() {
                   })}
                 </div>
               ) : (
-                <textarea
-                  value={code}
-                  onChange={(e) => setCode(e.target.value)}
-                  spellCheck={false}
-                  placeholder="Paste any code here…"
-                  className="w-full flex-1 min-h-0 resize-none bg-transparent p-4 font-mono text-[13px] leading-6 text-slate-200 outline-none"
-                />
+                <div ref={codeFit.ref} className="flex-1 min-h-0 flex">
+                  <textarea
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
+                    spellCheck={false}
+                    placeholder="Paste any code here…"
+                    className="w-full flex-1 min-h-0 resize-none bg-transparent p-4 font-mono text-slate-200 outline-none"
+                    style={{
+                      fontSize: `${codeFit.fontSize}px`,
+                      lineHeight: `${codeFit.lineHeightPx}px`,
+                    }}
+                  />
+                </div>
               )}
+
 
               <div className="border-t border-border/50 p-2 flex items-center gap-2">
                 {trace ? (

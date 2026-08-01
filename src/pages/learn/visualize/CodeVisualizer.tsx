@@ -560,59 +560,62 @@ export default function CodeVisualizer() {
 
               {step && (
                 <>
-                  <div className="flex flex-wrap gap-6 items-start">
-                    {(step.frames ?? []).map((f, i) => {
-                      const top = i === (step.frames?.length ?? 0) - 1;
-                      const scope = f.isGlobal ? "global" : `local → ${f.name}`;
-                      return (
-                        <motion.div
-                          key={`${f.name}-${i}`}
-                          layout
-                          initial={{ opacity: 0, y: 8, scale: 0.97 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          transition={{ type: "spring", damping: 20, stiffness: 220 }}
-                          className={cn(
-                            "min-w-[260px] rounded-lg border border-dashed p-3 space-y-2 bg-card/40",
-                            top ? "border-sky-400/70" : "border-border/50",
-                          )}
-                        >
-                          <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
-                            {f.isGlobal ? "" : "function "}
-                            <span className="text-foreground">{f.name}</span>
-                            <Badge
-                              variant="outline"
-                              className="ml-auto text-[10px] font-sans"
-                            >
-                              {f.isGlobal ? "global scope" : "local scope"}
-                            </Badge>
-                          </div>
-                          {(f.vars ?? []).length > 0 && (
-                            <div className="rounded-md border border-border/50 overflow-hidden">
-                              {(f.vars ?? []).map((v) => (
-                                <VarRow
-                                  key={v.name}
-                                  name={v.name}
-                                  value={v.value}
-                                  scope={scope}
-                                />
-                              ))}
+                  <div className="flex-1 min-h-0 overflow-auto rounded-xl border border-border/50 bg-card/20 p-3">
+                    <div className="flex flex-wrap gap-4 items-start">
+                      {(step.frames ?? []).map((f, i) => {
+                        const top = i === (step.frames?.length ?? 0) - 1;
+                        const scope = f.isGlobal ? "global" : `local → ${f.name}`;
+                        return (
+                          <motion.div
+                            key={`${f.name}-${i}`}
+                            layout
+                            initial={{ opacity: 0, y: 8, scale: 0.97 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            transition={{ type: "spring", damping: 20, stiffness: 220 }}
+                            className={cn(
+                              "min-w-[240px] rounded-lg border border-dashed p-3 space-y-2 bg-card/40",
+                              top ? "border-sky-400/70" : "border-border/50",
+                            )}
+                          >
+                            <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
+                              {f.isGlobal ? "" : "function "}
+                              <span className="text-foreground">{f.name}</span>
+                              <Badge
+                                variant="outline"
+                                className="ml-auto text-[10px] font-sans"
+                              >
+                                {f.isGlobal ? "global scope" : "local scope"}
+                              </Badge>
                             </div>
-                          )}
-                          {f.returned != null && (
-                            <div className="text-xs text-emerald-400 font-mono">
-                              returns {f.returned}
-                            </div>
-                          )}
-                        </motion.div>
-                      );
-                    })}
+                            {(f.vars ?? []).length > 0 && (
+                              <div className="rounded-md border border-border/50 overflow-hidden">
+                                {(f.vars ?? []).map((v) => (
+                                  <VarRow
+                                    key={v.name}
+                                    name={v.name}
+                                    value={v.value}
+                                    scope={scope}
+                                  />
+                                ))}
+                              </div>
+                            )}
+                            {f.returned != null && (
+                              <div className="text-xs text-emerald-400 font-mono">
+                                returns {f.returned}
+                              </div>
+                            )}
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+
+                    {step.callArgs?.length ? (
+                      <div className="mt-3 text-xs text-sky-400 font-mono">
+                        Calls function with arguments {step.callArgs.join(", ")}
+                      </div>
+                    ) : null}
                   </div>
 
-                  {step.callArgs?.length ? (
-                    <div className="text-xs text-sky-400 font-mono">
-                      Calls function with arguments {step.callArgs.join(", ")}
-                    </div>
-                  ) : null}
 
                   <AnimatePresence mode="wait">
                     <motion.div

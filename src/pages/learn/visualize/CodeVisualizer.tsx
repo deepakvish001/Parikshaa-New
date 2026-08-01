@@ -450,11 +450,11 @@ export default function CodeVisualizer() {
             </div>
           )}
 
-          <div className="grid lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] gap-4">
+          <div className="flex-1 min-h-0 grid lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] gap-4">
             {/* Code panel */}
-            <div className="rounded-xl border border-border/50 bg-[#0d1117]/80 overflow-hidden">
+            <div className="flex flex-col min-h-0 rounded-xl border border-border/50 bg-[#0d1117]/80 overflow-hidden">
               {trace ? (
-                <div className="font-mono text-[13px] leading-6 py-3 max-h-[70vh] overflow-auto">
+                <div className="font-mono text-[13px] leading-6 py-3 flex-1 min-h-0 overflow-auto">
                   {lines.map((l, i) => {
                     const active = step?.line === i + 1;
                     return (
@@ -488,9 +488,10 @@ export default function CodeVisualizer() {
                   onChange={(e) => setCode(e.target.value)}
                   spellCheck={false}
                   placeholder="Paste any code here…"
-                  className="w-full h-[70vh] resize-none bg-transparent p-4 font-mono text-[13px] leading-6 text-slate-200 outline-none"
+                  className="w-full flex-1 min-h-0 resize-none bg-transparent p-4 font-mono text-[13px] leading-6 text-slate-200 outline-none"
                 />
               )}
+
               <div className="border-t border-border/50 p-2 flex items-center gap-2">
                 {trace ? (
                   <Button

@@ -168,6 +168,31 @@ const VarRow = ({
   );
 };
 
+type FitPrefs = {
+  codeAuto: boolean;
+  codeZoom: number;
+  stackAuto: boolean;
+  stackZoom: number;
+};
+
+const FIT_PREFS_KEY = "visualizer:fit-prefs:v1";
+const DEFAULT_FIT_PREFS: FitPrefs = {
+  codeAuto: true,
+  codeZoom: 1,
+  stackAuto: true,
+  stackZoom: 1,
+};
+
+const loadFitPrefs = (): FitPrefs => {
+  try {
+    const raw = localStorage.getItem(FIT_PREFS_KEY);
+    if (!raw) return DEFAULT_FIT_PREFS;
+    return { ...DEFAULT_FIT_PREFS, ...(JSON.parse(raw) as Partial<FitPrefs>) };
+  } catch {
+    return DEFAULT_FIT_PREFS;
+  }
+};
+
 const ZoomControl = ({
   label,
   autoFit,

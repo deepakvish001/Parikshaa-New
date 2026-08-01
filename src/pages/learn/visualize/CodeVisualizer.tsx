@@ -235,6 +235,48 @@ export default function CodeVisualizer() {
   const step = steps[idx];
   const lines = useMemo(() => code.replace(/\t/g, "    ").split("\n"), [code]);
 
+  /* ---- auto font / zoom fit ---- */
+  const [autoFit, setAutoFit] = useState(true);
+  const [zoom, setZoom] = useState(1);
+
+  const maxCols = useMemo(
+    () => lines.reduce((m, l) => Math.max(m, l.length), 0),
+    [lines],
+  );
+  const codeFit = useAutoFitFont({
+    rows: Math.max(lines.length, 1),
+    cols: maxCols + 4,
+    lineHeight: 1.55,
+    min: 8,
+    max: 15,
+    padY: 28,
+    padX: 60,
+    zoom,
+    enabled: autoFit,
+  });
+
+  const frames = step?.frames ?? [];
+  const stackRows = useMemo(() => {
+    const total = frames.reduce(
+      (s, f) => s + 2.4 + (f.vars?.length ?? 0) + (f.returned != null ? 1 : 0),
+      0,
+    );
+    const columns = Math.min(3, Math.max(1, frames.length));
+    return Math.max(4, Math.ceil(total / columns));
+  }, [frames]);
+  const stackFit = useAutoFitFont({
+    rows: stackRows,
+    cols: 0,
+    lineHeight: 2.1,
+    min: 9,
+    max: 14,
+    padY: 36,
+    zoom,
+    enabled: autoFit,
+  });
+
+
+
   useEffect(() => {
     if (!playing || steps.length === 0) return;
     if (idx >= steps.length - 1) {

@@ -663,8 +663,12 @@ export default function CodeVisualizer() {
 
               {step && (
                 <>
-                  <div className="flex-1 min-h-0 overflow-auto rounded-xl border border-border/50 bg-card/20 p-3">
-                    <div className="flex flex-wrap gap-4 items-start">
+                  <div
+                    ref={stackFit.ref}
+                    className="flex-1 min-h-0 overflow-auto rounded-xl border border-border/50 bg-card/20 p-3"
+                    style={{ fontSize: `${stackFit.fontSize}px` }}
+                  >
+                    <div className="flex flex-wrap gap-3 items-start">
                       {(step.frames ?? []).map((f, i) => {
                         const top = i === (step.frames?.length ?? 0) - 1;
                         const scope = f.isGlobal ? "global" : `local → ${f.name}`;
@@ -676,20 +680,21 @@ export default function CodeVisualizer() {
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             transition={{ type: "spring", damping: 20, stiffness: 220 }}
                             className={cn(
-                              "min-w-[240px] rounded-lg border border-dashed p-3 space-y-2 bg-card/40",
+                              "min-w-[16em] max-w-full rounded-lg border border-dashed p-[0.7em] space-y-[0.5em] bg-card/40",
                               top ? "border-sky-400/70" : "border-border/50",
                             )}
                           >
-                            <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
+                            <div className="flex items-center gap-2 text-[0.9em] font-mono text-muted-foreground">
                               {f.isGlobal ? "" : "function "}
                               <span className="text-foreground">{f.name}</span>
                               <Badge
                                 variant="outline"
-                                className="ml-auto text-[10px] font-sans"
+                                className="ml-auto text-[0.75em] font-sans"
                               >
                                 {f.isGlobal ? "global scope" : "local scope"}
                               </Badge>
                             </div>
+
                             {(f.vars ?? []).length > 0 && (
                               <div className="rounded-md border border-border/50 overflow-hidden">
                                 {(f.vars ?? []).map((v) => (

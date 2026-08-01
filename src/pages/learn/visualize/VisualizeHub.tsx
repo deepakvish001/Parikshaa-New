@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Play, Sparkles, Star, History } from "lucide-react";
+import { ArrowLeft, ArrowRight, Play, Sparkles, Star, History, Code2 } from "lucide-react";
 import { VISUALIZE_TRACKS, VISUALIZE_ALGOS } from "./_data";
 import TwoPointersMini from "./mini/TwoPointersMini";
 import { useVisualizeFavorites } from "./useVisualizeFavorites";

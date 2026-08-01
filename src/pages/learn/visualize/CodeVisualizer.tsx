@@ -537,7 +537,7 @@ export default function CodeVisualizer() {
               )}
             </Button>
 
-            <div className="flex items-center gap-1 ml-auto">
+            <div className="flex flex-wrap items-center gap-1 w-full lg:w-auto lg:ml-auto justify-end">
               <Button
                 size="sm"
                 variant="ghost"

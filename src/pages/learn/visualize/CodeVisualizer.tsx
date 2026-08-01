@@ -296,9 +296,19 @@ export default function CodeVisualizer() {
   const step = steps[idx];
   const lines = useMemo(() => code.replace(/\t/g, "    ").split("\n"), [code]);
 
-  /* ---- auto font / zoom fit ---- */
-  const [autoFit, setAutoFit] = useState(true);
-  const [zoom, setZoom] = useState(1);
+  /* ---- auto font / zoom fit (persisted) ---- */
+  const [fitPrefs, setFitPrefs] = useState<FitPrefs>(loadFitPrefs);
+  useEffect(() => {
+    try {
+      localStorage.setItem(FIT_PREFS_KEY, JSON.stringify(fitPrefs));
+    } catch {
+      /* ignore */
+    }
+  }, [fitPrefs]);
+  const setPref = useCallback(
+    (patch: Partial<FitPrefs>) => setFitPrefs((p) => ({ ...p, ...patch })),
+    [],
+  );
 
   const maxCols = useMemo(
     () => lines.reduce((m, l) => Math.max(m, l.length), 0),
@@ -312,8 +322,8 @@ export default function CodeVisualizer() {
     max: 15,
     padY: 28,
     padX: 60,
-    zoom,
-    enabled: autoFit,
+    zoom: fitPrefs.codeZoom,
+    enabled: fitPrefs.codeAuto,
   });
 
   const frames = step?.frames ?? [];
@@ -332,9 +342,10 @@ export default function CodeVisualizer() {
     min: 9,
     max: 14,
     padY: 36,
-    zoom,
-    enabled: autoFit,
+    zoom: fitPrefs.stackZoom,
+    enabled: fitPrefs.stackAuto,
   });
+
 
 
 

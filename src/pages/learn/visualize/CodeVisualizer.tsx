@@ -299,7 +299,7 @@ export default function CodeVisualizer() {
 
   return (
     <TooltipProvider>
-      <div className="absolute inset-0 overflow-y-auto bg-transparent text-foreground">
+      <div className="absolute inset-0 flex flex-col overflow-hidden bg-transparent text-foreground">
         <Helmet>
           <title>Code Visualizer — Step Through Any Code | Parikshaa</title>
           <meta
@@ -308,9 +308,10 @@ export default function CodeVisualizer() {
           />
         </Helmet>
 
-        <div className="mx-auto max-w-[1500px] px-4 md:px-6 py-4 space-y-4">
+        <div className="mx-auto w-full max-w-[1500px] flex-1 min-h-0 flex flex-col gap-3 px-4 md:px-6 py-3">
           {/* Toolbar */}
-          <div className="flex flex-wrap items-center gap-2 rounded-xl border border-border/50 bg-card/50 px-3 py-2">
+          <div className="shrink-0 flex flex-wrap items-center gap-2 rounded-xl border border-border/50 bg-card/50 px-3 py-2">
+
             <Select value={language} onValueChange={setLanguage}>
               <SelectTrigger className="h-9 w-[170px]">
                 <SelectValue />

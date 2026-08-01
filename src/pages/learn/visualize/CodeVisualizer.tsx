@@ -236,22 +236,22 @@ const MiniTrace = ({
 
       <div className="flex items-center justify-between gap-2">
         <div className="font-medium truncate">{entry.title}</div>
-        <Badge variant="secondary" className="shrink-0 text-[10px]">
+        <Badge variant="secondary" className="shrink-0 text-[0.75em]">
           {entry.language}
         </Badge>
       </div>
-      <div className="text-[11px] text-muted-foreground">
+      <div className="text-[0.8em] text-muted-foreground">
         {steps.length} steps · {new Date(entry.createdAt).toLocaleString()}
       </div>
       {s ? (
         <>
-          <div className="rounded bg-[#0d1117]/70 p-2 font-mono text-xs text-emerald-300">
+          <div className="rounded bg-[#0d1117]/70 p-2 font-mono text-[0.85em] text-emerald-300">
             L{s.line}: {s.code ?? "—"}
           </div>
-          <div className="text-xs text-muted-foreground">{s.explanation ?? "—"}</div>
+          <div className="text-[0.85em] text-muted-foreground">{s.explanation ?? "—"}</div>
           <div className="space-y-1">
             {(s.frames ?? []).map((f, i) => (
-              <div key={i} className="rounded border border-border/50 px-2 py-1 text-xs font-mono">
+              <div key={i} className="rounded border border-border/50 px-2 py-1 text-[0.85em] font-mono">
                 <span className="text-sky-300">{f.name}</span>
                 {(f.vars ?? []).length > 0 && (
                   <span className="text-muted-foreground">
@@ -264,7 +264,7 @@ const MiniTrace = ({
           </div>
         </>
       ) : (
-        <div className="text-xs text-muted-foreground">No step at this index.</div>
+        <div className="text-[0.85em] text-muted-foreground">No step at this index.</div>
       )}
     </div>
   );

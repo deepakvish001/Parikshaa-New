@@ -97,12 +97,20 @@ export default function VisualizeHub() {
                 <Play className="h-4 w-4 fill-current" />
                 Start with DSA
               </Link>
+              <Link
+                to="/learn/visualize/code"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-amber-500/40 bg-amber-500/10 text-amber-300 text-sm font-medium hover:border-amber-500/70 hover:bg-amber-500/15 transition"
+              >
+                <Code2 className="h-4 w-4" />
+                Paste your code
+              </Link>
               <a
                 href="#tracks"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border/60 bg-card/40 text-sm hover:border-primary/50 hover:text-primary transition"
               >
                 Choose a track
               </a>
+
             </div>
           </motion.div>
 

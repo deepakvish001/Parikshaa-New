@@ -299,7 +299,7 @@ export default function CodeVisualizer() {
 
   return (
     <TooltipProvider>
-      <div className="absolute inset-0 overflow-y-auto bg-transparent text-foreground">
+      <div className="absolute inset-0 flex flex-col overflow-hidden bg-transparent text-foreground">
         <Helmet>
           <title>Code Visualizer — Step Through Any Code | Parikshaa</title>
           <meta
@@ -308,9 +308,10 @@ export default function CodeVisualizer() {
           />
         </Helmet>
 
-        <div className="mx-auto max-w-[1500px] px-4 md:px-6 py-4 space-y-4">
+        <div className="mx-auto w-full max-w-[1500px] flex-1 min-h-0 flex flex-col gap-3 px-4 md:px-6 py-3">
           {/* Toolbar */}
-          <div className="flex flex-wrap items-center gap-2 rounded-xl border border-border/50 bg-card/50 px-3 py-2">
+          <div className="shrink-0 flex flex-wrap items-center gap-2 rounded-xl border border-border/50 bg-card/50 px-3 py-2">
+
             <Select value={language} onValueChange={setLanguage}>
               <SelectTrigger className="h-9 w-[170px]">
                 <SelectValue />
@@ -423,7 +424,8 @@ export default function CodeVisualizer() {
 
           {/* Compare strip */}
           {compareEntries.length === 2 && (
-            <div className="rounded-xl border border-border/50 bg-card/40 p-3 space-y-3">
+            <div className="shrink-0 max-h-[38vh] overflow-auto rounded-xl border border-border/50 bg-card/40 p-3 space-y-3">
+
               <div className="flex items-center gap-2">
                 <GitCompare className="h-4 w-4 text-sky-400" />
                 <div className="text-sm font-semibold">Comparing two runs</div>
@@ -450,11 +452,11 @@ export default function CodeVisualizer() {
             </div>
           )}
 
-          <div className="grid lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] gap-4">
+          <div className="flex-1 min-h-0 grid lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] gap-4">
             {/* Code panel */}
-            <div className="rounded-xl border border-border/50 bg-[#0d1117]/80 overflow-hidden">
+            <div className="flex flex-col min-h-0 rounded-xl border border-border/50 bg-[#0d1117]/80 overflow-hidden">
               {trace ? (
-                <div className="font-mono text-[13px] leading-6 py-3 max-h-[70vh] overflow-auto">
+                <div className="font-mono text-[13px] leading-6 py-3 flex-1 min-h-0 overflow-auto">
                   {lines.map((l, i) => {
                     const active = step?.line === i + 1;
                     return (
@@ -488,9 +490,10 @@ export default function CodeVisualizer() {
                   onChange={(e) => setCode(e.target.value)}
                   spellCheck={false}
                   placeholder="Paste any code here…"
-                  className="w-full h-[70vh] resize-none bg-transparent p-4 font-mono text-[13px] leading-6 text-slate-200 outline-none"
+                  className="w-full flex-1 min-h-0 resize-none bg-transparent p-4 font-mono text-[13px] leading-6 text-slate-200 outline-none"
                 />
               )}
+
               <div className="border-t border-border/50 p-2 flex items-center gap-2">
                 {trace ? (
                   <Button
@@ -516,7 +519,7 @@ export default function CodeVisualizer() {
             </div>
 
             {/* Visualization panel */}
-            <div className="space-y-4">
+            <div className="flex flex-col min-h-0 gap-3">
               {loading && (
                 <div className="rounded-xl border border-border/50 bg-card/40 p-10 text-center text-sm text-muted-foreground">
                   <Loader2 className="h-5 w-5 animate-spin mx-auto mb-3" />
@@ -525,7 +528,8 @@ export default function CodeVisualizer() {
               )}
 
               {!loading && !trace && (
-                <div className="rounded-xl border border-dashed border-border/50 bg-card/30 p-6 space-y-4">
+                <div className="rounded-xl border border-dashed border-border/50 bg-card/30 p-6 space-y-4 overflow-auto">
+
                   <div className="text-center space-y-2">
                     <div className="text-lg font-semibold">Paste code, hit Visualize</div>
                     <p className="text-sm text-muted-foreground max-w-md mx-auto">
@@ -560,59 +564,62 @@ export default function CodeVisualizer() {
 
               {step && (
                 <>
-                  <div className="flex flex-wrap gap-6 items-start">
-                    {(step.frames ?? []).map((f, i) => {
-                      const top = i === (step.frames?.length ?? 0) - 1;
-                      const scope = f.isGlobal ? "global" : `local → ${f.name}`;
-                      return (
-                        <motion.div
-                          key={`${f.name}-${i}`}
-                          layout
-                          initial={{ opacity: 0, y: 8, scale: 0.97 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          transition={{ type: "spring", damping: 20, stiffness: 220 }}
-                          className={cn(
-                            "min-w-[260px] rounded-lg border border-dashed p-3 space-y-2 bg-card/40",
-                            top ? "border-sky-400/70" : "border-border/50",
-                          )}
-                        >
-                          <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
-                            {f.isGlobal ? "" : "function "}
-                            <span className="text-foreground">{f.name}</span>
-                            <Badge
-                              variant="outline"
-                              className="ml-auto text-[10px] font-sans"
-                            >
-                              {f.isGlobal ? "global scope" : "local scope"}
-                            </Badge>
-                          </div>
-                          {(f.vars ?? []).length > 0 && (
-                            <div className="rounded-md border border-border/50 overflow-hidden">
-                              {(f.vars ?? []).map((v) => (
-                                <VarRow
-                                  key={v.name}
-                                  name={v.name}
-                                  value={v.value}
-                                  scope={scope}
-                                />
-                              ))}
+                  <div className="flex-1 min-h-0 overflow-auto rounded-xl border border-border/50 bg-card/20 p-3">
+                    <div className="flex flex-wrap gap-4 items-start">
+                      {(step.frames ?? []).map((f, i) => {
+                        const top = i === (step.frames?.length ?? 0) - 1;
+                        const scope = f.isGlobal ? "global" : `local → ${f.name}`;
+                        return (
+                          <motion.div
+                            key={`${f.name}-${i}`}
+                            layout
+                            initial={{ opacity: 0, y: 8, scale: 0.97 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            transition={{ type: "spring", damping: 20, stiffness: 220 }}
+                            className={cn(
+                              "min-w-[240px] rounded-lg border border-dashed p-3 space-y-2 bg-card/40",
+                              top ? "border-sky-400/70" : "border-border/50",
+                            )}
+                          >
+                            <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
+                              {f.isGlobal ? "" : "function "}
+                              <span className="text-foreground">{f.name}</span>
+                              <Badge
+                                variant="outline"
+                                className="ml-auto text-[10px] font-sans"
+                              >
+                                {f.isGlobal ? "global scope" : "local scope"}
+                              </Badge>
                             </div>
-                          )}
-                          {f.returned != null && (
-                            <div className="text-xs text-emerald-400 font-mono">
-                              returns {f.returned}
-                            </div>
-                          )}
-                        </motion.div>
-                      );
-                    })}
+                            {(f.vars ?? []).length > 0 && (
+                              <div className="rounded-md border border-border/50 overflow-hidden">
+                                {(f.vars ?? []).map((v) => (
+                                  <VarRow
+                                    key={v.name}
+                                    name={v.name}
+                                    value={v.value}
+                                    scope={scope}
+                                  />
+                                ))}
+                              </div>
+                            )}
+                            {f.returned != null && (
+                              <div className="text-xs text-emerald-400 font-mono">
+                                returns {f.returned}
+                              </div>
+                            )}
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+
+                    {step.callArgs?.length ? (
+                      <div className="mt-3 text-xs text-sky-400 font-mono">
+                        Calls function with arguments {step.callArgs.join(", ")}
+                      </div>
+                    ) : null}
                   </div>
 
-                  {step.callArgs?.length ? (
-                    <div className="text-xs text-sky-400 font-mono">
-                      Calls function with arguments {step.callArgs.join(", ")}
-                    </div>
-                  ) : null}
 
                   <AnimatePresence mode="wait">
                     <motion.div
@@ -620,7 +627,7 @@ export default function CodeVisualizer() {
                       initial={{ opacity: 0, y: 6 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0 }}
-                      className="space-y-0"
+                      className="shrink-0 space-y-0"
                     >
                       <div className="inline-block rounded-t-lg border border-b-0 border-dashed border-border/60 bg-card/40 px-3 py-2">
                         <div className="text-[11px] text-rose-400/80">
@@ -630,7 +637,7 @@ export default function CodeVisualizer() {
                           {step.code ?? lines[step.line - 1]}
                         </div>
                       </div>
-                      <div className="rounded-lg rounded-tl-none border border-border/60 bg-card/60 p-4 text-sm leading-relaxed">
+                      <div className="rounded-lg rounded-tl-none border border-border/60 bg-card/60 p-3 text-sm leading-relaxed max-h-32 overflow-auto">
                         {step.explanation ?? "—"}
                         {step.returnValue != null && (
                           <div className="mt-2 font-mono text-emerald-400">
@@ -641,25 +648,27 @@ export default function CodeVisualizer() {
                     </motion.div>
                   </AnimatePresence>
 
+
                   {step.stdout ? (
-                    <div className="rounded-lg border border-border/50 bg-[#0d1117]/70 p-3">
+                    <div className="shrink-0 rounded-lg border border-border/50 bg-[#0d1117]/70 p-3">
                       <div className="text-[11px] uppercase tracking-wider text-muted-foreground mb-1">
                         Output
                       </div>
-                      <pre className="font-mono text-sm text-emerald-300 whitespace-pre-wrap">
+                      <pre className="font-mono text-sm text-emerald-300 whitespace-pre-wrap max-h-24 overflow-auto">
                         {step.stdout}
                       </pre>
                     </div>
                   ) : null}
 
                   {trace?.truncated && idx === steps.length - 1 && (
-                    <div className="text-xs text-amber-400">
+                    <div className="shrink-0 text-xs text-amber-400">
                       Trace truncated — this program runs longer than the step limit.
                     </div>
                   )}
                 </>
               )}
             </div>
+
           </div>
         </div>
 

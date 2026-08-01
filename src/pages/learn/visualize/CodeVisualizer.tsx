@@ -423,7 +423,8 @@ export default function CodeVisualizer() {
 
           {/* Compare strip */}
           {compareEntries.length === 2 && (
-            <div className="rounded-xl border border-border/50 bg-card/40 p-3 space-y-3">
+            <div className="shrink-0 max-h-[38vh] overflow-auto rounded-xl border border-border/50 bg-card/40 p-3 space-y-3">
+
               <div className="flex items-center gap-2">
                 <GitCompare className="h-4 w-4 text-sky-400" />
                 <div className="text-sm font-semibold">Comparing two runs</div>

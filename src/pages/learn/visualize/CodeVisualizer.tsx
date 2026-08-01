@@ -620,7 +620,7 @@ export default function CodeVisualizer() {
                       initial={{ opacity: 0, y: 6 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0 }}
-                      className="space-y-0"
+                      className="shrink-0 space-y-0"
                     >
                       <div className="inline-block rounded-t-lg border border-b-0 border-dashed border-border/60 bg-card/40 px-3 py-2">
                         <div className="text-[11px] text-rose-400/80">
@@ -630,7 +630,7 @@ export default function CodeVisualizer() {
                           {step.code ?? lines[step.line - 1]}
                         </div>
                       </div>
-                      <div className="rounded-lg rounded-tl-none border border-border/60 bg-card/60 p-4 text-sm leading-relaxed">
+                      <div className="rounded-lg rounded-tl-none border border-border/60 bg-card/60 p-3 text-sm leading-relaxed max-h-32 overflow-auto">
                         {step.explanation ?? "—"}
                         {step.returnValue != null && (
                           <div className="mt-2 font-mono text-emerald-400">
@@ -640,6 +640,7 @@ export default function CodeVisualizer() {
                       </div>
                     </motion.div>
                   </AnimatePresence>
+
 
                   {step.stdout ? (
                     <div className="shrink-0 rounded-lg border border-border/50 bg-[#0d1117]/70 p-3">

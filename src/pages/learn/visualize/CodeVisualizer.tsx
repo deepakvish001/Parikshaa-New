@@ -443,6 +443,27 @@ export default function CodeVisualizer() {
     ...compareEntries.map((e) => ((e.trace as Trace)?.steps?.length ?? 1) - 1),
   );
 
+  // One shared fit for both compare cards → identical scale, never mismatched.
+  const compareRows = useMemo(() => {
+    const rowsFor = (e: TraceHistoryEntry) => {
+      const st = ((e.trace as Trace)?.steps ?? []) as Step[];
+      const s = st[Math.min(compareIdx, st.length - 1)];
+      return 5 + (s?.frames?.length ?? 0);
+    };
+    return Math.max(6, ...compareEntries.map(rowsFor));
+  }, [compareEntries, compareIdx]);
+  const compareFit = useAutoFitFont({
+    rows: compareRows,
+    cols: 0,
+    lineHeight: 2.2,
+    min: 9,
+    max: 14,
+    padY: 40,
+    zoom: fitPrefs.stackZoom,
+    enabled: fitPrefs.stackAuto,
+  });
+
+
   return (
     <TooltipProvider>
       <div className="absolute inset-0 flex flex-col overflow-hidden bg-transparent text-foreground">

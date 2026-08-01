@@ -168,11 +168,72 @@ const VarRow = ({
   );
 };
 
-const MiniTrace = ({ entry, idx }: { entry: TraceHistoryEntry; idx: number }) => {
+const ZoomControl = ({
+  label,
+  autoFit,
+  zoom,
+  onToggleAuto,
+  onZoom,
+}: {
+  label: string;
+  autoFit: boolean;
+  zoom: number;
+  onToggleAuto: () => void;
+  onZoom: (next: number) => void;
+}) => (
+  <div className="flex items-center gap-0.5 rounded-md border border-border/50 px-1">
+    <span className="px-1 text-[10px] uppercase tracking-wide text-muted-foreground">
+      {label}
+    </span>
+    <Button
+      size="sm"
+      variant="ghost"
+      className="h-7 w-7 p-0"
+      title={`Zoom out ${label}`}
+      onClick={() => onZoom(Math.max(0.6, +(zoom - 0.1).toFixed(2)))}
+    >
+      <ZoomOut className="h-3.5 w-3.5" />
+    </Button>
+    <button
+      onClick={onToggleAuto}
+      title={`Toggle auto fit for ${label}`}
+      className={cn(
+        "px-1.5 text-[11px] rounded transition-colors",
+        autoFit ? "text-emerald-400" : "text-muted-foreground",
+      )}
+    >
+      <Maximize2 className="h-3.5 w-3.5 inline mr-1" />
+      {autoFit ? "Auto" : "Manual"} · {Math.round(zoom * 100)}%
+    </button>
+    <Button
+      size="sm"
+      variant="ghost"
+      className="h-7 w-7 p-0"
+      title={`Zoom in ${label}`}
+      onClick={() => onZoom(Math.min(1.8, +(zoom + 0.1).toFixed(2)))}
+    >
+      <ZoomIn className="h-3.5 w-3.5" />
+    </Button>
+  </div>
+);
+
+const MiniTrace = ({
+  entry,
+  idx,
+  style,
+}: {
+  entry: TraceHistoryEntry;
+  idx: number;
+  style?: React.CSSProperties;
+}) => {
   const steps = ((entry.trace as Trace)?.steps ?? []) as Step[];
   const s = steps[Math.min(idx, steps.length - 1)];
   return (
-    <div className="rounded-lg border border-border/50 bg-card/40 p-3 space-y-2 text-sm">
+    <div
+      className="rounded-lg border border-border/50 bg-card/40 p-3 space-y-2"
+      style={style}
+    >
+
       <div className="flex items-center justify-between gap-2">
         <div className="font-medium truncate">{entry.title}</div>
         <Badge variant="secondary" className="shrink-0 text-[10px]">

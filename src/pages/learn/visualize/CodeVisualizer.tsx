@@ -642,24 +642,25 @@ export default function CodeVisualizer() {
                   </AnimatePresence>
 
                   {step.stdout ? (
-                    <div className="rounded-lg border border-border/50 bg-[#0d1117]/70 p-3">
+                    <div className="shrink-0 rounded-lg border border-border/50 bg-[#0d1117]/70 p-3">
                       <div className="text-[11px] uppercase tracking-wider text-muted-foreground mb-1">
                         Output
                       </div>
-                      <pre className="font-mono text-sm text-emerald-300 whitespace-pre-wrap">
+                      <pre className="font-mono text-sm text-emerald-300 whitespace-pre-wrap max-h-24 overflow-auto">
                         {step.stdout}
                       </pre>
                     </div>
                   ) : null}
 
                   {trace?.truncated && idx === steps.length - 1 && (
-                    <div className="text-xs text-amber-400">
+                    <div className="shrink-0 text-xs text-amber-400">
                       Trace truncated — this program runs longer than the step limit.
                     </div>
                   )}
                 </>
               )}
             </div>
+
           </div>
         </div>
 

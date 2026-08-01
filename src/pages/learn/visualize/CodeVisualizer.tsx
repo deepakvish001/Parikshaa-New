@@ -708,7 +708,7 @@ export default function CodeVisualizer() {
                               </div>
                             )}
                             {f.returned != null && (
-                              <div className="text-xs text-emerald-400 font-mono">
+                              <div className="text-[0.9em] text-emerald-400 font-mono">
                                 returns {f.returned}
                               </div>
                             )}
@@ -718,7 +718,7 @@ export default function CodeVisualizer() {
                     </div>
 
                     {step.callArgs?.length ? (
-                      <div className="mt-3 text-xs text-sky-400 font-mono">
+                      <div className="mt-3 text-[0.9em] text-sky-400 font-mono">
                         Calls function with arguments {step.callArgs.join(", ")}
                       </div>
                     ) : null}

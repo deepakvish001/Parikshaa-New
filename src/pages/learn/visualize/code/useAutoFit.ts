@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 /**
@@ -75,10 +76,20 @@ export function useAutoFitFont(opts: {
   }
   fontSize = Math.max(min, Math.min(max * 1.8, fontSize * zoom));
 
+  const fs = Math.round(fontSize * 10) / 10;
+  const lh = Math.round(fs * lineHeight * 10) / 10;
+
   return {
     ref,
-    fontSize: Math.round(fontSize * 10) / 10,
-    lineHeightPx: Math.round(fontSize * lineHeight * 10) / 10,
+    fontSize: fs,
+    lineHeightPx: lh,
+    /** apply directly — includes a smooth transition so the layout never jumps */
+    style: {
+      fontSize: `${fs}px`,
+      lineHeight: `${lh}px`,
+      transition:
+        "font-size 260ms cubic-bezier(0.4, 0, 0.2, 1), line-height 260ms cubic-bezier(0.4, 0, 0.2, 1)",
+    } as CSSProperties,
     remeasure: measure,
   };
 }

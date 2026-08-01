@@ -168,29 +168,115 @@ const VarRow = ({
   );
 };
 
-const MiniTrace = ({ entry, idx }: { entry: TraceHistoryEntry; idx: number }) => {
+type FitPrefs = {
+  codeAuto: boolean;
+  codeZoom: number;
+  stackAuto: boolean;
+  stackZoom: number;
+};
+
+const FIT_PREFS_KEY = "visualizer:fit-prefs:v1";
+const DEFAULT_FIT_PREFS: FitPrefs = {
+  codeAuto: true,
+  codeZoom: 1,
+  stackAuto: true,
+  stackZoom: 1,
+};
+
+const loadFitPrefs = (): FitPrefs => {
+  try {
+    const raw = localStorage.getItem(FIT_PREFS_KEY);
+    if (!raw) return DEFAULT_FIT_PREFS;
+    return { ...DEFAULT_FIT_PREFS, ...(JSON.parse(raw) as Partial<FitPrefs>) };
+  } catch {
+    return DEFAULT_FIT_PREFS;
+  }
+};
+
+const ZoomControl = ({
+  label,
+  autoFit,
+  zoom,
+  onToggleAuto,
+  onZoom,
+}: {
+  label: string;
+  autoFit: boolean;
+  zoom: number;
+  onToggleAuto: () => void;
+  onZoom: (next: number) => void;
+}) => (
+  <div className="flex items-center gap-0.5 rounded-md border border-border/50 px-1">
+    <span className="px-1 text-[10px] uppercase tracking-wide text-muted-foreground">
+      {label}
+    </span>
+    <Button
+      size="sm"
+      variant="ghost"
+      className="h-7 w-7 p-0"
+      title={`Zoom out ${label}`}
+      onClick={() => onZoom(Math.max(0.6, +(zoom - 0.1).toFixed(2)))}
+    >
+      <ZoomOut className="h-3.5 w-3.5" />
+    </Button>
+    <button
+      onClick={onToggleAuto}
+      title={`Toggle auto fit for ${label}`}
+      className={cn(
+        "px-1.5 text-[11px] rounded transition-colors",
+        autoFit ? "text-emerald-400" : "text-muted-foreground",
+      )}
+    >
+      <Maximize2 className="h-3.5 w-3.5 inline mr-1" />
+      {autoFit ? "Auto" : "Manual"} · {Math.round(zoom * 100)}%
+    </button>
+    <Button
+      size="sm"
+      variant="ghost"
+      className="h-7 w-7 p-0"
+      title={`Zoom in ${label}`}
+      onClick={() => onZoom(Math.min(1.8, +(zoom + 0.1).toFixed(2)))}
+    >
+      <ZoomIn className="h-3.5 w-3.5" />
+    </Button>
+  </div>
+);
+
+const MiniTrace = ({
+  entry,
+  idx,
+  style,
+}: {
+  entry: TraceHistoryEntry;
+  idx: number;
+  style?: React.CSSProperties;
+}) => {
   const steps = ((entry.trace as Trace)?.steps ?? []) as Step[];
   const s = steps[Math.min(idx, steps.length - 1)];
   return (
-    <div className="rounded-lg border border-border/50 bg-card/40 p-3 space-y-2 text-sm">
+    <div
+      className="rounded-lg border border-border/50 bg-card/40 p-3 space-y-2"
+      style={style}
+    >
+
       <div className="flex items-center justify-between gap-2">
         <div className="font-medium truncate">{entry.title}</div>
-        <Badge variant="secondary" className="shrink-0 text-[10px]">
+        <Badge variant="secondary" className="shrink-0 text-[0.75em]">
           {entry.language}
         </Badge>
       </div>
-      <div className="text-[11px] text-muted-foreground">
+      <div className="text-[0.8em] text-muted-foreground">
         {steps.length} steps · {new Date(entry.createdAt).toLocaleString()}
       </div>
       {s ? (
         <>
-          <div className="rounded bg-[#0d1117]/70 p-2 font-mono text-xs text-emerald-300">
+          <div className="rounded bg-[#0d1117]/70 p-2 font-mono text-[0.85em] text-emerald-300">
             L{s.line}: {s.code ?? "—"}
           </div>
-          <div className="text-xs text-muted-foreground">{s.explanation ?? "—"}</div>
+          <div className="text-[0.85em] text-muted-foreground">{s.explanation ?? "—"}</div>
           <div className="space-y-1">
             {(s.frames ?? []).map((f, i) => (
-              <div key={i} className="rounded border border-border/50 px-2 py-1 text-xs font-mono">
+              <div key={i} className="rounded border border-border/50 px-2 py-1 text-[0.85em] font-mono">
                 <span className="text-sky-300">{f.name}</span>
                 {(f.vars ?? []).length > 0 && (
                   <span className="text-muted-foreground">
@@ -203,7 +289,7 @@ const MiniTrace = ({ entry, idx }: { entry: TraceHistoryEntry; idx: number }) =>
           </div>
         </>
       ) : (
-        <div className="text-xs text-muted-foreground">No step at this index.</div>
+        <div className="text-[0.85em] text-muted-foreground">No step at this index.</div>
       )}
     </div>
   );
@@ -235,9 +321,19 @@ export default function CodeVisualizer() {
   const step = steps[idx];
   const lines = useMemo(() => code.replace(/\t/g, "    ").split("\n"), [code]);
 
-  /* ---- auto font / zoom fit ---- */
-  const [autoFit, setAutoFit] = useState(true);
-  const [zoom, setZoom] = useState(1);
+  /* ---- auto font / zoom fit (persisted) ---- */
+  const [fitPrefs, setFitPrefs] = useState<FitPrefs>(loadFitPrefs);
+  useEffect(() => {
+    try {
+      localStorage.setItem(FIT_PREFS_KEY, JSON.stringify(fitPrefs));
+    } catch {
+      /* ignore */
+    }
+  }, [fitPrefs]);
+  const setPref = useCallback(
+    (patch: Partial<FitPrefs>) => setFitPrefs((p) => ({ ...p, ...patch })),
+    [],
+  );
 
   const maxCols = useMemo(
     () => lines.reduce((m, l) => Math.max(m, l.length), 0),
@@ -251,8 +347,8 @@ export default function CodeVisualizer() {
     max: 15,
     padY: 28,
     padX: 60,
-    zoom,
-    enabled: autoFit,
+    zoom: fitPrefs.codeZoom,
+    enabled: fitPrefs.codeAuto,
   });
 
   const frames = step?.frames ?? [];
@@ -271,9 +367,10 @@ export default function CodeVisualizer() {
     min: 9,
     max: 14,
     padY: 36,
-    zoom,
-    enabled: autoFit,
+    zoom: fitPrefs.stackZoom,
+    enabled: fitPrefs.stackAuto,
   });
+
 
 
 
@@ -346,6 +443,27 @@ export default function CodeVisualizer() {
     ...compareEntries.map((e) => ((e.trace as Trace)?.steps?.length ?? 1) - 1),
   );
 
+  // One shared fit for both compare cards → identical scale, never mismatched.
+  const compareRows = useMemo(() => {
+    const rowsFor = (e: TraceHistoryEntry) => {
+      const st = ((e.trace as Trace)?.steps ?? []) as Step[];
+      const s = st[Math.min(compareIdx, st.length - 1)];
+      return 5 + (s?.frames?.length ?? 0);
+    };
+    return Math.max(6, ...compareEntries.map(rowsFor));
+  }, [compareEntries, compareIdx]);
+  const compareFit = useAutoFitFont({
+    rows: compareRows,
+    cols: 0,
+    lineHeight: 2.2,
+    min: 9,
+    max: 14,
+    padY: 40,
+    zoom: fitPrefs.stackZoom,
+    enabled: fitPrefs.stackAuto,
+  });
+
+
   return (
     <TooltipProvider>
       <div className="absolute inset-0 flex flex-col overflow-hidden bg-transparent text-foreground">
@@ -386,40 +504,25 @@ export default function CodeVisualizer() {
               Visualize
             </Button>
 
-            <div className="flex items-center gap-0.5 rounded-md border border-border/50 px-1">
-              <Button
-                size="sm"
-                variant="ghost"
-                className="h-7 w-7 p-0"
-                title="Zoom out"
-                onClick={() => setZoom((z) => Math.max(0.6, +(z - 0.1).toFixed(2)))}
-              >
-                <ZoomOut className="h-3.5 w-3.5" />
-              </Button>
-              <button
-                onClick={() => {
-                  setAutoFit((a) => !a);
-                  setZoom(1);
-                }}
-                className={cn(
-                  "px-1.5 text-[11px] rounded",
-                  autoFit ? "text-emerald-400" : "text-muted-foreground",
-                )}
-                title="Toggle auto fit to viewport"
-              >
-                <Maximize2 className="h-3.5 w-3.5 inline mr-1" />
-                {autoFit ? "Auto fit" : "Manual"} · {Math.round(zoom * 100)}%
-              </button>
-              <Button
-                size="sm"
-                variant="ghost"
-                className="h-7 w-7 p-0"
-                title="Zoom in"
-                onClick={() => setZoom((z) => Math.min(1.8, +(z + 0.1).toFixed(2)))}
-              >
-                <ZoomIn className="h-3.5 w-3.5" />
-              </Button>
-            </div>
+            <ZoomControl
+              label="Code"
+              autoFit={fitPrefs.codeAuto}
+              zoom={fitPrefs.codeZoom}
+              onToggleAuto={() =>
+                setPref({ codeAuto: !fitPrefs.codeAuto, codeZoom: 1 })
+              }
+              onZoom={(z) => setPref({ codeZoom: z })}
+            />
+            <ZoomControl
+              label="Vars"
+              autoFit={fitPrefs.stackAuto}
+              zoom={fitPrefs.stackZoom}
+              onToggleAuto={() =>
+                setPref({ stackAuto: !fitPrefs.stackAuto, stackZoom: 1 })
+              }
+              onZoom={(z) => setPref({ stackZoom: z })}
+            />
+
 
 
             <Button size="sm" variant="ghost" onClick={() => setExamplesOpen(true)}>
@@ -509,7 +612,10 @@ export default function CodeVisualizer() {
 
           {/* Compare strip */}
           {compareEntries.length === 2 && (
-            <div className="shrink-0 max-h-[38vh] overflow-auto rounded-xl border border-border/50 bg-card/40 p-3 space-y-3">
+            <div
+              ref={compareFit.ref}
+              className="shrink-0 max-h-[38vh] overflow-auto rounded-xl border border-border/50 bg-card/40 p-3 space-y-3"
+            >
 
               <div className="flex items-center gap-2">
                 <GitCompare className="h-4 w-4 text-sky-400" />
@@ -531,7 +637,15 @@ export default function CodeVisualizer() {
               </div>
               <div className="grid md:grid-cols-2 gap-3">
                 {compareEntries.map((e) => (
-                  <MiniTrace key={e.id} entry={e} idx={compareIdx} />
+                  <MiniTrace
+                    key={e.id}
+                    entry={e}
+                    idx={compareIdx}
+                    style={{
+                      fontSize: `${compareFit.fontSize}px`,
+                      transition: "font-size 260ms cubic-bezier(0.4, 0, 0.2, 1)",
+                    }}
+                  />
                 ))}
               </div>
             </div>
@@ -544,10 +658,7 @@ export default function CodeVisualizer() {
                 <div
                   ref={codeFit.ref}
                   className="font-mono py-3 flex-1 min-h-0 overflow-auto"
-                  style={{
-                    fontSize: `${codeFit.fontSize}px`,
-                    lineHeight: `${codeFit.lineHeightPx}px`,
-                  }}
+                  style={codeFit.style}
                 >
                   {lines.map((l, i) => {
                     const active = step?.line === i + 1;
@@ -584,10 +695,7 @@ export default function CodeVisualizer() {
                     spellCheck={false}
                     placeholder="Paste any code here…"
                     className="w-full flex-1 min-h-0 resize-none bg-transparent p-4 font-mono text-slate-200 outline-none"
-                    style={{
-                      fontSize: `${codeFit.fontSize}px`,
-                      lineHeight: `${codeFit.lineHeightPx}px`,
-                    }}
+                    style={codeFit.style}
                   />
                 </div>
               )}
@@ -666,7 +774,10 @@ export default function CodeVisualizer() {
                   <div
                     ref={stackFit.ref}
                     className="flex-1 min-h-0 overflow-auto rounded-xl border border-border/50 bg-card/20 p-3"
-                    style={{ fontSize: `${stackFit.fontSize}px` }}
+                    style={{
+                      fontSize: `${stackFit.fontSize}px`,
+                      transition: "font-size 260ms cubic-bezier(0.4, 0, 0.2, 1)",
+                    }}
                   >
                     <div className="flex flex-wrap gap-3 items-start">
                       {(step.frames ?? []).map((f, i) => {

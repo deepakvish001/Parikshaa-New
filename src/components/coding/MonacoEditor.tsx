@@ -182,16 +182,19 @@ export const MonacoEditor = forwardRef<MonacoEditorHandle, MonacoEditorProps>(
           onMount={handleMount}
           options={{
             readOnly,
-            wordWrap: "on",
+            wordWrap: wordWrap ? "on" : "off",
+            minimap: { enabled: minimap, renderCharacters: false },
             smoothScrolling: true,
             cursorBlinking: "smooth",
             fontSize,
+            lineHeight: Math.round(fontSize * 1.7),
           }}
           loading={
-            <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
-              
+            <div className="flex h-full items-center justify-center text-xs text-muted-foreground">
+              Loading editor…
             </div>
           }
+
         />
       </div>
     );

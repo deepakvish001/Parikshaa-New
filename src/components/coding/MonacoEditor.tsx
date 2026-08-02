@@ -43,6 +43,10 @@ export const MonacoEditor = forwardRef<MonacoEditorHandle, MonacoEditorProps>(
       height = "100%",
       fontSize = 13,
       diagnostics = [],
+      minimap = false,
+      wordWrap = true,
+      onRunShortcut,
+
     },
     ref,
   ) => {

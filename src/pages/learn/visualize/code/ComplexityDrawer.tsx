@@ -143,8 +143,16 @@ export default function ComplexityDrawer({ open, onOpenChange, complexity }: Pro
           <div className="space-y-6 p-5">
             <section className="space-y-2">
               <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Estimate confidence
+              </h3>
+              <ConfidenceMeter result={scoreConfidence(c)} />
+            </section>
+
+            <section className="space-y-2">
+              <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 Growth across cases
               </h3>
+
               <div className="rounded-xl border border-border/50 bg-card/40 p-3">
                 <ComplexityChart series={caseSeries} />
               </div>

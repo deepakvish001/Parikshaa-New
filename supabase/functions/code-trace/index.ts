@@ -43,7 +43,21 @@ Return ONLY JSON matching this shape (no markdown fence):
     }
   ]
 }
-"line" is 1-based against the code exactly as given. "stdout" is the cumulative program output so far.`;
+"line" is 1-based against the code exactly as given. "stdout" is the cumulative program output so far.
+
+You MUST also return a "complexity" object analysing the dominant algorithm in the code:
+"complexity": {
+  "time": "O(n)",
+  "space": "O(n)",
+  "timeReason": "One pass over the array of n elements.",
+  "spaceReason": "Recursion depth grows linearly with n.",
+  "recurrence": "T(n) = T(n-1) + O(1)" or null,
+  "best": "O(1)", "average": "O(n)", "worst": "O(n)",
+  "notes": ["short bullet", "short bullet"]
+}
+Use standard Big-O notation. Keep reasons to one short sentence each.
+
+Language support: handle any mainstream language (Python, JavaScript, TypeScript, Java, C, C++, C#, Go, Rust, Kotlin, Swift, PHP, Ruby, Scala, Dart, R, SQL procedural blocks). Respect that language's real semantics.`;
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
@@ -61,7 +75,8 @@ Deno.serve(async (req) => {
       method: "POST",
       headers: { "Content-Type": "application/json", "Lovable-API-Key": LOVABLE_API_KEY },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
+        model: "google/gemini-3.6-flash",
+        reasoning_effort: "none",
         response_format: { type: "json_object" },
         messages: [
           { role: "system", content: SYSTEM },

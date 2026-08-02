@@ -374,6 +374,10 @@ export default function CodeVisualizer() {
   const [debounceMs, setDebounceMs] = useState<number>(() => loadDebounceMs());
   const [compareIds, setCompareIds] = useState<string[]>([]);
   const [compareIdx, setCompareIdx] = useState(0);
+  const [cacheStats, setCacheStats] = useState(() => traceCacheStats());
+  const [analyzedAt, setAnalyzedAt] = useState<number | null>(null);
+  const refreshCacheStats = useCallback(() => setCacheStats(traceCacheStats()), []);
+
 
   useEffect(() => {
     saveDebounceMs(debounceMs);

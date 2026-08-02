@@ -11,7 +11,11 @@ interface MonacoEditorProps {
   height?: string | number;
   fontSize?: number;
   diagnostics?: MonacoDiagnostic[];
+  minimap?: boolean;
+  wordWrap?: boolean;
+  onRunShortcut?: () => void;
 }
+
 
 export interface MonacoDiagnostic {
   line: number;

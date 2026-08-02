@@ -52,6 +52,8 @@ import { inferVar, TYPE_COLOR } from "./code/inferVarType";
 import { useTraceHistory, titleFromCode, type TraceHistoryEntry } from "./code/useTraceHistory";
 import { useAutoFitFont } from "./code/useAutoFit";
 import { MonacoEditor, type MonacoDiagnostic } from "@/components/coding/MonacoEditor";
+import { HighlightedLine } from "./code/highlight";
+import { frameColor, eventStyle } from "./code/frameColors";
 
 
 interface Frame {
@@ -70,11 +72,23 @@ interface Step {
   stdout?: string;
   explanation?: string;
 }
+interface Complexity {
+  time?: string;
+  space?: string;
+  timeReason?: string;
+  spaceReason?: string;
+  recurrence?: string | null;
+  best?: string;
+  average?: string;
+  worst?: string;
+  notes?: string[];
+}
 interface Trace {
   valid?: true;
   language?: string;
   truncated?: boolean;
   steps: Step[];
+  complexity?: Complexity;
 }
 
 interface TraceValidationError {
@@ -89,10 +103,30 @@ interface InvalidTraceResponse {
   error: TraceValidationError;
 }
 
-const LANGUAGES = [
-  { value: "typescript", label: "TS" },
-  { value: "javascript", label: "JS" },
+const QUICK_LANGUAGES = [
   { value: "python", label: "Python" },
+  { value: "javascript", label: "JS" },
+  { value: "typescript", label: "TS" },
+] as const;
+
+const ALL_LANGUAGES = [
+  { value: "python", label: "Python" },
+  { value: "javascript", label: "JavaScript" },
+  { value: "typescript", label: "TypeScript" },
+  { value: "java", label: "Java" },
+  { value: "c", label: "C" },
+  { value: "c++", label: "C++" },
+  { value: "c#", label: "C#" },
+  { value: "go", label: "Go" },
+  { value: "rust", label: "Rust" },
+  { value: "kotlin", label: "Kotlin" },
+  { value: "swift", label: "Swift" },
+  { value: "php", label: "PHP" },
+  { value: "ruby", label: "Ruby" },
+  { value: "scala", label: "Scala" },
+  { value: "dart", label: "Dart" },
+  { value: "r", label: "R" },
+  { value: "sql", label: "SQL" },
 ] as const;
 
 /** Map the generic snippet detector's ids onto visualizer language names. */
@@ -519,7 +553,7 @@ export default function CodeVisualizer() {
           <div className="shrink-0 flex flex-wrap items-center gap-x-2 gap-y-2 rounded-xl border border-border/50 bg-card/50 px-3 py-2">
 
             <div className="flex h-9 items-center rounded-md border border-border/60 bg-background/40 p-1" aria-label="Code language">
-              {LANGUAGES.map((item) => (
+              {QUICK_LANGUAGES.map((item) => (
                 <Button
                   key={item.value}
                   type="button"
@@ -532,6 +566,18 @@ export default function CodeVisualizer() {
                   {item.label}
                 </Button>
               ))}
+              <Select value={language} onValueChange={setLanguage}>
+                <SelectTrigger className="h-7 w-[124px] border-0 bg-transparent text-xs focus:ring-0">
+                  <SelectValue placeholder="More…" />
+                </SelectTrigger>
+                <SelectContent className="max-h-72">
+                  {ALL_LANGUAGES.map((l) => (
+                    <SelectItem key={l.value} value={l.value} className="text-xs">
+                      {l.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <Button size="sm" variant="secondary" onClick={() => void runTrace()} disabled={loading || !code.trim()}>

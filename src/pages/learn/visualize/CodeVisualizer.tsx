@@ -494,7 +494,9 @@ export default function CodeVisualizer() {
           applyTrace(cached);
           setLoading(false);
           setCacheHit(true);
+          setAnalyzedAt(getCachedAt(key));
           return;
+
         }
       }
       const requestId = ++requestIdRef.current;

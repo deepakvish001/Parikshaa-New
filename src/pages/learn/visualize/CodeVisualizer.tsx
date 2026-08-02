@@ -995,7 +995,7 @@ export default function CodeVisualizer() {
                       onClick={() => setMinimapOn((m) => !m)}
                       title="Toggle minimap"
                     >
-                      <Map className="h-3.5 w-3.5" />
+                      <MapIcon className="h-3.5 w-3.5" />
                     </Button>
                     <Button
                       size="sm"

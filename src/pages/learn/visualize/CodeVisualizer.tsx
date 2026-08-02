@@ -65,13 +65,20 @@ import {
   getCachedTrace,
   setCachedTrace,
   clearTraceCache,
+  traceCacheStats,
+  getCachedAt,
+  formatBytes,
   loadDebounceMs,
   saveDebounceMs,
   DEBOUNCE_MIN,
   DEBOUNCE_MAX,
 } from "./code/traceCache";
+import { scoreConfidence } from "./code/confidence";
+import { ConfidenceMeter } from "./code/ConfidenceMeter";
+import { formatRelative } from "@/lib/formatRelative";
 import { Slider } from "@/components/ui/slider";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+
 
 
 interface Frame {
@@ -367,6 +374,10 @@ export default function CodeVisualizer() {
   const [debounceMs, setDebounceMs] = useState<number>(() => loadDebounceMs());
   const [compareIds, setCompareIds] = useState<string[]>([]);
   const [compareIdx, setCompareIdx] = useState(0);
+  const [cacheStats, setCacheStats] = useState(() => traceCacheStats());
+  const [analyzedAt, setAnalyzedAt] = useState<number | null>(null);
+  const refreshCacheStats = useCallback(() => setCacheStats(traceCacheStats()), []);
+
 
   useEffect(() => {
     saveDebounceMs(debounceMs);
@@ -483,7 +494,9 @@ export default function CodeVisualizer() {
           applyTrace(cached);
           setLoading(false);
           setCacheHit(true);
+          setAnalyzedAt(getCachedAt(key));
           return;
+
         }
       }
       const requestId = ++requestIdRef.current;
@@ -512,9 +525,12 @@ export default function CodeVisualizer() {
         const t = data as Trace;
         if (!t?.steps?.length) throw new Error("No steps returned");
         setCachedTrace(key, t);
+        setAnalyzedAt(Date.now());
+        refreshCacheStats();
         setTrace(t);
         setValidationError(null);
         save({
+
           title: titleFromCode(source),
           language: selectedLanguage,
           code: source,
@@ -531,7 +547,7 @@ export default function CodeVisualizer() {
         if (requestId === requestIdRef.current) setLoading(false);
       }
     },
-    [code, effectiveLanguage, save, applyTrace],
+    [code, effectiveLanguage, save, applyTrace, refreshCacheStats],
   );
 
   useEffect(() => {
@@ -540,21 +556,25 @@ export default function CodeVisualizer() {
       return;
     }
     // Instant path — unchanged code already analysed before.
-    const cached = getCachedTrace<Trace>(traceCacheKey(code, effectiveLanguage));
+    const key = traceCacheKey(code, effectiveLanguage);
+    const cached = getCachedTrace<Trace>(key);
     if (cached?.steps?.length) {
       requestIdRef.current += 1;
       applyTrace(cached);
       setLoading(false);
       setCacheHit(true);
+      setAnalyzedAt(getCachedAt(key));
       return;
     }
     setTrace(null);
     setValidationError(null);
     setPlaying(false);
     setCacheHit(false);
+    setAnalyzedAt(null);
     const timer = window.setTimeout(() => void runTrace(code, effectiveLanguage), debounceMs);
     return () => window.clearTimeout(timer);
   }, [code, effectiveLanguage, runTrace, debounceMs, applyTrace]);
+
 
 
   const loadEntry = (entry: TraceHistoryEntry) => {
@@ -663,13 +683,13 @@ export default function CodeVisualizer() {
               {loading ? "Analyzing" : "Visualize now"}
             </Button>
 
-            <Popover>
+            <Popover onOpenChange={(o) => o && refreshCacheStats()}>
               <PopoverTrigger asChild>
-                <Button size="sm" variant="ghost" title="Re-run settings">
+                <Button size="sm" variant="ghost" title="Re-run & cache settings">
                   <Settings2 className="h-4 w-4" /> {debounceMs}ms
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-72 space-y-3" align="start">
+              <PopoverContent className="w-80 space-y-3" align="start">
                 <div>
                   <div className="flex items-center justify-between text-xs font-medium">
                     <span>Auto-run delay</span>
@@ -687,25 +707,56 @@ export default function CodeVisualizer() {
                     How long to wait after you stop typing before re-analyzing.
                   </p>
                 </div>
-                <div className="border-t border-border/50 pt-2">
+                <div className="space-y-2 border-t border-border/50 pt-2">
+                  <div className="text-xs font-medium">Trace cache</div>
                   <p className="text-[11px] text-muted-foreground">
                     Identical code + language is served from cache instantly — no AI call.
                   </p>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    className="mt-1 h-7 px-2 text-xs"
-                    onClick={() => {
-                      clearTraceCache();
-                      setCacheHit(false);
-                      toast.success("Trace cache cleared");
-                    }}
-                  >
-                    <Trash2 className="h-3.5 w-3.5" /> Clear cache
-                  </Button>
+                  <dl className="grid grid-cols-2 gap-x-3 gap-y-1 text-[11px]">
+                    <dt className="text-muted-foreground">Cached traces</dt>
+                    <dd className="text-right font-mono text-foreground">{cacheStats.count}</dd>
+                    <dt className="text-muted-foreground">Cache size</dt>
+                    <dd className="text-right font-mono text-foreground">{formatBytes(cacheStats.bytes)}</dd>
+                    <dt className="text-muted-foreground">This code analyzed</dt>
+                    <dd className="text-right font-mono text-foreground">
+                      {analyzedAt ? formatRelative(new Date(analyzedAt).toISOString()) : "—"}
+                    </dd>
+                    <dt className="text-muted-foreground">Last cache write</dt>
+                    <dd className="text-right font-mono text-foreground">
+                      {cacheStats.lastSavedAt
+                        ? formatRelative(new Date(cacheStats.lastSavedAt).toISOString())
+                        : "—"}
+                    </dd>
+                  </dl>
+                  <div className="flex items-center gap-1">
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="h-7 px-2 text-xs"
+                      onClick={() => {
+                        clearTraceCache();
+                        setCacheHit(false);
+                        setAnalyzedAt(null);
+                        refreshCacheStats();
+                        toast.success("Trace cache cleared");
+                      }}
+                    >
+                      <Trash2 className="h-3.5 w-3.5" /> Clear cache
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="h-7 px-2 text-xs"
+                      disabled={loading || !code.trim()}
+                      onClick={() => void runTrace(code, effectiveLanguage, { force: true })}
+                    >
+                      <Wand2 className="h-3.5 w-3.5" /> Re-analyze now
+                    </Button>
+                  </div>
                 </div>
               </PopoverContent>
             </Popover>
+
 
             <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground" aria-live="polite">
               {loading ? (
@@ -714,10 +765,17 @@ export default function CodeVisualizer() {
                 <><AlertTriangle className="h-3.5 w-3.5 text-destructive" /> Fix line {validationError.line}</>
               ) : trace ? (
                 cacheHit ? (
-                  <><Zap className="h-3.5 w-3.5 text-amber-400" /> Cached · instant</>
+                  <>
+                    <Zap className="h-3.5 w-3.5 text-amber-400" /> Cached · instant
+                    {analyzedAt ? ` · ${formatRelative(new Date(analyzedAt).toISOString())}` : ""}
+                  </>
                 ) : (
-                  <><CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" /> Trace ready</>
+                  <>
+                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" /> Trace ready
+                    {analyzedAt ? ` · ${formatRelative(new Date(analyzedAt).toISOString())}` : ""}
+                  </>
                 )
+
               ) : (
                 <>Runs automatically after you stop typing</>
               )}
@@ -1065,6 +1123,11 @@ export default function CodeVisualizer() {
                         {trace.complexity.recurrence}
                       </span>
                     )}
+                    <ConfidenceMeter
+                      compact
+                      result={scoreConfidence(trace.complexity, lines.length)}
+                    />
+
                     <Button
                       size="sm"
                       variant="ghost"

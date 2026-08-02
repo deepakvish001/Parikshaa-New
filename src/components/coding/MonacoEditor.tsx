@@ -11,7 +11,11 @@ interface MonacoEditorProps {
   height?: string | number;
   fontSize?: number;
   diagnostics?: MonacoDiagnostic[];
+  minimap?: boolean;
+  wordWrap?: boolean;
+  onRunShortcut?: () => void;
 }
+
 
 export interface MonacoDiagnostic {
   line: number;
@@ -39,6 +43,10 @@ export const MonacoEditor = forwardRef<MonacoEditorHandle, MonacoEditorProps>(
       height = "100%",
       fontSize = 13,
       diagnostics = [],
+      minimap = false,
+      wordWrap = true,
+      onRunShortcut,
+
     },
     ref,
   ) => {
@@ -86,23 +94,46 @@ export const MonacoEditor = forwardRef<MonacoEditorHandle, MonacoEditorProps>(
       });
     }, []);
 
+    const runRef = useRef(onRunShortcut);
+    runRef.current = onRunShortcut;
+
     const handleMount: OnMount = useCallback((ed, monaco) => {
       editorRef.current = ed;
       monacoRef.current = monaco;
       ed.updateOptions({
         fontLigatures: true,
-        minimap: { enabled: false },
+        fontFamily:
+          "'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, monospace",
         scrollBeyondLastLine: false,
         automaticLayout: true,
         tabSize: 4,
         lineNumbers: "on",
         roundedSelection: true,
-        padding: { top: 12, bottom: 12 },
+        padding: { top: 14, bottom: 20 },
+        bracketPairColorization: { enabled: true },
+        guides: { bracketPairs: true, indentation: true, highlightActiveIndentation: true },
+        renderLineHighlight: "all",
+        cursorSmoothCaretAnimation: "on",
+        autoClosingBrackets: "languageDefined",
+        autoClosingQuotes: "languageDefined",
+        formatOnPaste: true,
+        formatOnType: true,
+        tabCompletion: "on",
+        suggestOnTriggerCharacters: true,
+        quickSuggestions: { other: true, comments: false, strings: false },
+        stickyScroll: { enabled: true },
+        scrollbar: { verticalScrollbarSize: 10, horizontalScrollbarSize: 10 },
+        overviewRulerLanes: 2,
+        matchBrackets: "always",
+        occurrencesHighlight: "singleFile",
+        linkedEditing: true,
       });
+      ed.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => runRef.current?.());
       applyDiagnostics(ed, monaco, diagnostics);
       // Initial layout once mounted into the live grid
       requestAnimationFrame(() => relayout());
     }, [applyDiagnostics, diagnostics, relayout]);
+
 
     useEffect(() => {
       const ed = editorRef.current;
@@ -151,16 +182,19 @@ export const MonacoEditor = forwardRef<MonacoEditorHandle, MonacoEditorProps>(
           onMount={handleMount}
           options={{
             readOnly,
-            wordWrap: "on",
+            wordWrap: wordWrap ? "on" : "off",
+            minimap: { enabled: minimap, renderCharacters: false },
             smoothScrolling: true,
             cursorBlinking: "smooth",
             fontSize,
+            lineHeight: Math.round(fontSize * 1.7),
           }}
           loading={
-            <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
-              
+            <div className="flex h-full items-center justify-center text-xs text-muted-foreground">
+              Loading editor…
             </div>
           }
+
         />
       </div>
     );

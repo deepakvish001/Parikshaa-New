@@ -1075,13 +1075,18 @@ export default function CodeVisualizer() {
                 <div ref={codeFit.ref} className="flex-1 min-h-0 flex flex-col">
                   <div className="flex-1 min-h-0">
                     <MonacoEditor
-                    value={code}
-                    onChange={setCode}
-                    language={effectiveLanguage}
-                    fontSize={codeFit.fontSize}
-                    diagnostics={diagnostics}
-                  />
+                      ref={editorRef}
+                      value={code}
+                      onChange={setCode}
+                      language={effectiveLanguage}
+                      fontSize={codeFit.fontSize}
+                      diagnostics={diagnostics}
+                      minimap={minimapOn}
+                      wordWrap={wrapOn}
+                      onRunShortcut={() => void runTrace(code, effectiveLanguage, { force: true })}
+                    />
                   </div>
+
                   {validationError && (
                     <div className="shrink-0 border-t border-destructive/40 bg-destructive/10 px-3 py-2" role="alert">
                       <div className="flex items-start gap-2">

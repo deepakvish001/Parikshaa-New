@@ -31,7 +31,9 @@ export interface MonacoEditorHandle {
   focus: () => void;
   getValue: () => string;
   relayout: () => void;
+  revealPosition: (line: number, column?: number) => void;
 }
+
 
 export const MonacoEditor = forwardRef<MonacoEditorHandle, MonacoEditorProps>(
   (

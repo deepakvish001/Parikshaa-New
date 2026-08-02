@@ -20,6 +20,9 @@ import {
   AlertTriangle,
   CheckCircle2,
   Gauge,
+  Settings2,
+  Zap,
+  BarChart3,
 } from "lucide-react";
 
 import { toast } from "sonner";
@@ -55,6 +58,20 @@ import { useAutoFitFont } from "./code/useAutoFit";
 import { MonacoEditor, type MonacoDiagnostic } from "@/components/coding/MonacoEditor";
 import { HighlightedLine } from "./code/highlight";
 import { frameColor, eventStyle } from "./code/frameColors";
+import ComplexityDrawer, { ComplexityChart } from "./code/ComplexityDrawer";
+import { COMPLEXITY_CASE_COLORS } from "./code/complexityMath";
+import {
+  traceCacheKey,
+  getCachedTrace,
+  setCachedTrace,
+  clearTraceCache,
+  loadDebounceMs,
+  saveDebounceMs,
+  DEBOUNCE_MIN,
+  DEBOUNCE_MAX,
+} from "./code/traceCache";
+import { Slider } from "@/components/ui/slider";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 
 interface Frame {
@@ -345,8 +362,15 @@ export default function CodeVisualizer() {
 
   const [examplesOpen, setExamplesOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
+  const [complexityOpen, setComplexityOpen] = useState(false);
+  const [cacheHit, setCacheHit] = useState(false);
+  const [debounceMs, setDebounceMs] = useState<number>(() => loadDebounceMs());
   const [compareIds, setCompareIds] = useState<string[]>([]);
   const [compareIdx, setCompareIdx] = useState(0);
+
+  useEffect(() => {
+    saveDebounceMs(debounceMs);
+  }, [debounceMs]);
 
   const { entries, save, remove, clear } = useTraceHistory();
 
@@ -432,68 +456,106 @@ export default function CodeVisualizer() {
     lineRef.current?.scrollIntoView({ block: "center", behavior: "smooth" });
   }, [idx]);
 
-  const runTrace = useCallback(async (source = code, selectedLanguage = effectiveLanguage) => {
-    if (!source.trim()) {
-      setTrace(null);
-      setValidationError(null);
-      setLoading(false);
-      return;
-    }
-    const requestId = ++requestIdRef.current;
-    setLoading(true);
+  const applyTrace = useCallback((t: Trace) => {
+    setTrace(t);
     setValidationError(null);
-    setPlaying(false);
     setIdx(0);
-    try {
-      const { data, error } = await supabase.functions.invoke("code-trace", {
-        body: { code: source, language: selectedLanguage },
-      });
-      if (requestId !== requestIdRef.current) return;
-      if (error) throw error;
-      const invalid = data as InvalidTraceResponse;
-      if (invalid?.valid === false && invalid.error) {
+    setPlaying(false);
+  }, []);
+
+  const runTrace = useCallback(
+    async (
+      source = code,
+      selectedLanguage = effectiveLanguage,
+      opts: { force?: boolean } = {},
+    ) => {
+      if (!source.trim()) {
         setTrace(null);
-        setValidationError({
-          line: Math.max(1, Number(invalid.error.line) || 1),
-          column: Math.max(1, Number(invalid.error.column) || 1),
-          message: invalid.error.message || "Syntax error",
-          code: invalid.error.code,
-        });
+        setValidationError(null);
+        setLoading(false);
         return;
       }
-      const t = data as Trace;
-      if (!t?.steps?.length) throw new Error("No steps returned");
-      setTrace(t);
+      const key = traceCacheKey(source, selectedLanguage);
+      if (!opts.force) {
+        const cached = getCachedTrace<Trace>(key);
+        if (cached?.steps?.length) {
+          requestIdRef.current += 1;
+          applyTrace(cached);
+          setLoading(false);
+          setCacheHit(true);
+          return;
+        }
+      }
+      const requestId = ++requestIdRef.current;
+      setCacheHit(false);
+      setLoading(true);
       setValidationError(null);
-      save({
-        title: titleFromCode(source),
-        language: selectedLanguage,
-        code: source,
-        trace: t,
-        stepCount: t.steps.length,
-      });
-    } catch (e) {
-      if (requestId !== requestIdRef.current) return;
-      setTrace(null);
-      toast.error("Could not visualize this code", {
-        description: (e as Error)?.message ?? "Try a smaller snippet.",
-      });
-    } finally {
-      if (requestId === requestIdRef.current) setLoading(false);
-    }
-  }, [code, effectiveLanguage, save]);
+      setPlaying(false);
+      setIdx(0);
+      try {
+        const { data, error } = await supabase.functions.invoke("code-trace", {
+          body: { code: source, language: selectedLanguage },
+        });
+        if (requestId !== requestIdRef.current) return;
+        if (error) throw error;
+        const invalid = data as InvalidTraceResponse;
+        if (invalid?.valid === false && invalid.error) {
+          setTrace(null);
+          setValidationError({
+            line: Math.max(1, Number(invalid.error.line) || 1),
+            column: Math.max(1, Number(invalid.error.column) || 1),
+            message: invalid.error.message || "Syntax error",
+            code: invalid.error.code,
+          });
+          return;
+        }
+        const t = data as Trace;
+        if (!t?.steps?.length) throw new Error("No steps returned");
+        setCachedTrace(key, t);
+        setTrace(t);
+        setValidationError(null);
+        save({
+          title: titleFromCode(source),
+          language: selectedLanguage,
+          code: source,
+          trace: t,
+          stepCount: t.steps.length,
+        });
+      } catch (e) {
+        if (requestId !== requestIdRef.current) return;
+        setTrace(null);
+        toast.error("Could not visualize this code", {
+          description: (e as Error)?.message ?? "Try a smaller snippet.",
+        });
+      } finally {
+        if (requestId === requestIdRef.current) setLoading(false);
+      }
+    },
+    [code, effectiveLanguage, save, applyTrace],
+  );
 
   useEffect(() => {
     if (initialRenderRef.current) {
       initialRenderRef.current = false;
       return;
     }
+    // Instant path — unchanged code already analysed before.
+    const cached = getCachedTrace<Trace>(traceCacheKey(code, effectiveLanguage));
+    if (cached?.steps?.length) {
+      requestIdRef.current += 1;
+      applyTrace(cached);
+      setLoading(false);
+      setCacheHit(true);
+      return;
+    }
     setTrace(null);
     setValidationError(null);
     setPlaying(false);
-    const timer = window.setTimeout(() => void runTrace(code, effectiveLanguage), 900);
+    setCacheHit(false);
+    const timer = window.setTimeout(() => void runTrace(code, effectiveLanguage), debounceMs);
     return () => window.clearTimeout(timer);
-  }, [code, effectiveLanguage, runTrace]);
+  }, [code, effectiveLanguage, runTrace, debounceMs, applyTrace]);
+
 
   const loadEntry = (entry: TraceHistoryEntry) => {
     setCode(entry.code);
@@ -587,7 +649,12 @@ export default function CodeVisualizer() {
               </Select>
             </div>
 
-            <Button size="sm" variant="secondary" onClick={() => void runTrace()} disabled={loading || !code.trim()}>
+            <Button
+              size="sm"
+              variant="secondary"
+              onClick={() => void runTrace(code, effectiveLanguage, { force: true })}
+              disabled={loading || !code.trim()}
+            >
               {loading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
@@ -596,17 +663,66 @@ export default function CodeVisualizer() {
               {loading ? "Analyzing" : "Visualize now"}
             </Button>
 
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button size="sm" variant="ghost" title="Re-run settings">
+                  <Settings2 className="h-4 w-4" /> {debounceMs}ms
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-72 space-y-3" align="start">
+                <div>
+                  <div className="flex items-center justify-between text-xs font-medium">
+                    <span>Auto-run delay</span>
+                    <span className="font-mono text-muted-foreground">{debounceMs}ms</span>
+                  </div>
+                  <Slider
+                    className="mt-2"
+                    value={[debounceMs]}
+                    min={DEBOUNCE_MIN}
+                    max={DEBOUNCE_MAX}
+                    step={100}
+                    onValueChange={(v) => setDebounceMs(v[0])}
+                  />
+                  <p className="mt-1.5 text-[11px] text-muted-foreground">
+                    How long to wait after you stop typing before re-analyzing.
+                  </p>
+                </div>
+                <div className="border-t border-border/50 pt-2">
+                  <p className="text-[11px] text-muted-foreground">
+                    Identical code + language is served from cache instantly — no AI call.
+                  </p>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="mt-1 h-7 px-2 text-xs"
+                    onClick={() => {
+                      clearTraceCache();
+                      setCacheHit(false);
+                      toast.success("Trace cache cleared");
+                    }}
+                  >
+                    <Trash2 className="h-3.5 w-3.5" /> Clear cache
+                  </Button>
+                </div>
+              </PopoverContent>
+            </Popover>
+
             <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground" aria-live="polite">
               {loading ? (
                 <><Loader2 className="h-3.5 w-3.5 animate-spin" /> Auto-visualizing…</>
               ) : validationError ? (
                 <><AlertTriangle className="h-3.5 w-3.5 text-destructive" /> Fix line {validationError.line}</>
               ) : trace ? (
-                <><CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" /> Trace ready</>
+                cacheHit ? (
+                  <><Zap className="h-3.5 w-3.5 text-amber-400" /> Cached · instant</>
+                ) : (
+                  <><CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" /> Trace ready</>
+                )
               ) : (
                 <>Runs automatically after you stop typing</>
               )}
             </div>
+
 
             <ZoomControl
               label="Code"
@@ -938,6 +1054,7 @@ export default function CodeVisualizer() {
                         <span
                           key={k}
                           className="rounded-md border border-border/60 bg-background/40 px-2 py-1 text-[11px] text-muted-foreground"
+                          style={{ borderLeft: `3px solid ${COMPLEXITY_CASE_COLORS[k]}` }}
                         >
                           {k} <span className="font-mono text-foreground">{trace.complexity[k]}</span>
                         </span>
@@ -948,7 +1065,31 @@ export default function CodeVisualizer() {
                         {trace.complexity.recurrence}
                       </span>
                     )}
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="ml-auto h-7 px-2 text-xs"
+                      onClick={() => setComplexityOpen(true)}
+                    >
+                      <BarChart3 className="h-3.5 w-3.5" /> Explain
+                    </Button>
                   </div>
+
+                  <div className="mt-2 rounded-lg border border-border/40 bg-background/30 p-2">
+                    <ComplexityChart
+                      height={130}
+                      series={[
+                        { key: "best", expr: trace.complexity.best, color: COMPLEXITY_CASE_COLORS.best },
+                        {
+                          key: "average",
+                          expr: trace.complexity.average ?? trace.complexity.time,
+                          color: COMPLEXITY_CASE_COLORS.average,
+                        },
+                        { key: "worst", expr: trace.complexity.worst, color: COMPLEXITY_CASE_COLORS.worst },
+                      ]}
+                    />
+                  </div>
+
                   {trace.complexity.notes?.length ? (
                     <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-muted-foreground">
                       {trace.complexity.notes.slice(0, 4).map((n, i) => (
@@ -957,6 +1098,7 @@ export default function CodeVisualizer() {
                     </ul>
                   ) : null}
                 </div>
+
               )}
 
               {step && (
@@ -1194,6 +1336,11 @@ export default function CodeVisualizer() {
           </DialogContent>
         </Dialog>
       </div>
+      <ComplexityDrawer
+        open={complexityOpen}
+        onOpenChange={setComplexityOpen}
+        complexity={trace?.complexity}
+      />
     </TooltipProvider>
   );
 }

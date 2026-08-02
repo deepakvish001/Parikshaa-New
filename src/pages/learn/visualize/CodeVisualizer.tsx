@@ -525,9 +525,12 @@ export default function CodeVisualizer() {
         const t = data as Trace;
         if (!t?.steps?.length) throw new Error("No steps returned");
         setCachedTrace(key, t);
+        setAnalyzedAt(Date.now());
+        refreshCacheStats();
         setTrace(t);
         setValidationError(null);
         save({
+
           title: titleFromCode(source),
           language: selectedLanguage,
           code: source,

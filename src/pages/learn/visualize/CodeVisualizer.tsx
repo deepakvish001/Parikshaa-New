@@ -580,6 +580,8 @@ export default function CodeVisualizer() {
       setCacheHit(false);
       setLoading(true);
       setValidationError(null);
+      setRuntimeError(null);
+
       setPlaying(false);
       setIdx(0);
       try {

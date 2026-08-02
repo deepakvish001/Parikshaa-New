@@ -572,8 +572,10 @@ export default function CodeVisualizer() {
                 </Button>
               ))}
               <Select value={language} onValueChange={setLanguage}>
-                <SelectTrigger className="h-7 w-[124px] border-0 bg-transparent text-xs focus:ring-0">
-                  <SelectValue placeholder="More…" />
+                <SelectTrigger className="h-7 w-[118px] border-0 bg-transparent text-xs focus:ring-0">
+                  {QUICK_LANGUAGES.some((q) => q.value === language)
+                    ? "More…"
+                    : (ALL_LANGUAGES.find((l) => l.value === language)?.label ?? "More…")}
                 </SelectTrigger>
                 <SelectContent className="max-h-72">
                   {ALL_LANGUAGES.map((l) => (

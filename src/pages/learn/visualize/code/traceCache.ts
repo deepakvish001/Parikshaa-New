@@ -93,6 +93,41 @@ export function traceCacheSize(): number {
   return memory.size;
 }
 
+export interface TraceCacheStats {
+  /** Number of cached traces. */
+  count: number;
+  /** Approximate bytes used on disk. */
+  bytes: number;
+  /** Most recent save time across all entries (ms epoch), or null. */
+  lastSavedAt: number | null;
+}
+
+export function traceCacheStats(): TraceCacheStats {
+  hydrate();
+  const values = [...memory.values()];
+  let bytes = 0;
+  try {
+    bytes = new Blob([JSON.stringify(values)]).size;
+  } catch {
+    bytes = JSON.stringify(values).length;
+  }
+  return {
+    count: values.length,
+    bytes,
+    lastSavedAt: values.length ? Math.max(...values.map((e) => e.savedAt)) : null,
+  };
+}
+
+/** When was this exact code+language last analyzed? */
+export function getCachedAt(key: string): number | null {
+  hydrate();
+  return memory.get(key)?.savedAt ?? null;
+}
+
+export const formatBytes = (b: number): string =>
+  b >= 1024 * 1024 ? `${(b / (1024 * 1024)).toFixed(1)} MB` : b >= 1024 ? `${Math.round(b / 1024)} KB` : `${b} B`;
+
+
 /* ---- debounce preference ---- */
 
 const DEBOUNCE_KEY = "parikshaa:visualize:debounce-ms:v1";

@@ -683,13 +683,13 @@ export default function CodeVisualizer() {
               {loading ? "Analyzing" : "Visualize now"}
             </Button>
 
-            <Popover>
+            <Popover onOpenChange={(o) => o && refreshCacheStats()}>
               <PopoverTrigger asChild>
-                <Button size="sm" variant="ghost" title="Re-run settings">
+                <Button size="sm" variant="ghost" title="Re-run & cache settings">
                   <Settings2 className="h-4 w-4" /> {debounceMs}ms
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-72 space-y-3" align="start">
+              <PopoverContent className="w-80 space-y-3" align="start">
                 <div>
                   <div className="flex items-center justify-between text-xs font-medium">
                     <span>Auto-run delay</span>
@@ -707,25 +707,56 @@ export default function CodeVisualizer() {
                     How long to wait after you stop typing before re-analyzing.
                   </p>
                 </div>
-                <div className="border-t border-border/50 pt-2">
+                <div className="space-y-2 border-t border-border/50 pt-2">
+                  <div className="text-xs font-medium">Trace cache</div>
                   <p className="text-[11px] text-muted-foreground">
                     Identical code + language is served from cache instantly — no AI call.
                   </p>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    className="mt-1 h-7 px-2 text-xs"
-                    onClick={() => {
-                      clearTraceCache();
-                      setCacheHit(false);
-                      toast.success("Trace cache cleared");
-                    }}
-                  >
-                    <Trash2 className="h-3.5 w-3.5" /> Clear cache
-                  </Button>
+                  <dl className="grid grid-cols-2 gap-x-3 gap-y-1 text-[11px]">
+                    <dt className="text-muted-foreground">Cached traces</dt>
+                    <dd className="text-right font-mono text-foreground">{cacheStats.count}</dd>
+                    <dt className="text-muted-foreground">Cache size</dt>
+                    <dd className="text-right font-mono text-foreground">{formatBytes(cacheStats.bytes)}</dd>
+                    <dt className="text-muted-foreground">This code analyzed</dt>
+                    <dd className="text-right font-mono text-foreground">
+                      {analyzedAt ? formatRelative(new Date(analyzedAt).toISOString()) : "—"}
+                    </dd>
+                    <dt className="text-muted-foreground">Last cache write</dt>
+                    <dd className="text-right font-mono text-foreground">
+                      {cacheStats.lastSavedAt
+                        ? formatRelative(new Date(cacheStats.lastSavedAt).toISOString())
+                        : "—"}
+                    </dd>
+                  </dl>
+                  <div className="flex items-center gap-1">
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="h-7 px-2 text-xs"
+                      onClick={() => {
+                        clearTraceCache();
+                        setCacheHit(false);
+                        setAnalyzedAt(null);
+                        refreshCacheStats();
+                        toast.success("Trace cache cleared");
+                      }}
+                    >
+                      <Trash2 className="h-3.5 w-3.5" /> Clear cache
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="h-7 px-2 text-xs"
+                      disabled={loading || !code.trim()}
+                      onClick={() => void runTrace(code, effectiveLanguage, { force: true })}
+                    >
+                      <Wand2 className="h-3.5 w-3.5" /> Re-analyze now
+                    </Button>
+                  </div>
                 </div>
               </PopoverContent>
             </Popover>
+
 
             <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground" aria-live="polite">
               {loading ? (

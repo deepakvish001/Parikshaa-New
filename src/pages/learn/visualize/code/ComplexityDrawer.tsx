@@ -20,6 +20,9 @@ import {
 } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { buildCurves, COMPLEXITY_CASE_COLORS, parseComplexity } from "./complexityMath";
+import { scoreConfidence } from "./confidence";
+import { ConfidenceMeter } from "./ConfidenceMeter";
+
 
 export interface ComplexityLike {
   time?: string;

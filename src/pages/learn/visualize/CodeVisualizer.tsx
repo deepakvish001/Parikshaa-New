@@ -547,7 +547,7 @@ export default function CodeVisualizer() {
         if (requestId === requestIdRef.current) setLoading(false);
       }
     },
-    [code, effectiveLanguage, save, applyTrace],
+    [code, effectiveLanguage, save, applyTrace, refreshCacheStats],
   );
 
   useEffect(() => {
@@ -556,21 +556,25 @@ export default function CodeVisualizer() {
       return;
     }
     // Instant path — unchanged code already analysed before.
-    const cached = getCachedTrace<Trace>(traceCacheKey(code, effectiveLanguage));
+    const key = traceCacheKey(code, effectiveLanguage);
+    const cached = getCachedTrace<Trace>(key);
     if (cached?.steps?.length) {
       requestIdRef.current += 1;
       applyTrace(cached);
       setLoading(false);
       setCacheHit(true);
+      setAnalyzedAt(getCachedAt(key));
       return;
     }
     setTrace(null);
     setValidationError(null);
     setPlaying(false);
     setCacheHit(false);
+    setAnalyzedAt(null);
     const timer = window.setTimeout(() => void runTrace(code, effectiveLanguage), debounceMs);
     return () => window.clearTimeout(timer);
   }, [code, effectiveLanguage, runTrace, debounceMs, applyTrace]);
+
 
 
   const loadEntry = (entry: TraceHistoryEntry) => {

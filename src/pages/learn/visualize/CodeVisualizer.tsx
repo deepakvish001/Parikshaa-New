@@ -364,10 +364,24 @@ const MiniTrace = ({
 /* ------------------------------------------------------------------ */
 
 export default function CodeVisualizer() {
-  const [code, setCode] = useState(SAMPLE);
-  const [language, setLanguage] = useState("python");
+  const {
+    files,
+    activeId,
+    active: activeFile,
+    setCode,
+    setLanguage,
+    select: selectFile,
+    addFile,
+    closeFile,
+    renameFile,
+  } = useCodeFiles(SAMPLE, "python");
+  const code = activeFile.code;
+  const language = activeFile.language;
   const [trace, setTrace] = useState<Trace | null>(null);
   const [validationError, setValidationError] = useState<TraceValidationError | null>(null);
+  const [runtimeError, setRuntimeError] = useState<string | null>(null);
+  const [problemsCollapsed, setProblemsCollapsed] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const [idx, setIdx] = useState(0);
   const [playing, setPlaying] = useState(false);

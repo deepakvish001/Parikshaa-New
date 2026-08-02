@@ -55,6 +55,20 @@ import { useAutoFitFont } from "./code/useAutoFit";
 import { MonacoEditor, type MonacoDiagnostic } from "@/components/coding/MonacoEditor";
 import { HighlightedLine } from "./code/highlight";
 import { frameColor, eventStyle } from "./code/frameColors";
+import ComplexityDrawer, { ComplexityChart } from "./code/ComplexityDrawer";
+import { COMPLEXITY_CASE_COLORS } from "./code/complexityMath";
+import {
+  traceCacheKey,
+  getCachedTrace,
+  setCachedTrace,
+  clearTraceCache,
+  loadDebounceMs,
+  saveDebounceMs,
+  DEBOUNCE_MIN,
+  DEBOUNCE_MAX,
+} from "./code/traceCache";
+import { Slider } from "@/components/ui/slider";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 
 interface Frame {

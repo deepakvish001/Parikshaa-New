@@ -20,6 +20,9 @@ import {
   AlertTriangle,
   CheckCircle2,
   Gauge,
+  Settings2,
+  Zap,
+  BarChart3,
 } from "lucide-react";
 
 import { toast } from "sonner";

@@ -23,6 +23,11 @@ import {
   Settings2,
   Zap,
   BarChart3,
+  Braces,
+  Copy,
+  WrapText,
+  Map as MapIcon,
+
 } from "lucide-react";
 
 import { toast } from "sonner";

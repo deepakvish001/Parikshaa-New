@@ -646,7 +646,12 @@ export default function CodeVisualizer() {
               </Select>
             </div>
 
-            <Button size="sm" variant="secondary" onClick={() => void runTrace()} disabled={loading || !code.trim()}>
+            <Button
+              size="sm"
+              variant="secondary"
+              onClick={() => void runTrace(code, effectiveLanguage, { force: true })}
+              disabled={loading || !code.trim()}
+            >
               {loading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
@@ -655,17 +660,66 @@ export default function CodeVisualizer() {
               {loading ? "Analyzing" : "Visualize now"}
             </Button>
 
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button size="sm" variant="ghost" title="Re-run settings">
+                  <Settings2 className="h-4 w-4" /> {debounceMs}ms
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-72 space-y-3" align="start">
+                <div>
+                  <div className="flex items-center justify-between text-xs font-medium">
+                    <span>Auto-run delay</span>
+                    <span className="font-mono text-muted-foreground">{debounceMs}ms</span>
+                  </div>
+                  <Slider
+                    className="mt-2"
+                    value={[debounceMs]}
+                    min={DEBOUNCE_MIN}
+                    max={DEBOUNCE_MAX}
+                    step={100}
+                    onValueChange={(v) => setDebounceMs(v[0])}
+                  />
+                  <p className="mt-1.5 text-[11px] text-muted-foreground">
+                    How long to wait after you stop typing before re-analyzing.
+                  </p>
+                </div>
+                <div className="border-t border-border/50 pt-2">
+                  <p className="text-[11px] text-muted-foreground">
+                    Identical code + language is served from cache instantly — no AI call.
+                  </p>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="mt-1 h-7 px-2 text-xs"
+                    onClick={() => {
+                      clearTraceCache();
+                      setCacheHit(false);
+                      toast.success("Trace cache cleared");
+                    }}
+                  >
+                    <Trash2 className="h-3.5 w-3.5" /> Clear cache
+                  </Button>
+                </div>
+              </PopoverContent>
+            </Popover>
+
             <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground" aria-live="polite">
               {loading ? (
                 <><Loader2 className="h-3.5 w-3.5 animate-spin" /> Auto-visualizing…</>
               ) : validationError ? (
                 <><AlertTriangle className="h-3.5 w-3.5 text-destructive" /> Fix line {validationError.line}</>
               ) : trace ? (
-                <><CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" /> Trace ready</>
+                cacheHit ? (
+                  <><Zap className="h-3.5 w-3.5 text-amber-400" /> Cached · instant</>
+                ) : (
+                  <><CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" /> Trace ready</>
+                )
               ) : (
                 <>Runs automatically after you stop typing</>
               )}
             </div>
+
 
             <ZoomControl
               label="Code"

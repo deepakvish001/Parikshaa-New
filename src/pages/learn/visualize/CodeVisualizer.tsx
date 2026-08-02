@@ -17,6 +17,8 @@ import {
   ZoomIn,
   ZoomOut,
   Maximize2,
+  AlertTriangle,
+  CheckCircle2,
 } from "lucide-react";
 
 import { toast } from "sonner";
@@ -49,6 +51,7 @@ import { CODE_EXAMPLES } from "./code/examples";
 import { inferVar, TYPE_COLOR } from "./code/inferVarType";
 import { useTraceHistory, titleFromCode, type TraceHistoryEntry } from "./code/useTraceHistory";
 import { useAutoFitFont } from "./code/useAutoFit";
+import { MonacoEditor, type MonacoDiagnostic } from "@/components/coding/MonacoEditor";
 
 
 interface Frame {
@@ -68,34 +71,29 @@ interface Step {
   explanation?: string;
 }
 interface Trace {
+  valid?: true;
   language?: string;
   truncated?: boolean;
   steps: Step[];
 }
 
+interface TraceValidationError {
+  line: number;
+  column?: number;
+  message: string;
+  code?: string;
+}
+
+interface InvalidTraceResponse {
+  valid: false;
+  error: TraceValidationError;
+}
+
 const LANGUAGES = [
-  "python",
-  "javascript",
-  "typescript",
-  "java",
-  "c++",
-  "c",
-  "c#",
-  "go",
-  "rust",
-  "kotlin",
-  "swift",
-  "php",
-  "ruby",
-  "sql",
-  "bash",
-  "r",
-  "scala",
-  "dart",
-  "perl",
-  "haskell",
-  "matlab",
-];
+  { value: "typescript", label: "TS" },
+  { value: "javascript", label: "JS" },
+  { value: "python", label: "Python" },
+] as const;
 
 /** Map the generic snippet detector's ids onto visualizer language names. */
 const DETECT_MAP: Record<string, string> = {
@@ -299,13 +297,16 @@ const MiniTrace = ({
 
 export default function CodeVisualizer() {
   const [code, setCode] = useState(SAMPLE);
-  const [language, setLanguage] = useState("auto");
+  const [language, setLanguage] = useState("python");
   const [trace, setTrace] = useState<Trace | null>(null);
+  const [validationError, setValidationError] = useState<TraceValidationError | null>(null);
   const [loading, setLoading] = useState(false);
   const [idx, setIdx] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState(1);
   const lineRef = useRef<HTMLDivElement>(null);
+  const requestIdRef = useRef(0);
+  const initialRenderRef = useRef(true);
 
   const [examplesOpen, setExamplesOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
@@ -315,7 +316,11 @@ export default function CodeVisualizer() {
   const { entries, save, remove, clear } = useTraceHistory();
 
   const detected = useMemo(() => detectVisualizerLanguage(code), [code]);
-  const effectiveLanguage = language === "auto" ? detected ?? "python" : language;
+  const effectiveLanguage = language;
+  const diagnostics = useMemo<MonacoDiagnostic[]>(
+    () => validationError ? [{ ...validationError, severity: "error" }] : [],
+    [validationError],
+  );
 
   const steps = trace?.steps ?? [];
   const step = steps[idx];
@@ -388,40 +393,74 @@ export default function CodeVisualizer() {
     lineRef.current?.scrollIntoView({ block: "center", behavior: "smooth" });
   }, [idx]);
 
-  const runTrace = useCallback(async () => {
-    if (!code.trim()) return;
+  const runTrace = useCallback(async (source = code, selectedLanguage = effectiveLanguage) => {
+    if (!source.trim()) {
+      setTrace(null);
+      setValidationError(null);
+      setLoading(false);
+      return;
+    }
+    const requestId = ++requestIdRef.current;
     setLoading(true);
-    setTrace(null);
+    setValidationError(null);
     setPlaying(false);
     setIdx(0);
     try {
       const { data, error } = await supabase.functions.invoke("code-trace", {
-        body: { code, language: effectiveLanguage },
+        body: { code: source, language: selectedLanguage },
       });
+      if (requestId !== requestIdRef.current) return;
       if (error) throw error;
+      const invalid = data as InvalidTraceResponse;
+      if (invalid?.valid === false && invalid.error) {
+        setTrace(null);
+        setValidationError({
+          line: Math.max(1, Number(invalid.error.line) || 1),
+          column: Math.max(1, Number(invalid.error.column) || 1),
+          message: invalid.error.message || "Syntax error",
+          code: invalid.error.code,
+        });
+        return;
+      }
       const t = data as Trace;
       if (!t?.steps?.length) throw new Error("No steps returned");
       setTrace(t);
+      setValidationError(null);
       save({
-        title: titleFromCode(code),
-        language: effectiveLanguage,
-        code,
+        title: titleFromCode(source),
+        language: selectedLanguage,
+        code: source,
         trace: t,
         stepCount: t.steps.length,
       });
     } catch (e) {
+      if (requestId !== requestIdRef.current) return;
+      setTrace(null);
       toast.error("Could not visualize this code", {
         description: (e as Error)?.message ?? "Try a smaller snippet.",
       });
     } finally {
-      setLoading(false);
+      if (requestId === requestIdRef.current) setLoading(false);
     }
   }, [code, effectiveLanguage, save]);
+
+  useEffect(() => {
+    if (initialRenderRef.current) {
+      initialRenderRef.current = false;
+      return;
+    }
+    setTrace(null);
+    setValidationError(null);
+    setPlaying(false);
+    const timer = window.setTimeout(() => void runTrace(code, effectiveLanguage), 900);
+    return () => window.clearTimeout(timer);
+  }, [code, effectiveLanguage, runTrace]);
 
   const loadEntry = (entry: TraceHistoryEntry) => {
     setCode(entry.code);
     setLanguage(entry.language);
     setTrace(entry.trace as Trace);
+    setValidationError(null);
     setIdx(0);
     setPlaying(false);
     setHistoryOpen(false);
@@ -479,30 +518,42 @@ export default function CodeVisualizer() {
           {/* Toolbar */}
           <div className="shrink-0 flex flex-wrap items-center gap-x-2 gap-y-2 rounded-xl border border-border/50 bg-card/50 px-3 py-2">
 
-            <Select value={language} onValueChange={setLanguage}>
-              <SelectTrigger className="h-9 w-[170px]">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="max-h-[320px]">
-                <SelectItem value="auto">
-                  Auto-detect{detected ? ` (${detected})` : ""}
-                </SelectItem>
-                {LANGUAGES.map((l) => (
-                  <SelectItem key={l} value={l}>
-                    {l}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="flex h-9 items-center rounded-md border border-border/60 bg-background/40 p-1" aria-label="Code language">
+              {LANGUAGES.map((item) => (
+                <Button
+                  key={item.value}
+                  type="button"
+                  size="sm"
+                  variant={language === item.value ? "secondary" : "ghost"}
+                  className="h-7 px-3 text-xs"
+                  onClick={() => setLanguage(item.value)}
+                  aria-pressed={language === item.value}
+                >
+                  {item.label}
+                </Button>
+              ))}
+            </div>
 
-            <Button size="sm" variant="secondary" onClick={runTrace} disabled={loading}>
+            <Button size="sm" variant="secondary" onClick={() => void runTrace()} disabled={loading || !code.trim()}>
               {loading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
                 <Wand2 className="h-4 w-4" />
               )}
-              Visualize
+              {loading ? "Analyzing" : "Visualize now"}
             </Button>
+
+            <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground" aria-live="polite">
+              {loading ? (
+                <><Loader2 className="h-3.5 w-3.5 animate-spin" /> Auto-visualizing…</>
+              ) : validationError ? (
+                <><AlertTriangle className="h-3.5 w-3.5 text-destructive" /> Fix line {validationError.line}</>
+              ) : trace ? (
+                <><CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" /> Trace ready</>
+              ) : (
+                <>Runs automatically after you stop typing</>
+              )}
+            </div>
 
             <ZoomControl
               label="Code"
@@ -688,15 +739,32 @@ export default function CodeVisualizer() {
                   })}
                 </div>
               ) : (
-                <div ref={codeFit.ref} className="flex-1 min-h-0 flex">
-                  <textarea
+                <div ref={codeFit.ref} className="flex-1 min-h-0 flex flex-col">
+                  <div className="flex-1 min-h-0">
+                    <MonacoEditor
                     value={code}
-                    onChange={(e) => setCode(e.target.value)}
-                    spellCheck={false}
-                    placeholder="Paste any code here…"
-                    className="w-full flex-1 min-h-0 resize-none bg-transparent p-4 font-mono text-slate-200 outline-none"
-                    style={codeFit.style}
+                    onChange={setCode}
+                    language={effectiveLanguage}
+                    fontSize={codeFit.fontSize}
+                    diagnostics={diagnostics}
                   />
+                  </div>
+                  {validationError && (
+                    <div className="shrink-0 border-t border-destructive/40 bg-destructive/10 px-3 py-2" role="alert">
+                      <div className="flex items-start gap-2">
+                        <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-destructive" />
+                        <div className="min-w-0">
+                          <div className="text-xs font-semibold text-destructive">
+                            Line {validationError.line}{validationError.column ? `, column ${validationError.column}` : ""}
+                          </div>
+                          <div className="text-xs text-foreground">{validationError.message}</div>
+                          {validationError.code && (
+                            <code className="mt-1 block truncate text-[11px] text-muted-foreground">{validationError.code}</code>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -717,9 +785,7 @@ export default function CodeVisualizer() {
                   </Button>
                 ) : (
                   <span className="px-2 text-[11px] text-muted-foreground">
-                    {detected
-                      ? `Detected ${detected}${language === "auto" ? " (auto)" : ""}`
-                      : "Language will be auto-detected"}
+                    Selected {effectiveLanguage}{detected && detected !== effectiveLanguage ? ` · code looks like ${detected}` : ""}
                   </span>
                 )}
               </div>
@@ -738,7 +804,7 @@ export default function CodeVisualizer() {
                 <div className="rounded-xl border border-dashed border-border/50 bg-card/30 p-6 space-y-4 overflow-auto">
 
                   <div className="text-center space-y-2">
-                    <div className="text-lg font-semibold">Paste code, hit Visualize</div>
+                    <div className="text-lg font-semibold">Paste code to visualize automatically</div>
                     <p className="text-sm text-muted-foreground max-w-md mx-auto">
                       Every step shows the call stack, each frame's typed variables, and a
                       plain-English explanation of the highlighted line.
@@ -893,7 +959,7 @@ export default function CodeVisualizer() {
             <DialogHeader>
               <DialogTitle>Example gallery</DialogTitle>
               <DialogDescription>
-                Pick a snippet to load it into the editor, then hit Visualize.
+                Pick a snippet to load it into the editor. Visualization starts automatically.
               </DialogDescription>
             </DialogHeader>
             <div className="grid sm:grid-cols-2 gap-3">

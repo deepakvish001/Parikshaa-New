@@ -1091,16 +1091,31 @@ export default function CodeVisualizer() {
                     >
                       <Trash2 className="h-3.5 w-3.5" />
                     </Button>
-                    <Button
-                      size="sm"
-                      className="h-7 px-2.5 text-[11px]"
-                      onClick={() => void runTrace(code, effectiveLanguage, { force: true })}
-                    >
-                      <Play className="h-3.5 w-3.5" /> Run
-                    </Button>
+                    {trace ? (
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        className="h-7 px-2.5 text-[11px]"
+                        onClick={() => {
+                          setTrace(null);
+                          setIdx(0);
+                          setPlaying(false);
+                        }}
+                      >
+                        <Braces className="h-3.5 w-3.5" /> Edit code
+                      </Button>
+                    ) : (
+                      <Button
+                        size="sm"
+                        className="h-7 px-2.5 text-[11px]"
+                        onClick={() => void runTrace(code, effectiveLanguage, { force: true })}
+                      >
+                        <Play className="h-3.5 w-3.5" /> Run
+                      </Button>
+                    )}
                   </div>
                 </div>
-              )}
+
               {trace ? (
 
                 <div

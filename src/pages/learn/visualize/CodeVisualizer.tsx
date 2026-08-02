@@ -378,6 +378,11 @@ export default function CodeVisualizer() {
   const [analyzedAt, setAnalyzedAt] = useState<number | null>(null);
   const refreshCacheStats = useCallback(() => setCacheStats(traceCacheStats()), []);
 
+  const editorRef = useRef<MonacoEditorHandle>(null);
+  const [minimapOn, setMinimapOn] = useState(false);
+  const [wrapOn, setWrapOn] = useState(true);
+
+
 
   useEffect(() => {
     saveDebounceMs(debounceMs);

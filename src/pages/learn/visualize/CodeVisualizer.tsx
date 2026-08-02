@@ -1258,90 +1258,6 @@ export default function CodeVisualizer() {
                 </div>
               )}
 
-              {trace?.complexity && (
-                <div className="shrink-0 rounded-xl border border-border/50 bg-gradient-to-r from-indigo-500/10 via-fuchsia-500/10 to-amber-500/10 p-3">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <Gauge className="h-4 w-4 text-fuchsia-400" />
-                    <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                      Complexity
-                    </span>
-                    <Tooltip delayDuration={120}>
-                      <TooltipTrigger asChild>
-                        <span className="cursor-help rounded-md border border-indigo-400/40 bg-indigo-500/15 px-2 py-1 font-mono text-sm text-indigo-200">
-                          Time {trace.complexity.time ?? "—"}
-                        </span>
-                      </TooltipTrigger>
-                      <TooltipContent className="max-w-[280px] text-xs">
-                        {trace.complexity.timeReason ?? "No reasoning provided."}
-                      </TooltipContent>
-                    </Tooltip>
-                    <Tooltip delayDuration={120}>
-                      <TooltipTrigger asChild>
-                        <span className="cursor-help rounded-md border border-emerald-400/40 bg-emerald-500/15 px-2 py-1 font-mono text-sm text-emerald-200">
-                          Space {trace.complexity.space ?? "—"}
-                        </span>
-                      </TooltipTrigger>
-                      <TooltipContent className="max-w-[280px] text-xs">
-                        {trace.complexity.spaceReason ?? "No reasoning provided."}
-                      </TooltipContent>
-                    </Tooltip>
-                    {(["best", "average", "worst"] as const).map((k) =>
-                      trace.complexity?.[k] ? (
-                        <span
-                          key={k}
-                          className="rounded-md border border-border/60 bg-background/40 px-2 py-1 text-[11px] text-muted-foreground"
-                          style={{ borderLeft: `3px solid ${COMPLEXITY_CASE_COLORS[k]}` }}
-                        >
-                          {k} <span className="font-mono text-foreground">{trace.complexity[k]}</span>
-                        </span>
-                      ) : null,
-                    )}
-                    {trace.complexity.recurrence && (
-                      <span className="rounded-md border border-amber-400/40 bg-amber-500/10 px-2 py-1 font-mono text-[11px] text-amber-200">
-                        {trace.complexity.recurrence}
-                      </span>
-                    )}
-                    <ConfidenceMeter
-                      compact
-                      result={scoreConfidence(trace.complexity, lines.length)}
-                    />
-
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      className="ml-auto h-7 px-2 text-xs"
-                      onClick={() => setComplexityOpen(true)}
-                    >
-                      <BarChart3 className="h-3.5 w-3.5" /> Explain
-                    </Button>
-                  </div>
-
-                  <div className="mt-2 rounded-lg border border-border/40 bg-background/30 p-2">
-                    <ComplexityChart
-                      height={130}
-                      series={[
-                        { key: "best", expr: trace.complexity.best, color: COMPLEXITY_CASE_COLORS.best },
-                        {
-                          key: "average",
-                          expr: trace.complexity.average ?? trace.complexity.time,
-                          color: COMPLEXITY_CASE_COLORS.average,
-                        },
-                        { key: "worst", expr: trace.complexity.worst, color: COMPLEXITY_CASE_COLORS.worst },
-                      ]}
-                    />
-                  </div>
-
-                  {trace.complexity.notes?.length ? (
-                    <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-muted-foreground">
-                      {trace.complexity.notes.slice(0, 4).map((n, i) => (
-                        <li key={i}>• {n}</li>
-                      ))}
-                    </ul>
-                  ) : null}
-                </div>
-
-              )}
-
               {step && (
                 <>
                   <div
@@ -1460,6 +1376,91 @@ export default function CodeVisualizer() {
                   )}
                 </>
               )}
+
+              {trace?.complexity && (
+                <div className="shrink-0 rounded-xl border border-border/50 bg-gradient-to-r from-indigo-500/10 via-fuchsia-500/10 to-amber-500/10 p-3">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Gauge className="h-4 w-4 text-fuchsia-400" />
+                    <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                      Complexity
+                    </span>
+                    <Tooltip delayDuration={120}>
+                      <TooltipTrigger asChild>
+                        <span className="cursor-help rounded-md border border-indigo-400/40 bg-indigo-500/15 px-2 py-1 font-mono text-sm text-indigo-200">
+                          Time {trace.complexity.time ?? "—"}
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-[280px] text-xs">
+                        {trace.complexity.timeReason ?? "No reasoning provided."}
+                      </TooltipContent>
+                    </Tooltip>
+                    <Tooltip delayDuration={120}>
+                      <TooltipTrigger asChild>
+                        <span className="cursor-help rounded-md border border-emerald-400/40 bg-emerald-500/15 px-2 py-1 font-mono text-sm text-emerald-200">
+                          Space {trace.complexity.space ?? "—"}
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-[280px] text-xs">
+                        {trace.complexity.spaceReason ?? "No reasoning provided."}
+                      </TooltipContent>
+                    </Tooltip>
+                    {(["best", "average", "worst"] as const).map((k) =>
+                      trace.complexity?.[k] ? (
+                        <span
+                          key={k}
+                          className="rounded-md border border-border/60 bg-background/40 px-2 py-1 text-[11px] text-muted-foreground"
+                          style={{ borderLeft: `3px solid ${COMPLEXITY_CASE_COLORS[k]}` }}
+                        >
+                          {k} <span className="font-mono text-foreground">{trace.complexity[k]}</span>
+                        </span>
+                      ) : null,
+                    )}
+                    {trace.complexity.recurrence && (
+                      <span className="rounded-md border border-amber-400/40 bg-amber-500/10 px-2 py-1 font-mono text-[11px] text-amber-200">
+                        {trace.complexity.recurrence}
+                      </span>
+                    )}
+                    <ConfidenceMeter
+                      compact
+                      result={scoreConfidence(trace.complexity, lines.length)}
+                    />
+
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="ml-auto h-7 px-2 text-xs"
+                      onClick={() => setComplexityOpen(true)}
+                    >
+                      <BarChart3 className="h-3.5 w-3.5" /> Explain
+                    </Button>
+                  </div>
+
+                  <div className="mt-2 rounded-lg border border-border/40 bg-background/30 p-2">
+                    <ComplexityChart
+                      height={130}
+                      series={[
+                        { key: "best", expr: trace.complexity.best, color: COMPLEXITY_CASE_COLORS.best },
+                        {
+                          key: "average",
+                          expr: trace.complexity.average ?? trace.complexity.time,
+                          color: COMPLEXITY_CASE_COLORS.average,
+                        },
+                        { key: "worst", expr: trace.complexity.worst, color: COMPLEXITY_CASE_COLORS.worst },
+                      ]}
+                    />
+                  </div>
+
+                  {trace.complexity.notes?.length ? (
+                    <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-muted-foreground">
+                      {trace.complexity.notes.slice(0, 4).map((n, i) => (
+                        <li key={i}>• {n}</li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
+
+              )}
+
             </div>
 
           </div>

@@ -1,4 +1,4 @@
-import Editor, { OnMount } from "@monaco-editor/react";
+import Editor, { OnMount, type Monaco } from "@monaco-editor/react";
 import { useTheme } from "next-themes";
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from "react";
 type IStandaloneCodeEditor = Parameters<OnMount>[0];
@@ -10,6 +10,16 @@ interface MonacoEditorProps {
   readOnly?: boolean;
   height?: string | number;
   fontSize?: number;
+  diagnostics?: MonacoDiagnostic[];
+}
+
+export interface MonacoDiagnostic {
+  line: number;
+  column?: number;
+  endLine?: number;
+  endColumn?: number;
+  message: string;
+  severity?: "error" | "warning";
 }
 
 export interface MonacoEditorHandle {
@@ -21,12 +31,46 @@ export interface MonacoEditorHandle {
 
 export const MonacoEditor = forwardRef<MonacoEditorHandle, MonacoEditorProps>(
   (
-    { value, onChange, language, readOnly = false, height = "100%", fontSize = 13 },
+    {
+      value,
+      onChange,
+      language,
+      readOnly = false,
+      height = "100%",
+      fontSize = 13,
+      diagnostics = [],
+    },
     ref,
   ) => {
     const { resolvedTheme } = useTheme();
     const editorRef = useRef<IStandaloneCodeEditor | null>(null);
     const containerRef = useRef<HTMLDivElement | null>(null);
+    const monacoRef = useRef<Monaco | null>(null);
+
+    const applyDiagnostics = useCallback((ed: IStandaloneCodeEditor, monaco: Monaco, next: MonacoDiagnostic[]) => {
+      const model = ed.getModel();
+      if (!model) return;
+      monaco.editor.setModelMarkers(
+        model,
+        "parikshaa-code-diagnostics",
+        next.map((diagnostic) => {
+          const line = Math.max(1, Math.min(diagnostic.line, model.getLineCount()));
+          const maxColumn = model.getLineMaxColumn(line);
+          const column = Math.max(1, Math.min(diagnostic.column ?? 1, maxColumn));
+          return {
+            startLineNumber: line,
+            startColumn: column,
+            endLineNumber: Math.max(line, Math.min(diagnostic.endLine ?? line, model.getLineCount())),
+            endColumn: Math.max(column + 1, Math.min(diagnostic.endColumn ?? maxColumn, maxColumn)),
+            message: diagnostic.message,
+            severity:
+              diagnostic.severity === "warning"
+                ? monaco.MarkerSeverity.Warning
+                : monaco.MarkerSeverity.Error,
+          };
+        }),
+      );
+    }, []);
 
     const relayout = useCallback(() => {
       const ed = editorRef.current;
@@ -42,8 +86,9 @@ export const MonacoEditor = forwardRef<MonacoEditorHandle, MonacoEditorProps>(
       });
     }, []);
 
-    const handleMount: OnMount = useCallback((ed) => {
+    const handleMount: OnMount = useCallback((ed, monaco) => {
       editorRef.current = ed;
+      monacoRef.current = monaco;
       ed.updateOptions({
         fontLigatures: true,
         minimap: { enabled: false },
@@ -54,9 +99,21 @@ export const MonacoEditor = forwardRef<MonacoEditorHandle, MonacoEditorProps>(
         roundedSelection: true,
         padding: { top: 12, bottom: 12 },
       });
+      applyDiagnostics(ed, monaco, diagnostics);
       // Initial layout once mounted into the live grid
       requestAnimationFrame(() => relayout());
-    }, [relayout]);
+    }, [applyDiagnostics, diagnostics, relayout]);
+
+    useEffect(() => {
+      const ed = editorRef.current;
+      const monaco = monacoRef.current;
+      if (!ed || !monaco) return;
+      applyDiagnostics(ed, monaco, diagnostics);
+      const firstError = diagnostics.find((diagnostic) => diagnostic.severity !== "warning");
+      if (firstError) {
+        ed.revealLineInCenter(firstError.line);
+      }
+    }, [applyDiagnostics, diagnostics]);
 
     // ResizeObserver on the wrapper — covers the case where the parent grid
     // template changes (e.g. peer join → BattleRoom mounts → siblings appear).

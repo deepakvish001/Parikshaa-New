@@ -12,6 +12,9 @@ Given source code, mentally EXECUTE it and return a step-by-step trace of the ru
 One step = one meaningful executed line (declaration, condition check, call, return, loop iteration, print).
 
 Rules:
+- First validate that the source is syntactically valid for the stated language. If it is invalid, do not invent a trace. Return ONLY this JSON shape:
+  {"valid":false,"error":{"line":4,"column":8,"message":"Clear syntax error message","code":"the offending source line"}}
+- Error line and column are 1-based and must point to the source exactly as provided.
 - Simulate faithfully. Values must be the real values at that moment.
 - Include a step when a function is called (before its body runs) and when it returns.
 - Cap at 120 steps. If the program is longer, trace the first 120 steps and set "truncated": true.
@@ -21,6 +24,7 @@ Rules:
 
 Return ONLY JSON matching this shape (no markdown fence):
 {
+  "valid": true,
   "language": "python",
   "truncated": false,
   "steps": [
@@ -88,7 +92,20 @@ Deno.serve(async (req) => {
       });
     }
 
-    return new Response(JSON.stringify(parsed), {
+    const result = parsed as { valid?: boolean; steps?: unknown[]; error?: unknown };
+    if (result.valid === false && result.error) {
+      return new Response(JSON.stringify(result), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (!Array.isArray(result.steps) || result.steps.length === 0) {
+      return new Response(JSON.stringify({ error: "No execution steps were generated" }), {
+        status: 502,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    return new Response(JSON.stringify({ ...result, valid: true }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {

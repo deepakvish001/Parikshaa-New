@@ -934,10 +934,88 @@ export default function CodeVisualizer() {
             </div>
           )}
 
-          <div className="flex-1 min-h-0 grid lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] gap-4">
+          <div
+            className={cn(
+              "flex-1 min-h-0 grid gap-4",
+              trace
+                ? "lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)]"
+                : "lg:grid-cols-[minmax(0,1fr)_minmax(0,380px)]",
+            )}
+          >
             {/* Code panel */}
             <div className="flex flex-col min-h-0 rounded-xl border border-border/50 bg-[#0d1117]/80 overflow-hidden">
+              {!trace && (
+                <div className="shrink-0 flex items-center gap-1.5 border-b border-border/50 bg-white/[0.03] px-2 py-1.5">
+                  <span className="flex items-center gap-1.5 pl-1 pr-2 text-[11px] font-medium text-muted-foreground">
+                    <span className="h-2.5 w-2.5 rounded-full bg-rose-400/70" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/70" />
+                  </span>
+                  <Badge variant="outline" className="text-[10px] uppercase tracking-wide">
+                    {effectiveLanguage}
+                  </Badge>
+                  <div className="ml-auto flex items-center gap-1">
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="h-7 px-2 text-[11px]"
+                      onClick={() => void editorRef.current?.format()}
+                    >
+                      <Braces className="h-3.5 w-3.5" /> Format
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="h-7 px-2 text-[11px]"
+                      onClick={() => {
+                        void navigator.clipboard.writeText(code);
+                        toast.success("Code copied");
+                      }}
+                    >
+                      <Copy className="h-3.5 w-3.5" /> Copy
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className={cn("h-7 px-2 text-[11px]", wrapOn && "text-sky-400")}
+                      onClick={() => setWrapOn((w) => !w)}
+                      title="Toggle word wrap"
+                    >
+                      <WrapText className="h-3.5 w-3.5" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className={cn("h-7 px-2 text-[11px]", minimapOn && "text-sky-400")}
+                      onClick={() => setMinimapOn((m) => !m)}
+                      title="Toggle minimap"
+                    >
+                      <Map className="h-3.5 w-3.5" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="h-7 px-2 text-[11px] text-muted-foreground"
+                      onClick={() => {
+                        setCode("");
+                        editorRef.current?.focus();
+                      }}
+                      title="Clear editor"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      className="h-7 px-2.5 text-[11px]"
+                      onClick={() => void runTrace(code, effectiveLanguage, { force: true })}
+                    >
+                      <Play className="h-3.5 w-3.5" /> Run
+                    </Button>
+                  </div>
+                </div>
+              )}
               {trace ? (
+
                 <div
                   ref={codeFit.ref}
                   className="font-mono py-3 flex-1 min-h-0 overflow-auto"

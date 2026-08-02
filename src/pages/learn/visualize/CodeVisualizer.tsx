@@ -446,68 +446,106 @@ export default function CodeVisualizer() {
     lineRef.current?.scrollIntoView({ block: "center", behavior: "smooth" });
   }, [idx]);
 
-  const runTrace = useCallback(async (source = code, selectedLanguage = effectiveLanguage) => {
-    if (!source.trim()) {
-      setTrace(null);
-      setValidationError(null);
-      setLoading(false);
-      return;
-    }
-    const requestId = ++requestIdRef.current;
-    setLoading(true);
+  const applyTrace = useCallback((t: Trace) => {
+    setTrace(t);
     setValidationError(null);
-    setPlaying(false);
     setIdx(0);
-    try {
-      const { data, error } = await supabase.functions.invoke("code-trace", {
-        body: { code: source, language: selectedLanguage },
-      });
-      if (requestId !== requestIdRef.current) return;
-      if (error) throw error;
-      const invalid = data as InvalidTraceResponse;
-      if (invalid?.valid === false && invalid.error) {
+    setPlaying(false);
+  }, []);
+
+  const runTrace = useCallback(
+    async (
+      source = code,
+      selectedLanguage = effectiveLanguage,
+      opts: { force?: boolean } = {},
+    ) => {
+      if (!source.trim()) {
         setTrace(null);
-        setValidationError({
-          line: Math.max(1, Number(invalid.error.line) || 1),
-          column: Math.max(1, Number(invalid.error.column) || 1),
-          message: invalid.error.message || "Syntax error",
-          code: invalid.error.code,
-        });
+        setValidationError(null);
+        setLoading(false);
         return;
       }
-      const t = data as Trace;
-      if (!t?.steps?.length) throw new Error("No steps returned");
-      setTrace(t);
+      const key = traceCacheKey(source, selectedLanguage);
+      if (!opts.force) {
+        const cached = getCachedTrace<Trace>(key);
+        if (cached?.steps?.length) {
+          requestIdRef.current += 1;
+          applyTrace(cached);
+          setLoading(false);
+          setCacheHit(true);
+          return;
+        }
+      }
+      const requestId = ++requestIdRef.current;
+      setCacheHit(false);
+      setLoading(true);
       setValidationError(null);
-      save({
-        title: titleFromCode(source),
-        language: selectedLanguage,
-        code: source,
-        trace: t,
-        stepCount: t.steps.length,
-      });
-    } catch (e) {
-      if (requestId !== requestIdRef.current) return;
-      setTrace(null);
-      toast.error("Could not visualize this code", {
-        description: (e as Error)?.message ?? "Try a smaller snippet.",
-      });
-    } finally {
-      if (requestId === requestIdRef.current) setLoading(false);
-    }
-  }, [code, effectiveLanguage, save]);
+      setPlaying(false);
+      setIdx(0);
+      try {
+        const { data, error } = await supabase.functions.invoke("code-trace", {
+          body: { code: source, language: selectedLanguage },
+        });
+        if (requestId !== requestIdRef.current) return;
+        if (error) throw error;
+        const invalid = data as InvalidTraceResponse;
+        if (invalid?.valid === false && invalid.error) {
+          setTrace(null);
+          setValidationError({
+            line: Math.max(1, Number(invalid.error.line) || 1),
+            column: Math.max(1, Number(invalid.error.column) || 1),
+            message: invalid.error.message || "Syntax error",
+            code: invalid.error.code,
+          });
+          return;
+        }
+        const t = data as Trace;
+        if (!t?.steps?.length) throw new Error("No steps returned");
+        setCachedTrace(key, t);
+        setTrace(t);
+        setValidationError(null);
+        save({
+          title: titleFromCode(source),
+          language: selectedLanguage,
+          code: source,
+          trace: t,
+          stepCount: t.steps.length,
+        });
+      } catch (e) {
+        if (requestId !== requestIdRef.current) return;
+        setTrace(null);
+        toast.error("Could not visualize this code", {
+          description: (e as Error)?.message ?? "Try a smaller snippet.",
+        });
+      } finally {
+        if (requestId === requestIdRef.current) setLoading(false);
+      }
+    },
+    [code, effectiveLanguage, save, applyTrace],
+  );
 
   useEffect(() => {
     if (initialRenderRef.current) {
       initialRenderRef.current = false;
       return;
     }
+    // Instant path — unchanged code already analysed before.
+    const cached = getCachedTrace<Trace>(traceCacheKey(code, effectiveLanguage));
+    if (cached?.steps?.length) {
+      requestIdRef.current += 1;
+      applyTrace(cached);
+      setLoading(false);
+      setCacheHit(true);
+      return;
+    }
     setTrace(null);
     setValidationError(null);
     setPlaying(false);
-    const timer = window.setTimeout(() => void runTrace(code, effectiveLanguage), 900);
+    setCacheHit(false);
+    const timer = window.setTimeout(() => void runTrace(code, effectiveLanguage), debounceMs);
     return () => window.clearTimeout(timer);
-  }, [code, effectiveLanguage, runTrace]);
+  }, [code, effectiveLanguage, runTrace, debounceMs, applyTrace]);
+
 
   const loadEntry = (entry: TraceHistoryEntry) => {
     setCode(entry.code);

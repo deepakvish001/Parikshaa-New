@@ -55,7 +55,7 @@ import { CODE_EXAMPLES } from "./code/examples";
 import { inferVar, TYPE_COLOR } from "./code/inferVarType";
 import { useTraceHistory, titleFromCode, type TraceHistoryEntry } from "./code/useTraceHistory";
 import { useAutoFitFont } from "./code/useAutoFit";
-import { MonacoEditor, type MonacoDiagnostic } from "@/components/coding/MonacoEditor";
+import { MonacoEditor, type MonacoDiagnostic, type MonacoEditorHandle } from "@/components/coding/MonacoEditor";
 import { HighlightedLine } from "./code/highlight";
 import { frameColor, eventStyle } from "./code/frameColors";
 import ComplexityDrawer, { ComplexityChart } from "./code/ComplexityDrawer";

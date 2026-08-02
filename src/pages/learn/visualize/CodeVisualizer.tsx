@@ -619,10 +619,12 @@ export default function CodeVisualizer() {
       } catch (e) {
         if (requestId !== requestIdRef.current) return;
         setTrace(null);
-        toast.error("Could not visualize this code", {
-          description: (e as Error)?.message ?? "Try a smaller snippet.",
-        });
+        const msg = (e as Error)?.message || "Try a smaller snippet.";
+        setRuntimeError(msg);
+        setProblemsCollapsed(false);
+        toast.error("Could not visualize this code", { description: msg });
       } finally {
+
         if (requestId === requestIdRef.current) setLoading(false);
       }
     },

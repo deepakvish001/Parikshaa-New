@@ -1183,18 +1183,19 @@ export default function CodeVisualizer() {
                       onRunShortcut={() => void runTrace(code, effectiveLanguage, { force: true })}
                     />
                   </div>
-
-                  <ProblemsPanel
-                    problems={problems}
-                    collapsed={problemsCollapsed}
-                    onToggle={() => setProblemsCollapsed((c) => !c)}
-                    onSelect={(p) => {
-                      if (p.line) editorRef.current?.revealPosition(p.line, p.column);
-                    }}
-                  />
-
                 </div>
               )}
+
+              <ProblemsPanel
+                problems={problems}
+                collapsed={problemsCollapsed}
+                onToggle={() => setProblemsCollapsed((c) => !c)}
+                onSelect={(p) => {
+                  if (p.line) editorRef.current?.revealPosition(p.line, p.column);
+                }}
+              />
+
+
 
 
               <div className="border-t border-border/50 p-2 flex items-center gap-2">

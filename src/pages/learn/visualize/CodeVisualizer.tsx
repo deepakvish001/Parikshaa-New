@@ -415,10 +415,59 @@ export default function CodeVisualizer() {
 
   const detected = useMemo(() => detectVisualizerLanguage(code), [code]);
   const effectiveLanguage = language;
+  const problems = useMemo<CodeProblem[]>(() => {
+    const out: CodeProblem[] = [];
+    if (validationError) {
+      out.push({
+        id: "syntax",
+        kind: "syntax",
+        severity: "error",
+        message: validationError.message,
+        line: validationError.line,
+        column: validationError.column,
+        snippet: validationError.code,
+        fileName: activeFile.name,
+      });
+    }
+    if (runtimeError) {
+      out.push({
+        id: "runtime",
+        kind: "runtime",
+        severity: "error",
+        message: runtimeError,
+        fileName: activeFile.name,
+      });
+    }
+    if (detected && detected !== language) {
+      out.push({
+        id: "lang-mismatch",
+        kind: "analysis",
+        severity: "warning",
+        message: `Code looks like ${detected}, but ${language} is selected.`,
+        fileName: activeFile.name,
+      });
+    }
+    return out;
+  }, [validationError, runtimeError, detected, language, activeFile.name]);
+
   const diagnostics = useMemo<MonacoDiagnostic[]>(
-    () => validationError ? [{ ...validationError, severity: "error" }] : [],
-    [validationError],
+    () =>
+      problems
+        .filter((p) => typeof p.line === "number")
+        .map((p) => ({
+          line: p.line as number,
+          column: p.column,
+          message: p.message,
+          severity: p.severity,
+        })),
+    [problems],
   );
+
+  const errorCounts = useMemo(
+    () => ({ [activeId]: problems.filter((p) => p.severity === "error").length }),
+    [activeId, problems],
+  );
+
 
   const steps = trace?.steps ?? [];
   const step = steps[idx];

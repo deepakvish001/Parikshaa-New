@@ -1123,6 +1123,11 @@ export default function CodeVisualizer() {
                         {trace.complexity.recurrence}
                       </span>
                     )}
+                    <ConfidenceMeter
+                      compact
+                      result={scoreConfidence(trace.complexity, lines.length)}
+                    />
+
                     <Button
                       size="sm"
                       variant="ghost"

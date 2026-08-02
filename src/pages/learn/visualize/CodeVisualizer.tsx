@@ -1160,22 +1160,15 @@ export default function CodeVisualizer() {
                     />
                   </div>
 
-                  {validationError && (
-                    <div className="shrink-0 border-t border-destructive/40 bg-destructive/10 px-3 py-2" role="alert">
-                      <div className="flex items-start gap-2">
-                        <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-destructive" />
-                        <div className="min-w-0">
-                          <div className="text-xs font-semibold text-destructive">
-                            Line {validationError.line}{validationError.column ? `, column ${validationError.column}` : ""}
-                          </div>
-                          <div className="text-xs text-foreground">{validationError.message}</div>
-                          {validationError.code && (
-                            <code className="mt-1 block truncate text-[11px] text-muted-foreground">{validationError.code}</code>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                  <ProblemsPanel
+                    problems={problems}
+                    collapsed={problemsCollapsed}
+                    onToggle={() => setProblemsCollapsed((c) => !c)}
+                    onSelect={(p) => {
+                      if (p.line) editorRef.current?.revealPosition(p.line, p.column);
+                    }}
+                  />
+
                 </div>
               )}
 

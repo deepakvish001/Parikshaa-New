@@ -19,6 +19,7 @@ import {
   Maximize2,
   AlertTriangle,
   CheckCircle2,
+  Gauge,
 } from "lucide-react";
 
 import { toast } from "sonner";
@@ -903,6 +904,59 @@ export default function CodeVisualizer() {
                 </div>
               )}
 
+              {trace?.complexity && (
+                <div className="shrink-0 rounded-xl border border-border/50 bg-gradient-to-r from-indigo-500/10 via-fuchsia-500/10 to-amber-500/10 p-3">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Gauge className="h-4 w-4 text-fuchsia-400" />
+                    <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                      Complexity
+                    </span>
+                    <Tooltip delayDuration={120}>
+                      <TooltipTrigger asChild>
+                        <span className="cursor-help rounded-md border border-indigo-400/40 bg-indigo-500/15 px-2 py-1 font-mono text-sm text-indigo-200">
+                          Time {trace.complexity.time ?? "—"}
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-[280px] text-xs">
+                        {trace.complexity.timeReason ?? "No reasoning provided."}
+                      </TooltipContent>
+                    </Tooltip>
+                    <Tooltip delayDuration={120}>
+                      <TooltipTrigger asChild>
+                        <span className="cursor-help rounded-md border border-emerald-400/40 bg-emerald-500/15 px-2 py-1 font-mono text-sm text-emerald-200">
+                          Space {trace.complexity.space ?? "—"}
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-[280px] text-xs">
+                        {trace.complexity.spaceReason ?? "No reasoning provided."}
+                      </TooltipContent>
+                    </Tooltip>
+                    {(["best", "average", "worst"] as const).map((k) =>
+                      trace.complexity?.[k] ? (
+                        <span
+                          key={k}
+                          className="rounded-md border border-border/60 bg-background/40 px-2 py-1 text-[11px] text-muted-foreground"
+                        >
+                          {k} <span className="font-mono text-foreground">{trace.complexity[k]}</span>
+                        </span>
+                      ) : null,
+                    )}
+                    {trace.complexity.recurrence && (
+                      <span className="rounded-md border border-amber-400/40 bg-amber-500/10 px-2 py-1 font-mono text-[11px] text-amber-200">
+                        {trace.complexity.recurrence}
+                      </span>
+                    )}
+                  </div>
+                  {trace.complexity.notes?.length ? (
+                    <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-muted-foreground">
+                      {trace.complexity.notes.slice(0, 4).map((n, i) => (
+                        <li key={i}>• {n}</li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
+              )}
+
               {step && (
                 <>
                   <div
@@ -988,7 +1042,7 @@ export default function CodeVisualizer() {
                           Explanation of this code:
                         </div>
                         <div className="font-mono text-sm">
-                          {step.code ?? lines[step.line - 1]}
+                          <HighlightedLine line={step.code ?? lines[step.line - 1] ?? ""} />
                         </div>
                       </div>
                       <div className="rounded-lg rounded-tl-none border border-border/60 bg-card/60 p-3 text-sm leading-relaxed max-h-32 overflow-auto">

@@ -359,6 +359,10 @@ export default function CodeVisualizer() {
   const steps = trace?.steps ?? [];
   const step = steps[idx];
   const lines = useMemo(() => code.replace(/\t/g, "    ").split("\n"), [code]);
+  const visitedLines = useMemo(
+    () => new Set(steps.slice(0, idx + 1).map((st) => st.line)),
+    [steps, idx],
+  );
 
   /* ---- auto font / zoom fit (persisted) ---- */
   const [fitPrefs, setFitPrefs] = useState<FitPrefs>(loadFitPrefs);
@@ -759,27 +763,45 @@ export default function CodeVisualizer() {
                 >
                   {lines.map((l, i) => {
                     const active = step?.line === i + 1;
+                    const visited = visitedLines.has(i + 1);
+                    const ev = eventStyle(step?.event);
                     return (
                       <div
                         key={i}
                         ref={active ? lineRef : undefined}
                         className={cn(
-                          "flex items-start gap-3 px-3 transition-colors",
-                          active && "bg-emerald-500/10 border-y border-emerald-500/40",
+                          "relative flex items-start gap-3 px-3 transition-colors duration-200",
+                          active && cn("border-y", ev.line),
+                          !active && visited && "bg-white/[0.03]",
                         )}
                       >
-                        <span className="w-[2.4em] shrink-0 text-right text-muted-foreground/60 select-none">
-                          {i + 1}
-                        </span>
+                        {active && (
+                          <motion.span
+                            layoutId="active-gutter"
+                            className={cn("absolute left-0 top-0 h-full w-[3px]", ev.gutter)}
+                          />
+                        )}
                         <span
                           className={cn(
-                            "whitespace-pre-wrap break-words flex-1",
-                            active ? "text-emerald-300" : "text-slate-300",
+                            "w-[2.4em] shrink-0 text-right select-none",
+                            active ? "text-foreground" : visited ? "text-slate-500" : "text-muted-foreground/40",
                           )}
                         >
-                          {l || " "}
+                          {i + 1}
                         </span>
-                        {active && <span className="text-emerald-400 shrink-0">◀</span>}
+                        <span className="whitespace-pre-wrap break-words flex-1">
+                          {l ? <HighlightedLine line={l} /> : " "}
+                        </span>
+                        {active && (
+                          <span
+                            className={cn(
+                              "shrink-0 rounded border px-1.5 text-[0.7em] font-sans leading-[1.6em]",
+                              ev.chip,
+                            )}
+                          >
+                            {ev.label}
+                          </span>
+                        )}
                       </div>
                     );
                   })}
@@ -895,6 +917,7 @@ export default function CodeVisualizer() {
                       {(step.frames ?? []).map((f, i) => {
                         const top = i === (step.frames?.length ?? 0) - 1;
                         const scope = f.isGlobal ? "global" : `local → ${f.name}`;
+                        const c = frameColor(i);
                         return (
                           <motion.div
                             key={`${f.name}-${i}`}
@@ -903,18 +926,22 @@ export default function CodeVisualizer() {
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             transition={{ type: "spring", damping: 20, stiffness: 220 }}
                             className={cn(
-                              "min-w-[16em] max-w-full rounded-lg border border-dashed p-[0.7em] space-y-[0.5em] bg-card/40",
-                              top ? "border-sky-400/70" : "border-border/50",
+                              "relative min-w-[16em] max-w-full overflow-hidden rounded-lg border p-[0.7em] space-y-[0.5em] bg-card/40",
+                              c.ring,
+                              top && c.glow,
                             )}
                           >
+                            <span className={cn("absolute inset-x-0 top-0 h-[3px]", c.bar)} />
                             <div className="flex items-center gap-2 text-[0.9em] font-mono text-muted-foreground">
-                              {f.isGlobal ? "" : "function "}
-                              <span className="text-foreground">{f.name}</span>
+                              <span className={cn("rounded border px-1.5 text-[0.75em] font-sans", c.chip)}>
+                                #{i}
+                              </span>
+                              <span className={cn("font-semibold", c.text)}>{f.name}</span>
                               <Badge
                                 variant="outline"
-                                className="ml-auto text-[0.75em] font-sans"
+                                className={cn("ml-auto text-[0.75em] font-sans", c.chip)}
                               >
-                                {f.isGlobal ? "global scope" : "local scope"}
+                                {f.isGlobal ? "global" : "local"}
                               </Badge>
                             </div>
 

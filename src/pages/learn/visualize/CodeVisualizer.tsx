@@ -359,8 +359,15 @@ export default function CodeVisualizer() {
 
   const [examplesOpen, setExamplesOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
+  const [complexityOpen, setComplexityOpen] = useState(false);
+  const [cacheHit, setCacheHit] = useState(false);
+  const [debounceMs, setDebounceMs] = useState<number>(() => loadDebounceMs());
   const [compareIds, setCompareIds] = useState<string[]>([]);
   const [compareIdx, setCompareIdx] = useState(0);
+
+  useEffect(() => {
+    saveDebounceMs(debounceMs);
+  }, [debounceMs]);
 
   const { entries, save, remove, clear } = useTraceHistory();
 

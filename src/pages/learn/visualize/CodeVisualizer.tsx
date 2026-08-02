@@ -765,10 +765,17 @@ export default function CodeVisualizer() {
                 <><AlertTriangle className="h-3.5 w-3.5 text-destructive" /> Fix line {validationError.line}</>
               ) : trace ? (
                 cacheHit ? (
-                  <><Zap className="h-3.5 w-3.5 text-amber-400" /> Cached · instant</>
+                  <>
+                    <Zap className="h-3.5 w-3.5 text-amber-400" /> Cached · instant
+                    {analyzedAt ? ` · ${formatRelative(new Date(analyzedAt).toISOString())}` : ""}
+                  </>
                 ) : (
-                  <><CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" /> Trace ready</>
+                  <>
+                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" /> Trace ready
+                    {analyzedAt ? ` · ${formatRelative(new Date(analyzedAt).toISOString())}` : ""}
+                  </>
                 )
+
               ) : (
                 <>Runs automatically after you stop typing</>
               )}

@@ -65,13 +65,20 @@ import {
   getCachedTrace,
   setCachedTrace,
   clearTraceCache,
+  traceCacheStats,
+  getCachedAt,
+  formatBytes,
   loadDebounceMs,
   saveDebounceMs,
   DEBOUNCE_MIN,
   DEBOUNCE_MAX,
 } from "./code/traceCache";
+import { scoreConfidence } from "./code/confidence";
+import { ConfidenceMeter } from "./code/ConfidenceMeter";
+import { formatRelative } from "@/lib/formatRelative";
 import { Slider } from "@/components/ui/slider";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+
 
 
 interface Frame {

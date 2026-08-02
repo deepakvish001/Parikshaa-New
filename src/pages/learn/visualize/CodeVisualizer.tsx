@@ -1054,6 +1054,7 @@ export default function CodeVisualizer() {
                         <span
                           key={k}
                           className="rounded-md border border-border/60 bg-background/40 px-2 py-1 text-[11px] text-muted-foreground"
+                          style={{ borderLeft: `3px solid ${COMPLEXITY_CASE_COLORS[k]}` }}
                         >
                           {k} <span className="font-mono text-foreground">{trace.complexity[k]}</span>
                         </span>
@@ -1064,7 +1065,31 @@ export default function CodeVisualizer() {
                         {trace.complexity.recurrence}
                       </span>
                     )}
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="ml-auto h-7 px-2 text-xs"
+                      onClick={() => setComplexityOpen(true)}
+                    >
+                      <BarChart3 className="h-3.5 w-3.5" /> Explain
+                    </Button>
                   </div>
+
+                  <div className="mt-2 rounded-lg border border-border/40 bg-background/30 p-2">
+                    <ComplexityChart
+                      height={130}
+                      series={[
+                        { key: "best", expr: trace.complexity.best, color: COMPLEXITY_CASE_COLORS.best },
+                        {
+                          key: "average",
+                          expr: trace.complexity.average ?? trace.complexity.time,
+                          color: COMPLEXITY_CASE_COLORS.average,
+                        },
+                        { key: "worst", expr: trace.complexity.worst, color: COMPLEXITY_CASE_COLORS.worst },
+                      ]}
+                    />
+                  </div>
+
                   {trace.complexity.notes?.length ? (
                     <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-muted-foreground">
                       {trace.complexity.notes.slice(0, 4).map((n, i) => (
@@ -1073,6 +1098,7 @@ export default function CodeVisualizer() {
                     </ul>
                   ) : null}
                 </div>
+
               )}
 
               {step && (

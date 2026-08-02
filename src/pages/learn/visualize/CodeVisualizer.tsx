@@ -1198,33 +1198,19 @@ export default function CodeVisualizer() {
 
 
               <div className="border-t border-border/50 p-2 flex items-center gap-2">
-                {trace ? (
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    className="flex-1 text-xs"
-                    onClick={() => {
-                      setTrace(null);
-                      setIdx(0);
-                      setPlaying(false);
-                    }}
-                  >
-                    Edit code
-                  </Button>
-                ) : (
-                  <span className="flex w-full flex-wrap items-center gap-x-3 gap-y-1 px-2 text-[11px] text-muted-foreground">
-                    <span>{lines.length} lines · {code.length} chars</span>
-                    <span>Spaces: 4</span>
-                    {detected && detected !== effectiveLanguage && (
-                      <span className="text-amber-400">code looks like {detected}</span>
-                    )}
-                    <kbd className="ml-auto rounded border border-border/60 px-1.5 py-0.5 font-sans text-[10px]">
-                      Ctrl/⌘ + Enter to run
-                    </kbd>
-                  </span>
-                )}
-
+                <span className="flex w-full flex-wrap items-center gap-x-3 gap-y-1 px-2 text-[11px] text-muted-foreground">
+                  <span className="truncate max-w-[10rem] text-foreground/80">{activeFile.name}</span>
+                  <span>{lines.length} lines · {code.length} chars</span>
+                  <span>Spaces: 4</span>
+                  {detected && detected !== effectiveLanguage && (
+                    <span className="text-amber-400">code looks like {detected}</span>
+                  )}
+                  <kbd className="ml-auto rounded border border-border/60 px-1.5 py-0.5 font-sans text-[10px]">
+                    Ctrl/⌘ + Enter to run
+                  </kbd>
+                </span>
               </div>
+
             </div>
 
             {/* Visualization panel */}

@@ -649,6 +649,8 @@ export default function CodeVisualizer() {
     }
     setTrace(null);
     setValidationError(null);
+    setRuntimeError(null);
+
     setPlaying(false);
     setCacheHit(false);
     setAnalyzedAt(null);

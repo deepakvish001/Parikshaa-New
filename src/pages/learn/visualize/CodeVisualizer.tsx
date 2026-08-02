@@ -19,6 +19,7 @@ import {
   Maximize2,
   AlertTriangle,
   CheckCircle2,
+  Gauge,
 } from "lucide-react";
 
 import { toast } from "sonner";
@@ -52,6 +53,8 @@ import { inferVar, TYPE_COLOR } from "./code/inferVarType";
 import { useTraceHistory, titleFromCode, type TraceHistoryEntry } from "./code/useTraceHistory";
 import { useAutoFitFont } from "./code/useAutoFit";
 import { MonacoEditor, type MonacoDiagnostic } from "@/components/coding/MonacoEditor";
+import { HighlightedLine } from "./code/highlight";
+import { frameColor, eventStyle } from "./code/frameColors";
 
 
 interface Frame {
@@ -70,11 +73,23 @@ interface Step {
   stdout?: string;
   explanation?: string;
 }
+interface Complexity {
+  time?: string;
+  space?: string;
+  timeReason?: string;
+  spaceReason?: string;
+  recurrence?: string | null;
+  best?: string;
+  average?: string;
+  worst?: string;
+  notes?: string[];
+}
 interface Trace {
   valid?: true;
   language?: string;
   truncated?: boolean;
   steps: Step[];
+  complexity?: Complexity;
 }
 
 interface TraceValidationError {
@@ -89,10 +104,30 @@ interface InvalidTraceResponse {
   error: TraceValidationError;
 }
 
-const LANGUAGES = [
-  { value: "typescript", label: "TS" },
-  { value: "javascript", label: "JS" },
+const QUICK_LANGUAGES = [
   { value: "python", label: "Python" },
+  { value: "javascript", label: "JS" },
+  { value: "typescript", label: "TS" },
+] as const;
+
+const ALL_LANGUAGES = [
+  { value: "python", label: "Python" },
+  { value: "javascript", label: "JavaScript" },
+  { value: "typescript", label: "TypeScript" },
+  { value: "java", label: "Java" },
+  { value: "c", label: "C" },
+  { value: "c++", label: "C++" },
+  { value: "c#", label: "C#" },
+  { value: "go", label: "Go" },
+  { value: "rust", label: "Rust" },
+  { value: "kotlin", label: "Kotlin" },
+  { value: "swift", label: "Swift" },
+  { value: "php", label: "PHP" },
+  { value: "ruby", label: "Ruby" },
+  { value: "scala", label: "Scala" },
+  { value: "dart", label: "Dart" },
+  { value: "r", label: "R" },
+  { value: "sql", label: "SQL" },
 ] as const;
 
 /** Map the generic snippet detector's ids onto visualizer language names. */
@@ -325,6 +360,10 @@ export default function CodeVisualizer() {
   const steps = trace?.steps ?? [];
   const step = steps[idx];
   const lines = useMemo(() => code.replace(/\t/g, "    ").split("\n"), [code]);
+  const visitedLines = useMemo(
+    () => new Set(steps.slice(0, idx + 1).map((st) => st.line)),
+    [steps, idx],
+  );
 
   /* ---- auto font / zoom fit (persisted) ---- */
   const [fitPrefs, setFitPrefs] = useState<FitPrefs>(loadFitPrefs);
@@ -519,7 +558,7 @@ export default function CodeVisualizer() {
           <div className="shrink-0 flex flex-wrap items-center gap-x-2 gap-y-2 rounded-xl border border-border/50 bg-card/50 px-3 py-2">
 
             <div className="flex h-9 items-center rounded-md border border-border/60 bg-background/40 p-1" aria-label="Code language">
-              {LANGUAGES.map((item) => (
+              {QUICK_LANGUAGES.map((item) => (
                 <Button
                   key={item.value}
                   type="button"
@@ -532,6 +571,20 @@ export default function CodeVisualizer() {
                   {item.label}
                 </Button>
               ))}
+              <Select value={language} onValueChange={setLanguage}>
+                <SelectTrigger className="h-7 w-[118px] border-0 bg-transparent text-xs focus:ring-0">
+                  {QUICK_LANGUAGES.some((q) => q.value === language)
+                    ? "More…"
+                    : (ALL_LANGUAGES.find((l) => l.value === language)?.label ?? "More…")}
+                </SelectTrigger>
+                <SelectContent className="max-h-72">
+                  {ALL_LANGUAGES.map((l) => (
+                    <SelectItem key={l.value} value={l.value} className="text-xs">
+                      {l.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <Button size="sm" variant="secondary" onClick={() => void runTrace()} disabled={loading || !code.trim()}>
@@ -713,27 +766,45 @@ export default function CodeVisualizer() {
                 >
                   {lines.map((l, i) => {
                     const active = step?.line === i + 1;
+                    const visited = visitedLines.has(i + 1);
+                    const ev = eventStyle(step?.event);
                     return (
                       <div
                         key={i}
                         ref={active ? lineRef : undefined}
                         className={cn(
-                          "flex items-start gap-3 px-3 transition-colors",
-                          active && "bg-emerald-500/10 border-y border-emerald-500/40",
+                          "relative flex items-start gap-3 px-3 transition-colors duration-200",
+                          active && cn("border-y", ev.line),
+                          !active && visited && "bg-white/[0.03]",
                         )}
                       >
-                        <span className="w-[2.4em] shrink-0 text-right text-muted-foreground/60 select-none">
-                          {i + 1}
-                        </span>
+                        {active && (
+                          <motion.span
+                            layoutId="active-gutter"
+                            className={cn("absolute left-0 top-0 h-full w-[3px]", ev.gutter)}
+                          />
+                        )}
                         <span
                           className={cn(
-                            "whitespace-pre-wrap break-words flex-1",
-                            active ? "text-emerald-300" : "text-slate-300",
+                            "w-[2.4em] shrink-0 text-right select-none",
+                            active ? "text-foreground" : visited ? "text-slate-500" : "text-muted-foreground/40",
                           )}
                         >
-                          {l || " "}
+                          {i + 1}
                         </span>
-                        {active && <span className="text-emerald-400 shrink-0">◀</span>}
+                        <span className="whitespace-pre-wrap break-words flex-1">
+                          {l ? <HighlightedLine line={l} /> : " "}
+                        </span>
+                        {active && (
+                          <span
+                            className={cn(
+                              "shrink-0 rounded border px-1.5 text-[0.7em] font-sans leading-[1.6em]",
+                              ev.chip,
+                            )}
+                          >
+                            {ev.label}
+                          </span>
+                        )}
                       </div>
                     );
                   })}
@@ -835,6 +906,59 @@ export default function CodeVisualizer() {
                 </div>
               )}
 
+              {trace?.complexity && (
+                <div className="shrink-0 rounded-xl border border-border/50 bg-gradient-to-r from-indigo-500/10 via-fuchsia-500/10 to-amber-500/10 p-3">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Gauge className="h-4 w-4 text-fuchsia-400" />
+                    <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                      Complexity
+                    </span>
+                    <Tooltip delayDuration={120}>
+                      <TooltipTrigger asChild>
+                        <span className="cursor-help rounded-md border border-indigo-400/40 bg-indigo-500/15 px-2 py-1 font-mono text-sm text-indigo-200">
+                          Time {trace.complexity.time ?? "—"}
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-[280px] text-xs">
+                        {trace.complexity.timeReason ?? "No reasoning provided."}
+                      </TooltipContent>
+                    </Tooltip>
+                    <Tooltip delayDuration={120}>
+                      <TooltipTrigger asChild>
+                        <span className="cursor-help rounded-md border border-emerald-400/40 bg-emerald-500/15 px-2 py-1 font-mono text-sm text-emerald-200">
+                          Space {trace.complexity.space ?? "—"}
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-[280px] text-xs">
+                        {trace.complexity.spaceReason ?? "No reasoning provided."}
+                      </TooltipContent>
+                    </Tooltip>
+                    {(["best", "average", "worst"] as const).map((k) =>
+                      trace.complexity?.[k] ? (
+                        <span
+                          key={k}
+                          className="rounded-md border border-border/60 bg-background/40 px-2 py-1 text-[11px] text-muted-foreground"
+                        >
+                          {k} <span className="font-mono text-foreground">{trace.complexity[k]}</span>
+                        </span>
+                      ) : null,
+                    )}
+                    {trace.complexity.recurrence && (
+                      <span className="rounded-md border border-amber-400/40 bg-amber-500/10 px-2 py-1 font-mono text-[11px] text-amber-200">
+                        {trace.complexity.recurrence}
+                      </span>
+                    )}
+                  </div>
+                  {trace.complexity.notes?.length ? (
+                    <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-muted-foreground">
+                      {trace.complexity.notes.slice(0, 4).map((n, i) => (
+                        <li key={i}>• {n}</li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
+              )}
+
               {step && (
                 <>
                   <div
@@ -849,6 +973,7 @@ export default function CodeVisualizer() {
                       {(step.frames ?? []).map((f, i) => {
                         const top = i === (step.frames?.length ?? 0) - 1;
                         const scope = f.isGlobal ? "global" : `local → ${f.name}`;
+                        const c = frameColor(i);
                         return (
                           <motion.div
                             key={`${f.name}-${i}`}
@@ -857,18 +982,22 @@ export default function CodeVisualizer() {
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             transition={{ type: "spring", damping: 20, stiffness: 220 }}
                             className={cn(
-                              "min-w-[16em] max-w-full rounded-lg border border-dashed p-[0.7em] space-y-[0.5em] bg-card/40",
-                              top ? "border-sky-400/70" : "border-border/50",
+                              "relative min-w-[16em] max-w-full overflow-hidden rounded-lg border p-[0.7em] space-y-[0.5em] bg-card/40",
+                              c.ring,
+                              top && c.glow,
                             )}
                           >
+                            <span className={cn("absolute inset-x-0 top-0 h-[3px]", c.bar)} />
                             <div className="flex items-center gap-2 text-[0.9em] font-mono text-muted-foreground">
-                              {f.isGlobal ? "" : "function "}
-                              <span className="text-foreground">{f.name}</span>
+                              <span className={cn("rounded border px-1.5 text-[0.75em] font-sans", c.chip)}>
+                                #{i}
+                              </span>
+                              <span className={cn("font-semibold", c.text)}>{f.name}</span>
                               <Badge
                                 variant="outline"
-                                className="ml-auto text-[0.75em] font-sans"
+                                className={cn("ml-auto text-[0.75em] font-sans", c.chip)}
                               >
-                                {f.isGlobal ? "global scope" : "local scope"}
+                                {f.isGlobal ? "global" : "local"}
                               </Badge>
                             </div>
 
@@ -915,7 +1044,7 @@ export default function CodeVisualizer() {
                           Explanation of this code:
                         </div>
                         <div className="font-mono text-sm">
-                          {step.code ?? lines[step.line - 1]}
+                          <HighlightedLine line={step.code ?? lines[step.line - 1] ?? ""} />
                         </div>
                       </div>
                       <div className="rounded-lg rounded-tl-none border border-border/60 bg-card/60 p-3 text-sm leading-relaxed max-h-32 overflow-auto">

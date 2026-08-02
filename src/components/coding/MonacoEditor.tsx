@@ -94,23 +94,46 @@ export const MonacoEditor = forwardRef<MonacoEditorHandle, MonacoEditorProps>(
       });
     }, []);
 
+    const runRef = useRef(onRunShortcut);
+    runRef.current = onRunShortcut;
+
     const handleMount: OnMount = useCallback((ed, monaco) => {
       editorRef.current = ed;
       monacoRef.current = monaco;
       ed.updateOptions({
         fontLigatures: true,
-        minimap: { enabled: false },
+        fontFamily:
+          "'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, monospace",
         scrollBeyondLastLine: false,
         automaticLayout: true,
         tabSize: 4,
         lineNumbers: "on",
         roundedSelection: true,
-        padding: { top: 12, bottom: 12 },
+        padding: { top: 14, bottom: 20 },
+        bracketPairColorization: { enabled: true },
+        guides: { bracketPairs: true, indentation: true, highlightActiveIndentation: true },
+        renderLineHighlight: "all",
+        cursorSmoothCaretAnimation: "on",
+        autoClosingBrackets: "languageDefined",
+        autoClosingQuotes: "languageDefined",
+        formatOnPaste: true,
+        formatOnType: true,
+        tabCompletion: "on",
+        suggestOnTriggerCharacters: true,
+        quickSuggestions: { other: true, comments: false, strings: false },
+        stickyScroll: { enabled: true },
+        scrollbar: { verticalScrollbarSize: 10, horizontalScrollbarSize: 10 },
+        overviewRulerLanes: 2,
+        matchBrackets: "always",
+        occurrencesHighlight: "singleFile",
+        linkedEditing: true,
       });
+      ed.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => runRef.current?.());
       applyDiagnostics(ed, monaco, diagnostics);
       // Initial layout once mounted into the live grid
       requestAnimationFrame(() => relayout());
     }, [applyDiagnostics, diagnostics, relayout]);
+
 
     useEffect(() => {
       const ed = editorRef.current;

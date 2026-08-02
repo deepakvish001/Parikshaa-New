@@ -1022,20 +1022,17 @@ export default function CodeVisualizer() {
           >
             {/* Code panel */}
             <div className="flex flex-col min-h-0 rounded-xl border border-border/50 bg-[#0d1117]/80 overflow-hidden">
-              {!trace && (
-                <FileTabs
-                  files={files}
-                  activeId={activeId}
-                  errorCounts={errorCounts}
-                  onSelect={selectFile}
-                  onClose={closeFile}
-                  onAdd={() => addFile()}
-                  onRename={renameFile}
-                />
-              )}
-              {!trace && (
+              <FileTabs
+                files={files}
+                activeId={activeId}
+                errorCounts={errorCounts}
+                onSelect={selectFile}
+                onClose={closeFile}
+                onAdd={() => addFile()}
+                onRename={renameFile}
+              />
+              <div className="shrink-0 flex items-center gap-1.5 border-b border-border/50 bg-white/[0.03] px-2 py-1.5">
 
-                <div className="shrink-0 flex items-center gap-1.5 border-b border-border/50 bg-white/[0.03] px-2 py-1.5">
                   <span className="flex items-center gap-1.5 pl-1 pr-2 text-[11px] font-medium text-muted-foreground">
                     <span className="h-2.5 w-2.5 rounded-full bg-rose-400/70" />
                     <span className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
@@ -1094,16 +1091,31 @@ export default function CodeVisualizer() {
                     >
                       <Trash2 className="h-3.5 w-3.5" />
                     </Button>
-                    <Button
-                      size="sm"
-                      className="h-7 px-2.5 text-[11px]"
-                      onClick={() => void runTrace(code, effectiveLanguage, { force: true })}
-                    >
-                      <Play className="h-3.5 w-3.5" /> Run
-                    </Button>
+                    {trace ? (
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        className="h-7 px-2.5 text-[11px]"
+                        onClick={() => {
+                          setTrace(null);
+                          setIdx(0);
+                          setPlaying(false);
+                        }}
+                      >
+                        <Braces className="h-3.5 w-3.5" /> Edit code
+                      </Button>
+                    ) : (
+                      <Button
+                        size="sm"
+                        className="h-7 px-2.5 text-[11px]"
+                        onClick={() => void runTrace(code, effectiveLanguage, { force: true })}
+                      >
+                        <Play className="h-3.5 w-3.5" /> Run
+                      </Button>
+                    )}
                   </div>
                 </div>
-              )}
+
               {trace ? (
 
                 <div
@@ -1171,48 +1183,35 @@ export default function CodeVisualizer() {
                       onRunShortcut={() => void runTrace(code, effectiveLanguage, { force: true })}
                     />
                   </div>
-
-                  <ProblemsPanel
-                    problems={problems}
-                    collapsed={problemsCollapsed}
-                    onToggle={() => setProblemsCollapsed((c) => !c)}
-                    onSelect={(p) => {
-                      if (p.line) editorRef.current?.revealPosition(p.line, p.column);
-                    }}
-                  />
-
                 </div>
               )}
 
+              <ProblemsPanel
+                problems={problems}
+                collapsed={problemsCollapsed}
+                onToggle={() => setProblemsCollapsed((c) => !c)}
+                onSelect={(p) => {
+                  if (p.line) editorRef.current?.revealPosition(p.line, p.column);
+                }}
+              />
+
+
+
 
               <div className="border-t border-border/50 p-2 flex items-center gap-2">
-                {trace ? (
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    className="flex-1 text-xs"
-                    onClick={() => {
-                      setTrace(null);
-                      setIdx(0);
-                      setPlaying(false);
-                    }}
-                  >
-                    Edit code
-                  </Button>
-                ) : (
-                  <span className="flex w-full flex-wrap items-center gap-x-3 gap-y-1 px-2 text-[11px] text-muted-foreground">
-                    <span>{lines.length} lines · {code.length} chars</span>
-                    <span>Spaces: 4</span>
-                    {detected && detected !== effectiveLanguage && (
-                      <span className="text-amber-400">code looks like {detected}</span>
-                    )}
-                    <kbd className="ml-auto rounded border border-border/60 px-1.5 py-0.5 font-sans text-[10px]">
-                      Ctrl/⌘ + Enter to run
-                    </kbd>
-                  </span>
-                )}
-
+                <span className="flex w-full flex-wrap items-center gap-x-3 gap-y-1 px-2 text-[11px] text-muted-foreground">
+                  <span className="truncate max-w-[10rem] text-foreground/80">{activeFile.name}</span>
+                  <span>{lines.length} lines · {code.length} chars</span>
+                  <span>Spaces: 4</span>
+                  {detected && detected !== effectiveLanguage && (
+                    <span className="text-amber-400">code looks like {detected}</span>
+                  )}
+                  <kbd className="ml-auto rounded border border-border/60 px-1.5 py-0.5 font-sans text-[10px]">
+                    Ctrl/⌘ + Enter to run
+                  </kbd>
+                </span>
               </div>
+
             </div>
 
             {/* Visualization panel */}

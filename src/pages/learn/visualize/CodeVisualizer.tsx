@@ -1122,10 +1122,18 @@ export default function CodeVisualizer() {
                     Edit code
                   </Button>
                 ) : (
-                  <span className="px-2 text-[11px] text-muted-foreground">
-                    Selected {effectiveLanguage}{detected && detected !== effectiveLanguage ? ` · code looks like ${detected}` : ""}
+                  <span className="flex w-full flex-wrap items-center gap-x-3 gap-y-1 px-2 text-[11px] text-muted-foreground">
+                    <span>{lines.length} lines · {code.length} chars</span>
+                    <span>Spaces: 4</span>
+                    {detected && detected !== effectiveLanguage && (
+                      <span className="text-amber-400">code looks like {detected}</span>
+                    )}
+                    <kbd className="ml-auto rounded border border-border/60 px-1.5 py-0.5 font-sans text-[10px]">
+                      Ctrl/⌘ + Enter to run
+                    </kbd>
                   </span>
                 )}
+
               </div>
             </div>
 

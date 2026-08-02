@@ -1023,6 +1023,18 @@ export default function CodeVisualizer() {
             {/* Code panel */}
             <div className="flex flex-col min-h-0 rounded-xl border border-border/50 bg-[#0d1117]/80 overflow-hidden">
               {!trace && (
+                <FileTabs
+                  files={files}
+                  activeId={activeId}
+                  errorCounts={errorCounts}
+                  onSelect={selectFile}
+                  onClose={closeFile}
+                  onAdd={() => addFile()}
+                  onRename={renameFile}
+                />
+              )}
+              {!trace && (
+
                 <div className="shrink-0 flex items-center gap-1.5 border-b border-border/50 bg-white/[0.03] px-2 py-1.5">
                   <span className="flex items-center gap-1.5 pl-1 pr-2 text-[11px] font-medium text-muted-foreground">
                     <span className="h-2.5 w-2.5 rounded-full bg-rose-400/70" />

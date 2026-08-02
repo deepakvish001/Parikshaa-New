@@ -31,7 +31,9 @@ export interface MonacoEditorHandle {
   focus: () => void;
   getValue: () => string;
   relayout: () => void;
+  revealPosition: (line: number, column?: number) => void;
 }
+
 
 export const MonacoEditor = forwardRef<MonacoEditorHandle, MonacoEditorProps>(
   (
@@ -168,7 +170,15 @@ export const MonacoEditor = forwardRef<MonacoEditorHandle, MonacoEditorProps>(
       focus: () => editorRef.current?.focus(),
       getValue: () => editorRef.current?.getValue() ?? "",
       relayout,
+      revealPosition: (line: number, column = 1) => {
+        const ed = editorRef.current;
+        if (!ed) return;
+        ed.revealLineInCenter(Math.max(1, line));
+        ed.setPosition({ lineNumber: Math.max(1, line), column: Math.max(1, column) });
+        ed.focus();
+      },
     }));
+
 
     return (
       <div ref={containerRef} className="w-full h-full min-w-0" data-testid="monaco-wrapper">

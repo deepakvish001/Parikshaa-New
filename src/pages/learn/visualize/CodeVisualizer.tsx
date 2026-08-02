@@ -61,6 +61,10 @@ import { inferVar, TYPE_COLOR } from "./code/inferVarType";
 import { useTraceHistory, titleFromCode, type TraceHistoryEntry } from "./code/useTraceHistory";
 import { useAutoFitFont } from "./code/useAutoFit";
 import { MonacoEditor, type MonacoDiagnostic, type MonacoEditorHandle } from "@/components/coding/MonacoEditor";
+import { useCodeFiles } from "./code/useCodeFiles";
+import FileTabs from "./code/FileTabs";
+import ProblemsPanel, { type CodeProblem } from "./code/ProblemsPanel";
+
 import { HighlightedLine } from "./code/highlight";
 import { frameColor, eventStyle } from "./code/frameColors";
 import ComplexityDrawer, { ComplexityChart } from "./code/ComplexityDrawer";
@@ -360,10 +364,24 @@ const MiniTrace = ({
 /* ------------------------------------------------------------------ */
 
 export default function CodeVisualizer() {
-  const [code, setCode] = useState(SAMPLE);
-  const [language, setLanguage] = useState("python");
+  const {
+    files,
+    activeId,
+    active: activeFile,
+    setCode,
+    setLanguage,
+    select: selectFile,
+    addFile,
+    closeFile,
+    renameFile,
+  } = useCodeFiles(SAMPLE, "python");
+  const code = activeFile.code;
+  const language = activeFile.language;
   const [trace, setTrace] = useState<Trace | null>(null);
   const [validationError, setValidationError] = useState<TraceValidationError | null>(null);
+  const [runtimeError, setRuntimeError] = useState<string | null>(null);
+  const [problemsCollapsed, setProblemsCollapsed] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const [idx, setIdx] = useState(0);
   const [playing, setPlaying] = useState(false);
@@ -397,10 +415,59 @@ export default function CodeVisualizer() {
 
   const detected = useMemo(() => detectVisualizerLanguage(code), [code]);
   const effectiveLanguage = language;
+  const problems = useMemo<CodeProblem[]>(() => {
+    const out: CodeProblem[] = [];
+    if (validationError) {
+      out.push({
+        id: "syntax",
+        kind: "syntax",
+        severity: "error",
+        message: validationError.message,
+        line: validationError.line,
+        column: validationError.column,
+        snippet: validationError.code,
+        fileName: activeFile.name,
+      });
+    }
+    if (runtimeError) {
+      out.push({
+        id: "runtime",
+        kind: "runtime",
+        severity: "error",
+        message: runtimeError,
+        fileName: activeFile.name,
+      });
+    }
+    if (detected && detected !== language) {
+      out.push({
+        id: "lang-mismatch",
+        kind: "analysis",
+        severity: "warning",
+        message: `Code looks like ${detected}, but ${language} is selected.`,
+        fileName: activeFile.name,
+      });
+    }
+    return out;
+  }, [validationError, runtimeError, detected, language, activeFile.name]);
+
   const diagnostics = useMemo<MonacoDiagnostic[]>(
-    () => validationError ? [{ ...validationError, severity: "error" }] : [],
-    [validationError],
+    () =>
+      problems
+        .filter((p) => typeof p.line === "number")
+        .map((p) => ({
+          line: p.line as number,
+          column: p.column,
+          message: p.message,
+          severity: p.severity,
+        })),
+    [problems],
   );
+
+  const errorCounts = useMemo(
+    () => ({ [activeId]: problems.filter((p) => p.severity === "error").length }),
+    [activeId, problems],
+  );
+
 
   const steps = trace?.steps ?? [];
   const step = steps[idx];
@@ -513,6 +580,8 @@ export default function CodeVisualizer() {
       setCacheHit(false);
       setLoading(true);
       setValidationError(null);
+      setRuntimeError(null);
+
       setPlaying(false);
       setIdx(0);
       try {
@@ -550,10 +619,12 @@ export default function CodeVisualizer() {
       } catch (e) {
         if (requestId !== requestIdRef.current) return;
         setTrace(null);
-        toast.error("Could not visualize this code", {
-          description: (e as Error)?.message ?? "Try a smaller snippet.",
-        });
+        const msg = (e as Error)?.message || "Try a smaller snippet.";
+        setRuntimeError(msg);
+        setProblemsCollapsed(false);
+        toast.error("Could not visualize this code", { description: msg });
       } finally {
+
         if (requestId === requestIdRef.current) setLoading(false);
       }
     },
@@ -578,6 +649,8 @@ export default function CodeVisualizer() {
     }
     setTrace(null);
     setValidationError(null);
+    setRuntimeError(null);
+
     setPlaying(false);
     setCacheHit(false);
     setAnalyzedAt(null);
@@ -950,6 +1023,18 @@ export default function CodeVisualizer() {
             {/* Code panel */}
             <div className="flex flex-col min-h-0 rounded-xl border border-border/50 bg-[#0d1117]/80 overflow-hidden">
               {!trace && (
+                <FileTabs
+                  files={files}
+                  activeId={activeId}
+                  errorCounts={errorCounts}
+                  onSelect={selectFile}
+                  onClose={closeFile}
+                  onAdd={() => addFile()}
+                  onRename={renameFile}
+                />
+              )}
+              {!trace && (
+
                 <div className="shrink-0 flex items-center gap-1.5 border-b border-border/50 bg-white/[0.03] px-2 py-1.5">
                   <span className="flex items-center gap-1.5 pl-1 pr-2 text-[11px] font-medium text-muted-foreground">
                     <span className="h-2.5 w-2.5 rounded-full bg-rose-400/70" />
@@ -1087,22 +1172,15 @@ export default function CodeVisualizer() {
                     />
                   </div>
 
-                  {validationError && (
-                    <div className="shrink-0 border-t border-destructive/40 bg-destructive/10 px-3 py-2" role="alert">
-                      <div className="flex items-start gap-2">
-                        <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-destructive" />
-                        <div className="min-w-0">
-                          <div className="text-xs font-semibold text-destructive">
-                            Line {validationError.line}{validationError.column ? `, column ${validationError.column}` : ""}
-                          </div>
-                          <div className="text-xs text-foreground">{validationError.message}</div>
-                          {validationError.code && (
-                            <code className="mt-1 block truncate text-[11px] text-muted-foreground">{validationError.code}</code>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                  <ProblemsPanel
+                    problems={problems}
+                    collapsed={problemsCollapsed}
+                    onToggle={() => setProblemsCollapsed((c) => !c)}
+                    onSelect={(p) => {
+                      if (p.line) editorRef.current?.revealPosition(p.line, p.column);
+                    }}
+                  />
+
                 </div>
               )}
 

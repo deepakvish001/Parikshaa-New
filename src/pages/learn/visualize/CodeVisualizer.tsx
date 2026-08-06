@@ -722,7 +722,7 @@ export default function CodeVisualizer() {
           {/* Toolbar */}
           <div className="shrink-0 flex flex-wrap items-center gap-x-2 gap-y-2 rounded-xl border border-border/50 bg-card/50 px-3 py-2">
 
-            <div className="flex h-9 items-center rounded-md border border-border/60 bg-background/40 p-1" aria-label="Code language">
+            <div className="flex h-9 items-center rounded-md border border-border/60 bg-background/40 p-1" aria-label="I have approved the plan">
               {QUICK_LANGUAGES.map((item) => (
                 <Button
                   key={item.value}

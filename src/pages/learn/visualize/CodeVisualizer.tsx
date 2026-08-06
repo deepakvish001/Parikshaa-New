@@ -722,7 +722,7 @@ export default function CodeVisualizer() {
           {/* Toolbar */}
           <div className="shrink-0 flex flex-wrap items-center gap-x-2 gap-y-2 rounded-xl border border-border/50 bg-card/50 px-3 py-2">
 
-            <div className="flex h-9 items-center rounded-md border border-border/60 bg-background/40 p-1" aria-label="coding problems page per ke har problem statement ke starter code ko format kar do proper in all problems in all language&#10;&#10;/library/problems page per">
+            <div className="flex h-9 items-center rounded-md border border-border/60 bg-background/40 p-1" aria-label="coding problems page per kitne problems hai ?">
               {QUICK_LANGUAGES.map((item) => (
                 <Button
                   key={item.value}

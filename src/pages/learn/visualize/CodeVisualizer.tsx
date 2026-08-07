@@ -571,6 +571,7 @@ export default function CodeVisualizer() {
 
     setTrace({ ...t, steps: enhancedSteps });
     setValidationError(null);
+    setRuntimeError(null);
     setIdx(0);
     setPlaying(false);
   }, []);
@@ -652,7 +653,7 @@ export default function CodeVisualizer() {
         if (requestId === requestIdRef.current) setLoading(false);
       }
     },
-    [code, effectiveLanguage, save, applyTrace, refreshCacheStats],
+    [code, effectiveLanguage, save, applyTrace, refreshCacheStats, setRuntimeError],
   );
 
   useEffect(() => {

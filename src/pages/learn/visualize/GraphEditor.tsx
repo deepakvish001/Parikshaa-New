@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import "./GraphEditor.css";
 import { 
   Plus, 
   Trash2, 
@@ -216,20 +217,20 @@ const GraphEditor = () => {
 
   return (
     <div 
-      className="min-h-screen bg-black text-white p-8 font-serif select-none overflow-hidden relative"
+      className="min-h-screen bg-black text-white p-4 md:p-8 font-sans select-none overflow-y-auto overflow-x-hidden relative"
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
     >
-      <div className="absolute top-4 left-1/2 -translate-x-1/2 z-50 text-center pointer-events-none opacity-40 hover:opacity-100 transition-opacity max-w-2xl px-4">
+      <div className="absolute top-4 left-1/2 -translate-x-1/2 z-50 text-center pointer-events-none opacity-40 hover:opacity-100 transition-opacity max-w-2xl px-4 hidden md:block">
         <p className="text-[10px] leading-relaxed whitespace-pre-wrap uppercase tracking-[0.2em] font-sans italic text-white/60">
           '''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
                                             
-                                            Graph Editor ko complete correct working and design ke plan karo end to end
+                                            UI is not proper and font text ions scrolling etc.. fix all
         </p>
       </div>
 
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8 h-[85vh]">
-        <div className="flex-1 relative border border-white/10 rounded-2xl bg-[#050505] overflow-hidden group shadow-2xl">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 min-h-[85vh]">
+        <div className="flex-[2] relative border border-white/10 rounded-2xl bg-[#050505] overflow-hidden group shadow-2xl min-h-[500px] lg:min-h-0">
           <div className="absolute top-6 left-1/2 -translate-x-1/2 flex items-center gap-6 z-10">
             <h1 className="text-4xl font-bold tracking-tight text-white/90">Graph Editor</h1>
             <div className="flex gap-2">
@@ -312,16 +313,16 @@ const GraphEditor = () => {
           </div>
         </div>
 
-        <div className="w-full md:w-[380px] flex flex-col gap-6">
-          <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-6 shadow-xl flex-1 flex flex-col">
-            <Tabs defaultValue="input" className="w-full flex-1 flex flex-col">
+        <div className="w-full lg:w-[380px] flex flex-col gap-6">
+          <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-6 shadow-xl flex-1 flex flex-col min-h-[400px]">
+            <Tabs defaultValue="input" className="w-full flex-1 flex flex-col overflow-hidden">
               <TabsList className="bg-transparent border-b border-white/10 w-full justify-start rounded-none p-0 h-auto gap-4 mb-8">
                 <TabsTrigger value="input" className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-white border-b-2 border-transparent rounded-none px-4 py-2 text-base font-sans uppercase tracking-widest text-white/60 data-[state=active]:text-white">Input</TabsTrigger>
                 <TabsTrigger value="random" className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-white border-b-2 border-transparent rounded-none px-4 py-2 text-base font-sans uppercase tracking-widest text-white/60 data-[state=active]:text-white">Random</TabsTrigger>
                 <TabsTrigger value="print" className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-white border-b-2 border-transparent rounded-none px-4 py-2 text-base font-sans uppercase tracking-widest text-white/60 data-[state=active]:text-white">Print</TabsTrigger>
               </TabsList>
 
-              <TabsContent value="input" className="space-y-6 flex-1 flex flex-col mt-0">
+              <TabsContent value="input" className="space-y-6 flex-1 flex flex-col mt-0 overflow-y-auto pr-2 custom-scrollbar">
                 <h3 className="text-2xl font-bold tracking-tight text-white/90">Input Graph</h3>
                 <div className="flex items-center gap-4">
                   <label className="text-xl font-sans text-white/80">n =</label>

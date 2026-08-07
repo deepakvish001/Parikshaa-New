@@ -387,12 +387,13 @@ const CodingProblemDetail = () => {
   } = useEditorPrefs();
   const {
     effective: effectiveFormatOnSubmit,
-  } = useFormatOnSubmitOverride(slug ?? "", language);
+  } = useFormatOnSubmitOverride(slug ?? "", language, editorPrefs.formatOnSubmit);
+
   const layout = { order: [], active: DEFAULT_PROBLEM_TAB, setOrder: () => {}, setActive: () => {}, reset: () => {}, isCustomized: false };
   const setLayout = () => {};
   const toggleTab = () => {};
   const activeTabs = [] as EditorTabId[];
-  const { preset, setPreset: applyPreset } = useEditorLayoutPreset(slug ?? "");
+  const { preset, setPreset: applyPreset } = useEditorLayoutPreset(slug ?? "", DEFAULT_PROBLEM_TAB);
   const companyTags = [] as any[];
 
   const [isEditorFullscreen, setIsEditorFullscreen] = useState(false);

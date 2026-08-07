@@ -1486,6 +1486,7 @@ export default function CodeVisualizer() {
         </div>
 
 
+
         {/* Examples gallery */}
         <Dialog open={examplesOpen} onOpenChange={setExamplesOpen}>
           <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">

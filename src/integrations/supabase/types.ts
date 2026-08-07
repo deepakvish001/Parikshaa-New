@@ -1256,6 +1256,7 @@ export type Database = {
           difficulty: string
           examples: Json
           hints: string[]
+          is_contest_pool: boolean
           is_published: boolean
           mcq: Json | null
           memory_limit_kb: number | null
@@ -1273,6 +1274,7 @@ export type Database = {
           difficulty?: string
           examples?: Json
           hints?: string[]
+          is_contest_pool?: boolean
           is_published?: boolean
           mcq?: Json | null
           memory_limit_kb?: number | null
@@ -1290,6 +1292,7 @@ export type Database = {
           difficulty?: string
           examples?: Json
           hints?: string[]
+          is_contest_pool?: boolean
           is_published?: boolean
           mcq?: Json | null
           memory_limit_kb?: number | null
@@ -1569,6 +1572,53 @@ export type Database = {
             columns: ["session_id"]
             isOneToOne: false
             referencedRelation: "contest_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contest_rating_history: {
+        Row: {
+          contest_id: string
+          created_at: string
+          delta: number
+          id: string
+          new_rating: number
+          old_rating: number
+          participants: number
+          rank: number
+          score: number
+          user_id: string
+        }
+        Insert: {
+          contest_id: string
+          created_at?: string
+          delta: number
+          id?: string
+          new_rating: number
+          old_rating?: number
+          participants: number
+          rank: number
+          score?: number
+          user_id: string
+        }
+        Update: {
+          contest_id?: string
+          created_at?: string
+          delta?: number
+          id?: string
+          new_rating?: number
+          old_rating?: number
+          participants?: number
+          rank?: number
+          score?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contest_rating_history_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
             referencedColumns: ["id"]
           },
         ]
@@ -2108,6 +2158,7 @@ export type Database = {
           ends_at: string
           id: string
           invite_code: string | null
+          is_weekly_rated: boolean
           kind: string | null
           max_participants: number | null
           min_trust_score: number
@@ -2133,6 +2184,7 @@ export type Database = {
           ends_at: string
           id?: string
           invite_code?: string | null
+          is_weekly_rated?: boolean
           kind?: string | null
           max_participants?: number | null
           min_trust_score?: number
@@ -2158,6 +2210,7 @@ export type Database = {
           ends_at?: string
           id?: string
           invite_code?: string | null
+          is_weekly_rated?: boolean
           kind?: string | null
           max_participants?: number | null
           min_trust_score?: number

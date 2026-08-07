@@ -1170,6 +1170,7 @@ const CodingProblems = () => {
           </PopoverContent>
         </Popover>
 
+
         {/* Spacer to push right-side filters */}
         <div className="flex-1" />
 

@@ -13,7 +13,7 @@ async function formatStarterCode() {
     await client.connect();
     console.log("Connected to database.");
 
-    const res = await client.query('SELECT id, lang_id, code FROM public.coding_problem_starter_code');
+    const res = await client.query('SELECT id, lang_id, code FROM public.coding_problem_starter_code LIMIT 500');
     console.log(`Found ${res.rows.length} starter code entries.`);
 
     let updatedCount = 0;

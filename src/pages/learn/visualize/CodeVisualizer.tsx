@@ -1477,10 +1477,10 @@ export default function CodeVisualizer() {
                       </div>
                     ) : null}
                   </div>
-
-                  </>
                 )}
               </div>
+            </div>
+
             </div>
           </div>
         </div>

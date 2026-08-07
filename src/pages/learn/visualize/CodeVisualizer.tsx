@@ -1214,6 +1214,153 @@ export default function CodeVisualizer() {
 
             </div>
 
+            {/* Bottom Section: Explanation and Complexity (New position) */}
+            {trace && (
+              <div className="lg:col-span-2 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-4 pt-2 border-t border-border/20">
+                {/* 1. Explanation Panel */}
+                <div className="space-y-3">
+                  {step && (
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                        className="space-y-0"
+                      >
+                        <div className="inline-block rounded-t-lg border border-b-0 border-dashed border-border/60 bg-card/40 px-3 py-2">
+                          <div className="text-[11px] text-rose-400/80 uppercase font-semibold tracking-wider">
+                            Line {step.line} Explanation
+                          </div>
+                          <div className="font-mono text-sm mt-1">
+                            <HighlightedLine line={step.code ?? lines[step.line - 1] ?? ""} />
+                          </div>
+                        </div>
+                        <div className="rounded-lg rounded-tl-none border border-border/60 bg-card/60 p-4 text-sm leading-relaxed shadow-sm min-h-[100px] max-h-48 overflow-auto">
+                          {step.explanation ?? "No explanation available for this step."}
+                          {step.returnValue != null && (
+                            <div className="mt-3 font-mono text-emerald-400 flex items-center gap-2">
+                              <span className="text-muted-foreground text-[10px] uppercase">returns</span>
+                              {step.returnValue}
+                            </div>
+                          )}
+                        </div>
+                      </motion.div>
+                    </AnimatePresence>
+                  )}
+
+                  {step?.stdout && (
+                    <div className="rounded-lg border border-border/50 bg-[#0d1117]/70 p-3">
+                      <div className="text-[11px] uppercase tracking-wider text-muted-foreground mb-1.5 flex items-center gap-2">
+                        <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                        Console Output
+                      </div>
+                      <pre className="font-mono text-sm text-emerald-300 whitespace-pre-wrap max-h-24 overflow-auto px-1">
+                        {step.stdout}
+                      </pre>
+                    </div>
+                  )}
+                </div>
+
+                {/* 2. Complexity Panel */}
+                <div className="space-y-3">
+                  {trace?.complexity ? (
+                    <div className="h-full rounded-xl border border-border/50 bg-gradient-to-br from-indigo-500/5 via-fuchsia-500/5 to-amber-500/5 p-4 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center gap-2">
+                            <Gauge className="h-4 w-4 text-fuchsia-400" />
+                            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                              Analysis
+                            </span>
+                          </div>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="h-6 px-2 text-[10px] uppercase tracking-wider hover:bg-white/5"
+                            onClick={() => setComplexityOpen(true)}
+                          >
+                            <BarChart3 className="h-3 w-3 mr-1" /> Full Report
+                          </Button>
+                        </div>
+
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          <Tooltip delayDuration={120}>
+                            <TooltipTrigger asChild>
+                              <div className="cursor-help flex flex-col rounded-md border border-indigo-400/30 bg-indigo-500/10 p-2 min-w-[100px]">
+                                <span className="text-[9px] uppercase text-indigo-300/70 font-bold mb-0.5">Time</span>
+                                <span className="font-mono text-sm text-indigo-100">{trace.complexity.time ?? "—"}</span>
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent className="max-w-[280px] text-xs">
+                              {trace.complexity.timeReason ?? "No reasoning provided."}
+                            </TooltipContent>
+                          </Tooltip>
+
+                          <Tooltip delayDuration={120}>
+                            <TooltipTrigger asChild>
+                              <div className="cursor-help flex flex-col rounded-md border border-emerald-400/30 bg-emerald-500/10 p-2 min-w-[100px]">
+                                <span className="text-[9px] uppercase text-emerald-300/70 font-bold mb-0.5">Space</span>
+                                <span className="font-mono text-sm text-emerald-100">{trace.complexity.space ?? "—"}</span>
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent className="max-w-[280px] text-xs">
+                              {trace.complexity.spaceReason ?? "No reasoning provided."}
+                            </TooltipContent>
+                          </Tooltip>
+
+                          <div className="flex-1 min-w-[120px]">
+                            <ComplexityChart
+                              height={45}
+                              series={[
+                                { key: "best", expr: trace.complexity.best, color: COMPLEXITY_CASE_COLORS.best },
+                                {
+                                  key: "average",
+                                  expr: trace.complexity.average ?? trace.complexity.time,
+                                  color: COMPLEXITY_CASE_COLORS.average,
+                                },
+                                { key: "worst", expr: trace.complexity.worst, color: COMPLEXITY_CASE_COLORS.worst },
+                              ]}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between pt-2 border-t border-border/20">
+                        <div className="flex gap-3">
+                          {trace.complexity.recurrence && (
+                            <div className="flex flex-col">
+                              <span className="text-[9px] uppercase text-amber-300/60 font-bold">Recurrence</span>
+                              <span className="font-mono text-[11px] text-amber-200/90">{trace.complexity.recurrence}</span>
+                            </div>
+                          )}
+                          <div className="flex flex-col">
+                            <span className="text-[9px] uppercase text-muted-foreground font-bold">Confidence</span>
+                            <ConfidenceMeter
+                              compact
+                              result={scoreConfidence(trace.complexity, lines.length)}
+                            />
+                          </div>
+                        </div>
+                        {trace.truncated && idx === steps.length - 1 && (
+                          <div className="flex items-center gap-1.5 text-[10px] text-amber-400 font-medium">
+                            <AlertTriangle className="h-3 w-3" />
+                            Truncated
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="h-full rounded-xl border border-dashed border-border/50 bg-card/20 flex flex-col items-center justify-center p-6 text-center text-muted-foreground">
+                      <BarChart3 className="h-6 w-6 mb-2 opacity-20" />
+                      <span className="text-xs">No complexity analysis available for this run.</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+
             {/* Visualization panel (Right Side) */}
             <div className="flex flex-col min-h-0 gap-3">
               {loading && (

@@ -95,7 +95,7 @@ import {
   ProblemCompaniesProvider,
 } from "@/hooks/useProblemCompanies";
 import { companiesForSlug } from "@/data/problemCompaniesMap";
-import BeginnerRoadmapView from "@/components/library/coding/BeginnerRoadmapView";
+
 import {
   EXPERIENCED_HEADER,
   EXPERIENCED_GUIDANCE,

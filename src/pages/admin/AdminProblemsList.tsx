@@ -444,22 +444,6 @@ const AdminProblemsList = () => {
           </Button>
         </div>
 
-      </div>
-
-          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
-          <div className="flex-1">
-            <p className="font-medium text-amber-600 dark:text-amber-400">
-              No contests exist yet
-            </p>
-            <p className="text-xs text-muted-foreground">
-              The “Add to contest” action (<Trophy className="inline h-3 w-3" />) will appear empty until you create one.
-            </p>
-          </div>
-          <Button asChild size="sm" variant="outline">
-            <Link to="/admin/contests/new">Create contest</Link>
-          </Button>
-        </div>
-      )}
 
       {(countMismatch || dbMismatch) && (
         <div className="mb-4 flex flex-wrap items-start gap-3 rounded-lg border border-rose-500/40 bg-rose-500/10 p-3 text-sm">

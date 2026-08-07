@@ -842,15 +842,7 @@ const AdminProblemsList = () => {
                   <TableCell className="text-right">
 
                     <div className="flex justify-end gap-1">
-                      <AddProblemToContestDialog
-                        problemSlug={p.slug}
-                        problemTitle={p.title}
-                        trigger={
-                          <Button variant="ghost" size="icon" title="Add to contest">
-                            <Trophy className="h-4 w-4" />
-                          </Button>
-                        }
-                      />
+
                       <Button asChild variant="ghost" size="icon" title="Edit">
                         <Link to={`/admin/problems/${p.slug}/edit`}>
                           <Pencil className="h-4 w-4" />

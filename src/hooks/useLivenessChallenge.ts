@@ -32,10 +32,8 @@ export function useLivenessChallenge(opts: {
     if (!sessionId) return;
     try {
       const body = { mode: "issue", sessionId };
-      const headers = await signContestFunctionCall("contest-liveness-challenge", body);
       const { data, error } = await supabase.functions.invoke("contest-liveness-challenge", {
         body,
-        headers: headers ?? undefined,
       });
       if (error || !data?.ok || !data.challengeId) return;
       setActive({
@@ -51,10 +49,8 @@ export function useLivenessChallenge(opts: {
     async (imageDataUrl: string): Promise<{ ok: boolean; reason?: string }> => {
       if (!active) return { ok: false, reason: "no_active_challenge" };
       const body = { mode: "submit", challengeId: active.challengeId, imageDataUrl };
-      const headers = await signContestFunctionCall("contest-liveness-challenge", body);
       const { data, error } = await supabase.functions.invoke("contest-liveness-challenge", {
         body,
-        headers: headers ?? undefined,
       });
       setActive(null);
       if (error) return { ok: false, reason: error.message };
@@ -62,6 +58,7 @@ export function useLivenessChallenge(opts: {
     },
     [active],
   );
+
 
   // Scheduler
   useEffect(() => {

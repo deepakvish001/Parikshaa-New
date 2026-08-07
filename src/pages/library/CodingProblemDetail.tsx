@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, useMemo, type ReactNode } from "react";
 import { useNavigate, useParams, Link, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
@@ -387,15 +387,14 @@ const CodingProblemDetail = () => {
   } = useEditorPrefs();
   const {
     effective: effectiveFormatOnSubmit,
-  } = useFormatOnSubmitOverride();
-  const {
-    layout,
-    setLayout,
-    toggleTab,
-    activeTabs,
-  } = useEditorTabsLayout(DEFAULT_PROBLEM_TAB);
-  const { preset, applyPreset } = useEditorLayoutPreset();
-  const { data: companyTags } = useProblemCompanies(slug ?? "");
+  } = useFormatOnSubmitOverride(slug ?? "", language);
+  const layout = { order: [], active: DEFAULT_PROBLEM_TAB, setOrder: () => {}, setActive: () => {}, reset: () => {}, isCustomized: false };
+  const setLayout = () => {};
+  const toggleTab = () => {};
+  const activeTabs = [] as EditorTabId[];
+  const { preset, setPreset: applyPreset } = useEditorLayoutPreset(slug ?? "");
+  const companyTags = [] as any[];
+
   const [isEditorFullscreen, setIsEditorFullscreen] = useState(false);
   const [showCompanyTags, setShowCompanyTags] = useState(false);
   const [detailSubmission, setDetailSubmission] = useState<CodeSubmissionRow | null>(null);

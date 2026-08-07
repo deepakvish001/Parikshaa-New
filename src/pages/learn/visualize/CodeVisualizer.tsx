@@ -1600,7 +1600,6 @@ export default function CodeVisualizer() {
             )}
           </DialogContent>
         </Dialog>
-      </div>
       <ComplexityDrawer
         open={complexityOpen}
         onOpenChange={setComplexityOpen}

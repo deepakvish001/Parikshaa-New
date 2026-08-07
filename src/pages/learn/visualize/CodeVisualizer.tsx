@@ -1016,10 +1016,11 @@ export default function CodeVisualizer() {
             className={cn(
               "flex-1 min-h-0 grid gap-4",
               trace
-                ? "lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)]"
+                ? "lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] lg:grid-rows-[1fr_auto]"
                 : "lg:grid-cols-[minmax(0,1fr)_minmax(0,380px)]",
             )}
           >
+
             {/* Code panel */}
             <div className="flex flex-col min-h-0 rounded-xl border border-border/50 bg-[#0d1117]/80 overflow-hidden">
               <FileTabs

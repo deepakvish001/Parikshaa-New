@@ -1476,11 +1476,13 @@ export default function CodeVisualizer() {
                     ) : null}
                   </div>
 
-
-                  {/* Moved to bottom section */}
-
-
+                  </>
+                )}
+              </div>
             </div>
+          </div>
+        </div>
+
 
           </div>
         </div>

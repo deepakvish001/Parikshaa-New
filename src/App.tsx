@@ -38,6 +38,7 @@ import DsaStudioEdgePage from "./pages/learn/dsa-studio/EdgePage";
 import DsaStudioJournalPage from "./pages/learn/dsa-studio/JournalPage";
 
 import CodePlayground from "./pages/learn/CodePlayground";
+import GraphEditor from "./pages/learn/visualize/GraphEditor";
 
 
 import Settings from "./pages/Settings";
@@ -239,6 +240,7 @@ const App = () => (
                     <Route path="leaderboard" element={<Leaderboard />} />
                     
                     <Route path="playground" element={<CodePlayground />} />
+                    <Route path="visualize" element={<GraphEditor />} />
 
                   </Route>
                 </Route>

@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS public.contest_rating_history CASCADE;
+DROP TABLE IF EXISTS public.contest_submissions CASCADE;
+DROP TABLE IF EXISTS public.contest_problems CASCADE;
+DROP TABLE IF EXISTS public.contests CASCADE;
+DROP TABLE IF EXISTS public.job_applications CASCADE;
+DROP TABLE IF EXISTS public.jobs CASCADE;
+DROP TABLE IF EXISTS public.roadmap_nodes CASCADE;
+DROP TABLE IF EXISTS public.roadmaps CASCADE;
+DROP TABLE IF EXISTS public.visualize_favorites CASCADE;

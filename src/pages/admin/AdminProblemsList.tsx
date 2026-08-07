@@ -35,7 +35,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Plus, Search, Trash2, Pencil, Copy, X, Globe, Lock, Trophy } from "lucide-react";
-import { AddProblemToContestDialog } from "@/components/admin/AddProblemToContestDialog";
+
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
 import {
@@ -301,16 +301,6 @@ const AdminProblemsList = () => {
   const { data: libProblems } = useDbCodingProblems();
   const { data: publishedCount } = usePublishedProblemCount();
 
-  const { data: contestCount = null } = useQuery({
-    queryKey: ["admin", "contests", "count"],
-    queryFn: async () => {
-      const { count, error } = await supabase
-        .from("contests")
-        .select("*", { count: "exact", head: true });
-      if (error) throw error;
-      return count ?? 0;
-    },
-  });
 
   const allTopics = useMemo(() => {
     const s = new Set<string>();
@@ -453,25 +443,7 @@ const AdminProblemsList = () => {
             </Link>
           </Button>
         </div>
-
       </div>
-
-      {contestCount === 0 && (
-        <div className="mb-4 flex flex-wrap items-start gap-3 rounded-lg border border-amber-500/40 bg-amber-500/10 p-3 text-sm">
-          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
-          <div className="flex-1">
-            <p className="font-medium text-amber-600 dark:text-amber-400">
-              No contests exist yet
-            </p>
-            <p className="text-xs text-muted-foreground">
-              The “Add to contest” action (<Trophy className="inline h-3 w-3" />) will appear empty until you create one.
-            </p>
-          </div>
-          <Button asChild size="sm" variant="outline">
-            <Link to="/admin/contests/new">Create contest</Link>
-          </Button>
-        </div>
-      )}
 
       {(countMismatch || dbMismatch) && (
         <div className="mb-4 flex flex-wrap items-start gap-3 rounded-lg border border-rose-500/40 bg-rose-500/10 p-3 text-sm">
@@ -501,6 +473,7 @@ const AdminProblemsList = () => {
           </div>
         </div>
       )}
+
 
       <div className="mb-3 flex flex-wrap items-center gap-2">
         {[
@@ -869,15 +842,7 @@ const AdminProblemsList = () => {
                   <TableCell className="text-right">
 
                     <div className="flex justify-end gap-1">
-                      <AddProblemToContestDialog
-                        problemSlug={p.slug}
-                        problemTitle={p.title}
-                        trigger={
-                          <Button variant="ghost" size="icon" title="Add to contest">
-                            <Trophy className="h-4 w-4" />
-                          </Button>
-                        }
-                      />
+
                       <Button asChild variant="ghost" size="icon" title="Edit">
                         <Link to={`/admin/problems/${p.slug}/edit`}>
                           <Pencil className="h-4 w-4" />

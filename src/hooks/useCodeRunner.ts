@@ -173,8 +173,7 @@ export const useCodeRunner = () => {
       let signedHeaders: Record<string, string> | null = null;
       if (params.contest_slug) {
         try {
-          const { signContestFunctionCall } = await import("@/hooks/useContestSessionSigner");
-          signedHeaders = await signContestFunctionCall(fnName, params);
+          // contest signer disabled
         } catch { /* signer not mounted — server will treat as unsigned */ }
       }
       const { data, error } = await supabase.functions.invoke(fnName, {

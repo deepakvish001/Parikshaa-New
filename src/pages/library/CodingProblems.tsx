@@ -95,7 +95,7 @@ import {
   ProblemCompaniesProvider,
 } from "@/hooks/useProblemCompanies";
 import { companiesForSlug } from "@/data/problemCompaniesMap";
-import BeginnerRoadmapView from "@/components/library/coding/BeginnerRoadmapView";
+
 import {
   EXPERIENCED_HEADER,
   EXPERIENCED_GUIDANCE,
@@ -996,34 +996,8 @@ const CodingProblems = () => {
       <div>
         <div className="min-w-0">
 
-      {(() => {
-        const diff = (params.get("diff") ?? "").toLowerCase();
-        const isBeginner = diff === "easy";
-        const isExperienced = diff === "medium,hard" || diff === "hard,medium";
-        if (!isBeginner && !isExperienced) return null;
-        const existingSlugs = new Set(ALL_PROBLEMS.map((p) => p.slug));
-        if (isBeginner) {
-          return (
-            <BeginnerRoadmapView
-              isSolved={(s) => solved.has(s)}
-              problemExists={(s) => existingSlugs.has(s)}
-              storageKey="beginner"
-            />
-          );
-        }
-        return (
-          <BeginnerRoadmapView
-            isSolved={(s) => solved.has(s)}
-            problemExists={(s) => existingSlugs.has(s)}
-            eyebrow={EXPERIENCED_HEADER.eyebrow}
-            title={EXPERIENCED_HEADER.title}
-            guidance={EXPERIENCED_GUIDANCE}
-            nextSteps={EXPERIENCED_NEXT_STEPS}
-            data={EXPERIENCED_ROADMAP}
-            storageKey="experienced"
-          />
-        );
-      })()}
+      {null}
+
 
       {(() => {
         const diff = (params.get("diff") ?? "").toLowerCase();
@@ -1169,6 +1143,7 @@ const CodingProblems = () => {
             </Command>
           </PopoverContent>
         </Popover>
+
 
         {/* Spacer to push right-side filters */}
         <div className="flex-1" />

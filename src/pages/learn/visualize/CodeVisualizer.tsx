@@ -653,7 +653,7 @@ export default function CodeVisualizer() {
         if (requestId === requestIdRef.current) setLoading(false);
       }
     },
-    [code, effectiveLanguage, save, applyTrace, refreshCacheStats],
+    [code, effectiveLanguage, save, applyTrace, refreshCacheStats, setRuntimeError],
   );
 
   useEffect(() => {

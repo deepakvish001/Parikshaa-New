@@ -330,16 +330,10 @@ const App = () => (
                 <Route path="/roadmaps/*" element={<Navigate to="/learn" replace />} />
 
 
-                {/* Contest Notifier - public */}
-                <Route path="/contest-notifier" element={<PublicDashboardWrapper />}>
-                  <Route index element={<ContestNotifier />} />
-                </Route>
+                <Route path="/contest-notifier" element={<Navigate to="/learn" replace />} />
+                <Route path="/roadmaps" element={<Navigate to="/learn" replace />} />
+                <Route path="/roadmaps/*" element={<Navigate to="/learn" replace />} />
 
-                {/* Roadmaps - public */}
-                <Route path="/roadmaps" element={<PublicDashboardWrapper />}>
-                  <Route index element={<Roadmaps />} />
-                  <Route path=":slug" element={<RoadmapDetail />} />
-                </Route>
 
                 {/* Settings */}
                 <Route
@@ -381,9 +375,6 @@ const App = () => (
                   <Route path="blog/comments" element={<AdminBlogComments />} />
                   <Route path="blog/audit" element={<AdminBlogAudit />} />
 
-                  <Route path="jobs" element={<AdminJobs />} />
-                  <Route path="contests" element={<AdminContests />} />
-                  <Route path="contests/:id" element={<ContestProblemsEditor />} />
                   <Route path="mirror-health" element={<MirrorHealth />} />
                 </Route>
 

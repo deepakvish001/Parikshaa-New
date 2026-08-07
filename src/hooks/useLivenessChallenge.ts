@@ -6,7 +6,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { signContestFunctionCall } from "@/hooks/useContestSessionSigner";
+
 
 export interface ActiveChallenge {
   challengeId: string;

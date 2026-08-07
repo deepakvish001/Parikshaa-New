@@ -24,7 +24,7 @@ import {
   NotebookPen,
 } from "lucide-react";
 
-import SecureProblemHUD from "@/components/contests/SecureProblemHUD";
+
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Button } from "@/components/ui/button";
@@ -110,10 +110,6 @@ import { ProblemRunHistory } from "@/components/library/coding/ProblemRunHistory
 import { ShortcutsCheatSheet } from "@/components/library/coding/ShortcutsCheatSheet";
 import { useProblemNotes } from "@/hooks/useProblemNotes";
 import { useProblemSolution } from "@/hooks/useProblemSolution";
-import { useContestLocks } from "@/hooks/useContestLocks";
-import { LockedAuxPanel } from "@/components/contests/LockedAuxPanel";
-import { logContestLockEvent } from "@/lib/contestTelemetry";
-import { useActiveContestSession } from "@/hooks/useActiveContestSession";
 import { useTypingTelemetry } from "@/hooks/useTypingTelemetry";
 import { useEditorPrefs } from "@/hooks/useEditorPrefs";
 import type { CodeSubmissionRow } from "@/hooks/useCodingSubmissions";
@@ -387,16 +383,10 @@ const CodingProblemDetail = () => {
   // registered participant, these panels are replaced with a LockedAuxPanel
   // surface that countdowns to the contest end. Hooks below also receive the
   // `locked` flag so they refuse to fetch sensitive data over the network.
-  const contestLocks = useContestLocks(contestId ?? undefined);
-  // Active contest session id (for typing telemetry). Only resolved when we
-  // are on a `?contest=<slug>` URL inside an active secure session.
-  const contestSession = useActiveContestSession(contestId ?? undefined);
-  const typing = useTypingTelemetry({
-    contestId: contestId ?? undefined,
-    sessionId: contestSession.sessionId ?? null,
-    problemSlug: slug,
-    enabled: !!contestId && contestSession.hasActive,
-  });
+  const contestLocks = { historyLocked: false, solutionLocked: false };
+  const contestSession = { sessionId: null, hasActive: false };
+  const typing = { enabled: false };
+
   const lastCodeLenRef = useRef<number>(0);
   const { runs, refetch: refetchRuns } = useCodeRuns(slug, {
     locked: contestLocks.historyLocked,

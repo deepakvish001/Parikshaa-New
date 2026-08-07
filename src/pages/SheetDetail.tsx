@@ -1575,8 +1575,9 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   );
   const closeArticle = useCallback(() => {
 
-    // Prefer history back so forward navigation stays available.
-    if (window.history.length > 1) navigate(-1);
+    // Prefer history back so forward navigation stays available, 
+    // but only if the previous entry is within the same SPA session (via state.sheetInline).
+    if (window.history.length > 1 && window.history.state?.sheetInline) navigate(-1);
     else {
       const next = new URLSearchParams(searchParams);
       next.delete("article");

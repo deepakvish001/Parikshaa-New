@@ -571,6 +571,7 @@ export default function CodeVisualizer() {
 
     setTrace({ ...t, steps: enhancedSteps });
     setValidationError(null);
+    setRuntimeError(null);
     setIdx(0);
     setPlaying(false);
   }, []);

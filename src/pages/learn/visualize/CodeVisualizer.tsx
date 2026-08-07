@@ -722,7 +722,7 @@ export default function CodeVisualizer() {
           {/* Toolbar */}
           <div className="shrink-0 flex flex-wrap items-center gap-x-2 gap-y-2 rounded-xl border border-border/50 bg-card/50 px-3 py-2">
 
-            <div className="flex h-9 items-center rounded-md border border-border/60 bg-background/40 p-1" aria-label="'''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''\n                                            \n                                            coding problems page per ke har problem statement ke starter code ko format kar do proper in all problems in all language">
+            <div className="flex h-9 items-center rounded-md border border-border/60 bg-background/40 p-1" aria-label="'''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''\n                                            \n                                            explanation of code and complexity of code ko niche karo left side me code editor hai aur right side pura visual blocks ke liye rhne do">
               {QUICK_LANGUAGES.map((item) => (
                 <Button
                   key={item.value}

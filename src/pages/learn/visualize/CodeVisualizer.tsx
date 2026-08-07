@@ -105,6 +105,7 @@ interface Step {
   returnValue?: string | null;
   stdout?: string;
   explanation?: string;
+  diffs?: Record<string, boolean>; // New: track which variables changed in this step
 }
 interface Complexity {
   time?: string;
@@ -197,16 +198,21 @@ const VarRow = ({
   name,
   value,
   scope,
+  isChanged,
 }: {
   name: string;
   value: string;
   scope: string;
+  isChanged?: boolean;
 }) => {
   const info = inferVar(value);
   return (
     <Tooltip delayDuration={120}>
       <TooltipTrigger asChild>
-        <div className="grid grid-cols-[1fr_auto_1.2fr] items-center gap-2 px-2.5 py-[0.35em] font-mono border-b border-border/50 last:border-b-0 hover:bg-muted/30 cursor-help">
+        <div className={cn(
+          "grid grid-cols-[1fr_auto_1.2fr] items-center gap-2 px-2.5 py-[0.35em] font-mono border-b border-border/50 last:border-b-0 hover:bg-muted/30 cursor-help transition-all duration-300",
+          isChanged && "bg-emerald-500/10 ring-1 ring-inset ring-emerald-500/30 shadow-[0_0_8px_rgba(16,185,129,0.1)]"
+        )}>
           <span className="text-muted-foreground truncate">{name}</span>
           <span
             className={cn(
@@ -216,7 +222,7 @@ const VarRow = ({
           >
             {info.label}
           </span>
-          <span className="truncate text-right">{value}</span>
+          <span className={cn("truncate text-right", isChanged && "text-emerald-400 font-bold")}>{value}</span>
         </div>
 
       </TooltipTrigger>
@@ -545,7 +551,25 @@ export default function CodeVisualizer() {
   }, [idx]);
 
   const applyTrace = useCallback((t: Trace) => {
-    setTrace(t);
+    // Calculate state diffs for variable highlighting
+    const enhancedSteps = t.steps.map((curr, i) => {
+      if (i === 0) return curr;
+      const prev = t.steps[i - 1];
+      const diffs: Record<string, boolean> = {};
+      
+      curr.frames?.forEach((f, frameIdx) => {
+        const prevFrame = prev.frames?.[frameIdx];
+        f.vars?.forEach(v => {
+          const prevVar = prevFrame?.vars?.find(pv => pv.name === v.name);
+          if (!prevVar || prevVar.value !== v.value) {
+            diffs[`${f.name}-${v.name}`] = true;
+          }
+        });
+      });
+      return { ...curr, diffs };
+    });
+
+    setTrace({ ...t, steps: enhancedSteps });
     setValidationError(null);
     setIdx(0);
     setPlaying(false);
@@ -911,22 +935,23 @@ export default function CodeVisualizer() {
                 <SkipBack className="h-4 w-4" /> Prev Step
               </Button>
 
-              <div className="min-w-[130px] rounded-md bg-pink-500/10 border border-pink-500/30 px-3 py-1.5 text-xs">
-                <div className="text-muted-foreground">
-                  Step{" "}
-                  <span className="text-foreground font-semibold">
-                    {steps.length ? idx + 1 : 0}
-                  </span>{" "}
-                  of {steps.length}
+              <div className="flex flex-col gap-1.5 min-w-[200px] lg:min-w-[300px]">
+                <div className="flex items-center justify-between text-[10px] text-muted-foreground uppercase tracking-widest font-bold px-1">
+                  <span>Progress</span>
+                  <span>{steps.length ? idx + 1 : 0} / {steps.length}</span>
                 </div>
-                <div className="mt-1 h-1 rounded bg-border/60 overflow-hidden">
-                  <motion.div
-                    className="h-full bg-pink-500"
-                    animate={{
-                      width: steps.length ? `${((idx + 1) / steps.length) * 100}%` : "0%",
+                <div className="relative group px-1">
+                  <Slider
+                    value={[idx]}
+                    max={steps.length ? steps.length - 1 : 0}
+                    step={1}
+                    onValueChange={([v]) => {
+                      setPlaying(false);
+                      setIdx(v);
                     }}
-                    transition={{ duration: 0.25 }}
+                    className="cursor-pointer"
                   />
+                  {/* Hover indicator could go here for "scrubbing" preview */}
                 </div>
               </div>
 
@@ -1313,6 +1338,7 @@ export default function CodeVisualizer() {
                                     name={v.name}
                                     value={v.value}
                                     scope={scope}
+                                    isChanged={step.diffs?.[`${f.name}-${v.name}`]}
                                   />
                                 ))}
                               </div>

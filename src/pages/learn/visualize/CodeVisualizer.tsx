@@ -1480,11 +1480,9 @@ export default function CodeVisualizer() {
                 )}
               </div>
             </div>
-
-
-            </div>
           </div>
         </div>
+
 
 
 

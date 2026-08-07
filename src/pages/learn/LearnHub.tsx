@@ -239,7 +239,7 @@ const sections: {
     label: "System Design", icon: Workflow,
     items: [
       
-      navCard("Fullstack Roadmap", "Interactive 120+ topic flowchart", "/roadmaps/fullstack", "Open Roadmap"),
+      navCard("Fullstack Roadmap", "Interactive 120+ topic flowchart", "/learn", "Open Roadmap"),
     ],
   },
   {
@@ -282,12 +282,6 @@ const sections: {
       navCard("Binary Search Tree", "Hierarchical data structure with efficient search.", "/blog", "Read"),
     ],
   },
-  {
-    label: "Jobs", icon: Briefcase,
-    items: [
-      navCard("Job Openings", "Latest internships & fresher openings from Remotive, Adzuna & top boards", "/jobs", "Browse Jobs"),
-    ],
-  },
 
 ];
 
@@ -319,7 +313,7 @@ const SECTION_GROUPS = [
   { id: "practice", label: "Practice", icon: BrainCircuit, hint: "Solve, review and revise", sections: ["DSA Studio", "DSA Heatmap", "Coding Problems", "DSA Playlist"] },
   { id: "library", label: "Library", icon: LibraryBig, hint: "Question banks, notes, companies & roles", sections: ["Library"] },
   { id: "community", label: "Community", icon: Trophy, hint: "Leaderboards & blogs", sections: ["Leaderboard", "Blogs"] },
-  { id: "jobs", label: "Jobs", icon: Briefcase, hint: "Internship & fresher openings", sections: ["Jobs"] },
+  
 ] as const;
 
 

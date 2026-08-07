@@ -37,14 +37,7 @@ import DsaStudioTricksPage from "./pages/learn/dsa-studio/TricksPage";
 import DsaStudioEdgePage from "./pages/learn/dsa-studio/EdgePage";
 import DsaStudioJournalPage from "./pages/learn/dsa-studio/JournalPage";
 
-import VisualizeHub from "./pages/learn/visualize/VisualizeHub";
-import VisualizeTrack from "./pages/learn/visualize/VisualizeTrack";
-import VisualizePlayer from "./pages/learn/visualize/VisualizePlayer";
-import CodeVisualizer from "./pages/learn/visualize/CodeVisualizer";
 import CodePlayground from "./pages/learn/CodePlayground";
-import WeeklyContests from "./pages/contests/WeeklyContests";
-import ContestDetails from "./pages/contests/ContestDetails";
-import ContestRatings from "./pages/contests/ContestRatings";
 
 
 import Settings from "./pages/Settings";
@@ -88,14 +81,14 @@ import SystemDesignOverview from "./pages/system-design/SystemDesignOverview";
 
 // Research Pages
 import ResearchOverview from "./pages/research/Overview";
-import JobPortals from "./pages/research/JobPortals";
+
 import ResumeTemplates from "./pages/research/ResumeTemplates";
 import ResumeAnalyser from "./pages/research/ResumeAnalyser";
 import ColdOutreach from "./pages/research/ColdOutreach";
 import MyActivity from "./pages/research/MyActivity";
 
 import PublicProfile from "./pages/PublicProfile";
-import ContestNotifier from "./pages/ContestNotifier";
+
 import { ProfileRailLayout } from "./components/profile/ProfileRailLayout";
 
 import { AdminRoute } from "@/components/AdminRoute";
@@ -126,15 +119,6 @@ import AdminBlogEditor from "./pages/admin/blog/AdminBlogEditor";
 import AdminBlogComments from "./pages/admin/blog/AdminBlogComments";
 import AdminBlogAudit from "./pages/admin/blog/AdminBlogAudit";
 import AdminBlogRevisions from "./pages/admin/blog/AdminBlogRevisions";
-import AdminJobs from "./pages/admin/AdminJobs";
-import AdminContests from "./pages/admin/AdminContests";
-import ContestProblemsEditor from "./pages/admin/ContestProblemsEditor";
-import Jobs from "./pages/Jobs";
-import Roadmaps from "./pages/Roadmaps";
-import RoadmapDetail from "./pages/RoadmapDetail";
-import JobDetail from "./pages/JobDetail";
-import JobsOrDetailDispatcher, { LegacyCategoryRedirect } from "./pages/JobsOrDetail";
-import JobApply from "./pages/JobApply";
 import BlogIndex from "./pages/blog/BlogIndex";
 import BlogPost from "./pages/blog/BlogPost";
 
@@ -171,9 +155,6 @@ const LearnDashboardWrapper = () => (
   </DashboardLayout>
 );
 
-// Dedicated theme shell for /contests/* — keeps deep-black + amber palette
-// but isolates it from LearnThemeLayout so contest pages can evolve
-// independently without inheriting learn-hub-specific styles.
 const ContestThemeLayout = () => (
   <div className="contest-dark-surface dark relative min-h-screen bg-background text-foreground">
     <DashboardLayout>
@@ -258,10 +239,7 @@ const App = () => (
                     <Route path="leaderboard" element={<Leaderboard />} />
                     
                     <Route path="playground" element={<CodePlayground />} />
-                    <Route path="visualize" element={<VisualizeHub />} />
-                    <Route path="visualize/code" element={<CodeVisualizer />} />
-                    <Route path="visualize/algo/:algoId" element={<VisualizePlayer />} />
-                    <Route path="visualize/:trackId" element={<VisualizeTrack />} />
+
                   </Route>
                 </Route>
 
@@ -301,13 +279,8 @@ const App = () => (
                 </Route>
 
                 {/* Retired routes — redirect to /learn */}
-                <Route path="/contests" element={<ContestThemeLayout />}>
-                  <Route index element={<WeeklyContests />} />
-                  <Route path="weekly" element={<Navigate to="/contests" replace />} />
-                  <Route path="ratings" element={<ContestRatings />} />
-                  <Route path=":slug" element={<ContestDetails />} />
-                  <Route path="*" element={<Navigate to="/contests" replace />} />
-                </Route>
+                <Route path="/contests" element={<Navigate to="/learn" replace />} />
+
                 <Route path="/arena/*" element={<Navigate to="/learn" replace />} />
                 <Route path="/experiences/*" element={<Navigate to="/learn" replace />} />
                 <Route path="/mock-interview/*" element={<Navigate to="/learn" replace />} />
@@ -335,7 +308,7 @@ const App = () => (
                 <Route path="/research" element={<PublicDashboardWrapper />}>
                   <Route index element={<ResearchOverview />} />
                   <Route path="overview" element={<ResearchOverview />} />
-                  <Route path="jobs" element={<JobPortals />} />
+                  
                   <Route path="resume" element={<ResumeTemplates />} />
                   <Route path="analyser" element={<ResumeAnalyser />} />
                   <Route path="outreach" element={<ColdOutreach />} />
@@ -352,16 +325,10 @@ const App = () => (
                 </Route>
 
                 {/* Jobs - public */}
-                <Route path="/jobs" element={<PublicDashboardWrapper />}>
-                  <Route index element={<Jobs />} />
-                  {/* Single param disambiguates category vs job detail: job
-                      slugs always end with a UUID; anything else falls back
-                      to the category view (unknown = show all). */}
-                  <Route path=":categoryOrSlug" element={<JobsOrDetailDispatcher />} />
-                  <Route path=":categoryOrSlug/apply" element={<JobApply />} />
-                  {/* Legacy path — 308-equivalent redirect via component */}
-                  <Route path="category/:categorySlug" element={<LegacyCategoryRedirect />} />
-                </Route>
+                <Route path="/jobs" element={<Navigate to="/learn" replace />} />
+                <Route path="/roadmaps" element={<Navigate to="/learn" replace />} />
+                <Route path="/roadmaps/*" element={<Navigate to="/learn" replace />} />
+
 
                 {/* Contest Notifier - public */}
                 <Route path="/contest-notifier" element={<PublicDashboardWrapper />}>

@@ -29,40 +29,7 @@ import {
 import { publishCodingSolutionTool } from "./tools/publish-coding-solution";
 import { publishCodingBundleTool } from "./tools/publish-coding-bundle";
 import { ensureAdminAccessTool } from "./tools/ensure-admin-access";
-import {
-  createSheetTool,
-  listSheetsTool,
-  addProblemsToSheetTool,
-  removeProblemFromSheetTool,
-  listSheetItemsTool,
-  shareSheetTool,
-  publishRoadmapTool,
-  listRoadmapsTool,
-} from "./tools/sheets";
-import {
-  listSheetTemplatesTool,
-  createSheetFromTemplateTool,
-  cloneSheetTool,
-  reorderSheetItemsTool,
-  publishSheetBundleTool,
-} from "./tools/sheet-templates";
-import {
-  regenerateShareSheetLinkTool,
-  updateSheetSectionsTool,
-  getSheetDetailsTool,
-  previewPublishSheetBundleTool,
-} from "./tools/sheet-manage";
-import {
-  bulkRemoveProblemsFromSheetTool,
-  getSheetShareStatusTool,
-  deleteOrArchiveSheetTool,
-} from "./tools/sheet-lifecycle";
-import {
-  updateSheetShareSettingsTool,
-  duplicateSheetTool,
-  exportSheetItemsCsvTool,
-  listPublicShareCodesTool,
-} from "./tools/sheet-share-ops";
+
 import {
   publishTopicArticleTool,
   listTopicArticlesTool,
@@ -87,19 +54,8 @@ import {
 } from "./tools/topic-articles-extra";
 import { listBuiltinSheetsTool, getBuiltinSheetTool } from "./tools/builtin-sheets";
 import { getCurrentUserContextTool, testSheetAccessTool } from "./tools/auth-debug";
-import {
-  updateBuiltinSheetTool,
-  syncBuiltinSheetToDbTool,
-  listAllSheetsAdminTool,
-  adminUpdateSheetTool,
-  adminDeleteSheetTool,
-} from "./tools/admin-sheets-all";
-import {
-  sheetAccessMatrixTool,
-  debugMcpReadFailureTool,
-  verifySheetArticleAccessTool,
-} from "./tools/auth-diagnostics";
-import { verifySheetWriteAccessTool } from "./tools/sheet-write-access";
+
+
 import {
   createBuiltinShareLinkTool,
   revokeBuiltinShareLinkTool,
@@ -123,7 +79,7 @@ export default defineMcp({
   title: "Parikshaa",
   version: "0.1.0",
   instructions:
-    "Parikshaa MCP server for admins/owners. Tools act as the signed-in user (RLS enforced) but admin/owner roles have broad read/write across all features. Start with `ensure_admin_access` then `whoami`. For existing frontend-only sheets like DBMS/CN/OS, use `list_builtin_sheets` and `get_builtin_sheet` instead of checking user_folders. For database-backed folders: list_sheets/get_sheet_details. For any table: db_select (simple), db_query (advanced filters), db_insert/db_update/db_delete. For DB functions: db_rpc. For files: storage_list/upload/delete/signed_url. For business logic: invoke_edge_function. For access control: admin_manage_role. Coding-content publishing: publish_coding_bundle / publish_coding_problem / publish_coding_solution.",
+    "Parikshaa MCP server for admins/owners. Tools act as the signed-in user (RLS enforced) but admin/owner roles have broad read/write across all features. Start with `ensure_admin_access` then `whoami`. For existing frontend-only sheets like DBMS/CN/OS, use `list_builtin_sheets` and `get_builtin_sheet` instead of checking user_folders. For database-backed folders: list_folders. For any table: db_select (simple), db_query (advanced filters), db_insert/db_update/db_delete. For DB functions: db_rpc. For files: storage_list/upload/delete/signed_url. For business logic: invoke_edge_function. For access control: admin_manage_role. Coding-content publishing: publish_coding_bundle / publish_coding_problem / publish_coding_solution.",
   auth: auth.oauth.issuer({
     issuer: `https://${projectRef}.supabase.co/auth/v1`,
     acceptedAudiences: "authenticated",
@@ -167,38 +123,7 @@ export default defineMcp({
     getBuiltinSheetTool,
     getCurrentUserContextTool,
     testSheetAccessTool,
-    updateBuiltinSheetTool,
-    syncBuiltinSheetToDbTool,
-    listAllSheetsAdminTool,
-    adminUpdateSheetTool,
-    adminDeleteSheetTool,
-    sheetAccessMatrixTool,
-    debugMcpReadFailureTool,
-    verifySheetArticleAccessTool,
-    createSheetTool,
-    listSheetsTool,
-    addProblemsToSheetTool,
-    removeProblemFromSheetTool,
-    listSheetItemsTool,
-    shareSheetTool,
-    publishRoadmapTool,
-    listRoadmapsTool,
-    listSheetTemplatesTool,
-    createSheetFromTemplateTool,
-    cloneSheetTool,
-    reorderSheetItemsTool,
-    publishSheetBundleTool,
-    regenerateShareSheetLinkTool,
-    updateSheetSectionsTool,
-    getSheetDetailsTool,
-    previewPublishSheetBundleTool,
-    bulkRemoveProblemsFromSheetTool,
-    getSheetShareStatusTool,
-    deleteOrArchiveSheetTool,
-    updateSheetShareSettingsTool,
-    duplicateSheetTool,
-    exportSheetItemsCsvTool,
-    listPublicShareCodesTool,
+
     publishTopicArticleTool,
     listTopicArticlesTool,
     linkArticleToSheetTopicTool,
@@ -217,7 +142,7 @@ export default defineMcp({
     exportTopicArticlesSitemapTool,
     reresolveTopicArticleImagesTool,
     fixTopicArticleLinkageTool,
-    verifySheetWriteAccessTool,
+    
     createBuiltinShareLinkTool,
     revokeBuiltinShareLinkTool,
     listBuiltinShareLinksTool,

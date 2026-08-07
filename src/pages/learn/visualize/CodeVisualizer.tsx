@@ -1408,7 +1408,7 @@ export default function CodeVisualizer() {
               )}
 
               {step && (
-                <>
+
                   <div
                     ref={stackFit.ref}
                     className="flex-1 min-h-0 overflow-auto rounded-xl border border-border/50 bg-card/20 p-3"

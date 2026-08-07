@@ -1214,7 +1214,7 @@ export default function CodeVisualizer() {
 
             </div>
 
-            {/* Visualization panel */}
+            {/* Visualization panel (Right Side) */}
             <div className="flex flex-col min-h-0 gap-3">
               {loading && (
                 <div className="rounded-xl border border-border/50 bg-card/40 p-10 text-center text-sm text-muted-foreground">

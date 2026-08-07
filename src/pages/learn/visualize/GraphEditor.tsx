@@ -120,8 +120,8 @@ const GraphEditor = () => {
       <div className="absolute top-4 left-1/2 -translate-x-1/2 z-50 text-center pointer-events-none opacity-40 hover:opacity-100 transition-opacity max-w-2xl px-4">
         <p className="text-[10px] leading-relaxed whitespace-pre-wrap uppercase tracking-[0.2em] font-sans italic text-white/60">
           '''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
-          
-          build this as it is keep one name under this graph then we build for other data structure as well
+                                            
+                                            Graph Editor ko complete correct working and design ke plan karo end to end
         </p>
       </div>
 

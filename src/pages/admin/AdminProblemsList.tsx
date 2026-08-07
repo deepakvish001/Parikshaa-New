@@ -445,6 +445,7 @@ const AdminProblemsList = () => {
         </div>
       </div>
 
+      {(countMismatch || dbMismatch) && (
         <div className="mb-4 flex flex-wrap items-start gap-3 rounded-lg border border-rose-500/40 bg-rose-500/10 p-3 text-sm">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose-500" />
           <div className="flex-1">
@@ -472,6 +473,7 @@ const AdminProblemsList = () => {
           </div>
         </div>
       )}
+
 
       <div className="mb-3 flex flex-wrap items-center gap-2">
         {[

@@ -1215,9 +1215,131 @@ export default function CodeVisualizer() {
 
             </div>
 
-            {/* Bottom Section: Explanation and Complexity (New position) */}
+
+
+
+
+            {/* Visualization panel (Right Side) */}
+            <div className="flex flex-col min-h-0 gap-3">
+              {loading && (
+                <div className="rounded-xl border border-border/50 bg-card/40 p-10 text-center text-sm text-muted-foreground">
+                  <Loader2 className="h-5 w-5 animate-spin mx-auto mb-3" />
+                  Reading your code and building the execution trace…
+                </div>
+              )}
+
+              {!loading && !trace && (
+                <div className="rounded-xl border border-dashed border-border/50 bg-card/30 p-6 space-y-4 overflow-auto">
+
+                  <div className="text-center space-y-2">
+                    <div className="text-lg font-semibold">Paste code to visualize automatically</div>
+                    <p className="text-sm text-muted-foreground max-w-md mx-auto">
+                      Every step shows the call stack, each frame's typed variables, and a
+                      plain-English explanation of the highlighted line.
+                    </p>
+                  </div>
+                  <div className="grid sm:grid-cols-2 gap-2">
+                    {CODE_EXAMPLES.slice(0, 4).map((ex) => (
+                      <button
+                        key={ex.id}
+                        onClick={() => {
+                          setCode(ex.code);
+                          setLanguage(ex.language);
+                        }}
+                        className="text-left rounded-lg border border-border/50 bg-card/40 px-3 py-2 hover:border-sky-400/60 transition-colors"
+                      >
+                        <div className="text-sm font-medium">{ex.title}</div>
+                        <div className="text-[11px] text-muted-foreground">
+                          {ex.category} · {ex.language}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                  <div className="text-center">
+                    <Button size="sm" variant="ghost" onClick={() => setExamplesOpen(true)}>
+                      <Sparkles className="h-4 w-4" /> Browse all examples
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {step && (
+
+                  <div
+                    ref={stackFit.ref}
+                    className="flex-1 min-h-0 overflow-auto rounded-xl border border-border/50 bg-card/20 p-3"
+                    style={{
+                      fontSize: `${stackFit.fontSize}px`,
+                      transition: "font-size 260ms cubic-bezier(0.4, 0, 0.2, 1)",
+                    }}
+                  >
+                    <div className="flex flex-wrap gap-3 items-start">
+                      {(step.frames ?? []).map((f, i) => {
+                        const top = i === (step.frames?.length ?? 0) - 1;
+                        const scope = f.isGlobal ? "global" : `local → ${f.name}`;
+                        const c = frameColor(i);
+                        return (
+                          <motion.div
+                            key={`${f.name}-${i}`}
+                            layout
+                            initial={{ opacity: 0, y: 8, scale: 0.97 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            transition={{ type: "spring", damping: 20, stiffness: 220 }}
+                            className={cn(
+                              "relative min-w-[16em] max-w-full overflow-hidden rounded-lg border p-[0.7em] space-y-[0.5em] bg-card/40",
+                              c.ring,
+                              top && c.glow,
+                            )}
+                          >
+                            <span className={cn("absolute inset-x-0 top-0 h-[3px]", c.bar)} />
+                            <div className="flex items-center gap-2 text-[0.9em] font-mono text-muted-foreground">
+                              <span className={cn("rounded border px-1.5 text-[0.75em] font-sans", c.chip)}>
+                                #{i}
+                              </span>
+                              <span className={cn("font-semibold", c.text)}>{f.name}</span>
+                              <Badge
+                                variant="outline"
+                                className={cn("ml-auto text-[0.75em] font-sans", c.chip)}
+                              >
+                                {f.isGlobal ? "global" : "local"}
+                              </Badge>
+                            </div>
+
+                            {(f.vars ?? []).length > 0 && (
+                              <div className="rounded-md border border-border/50 overflow-hidden">
+                                {(f.vars ?? []).map((v) => (
+                                  <VarRow
+                                    key={v.name}
+                                    name={v.name}
+                                    value={v.value}
+                                    scope={scope}
+                                  />
+                                ))}
+                              </div>
+                            )}
+                            {f.returned != null && (
+                              <div className="text-[0.9em] text-emerald-400 font-mono">
+                                returns {f.returned}
+                              </div>
+                            )}
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+
+                    {step.callArgs?.length ? (
+                      <div className="mt-3 text-[0.9em] text-sky-400 font-mono">
+                        Calls function with arguments {step.callArgs.join(", ")}
+                      </div>
+                    ) : null}
+                  </div>
+                )}
+
+              </div>
+
+            {/* Bottom Section: Explanation and Complexity */}
             {trace && (
-              <div className="lg:col-span-2 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-4 pt-2 border-t border-border/20 order-last">
+              <div className="lg:col-span-2 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-4 pt-3 border-t border-border/20">
                 {/* 1. Explanation Panel */}
                 <div className="space-y-3">
                   {step && (
@@ -1361,125 +1483,6 @@ export default function CodeVisualizer() {
               </div>
             )}
 
-
-
-            {/* Visualization panel (Right Side) */}
-            <div className="flex flex-col min-h-0 gap-3">
-              {loading && (
-                <div className="rounded-xl border border-border/50 bg-card/40 p-10 text-center text-sm text-muted-foreground">
-                  <Loader2 className="h-5 w-5 animate-spin mx-auto mb-3" />
-                  Reading your code and building the execution trace…
-                </div>
-              )}
-
-              {!loading && !trace && (
-                <div className="rounded-xl border border-dashed border-border/50 bg-card/30 p-6 space-y-4 overflow-auto">
-
-                  <div className="text-center space-y-2">
-                    <div className="text-lg font-semibold">Paste code to visualize automatically</div>
-                    <p className="text-sm text-muted-foreground max-w-md mx-auto">
-                      Every step shows the call stack, each frame's typed variables, and a
-                      plain-English explanation of the highlighted line.
-                    </p>
-                  </div>
-                  <div className="grid sm:grid-cols-2 gap-2">
-                    {CODE_EXAMPLES.slice(0, 4).map((ex) => (
-                      <button
-                        key={ex.id}
-                        onClick={() => {
-                          setCode(ex.code);
-                          setLanguage(ex.language);
-                        }}
-                        className="text-left rounded-lg border border-border/50 bg-card/40 px-3 py-2 hover:border-sky-400/60 transition-colors"
-                      >
-                        <div className="text-sm font-medium">{ex.title}</div>
-                        <div className="text-[11px] text-muted-foreground">
-                          {ex.category} · {ex.language}
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                  <div className="text-center">
-                    <Button size="sm" variant="ghost" onClick={() => setExamplesOpen(true)}>
-                      <Sparkles className="h-4 w-4" /> Browse all examples
-                    </Button>
-                  </div>
-                </div>
-              )}
-
-              {step && (
-
-                  <div
-                    ref={stackFit.ref}
-                    className="flex-1 min-h-0 overflow-auto rounded-xl border border-border/50 bg-card/20 p-3"
-                    style={{
-                      fontSize: `${stackFit.fontSize}px`,
-                      transition: "font-size 260ms cubic-bezier(0.4, 0, 0.2, 1)",
-                    }}
-                  >
-                    <div className="flex flex-wrap gap-3 items-start">
-                      {(step.frames ?? []).map((f, i) => {
-                        const top = i === (step.frames?.length ?? 0) - 1;
-                        const scope = f.isGlobal ? "global" : `local → ${f.name}`;
-                        const c = frameColor(i);
-                        return (
-                          <motion.div
-                            key={`${f.name}-${i}`}
-                            layout
-                            initial={{ opacity: 0, y: 8, scale: 0.97 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            transition={{ type: "spring", damping: 20, stiffness: 220 }}
-                            className={cn(
-                              "relative min-w-[16em] max-w-full overflow-hidden rounded-lg border p-[0.7em] space-y-[0.5em] bg-card/40",
-                              c.ring,
-                              top && c.glow,
-                            )}
-                          >
-                            <span className={cn("absolute inset-x-0 top-0 h-[3px]", c.bar)} />
-                            <div className="flex items-center gap-2 text-[0.9em] font-mono text-muted-foreground">
-                              <span className={cn("rounded border px-1.5 text-[0.75em] font-sans", c.chip)}>
-                                #{i}
-                              </span>
-                              <span className={cn("font-semibold", c.text)}>{f.name}</span>
-                              <Badge
-                                variant="outline"
-                                className={cn("ml-auto text-[0.75em] font-sans", c.chip)}
-                              >
-                                {f.isGlobal ? "global" : "local"}
-                              </Badge>
-                            </div>
-
-                            {(f.vars ?? []).length > 0 && (
-                              <div className="rounded-md border border-border/50 overflow-hidden">
-                                {(f.vars ?? []).map((v) => (
-                                  <VarRow
-                                    key={v.name}
-                                    name={v.name}
-                                    value={v.value}
-                                    scope={scope}
-                                  />
-                                ))}
-                              </div>
-                            )}
-                            {f.returned != null && (
-                              <div className="text-[0.9em] text-emerald-400 font-mono">
-                                returns {f.returned}
-                              </div>
-                            )}
-                          </motion.div>
-                        );
-                      })}
-                    </div>
-
-                    {step.callArgs?.length ? (
-                      <div className="mt-3 text-[0.9em] text-sky-400 font-mono">
-                        Calls function with arguments {step.callArgs.join(", ")}
-                      </div>
-                    ) : null}
-                  </div>
-                )}
-
-              </div>
             </div>
           </div>
         </div>

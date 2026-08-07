@@ -274,6 +274,12 @@ const sections: {
     ],
   },
   {
+    label: "Visualize", icon: Eye,
+    items: [
+      navCard("Graph Editor", "Interactive graph builder & visualizer", "/learn/visualize", "Open Editor"),
+    ],
+  },
+  {
     label: "Blogs", icon: BookOpenCheck,
     items: [
       navCard("Arrays", "Fundamental data structure for storing elements of the same type.", "/blog", "Read"),
@@ -312,7 +318,7 @@ const SECTION_GROUPS = [
   { id: "sheets", label: "Sheets", icon: Layers, hint: "Curated sheets across DSA, CS core, SD, CP & SQL", sections: ["Pariksha DSA Sheets", "DSA Sheets", "Core CS Subjects", "System Design", "Competitive Programming", "SQL"] },
   { id: "practice", label: "Practice", icon: BrainCircuit, hint: "Solve, review and revise", sections: ["DSA Studio", "DSA Heatmap", "Coding Problems", "DSA Playlist"] },
   { id: "library", label: "Library", icon: LibraryBig, hint: "Question banks, notes, companies & roles", sections: ["Library"] },
-  { id: "community", label: "Community", icon: Trophy, hint: "Leaderboards & blogs", sections: ["Leaderboard", "Blogs"] },
+  { id: "community", label: "Community", icon: Trophy, hint: "Leaderboards & blogs", sections: ["Leaderboard", "Visualize", "Blogs"] },
   
 ] as const;
 

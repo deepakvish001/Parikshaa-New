@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useRef, useEffect } from "react";
 import { 
   Plus, 
   Trash2, 
@@ -24,9 +23,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Slider } from "@/components/ui/slider";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -36,6 +32,8 @@ interface Node {
   label: string;
   x: number;
   y: number;
+  vx?: number;
+  vy?: number;
 }
 
 interface Edge {
@@ -51,19 +49,97 @@ const GraphEditor = () => {
   const [isZeroIndexed, setIsZeroIndexed] = useState(true);
   const [isWeighted, setIsWeighted] = useState(false);
   const [isOriented, setIsOriented] = useState(false);
-  const [nodeCount, setNodeCount] = useState("0");
-  const [edgeInput, setEdgeInput] = useState("");
-  const [randomP, setRandomP] = useState("0.15");
+  const [nodeCount, setNodeCount] = useState("5");
+  const [edgeInput, setEdgeInput] = useState("0 1\n1 2\n2 3\n3 4\n4 0");
+  const [randomP, setRandomP] = useState("0.3");
+  const [isDragging, setIsDragging] = useState(false);
+  const [draggedNode, setDraggedNode] = useState<number | null>(null);
+  const [physicsEnabled, setPhysicsEnabled] = useState(true);
   
   const svgRef = useRef<SVGSVGElement>(null);
 
+  // Initialize
+  useEffect(() => {
+    handleRender();
+  }, []);
+
+  // Simple Force-Directed Layout logic
+  useEffect(() => {
+    if (!physicsEnabled || isDragging) return;
+
+    const interval = setInterval(() => {
+      setNodes(prevNodes => {
+        if (prevNodes.length === 0) return prevNodes;
+        
+        const newNodes = prevNodes.map(n => ({ ...n, vx: n.vx || 0, vy: n.vy || 0 }));
+        const k = 0.1;
+        const repulse = 1500;
+        const centerForce = 0.01;
+        const centerX = 400;
+        const centerY = 350;
+
+        for (let i = 0; i < newNodes.length; i++) {
+          for (let j = i + 1; j < newNodes.length; j++) {
+            const dx = newNodes[i].x - newNodes[j].x;
+            const dy = newNodes[i].y - newNodes[j].y;
+            const distSq = dx * dx + dy * dy + 0.1;
+            const dist = Math.sqrt(distSq);
+            const force = repulse / distSq;
+            const fx = (dx / dist) * force;
+            const fy = (dy / dist) * force;
+            
+            newNodes[i].vx! += fx;
+            newNodes[i].vy! += fy;
+            newNodes[j].vx! -= fx;
+            newNodes[j].vy! -= fy;
+          }
+        }
+
+        edges.forEach(edge => {
+          const from = newNodes.find(n => n.id === edge.from);
+          const to = newNodes.find(n => n.id === edge.to);
+          if (from && to) {
+            const dx = to.x - from.x;
+            const dy = to.y - from.y;
+            const dist = Math.sqrt(dx * dx + dy * dy) || 0.1;
+            const force = (dist - 120) * k;
+            const fx = (dx / dist) * force;
+            const fy = (dy / dist) * force;
+            
+            from.vx! += fx;
+            from.vy! += fy;
+            to.vx! -= fx;
+            to.vy! -= fy;
+          }
+        });
+
+        return newNodes.map(n => {
+          n.vx! += (centerX - n.x) * centerForce;
+          n.vy! += (centerY - n.y) * centerForce;
+          n.vx! *= 0.9;
+          n.vy! *= 0.9;
+
+          return {
+            ...n,
+            x: Math.max(50, Math.min(750, n.x + n.vx!)),
+            y: Math.max(50, Math.min(650, n.y + n.vy!))
+          };
+        });
+      });
+    }, 16);
+
+    return () => clearInterval(interval);
+  }, [edges, physicsEnabled, isDragging]);
+
   const handleRender = () => {
     const n = parseInt(nodeCount);
-    if (isNaN(n)) return;
+    if (isNaN(n) || n <= 0) {
+      toast.error("Invalid node count");
+      return;
+    }
 
-    // Generate nodes in a circle
     const newNodes: Node[] = [];
-    const radius = 250;
+    const radius = 200;
     const centerX = 400;
     const centerY = 350;
 
@@ -74,10 +150,11 @@ const GraphEditor = () => {
         label: i.toString(),
         x: centerX + radius * Math.cos(angle),
         y: centerY + radius * Math.sin(angle),
+        vx: 0,
+        vy: 0
       });
     }
 
-    // Parse edges
     const newEdges: Edge[] = [];
     const lines = edgeInput.trim().split("\n");
     lines.forEach(line => {
@@ -86,7 +163,7 @@ const GraphEditor = () => {
         const from = parseInt(parts[0]);
         const to = parseInt(parts[1]);
         const weight = parts[2] ? parseFloat(parts[2]) : undefined;
-        if (!isNaN(from) && !isNaN(to)) {
+        if (!isNaN(from) && !isNaN(to) && from < n && to < n && from >= 0 && to >= 0) {
           newEdges.push({ from, to, weight });
         }
       }
@@ -99,7 +176,7 @@ const GraphEditor = () => {
   const generateRandom = () => {
     const n = parseInt(nodeCount);
     const p = parseFloat(randomP);
-    if (isNaN(n) || isNaN(p)) return;
+    if (isNaN(n) || isNaN(p) || n <= 0) return;
 
     const newEdges: Edge[] = [];
     for (let i = 0; i < n; i++) {
@@ -109,14 +186,40 @@ const GraphEditor = () => {
         }
       }
     }
-    
     setEdgeInput(newEdges.map(e => `${e.from} ${e.to}`).join("\n"));
     handleRender();
   };
 
+  const handleMouseDown = (nodeId: number) => {
+    setIsDragging(true);
+    setDraggedNode(nodeId);
+    setSelectedNode(nodeId);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (isDragging && draggedNode !== null && svgRef.current) {
+      const rect = svgRef.current.getBoundingClientRect();
+      const x = (e.clientX - rect.left) * (800 / rect.width);
+      const y = (e.clientY - rect.top) * (700 / rect.height);
+      setNodes(prev => prev.map(n => n.id === draggedNode ? { ...n, x, y, vx: 0, vy: 0 } : n));
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    setDraggedNode(null);
+  };
+
+  const handleExport = () => {
+    toast.info("Exporting graph...");
+  };
+
   return (
-    <div className="min-h-screen bg-black text-white p-8 font-serif select-none overflow-hidden relative">
-      {/* Instructions Overlay Header */}
+    <div 
+      className="min-h-screen bg-black text-white p-8 font-serif select-none overflow-hidden relative"
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+    >
       <div className="absolute top-4 left-1/2 -translate-x-1/2 z-50 text-center pointer-events-none opacity-40 hover:opacity-100 transition-opacity max-w-2xl px-4">
         <p className="text-[10px] leading-relaxed whitespace-pre-wrap uppercase tracking-[0.2em] font-sans italic text-white/60">
           '''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
@@ -126,7 +229,6 @@ const GraphEditor = () => {
       </div>
 
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8 h-[85vh]">
-        {/* Main Canvas */}
         <div className="flex-1 relative border border-white/10 rounded-2xl bg-[#050505] overflow-hidden group shadow-2xl">
           <div className="absolute top-6 left-1/2 -translate-x-1/2 flex items-center gap-6 z-10">
             <h1 className="text-4xl font-bold tracking-tight text-white/90">Graph Editor</h1>
@@ -145,7 +247,6 @@ const GraphEditor = () => {
             className="w-full h-full cursor-crosshair"
             viewBox="0 0 800 700"
           >
-            {/* Edges */}
             {edges.map((edge, i) => {
               const fromNode = nodes.find(n => n.id === edge.from);
               const toNode = nodes.find(n => n.id === edge.to);
@@ -154,45 +255,37 @@ const GraphEditor = () => {
               return (
                 <g key={`edge-${i}`}>
                   <line
-                    x1={fromNode.x}
-                    y1={fromNode.y}
-                    x2={toNode.x}
-                    y2={toNode.y}
+                    x1={fromNode.x} y1={fromNode.y}
+                    x2={toNode.x} y2={toNode.y}
                     stroke="rgba(255,255,255,0.2)"
                     strokeWidth="2"
                   />
                   {isOriented && (
-                    <circle cx={toNode.x} cy={toNode.y} r="3" fill="white" />
+                    <circle cx={toNode.x} cy={toNode.y} r="4" fill="white" />
                   )}
                 </g>
               );
             })}
 
-            {/* Nodes */}
             {nodes.map((node) => (
               <g 
                 key={node.id} 
                 className="cursor-pointer"
-                onClick={() => setSelectedNode(node.id)}
+                onMouseDown={() => handleMouseDown(node.id)}
               >
                 <circle
-                  cx={node.x}
-                  cy={node.y}
-                  r="20"
+                  cx={node.x} cy={node.y} r="22"
                   fill="black"
                   stroke="rgba(255,255,255,0.6)"
                   strokeWidth="2"
                   className={cn(
-                    "transition-all duration-300",
-                    selectedNode === node.id && "stroke-white r-[22px]"
+                    "transition-all duration-150",
+                    selectedNode === node.id && "stroke-white r-[24px]"
                   )}
                 />
                 <text
-                  x={node.x}
-                  y={node.y}
-                  dy=".3em"
-                  textAnchor="middle"
-                  fill="white"
+                  x={node.x} y={node.y} dy=".3em"
+                  textAnchor="middle" fill="white"
                   className="text-sm font-sans select-none pointer-events-none"
                 >
                   {node.label}
@@ -201,16 +294,24 @@ const GraphEditor = () => {
             ))}
           </svg>
 
-          {/* Action Bar */}
           <div className="absolute bottom-8 right-8 flex flex-col gap-4">
-            <Button variant="outline" className="bg-transparent border-white/20 text-white hover:bg-white/5 font-sans h-12 px-6 rounded-lg text-lg gap-2">
+            <Button onClick={handleExport} variant="outline" className="bg-transparent border-white/20 text-white hover:bg-white/5 font-sans h-12 px-6 rounded-lg text-lg gap-2">
               <Download className="w-5 h-5" />
               graph.png
             </Button>
           </div>
+          
+          <div className="absolute bottom-8 left-8">
+            <Button 
+              onClick={() => setPhysicsEnabled(!physicsEnabled)} 
+              variant="ghost" 
+              className={cn("text-white/40 hover:text-white", physicsEnabled && "text-white/80")}
+            >
+              {physicsEnabled ? "Physics On" : "Physics Off"}
+            </Button>
+          </div>
         </div>
 
-        {/* Controls Panel */}
         <div className="w-full md:w-[380px] flex flex-col gap-6">
           <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-6 shadow-xl flex-1 flex flex-col">
             <Tabs defaultValue="input" className="w-full flex-1 flex flex-col">
@@ -222,7 +323,6 @@ const GraphEditor = () => {
 
               <TabsContent value="input" className="space-y-6 flex-1 flex flex-col mt-0">
                 <h3 className="text-2xl font-bold tracking-tight text-white/90">Input Graph</h3>
-                
                 <div className="flex items-center gap-4">
                   <label className="text-xl font-sans text-white/80">n =</label>
                   <Input 
@@ -231,7 +331,6 @@ const GraphEditor = () => {
                     className="bg-[#111] border-white/10 text-white text-lg h-10 w-full font-sans"
                   />
                 </div>
-
                 <div className="flex flex-col gap-2 flex-1">
                   <label className="text-xl font-sans text-white/80">edges:</label>
                   <div className="relative flex-1">
@@ -240,35 +339,18 @@ const GraphEditor = () => {
                       onChange={e => setEdgeInput(e.target.value)}
                       className="w-full h-full min-h-[250px] bg-[#111] border border-white/10 rounded-lg p-4 font-mono text-white/90 focus:outline-none focus:border-white/30 resize-none text-lg"
                     />
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      className="absolute top-2 right-2 text-white/40 hover:text-white"
-                      onClick={() => {
-                        navigator.clipboard.writeText(edgeInput);
-                        toast.success("Copied to clipboard");
-                      }}
-                    >
-                      copy
-                    </Button>
                   </div>
                 </div>
-
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
-                    <input type="checkbox" checked={isZeroIndexed} onChange={e => setIsZeroIndexed(e.target.checked)} className="w-5 h-5 accent-primary bg-[#111] border-white/20" />
+                    <input type="checkbox" checked={isZeroIndexed} onChange={e => setIsZeroIndexed(e.target.checked)} className="w-5 h-5 accent-primary" />
                     <span className="text-lg font-sans text-white/80">zero-indexed</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <input type="checkbox" checked={isWeighted} onChange={e => setIsWeighted(e.target.checked)} className="w-5 h-5 accent-primary bg-[#111] border-white/20" />
-                    <span className="text-lg font-sans text-white/80">weighted</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <input type="checkbox" checked={isOriented} onChange={e => setIsOriented(e.target.checked)} className="w-5 h-5 accent-primary bg-[#111] border-white/20" />
+                    <input type="checkbox" checked={isOriented} onChange={e => setIsOriented(e.target.checked)} className="w-5 h-5 accent-primary" />
                     <span className="text-lg font-sans text-white/80">oriented</span>
                   </div>
                 </div>
-
                 <Button onClick={handleRender} className="w-full bg-transparent border border-white/20 text-white hover:bg-white/10 text-2xl h-14 font-serif rounded-lg">
                   render
                 </Button>
@@ -276,56 +358,39 @@ const GraphEditor = () => {
 
               <TabsContent value="random" className="space-y-6">
                  <h3 className="text-2xl font-bold tracking-tight text-white/90">Random Graph</h3>
-                 
                  <div className="flex items-center gap-4">
                   <label className="text-xl font-sans text-white/80">n =</label>
                   <Input 
-                    value={nodeCount} 
-                    onChange={e => setNodeCount(e.target.value)}
+                    value={nodeCount} onChange={e => setNodeCount(e.target.value)}
                     className="bg-[#111] border-white/10 text-white text-lg h-10 w-full font-sans"
                   />
                 </div>
-
-                <div className="space-y-1">
-                  <div className="flex items-center gap-4">
-                    <label className="text-xl font-sans text-white/80">p =</label>
-                    <Input 
-                      value={randomP} 
-                      onChange={e => setRandomP(e.target.value)}
-                      className="bg-[#111] border-white/10 text-white text-lg h-10 w-full font-sans"
-                    />
-                  </div>
-                  <p className="text-sm text-white/40 font-sans italic">p = 0.15 - edge probability</p>
+                <div className="flex items-center gap-4">
+                  <label className="text-xl font-sans text-white/80">p =</label>
+                  <Input 
+                    value={randomP} onChange={e => setRandomP(e.target.value)}
+                    className="bg-[#111] border-white/10 text-white text-lg h-10 w-full font-sans"
+                  />
                 </div>
-
                 <Button onClick={generateRandom} className="w-full bg-transparent border border-white/20 text-white hover:bg-white/10 text-2xl h-14 font-serif rounded-lg">
                   render
                 </Button>
-
-                <p className="text-center text-lg text-white/80 font-sans mt-4">INPUT / PRINT to copy</p>
               </TabsContent>
 
               <TabsContent value="print" className="space-y-6">
                 <h3 className="text-2xl font-bold tracking-tight text-white/90">Print Current Graph</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <input type="checkbox" checked={isZeroIndexed} onChange={e => setIsZeroIndexed(e.target.checked)} className="w-5 h-5 accent-primary bg-[#111] border-white/20" />
-                    <span className="text-lg font-sans text-white/80">zero-indexed</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <input type="checkbox" checked={isWeighted} onChange={e => setIsWeighted(e.target.checked)} className="w-5 h-5 accent-primary bg-[#111] border-white/20" />
-                    <span className="text-lg font-sans text-white/80">weighted</span>
-                  </div>
+                <div className="bg-[#111] p-4 rounded-lg font-mono text-white/60">
+                  {nodeCount}<br/>
+                  {edges.map((e, i) => (
+                    <div key={i}>{e.from} {e.to}</div>
+                  ))}
                 </div>
-                <Button className="w-full bg-transparent border border-white/20 text-white hover:bg-white/10 text-2xl h-12 font-serif rounded-lg">
-                  print
-                </Button>
               </TabsContent>
             </Tabs>
           </div>
-
           <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-6 text-center shadow-xl">
-             <p className="text-white/60 font-sans italic">- click to highlight adjacent nodes</p>
+             <p className="text-white/60 font-sans italic">- drag nodes to move them</p>
+             <p className="text-white/60 font-sans italic">- physics keeps nodes separated</p>
           </div>
         </div>
       </div>

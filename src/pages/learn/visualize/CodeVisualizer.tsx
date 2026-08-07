@@ -1217,7 +1217,7 @@ export default function CodeVisualizer() {
 
             {/* Bottom Section: Explanation and Complexity (New position) */}
             {trace && (
-              <div className="lg:col-span-2 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-4 pt-2 border-t border-border/20">
+              <div className="lg:col-span-2 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-4 pt-2 border-t border-border/20 order-last">
                 {/* 1. Explanation Panel */}
                 <div className="space-y-3">
                   {step && (
@@ -1360,6 +1360,7 @@ export default function CodeVisualizer() {
                 </div>
               </div>
             )}
+
 
 
             {/* Visualization panel (Right Side) */}

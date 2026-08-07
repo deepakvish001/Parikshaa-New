@@ -1014,15 +1014,15 @@ export default function CodeVisualizer() {
 
           <div
             className={cn(
-              "flex-1 min-h-0 grid gap-4",
+              "flex-1 min-h-0 grid gap-6",
               trace
-                ? "lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] lg:grid-rows-[1fr_auto]"
+                ? "lg:grid-cols-[minmax(0,480px)_minmax(0,1fr)] lg:grid-rows-[1fr_auto]"
                 : "lg:grid-cols-[minmax(0,1fr)_minmax(0,380px)]",
             )}
           >
 
             {/* Code panel */}
-            <div className="flex flex-col min-h-0 rounded-xl border border-border/50 bg-[#0d1117]/80 overflow-hidden">
+            <div className="flex flex-col min-h-0 rounded-2xl border border-border/60 bg-[#0d1117]/90 shadow-2xl overflow-hidden ring-1 ring-white/5">
               <FileTabs
                 files={files}
                 activeId={activeId}
@@ -1267,7 +1267,7 @@ export default function CodeVisualizer() {
 
                   <div
                     ref={stackFit.ref}
-                    className="flex-1 min-h-0 overflow-auto rounded-xl border border-border/50 bg-card/20 p-3"
+                    className="flex-1 min-h-0 overflow-auto rounded-2xl border border-border/60 bg-card/30 p-6 shadow-inner"
                     style={{
                       fontSize: `${stackFit.fontSize}px`,
                       transition: "font-size 260ms cubic-bezier(0.4, 0, 0.2, 1)",
@@ -1339,7 +1339,7 @@ export default function CodeVisualizer() {
 
             {/* Bottom Section: Explanation and Complexity */}
             {trace && (
-              <div className="lg:col-span-2 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-4 pt-3 border-t border-border/20">
+              <div className="lg:col-span-2 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-6 pt-6 border-t border-border/30">
                 {/* 1. Explanation Panel */}
                 <div className="space-y-3">
                   {step && (
@@ -1359,7 +1359,7 @@ export default function CodeVisualizer() {
                             <HighlightedLine line={step.code ?? lines[step.line - 1] ?? ""} />
                           </div>
                         </div>
-                        <div className="rounded-lg rounded-tl-none border border-border/60 bg-card/60 p-4 text-sm leading-relaxed shadow-sm min-h-[100px] max-h-48 overflow-auto">
+                        <div className="rounded-xl rounded-tl-none border border-border/60 bg-gradient-to-br from-card/80 to-card/40 p-5 text-sm leading-relaxed shadow-lg min-h-[120px] max-h-60 overflow-auto backdrop-blur-sm">
                           {step.explanation ?? "No explanation available for this step."}
                           {step.returnValue != null && (
                             <div className="mt-3 font-mono text-emerald-400 flex items-center gap-2">

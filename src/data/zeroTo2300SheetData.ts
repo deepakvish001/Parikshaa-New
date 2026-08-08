@@ -10,7 +10,7 @@ export const zeroTo2300Meta = {
   "hard": 547
 };
 
-export const zeroTo2300Sections = [
+export const zeroTo2300Sections: any[] = [
   {
     "id": "z23-0",
     "title": "Implementation & Simulation",
@@ -20,7 +20,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-pdnla670e",
+            "id": "z23-p-iwpxbj1lt",
             "title": "Bit++ (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -30,7 +30,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-favlp6ujp",
+            "id": "z23-p-hqxdi3399",
             "title": "Next Round (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -40,7 +40,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-znfh96lhe",
+            "id": "z23-p-1z15f6ox5",
             "title": "Beautiful Matrix (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -50,7 +50,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ctkk1scn9",
+            "id": "z23-p-6rwqs2dmq",
             "title": "Petya and Strings (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -60,7 +60,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-rs824skhk",
+            "id": "z23-p-hzw9hzmvk",
             "title": "Boy or Girl (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -70,7 +70,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-bgueff5bv",
+            "id": "z23-p-bos7w6wno",
             "title": "Helpful Maths (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -80,7 +80,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dzxi7bf4a",
+            "id": "z23-p-sqtw7shw1",
             "title": "Word Capitalization (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -90,7 +90,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-62h9rzyqj",
+            "id": "z23-p-yk154bfny",
             "title": "Bear and Big Brother (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -100,7 +100,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-oeao7kr81",
+            "id": "z23-p-9xxavzud7",
             "title": "Football (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -110,7 +110,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-s0lsk3gmb",
+            "id": "z23-p-ar7esf0p4",
             "title": "Gravity Flip (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -120,7 +120,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-so1kozany",
+            "id": "z23-p-x7gem14f1",
             "title": "HQ9+ (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -130,7 +130,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zrp7221ag",
+            "id": "z23-p-ae8h7od0u",
             "title": "Game With Sticks (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -140,7 +140,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-vu4bvv96a",
+            "id": "z23-p-a5poyk5w2",
             "title": "String Task (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -150,7 +150,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-glo9bii25",
+            "id": "z23-p-nln6ofdcc",
             "title": "Young Physicist (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -160,7 +160,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5t1hb4m9b",
+            "id": "z23-p-50wa6j9np",
             "title": "cAPS lOCK (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -170,7 +170,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-knyuu8wck",
+            "id": "z23-p-4jtc6iwp6",
             "title": "Xenia and Ringroad (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -180,7 +180,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-4rdmtvdpw",
+            "id": "z23-p-9tzgonhm7",
             "title": "Taxi (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -190,7 +190,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-u06yfg6no",
+            "id": "z23-p-p7b079zbt",
             "title": "Fancy Fence (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -200,7 +200,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jkassmbeb",
+            "id": "z23-p-2343l8g46",
             "title": "Vanya and Lanterns (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -210,7 +210,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-6zi8x76et",
+            "id": "z23-p-tf88l8ivd",
             "title": "Cheap Travel (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -220,7 +220,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3rdvtlgmt",
+            "id": "z23-p-ioozyu3f5",
             "title": "Chewbaсca and Number (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -230,7 +230,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-c56bxhmq7",
+            "id": "z23-p-k0uxgzols",
             "title": "Worms (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -240,7 +240,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ftgqumk8b",
+            "id": "z23-p-tutqvm41l",
             "title": "Registration System (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -250,7 +250,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ay4ke2fnh",
+            "id": "z23-p-paqd0xjnb",
             "title": "Sort the Array (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -260,7 +260,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-0v1i0r8i1",
+            "id": "z23-p-ueknx3ta1",
             "title": "Books (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -282,7 +282,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-pusik8ntd",
+            "id": "z23-p-9dir72jhb",
             "title": "Watermelon (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -292,7 +292,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-yk4ru52j9",
+            "id": "z23-p-kydmwq6we",
             "title": "Domino piling (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -302,7 +302,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-en6c7yrsd",
+            "id": "z23-p-lbpk8esbr",
             "title": "Elephant (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -312,7 +312,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-l5sa4rzdr",
+            "id": "z23-p-oglgq9ge",
             "title": "Soldier and Bananas (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -322,7 +322,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-957kyryg1",
+            "id": "z23-p-2x58bw189",
             "title": "Calculating Function (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -332,7 +332,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-qzsqsc10q",
+            "id": "z23-p-anwkyd92s",
             "title": "Drinks (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -342,7 +342,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ci88n47bv",
+            "id": "z23-p-7mbinvvua",
             "title": "Divisibility Problem (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -352,7 +352,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-x02ugjn5s",
+            "id": "z23-p-q5n56kd3m",
             "title": "Even Odds (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -362,7 +362,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-9glc8q792",
+            "id": "z23-p-jtuenbobe",
             "title": "Theatre Square (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -372,7 +372,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-nw76kt6np",
+            "id": "z23-p-hz3fc17tk",
             "title": "Expression (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -382,7 +382,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-vv02t8g6r",
+            "id": "z23-p-q6mlbluil",
             "title": "Olesya and Rodion (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -392,7 +392,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-013egifw0",
+            "id": "z23-p-pjnpz96eg",
             "title": "Dreamoon and Stairs (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -402,7 +402,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zwcc2s69q",
+            "id": "z23-p-ts319nn6y",
             "title": "Monsters (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -412,7 +412,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-o9hvohwyh",
+            "id": "z23-p-r3mqu7gpc",
             "title": "Road To Zero (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -422,7 +422,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-qs9dh0dfc",
+            "id": "z23-p-s5vrsio3x",
             "title": "Olya and Game with Arrays (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -432,7 +432,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-8t23oriez",
+            "id": "z23-p-801c9pndd",
             "title": "Sum of Odd Integers (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -442,7 +442,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-nlclckogm",
+            "id": "z23-p-8udwcs8bj",
             "title": "K-th Not Divisible by n (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -452,7 +452,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-xls8o4058",
+            "id": "z23-p-ow49tpcp7",
             "title": "Same Differences (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -462,7 +462,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-25syl0ueh",
+            "id": "z23-p-3owhl14te",
             "title": "Same Parity Summands (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -472,7 +472,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-587n9okks",
+            "id": "z23-p-dhv3lbj25",
             "title": "Plus Minus Permutation (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -482,7 +482,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-d64ojjovj",
+            "id": "z23-p-qfnuvcvfg",
             "title": "Scuza (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -492,7 +492,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-moxu44b05",
+            "id": "z23-p-3cqww2cx3",
             "title": "Odd Selection (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -502,7 +502,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-p43x0tjxp",
+            "id": "z23-p-h674ekimh",
             "title": "Romantic Glasses (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -512,7 +512,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-87rkd0q45",
+            "id": "z23-p-jbjnvm7px",
             "title": "Number of Pairs (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -522,7 +522,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-sqiv1oh75",
+            "id": "z23-p-zgj5jzi8t",
             "title": "Maximum Median (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -544,7 +544,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-hhtsy18uw",
+            "id": "z23-p-hiwufhkov",
             "title": "Team (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -554,7 +554,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-gn6flamia",
+            "id": "z23-p-mek6spw7h",
             "title": "Beautiful Year (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -564,7 +564,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-h1fjk6gqy",
+            "id": "z23-p-at8hozezm",
             "title": "Games (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -574,7 +574,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-178u7wfdc",
+            "id": "z23-p-t1h989mt7",
             "title": "YES or YES? (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -584,7 +584,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-qlfiv47l0",
+            "id": "z23-p-dwfjvd3zz",
             "title": "I_love_\\%username\\% (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -594,7 +594,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-93snjg272",
+            "id": "z23-p-q8vardhxr",
             "title": "New Year and Hurry (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -604,7 +604,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-f53ip9xgg",
+            "id": "z23-p-lm0dhorro",
             "title": "Buy a Shovel (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -614,7 +614,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-m7k5hctzk",
+            "id": "z23-p-vi0ps4rn6",
             "title": "Lucky Division (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -624,7 +624,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dxaagkq67",
+            "id": "z23-p-6kmm5ju0f",
             "title": "Fedor and New Game (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -634,7 +634,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fet3akw42",
+            "id": "z23-p-0mno2serp",
             "title": "Sum of Cubes (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -644,7 +644,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-z1cv5lfqs",
+            "id": "z23-p-ln5l94e2f",
             "title": "Maximum Sum (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -654,7 +654,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-j6j9li9gr",
+            "id": "z23-p-nlgzcbwuv",
             "title": "Coprime (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -664,7 +664,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-4b2sromoj",
+            "id": "z23-p-newfm06xx",
             "title": "250 Thousand Tons of TNT (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -674,7 +674,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ujo9oqw33",
+            "id": "z23-p-ckqj8xhq7",
             "title": "Yet Another Card Deck (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -684,7 +684,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-68z5veczx",
+            "id": "z23-p-7hgr6v8ws",
             "title": "Pleasant Pairs (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -694,7 +694,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fv1ibrtzf",
+            "id": "z23-p-9wh79q9mj",
             "title": "IQ test (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -704,7 +704,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-250j1fm7l",
+            "id": "z23-p-pd9wikfj2",
             "title": "Fadi and LCM (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -714,7 +714,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-140az422w",
+            "id": "z23-p-p2kf5p9ub",
             "title": "Preparing Olympiad (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -724,7 +724,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5mhq0x6xm",
+            "id": "z23-p-v2jz702au",
             "title": "Hamburgers (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -746,7 +746,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-7iebgqdri",
+            "id": "z23-p-2djqjozbc",
             "title": "Amusing Joke (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -756,7 +756,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jjup5tdwp",
+            "id": "z23-p-r4f12f18f",
             "title": "The New Year: Meeting Friends (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -766,7 +766,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-8guxq1jfn",
+            "id": "z23-p-ek7klh9tb",
             "title": "Halloumi Boxes (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -776,7 +776,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dr3r2qbft",
+            "id": "z23-p-44ohh420c",
             "title": "Remove Smallest (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -786,7 +786,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-i96y7jtzu",
+            "id": "z23-p-hs3ugrw59",
             "title": "Medium Number (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -796,7 +796,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jtyj3l592",
+            "id": "z23-p-27dqpw7cr",
             "title": "To My Critics (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -806,7 +806,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-vq9qoam9y",
+            "id": "z23-p-y7w16um7z",
             "title": "Twins (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -816,7 +816,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-1owxpsoi2",
+            "id": "z23-p-gf40y90gx",
             "title": "Dragons (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -826,7 +826,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-hlxpyf962",
+            "id": "z23-p-gmu2bmy53",
             "title": "Laptops (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -836,7 +836,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-48zqpy20q",
+            "id": "z23-p-qo2xq7ble",
             "title": "Building an Aquarium (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -846,7 +846,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jdj7sdq4h",
+            "id": "z23-p-h85ctsuv1",
             "title": "Two Teams Composing (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -856,7 +856,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-uchbreeox",
+            "id": "z23-p-emwmbwyf3",
             "title": "Similar Pairs (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -866,7 +866,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-2jggcevl6",
+            "id": "z23-p-4zh0s1fbz",
             "title": "Teleporters (Easy Version) (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -876,7 +876,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-39kktm0ig",
+            "id": "z23-p-7aiwu28of",
             "title": "Less or Equal (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -886,7 +886,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-0fxohxnzw",
+            "id": "z23-p-4wdvo0pha",
             "title": "Assembly via Minimums (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -896,7 +896,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3bch96p03",
+            "id": "z23-p-751pymt5u",
             "title": "Pashmak and Flowers (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -906,7 +906,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-az896slfk",
+            "id": "z23-p-gqj2ey4ig",
             "title": "Kefa and Company (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -916,7 +916,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-gkbg37zyq",
+            "id": "z23-p-1o33ov5ej",
             "title": "Smilo and Monsters (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -926,7 +926,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-qss0y4ymy",
+            "id": "z23-p-7zlxnr79y",
             "title": "Fox And Names (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -948,7 +948,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-p9xf5upax",
+            "id": "z23-p-9fbb9tm70",
             "title": "I Wanna Be the Guy (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -958,7 +958,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-2ddtty0kc",
+            "id": "z23-p-ckpq683b9",
             "title": "Sereja and Dima (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -968,7 +968,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-d61tj5qkv",
+            "id": "z23-p-0kt61jblw",
             "title": "How Much Does Daytona Cost? (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -978,7 +978,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3p1e4ueb0",
+            "id": "z23-p-bhz74s9rn",
             "title": "Array Coloring (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -988,7 +988,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-m75piu6zf",
+            "id": "z23-p-xfapu6pjb",
             "title": "Line Trip (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -998,7 +998,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-o7th72leo",
+            "id": "z23-p-echdbstx3",
             "title": "Yet Another Two Integers Problem (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1008,7 +1008,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ev4fo996q",
+            "id": "z23-p-ob6m40ofo",
             "title": "Team Olympiad (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1018,7 +1018,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-74i2xgxi9",
+            "id": "z23-p-eqnosyt9y",
             "title": "Puzzles (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -1028,7 +1028,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-rc71cgwjs",
+            "id": "z23-p-41yab8n2z",
             "title": "Chat room (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1038,7 +1038,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-8z3znu1sh",
+            "id": "z23-p-irb5b3049",
             "title": "Move Brackets (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1048,7 +1048,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zrjl8quxc",
+            "id": "z23-p-k03ilswtm",
             "title": "Distinct Split (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1058,7 +1058,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zb2stdvnj",
+            "id": "z23-p-zbgzc13s4",
             "title": "Good Prefixes (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1068,7 +1068,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-z6ixbdpgo",
+            "id": "z23-p-nlnlqapvs",
             "title": "Helmets in Night Light (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1078,7 +1078,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-efn9nuxqv",
+            "id": "z23-p-k48czver3",
             "title": "Add and Divide (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1088,7 +1088,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-4g61f9tr4",
+            "id": "z23-p-az6lj44bb",
             "title": "MEXor Mixup (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1098,7 +1098,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-839oemn1w",
+            "id": "z23-p-w23q0gwhq",
             "title": "Quests (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -1108,7 +1108,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-k4ltic5kq",
+            "id": "z23-p-2pysy6xrw",
             "title": "Contrast Value (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -1118,7 +1118,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-lzakw1sqg",
+            "id": "z23-p-1ep2i06en",
             "title": "Ternary XOR (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -1128,7 +1128,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-0wpgmitne",
+            "id": "z23-p-lctewvcp0",
             "title": "Boats Competition (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -1138,7 +1138,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-h120aquw6",
+            "id": "z23-p-fxyaci53g",
             "title": "Stable Groups (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -1148,7 +1148,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-uf3vhat4v",
+            "id": "z23-p-ggopv1cg3",
             "title": "Friends and the Restaurant (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -1158,7 +1158,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-kwrulc6cr",
+            "id": "z23-p-sw4sjryde",
             "title": "Product of Three Numbers (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1168,7 +1168,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-k61v8rh1r",
+            "id": "z23-p-6rr7esskb",
             "title": "Omkar and Last Class of Math (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1178,7 +1178,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-lrv5wds6x",
+            "id": "z23-p-18f8xdfow",
             "title": "Little Girl and Game (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1188,7 +1188,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fknvmt3lt",
+            "id": "z23-p-094ekuhn3",
             "title": "Two Buttons (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1198,7 +1198,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-oam3x16wb",
+            "id": "z23-p-aarneufyo",
             "title": "Exams (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1208,7 +1208,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-piulswto2",
+            "id": "z23-p-scm8keumj",
             "title": "Powered Addition (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -1230,7 +1230,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-hx2msut69",
+            "id": "z23-p-yi2zha6fw",
             "title": "Prepend and Append (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1240,7 +1240,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dqzbgm90w",
+            "id": "z23-p-fs2bm6jq0",
             "title": "Favorite Sequence (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1250,7 +1250,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-kqepcv0k2",
+            "id": "z23-p-orggpkj4e",
             "title": "1D Eraser (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1260,7 +1260,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7fu9gqy6z",
+            "id": "z23-p-n3vqgogps",
             "title": "Ski Resort (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1270,7 +1270,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-a8khqgp1w",
+            "id": "z23-p-6brsl2ev8",
             "title": "Black and White Stripe (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1280,7 +1280,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ai5qt4rtf",
+            "id": "z23-p-gfk6wcjqe",
             "title": "Traffic Light (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1290,7 +1290,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-0es1eigj8",
+            "id": "z23-p-fyigm3ryh",
             "title": "BerSU Ball (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -1300,7 +1300,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-boyor7kxj",
+            "id": "z23-p-pqpbq80nb",
             "title": "Alternating Subsequence (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -1310,7 +1310,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-0g6db77ys",
+            "id": "z23-p-4jwhylj3k",
             "title": "Queries about less or equal elements (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1320,7 +1320,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-pj58iqfsi",
+            "id": "z23-p-eyc6whydr",
             "title": "Find the Different Ones! (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1330,7 +1330,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-llm6i0j8h",
+            "id": "z23-p-v0lwhup6d",
             "title": "Strange Birthday Party (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1340,7 +1340,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-xgtcgpef4",
+            "id": "z23-p-ur9jeleyb",
             "title": "Shuffle (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1350,7 +1350,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jss1vtk6i",
+            "id": "z23-p-60ugszzi0",
             "title": "Most socially-distanced subsequence (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1360,7 +1360,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-rs1c4x6k1",
+            "id": "z23-p-kof67lte1",
             "title": "Pair of Topics (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1370,7 +1370,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-g8pgytl5u",
+            "id": "z23-p-8zwoejsq2",
             "title": "Zero Remainder Array (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1380,7 +1380,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-qyldjv3hq",
+            "id": "z23-p-uxe5yzn5u",
             "title": "2^Sort (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1390,7 +1390,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5xmp1sy7j",
+            "id": "z23-p-2wm6pifx6",
             "title": "Tracking Segments (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -1400,7 +1400,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-t8tg05uuj",
+            "id": "z23-p-qyxdx4fza",
             "title": "Maximum Sum of Products (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -1410,7 +1410,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-xyeo1ktbo",
+            "id": "z23-p-21qiig288",
             "title": "Number of Ways (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -1432,7 +1432,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-msr0u4lsx",
+            "id": "z23-p-fuzgz5s01",
             "title": "Odd Queries (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -1442,7 +1442,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-00z3w2921",
+            "id": "z23-p-d7gceunbf",
             "title": "Three Indices (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -1452,7 +1452,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-k6dot0nbm",
+            "id": "z23-p-4nkpyjkmj",
             "title": "Progressive Square (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1462,7 +1462,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-h81lbsupl",
+            "id": "z23-p-wbg5d5naa",
             "title": "A and B and Compilation Errors (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -1472,7 +1472,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-swrpd75xu",
+            "id": "z23-p-srczmf52j",
             "title": "Eating Candies (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -1482,7 +1482,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-0r23ahenl",
+            "id": "z23-p-rnxqz4vga",
             "title": "Bad Prices (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -1492,7 +1492,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fd3973qc8",
+            "id": "z23-p-okrpf8mln",
             "title": "Dora and Search (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -1502,7 +1502,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-640f1so34",
+            "id": "z23-p-iidkufcux",
             "title": "Matryoshkas (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -1512,7 +1512,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-p6x6v53e9",
+            "id": "z23-p-e2tgad1ld",
             "title": "Box Fitting (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1522,7 +1522,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-v8n6z9gdy",
+            "id": "z23-p-qcihxx2ii",
             "title": "Karen and Coffee (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1532,7 +1532,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-kr7w13d1i",
+            "id": "z23-p-9dxgomskh",
             "title": "Phoenix and Beauty (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1542,7 +1542,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-xajhgtyv4",
+            "id": "z23-p-quj9v90b0",
             "title": "Greg and Array (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1552,7 +1552,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-4348x8ist",
+            "id": "z23-p-roufrf6i0",
             "title": "Epic Transformation (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1562,7 +1562,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-u0nmus5i6",
+            "id": "z23-p-cl78vuwul",
             "title": "Array Game (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1572,7 +1572,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-wf7s6twre",
+            "id": "z23-p-4rh0zsopx",
             "title": "Rotation Matching (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1582,7 +1582,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-th3c7fbaj",
+            "id": "z23-p-u82q09rgu",
             "title": "Little Girl and Maximum Sum (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -1592,7 +1592,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-8ytivrdna",
+            "id": "z23-p-s8gw92ody",
             "title": "Potions (Hard Version) (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -1602,7 +1602,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ejk27elfk",
+            "id": "z23-p-0pobjvdir",
             "title": "Orac and LCM (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -1612,7 +1612,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-oy8fcui9b",
+            "id": "z23-p-1zw7fyr0w",
             "title": "Constructing the Array (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -1634,7 +1634,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-qxdamxn41",
+            "id": "z23-p-72zrdj7lz",
             "title": "Legs (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1644,7 +1644,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-wlm0a7lbg",
+            "id": "z23-p-67tldo9c1",
             "title": "Can I Square? (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1654,7 +1654,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zelunncx2",
+            "id": "z23-p-q3t4vko3i",
             "title": "Square Year (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1664,7 +1664,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-owagva5wn",
+            "id": "z23-p-azqnu4oxe",
             "title": "Journey (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1674,7 +1674,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fxxgkpvuv",
+            "id": "z23-p-mp8t22mbl",
             "title": "K-divisible Sum (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1684,7 +1684,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-u52k3gw96",
+            "id": "z23-p-xxzqg0jvj",
             "title": "Different Divisors (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1694,7 +1694,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-g4obygsxp",
+            "id": "z23-p-ge24c1cdk",
             "title": "Interesting drink (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -1704,7 +1704,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-1oen8gp2r",
+            "id": "z23-p-q1qcr97tv",
             "title": "Cardboard for Pictures (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -1714,7 +1714,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ckn2go481",
+            "id": "z23-p-dv5t6b4e1",
             "title": "T-primes (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1724,7 +1724,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ula0vmpac",
+            "id": "z23-p-dqgiicko9",
             "title": "K-th Beautiful String (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1734,7 +1734,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-umikujy1a",
+            "id": "z23-p-eg0k00ue9",
             "title": "Yet Another Problem About Pairs Satisfying an Inequality (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1744,7 +1744,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-r941o5nr7",
+            "id": "z23-p-xjnp91d2g",
             "title": "Chat Ban (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1754,7 +1754,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-hovtfi5nu",
+            "id": "z23-p-lejwy9snb",
             "title": "Jumping Through Segments (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1764,7 +1764,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-273rkifwh",
+            "id": "z23-p-ci0a84a16",
             "title": "Magic Powder - 1 (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1774,7 +1774,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jquh9h3v4",
+            "id": "z23-p-de3q11u33",
             "title": "Schedule Management (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1784,7 +1784,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-gecobsnod",
+            "id": "z23-p-ww1squ933",
             "title": "Cellular Network (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -1794,7 +1794,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-feiw2xglk",
+            "id": "z23-p-blbp701pp",
             "title": "To Become Max (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -1804,7 +1804,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-22xs5p1bw",
+            "id": "z23-p-t9lqytejx",
             "title": "Meeting on the Line (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -1814,7 +1814,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-lgdv7phwr",
+            "id": "z23-p-nh42jyhz1",
             "title": "Erase and Extend (Easy Version) (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -1824,7 +1824,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-8uz8sjpus",
+            "id": "z23-p-c7mk8n0wr",
             "title": "Modified GCD (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -1834,7 +1834,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jnprblzpv",
+            "id": "z23-p-184twmo4e",
             "title": "Password (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -1844,7 +1844,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-skn43fh0a",
+            "id": "z23-p-4bu1fru45",
             "title": "Multiplication Table (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -1854,7 +1854,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-79q1npq8t",
+            "id": "z23-p-9gmrz8v6o",
             "title": "Mike and Feet (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -1864,7 +1864,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-hjqij3m1v",
+            "id": "z23-p-gsejb2r5h",
             "title": "Multiset (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -1874,7 +1874,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-4r3ekw1w4",
+            "id": "z23-p-e4t0ed3sn",
             "title": "Odd-Even Subsequence (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -1896,7 +1896,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-suspcohfk",
+            "id": "z23-p-lehzdbucd",
             "title": "ICPC Balloons (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1906,7 +1906,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zmxfb1htk",
+            "id": "z23-p-n2qwe9b3a",
             "title": "Advantage (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1916,7 +1916,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dt0pklog0",
+            "id": "z23-p-9yg71vwbo",
             "title": "Word Game (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1926,7 +1926,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-glnrsrxza",
+            "id": "z23-p-a9qo70reo",
             "title": "Remove Prefix (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1936,7 +1936,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-kqqxnd3bj",
+            "id": "z23-p-iwvmkex7b",
             "title": "Redstone? (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1946,7 +1946,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-pse1bh05n",
+            "id": "z23-p-xsni2cndh",
             "title": "Numeric String Template (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1956,7 +1956,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-uat6uxxau",
+            "id": "z23-p-kvx8onixm",
             "title": "Sereja and Suffixes (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -1966,7 +1966,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-wr0x4ebkk",
+            "id": "z23-p-zid2xt05a",
             "title": "Erase First or Second Letter (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -1976,7 +1976,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-946ztw6ll",
+            "id": "z23-p-pg0147qs7",
             "title": "Balanced Tunnel (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1986,7 +1986,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zos32ejrt",
+            "id": "z23-p-slmh4t225",
             "title": "Grouping Increases (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1996,7 +1996,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-708k7oanb",
+            "id": "z23-p-0ub8lqksi",
             "title": "Berland Regional (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2006,7 +2006,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-09m2t9kfm",
+            "id": "z23-p-210tw28y3",
             "title": "Element Extermination (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2016,7 +2016,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-htxslnwcl",
+            "id": "z23-p-8a20bck84",
             "title": "Han Solo and Lazer Gun (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2026,7 +2026,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-9ngn5429m",
+            "id": "z23-p-j8pmpc8q3",
             "title": "Journey Planning (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2036,7 +2036,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-id5wa6hpi",
+            "id": "z23-p-esso18sqt",
             "title": "Potions (Easy Version) (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -2046,7 +2046,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-gryjui4ja",
+            "id": "z23-p-iuq0x22uw",
             "title": "Data Structures Fan (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -2056,7 +2056,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-tdwv7krve",
+            "id": "z23-p-89mq0tw9i",
             "title": "Good Subarrays (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2066,7 +2066,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3pnuiybzl",
+            "id": "z23-p-hialo3uzz",
             "title": "Distinct Characters Queries (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2076,7 +2076,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ln197aluc",
+            "id": "z23-p-bi44qp8oo",
             "title": "Longest Regular Bracket Sequence (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -2098,7 +2098,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-8ev590syx",
+            "id": "z23-p-1gkzhqedz",
             "title": "Way Too Long Words (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2108,7 +2108,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3kivm3vfq",
+            "id": "z23-p-35zla3tjl",
             "title": "Word (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2118,7 +2118,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-nz46cj2x2",
+            "id": "z23-p-m75h1l9y0",
             "title": "Anton and Danik (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2128,7 +2128,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-i7d1efl10",
+            "id": "z23-p-t36jy7ago",
             "title": "Translation (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2138,7 +2138,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-609jx7mxd",
+            "id": "z23-p-ezle6o3oj",
             "title": "Pangram (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2148,7 +2148,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-uc3tuyq8t",
+            "id": "z23-p-e17kmwj6p",
             "title": "Anton and Polyhedrons (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2158,7 +2158,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-prwyf28sp",
+            "id": "z23-p-qchrz9bpg",
             "title": "Codeforces Checking (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2168,7 +2168,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-e2op8os9h",
+            "id": "z23-p-w8hayemr1",
             "title": "Dubstep (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -2178,7 +2178,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-l22vynqhc",
+            "id": "z23-p-uq67fdxg0",
             "title": "Make Them Equal (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2188,7 +2188,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-snwhlugxd",
+            "id": "z23-p-o8kxsjlc2",
             "title": "Prinzessin der Verurteilung (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2198,7 +2198,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-yf1f2m0n9",
+            "id": "z23-p-0ryu661vh",
             "title": "AccurateLee (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2208,7 +2208,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-xi7wbtsc8",
+            "id": "z23-p-rgisu1a58",
             "title": "Grandma Capa Knits a Scarf (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2218,7 +2218,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-vtntu9qf0",
+            "id": "z23-p-mcir25n5a",
             "title": "Substring and Subsequence (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2228,7 +2228,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fywvgqoyt",
+            "id": "z23-p-5og4jf227",
             "title": "Removal of Unattractive Pairs (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2238,7 +2238,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-xu9c1ibgd",
+            "id": "z23-p-d698m932x",
             "title": "Anton and currency you all know (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -2248,7 +2248,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-w1juutv9z",
+            "id": "z23-p-t39154oeq",
             "title": "Subsequence Hate (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2258,7 +2258,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-xx0arc3k4",
+            "id": "z23-p-0p02nxavl",
             "title": "Codeforces Subsequences (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -2268,7 +2268,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-krxr6kshn",
+            "id": "z23-p-7jbo79xb5",
             "title": "K-Complete Word (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -2278,7 +2278,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-h7162rg5r",
+            "id": "z23-p-r4qiifsb7",
             "title": "They Are Everywhere (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -2300,7 +2300,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-puc7z6jy4",
+            "id": "z23-p-xetwfip1t",
             "title": "Random Teams (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -2310,7 +2310,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-npgqm2ew7",
+            "id": "z23-p-pql9ceao3",
             "title": "Maximal AND (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -2320,7 +2320,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fottihr6q",
+            "id": "z23-p-7gqwblym7",
             "title": "Queue (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -2330,7 +2330,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-d045z9er2",
+            "id": "z23-p-r63g5v2xb",
             "title": "Rumor (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -2340,7 +2340,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-nl943cs48",
+            "id": "z23-p-l8f51w0wq",
             "title": "Arranging The Sheep (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2350,7 +2350,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-esncpa0lb",
+            "id": "z23-p-swsbv9gpe",
             "title": "Drazil and Factorial (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2360,7 +2360,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-rl2sf1sk8",
+            "id": "z23-p-69bouuzwd",
             "title": "Anna and the Valentine's Day Gift (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2370,7 +2370,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-y8z75hl4u",
+            "id": "z23-p-8u4s75guh",
             "title": "Regular Bracket Sequence (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2380,7 +2380,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-yy4al9aan",
+            "id": "z23-p-9xj7a6pwy",
             "title": "Product 1 Modulo N (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2390,7 +2390,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-pkggenyzk",
+            "id": "z23-p-w9nc4xnvm",
             "title": "Circle of Monsters (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2400,7 +2400,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-86g7as06k",
+            "id": "z23-p-yf88omosv",
             "title": "Multiples of Length (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2410,7 +2410,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-pwxt5aq3d",
+            "id": "z23-p-a01bjkeqa",
             "title": "Keshi Is Throwing a Party (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2420,7 +2420,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jmkx8jwjl",
+            "id": "z23-p-89jynfnkb",
             "title": "Counting Kangaroos is Fun (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2430,7 +2430,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-21zdzo9vt",
+            "id": "z23-p-o6x87szbi",
             "title": "Set or Decrease (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2440,7 +2440,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-v1de5x8ff",
+            "id": "z23-p-6adtuvql4",
             "title": "Doremy's IQ (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2450,7 +2450,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3whz4nyuy",
+            "id": "z23-p-ti0pujgt7",
             "title": "Solve The Maze (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -2460,7 +2460,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-6ytru0swg",
+            "id": "z23-p-co76yyf8e",
             "title": "Table Decorations (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -2470,7 +2470,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-9gm968mfq",
+            "id": "z23-p-k4scn9row",
             "title": "Stoned Game (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -2480,7 +2480,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-hn0rua5x5",
+            "id": "z23-p-1a5pn5wqr",
             "title": "Prefix-Suffix Palindrome (Hard version) (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -2502,7 +2502,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-ahbmfndrp",
+            "id": "z23-p-ko0lyt4uo",
             "title": "Difference of GCDs (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -2512,7 +2512,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5g8j23sjv",
+            "id": "z23-p-wk957pkwi",
             "title": "Palindrome Game (easy version) (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2522,7 +2522,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-c8ekebkhl",
+            "id": "z23-p-1ghdm4t88",
             "title": "Make Almost Equal With Mod (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2532,7 +2532,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-f1xz71wxj",
+            "id": "z23-p-4qw7ym650",
             "title": "Districts Connection (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2542,7 +2542,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-djy0wzmp8",
+            "id": "z23-p-atp1pkchp",
             "title": "Challenging Cliffs (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2552,7 +2552,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5pjw38qh7",
+            "id": "z23-p-inp20petx",
             "title": "Before an Exam (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2562,7 +2562,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5t4e5m47w",
+            "id": "z23-p-posehmcyu",
             "title": "k-LCM (easy version) (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2572,7 +2572,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zclu015v0",
+            "id": "z23-p-od74y791k",
             "title": "Anti-Sudoku (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -2582,7 +2582,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-b36zu3u6s",
+            "id": "z23-p-vzu6vamyf",
             "title": "Bracket Coloring (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2592,7 +2592,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-1dcpacebs",
+            "id": "z23-p-s2bcihrsd",
             "title": "Hossam and Friends (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2602,7 +2602,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-1e8khugey",
+            "id": "z23-p-nk3jzqp9o",
             "title": "Team (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2612,7 +2612,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-u2ov5zx0h",
+            "id": "z23-p-3f9r2yzy1",
             "title": "Find The Array (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2622,7 +2622,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-yq1luxkor",
+            "id": "z23-p-761h3gj5n",
             "title": "AND Sequences (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2632,7 +2632,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-s87l0acme",
+            "id": "z23-p-8ior408z4",
             "title": "Plus and Multiply (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -2642,7 +2642,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-9vbuhlbjb",
+            "id": "z23-p-wb3nq0x0s",
             "title": "Factorials and Powers of Two (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -2652,7 +2652,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-v1eella2r",
+            "id": "z23-p-jtv9y4n7s",
             "title": "Special Permutation (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2662,7 +2662,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-w06noc6ez",
+            "id": "z23-p-6wr0h48m7",
             "title": "Another Problem About Dividing Numbers (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -2672,7 +2672,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-an7s1rff1",
+            "id": "z23-p-yakn9unk3",
             "title": "Prefix Flip (Hard Version) (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -2682,7 +2682,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-b0o0ssohb",
+            "id": "z23-p-pxse1h886",
             "title": "Baby Ehab Partitions Again (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -2692,7 +2692,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-v4dqgnqe5",
+            "id": "z23-p-u70e1cdri",
             "title": "Array Destruction (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -2702,7 +2702,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-v79kyzeaq",
+            "id": "z23-p-432xvtlxi",
             "title": "Soldier and Number Game (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -2712,7 +2712,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-kwi8itre7",
+            "id": "z23-p-d38myzrp6",
             "title": "Ehab the Xorcist (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -2722,7 +2722,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-re9bwj6pu",
+            "id": "z23-p-rmc5tng42",
             "title": "Bits (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -2732,7 +2732,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-45foak4ut",
+            "id": "z23-p-ikb43x441",
             "title": "Carousel (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -2742,7 +2742,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fzbsic1m4",
+            "id": "z23-p-qm5j5p1dm",
             "title": "Replace by MEX (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -2752,7 +2752,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-rbhr4wezo",
+            "id": "z23-p-dn7xp6zu8",
             "title": "Two Divisors (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -2762,7 +2762,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-n4fhlsimj",
+            "id": "z23-p-gobjft0c8",
             "title": "Engineer Artem (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -2784,7 +2784,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-2yenttrmv",
+            "id": "z23-p-ymwg7h3d5",
             "title": "Game with Integers (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2794,7 +2794,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-obw1qhm4j",
+            "id": "z23-p-40ortencv",
             "title": "Again Twenty Five! (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2804,7 +2804,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-lrn8wk5qo",
+            "id": "z23-p-1lmf06k9a",
             "title": "Design Tutorial: Learn from Math (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2814,7 +2814,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-905ubwp1j",
+            "id": "z23-p-k0jxrv54p",
             "title": "Maximum GCD (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2824,7 +2824,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zemyllp2b",
+            "id": "z23-p-vimz7mpek",
             "title": "United We Stand (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2834,7 +2834,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ty5m235tt",
+            "id": "z23-p-9jgvhru50",
             "title": "Bachgold Problem (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2844,7 +2844,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7r3ednb2i",
+            "id": "z23-p-ddcteqjke",
             "title": "Odd Divisor (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -2854,7 +2854,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-cd3852m5z",
+            "id": "z23-p-0u7pzgolt",
             "title": "Ilya and Bank Account (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -2864,7 +2864,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-nc79wg4tx",
+            "id": "z23-p-vw0yui6zr",
             "title": "Buying Shovels (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -2874,7 +2874,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ry7gn5erx",
+            "id": "z23-p-16ycz37x7",
             "title": "Divisible Pairs (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -2884,7 +2884,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-9iqnma10s",
+            "id": "z23-p-qzpn1nla2",
             "title": "Divide and Equalize (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -2894,7 +2894,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-loqnusbu8",
+            "id": "z23-p-aupxx8i4d",
             "title": "Mere Array (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -2904,7 +2904,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-yr47tvkxb",
+            "id": "z23-p-3harxpp3x",
             "title": "I Hate 1111 (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2914,7 +2914,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-qyqa3w8f3",
+            "id": "z23-p-qf7g6x1ap",
             "title": "Orac and Models (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2924,7 +2924,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-035s9y5i9",
+            "id": "z23-p-253t1ile5",
             "title": "Mashmokh and ACM (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2934,7 +2934,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-75t6rd3j8",
+            "id": "z23-p-0sxff9wod",
             "title": "Number Game (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2944,7 +2944,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-tamsyps9c",
+            "id": "z23-p-47j242la8",
             "title": "Row GCD (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2954,7 +2954,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dceccxhh2",
+            "id": "z23-p-avkt8wgnv",
             "title": "LCM Challenge (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2964,7 +2964,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-gjg46fyol",
+            "id": "z23-p-hwzqn3j40",
             "title": "Partitioning the Array (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2986,7 +2986,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-ktkd7llxc",
+            "id": "z23-p-5f8oellal",
             "title": "Pasha and Stick (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -2996,7 +2996,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5n327nki5",
+            "id": "z23-p-rzfybyvdi",
             "title": "Counting Orders (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -3006,7 +3006,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-lxx7h6d8m",
+            "id": "z23-p-306xjf13l",
             "title": "Lucky Numbers (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -3016,7 +3016,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-oz6dk1ycr",
+            "id": "z23-p-889emvk25",
             "title": "Tavas and SaDDas (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -3026,7 +3026,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fboa8zcsu",
+            "id": "z23-p-dd4tkpk1w",
             "title": "AND 0, Sum Big (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -3036,7 +3036,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-cegyx9lvf",
+            "id": "z23-p-rehcark9l",
             "title": "Yet Another Broken Keyboard (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -3046,7 +3046,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ybjuzp40n",
+            "id": "z23-p-p05m7un77",
             "title": "Dreamoon and WiFi (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -3056,7 +3056,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-f6vg4phn3",
+            "id": "z23-p-irxltnpk7",
             "title": "Make it Alternating (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -3066,7 +3066,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-1htbdjyqr",
+            "id": "z23-p-hnvrqts6c",
             "title": "Ball in Berland (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3076,7 +3076,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dueg4pzah",
+            "id": "z23-p-clwhlwl4n",
             "title": "Weird Sum (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3086,7 +3086,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-t8bf4rplq",
+            "id": "z23-p-xrse49l7t",
             "title": "The Number of Products (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3096,7 +3096,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-gdwjndaxi",
+            "id": "z23-p-jh8ygnmyk",
             "title": "Beautiful Triple Pairs (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3106,7 +3106,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-uwrn1fgur",
+            "id": "z23-p-e48947v98",
             "title": "Fun (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3116,7 +3116,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fpobm4vpm",
+            "id": "z23-p-501hxkfxf",
             "title": "Running for Gold (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3126,7 +3126,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dafvxnhy7",
+            "id": "z23-p-yue4x351x",
             "title": "Kuroni and Impossible Calculation (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -3136,7 +3136,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-bferufw48",
+            "id": "z23-p-14bxiokjm",
             "title": "Advertising Agency (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -3146,7 +3146,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-tey82luny",
+            "id": "z23-p-2g7hpn6su",
             "title": "Chat Screenshots (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -3156,7 +3156,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-mpplwcbef",
+            "id": "z23-p-tt2qweutd",
             "title": "Modulo Sum (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -3166,7 +3166,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-z90g9cauu",
+            "id": "z23-p-vbt0d8wjd",
             "title": "Classy Numbers (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -3188,7 +3188,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-wgaco1154",
+            "id": "z23-p-kmpck10u2",
             "title": "Odd One Out (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -3198,7 +3198,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-38q5fiu0v",
+            "id": "z23-p-rpdnls5k4",
             "title": "Not Quite Latin Square (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -3208,7 +3208,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-nevwxtu67",
+            "id": "z23-p-d8vvvuqe2",
             "title": "We Need the Zero (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -3218,7 +3218,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-4gps9d21z",
+            "id": "z23-p-8iwu5ikil",
             "title": "And Then There Were K (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -3228,7 +3228,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-x137zo47z",
+            "id": "z23-p-qks1bogji",
             "title": "Sum in Binary Tree (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -3238,7 +3238,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-suvr09han",
+            "id": "z23-p-ytcykd1cg",
             "title": "Mocha and Math (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -3248,7 +3248,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-good38izk",
+            "id": "z23-p-h6wt49v3n",
             "title": "Raising Bacteria (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -3258,7 +3258,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-yaqsbexts",
+            "id": "z23-p-ekxwi6yss",
             "title": "Rock and Lever (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -3268,7 +3268,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-pklzx5zba",
+            "id": "z23-p-x73coux5b",
             "title": "Johnny and Another Rating Drop (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3278,7 +3278,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jcpoyv2o2",
+            "id": "z23-p-yczl8oslf",
             "title": "Fortune Telling (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3288,7 +3288,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-xv18nnkm9",
+            "id": "z23-p-p001w1l5q",
             "title": "Iva & Pav (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3298,7 +3298,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fjhctv1kx",
+            "id": "z23-p-osatoyijy",
             "title": "Powers Of Two (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3308,7 +3308,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-k8vnu5o0q",
+            "id": "z23-p-yhue8aito",
             "title": "Bitwise Balancing (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3318,7 +3318,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dt39iib0z",
+            "id": "z23-p-x8pflbhvm",
             "title": "Adding Powers (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3328,7 +3328,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ykhuxmlms",
+            "id": "z23-p-8q7db95hp",
             "title": "Vlad and a Pair of Numbers (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3338,7 +3338,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-hknk5hta3",
+            "id": "z23-p-m2ij85722",
             "title": "XOR-distance (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3348,7 +3348,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ux4l5kfup",
+            "id": "z23-p-pnvyot9vp",
             "title": "AND, OR and square sum (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -3358,7 +3358,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-v3v3mri6s",
+            "id": "z23-p-mqxcr90r1",
             "title": "Cobb (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -3368,7 +3368,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dff2p397i",
+            "id": "z23-p-ofsh5sw9j",
             "title": "Vasiliy's Multiset (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -3390,7 +3390,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-wv2ztwjne",
+            "id": "z23-p-vym62oth6",
             "title": "Gold Rush (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -3400,7 +3400,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-raj6uolgi",
+            "id": "z23-p-jsvxw8d9h",
             "title": "Badge (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -3410,7 +3410,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-gbjmn1e2i",
+            "id": "z23-p-kwvejfme6",
             "title": "XOR and Triangle (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -3420,7 +3420,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-t35vyo3p9",
+            "id": "z23-p-gzjmdz80g",
             "title": "Petr and a Combination Lock (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -3430,7 +3430,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-iwajg84jb",
+            "id": "z23-p-319d3qm0h",
             "title": "Ice Skating (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -3440,7 +3440,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-e35kcut5m",
+            "id": "z23-p-rziqgcri0",
             "title": "Secret Box (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -3450,7 +3450,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-rweezln4e",
+            "id": "z23-p-8xx8ckqaw",
             "title": "Johnny and His Hobbies (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -3460,7 +3460,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ql1jym8pj",
+            "id": "z23-p-e9vrh8w7e",
             "title": "Arrow Path (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -3470,7 +3470,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ybthcdfjd",
+            "id": "z23-p-6tn2xzbhw",
             "title": "AGAGA XOOORRR (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3480,7 +3480,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-xjtb86gqe",
+            "id": "z23-p-9fphdlr1e",
             "title": "a-Good String (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3490,7 +3490,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-9jqxxpxnc",
+            "id": "z23-p-2mdgmi1e5",
             "title": "Unforgivable Curse (hard version) (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3500,7 +3500,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-27tm07r8g",
+            "id": "z23-p-1se902ggr",
             "title": "Minimum Ties (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3510,7 +3510,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jjvgmm1yv",
+            "id": "z23-p-g0k2ghfn8",
             "title": "Good Triples (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -3520,7 +3520,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-sozaskubn",
+            "id": "z23-p-snefrrbty",
             "title": "Boboniu and Bit Operations (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -3530,7 +3530,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3atryeshv",
+            "id": "z23-p-w6og5buhg",
             "title": "Remove Exactly Two (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -3540,7 +3540,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ux94vi4aj",
+            "id": "z23-p-4iko1ugu3",
             "title": "Gardener and Tree (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -3550,7 +3550,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-vp7ndmngq",
+            "id": "z23-p-czs0hf2tu",
             "title": "Beautiful Numbers (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -3560,7 +3560,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-d4wdqcddk",
+            "id": "z23-p-hm9tqhh6l",
             "title": "Zigzags (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -3570,7 +3570,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zgze1w5ia",
+            "id": "z23-p-cj50xqzb7",
             "title": "Dr. Evil Underscores (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -3592,7 +3592,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-zzkwv0ehs",
+            "id": "z23-p-arvzvbf62",
             "title": "Kefa and First Steps (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -3602,7 +3602,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7vxivkmmr",
+            "id": "z23-p-5need3cw3",
             "title": "New Year's Number (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -3612,7 +3612,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5n8690647",
+            "id": "z23-p-d0zrs9l00",
             "title": "Raspberries (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -3622,7 +3622,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3r778f6m7",
+            "id": "z23-p-6qchiljxv",
             "title": "Fence (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -3632,7 +3632,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-uaxtu4ybf",
+            "id": "z23-p-fwvgzkvle",
             "title": "Ilya and Queries (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -3642,7 +3642,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-iu4vi82k1",
+            "id": "z23-p-1ti1lxenn",
             "title": "Negatives and Positives (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -3652,7 +3652,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ijwt9oatu",
+            "id": "z23-p-l8uol8cj7",
             "title": "Kuriyama Mirai's Stones (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -3662,7 +3662,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jnxzbyxx5",
+            "id": "z23-p-w9fal4585",
             "title": "Flipping Game (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -3672,7 +3672,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-8xjxv8yr6",
+            "id": "z23-p-bcoq0kypf",
             "title": "Cut Ribbon (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -3682,7 +3682,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dcyjtdzfo",
+            "id": "z23-p-y5ewboohf",
             "title": "Just Eat It! (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -3692,7 +3692,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-s5sitjt4s",
+            "id": "z23-p-tfeonmxyq",
             "title": "Given Length and Sum of Digits... (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3702,7 +3702,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-76j5mr85s",
+            "id": "z23-p-vg97uiusx",
             "title": "Vacations (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3712,7 +3712,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7w93upxrt",
+            "id": "z23-p-hr1q03acf",
             "title": "Basketball Exercise (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3722,7 +3722,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-tmm19m6ry",
+            "id": "z23-p-rwump7fg2",
             "title": "Boredom (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3732,7 +3732,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7t9n3yfxg",
+            "id": "z23-p-sfzq35qxc",
             "title": "Two Substrings (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3742,7 +3742,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7qj4p95kv",
+            "id": "z23-p-0o8uuj4jw",
             "title": "Woodcutters (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3752,7 +3752,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zjmqo5qo5",
+            "id": "z23-p-8v2jdsj9o",
             "title": "Divisibility by Eight (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3762,7 +3762,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-oog7y9zj3",
+            "id": "z23-p-wk7mtsqaq",
             "title": "Mortal Kombat Tower (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3772,7 +3772,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zrim4wft0",
+            "id": "z23-p-23uefjabr",
             "title": "Array Walk (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -3782,7 +3782,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-c5gvgs43z",
+            "id": "z23-p-m3lsnedes",
             "title": "Hard problem (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -3792,7 +3792,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-vnfrt0ulv",
+            "id": "z23-p-xavsqoanu",
             "title": "Make Them Equal (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -3802,7 +3802,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-j641t133o",
+            "id": "z23-p-1vcfqkqi2",
             "title": "Sending a Sequence Over the Network (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -3812,7 +3812,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-css8kwvg5",
+            "id": "z23-p-ogmmp6nrx",
             "title": "Flowers (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -3822,7 +3822,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-0h111xleh",
+            "id": "z23-p-ibbpdq35q",
             "title": "Consecutive Subsequence (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -3832,7 +3832,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-56wm3pocn",
+            "id": "z23-p-zxuw1595o",
             "title": "Caesar's Legions (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -3842,7 +3842,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-j6golv5lm",
+            "id": "z23-p-suctbyutg",
             "title": "Greg and Graph (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -3852,7 +3852,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-nk9axjxzh",
+            "id": "z23-p-x0dngfop2",
             "title": "The Sports Festival (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -3862,7 +3862,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ts660q879",
+            "id": "z23-p-x4eujjakv",
             "title": "Zuma (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -3872,7 +3872,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-rgmw25wc1",
+            "id": "z23-p-pfl7a8q2l",
             "title": "The least round way (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -3894,7 +3894,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-m4h8cgs1f",
+            "id": "z23-p-6fw923lik",
             "title": "New Year Transportation (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -3904,7 +3904,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-v5j12mm3b",
+            "id": "z23-p-256nc93ca",
             "title": "Frog Jumps (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -3914,7 +3914,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-k3iuct5t7",
+            "id": "z23-p-y3ftqv4z2",
             "title": "The Lakes (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -3924,7 +3924,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ua7wwpj5c",
+            "id": "z23-p-am3lo2tid",
             "title": "DZY Loves Chessboard (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -3934,7 +3934,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ougd8cj97",
+            "id": "z23-p-ey2rvybla",
             "title": "Fall Down (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -3944,7 +3944,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-oma3uwvea",
+            "id": "z23-p-lu06ve0rl",
             "title": "Forever Winter (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -3954,7 +3954,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-4980rs43z",
+            "id": "z23-p-p9h01xd8t",
             "title": "News Distribution (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3964,7 +3964,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-v31umti4o",
+            "id": "z23-p-bpngfpyr3",
             "title": "Learning Languages (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3974,7 +3974,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-0uduro0fg",
+            "id": "z23-p-odwb3w8j6",
             "title": "Cyclic Components (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3984,7 +3984,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fpu38mg42",
+            "id": "z23-p-iqjlaoelk",
             "title": "Lunar New Year and a Wander (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3994,7 +3994,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-iu4a7kku3",
+            "id": "z23-p-zo9nm9kn1",
             "title": "Binary String Reconstruction (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4004,7 +4004,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-pz7qht2gf",
+            "id": "z23-p-h57r7af38",
             "title": "Bear and Friendship Condition (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4014,7 +4014,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zn1glupxd",
+            "id": "z23-p-5mpmn748v",
             "title": "Maze (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -4024,7 +4024,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-d41a09bpd",
+            "id": "z23-p-35yitzd54",
             "title": "Round Dance (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -4034,7 +4034,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7t062k67g",
+            "id": "z23-p-toaixstrz",
             "title": "Split Into Two Sets (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -4044,7 +4044,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dcxvg3b1c",
+            "id": "z23-p-n233fum3y",
             "title": "Checkposts (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4054,7 +4054,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3xa178u1f",
+            "id": "z23-p-9d48tb76s",
             "title": "King's Path (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -4064,7 +4064,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-vf5obc49o",
+            "id": "z23-p-sjp0ygzri",
             "title": "0-1 MST (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4074,7 +4074,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-f1l7r1k7i",
+            "id": "z23-p-5uvhrpaz4",
             "title": "Directing Edges (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -4096,7 +4096,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-q2onifxsu",
+            "id": "z23-p-mx8rxlvki",
             "title": "Begginer's Zelda (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -4106,7 +4106,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-1j5zt3mpg",
+            "id": "z23-p-akju7orev",
             "title": "Christmas Spruce (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -4116,7 +4116,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-8ea6yn4uc",
+            "id": "z23-p-hfg09ouhj",
             "title": "Strong Vertices (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -4126,7 +4126,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-eyw6l5tdf",
+            "id": "z23-p-vagh5t64u",
             "title": "Mahmoud and Ehab and the bipartiteness (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -4136,7 +4136,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-75zx77jfa",
+            "id": "z23-p-5iw081p2z",
             "title": "Masha and a Beautiful Tree (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -4146,7 +4146,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-iepoh6w2w",
+            "id": "z23-p-7dda22zla",
             "title": "Queen (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -4156,7 +4156,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-xmem5q4kb",
+            "id": "z23-p-rq6c89iuq",
             "title": "Kefa and Park (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4166,7 +4166,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-f7yrz8mxa",
+            "id": "z23-p-bw46bh7lb",
             "title": "Ehab and Path-etic MEXs (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4176,7 +4176,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-l3wf6nk5r",
+            "id": "z23-p-2j3cnj1ce",
             "title": "Game On Leaves (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -4186,7 +4186,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-nnirk1sa7",
+            "id": "z23-p-enc0gcd3f",
             "title": "Minimal Height Tree (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -4196,7 +4196,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-wjognaj1m",
+            "id": "z23-p-nva87atp2",
             "title": "Valera and Elections (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -4206,7 +4206,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-x11ussiyp",
+            "id": "z23-p-dzawtif3o",
             "title": "Military Problem (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -4216,7 +4216,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-4h7wo97gx",
+            "id": "z23-p-al72wntwm",
             "title": "Valid BFS? (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4226,7 +4226,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-6hpl6y1tz",
+            "id": "z23-p-l3ye73bi9",
             "title": "Cover it! (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4236,7 +4236,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ixifj17qt",
+            "id": "z23-p-nxue9x924",
             "title": "Link Cut Centroids (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4246,7 +4246,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-nudyj3t1r",
+            "id": "z23-p-zzu7485q5",
             "title": "0, 1, 2, Tree! (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4256,7 +4256,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-4mv0pvmvq",
+            "id": "z23-p-h1kpbcl27",
             "title": "Uncle Bogdan and Country Happiness (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -4266,7 +4266,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dmxas4pxy",
+            "id": "z23-p-7wzjx8n5l",
             "title": "Roads not only in Berland (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4276,7 +4276,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-kbdp1iyed",
+            "id": "z23-p-upmgucyn8",
             "title": "Tree Queries (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4298,7 +4298,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-esa96c03g",
+            "id": "z23-p-sd4s1wfzv",
             "title": "Double Perspective (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -4308,7 +4308,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-rsw3a1kms",
+            "id": "z23-p-bd9ypc7ca",
             "title": "Books Exchange (hard version) (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -4318,7 +4318,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-brspochsp",
+            "id": "z23-p-0cyw2uolh",
             "title": "Kousuke's Assignment (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -4328,7 +4328,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-0p0vw6lvh",
+            "id": "z23-p-rtpe50usr",
             "title": "Disappearing Permutation (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -4338,7 +4338,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-f2odozd6q",
+            "id": "z23-p-dmxyr93bi",
             "title": "Mocha and Diana (Easy Version) (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -4348,7 +4348,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fbhnbxhwn",
+            "id": "z23-p-ol15vwja0",
             "title": "Edgy Trees (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4358,7 +4358,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7wzf7vlus",
+            "id": "z23-p-map7sjstj",
             "title": "Knight Tournament (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4368,7 +4368,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-xj069bw60",
+            "id": "z23-p-kvnvgehsa",
             "title": "Secret Passwords (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4378,7 +4378,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jmzmhzrcb",
+            "id": "z23-p-fr2pem30d",
             "title": "Path Queries (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -4388,7 +4388,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-yon9aockn",
+            "id": "z23-p-k9zgbw6np",
             "title": "Rating System (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -4398,7 +4398,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-2djpbzbpx",
+            "id": "z23-p-obi409z51",
             "title": "Andrey and Escape from Capygrad (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -4408,7 +4408,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ee4zh78zo",
+            "id": "z23-p-79jnbjwt1",
             "title": "Shichikuji and Power Grid (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4418,7 +4418,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-h79kt4b3y",
+            "id": "z23-p-j5u8ryvwx",
             "title": "Replace the Numbers (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4428,7 +4428,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-milm836rw",
+            "id": "z23-p-eeupzumit",
             "title": "MinOr Tree (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4438,7 +4438,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-pskh783qx",
+            "id": "z23-p-a4zl8s99k",
             "title": "Make It Connected (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4448,7 +4448,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-nsbluxwjx",
+            "id": "z23-p-mylqkwf2x",
             "title": "SUM and REPLACE (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -4458,7 +4458,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-6bsbsvluo",
+            "id": "z23-p-c23ohlbs6",
             "title": "Minimum spanning tree for each edge (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -4468,7 +4468,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5vfvej3l7",
+            "id": "z23-p-oqbw39m7c",
             "title": "Lomsat gelral (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -4478,7 +4478,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-d89z24dbh",
+            "id": "z23-p-mzsyhu2di",
             "title": "Dominant Indices (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -4500,7 +4500,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-tk4akzik3",
+            "id": "z23-p-4znw20wta",
             "title": "Great Graphs (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -4510,7 +4510,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fy2lqhg3s",
+            "id": "z23-p-jzr1aiia2",
             "title": "Eastern Exhibition (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4520,7 +4520,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-cs1z2j4hh",
+            "id": "z23-p-h05nkodbb",
             "title": "Did We Get Everything Covered? (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4530,7 +4530,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-08jjpxsa8",
+            "id": "z23-p-y2cr00rqk",
             "title": "Air Conditioners (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4540,7 +4540,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-161nivyqp",
+            "id": "z23-p-6tocuvz8f",
             "title": "The Two Routes (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -4550,7 +4550,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-qs9jfq8dl",
+            "id": "z23-p-d6ecysp8b",
             "title": "Colored Portals (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -4560,7 +4560,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-59v2n6b8d",
+            "id": "z23-p-f7q0f7f4a",
             "title": "Zero Path (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4570,7 +4570,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-1rdb5bd14",
+            "id": "z23-p-fcgat3jwx",
             "title": "Igor In the Museum (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4580,7 +4580,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-9oqen0ul7",
+            "id": "z23-p-s2mt86dvg",
             "title": "Dijkstra? (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4590,7 +4590,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-mrg3zq1lx",
+            "id": "z23-p-ojsx30bfd",
             "title": "Roads in Berland (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4600,7 +4600,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-4wnye5c5p",
+            "id": "z23-p-r9cgsknhg",
             "title": "Nearest Opposite Parity (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4610,7 +4610,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-x9w8vvjrl",
+            "id": "z23-p-2o1lhlpjo",
             "title": "Shortest Cycle (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4620,7 +4620,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-k0t9vsl82",
+            "id": "z23-p-1e1hpuex3",
             "title": "Cow and Fields (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4630,7 +4630,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ec0b2ij74",
+            "id": "z23-p-9x2b04wvz",
             "title": "Jzzhu and Cities (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -4640,7 +4640,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7a9rql3sm",
+            "id": "z23-p-y8iwkatru",
             "title": "Buy a Ticket (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -4650,7 +4650,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-qp8w2drfu",
+            "id": "z23-p-c9dscxnae",
             "title": "Police Stations (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -4660,7 +4660,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-u85zh0xos",
+            "id": "z23-p-076f7zndf",
             "title": "Legacy (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -4670,7 +4670,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-kuwd7k2cy",
+            "id": "z23-p-bsnk4tgfd",
             "title": "Minimum Path (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -4680,7 +4680,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-b998l89ob",
+            "id": "z23-p-a46cjkj1m",
             "title": "The Shortest Statement (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -4702,7 +4702,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-24hwks02m",
+            "id": "z23-p-17tohcfrr",
             "title": "Journey (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4712,7 +4712,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-il47u74a8",
+            "id": "z23-p-0j16vprd2",
             "title": "NP-Hard Problem (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4722,7 +4722,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dyisbydia",
+            "id": "z23-p-shdps2vij",
             "title": "Cut 'em all! (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4732,7 +4732,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-84h53eonj",
+            "id": "z23-p-k9dlme5wt",
             "title": "Add Zeros (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4742,7 +4742,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-qj2htxx04",
+            "id": "z23-p-4roa8khfl",
             "title": "Nastya and Potions (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4752,7 +4752,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-o0gsr85mb",
+            "id": "z23-p-5tpqqnwxr",
             "title": "Graph Without Long Directed Paths (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4762,7 +4762,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5uxgnydsn",
+            "id": "z23-p-uuljfsi2x",
             "title": "Choosing Capital for Treeland (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4772,7 +4772,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-squrc5tmw",
+            "id": "z23-p-70ah4tke1",
             "title": "Maximum White Subtree (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -4782,7 +4782,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-offn5fqv7",
+            "id": "z23-p-djm0gpe91",
             "title": "Bertown roads (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -4792,7 +4792,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-mig6t44k5",
+            "id": "z23-p-visvwtk7s",
             "title": "Reachability from the Capital (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -4802,7 +4802,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-64vjw2ubv",
+            "id": "z23-p-jloc45hu0",
             "title": "Captain Flint and Treasure (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -4812,7 +4812,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-0j2ulfbme",
+            "id": "z23-p-dl5v161pj",
             "title": "Number of Simple Paths (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -4822,7 +4822,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-mrn8emmjf",
+            "id": "z23-p-v9r3l4d0w",
             "title": "Connected Components? (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -4832,7 +4832,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7pu2u3tyv",
+            "id": "z23-p-n1v1utxz4",
             "title": "Water Tree (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -4842,7 +4842,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-155sw2heu",
+            "id": "z23-p-ymvzpznb1",
             "title": "We Need More Bosses (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -4852,7 +4852,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jrhwyegua",
+            "id": "z23-p-d68deliro",
             "title": "Tree Requests (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -4862,7 +4862,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-amfrdr2q1",
+            "id": "z23-p-unrjw6t1k",
             "title": "Centroids (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -4872,7 +4872,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-itqp4jt6l",
+            "id": "z23-p-gwio36st5",
             "title": "Journey (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -4882,7 +4882,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-gxsri3mmn",
+            "id": "z23-p-tz0z4ybdk",
             "title": "Minimal Labels (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -4904,7 +4904,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-g5vi1zmr1",
+            "id": "z23-p-obg59p9ed",
             "title": "Neo's Escape (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4914,7 +4914,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ihixxcgm1",
+            "id": "z23-p-019dc5dra",
             "title": "Graph Composition (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4924,7 +4924,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ei3l32tpi",
+            "id": "z23-p-ttls7okvz",
             "title": "Cthulhu (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4934,7 +4934,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7md6ta9vq",
+            "id": "z23-p-ue4qbyxd3",
             "title": "Timofey and a tree (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -4944,7 +4944,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-t0jfcvjgt",
+            "id": "z23-p-pbca9z8ay",
             "title": "String Transformation 1 (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4954,7 +4954,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-gmrz5s3kf",
+            "id": "z23-p-sx036t7k8",
             "title": "Cow and Snacks (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4964,7 +4964,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ai534nr8i",
+            "id": "z23-p-ez8zg8ytr",
             "title": "Harmonious Graph (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4974,7 +4974,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ndzzamqx7",
+            "id": "z23-p-ioe7aayqi",
             "title": "The Third Letter (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4984,7 +4984,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-sfyosbp1j",
+            "id": "z23-p-gn53i1djt",
             "title": "GCD and MST (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -4994,7 +4994,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-6uhgke6kp",
+            "id": "z23-p-1cf8dleu1",
             "title": "The Door Problem (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5004,7 +5004,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7borlnyow",
+            "id": "z23-p-9nz0orsap",
             "title": "Monopole Magnets (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5014,7 +5014,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-9j2oc53gr",
+            "id": "z23-p-hgx2qvusf",
             "title": "By the Assignment (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5024,7 +5024,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-epezoqxab",
+            "id": "z23-p-oi92j3jm1",
             "title": "Counting Graphs (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5034,7 +5034,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-nxs46ve6q",
+            "id": "z23-p-j1esr1pr6",
             "title": "Count Paths (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5044,7 +5044,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ktxlnztyh",
+            "id": "z23-p-3dzxytahf",
             "title": "Edges in MST (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -5054,7 +5054,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7rxy7hl0s",
+            "id": "z23-p-tddf1xxzu",
             "title": "Imbalance Value of a Tree (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -5064,7 +5064,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-mcz2wg0ak",
+            "id": "z23-p-auhwperdt",
             "title": "Mocha and Diana (Hard Version) (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -5086,7 +5086,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-vwqut9las",
+            "id": "z23-p-6yd6i2p0v",
             "title": "Greetings (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -5096,7 +5096,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-9n0wp93xd",
+            "id": "z23-p-xcj3rhe0p",
             "title": "Final Boss (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -5106,7 +5106,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zd7djw18p",
+            "id": "z23-p-bl3mzzgqy",
             "title": "Binary String To Subsequences (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -5116,7 +5116,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-kzof12jrc",
+            "id": "z23-p-iyvk0wisv",
             "title": "Tea Tasting (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -5126,7 +5126,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ggvkn9rcl",
+            "id": "z23-p-vze49l6j7",
             "title": "Equalize the Array (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -5136,7 +5136,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-0sxfgr5c0",
+            "id": "z23-p-uhzvpyck7",
             "title": "Non-zero Segments (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -5146,7 +5146,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-4707tcopd",
+            "id": "z23-p-n99jz8ito",
             "title": "Maximum width (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -5156,7 +5156,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ybghw09mh",
+            "id": "z23-p-smprroiop",
             "title": "k-Amazing Numbers (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -5166,7 +5166,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ord3lo9xi",
+            "id": "z23-p-0wkqar69c",
             "title": "Alternating Current (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5176,7 +5176,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-4o0uhezbj",
+            "id": "z23-p-7grc1pljo",
             "title": "Xenia and Bit Operations (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -5186,7 +5186,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-11i8539oh",
+            "id": "z23-p-kiz4pisrf",
             "title": "Sereja and Brackets (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5196,7 +5196,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-tzcnb405s",
+            "id": "z23-p-t2zj3d56x",
             "title": "XOR on Segment (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5206,7 +5206,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-2pylccl7c",
+            "id": "z23-p-gvxf21d4a",
             "title": "Yet Another Yet Another Task (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5216,7 +5216,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-v9yj9k16q",
+            "id": "z23-p-rrtj5mc1w",
             "title": "Ant colony (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -5226,7 +5226,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-0k6b1vo82",
+            "id": "z23-p-mojxegbnh",
             "title": "Max Median (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -5236,7 +5236,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3seny2efc",
+            "id": "z23-p-b7abq9xc3",
             "title": "Powerful array (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -5246,7 +5246,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dg3nohn69",
+            "id": "z23-p-f868zdxzv",
             "title": "Circular RMQ (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -5256,7 +5256,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-gwt8rkp4v",
+            "id": "z23-p-7520rcizk",
             "title": "XOR and Favorite Number (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -5266,7 +5266,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jbjtfx60a",
+            "id": "z23-p-wl8b37y53",
             "title": "The Child and Sequence (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -5276,7 +5276,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ag9dqjh5w",
+            "id": "z23-p-9qco15i4g",
             "title": "Xenia and Tree (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -5286,7 +5286,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-d14iux9hl",
+            "id": "z23-p-vjl2damdr",
             "title": "Tree and Queries (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -5308,7 +5308,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-tyuebwck7",
+            "id": "z23-p-wvhhe7731",
             "title": "Little Girl and Maximum XOR (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -5318,7 +5318,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-bfigaep25",
+            "id": "z23-p-yyysge6r7",
             "title": "Spy-string (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -5328,7 +5328,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-evziga2ez",
+            "id": "z23-p-3rg06x8ld",
             "title": "Don't Blame Me (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -5338,7 +5338,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-4b8pjun49",
+            "id": "z23-p-0wotk7i1g",
             "title": "Sum of XOR Functions (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -5348,7 +5348,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-tbmu6jui5",
+            "id": "z23-p-nwvwbocfh",
             "title": "Moamen and XOR (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -5358,7 +5358,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5c8c6ad47",
+            "id": "z23-p-b8mr1fn2j",
             "title": "Distance in Tree (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -5368,7 +5368,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-oquzv8ch1",
+            "id": "z23-p-0sil23fy3",
             "title": "Kefa and Dishes (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -5378,7 +5378,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-pvzwrl74d",
+            "id": "z23-p-kwm4hpxr3",
             "title": "Tree with Maximum Cost (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -5388,7 +5388,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-pv65n6u9y",
+            "id": "z23-p-rku34ezaq",
             "title": "Minimax Problem (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5398,7 +5398,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-t10y3g9hd",
+            "id": "z23-p-tvlnjh3br",
             "title": "Square Subsets (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5408,7 +5408,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-aj3kkvz2f",
+            "id": "z23-p-6ycnrsiwp",
             "title": "Tree Shuffling (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5418,7 +5418,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ssbuhkjfs",
+            "id": "z23-p-96bi5yvp0",
             "title": "Appleman and Tree (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5428,7 +5428,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5hv6dhy51",
+            "id": "z23-p-aon838p3p",
             "title": "Tree Painting (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -5438,7 +5438,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jskgkawv6",
+            "id": "z23-p-fxu9u3fsb",
             "title": "A and B and Lecture Rooms (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -5448,7 +5448,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3pu0rmxx7",
+            "id": "z23-p-glhuu4gg1",
             "title": "Xor-Paths (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -5458,7 +5458,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-t99p8yttc",
+            "id": "z23-p-o8q4f6ez9",
             "title": "Compatible Numbers (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -5468,7 +5468,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dwr7p8anf",
+            "id": "z23-p-zfptdm4km",
             "title": "Team Building (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -5478,7 +5478,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-pva3vt1ck",
+            "id": "z23-p-pddcof185",
             "title": "Segment Sum (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -5488,7 +5488,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-8255am4ec",
+            "id": "z23-p-7gwhraqfg",
             "title": "Jzzhu and Numbers (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -5510,7 +5510,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-2oggiml2p",
+            "id": "z23-p-f60iwp8uh",
             "title": "Two Arrays (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5520,7 +5520,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-y74jxxdt0",
+            "id": "z23-p-s6n31ppvs",
             "title": "Triangle Coloring (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5530,7 +5530,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-f3svedxyj",
+            "id": "z23-p-w2h0kxny5",
             "title": "Ciel and Flowers (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5540,7 +5540,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-f4m4gvw00",
+            "id": "z23-p-owqfwl2id",
             "title": "Carrying Conundrum (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5550,7 +5550,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ilp17sien",
+            "id": "z23-p-gvskv4tru",
             "title": "Sum of LDS (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5560,7 +5560,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-be765czj0",
+            "id": "z23-p-7oaiv3xi1",
             "title": "Decode (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5570,7 +5570,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-65txgf5cl",
+            "id": "z23-p-11yc4w3oj",
             "title": "D-Function (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5580,7 +5580,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-qiwwzanzz",
+            "id": "z23-p-9e97q7z0l",
             "title": "How Does the Rook Move? (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5590,7 +5590,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7dk3i1tky",
+            "id": "z23-p-j6ntiqleq",
             "title": "Modular Stability (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5600,7 +5600,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-lyi5ioh6z",
+            "id": "z23-p-840d89gb2",
             "title": "Number of Subsequences (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5610,7 +5610,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-gxy2je13d",
+            "id": "z23-p-o9k3bskr7",
             "title": "Invertible Bracket Sequences (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5620,7 +5620,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-f2dkiprva",
+            "id": "z23-p-fup7l6bmm",
             "title": "Wonderful Lightbulbs (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5630,7 +5630,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fo6jdkysb",
+            "id": "z23-p-499te7umi",
             "title": "Placing Jinas (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5640,7 +5640,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-hq1g4xp63",
+            "id": "z23-p-kkd6etdsl",
             "title": "Coprime Subsequences (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5650,7 +5650,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-hygrue19h",
+            "id": "z23-p-905az3t2i",
             "title": "Shuffle (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5660,7 +5660,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-eyl55hslg",
+            "id": "z23-p-gq94gjseu",
             "title": "Gerald and Giant Chess (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -5670,7 +5670,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-vrmk9g6d9",
+            "id": "z23-p-kncd3eegl",
             "title": "Team Work (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -5680,7 +5680,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-1z4292l5u",
+            "id": "z23-p-2rvrlebg8",
             "title": "Permutation Blackhole (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -5690,7 +5690,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-t2kj0zl5t",
+            "id": "z23-p-wpf8r7uax",
             "title": "Vowels (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -5712,7 +5712,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-xu2c48j5x",
+            "id": "z23-p-8b5mu350a",
             "title": "Almost All Divisors (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5722,7 +5722,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-o8scaip31",
+            "id": "z23-p-we08fd88k",
             "title": "Hilbert's Hotel (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5732,7 +5732,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-38ynmkjld",
+            "id": "z23-p-jyrgwdnot",
             "title": "Strange Function (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5742,7 +5742,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jxsg99djy",
+            "id": "z23-p-pnk35wtf5",
             "title": "Taxes (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5752,7 +5752,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-tekezvwj5",
+            "id": "z23-p-hac651xt6",
             "title": "Factorial Divisibility (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5762,7 +5762,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7wf481rf9",
+            "id": "z23-p-pq2ecq6lh",
             "title": "Moderate Modular Mode (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5772,7 +5772,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-4e7b8pwb0",
+            "id": "z23-p-q7wuu43tm",
             "title": "Yet Another Counting Problem (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5782,7 +5782,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-h6gkozegm",
+            "id": "z23-p-g051ghq29",
             "title": "Deleting Divisors (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -5792,7 +5792,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-pozbfpkv1",
+            "id": "z23-p-odreq8vzs",
             "title": "The Football Season (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5802,7 +5802,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-04joelq8j",
+            "id": "z23-p-qohugjsx7",
             "title": "No Cost Too Great (Hard Version) (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5812,7 +5812,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5yua5t7n0",
+            "id": "z23-p-drkjvmjqi",
             "title": "Small Operations (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5822,7 +5822,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-po5jdthu8",
+            "id": "z23-p-y2x4251yg",
             "title": "The Number of Pairs (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -5832,7 +5832,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-x02eq1rok",
+            "id": "z23-p-mpuc3plgr",
             "title": "GCD of an Array (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -5842,7 +5842,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-p7kp0je7a",
+            "id": "z23-p-3apcrm4az",
             "title": "Multiples and Power Differences (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -5852,7 +5852,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-sdy2iquop",
+            "id": "z23-p-npv4qpq8o",
             "title": "DZY Loves Fibonacci Numbers (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -5862,7 +5862,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3zkp5bo42",
+            "id": "z23-p-ho9q07pee",
             "title": "Beautiful numbers (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -5872,7 +5872,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-adlwu44b0",
+            "id": "z23-p-8oile9c0v",
             "title": "Kuroni and the Punishment (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -5882,7 +5882,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-8own9l76t",
+            "id": "z23-p-ouhdvnbj8",
             "title": "Add One (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5892,7 +5892,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-1sauooh19",
+            "id": "z23-p-on1supfbd",
             "title": "Permutation of Rows and Columns (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5902,7 +5902,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-y289yu2zz",
+            "id": "z23-p-xzu1as5p9",
             "title": "Quiz (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5912,7 +5912,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5q5gpe1lm",
+            "id": "z23-p-twank63lh",
             "title": "Barcode (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -5922,7 +5922,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-9u4tz0ky1",
+            "id": "z23-p-piybruehl",
             "title": "Infinite Set (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -5932,7 +5932,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-gyh966xam",
+            "id": "z23-p-dbja77z98",
             "title": "Gifts Order (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5942,7 +5942,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-g9wdhjhcv",
+            "id": "z23-p-fhwht0nsh",
             "title": "Magic Gems (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -5952,7 +5952,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-n6qub4317",
+            "id": "z23-p-8drlb4r58",
             "title": "Count Pairs (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -5962,7 +5962,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-wssv2603m",
+            "id": "z23-p-86ip7054l",
             "title": "Mahmoud and Ehab and yet another xor task (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -5972,7 +5972,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-rimixqdyh",
+            "id": "z23-p-6bd7zg3oj",
             "title": "William The Oblivious  (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -5982,7 +5982,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-oxzty3g7p",
+            "id": "z23-p-4h8xb2w7k",
             "title": "Turtles (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -6004,7 +6004,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-v7e6mtdai",
+            "id": "z23-p-du8k5gsxw",
             "title": "String Equality (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -6014,7 +6014,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-illeqwpex",
+            "id": "z23-p-ckw6u4qph",
             "title": "Torn Lucky Ticket (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -6024,7 +6024,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zl2ahui57",
+            "id": "z23-p-zsiof2yu6",
             "title": "Winner (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -6034,7 +6034,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7goqlv593",
+            "id": "z23-p-htegq3j7b",
             "title": "Zero Quantity Maximization (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -6044,7 +6044,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-nt44y11rg",
+            "id": "z23-p-zb4jc50w5",
             "title": "Diluc and Kaeya (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -6054,7 +6054,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-oy2xzj472",
+            "id": "z23-p-4xqibz0c0",
             "title": "Prefix-Suffix Palindrome (Easy version) (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -6064,7 +6064,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-4hjsqxp4e",
+            "id": "z23-p-neg6j4a0n",
             "title": "Sequence Pair Weight (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -6074,7 +6074,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5lz7ce1qn",
+            "id": "z23-p-mfp0g94di",
             "title": "Binary String Copying (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -6084,7 +6084,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5wrp83y0f",
+            "id": "z23-p-3m990x599",
             "title": "Gargari and Bishops (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6094,7 +6094,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7e74jxzy0",
+            "id": "z23-p-s5wib8ivj",
             "title": "Treasure Island (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6104,7 +6104,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-plpf9nrvy",
+            "id": "z23-p-c6rotxm2r",
             "title": "Strange Definition (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6114,7 +6114,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-oa79wnc7y",
+            "id": "z23-p-2a0fwz0cr",
             "title": "Shuffling Songs (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6124,7 +6124,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-003x6hfmj",
+            "id": "z23-p-lrqzsuqtq",
             "title": "Compress Words (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -6134,7 +6134,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-u7ljgvy9j",
+            "id": "z23-p-gfu4awjpe",
             "title": "Watto and Mechanism (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -6144,7 +6144,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-l60fi677t",
+            "id": "z23-p-cz2dgo0hg",
             "title": "Erase and Extend (Hard Version) (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -6154,7 +6154,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-avuiduwzv",
+            "id": "z23-p-xg8zfu486",
             "title": "Palindrome Degree (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -6164,7 +6164,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-cdbl8yxsd",
+            "id": "z23-p-gwzvqu7rk",
             "title": "Double Profiles (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -6174,7 +6174,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7a6c28tyr",
+            "id": "z23-p-7qlryzfcy",
             "title": "Message Transmission Error (hard version) (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -6184,7 +6184,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-r9q55a05k",
+            "id": "z23-p-tq4vkhx0p",
             "title": "MUH and Cube Walls (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -6194,7 +6194,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-pzlb1fgru",
+            "id": "z23-p-ouuzb4sth",
             "title": "XOR Construction (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6204,7 +6204,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-efr4k9tr6",
+            "id": "z23-p-5rghi7uck",
             "title": "Division + LCP (easy version) (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6214,7 +6214,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-av5ovquho",
+            "id": "z23-p-u2kqw5uzb",
             "title": "Tavas and Malekas (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6224,7 +6224,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-pvhm3tplm",
+            "id": "z23-p-khtzsoaym",
             "title": "Spy Syndrome 2 (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6234,7 +6234,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fa0vi4g15",
+            "id": "z23-p-i9xj2ki37",
             "title": "Prefixes and Suffixes (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -6244,7 +6244,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-phrd02ghw",
+            "id": "z23-p-xwtqoxb4p",
             "title": "''a'' String Problem (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -6254,7 +6254,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-lp8wf9rjn",
+            "id": "z23-p-pykau29z2",
             "title": "String (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -6264,7 +6264,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-8mgtfl390",
+            "id": "z23-p-5c68znbcq",
             "title": "Messenger (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -6274,7 +6274,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-a18e77amn",
+            "id": "z23-p-a4zb2i3bw",
             "title": "Match & Catch (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -6284,7 +6284,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-eswudz2mg",
+            "id": "z23-p-lqq34gvnd",
             "title": "You Are Given Some Strings... (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -6294,7 +6294,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-20iyu8fit",
+            "id": "z23-p-knyiiko17",
             "title": "Frequency of String (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -6316,7 +6316,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-x28uq4hj2",
+            "id": "z23-p-eu7kjoqn8",
             "title": "Splitting Items (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -6326,7 +6326,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-99cnsqi18",
+            "id": "z23-p-hlxfxq700",
             "title": "Sequential Nim (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -6336,7 +6336,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-78rh31rjt",
+            "id": "z23-p-y2vcj5si3",
             "title": "Matrix Game (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -6346,7 +6346,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-55mnlvf5m",
+            "id": "z23-p-qk56go5cc",
             "title": "Summation Game (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -6356,7 +6356,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jg7sg66hs",
+            "id": "z23-p-ah1vr2hgw",
             "title": "Even-Odd Game (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -6366,7 +6366,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-4w2fo7qwa",
+            "id": "z23-p-qyy3inuhl",
             "title": "Swap Game (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -6376,7 +6376,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-6ezojtchs",
+            "id": "z23-p-sc8m5r4za",
             "title": "Eat the Chip (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -6386,7 +6386,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-0z7r2z8jx",
+            "id": "z23-p-cshpjrm6f",
             "title": "Alice and Bob (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -6396,7 +6396,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-0cep63ywk",
+            "id": "z23-p-o9aortkrv",
             "title": "Circle Game (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -6406,7 +6406,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jd32nr4n7",
+            "id": "z23-p-8mvtzj6gs",
             "title": "Vasya and Chess (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -6416,7 +6416,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-8bti6y7w6",
+            "id": "z23-p-v4y3dod7j",
             "title": "Iris and Game on the Tree (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -6426,7 +6426,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-qeidsn65n",
+            "id": "z23-p-uhqtulctn",
             "title": "Mad City (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -6436,7 +6436,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-0s5k9b24n",
+            "id": "z23-p-nadh786rt",
             "title": "Bag of mice (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -6446,7 +6446,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-m5tuu5t02",
+            "id": "z23-p-5d3wjke22",
             "title": "World is Mine (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -6456,7 +6456,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-u3vpeenfq",
+            "id": "z23-p-ruej3gubs",
             "title": "GCD Guess (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -6466,7 +6466,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-vtl8o9ntv",
+            "id": "z23-p-tn7rmaoiq",
             "title": "Koxia and Game (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -6476,7 +6476,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-kwfps7kyc",
+            "id": "z23-p-d4wai5u63",
             "title": "The Game (Easy Version) (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -6486,7 +6486,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-sab8ugdpb",
+            "id": "z23-p-y2nwy55t3",
             "title": "Omkar and Circle (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -6496,7 +6496,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-2u7nv52cv",
+            "id": "z23-p-4ha83auxi",
             "title": "Not a Nim Problem (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -6506,7 +6506,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-84ul8u6ps",
+            "id": "z23-p-ls1yyv3bs",
             "title": "Challenges in school №41 (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -6516,7 +6516,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-6adlpcei5",
+            "id": "z23-p-2snbmygjk",
             "title": "Tokitsukaze and Duel (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -6526,7 +6526,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-kbl6ad24e",
+            "id": "z23-p-r0em1tc85",
             "title": "Game on Sum (Hard Version) (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -6536,7 +6536,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-68wu9ub9p",
+            "id": "z23-p-rgmzxn5q5",
             "title": "Integer Game (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -6558,7 +6558,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-4j38prtcc",
+            "id": "z23-p-q1z0emsw0",
             "title": "Random Events (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -6568,7 +6568,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-udn6ryfn6",
+            "id": "z23-p-38ytnqydo",
             "title": "Little Pony and Expected Maximum (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -6578,7 +6578,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-mzxsajkft",
+            "id": "z23-p-lgjiw1a8m",
             "title": "Segments Covering (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -6588,7 +6588,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-58x40ugpu",
+            "id": "z23-p-iiduhdqgb",
             "title": "Empty Triangle (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -6598,7 +6598,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-o0813dywr",
+            "id": "z23-p-sw41xgoor",
             "title": "Ilya and Escalator (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -6608,7 +6608,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-8zjtoi9f2",
+            "id": "z23-p-yvmsc50s2",
             "title": "Problem with Random Tests (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -6618,7 +6618,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-p1xtf5w4v",
+            "id": "z23-p-qaympnfkn",
             "title": "Santa's Bot (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -6628,7 +6628,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-2clt6z65t",
+            "id": "z23-p-l3did7fzl",
             "title": "Guess the Cycle Size (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -6638,7 +6638,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-qt1f1pm89",
+            "id": "z23-p-881dcfw3p",
             "title": "Fish (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6648,7 +6648,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-c4j1hav12",
+            "id": "z23-p-uke966c0k",
             "title": "Bad Luck Island (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6658,7 +6658,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-92njt72wj",
+            "id": "z23-p-qjl02thdi",
             "title": "Need for Pink Slips (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6668,7 +6668,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-tgttecbp2",
+            "id": "z23-p-gnsbqobqt",
             "title": "Good Trip (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6678,7 +6678,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-towu3zpn1",
+            "id": "z23-p-tznm6sq7u",
             "title": "Score of a Tree (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6688,7 +6688,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-2qjonuqms",
+            "id": "z23-p-shbwu5v2g",
             "title": "Wish I Knew How to Sort (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -6698,7 +6698,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-etpg9lwcz",
+            "id": "z23-p-z17xxxdej",
             "title": "Beautiful Mirrors (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -6708,7 +6708,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-cc73j4j6k",
+            "id": "z23-p-gxbzje3l7",
             "title": "Game on Tree (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -6718,7 +6718,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-omzbu8eql",
+            "id": "z23-p-drm715s9g",
             "title": "LuoTianyi and the Floating Islands (Hard Version) (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -6728,7 +6728,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ldhp2ovqa",
+            "id": "z23-p-3vmwiffdc",
             "title": "Destiny (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -6738,7 +6738,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-64kxufwo3",
+            "id": "z23-p-c4812o92v",
             "title": "Willem, Chtholly and Seniorious (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -6760,7 +6760,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-uucxivdsu",
+            "id": "z23-p-eq19e9gyq",
             "title": "Trapmigiano Reggiano (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -6770,7 +6770,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-9c6yk9khk",
+            "id": "z23-p-2uihohtzc",
             "title": "Path Prefixes (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -6780,7 +6780,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-w05cgkyxo",
+            "id": "z23-p-yvju8gbc8",
             "title": "Playoff Tournament (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -6790,7 +6790,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-6wao00zur",
+            "id": "z23-p-cs4wxzgdk",
             "title": "Interesting Array (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -6800,7 +6800,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3l8f2a8e6",
+            "id": "z23-p-8uqe81e7j",
             "title": "Enemy is weak (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6810,7 +6810,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-9n5oxo8hp",
+            "id": "z23-p-djjt9pfoj",
             "title": "Fools and Roads (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6820,7 +6820,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-pwv8ktm0h",
+            "id": "z23-p-tjm1f6yob",
             "title": "Propagating tree (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -6830,7 +6830,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zk7tqaflp",
+            "id": "z23-p-t9omh5ved",
             "title": "Blood Cousins (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -6840,7 +6840,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-9jbsggslq",
+            "id": "z23-p-bd56x7l4o",
             "title": "Duff in the Army (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -6850,7 +6850,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dz1mhjvgs",
+            "id": "z23-p-btz8fj7du",
             "title": "Minimal Segment Cover (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -6860,7 +6860,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-y1pr0zgnk",
+            "id": "z23-p-omugnum84",
             "title": "Sausage Maximization (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -6870,7 +6870,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-cnwjkecy9",
+            "id": "z23-p-i8iwr9ny5",
             "title": "Tree Master (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -6880,7 +6880,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7g022g9v6",
+            "id": "z23-p-byymugj1r",
             "title": "Qpwoeirut and Vertices (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -6890,7 +6890,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ci88jymio",
+            "id": "z23-p-ntlm2s0q2",
             "title": "XOR Tree (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -6900,7 +6900,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-299s3dw2e",
+            "id": "z23-p-v6i1m9kv",
             "title": "Graph and Queries (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -6910,7 +6910,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-v9lnuawt2",
+            "id": "z23-p-rsmjkyt47",
             "title": "Mike and Friends (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -6920,7 +6920,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-gehthm7qy",
+            "id": "z23-p-qqr4m3tcf",
             "title": "You Are Given a Tree (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -6942,7 +6942,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-zrhn0yqag",
+            "id": "z23-p-87pdahozf",
             "title": "Tree Tag (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6952,7 +6952,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-95au3vyhn",
+            "id": "z23-p-4kth8ywve",
             "title": "Tree XOR (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6962,7 +6962,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ahkmwgdl7",
+            "id": "z23-p-7f45aajaw",
             "title": "A Lot of Games (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6972,7 +6972,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zz034ryou",
+            "id": "z23-p-6qyeky3rq",
             "title": "Non-academic Problem (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6982,7 +6982,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-neaumpntq",
+            "id": "z23-p-r3fvsuxff",
             "title": "Design Tutorial: Inverse the Problem (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6992,7 +6992,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-843judsir",
+            "id": "z23-p-fhil8lbdc",
             "title": "Three Paths on a Tree (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7002,7 +7002,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jol7dp1q1",
+            "id": "z23-p-5ughqkolv",
             "title": "Book of Evil (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7012,7 +7012,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-xbowp48zs",
+            "id": "z23-p-bt3067fzx",
             "title": "Ciel the Commander (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -7022,7 +7022,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-j0rdibnfb",
+            "id": "z23-p-n7ucr0e6w",
             "title": "Sliding Tree (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7032,7 +7032,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-lzvrpl3w4",
+            "id": "z23-p-uhahdlq46",
             "title": "Pursuit For Artifacts (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7042,7 +7042,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-vgunvijwa",
+            "id": "z23-p-u2twc2v8v",
             "title": "Trees of Tranquillity (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7052,7 +7052,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-305lyn917",
+            "id": "z23-p-9kprc5qac",
             "title": "DFS Checker (Hard Version) (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7062,7 +7062,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-om88wlnfv",
+            "id": "z23-p-d3sfdz8ie",
             "title": "Dogeforces (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7072,7 +7072,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-qr8l72i3d",
+            "id": "z23-p-h1zzz5loi",
             "title": "Happy Life in University (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7082,7 +7082,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ndcv6gf4e",
+            "id": "z23-p-33meeffeh",
             "title": "Tree Compass (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7092,7 +7092,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-xib2vx6if",
+            "id": "z23-p-pnwggnx9v",
             "title": "Hemose in ICPC ? (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7102,7 +7102,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-casd9d1vq",
+            "id": "z23-p-zg487j82r",
             "title": "Kingdom and its Cities (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -7112,7 +7112,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-vfhelny6b",
+            "id": "z23-p-imvs7kf27",
             "title": "Case of Computer Network (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -7122,7 +7122,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dcwaphvvi",
+            "id": "z23-p-ewz2q3psq",
             "title": "Arpa’s letter-marked tree and Mehrdad’s Dokhtar-kosh paths (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7144,7 +7144,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-gp4av7mdm",
+            "id": "z23-p-9vi9dxb3d",
             "title": "CGCDSSQ (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7154,7 +7154,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-vdtah29ts",
+            "id": "z23-p-v20ntsfsc",
             "title": "Weights Division (easy version) (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7164,7 +7164,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-31bbxo9lo",
+            "id": "z23-p-lc40dpcoh",
             "title": "Money Buys Less Happiness Now  (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7174,7 +7174,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-z031jgphx",
+            "id": "z23-p-gss79xpdr",
             "title": "New Year Tree (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -7184,7 +7184,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5fs04stqt",
+            "id": "z23-p-24iemjebm",
             "title": "Remainder Problem (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -7194,7 +7194,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-pe1ykza6i",
+            "id": "z23-p-c179gj4qp",
             "title": "The Bakery (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -7204,7 +7204,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-cj7d3hufk",
+            "id": "z23-p-a3szeno77",
             "title": "Clear the Multiset (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -7214,7 +7214,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-r61nh03mw",
+            "id": "z23-p-2htmwepic",
             "title": "A Simple Task (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7224,7 +7224,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5t3i6k0qx",
+            "id": "z23-p-rnknz1pps",
             "title": "Buy Low Sell High (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7234,7 +7234,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-vp3t6zcy5",
+            "id": "z23-p-uuioad68g",
             "title": "One Occurrence (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7244,7 +7244,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-bqqm92bj1",
+            "id": "z23-p-mvemcduu0",
             "title": "Blood Cousins Return (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7254,7 +7254,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-sk87ooiy8",
+            "id": "z23-p-c1yeykmrl",
             "title": "Cats Transport (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7264,7 +7264,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-65h6h9fol",
+            "id": "z23-p-b7gwpgra3",
             "title": "Lucky Queries (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7274,7 +7274,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-nccvmn4hg",
+            "id": "z23-p-6o9d1bmh7",
             "title": "Ciel and Gondolas (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -7284,7 +7284,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-irdi820wc",
+            "id": "z23-p-9h9i9h83o",
             "title": "Holes (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -7294,7 +7294,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ml0o41pi9",
+            "id": "z23-p-jepnb2lfr",
             "title": "Serega and Fun (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -7304,7 +7304,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-u6jg0llb4",
+            "id": "z23-p-g3sxv1zgo",
             "title": "Pudding Monsters (3000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7326,7 +7326,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-b5t2dm1bx",
+            "id": "z23-p-wvn66g263",
             "title": "Array Division (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7336,7 +7336,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3betuxcg7",
+            "id": "z23-p-uhbhfnwmj",
             "title": "Nikita and LCM (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7346,7 +7346,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-bhf3bavih",
+            "id": "z23-p-34frzgcx8",
             "title": "Beautiful Array (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7356,7 +7356,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-nrm99nv6i",
+            "id": "z23-p-jtp0oh15z",
             "title": "Painting the Array I (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7366,7 +7366,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-6z7ey9xqj",
+            "id": "z23-p-to9kde3kv",
             "title": "Array Stabilization (GCD version) (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7376,7 +7376,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-y9mf3sax2",
+            "id": "z23-p-3trmmrjvo",
             "title": "Smithing Skill (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7386,7 +7386,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-suulbt24b",
+            "id": "z23-p-xpdwgznmg",
             "title": "Subarray Sorting (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7396,7 +7396,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-23i8lw1ha",
+            "id": "z23-p-a02d23pdc",
             "title": "Ball (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7406,7 +7406,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-xu3eka95u",
+            "id": "z23-p-r68y7s91e",
             "title": "Traffic Lights (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7416,7 +7416,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-id4r3cl0l",
+            "id": "z23-p-md4zba03w",
             "title": "The Number of Subpermutations (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -7426,7 +7426,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zqwvmkvub",
+            "id": "z23-p-gtr8a7tcc",
             "title": "Machine Learning (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -7436,7 +7436,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-1h7d9h03c",
+            "id": "z23-p-ekpkw9bhr",
             "title": "Greedy Shopping (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -7446,7 +7446,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ca3h5ihgb",
+            "id": "z23-p-eqebe3nfi",
             "title": "Query Jungle (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7468,7 +7468,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-nzbw0oz3p",
+            "id": "z23-p-1f41f4isq",
             "title": "Choosing flowers (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7478,7 +7478,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ktbb7teb5",
+            "id": "z23-p-8yrtcn0k6",
             "title": "Array Queries (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7488,7 +7488,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-k4qzq521n",
+            "id": "z23-p-pfp67d2cu",
             "title": "Maximum Subarray (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7498,7 +7498,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-cp2okikbt",
+            "id": "z23-p-ehm9g5t6k",
             "title": "GCD Counting (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7508,7 +7508,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5gi787pav",
+            "id": "z23-p-8e2bbfcqz",
             "title": "String Coloring (hard version) (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7518,7 +7518,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-x8u35u1hg",
+            "id": "z23-p-wq5wanvh9",
             "title": "Kalila and Dimna in the Logging Industry (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -7528,7 +7528,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-yuawwck4c",
+            "id": "z23-p-i75oxe98c",
             "title": "Cut (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -7538,7 +7538,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-gf8wbveic",
+            "id": "z23-p-p23bzi0fp",
             "title": "Discrete Centrifugal Jumps (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -7548,7 +7548,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-h6lxu0gjs",
+            "id": "z23-p-a5ao26dlf",
             "title": "The Fair Nut and Rectangles (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7558,7 +7558,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zub4o36gq",
+            "id": "z23-p-3nip0uidx",
             "title": "Thief in a Shop (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7568,7 +7568,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-685hzcw7h",
+            "id": "z23-p-zee3y4mhk",
             "title": "Kindergarten (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7578,7 +7578,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-n2jjx5vs1",
+            "id": "z23-p-8zbjs3c60",
             "title": "Yet Another Minimization Problem (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -7588,7 +7588,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-d8f1czixe",
+            "id": "z23-p-vwowazjd4",
             "title": "Product Sum (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -7598,7 +7598,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-tgqjjkv2e",
+            "id": "z23-p-ivkptqd1k",
             "title": "Escape Through Leaf (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -7608,7 +7608,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-lond43fqw",
+            "id": "z23-p-8x6w5zkfw",
             "title": "Sum (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -7618,7 +7618,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-1y9o62jjq",
+            "id": "z23-p-piazq0cr4",
             "title": "Gosha is hunting (3000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7628,7 +7628,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-gnbx1a1jn",
+            "id": "z23-p-f4k6diwdr",
             "title": "Kia Bakes a Cake (3100)",
             "completed": false,
             "difficulty": "Hard",
@@ -7650,7 +7650,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-45593a8zv",
+            "id": "z23-p-x4vwptwpc",
             "title": "Chef Monocarp (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -7660,7 +7660,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-wey7vif3l",
+            "id": "z23-p-algojz015",
             "title": "Armchairs (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -7670,7 +7670,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-bwyqyu2bl",
+            "id": "z23-p-ixobgcxce",
             "title": "Rock, Paper, Scissors (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -7680,7 +7680,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-01x052x1p",
+            "id": "z23-p-9z1yjr50l",
             "title": "Problem about GCD (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -7690,7 +7690,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-xqk3at7g1",
+            "id": "z23-p-9vv8oq2er",
             "title": "Vasya And The Matrix (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -7700,7 +7700,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-d1rrtgk9l",
+            "id": "z23-p-t59oib46t",
             "title": "Vlad and Trouble at MIT (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7710,7 +7710,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-sl57togzj",
+            "id": "z23-p-ylcc1t7dc",
             "title": "Soldier and Traveling (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -7720,7 +7720,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-rythrcszg",
+            "id": "z23-p-r35n7jwe4",
             "title": "Array and Operations (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -7730,7 +7730,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-nu36mcuds",
+            "id": "z23-p-tyqvt5xn9",
             "title": "Yet Another Array Counting Problem (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7740,7 +7740,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-kzvyp5k4i",
+            "id": "z23-p-fc2n2pt5y",
             "title": "Fox And Dinner (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7750,7 +7750,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-sfvo85fr5",
+            "id": "z23-p-rrngptqxp",
             "title": "Ann and Books (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7760,7 +7760,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jgqqv1m6k",
+            "id": "z23-p-2r8a6zpph",
             "title": "Petya and Graph (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7770,7 +7770,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-irpv2jtef",
+            "id": "z23-p-j7bp03r1d",
             "title": "Maximize Mex (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7780,7 +7780,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-mk69ijbz7",
+            "id": "z23-p-wr9to0pnw",
             "title": "Best Subsequence (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -7790,7 +7790,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-oriq9yxer",
+            "id": "z23-p-dh4argai3",
             "title": "Bricks (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -7800,7 +7800,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fsdgolvk7",
+            "id": "z23-p-5dj0ecwvw",
             "title": "k-Maximum Subsequence Sum (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -7810,7 +7810,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-9zt41qk0t",
+            "id": "z23-p-cjwd6g90f",
             "title": "Goods transportation (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7820,7 +7820,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-z9owaz4ja",
+            "id": "z23-p-nwguc5w1m",
             "title": "Programming Competition (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7830,7 +7830,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-nykh25f1m",
+            "id": "z23-p-v9nw1u87t",
             "title": "Two Sets (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7840,7 +7840,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-y177mxton",
+            "id": "z23-p-rxow6p7su",
             "title": "Serval and Kaitenzushi Buffet (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7850,7 +7850,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-mshn4nkif",
+            "id": "z23-p-qw6s5qr2d",
             "title": "New Year's Puzzle (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -7860,7 +7860,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-god476u2w",
+            "id": "z23-p-f3orjef07",
             "title": "Strange Housing (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -7870,7 +7870,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-hth3smupr",
+            "id": "z23-p-5evznvsgx",
             "title": "Star MST (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -7880,7 +7880,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-o4g65xh8a",
+            "id": "z23-p-uz5mrp69w",
             "title": "Twin Polynomials (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7890,7 +7890,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-e8a1r0ms8",
+            "id": "z23-p-5ynm4qfpe",
             "title": "Catowice City (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7900,7 +7900,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-t9mlqpaoa",
+            "id": "z23-p-3wvlwt1cr",
             "title": "Tree Modification (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -7910,7 +7910,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-uew04624r",
+            "id": "z23-p-z3oniqdhh",
             "title": "Alice and Recoloring 2 (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -7920,7 +7920,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5r3mjtj45",
+            "id": "z23-p-kzpsy1la7",
             "title": "Buying Sets (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7942,7 +7942,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-w6063qujp",
+            "id": "z23-p-bstm0vtgr",
             "title": "Simons and Dividing the Rhythm (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -7952,7 +7952,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-edyp970nb",
+            "id": "z23-p-76u1qk8a0",
             "title": "Prefix Function Queries (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -7962,7 +7962,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-l0akwxfda",
+            "id": "z23-p-4jzrd42d3",
             "title": "Division + LCP (hard version) (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -7972,7 +7972,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-p93tiloac",
+            "id": "z23-p-2z43ryijq",
             "title": "Om Nom and Necklace (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -7982,7 +7982,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-muv4phwzo",
+            "id": "z23-p-nen98g3eg",
             "title": "A Trivial String Problem (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -7992,7 +7992,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-vbnt3hhkv",
+            "id": "z23-p-p7smclc3r",
             "title": "Martian Strings (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -8002,7 +8002,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5czajzpbi",
+            "id": "z23-p-rqmhvq0gy",
             "title": "Fake News (hard) (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -8012,7 +8012,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-m92o8e5vv",
+            "id": "z23-p-npon119w4",
             "title": "Games on a CD (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -8022,7 +8022,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-xzwxosr7y",
+            "id": "z23-p-8n55o470n",
             "title": "String Set Queries (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -8032,7 +8032,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-atykn5xvp",
+            "id": "z23-p-5vmy3pzsb",
             "title": "A Bit Similar (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -8042,7 +8042,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-8395u7i70",
+            "id": "z23-p-j2qcbvyd4",
             "title": "String Compression (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -8052,7 +8052,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-1i70x0phv",
+            "id": "z23-p-8lvf9jlx7",
             "title": "Forbidden Indices (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -8062,7 +8062,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-vo48b0w7d",
+            "id": "z23-p-9tkm0yaqw",
             "title": "Rescue Niwen! (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -8072,7 +8072,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-560wohlv5",
+            "id": "z23-p-yjdisd6tp",
             "title": "Cyclical Quest (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -8082,7 +8082,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-f1cpnc564",
+            "id": "z23-p-xfhy27iau",
             "title": "Little Elephant and Strings (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -8092,7 +8092,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-u041cnufa",
+            "id": "z23-p-4xgcmwcfh",
             "title": "Substrings in a String (3000)",
             "completed": false,
             "difficulty": "Hard",
@@ -8102,7 +8102,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-69kon6c3s",
+            "id": "z23-p-ri0p5e5ay",
             "title": "Forensic Examination (3100)",
             "completed": false,
             "difficulty": "Hard",
@@ -8124,7 +8124,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-tobe0sats",
+            "id": "z23-p-5sl0g7jfj",
             "title": "Rudolph and Christmas Tree (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -8134,7 +8134,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-lizopg6ux",
+            "id": "z23-p-477sfhzmm",
             "title": "Line Segments (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -8144,7 +8144,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-kqypm4n8p",
+            "id": "z23-p-b5o3c8tld",
             "title": "Fear of the Dark (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -8154,7 +8154,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-8y2rtb3be",
+            "id": "z23-p-gi909i04m",
             "title": "Diamond Miner (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -8164,7 +8164,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ahny82ka3",
+            "id": "z23-p-seb3xeomi",
             "title": "Amr and Pins (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -8174,7 +8174,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-vt9nzmlnf",
+            "id": "z23-p-a3590luax",
             "title": "Satyam and Counting (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -8184,7 +8184,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-qewvzqdlw",
+            "id": "z23-p-a8muecq3z",
             "title": "Maximize the Intersections (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8194,7 +8194,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jkqcow7lh",
+            "id": "z23-p-2r9lbmvep",
             "title": "Vasya and Triangle (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8204,7 +8204,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jlmjdooao",
+            "id": "z23-p-h5nph3npt",
             "title": "Blackslex and Girls (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8214,7 +8214,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-2s8vcjgbm",
+            "id": "z23-p-v3865adl7",
             "title": "Aerodynamic (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8224,7 +8224,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-daqlc9p6i",
+            "id": "z23-p-q17sdnmag",
             "title": "Not So Simple Polygon Embedding (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -8234,7 +8234,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-9a4s81pai",
+            "id": "z23-p-celz9q86v",
             "title": "Game With Triangles (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -8244,7 +8244,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3u9r4caj8",
+            "id": "z23-p-1krqd61w6",
             "title": "Pair Of Lines (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -8254,7 +8254,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-q8libmgy2",
+            "id": "z23-p-fhvwq54sb",
             "title": "Ancient Berland Circus (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -8264,7 +8264,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7ctj0fn2m",
+            "id": "z23-p-zpq7pdjic",
             "title": "Nearest vectors (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -8274,7 +8274,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7pi0knz83",
+            "id": "z23-p-vw05cwphg",
             "title": "Divide Points (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -8284,7 +8284,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3n206tcoj",
+            "id": "z23-p-6trhh5uvk",
             "title": "Divide Square (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -8294,7 +8294,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-viwg2upz2",
+            "id": "z23-p-0t67lzi3a",
             "title": "Bear and Bowling 4 (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -8304,7 +8304,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-qf3x44d4d",
+            "id": "z23-p-58qyifmj5",
             "title": "Commentator problem (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -8314,7 +8314,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-kcrto97sp",
+            "id": "z23-p-7dkqezigr",
             "title": "Boboniu and String (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -8324,7 +8324,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dzjwppfjd",
+            "id": "z23-p-qs1b3gqx6",
             "title": "Omkar and Akmar (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -8346,7 +8346,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-mc4g3fpdo",
+            "id": "z23-p-kol0zz38c",
             "title": "Interview (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -8356,7 +8356,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-g33ztcl4n",
+            "id": "z23-p-hyhkus37y",
             "title": "PolandBall and Forest (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -8366,7 +8366,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7gg8rtlzd",
+            "id": "z23-p-iiulfuik8",
             "title": "Lost Numbers (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -8376,7 +8376,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-8hcu1lpxx",
+            "id": "z23-p-kayyd5yeo",
             "title": "Bear and Prime 100 (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -8386,7 +8386,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zjrf20agd",
+            "id": "z23-p-xpyfo6he5",
             "title": "Password Cracking (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -8396,7 +8396,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-sgapuq5nh",
+            "id": "z23-p-31ty86p88",
             "title": "Ruler (easy version) (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -8406,7 +8406,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-swaat92ae",
+            "id": "z23-p-xm0r4ztys",
             "title": "Chocolate Bunny (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -8416,7 +8416,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-rqfqsne8b",
+            "id": "z23-p-ddmixo88e",
             "title": "Guess the K-th Zero (Easy version) (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -8426,7 +8426,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fvy7xi7f3",
+            "id": "z23-p-1hs4k557b",
             "title": "Take a Guess (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8436,7 +8436,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-pb9079a0i",
+            "id": "z23-p-q0s7wpgbj",
             "title": "Lost Tree (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8446,7 +8446,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-e6g629sux",
+            "id": "z23-p-lthe70knd",
             "title": "Rocket (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8456,7 +8456,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-35ija6zmk",
+            "id": "z23-p-9hyqxpu38",
             "title": "Genokraken (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8466,7 +8466,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-v2sl3xj9i",
+            "id": "z23-p-gethcn7zq",
             "title": "Tournament Countdown (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8476,7 +8476,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-v88p5gwmq",
+            "id": "z23-p-4bs7qv9en",
             "title": "Batteries (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8486,7 +8486,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-isv8i36ej",
+            "id": "z23-p-iy4xvu6v9",
             "title": "Guessing the Greatest (hard version) (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -8496,7 +8496,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-tj50q8bu7",
+            "id": "z23-p-pxrljdipi",
             "title": "XOR Guessing (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -8506,7 +8506,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-hf0aclp0p",
+            "id": "z23-p-l5j4a780y",
             "title": "Cat, Fox and Maximum Array Split (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -8516,7 +8516,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-vz8m99zib",
+            "id": "z23-p-1qqzcl5q9",
             "title": "Hacking Numbers (Hard Version) (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -8526,7 +8526,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ud4jwz3w5",
+            "id": "z23-p-ywp5888cu",
             "title": "Hidden Single (Version 1) (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -8548,7 +8548,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-561cjrdj8",
+            "id": "z23-p-1501buy5x",
             "title": "Maximum Crossings (Hard Version) (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -8558,7 +8558,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zec9qwcac",
+            "id": "z23-p-dnierpeit",
             "title": "Guess The Tree (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -8568,7 +8568,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-sumymcazs",
+            "id": "z23-p-dvgywf629",
             "title": "Bewitching Stargazer (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -8578,7 +8578,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-see627cxk",
+            "id": "z23-p-m4ovo4hr5",
             "title": "Parsa's Humongous Tree (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -8588,7 +8588,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7mkullhkx",
+            "id": "z23-p-h2wmj48c2",
             "title": "Maximum Sum on Even Positions (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -8598,7 +8598,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-gew1mo9yz",
+            "id": "z23-p-vm51ut9d2",
             "title": "Pashmak and Parmida's problem (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8608,7 +8608,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-o12pvxl4w",
+            "id": "z23-p-jlqdlr1v",
             "title": "XOR Inverse (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -8618,7 +8618,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-nxyj8ofm5",
+            "id": "z23-p-1j5uib1rc",
             "title": "Nene and the Mex Operator (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -8628,7 +8628,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-6o0qvrooz",
+            "id": "z23-p-9zylbizvr",
             "title": "No Palindromes (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -8638,7 +8638,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5ijwk1wot",
+            "id": "z23-p-idpfeacc3",
             "title": "Pokémon Army (hard version) (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -8648,7 +8648,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-is4kfae1w",
+            "id": "z23-p-gdz2x5evg",
             "title": "Beautiful Subarrays (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -8658,7 +8658,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-8t939bmkr",
+            "id": "z23-p-gll7evbg0",
             "title": "0-1-Tree (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -8668,7 +8668,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-007g8yfg1",
+            "id": "z23-p-ttqsouluf",
             "title": "Ivan and Burgers (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -8678,7 +8678,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-f0niyd39z",
+            "id": "z23-p-jgm4c87aj",
             "title": "Partition Game (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -8688,7 +8688,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-gh5jnkykk",
+            "id": "z23-p-205dbpfd3",
             "title": "Three Occurrences (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -8698,7 +8698,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jxf8lbnx9",
+            "id": "z23-p-ygtl16n76",
             "title": "Maximum Subsequence (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8708,7 +8708,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-lbpj2hn51",
+            "id": "z23-p-a4v12hl6d",
             "title": "Vanya and Scales (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -8718,7 +8718,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dgbbl9ky2",
+            "id": "z23-p-unegr3giy",
             "title": "Dasha and Nightmares (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -8728,7 +8728,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-yyhezzb48",
+            "id": "z23-p-plowhshsm",
             "title": "Anya and Cubes (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -8738,7 +8738,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-boxk2umvz",
+            "id": "z23-p-rf5v3kmwg",
             "title": "Red-Black Number (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -8748,7 +8748,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-8goiogjin",
+            "id": "z23-p-3fd3lxtav",
             "title": "In Search of Truth (Easy Version) (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -8758,7 +8758,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ub7c6rdrt",
+            "id": "z23-p-vevgfnjdc",
             "title": "Wise Men (Easy Version) (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -8768,7 +8768,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-lhs3chn9h",
+            "id": "z23-p-66mlt1aps",
             "title": "Mother of Dragons (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -8778,7 +8778,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-v9shpqbyd",
+            "id": "z23-p-nksydwpyg",
             "title": "Interesting Sections (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -8788,7 +8788,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-crzx7ph9k",
+            "id": "z23-p-1ppyiplrv",
             "title": "Billion Players Game (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -8798,7 +8798,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-myim6aiaw",
+            "id": "z23-p-jp4osbjo9",
             "title": "Searching Local Minimum (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -8808,7 +8808,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-r9ofwihmo",
+            "id": "z23-p-6kkiakygj",
             "title": "Ruler (hard version) (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -8818,7 +8818,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-vezews8nx",
+            "id": "z23-p-5m10907zw",
             "title": "Arithmetics Competition (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -8828,7 +8828,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-4jfh50cfl",
+            "id": "z23-p-vdxr11wd0",
             "title": "Devu and his Brother (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -8838,7 +8838,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-qpace5kn8",
+            "id": "z23-p-y9mnfty8a",
             "title": "Primitive Primes (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8848,7 +8848,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-oieioa5qg",
+            "id": "z23-p-gwg28z03d",
             "title": "Joking (Easy Version) (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -8858,7 +8858,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-siczfhg3l",
+            "id": "z23-p-f4e1bphg0",
             "title": "No Mind To Think (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -8868,7 +8868,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-9tsirv5hy",
+            "id": "z23-p-updzqhn5w",
             "title": "Reading Books (hard version) (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -8890,7 +8890,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-cild7nu0n",
+            "id": "z23-p-gircj3u9f",
             "title": "2+ doors (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -8900,7 +8900,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ysckktlsd",
+            "id": "z23-p-c2pr156wp",
             "title": "Unusual Matrix (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -8910,7 +8910,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-obe7ladud",
+            "id": "z23-p-uoo4x9fkk",
             "title": "Innokenty and a Football League (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -8920,7 +8920,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-b9qj33wnh",
+            "id": "z23-p-22qfjigyl",
             "title": "The Road to Berland is Paved With Good Intentions (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -8930,7 +8930,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-2vy0iqp6y",
+            "id": "z23-p-it960xevv",
             "title": "±1 (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -8940,7 +8940,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-knx3rxi5x",
+            "id": "z23-p-44lvjhtly",
             "title": "National Property (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -8950,7 +8950,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-hhps9pavm",
+            "id": "z23-p-e65nb32w9",
             "title": "Ring Road 2 (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -8960,7 +8960,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-0z9kbw7z5",
+            "id": "z23-p-dfpc9ugab",
             "title": "Cars  (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -8970,7 +8970,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zsl9h0og5",
+            "id": "z23-p-suf5vrbq2",
             "title": "Radio Stations (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -8980,7 +8980,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ybv4phwmw",
+            "id": "z23-p-hiqfcisue",
             "title": "One-Four Overload (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -8990,7 +8990,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-tb5yjbbc0",
+            "id": "z23-p-lgbwdawga",
             "title": "AquaMoon and Permutations (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -9000,7 +9000,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-f33lbqu9j",
+            "id": "z23-p-bp5xyztgb",
             "title": "Facetook Priority Wall (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9010,7 +9010,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-pdzi0f4oc",
+            "id": "z23-p-k8rz4lai9",
             "title": "Catch Overflow! (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -9020,7 +9020,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-6d5urguft",
+            "id": "z23-p-09perd2wz",
             "title": "Title (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -9030,7 +9030,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ik1aph8fm",
+            "id": "z23-p-t4ehj3dx2",
             "title": "Bill Total Value (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -9040,7 +9040,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zxdwn5ti9",
+            "id": "z23-p-6l5a0opbe",
             "title": "Text Messaging (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -9050,7 +9050,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-8sm5uvhr9",
+            "id": "z23-p-fdwpz2onh",
             "title": "Bracket Sequence (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -9060,7 +9060,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-w6fkcbv7j",
+            "id": "z23-p-3cl2btwx7",
             "title": "Rebus (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -9070,7 +9070,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-v1gj86mod",
+            "id": "z23-p-fzs01f0oc",
             "title": "Bitwise Formula (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -9080,7 +9080,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-0w9k0fg26",
+            "id": "z23-p-z0oqb1794",
             "title": "Double Bracket Sequence (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -9090,7 +9090,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ezl1v41i3",
+            "id": "z23-p-q4o41iwng",
             "title": "Defining Macros (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -9100,7 +9100,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-4y0i9qsmk",
+            "id": "z23-p-yw6m56j5w",
             "title": "Unambiguous Arithmetic Expression (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -9122,7 +9122,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-vtwwckg0d",
+            "id": "z23-p-ahr4dqsqd",
             "title": "Maple and Tree Beauty (Hard Version) (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -9132,7 +9132,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-vhun7fijz",
+            "id": "z23-p-6iqznv5gx",
             "title": "Mocha and Stars (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -9142,7 +9142,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ci460xuwj",
+            "id": "z23-p-vmq5m1f4t",
             "title": "Card Game (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -9152,7 +9152,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ila6pn7wc",
+            "id": "z23-p-u9xymdgeu",
             "title": "Placing Rooks (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -9162,7 +9162,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-4jxsmqagz",
+            "id": "z23-p-bge432t3c",
             "title": "Binary Subsequence Value Sum (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -9172,7 +9172,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-d0b8jfa41",
+            "id": "z23-p-tja2ai2hn",
             "title": "Digital Village (Easy Version) (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -9182,7 +9182,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-uqizz13u2",
+            "id": "z23-p-tvommjbwl",
             "title": "Nikita and Order Statistics (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -9192,7 +9192,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3jt7cl5dy",
+            "id": "z23-p-9lcknpl4m",
             "title": "Lucky Tickets (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -9202,7 +9202,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-s691rp3cw",
+            "id": "z23-p-6agxzi4xm",
             "title": "Fuzzy Search (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -9212,7 +9212,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jckj2dmik",
+            "id": "z23-p-vz9wk6tri",
             "title": "The Three Little Pigs (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -9222,7 +9222,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5wtwzgzzb",
+            "id": "z23-p-dtg62k6uj",
             "title": "Binary Table (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -9232,7 +9232,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-pmkkkd9bz",
+            "id": "z23-p-nqhsgylrm",
             "title": "Running Competition (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -9242,7 +9242,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5kyraxbtn",
+            "id": "z23-p-jk909ut68",
             "title": "PermuTree (hard version) (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -9252,7 +9252,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-f50a8yo3n",
+            "id": "z23-p-r3uw0lsjy",
             "title": "Clusterization Counting (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -9262,7 +9262,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zarqv4mj5",
+            "id": "z23-p-7jm74mk5e",
             "title": "Bandit Blues (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -9272,7 +9272,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-vbj0efhnl",
+            "id": "z23-p-kz89m64k2",
             "title": "The Child and Binary Tree (3100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9282,7 +9282,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-phg061bun",
+            "id": "z23-p-n3lwsfgja",
             "title": "PolandBall and Many Other Balls (3200)",
             "completed": false,
             "difficulty": "Hard",
@@ -9304,7 +9304,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-jw2la6zsu",
+            "id": "z23-p-hjvgadsph",
             "title": "Substring (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -9314,7 +9314,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-rc48ian03",
+            "id": "z23-p-dop9jhlmt",
             "title": "Beautiful Graph (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -9324,7 +9324,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-qslfd4yuk",
+            "id": "z23-p-cyt4edexg",
             "title": "SlavicG's Favorite Problem (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -9334,7 +9334,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ygbi48z8a",
+            "id": "z23-p-u6ws5hg0t",
             "title": "Minimum Maximum Distance (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -9344,7 +9344,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-so2ybnrhy",
+            "id": "z23-p-rfhtpggck",
             "title": "The Number of Imposters (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -9354,7 +9354,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-gch5unqsb",
+            "id": "z23-p-f1vz6xfir",
             "title": "Reachability and Tree (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -9364,7 +9364,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-wsd4fug5h",
+            "id": "z23-p-s33znn4ad",
             "title": "A Wide, Wide Graph (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -9374,7 +9374,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-lwky3isix",
+            "id": "z23-p-8v7xj1crg",
             "title": "Rendez-vous de Marian et Robin (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -9384,7 +9384,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dgucjl4lu",
+            "id": "z23-p-lnejjwkiy",
             "title": "To Go Or Not To Go? (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -9394,7 +9394,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jaag4gp8e",
+            "id": "z23-p-1786bm1t0",
             "title": "Almost Acyclic Graph (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -9404,7 +9404,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-83u8s05ll",
+            "id": "z23-p-f70fs4h2o",
             "title": "Three States (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -9414,7 +9414,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-w6mj28kgd",
+            "id": "z23-p-fsyja3axo",
             "title": "Balanced Tree (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -9424,7 +9424,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-tcpc0vvas",
+            "id": "z23-p-nhbgrsa9c",
             "title": "Tourist Reform (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -9434,7 +9434,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-euwhcs9dr",
+            "id": "z23-p-br7diis3u",
             "title": "Tanya and Password (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -9444,7 +9444,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-1c8kukn40",
+            "id": "z23-p-hv9usse08",
             "title": "Subset with Zero Sum (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -9454,7 +9454,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-8hhbeho4g",
+            "id": "z23-p-v6q6pli33",
             "title": "The Hidden Pair (Hard Version) (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -9464,7 +9464,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-wm5kuyh2g",
+            "id": "z23-p-c5mw3gbbv",
             "title": "Capitalism (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -9486,7 +9486,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-pawwl96vu",
+            "id": "z23-p-2l56vdp5f",
             "title": "Secret Santa (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -9496,7 +9496,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-q48b3mbpv",
+            "id": "z23-p-2sexcxob1",
             "title": "New Year Permutation (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -9506,7 +9506,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-419c3zyoa",
+            "id": "z23-p-jotkek566",
             "title": "Menorah (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -9516,7 +9516,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-xa4i6vmwn",
+            "id": "z23-p-yua3hybe6",
             "title": "Shifting String (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -9526,7 +9526,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-j4mwoyajw",
+            "id": "z23-p-lsi941clw",
             "title": "Book (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -9536,7 +9536,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-cx06cz5h3",
+            "id": "z23-p-mgbkxpi55",
             "title": "Bicycles (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -9546,7 +9546,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fv8mq39wj",
+            "id": "z23-p-9y3pavkwt",
             "title": "Friendly Spiders (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -9556,7 +9556,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-cjx2o6jue",
+            "id": "z23-p-5zpxbbn2g",
             "title": "TediousLee (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -9566,7 +9566,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-c86rxnxub",
+            "id": "z23-p-q2mhzbx6y",
             "title": "Ehab's Last Corollary (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9576,7 +9576,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-sgteyimqm",
+            "id": "z23-p-ozf6jc2zp",
             "title": "Turtle and a MEX Problem (Hard Version) (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9586,7 +9586,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-arz22p9cw",
+            "id": "z23-p-wxu75gjne",
             "title": "Monotone Subsequence (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9596,7 +9596,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-sx0049c91",
+            "id": "z23-p-klrr83djy",
             "title": "Segment Tree (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9606,7 +9606,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-e2tl7qmzm",
+            "id": "z23-p-kk2cra7ri",
             "title": "Timofey and Black-White Tree (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9616,7 +9616,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-hv0fod554",
+            "id": "z23-p-4awruz7oe",
             "title": "Monsters (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9626,7 +9626,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-e2tyr0mxe",
+            "id": "z23-p-zcihd1zur",
             "title": "Phoenix and Earthquake (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -9636,7 +9636,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-feis1w9w1",
+            "id": "z23-p-znuqv502s",
             "title": "Quantifier Question (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -9646,7 +9646,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-a0ry0ny4o",
+            "id": "z23-p-t3lmgpdhn",
             "title": "Minecraft (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -9668,7 +9668,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-59g04mrku",
+            "id": "z23-p-bb4qskelp",
             "title": "Find the Car (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9678,7 +9678,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-znsx3h57y",
+            "id": "z23-p-7hrfupx2e",
             "title": "Sagheer and Nubian Market (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9688,7 +9688,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-9rtdkyz47",
+            "id": "z23-p-hvzc59y2x",
             "title": "Air Conditioner (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9698,7 +9698,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-d7ch088kq",
+            "id": "z23-p-sg8t9n4uj",
             "title": "Sage's Birthday (hard version) (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9708,7 +9708,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-lgkbkuz3n",
+            "id": "z23-p-a9trl0bqi",
             "title": "The Morning Star (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9718,7 +9718,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-wchrsuc1y",
+            "id": "z23-p-xotypsk2n",
             "title": "Close Tuples (easy version) (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9728,7 +9728,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-mg5xoytse",
+            "id": "z23-p-wzuwdvzvy",
             "title": "Quests (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9738,7 +9738,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-72403md16",
+            "id": "z23-p-mvyb4k9as",
             "title": "Stay or Mirror (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -9748,7 +9748,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-l66mr38q3",
+            "id": "z23-p-xddymqr58",
             "title": "Match Points (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -9758,7 +9758,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dimlvdjjr",
+            "id": "z23-p-k4ho5qhgk",
             "title": "Minimizing Difference (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -9768,7 +9768,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7qxf2gwyf",
+            "id": "z23-p-31ootops2",
             "title": "Pairs of Segments (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -9778,7 +9778,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-2plrboih2",
+            "id": "z23-p-0dm3m9olr",
             "title": "Maximum Value (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9788,7 +9788,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-tmb7nfb3m",
+            "id": "z23-p-qx3ehg0h9",
             "title": "Restorer Distance (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9798,7 +9798,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-q7s8nid03",
+            "id": "z23-p-x7y30h9jm",
             "title": "Physical Education Lessons (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -9808,7 +9808,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fk8w4tmoa",
+            "id": "z23-p-ppi97w902",
             "title": "Mani and Segments (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -9818,7 +9818,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-mzx2hgylt",
+            "id": "z23-p-r0p6qrr9r",
             "title": "Another Exercise on Graphs (hard version) (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -9828,7 +9828,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-k16n10rjh",
+            "id": "z23-p-02rebtp0g",
             "title": "Difficult Mountain (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -9850,7 +9850,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-8tzru2oqe",
+            "id": "z23-p-edist1yo0",
             "title": "Sweets Eating (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9860,7 +9860,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-6j1iahqam",
+            "id": "z23-p-zsaiupa9i",
             "title": "13th Labour of Heracles (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9870,7 +9870,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-z7me3ovxb",
+            "id": "z23-p-kdxd0as41",
             "title": "Boxers (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9880,7 +9880,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-wz8i2d48j",
+            "id": "z23-p-30j2jd14j",
             "title": "Fight with Monsters (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9890,7 +9890,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-2mid5ech8",
+            "id": "z23-p-yuk8invk8",
             "title": "Breach of Faith (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9900,7 +9900,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ugwfe9qoc",
+            "id": "z23-p-kd9cwzktb",
             "title": "Linova and Kingdom (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -9910,7 +9910,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fb98x20d3",
+            "id": "z23-p-a42u7kcc9",
             "title": "Phoenix and Distribution (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -9920,7 +9920,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5s3nidx99",
+            "id": "z23-p-h8vshxij5",
             "title": "Reading Books (easy version) (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -9930,7 +9930,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-4r2hqgm6u",
+            "id": "z23-p-czoa37a2t",
             "title": "Weights Distributing (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9940,7 +9940,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-egdsy12yv",
+            "id": "z23-p-9acy0s2a0",
             "title": "Present (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9950,7 +9950,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-kpv47t8kt",
+            "id": "z23-p-5ldheebl7",
             "title": "Boring Segments (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9960,7 +9960,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-uzh5r8i1d",
+            "id": "z23-p-8lnip5969",
             "title": "01 Tree (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9970,7 +9970,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5cqw84v4s",
+            "id": "z23-p-74zvov6mv",
             "title": "Kate and imperfection (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -9980,7 +9980,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-tn0j485m1",
+            "id": "z23-p-oy9jd97sf",
             "title": "Carrots for Rabbits (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -9990,7 +9990,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-m8m3d2w4e",
+            "id": "z23-p-7c21ita2z",
             "title": "Mice and Holes (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -10000,7 +10000,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-021rgdfnp",
+            "id": "z23-p-4dgqahhbf",
             "title": "Velepin and Marketing (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -10010,7 +10010,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-glvm47ojj",
+            "id": "z23-p-x2q32dhe8",
             "title": "Minimal String Xoration (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -10032,7 +10032,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-b88yy40xw",
+            "id": "z23-p-dz44j9irh",
             "title": "Passable Paths (hard version) (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10042,7 +10042,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-gat1lyoxx",
+            "id": "z23-p-kc8tk9g12",
             "title": "1-Trees and Queries (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10052,7 +10052,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-k0jersg6w",
+            "id": "z23-p-o0ii5jut6",
             "title": "Pair of Numbers (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10062,7 +10062,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-kgn8gka07",
+            "id": "z23-p-8s0q4zwpl",
             "title": "Danil and a Part-time Job (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10072,7 +10072,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-p7kg5hzld",
+            "id": "z23-p-i0i5r4k6g",
             "title": "R2D2 and Droid Army (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10082,7 +10082,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-1itik9r6v",
+            "id": "z23-p-ue50m4f9x",
             "title": "New Year Concert (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10092,7 +10092,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-x1cws8q7s",
+            "id": "z23-p-1kk6xwbc6",
             "title": "Empty Graph (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10102,7 +10102,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-n0afdy0k6",
+            "id": "z23-p-jb5rltct6",
             "title": "Binary Subsequence Rotation (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10112,7 +10112,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fs5ycjbkd",
+            "id": "z23-p-w96of28yd",
             "title": "Sign on Fence (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -10122,7 +10122,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-qh9bw5wby",
+            "id": "z23-p-zroay1hts",
             "title": "Nastia Plays with a Tree (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -10132,7 +10132,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5v2yxajmk",
+            "id": "z23-p-wd922ukfh",
             "title": "GukiZ and GukiZiana (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -10142,7 +10142,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-sgwl09rq4",
+            "id": "z23-p-pe5bdce2v",
             "title": "Stack Exterminable Arrays (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -10152,7 +10152,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-i4g1diql1",
+            "id": "z23-p-w2269ep2i",
             "title": "Nearest Leaf (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -10162,7 +10162,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-j2s5g5zcq",
+            "id": "z23-p-q6plz1k8m",
             "title": "e-Government (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -10172,7 +10172,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-v3tor6lvx",
+            "id": "z23-p-9drolaarx",
             "title": "Pastoral Oddities (3000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10182,7 +10182,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jezv6hzyi",
+            "id": "z23-p-r6s18txoe",
             "title": "Archaeology (3100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10192,7 +10192,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5hzti3cig",
+            "id": "z23-p-eb1u1lqu9",
             "title": "Tourists (3200)",
             "completed": false,
             "difficulty": "Hard",
@@ -10214,7 +10214,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-5i8wahnlm",
+            "id": "z23-p-sln4y0vbm",
             "title": "Array Shrinking (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10224,7 +10224,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ea8mk38zv",
+            "id": "z23-p-cjupohbhs",
             "title": "Gellyfish and Camellia Japonica (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10234,7 +10234,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-cisd5fwqy",
+            "id": "z23-p-ikrbrewbz",
             "title": "Watching Fireworks is Fun (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10244,7 +10244,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-gob9coabs",
+            "id": "z23-p-iro1pmq25",
             "title": "Nearest Beautiful Number (hard version) (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10254,7 +10254,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-302e7jxfg",
+            "id": "z23-p-h1y0iis18",
             "title": "Painting the Array II (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10264,7 +10264,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-0wvu5b4ju",
+            "id": "z23-p-tiy6s27jk",
             "title": "Med-imize (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -10274,7 +10274,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-53use14hm",
+            "id": "z23-p-902s3epo7",
             "title": "Bits And Pieces (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -10284,7 +10284,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-2lntqv33y",
+            "id": "z23-p-ssnrdz3on",
             "title": "Greedy Grid Counting (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -10294,7 +10294,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7yf7vsw8m",
+            "id": "z23-p-lxidgudy2",
             "title": "PolandBall and Gifts (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -10304,7 +10304,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-9cpa8yta9",
+            "id": "z23-p-qwb96wfss",
             "title": "New Year and Old Subsequence (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -10314,7 +10314,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-1vt3lzh1w",
+            "id": "z23-p-rwyir4svq",
             "title": "Gellyfish and Forget-Me-Not (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10324,7 +10324,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-tyiw8bz0g",
+            "id": "z23-p-1b7x3zjjq",
             "title": "Victorious Coloring (Easy Version) (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10334,7 +10334,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-60mtg6eti",
+            "id": "z23-p-dqrrk2h7l",
             "title": "23 Rises Again (3100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10356,7 +10356,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-8izy3n23b",
+            "id": "z23-p-utdt5or2a",
             "title": "Not Adding (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10366,7 +10366,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-uirmntidx",
+            "id": "z23-p-i85k5yqsf",
             "title": "Strange Beauty (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10376,7 +10376,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-bn2k40cj4",
+            "id": "z23-p-r6n00xu8b",
             "title": "Prime XOR Coloring (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10386,7 +10386,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ciw3ugmsf",
+            "id": "z23-p-ifp7wi57n",
             "title": "Funny Game (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10396,7 +10396,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-nbdtvygh0",
+            "id": "z23-p-2xeaxh3lk",
             "title": "Valuable Cards (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10406,7 +10406,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-d26csmuje",
+            "id": "z23-p-sd57icyif",
             "title": "K-good (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10416,7 +10416,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-9c77s35fr",
+            "id": "z23-p-bltj1vm81",
             "title": "Divisible Numbers (hard version) (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10426,7 +10426,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-6evxxn3rs",
+            "id": "z23-p-vmxsprtn0",
             "title": "XOR-factorization (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10436,7 +10436,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-xfube3yt9",
+            "id": "z23-p-l3oq317lz",
             "title": "Please, another Queries on Array? (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -10446,7 +10446,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fugtt1ja7",
+            "id": "z23-p-s03e3k51h",
             "title": "GCD Counting (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -10456,7 +10456,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-1rcrpywyl",
+            "id": "z23-p-fhnfzf3mg",
             "title": "Hyperregular Bracket Strings (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -10466,7 +10466,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7ljfwdby8",
+            "id": "z23-p-frokrmqwg",
             "title": "Make It One (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -10476,7 +10476,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ndm44tlk4",
+            "id": "z23-p-lhgywrvd5",
             "title": "Cards (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -10486,7 +10486,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-kcjhrz4wk",
+            "id": "z23-p-rmeez7or0",
             "title": "Power Tower (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -10496,7 +10496,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-0kyww3qb2",
+            "id": "z23-p-dtcjfqglg",
             "title": "GCD Table (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10506,7 +10506,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-xa0oveutt",
+            "id": "z23-p-kejjqu9gw",
             "title": "Classical? (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10516,7 +10516,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7t28lzn4f",
+            "id": "z23-p-d3wixi8cj",
             "title": "Present for Vitalik the Philatelist  (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10538,7 +10538,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-j3zgpwy09",
+            "id": "z23-p-fiinj1b3s",
             "title": "Height All the Same (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10548,7 +10548,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-2qu2ljlvu",
+            "id": "z23-p-y716l3cyh",
             "title": "Arena (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10558,7 +10558,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-esnnebf31",
+            "id": "z23-p-xo4jhkw4w",
             "title": "Monocarp and the Set (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10568,7 +10568,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-0zy0ftu5o",
+            "id": "z23-p-j85wgzttr",
             "title": "Phoenix and Computers (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -10578,7 +10578,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-hb8q876g9",
+            "id": "z23-p-xqvtjbjmq",
             "title": "Sum of Paths (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -10588,7 +10588,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-4sy29v116",
+            "id": "z23-p-h2x7vg81g",
             "title": "Devu and Flowers (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -10598,7 +10598,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-lwb31l1ab",
+            "id": "z23-p-ttqr6844e",
             "title": "Crypto Lights (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -10608,7 +10608,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jkjp3gndx",
+            "id": "z23-p-gz4dnsksq",
             "title": "Cowmpany Cowmpensation (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -10618,7 +10618,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-uf0yzlo78",
+            "id": "z23-p-hfdrfi4xo",
             "title": "Partitions (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -10628,7 +10628,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zfnlldeba",
+            "id": "z23-p-tqunuvewi",
             "title": "Hamed and AghaBalaSar (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -10638,7 +10638,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3cfpvx438",
+            "id": "z23-p-ljrbl5alk",
             "title": "Keep XOR Low (3000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10648,7 +10648,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-hv33by6wp",
+            "id": "z23-p-5kgjwicjm",
             "title": "Lust (3000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10658,7 +10658,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-pegs9uh1l",
+            "id": "z23-p-e6nit27n1",
             "title": "Tree Parking (3300)",
             "completed": false,
             "difficulty": "Hard",
@@ -10680,7 +10680,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-4pd8r48lc",
+            "id": "z23-p-464wxl58f",
             "title": "Random Query (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -10690,7 +10690,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-70enoftsq",
+            "id": "z23-p-gqqz9mdt6",
             "title": "Checkpoints (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10700,7 +10700,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-7gv58jisq",
+            "id": "z23-p-zwc8d7g6c",
             "title": "Edge Split (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10710,7 +10710,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-xshpz0555",
+            "id": "z23-p-ove72fjgm",
             "title": "Guess Game (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10720,7 +10720,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-rv4bahp16",
+            "id": "z23-p-xgbqxapwq",
             "title": "Buratsuta 3 (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10730,7 +10730,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3vh9ptn96",
+            "id": "z23-p-mp20wtatp",
             "title": "Beautiful Tree (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -10740,7 +10740,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-j6s97g7la",
+            "id": "z23-p-hcko796yp",
             "title": "Intersection and Union (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -10750,7 +10750,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-9ul5oesm0",
+            "id": "z23-p-z2d8nzryg",
             "title": "Hossam and Range Minimum Query (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -10760,7 +10760,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-87epsqer9",
+            "id": "z23-p-8cigt9u5d",
             "title": "X-OR (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -10770,7 +10770,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-h7ih5xml3",
+            "id": "z23-p-bglyfss4e",
             "title": "Tree Queries (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -10780,7 +10780,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-nc31r6uzr",
+            "id": "z23-p-mwlo3m8re",
             "title": "Kazaee (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -10790,7 +10790,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-s40batwq8",
+            "id": "z23-p-cenltmwdb",
             "title": "Battalion Strength (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -10800,7 +10800,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-novmu2feh",
+            "id": "z23-p-srh20uxng",
             "title": "Odd Mineral Resource (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10810,7 +10810,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-a1p0bxh8v",
+            "id": "z23-p-6seekpu4b",
             "title": "New Year and Conference (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10820,7 +10820,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3rawd8pj3",
+            "id": "z23-p-oth2h5g9q",
             "title": "Preorder (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10830,7 +10830,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-j2k9jenib",
+            "id": "z23-p-gije8ulrz",
             "title": "Funny Substrings (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10840,7 +10840,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-9tkklf01o",
+            "id": "z23-p-x01d0xhl8",
             "title": "Two strings (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10850,7 +10850,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-aug21dc6k",
+            "id": "z23-p-4fuqk9t33",
             "title": "Check Transcription (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10860,7 +10860,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-avnbjvroy",
+            "id": "z23-p-i497t5b0z",
             "title": "Test (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -10870,7 +10870,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-h3yndorye",
+            "id": "z23-p-e8o4mxhaj",
             "title": "Quadratic Set (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10880,7 +10880,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-s9nsxxqse",
+            "id": "z23-p-87fzu13b6",
             "title": "Misha and LCP on Tree (3000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10890,7 +10890,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fgc9lb5di",
+            "id": "z23-p-rmq0jaacu",
             "title": "Minimum Difference (3100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10912,7 +10912,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-sgsfg7xu7",
+            "id": "z23-p-3wlmhzilx",
             "title": "Grouped Carriages (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10922,7 +10922,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-uiy5goiyy",
+            "id": "z23-p-bb9t8fiqn",
             "title": "Paired Payment (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -10932,7 +10932,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-rzj7b0u21",
+            "id": "z23-p-4mtnxo1hb",
             "title": "Delivery Bears (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -10942,7 +10942,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fvjbine3d",
+            "id": "z23-p-fylrpt00c",
             "title": "One-Way Reform (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -10952,7 +10952,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-2vu8potzi",
+            "id": "z23-p-iy4iumy7g",
             "title": "Little C Loves 3 II (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -10962,7 +10962,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5xjlekrzq",
+            "id": "z23-p-3mfynqr9q",
             "title": "Kirill and Company (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -10972,7 +10972,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-2g5owf2rw",
+            "id": "z23-p-kauipnr2s",
             "title": "Two Melodies (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -10982,7 +10982,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-es8tgmo1q",
+            "id": "z23-p-gc2tt4voa",
             "title": "Strange Set (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -10992,7 +10992,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5um5bqpp2",
+            "id": "z23-p-krovtcb3a",
             "title": "Wine Factory (Hard Version) (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -11002,7 +11002,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-hxpbw4xg3",
+            "id": "z23-p-4wrzr6l2t",
             "title": "April Fools' Problem (hard) (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -11012,7 +11012,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-su28hhwft",
+            "id": "z23-p-8pgt42yo9",
             "title": "Captain America (3100)",
             "completed": false,
             "difficulty": "Hard",
@@ -11022,7 +11022,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5b429u6ho",
+            "id": "z23-p-1e871c2lx",
             "title": "ALT (3200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11032,7 +11032,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-02g6rg9j3",
+            "id": "z23-p-1j0xok35q",
             "title": "Chests and Keys (3200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11042,7 +11042,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-t9gqgyzs3",
+            "id": "z23-p-2945zfgsg",
             "title": "Swap to Rearrange (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -11052,7 +11052,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-vi2mjln0p",
+            "id": "z23-p-8lnn2cgxp",
             "title": "Moment of Bloom (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11062,7 +11062,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-2bini7zga",
+            "id": "z23-p-7nhoiitie",
             "title": "Serge and Dining Room (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11072,7 +11072,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-0db5g0pdl",
+            "id": "z23-p-lp3igrpu4",
             "title": "Hamiltonian Spanning Tree (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11082,7 +11082,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-lac1h6ega",
+            "id": "z23-p-0kx3pk25u",
             "title": "Fair Share (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -11092,7 +11092,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-s1dni3orq",
+            "id": "z23-p-3c38g2k7h",
             "title": "Session in BSU (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -11102,7 +11102,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-2h04cln23",
+            "id": "z23-p-jkdhbn95e",
             "title": "MST with Matching (3100)",
             "completed": false,
             "difficulty": "Hard",
@@ -11112,7 +11112,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-yfmh0qrm0",
+            "id": "z23-p-q2gst9q22",
             "title": "Birthday (3200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11122,7 +11122,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-80a6kbib4",
+            "id": "z23-p-9zyqnuxvc",
             "title": "Showing Off (3300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11144,7 +11144,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-2szqsrm8y",
+            "id": "z23-p-0f7x8uegh",
             "title": "Winter is here (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11154,7 +11154,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zdpjs3op1",
+            "id": "z23-p-9gphttumq",
             "title": "Sasha and Array (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11164,7 +11164,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-asnb0x65g",
+            "id": "z23-p-7eejp9e2a",
             "title": "Anton and School - 2 (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11174,7 +11174,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-9s9ipd5rv",
+            "id": "z23-p-hb6mjafcp",
             "title": "Another Filling the Grid (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11184,7 +11184,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3wpe35dy8",
+            "id": "z23-p-q9cqn4azr",
             "title": "Mike and Foam (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11194,7 +11194,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ivcpzz0dl",
+            "id": "z23-p-mmtrj4toi",
             "title": "Product Oriented Recurrence (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11204,7 +11204,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-8f69oro27",
+            "id": "z23-p-c08z3cfb8",
             "title": "Gellyfish and Eternal Violet (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -11214,7 +11214,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-gbo0rmr5n",
+            "id": "z23-p-f1ivopajy",
             "title": "Latin Square (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -11224,7 +11224,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-nd55i73iu",
+            "id": "z23-p-ovc8970zf",
             "title": "Tenzing and Random Operations (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -11234,7 +11234,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-nqbwp1iok",
+            "id": "z23-p-b4un92q8q",
             "title": "Secure Password (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -11256,7 +11256,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-2fffmdsqa",
+            "id": "z23-p-c09jscujo",
             "title": "Non-Decreasing Dilemma (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11266,7 +11266,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-onic45l7r",
+            "id": "z23-p-kpql69up8",
             "title": "Special Segments of Permutation (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11276,7 +11276,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-bfgjmnc6g",
+            "id": "z23-p-bmhx1nnvb",
             "title": "Level Up (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11286,7 +11286,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-rcfotp9m7",
+            "id": "z23-p-r2mtng12o",
             "title": "Unique Median (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11296,7 +11296,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-y6ct4d2dp",
+            "id": "z23-p-gsfwwqe8n",
             "title": "MEX Queries (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11306,7 +11306,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ek6ros9cf",
+            "id": "z23-p-a4fwi35pm",
             "title": "Till I Collapse (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -11316,7 +11316,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-h7genuuh7",
+            "id": "z23-p-86ukeb9gf",
             "title": "Close Vertices (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -11326,7 +11326,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-zkvb24p56",
+            "id": "z23-p-6r9l908ke",
             "title": "Permutation (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -11336,7 +11336,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-4ur4dding",
+            "id": "z23-p-x6zy55ljg",
             "title": "Tree Generator™ (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -11346,7 +11346,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-lwql6aoba",
+            "id": "z23-p-3muo8375y",
             "title": "Best Edge Weight (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -11368,7 +11368,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-1ikvx6g82",
+            "id": "z23-p-3c7lhqmb1",
             "title": "Orac and Medians (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -11378,7 +11378,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-61ogqgxca",
+            "id": "z23-p-cfr6d2utx",
             "title": "Another Array Problem (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -11388,7 +11388,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-liztkrnqp",
+            "id": "z23-p-5hn7s9dj8",
             "title": "Breaking the Wall (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -11398,7 +11398,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-rpwtkh69i",
+            "id": "z23-p-kcl919vig",
             "title": "Make Them Equal (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -11408,7 +11408,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-0s23om1x2",
+            "id": "z23-p-ia8v7w7hu",
             "title": "Buying Jewels (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -11418,7 +11418,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-t2fq0mgvj",
+            "id": "z23-p-mo4kaniwu",
             "title": "XOR-gun (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -11428,7 +11428,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-gbnd4rv2r",
+            "id": "z23-p-admr15j6b",
             "title": "Coloring Edges (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -11438,7 +11438,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-n290mhit5",
+            "id": "z23-p-zgbzva145",
             "title": "Xor-MST (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11448,7 +11448,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-741onbm34",
+            "id": "z23-p-w5l3c8fqj",
             "title": "Omkar and Landslide (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -11458,7 +11458,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-sxg1zd4u2",
+            "id": "z23-p-ry57omd2e",
             "title": "Inversion SwapSort (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -11468,7 +11468,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-a91rzrlil",
+            "id": "z23-p-aqpr5qal8",
             "title": "Hack it! (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -11478,7 +11478,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-chcvt8plk",
+            "id": "z23-p-uufp7wqmu",
             "title": "Jzzhu and Apples (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -11488,7 +11488,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-klh9jkh6i",
+            "id": "z23-p-0y2f3zgic",
             "title": "Mike and Fish (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -11498,7 +11498,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-lmca6s1ig",
+            "id": "z23-p-1syqxaqt9",
             "title": "Arpa’s overnight party and Mehrdad’s silent entering (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -11508,7 +11508,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-79i1acmfo",
+            "id": "z23-p-1g1xhkxh9",
             "title": "Game of Pairs (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -11518,7 +11518,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-tzzwd16f0",
+            "id": "z23-p-wb4dqudzr",
             "title": "Double Knapsack (3000)",
             "completed": false,
             "difficulty": "Hard",
@@ -11528,7 +11528,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-uqwsnevj9",
+            "id": "z23-p-8mh5spcml",
             "title": "Sergey's problem (3000)",
             "completed": false,
             "difficulty": "Hard",
@@ -11538,7 +11538,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ej1tn1395",
+            "id": "z23-p-6by06no1b",
             "title": "Salyg1n and Array (hard version) (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11548,7 +11548,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-szf6iwfny",
+            "id": "z23-p-r7tlhndv2",
             "title": "Guess the K-th Zero (Hard version) (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11558,7 +11558,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-5qt2f3osr",
+            "id": "z23-p-0uhl790bx",
             "title": "Arithmetic Progression (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11568,7 +11568,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3b4tj2rd9",
+            "id": "z23-p-domft81e4",
             "title": "Gold Transfer (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11578,7 +11578,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-50hygnvnz",
+            "id": "z23-p-qk8qqlnz7",
             "title": "Bitwise Queries (Hard Version) (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11588,7 +11588,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-nyki5za26",
+            "id": "z23-p-26a9soflw",
             "title": "Grid Xor (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11598,7 +11598,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-axaz9b2s2",
+            "id": "z23-p-w13ndtd4n",
             "title": "Hidden Bipartite Graph (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -11608,7 +11608,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fjwoxvdp1",
+            "id": "z23-p-2xadaogld",
             "title": "Isaac's Queries (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -11618,7 +11618,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-2i9te6lb1",
+            "id": "z23-p-92lscnjj8",
             "title": "Coffee Varieties (hard version) (3000)",
             "completed": false,
             "difficulty": "Hard",
@@ -11640,7 +11640,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-d4zx0r0ce",
+            "id": "z23-p-92z3rjlce",
             "title": "Painting Fence (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -11650,7 +11650,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-yhrr2ruuf",
+            "id": "z23-p-mfnq3p9sn",
             "title": "Magic Ship (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -11660,7 +11660,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-8y8jji55e",
+            "id": "z23-p-uccfbh7yq",
             "title": "Phoenix and Science (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -11670,7 +11670,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jsgx3bxja",
+            "id": "z23-p-qhw4iswe7",
             "title": "The Values You Can Make (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -11680,7 +11680,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-1iphb9tf7",
+            "id": "z23-p-alp9kir2a",
             "title": "Palindrome Game (hard version) (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -11690,7 +11690,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-auej0tp3e",
+            "id": "z23-p-lgs8hkige",
             "title": "The Best Vacation (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -11700,7 +11700,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3olboqt8l",
+            "id": "z23-p-9ow9pjydz",
             "title": "Clear the String (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -11710,7 +11710,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-h46wjhopy",
+            "id": "z23-p-wos3kockz",
             "title": "Three Integers (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -11720,7 +11720,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-dh415d92f",
+            "id": "z23-p-wlvnr2fbe",
             "title": "Round Subset (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -11730,7 +11730,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-ykp5rz64t",
+            "id": "z23-p-pu1flxvzz",
             "title": "Zero Remainder Sum  (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -11740,7 +11740,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fdyop74wq",
+            "id": "z23-p-ueud2ir85",
             "title": "Civilization (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -11750,7 +11750,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-cq6ca3wf0",
+            "id": "z23-p-mcgghi4zq",
             "title": "Errich-Tac-Toe (Easy Version) (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -11760,7 +11760,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-rq68g4ahc",
+            "id": "z23-p-gibekixyq",
             "title": "Moving to the Capital (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -11770,7 +11770,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-anvvi2vxo",
+            "id": "z23-p-i0rrm0jwq",
             "title": "Magic Numbers (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11780,7 +11780,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-hohwdjezu",
+            "id": "z23-p-ffdd4dbpj",
             "title": "A Simple Task (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11790,7 +11790,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-1tv84k4vq",
+            "id": "z23-p-2m0m85wj5",
             "title": "Great Vova Wall (Version 1) (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11812,7 +11812,7 @@ export const zeroTo2300Sections = [
         "title": "Problems",
         "topics": [
           {
-            "id": "z23-p-yb8w3j7st",
+            "id": "z23-p-qz9c9nq6v",
             "title": "Sonya and Problem Wihtout a Legend (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11822,7 +11822,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-udrdesmmm",
+            "id": "z23-p-jbkd5mpf5",
             "title": "Errich-Tac-Toe (Hard Version) (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11832,7 +11832,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-3351az0r6",
+            "id": "z23-p-3ehzp4ain",
             "title": "Anthem of Berland (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11842,7 +11842,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-60qmlf988",
+            "id": "z23-p-2psm91lkm",
             "title": "Rectangle Painting 1 (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11852,7 +11852,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-l247hsvek",
+            "id": "z23-p-rio2g11mk",
             "title": "Complete The Graph (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11862,7 +11862,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-tk1oms1eo",
+            "id": "z23-p-3jrqiucq2",
             "title": "Almost Triple Deletions (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11872,7 +11872,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fovjxe78p",
+            "id": "z23-p-dwbla1eg8",
             "title": "Group Projects (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -11882,7 +11882,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-236tuhs3m",
+            "id": "z23-p-3bvcwiyzs",
             "title": "Karen and Supermarket (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -11892,7 +11892,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-m382srryl",
+            "id": "z23-p-4uoste4g8",
             "title": "Mass Change Queries (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -11902,7 +11902,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-fj472oy9o",
+            "id": "z23-p-59k5p4jl1",
             "title": "Triple Attack (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -11912,7 +11912,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-jocmb652j",
+            "id": "z23-p-n1uabwq4e",
             "title": "Subset Sums (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -11922,7 +11922,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-lq1bmiatr",
+            "id": "z23-p-22uqq0k3h",
             "title": "AND Graph (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -11932,7 +11932,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-59yjictgi",
+            "id": "z23-p-aogzrv5rg",
             "title": "The Sum of the k-th Powers (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -11942,7 +11942,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "z23-p-go7s3z0kp",
+            "id": "z23-p-1syi0bxcx",
             "title": "Least Cost Bracket Sequence (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -11955,4 +11955,4 @@ export const zeroTo2300Sections = [
       }
     ]
   }
-] as any;
+];

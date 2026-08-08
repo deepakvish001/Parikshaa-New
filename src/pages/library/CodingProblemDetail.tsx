@@ -400,35 +400,142 @@ const CodingProblemDetail = () => {
   const [showCompanyTags, setShowCompanyTags] = useState(false);
   const [detailSubmission, setDetailSubmission] = useState<CodeSubmissionRow | null>(null);
 
-  return (
-      <div className="min-h-screen bg-background">
-        <Helmet>
-          <title>{problem?.title ?? "Coding Problem"} | Parikshaa</title>
-        </Helmet>
-        <div className="flex h-screen flex-col overflow-hidden">
-          {problem ? (
-            <ResizablePanelGroup direction="horizontal">
-               <ResizablePanel defaultSize={50} minSize={30}>
-                 <div className="h-full overflow-y-auto p-6">
-                   <h1 className="text-3xl font-bold">{problem.title}</h1>
-                 </div>
-               </ResizablePanel>
-               <ResizableHandle />
-               <ResizablePanel defaultSize={50} minSize={30}>
-                 <div className="h-full overflow-hidden">
-                   <MonacoEditor 
-                     language={language}
-                     value={code}
-                     onChange={setCode}
-                   />
-                 </div>
-               </ResizablePanel>
-            </ResizablePanelGroup>
-          ) : (
-            <div className="flex h-full items-center justify-center">Loading...</div>
-          )}
-        </div>
+  if (dbProblemLoading) {
+    return (
+      <div className="flex flex-col h-screen bg-background items-center justify-center gap-4">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <p className="text-sm text-muted-foreground animate-pulse">Loading problem details...</p>
       </div>
+    );
+  }
+
+  if (!problem) {
+    return (
+      <div className="flex flex-col h-screen bg-background items-center justify-center p-6 text-center">
+        <div className="h-16 w-16 rounded-full bg-destructive/10 flex items-center justify-center mb-4">
+          <X className="h-8 w-8 text-destructive" />
+        </div>
+        <h2 className="text-xl font-bold mb-2">Problem Not Found</h2>
+        <p className="text-muted-foreground mb-6 max-w-sm">
+          This problem may have been moved or unpublished.
+        </p>
+        <Button variant="outline" onClick={() => navigate("/library/problems")}>
+          Back to Library
+        </Button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col h-screen bg-background overflow-hidden">
+      <Helmet>
+        <title>{problem.title} — Coding Problems | Parikshaa</title>
+        <meta name="description" content={problem.description?.slice(0, 160)} />
+      </Helmet>
+
+      <div className="flex-1 min-h-0">
+        <ResizablePanelGroup direction="horizontal">
+          <ResizablePanel defaultSize={45} minSize={20}>
+            <div className="h-full flex flex-col border-r border-border/50">
+              <div className="flex-1 overflow-y-auto overflow-x-hidden">
+                <div className="p-6 space-y-8">
+                  <header className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <DifficultyBadge difficulty={problem.difficulty} />
+                      <div className="flex gap-1.5 flex-wrap">
+                        {problem.topics.map((t) => (
+                          <Badge key={t} variant="outline" className="text-[10px] font-medium py-0 h-5">
+                            {t}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                    <h1 className="text-2xl font-bold tracking-tight">{problem.title}</h1>
+                  </header>
+
+                  <div className="space-y-6">
+                    <div className="prose prose-sm prose-invert max-w-none">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {problem.description}
+                      </ReactMarkdown>
+                    </div>
+
+                    {problem.examples && problem.examples.length > 0 && (
+                      <div className="space-y-4">
+                        <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground/80 flex items-center gap-2">
+                          <FileText className="h-3.5 w-3.5" /> Examples
+                        </h3>
+                        <div className="space-y-4">
+                          {problem.examples.map((ex, i) => (
+                            <div key={i} className="rounded-lg border border-border/40 bg-muted/30 overflow-hidden">
+                              <div className="px-3 py-1.5 bg-muted/50 border-b border-border/30 text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
+                                Example {i + 1}
+                              </div>
+                              <div className="p-3 space-y-2 font-mono text-xs leading-relaxed">
+                                <div><span className="text-muted-foreground font-sans text-[10px] uppercase">Input:</span> <span className="text-foreground">{ex.input}</span></div>
+                                <div><span className="text-muted-foreground font-sans text-[10px] uppercase">Output:</span> <span className="text-foreground">{ex.output}</span></div>
+                                {ex.explanation && (
+                                  <div className="pt-2 mt-2 border-t border-border/20 italic text-muted-foreground/90">
+                                    <span className="not-italic font-sans font-semibold">Explanation:</span> {ex.explanation}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {problem.constraints && problem.constraints.length > 0 && (
+                      <div className="space-y-3">
+                        <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground/80">Constraints</h3>
+                        <ul className="list-disc pl-5 space-y-1.5 text-xs text-muted-foreground">
+                          {problem.constraints.map((c, i) => (
+                            <li key={i}>{c}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+              
+              <ProblemFooterBar 
+                slug={problem.slug}
+                solved={false}
+                className="shrink-0"
+              />
+            </div>
+          </ResizablePanel>
+
+          <ResizableHandle withHandle className="w-1.5 bg-background border-x border-border/30 hover:bg-primary/20 transition-colors" />
+
+          <ResizablePanel defaultSize={55} minSize={30}>
+            <div className="h-full flex flex-col">
+              <div className="flex-1 min-h-0 bg-muted/5">
+                <MonacoEditor
+                  language={language}
+                  value={code}
+                  onChange={setCode}
+                />
+              </div>
+              
+              <div className="h-[35%] border-t border-border/50 flex flex-col bg-card/30">
+                <div className="flex items-center justify-between px-4 h-10 border-b border-border/40 shrink-0">
+                  <div className="flex items-center gap-2">
+                    <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Console</span>
+                  </div>
+                </div>
+                <div className="flex-1 p-4 font-mono text-[11px] text-muted-foreground">
+                  Ready to run...
+                </div>
+              </div>
+            </div>
+          </ResizablePanel>
+        </ResizablePanelGroup>
+      </div>
+    </div>
   );
 };
 

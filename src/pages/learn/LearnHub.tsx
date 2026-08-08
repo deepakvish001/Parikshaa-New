@@ -153,6 +153,12 @@ const sections: {
   items: CardItem[];
 }[] = [
   {
+    label: "Parikshaa Premium Sheets", icon: Crown,
+    items: [
+      { title: "SDE Sheet · The Ultimate Guide 💎", subtitle: "Curated roadmap for product-based companies. 180+ problems from top interview patterns.", primary: { label: "Open Sheet", to: "/learn/sheets/sde-sheet" } },
+    ],
+  },
+  {
     label: "Pariksha DSA Sheets", icon: Layers,
     items: [
       { title: "LEVEL 0 · Problem Solving Foundation 🧱", subtitle: "if-else → loops → patterns → digits → primes → strings → arrays → matrices. Build core problem-solving fluency before DSA.", primary: { label: "Open Sheet", to: "/learn/sheets/problem-solving-foundation" } },

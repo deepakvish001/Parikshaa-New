@@ -175,7 +175,7 @@ export const SubmissionResultView = ({
               onClick={onOpenAllSubmissions} 
               className="h-10 px-4 rounded-xl gap-2 font-bold uppercase tracking-tight text-muted-foreground hover:text-foreground transition-all"
             >
-              <History className="h-4 w-4" />
+              <HistoryIcon className="h-4 w-4" />
               History
             </Button>
           )}

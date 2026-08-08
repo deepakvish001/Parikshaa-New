@@ -291,20 +291,22 @@ export const TestCaseWorkbench = ({
                           Custom {i + 1} {statusValue === "ok" ? "Ran" : "Runtime Error"}
                         </span>
                       </div>
-                      <div>
-                        <div className="text-[10px] uppercase tracking-wide text-muted-foreground font-sans">Input</div>
-                        <div className="text-foreground">{entry.input || "(empty)"}</div>
-                      </div>
-                      <div>
-                        <div className="text-[10px] uppercase tracking-wide text-muted-foreground font-sans">Got</div>
-                        <div className="text-foreground">{entry.got || "(empty)"}</div>
-                      </div>
-                      {entry.stderr && (
+                      <div className="space-y-2">
                         <div>
-                          <div className="text-[10px] uppercase tracking-wide text-muted-foreground font-sans">Error</div>
-                          <div className="text-rose-400">{entry.stderr}</div>
+                          <div className="text-[9px] font-black uppercase tracking-widest text-muted-foreground/50 mb-1">Input</div>
+                          <div className="text-foreground bg-foreground/5 p-2 rounded-lg text-[10px] border border-border/20">{entry.input || "(empty)"}</div>
                         </div>
-                      )}
+                        <div>
+                          <div className="text-[9px] font-black uppercase tracking-widest text-muted-foreground/50 mb-1">Got</div>
+                          <div className="text-foreground bg-foreground/5 p-2 rounded-lg text-[10px] border border-border/20">{entry.got || "(empty)"}</div>
+                        </div>
+                        {entry.stderr && (
+                          <div>
+                            <div className="text-[9px] font-black uppercase tracking-widest text-rose-500/50 mb-1">Error Log</div>
+                            <div className="text-rose-400 bg-rose-500/5 p-2 rounded-lg text-[10px] border border-rose-500/20">{entry.stderr}</div>
+                          </div>
+                        )}
+                      </div>
                     </TooltipContent>
                   </Tooltip>
                 ) : (

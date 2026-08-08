@@ -158,10 +158,10 @@ import {
 
 const difficultyClass = (d: string) =>
   d === "Easy"
-    ? "text-emerald-500 bg-emerald-500/10 border-emerald-500/20"
+    ? "text-emerald-500 bg-emerald-500/10 border-emerald-500/20 shadow-[0_0_15px_-5px_rgba(16,185,129,0.3)]"
     : d === "Medium"
-      ? "text-amber-500 bg-amber-500/10 border-amber-500/20"
-      : "text-rose-500 bg-rose-500/10 border-rose-500/20";
+      ? "text-amber-500 bg-amber-500/10 border-amber-500/20 shadow-[0_0_15px_-5px_rgba(245,158,11,0.3)]"
+      : "text-rose-500 bg-rose-500/10 border-rose-500/20 shadow-[0_0_15px_-5px_rgba(244,63,94,0.3)]";
 
 const LAST_OPENED_KEY = "parikshaa:coding-last-opened-submission";
 const LAST_FAILED_KEY = "parikshaa:coding-last-failed-submission";

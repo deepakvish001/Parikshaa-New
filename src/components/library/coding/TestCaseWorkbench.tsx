@@ -183,29 +183,31 @@ export const TestCaseWorkbench = ({
 
   return (
     <TooltipProvider delayDuration={200}>
-      <div className="space-y-4">
+      <div className="space-y-6">
         {/* Tab strip */}
-        <div className="flex items-center gap-1.5 flex-wrap">
+        <div className="flex items-center gap-2 flex-wrap">
           {sampleTests.map((_, i) => {
             const key: TabKey = `s-${i}`;
             const isActive = active === key;
             const entry = sampleCaseStatus?.[i];
             const statusValue = entry?.status;
+            const isPass = statusValue === "passed";
+            
             const chipButton = (
               <button
                 type="button"
                 onClick={() => setActive(key)}
                 className={cn(
-                  "h-8 pl-2 pr-3 rounded-xl text-xs font-bold uppercase tracking-tight border transition-all duration-200 inline-flex items-center gap-2",
+                  "h-9 pl-2.5 pr-4 rounded-2xl text-[11px] font-black uppercase tracking-widest border transition-all duration-300 inline-flex items-center gap-2.5",
                   isActive
-                    ? "bg-primary/10 border-primary/40 text-foreground shadow-sm shadow-primary/5"
-                    : "bg-muted/30 border-transparent text-muted-foreground/60 hover:text-foreground hover:bg-muted/50",
+                    ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20 scale-105"
+                    : "bg-muted/30 border-border/40 text-muted-foreground/60 hover:text-foreground hover:bg-muted/50 hover:border-border/80",
                 )}
               >
                 {statusValue ? (
                   <StatusBadge kind={statusValue} />
                 ) : (
-                  <div className="h-1.5 w-1.5 rounded-full bg-muted-foreground/30" />
+                  <div className={cn("h-1.5 w-1.5 rounded-full", isActive ? "bg-primary-foreground/40" : "bg-muted-foreground/30")} />
                 )}
                 <span>Case {i + 1}</span>
               </button>
@@ -269,10 +271,10 @@ export const TestCaseWorkbench = ({
               <div
                 key={c.id}
                 className={cn(
-                  "group flex items-center gap-1 h-8 pl-2.5 pr-1 rounded-xl text-xs font-bold uppercase tracking-tight border transition-all duration-200",
+                  "group flex items-center gap-1.5 h-9 pl-3 pr-1.5 rounded-2xl text-[11px] font-black uppercase tracking-widest border transition-all duration-300",
                   isActive
-                    ? "bg-primary/10 border-primary/40 text-foreground shadow-sm shadow-primary/5"
-                    : "bg-muted/30 border-transparent text-muted-foreground/60 hover:text-foreground hover:bg-muted/50",
+                    ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20 scale-105"
+                    : "bg-muted/30 border-border/40 text-muted-foreground/60 hover:text-foreground hover:bg-muted/50 hover:border-border/80",
                 )}
               >
                 {entry ? (
@@ -329,7 +331,7 @@ export const TestCaseWorkbench = ({
           })}
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="sm" className="h-8 px-3 gap-1.5 text-xs font-bold uppercase tracking-tight rounded-xl" onClick={addCustom}>
+              <Button variant="outline" size="sm" className="h-9 px-4 gap-2 text-[10px] font-black uppercase tracking-widest rounded-2xl border-dashed border-border/60 hover:border-primary/40 hover:bg-primary/5 hover:text-primary transition-all duration-300" onClick={addCustom}>
                 <Plus className="h-3.5 w-3.5" />
                 Custom
               </Button>
@@ -352,7 +354,7 @@ export const TestCaseWorkbench = ({
             <Button
               variant="default"
               size="sm"
-              className="h-8 gap-2 text-xs font-black uppercase tracking-widest rounded-xl px-4 bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20"
+              className="h-9 gap-2.5 text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl px-5 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white shadow-xl shadow-emerald-500/20 border-0 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
               onClick={onRun}
               disabled={isRunning}
               title="Run only the active test"
@@ -385,7 +387,7 @@ export const TestCaseWorkbench = ({
             <Textarea
               value={stdin}
               onChange={(e) => updateActiveInput(e.target.value)}
-              className="relative font-mono text-[13px] min-h-[140px] resize-none rounded-xl border-border/50 bg-[#0a0a0c]/80 backdrop-blur-sm focus:ring-1 focus:ring-primary/30 transition-all selection:bg-primary/20"
+              className="relative font-mono text-[13px] min-h-[140px] resize-none rounded-2xl border-border/40 bg-[#0a0a0c]/90 backdrop-blur-xl focus:ring-2 focus:ring-primary/20 transition-all selection:bg-primary/30 shadow-inner"
               placeholder="Enter your test input..."
             />
           </div>

@@ -131,54 +131,67 @@ export const SubmissionResultView = ({
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
       {/* Header: verdict + actions */}
-      <div className="flex items-center justify-between gap-4 p-5 rounded-3xl bg-gradient-to-br from-background/80 to-muted/20 border border-border/40 shadow-xl shadow-black/20 backdrop-blur-md">
-        <div className="flex items-center gap-4">
-          <div className={cn(
-            "h-14 w-14 rounded-2xl flex items-center justify-center transition-all duration-500",
-            isAccepted ? "bg-emerald-500/20 text-emerald-500 scale-110 shadow-lg shadow-emerald-500/10" : "bg-rose-500/20 text-rose-500 scale-110 shadow-lg shadow-rose-500/10"
-          )}>
-            {isAccepted ? (
-              <CheckCircle2 className="h-8 w-8" />
-            ) : (
-              <XCircle className="h-8 w-8" />
+      <div className="relative group overflow-hidden rounded-[2rem] border border-border/40 bg-[#0a0a0c]/80 backdrop-blur-2xl shadow-2xl shadow-black/40">
+        <div className={cn(
+          "absolute inset-0 bg-gradient-to-br opacity-5",
+          isAccepted ? "from-emerald-500 via-transparent to-transparent" : "from-rose-500 via-transparent to-transparent"
+        )} />
+        
+        <div className="relative flex items-center justify-between gap-6 p-6 sm:p-8">
+          <div className="flex items-center gap-6">
+            <div className={cn(
+              "h-20 w-20 rounded-[1.75rem] flex items-center justify-center transition-all duration-700 animate-in zoom-in-50 fade-in",
+              isAccepted 
+                ? "bg-emerald-500/20 text-emerald-500 shadow-[0_0_40px_-10px_rgba(16,185,129,0.4)]" 
+                : "bg-rose-500/20 text-rose-500 shadow-[0_0_40px_-10px_rgba(244,63,94,0.4)]"
+            )}>
+              {isAccepted ? (
+                <CheckCircle2 className="h-10 w-10 animate-pulse" />
+              ) : (
+                <XCircle className="h-10 w-10" />
+              )}
+            </div>
+            <div>
+              <div className={cn(
+                "text-3xl font-black uppercase tracking-tighter leading-none mb-2 bg-clip-text text-transparent bg-gradient-to-br",
+                isAccepted ? "from-emerald-400 to-emerald-600" : "from-rose-400 to-rose-600"
+              )}>
+                {isAccepted ? "Accepted" : submitResult.verdict}
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="px-2 py-0.5 rounded-full bg-foreground/5 text-[11px] font-black uppercase tracking-widest text-foreground/80">
+                  {submitResult.passed} / {submitResult.total}
+                </div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/40">
+                  Testcases Passed
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-2.5">
+            {onBackToCode && (
+              <Button 
+                size="sm" 
+                variant="outline" 
+                onClick={onBackToCode} 
+                className="h-11 px-5 rounded-2xl gap-2 font-black uppercase tracking-widest border-border/40 bg-background/50 hover:bg-muted/50 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-black/10"
+              >
+                <Code2 className="h-4 w-4" />
+                Edit Code
+              </Button>
+            )}
+            {onOpenAllSubmissions && (
+              <Button 
+                size="sm" 
+                variant="ghost" 
+                onClick={onOpenAllSubmissions} 
+                className="h-11 px-5 rounded-2xl gap-2 font-black uppercase tracking-widest text-muted-foreground hover:text-foreground hover:bg-foreground/5 transition-all"
+              >
+                <HistoryIcon className="h-4 w-4" />
+                History
+              </Button>
             )}
           </div>
-          <div>
-            <div className={cn(
-              "text-2xl font-black uppercase tracking-tighter leading-none mb-1",
-              isAccepted ? "text-emerald-500" : "text-rose-500"
-            )}>
-              {isAccepted ? "Accepted" : submitResult.verdict}
-            </div>
-            <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-muted-foreground/50">
-              <span className="text-foreground/70">{submitResult.passed} / {submitResult.total}</span>
-              <span>Testcases Passed</span>
-            </div>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          {onBackToCode && (
-            <Button 
-              size="sm" 
-              variant="outline" 
-              onClick={onBackToCode} 
-              className="h-10 px-4 rounded-xl gap-2 font-bold uppercase tracking-tight border-border/50 hover:bg-muted/50 transition-all hover:scale-105 active:scale-95"
-            >
-              <Code2 className="h-4 w-4" />
-              Code Editor
-            </Button>
-          )}
-          {onOpenAllSubmissions && (
-            <Button 
-              size="sm" 
-              variant="ghost" 
-              onClick={onOpenAllSubmissions} 
-              className="h-10 px-4 rounded-xl gap-2 font-bold uppercase tracking-tight text-muted-foreground hover:text-foreground transition-all"
-            >
-              <HistoryIcon className="h-4 w-4" />
-              History
-            </Button>
-          )}
         </div>
       </div>
 

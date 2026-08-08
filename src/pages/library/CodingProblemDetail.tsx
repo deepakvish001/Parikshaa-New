@@ -1400,28 +1400,28 @@ const CodingProblemDetail = () => {
                       case "description":
                         return chip(
                           FileText,
-                          "Question",
-                          "group-data-[state=active]/tab:text-amber-300 group-data-[state=active]/tab:bg-amber-500/10",
-                          "group-data-[state=active]/tab:text-amber-400",
-                          "after:bg-gradient-to-r after:from-amber-400 after:to-orange-500",
+                          "Statement",
+                          "group-data-[state=active]/tab:text-amber-400 group-data-[state=active]/tab:bg-amber-500/10",
+                          "group-data-[state=active]/tab:text-amber-500",
+                          "after:bg-gradient-to-r after:from-amber-400 after:to-orange-500 after:shadow-[0_0_10px_rgba(245,158,11,0.5)]",
                         );
                       case "editorial":
                         return chip(
                           BookOpen,
-                          "Solution",
-                          "group-data-[state=active]/tab:text-emerald-300 group-data-[state=active]/tab:bg-emerald-500/10",
-                          "group-data-[state=active]/tab:text-emerald-400",
-                          "after:bg-gradient-to-r after:from-emerald-400 after:to-teal-500",
+                          "Editorial",
+                          "group-data-[state=active]/tab:text-emerald-400 group-data-[state=active]/tab:bg-emerald-500/10",
+                          "group-data-[state=active]/tab:text-emerald-500",
+                          "after:bg-gradient-to-r after:from-emerald-400 after:to-teal-500 after:shadow-[0_0_10px_rgba(16,185,129,0.5)]",
                         );
                       case "submissions":
                         return chip(
                           Clock,
-                          "Submissions",
-                          "group-data-[state=active]/tab:text-sky-300 group-data-[state=active]/tab:bg-sky-500/10",
-                          "group-data-[state=active]/tab:text-sky-400",
-                          "after:bg-gradient-to-r after:from-sky-400 after:to-blue-500",
+                          "Attempts",
+                          "group-data-[state=active]/tab:text-sky-400 group-data-[state=active]/tab:bg-sky-500/10",
+                          "group-data-[state=active]/tab:text-sky-500",
+                          "after:bg-gradient-to-r after:from-sky-400 after:to-blue-500 after:shadow-[0_0_10px_rgba(56,189,248,0.5)]",
                           submissions.length > 0 ? (
-                            <span className="ml-1 rounded-md bg-sky-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-sky-300 tabular-nums">
+                            <span className="ml-2 rounded-lg bg-sky-500/20 px-2 py-0.5 text-[9px] font-black uppercase tracking-widest text-sky-400 border border-sky-500/20">
                               {submissions.length}
                             </span>
                           ) : null,
@@ -1429,21 +1429,21 @@ const CodingProblemDetail = () => {
                       case "discussion":
                         return chip(
                           MessageCircle,
-                          "Discuss",
-                          "group-data-[state=active]/tab:text-fuchsia-300 group-data-[state=active]/tab:bg-fuchsia-500/10",
-                          "group-data-[state=active]/tab:text-fuchsia-400",
-                          "after:bg-gradient-to-r after:from-fuchsia-400 after:to-pink-500",
+                          "Community",
+                          "group-data-[state=active]/tab:text-fuchsia-400 group-data-[state=active]/tab:bg-fuchsia-500/10",
+                          "group-data-[state=active]/tab:text-fuchsia-500",
+                          "after:bg-gradient-to-r after:from-fuchsia-400 after:to-pink-500 after:shadow-[0_0_10px_rgba(217,70,239,0.5)]",
                         );
                       case "notes":
                         return chip(
                           NotebookPen,
-                          "Notes",
-                          "group-data-[state=active]/tab:text-amber-300 group-data-[state=active]/tab:bg-amber-500/10",
-                          "group-data-[state=active]/tab:text-amber-400",
-                          "after:bg-gradient-to-r after:from-amber-400 after:to-orange-500",
+                          "Notebook",
+                          "group-data-[state=active]/tab:text-amber-400 group-data-[state=active]/tab:bg-amber-500/10",
+                          "group-data-[state=active]/tab:text-amber-500",
+                          "after:bg-gradient-to-r after:from-amber-400 after:to-orange-500 after:shadow-[0_0_10px_rgba(245,158,11,0.5)]",
                           notesValue.trim().length > 0 ? (
                             <span
-                              className="ml-1 h-1.5 w-1.5 rounded-full bg-amber-400"
+                              className="ml-2 h-2 w-2 rounded-full bg-amber-500 animate-pulse shadow-[0_0_8px_rgba(245,158,11,0.6)]"
                               aria-label="Has note"
                             />
                           ) : null,

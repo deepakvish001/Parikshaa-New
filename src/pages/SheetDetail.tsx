@@ -35,7 +35,6 @@ import {
   Share2,
   Eye,
   BookOpen,
-  Info,
 } from "lucide-react";
 import {
   Command,

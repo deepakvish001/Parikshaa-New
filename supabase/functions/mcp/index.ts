@@ -958,6 +958,54 @@ var publishCodingSolutionTool = defineTool24({
 // src/lib/mcp/tools/publish-coding-bundle.ts
 import { defineTool as defineTool25 } from "npm:@lovable.dev/mcp-js@0.20.1";
 import { z as z21 } from "npm:zod@^3.23.8";
+async function publishBundleCore(sb, uid, input) {
+  const p = input.problem;
+  const { data: existing, error: exErr } = await sb.from("coding_problems").select("slug").eq("slug", p.slug).maybeSingle();
+  if (exErr) return { ok: false, slug: p.slug, snapshotVersion: null, error: `Slug check: ${exErr.message}` };
+  if (existing && (input.if_exists ?? "error") === "error") {
+    return { ok: false, slug: p.slug, snapshotVersion: null, error: `Slug "${p.slug}" exists \u2014 pass if_exists:"update".` };
+  }
+  let snapshotVersion = null;
+  if (existing) {
+    const [{ data: fullRow }, { data: curTests }, { data: curStarter }, { data: curSolutions }, { data: latest }] = await Promise.all([
+      sb.from("coding_problems").select("*").eq("slug", p.slug).maybeSingle(),
+      sb.from("coding_problem_tests").select("*").eq("problem_slug", p.slug),
+      sb.from("coding_problem_starter_code").select("*").eq("problem_slug", p.slug),
+      sb.from("coding_problem_reference_solutions").select("*").eq("problem_slug", p.slug),
+      sb.from("coding_problem_versions").select("version_number").eq("slug", p.slug).order("version_number", { ascending: false }).limit(1).maybeSingle()
+    ]);
+    snapshotVersion = (latest?.version_number ?? 0) + 1;
+    const { error: snapErr } = await sb.from("coding_problem_versions").insert({
+      slug: p.slug,
+      version_number: snapshotVersion,
+      snapshot: { ...fullRow ?? {}, _solutions: curSolutions ?? [] },
+      tests_snapshot: curTests ?? [],
+      starter_snapshot: curStarter ?? [],
+      note: input.version_note ?? "Auto snapshot before bundle overwrite",
+      created_by: uid
+    });
+    if (snapErr) return { ok: false, slug: p.slug, snapshotVersion, error: `Snapshot: ${snapErr.message}` };
+  }
+  const { error: upErr } = await sb.from("coding_problems").upsert({ ...p, is_published: true, created_by: uid }, { onConflict: "slug" });
+  if (upErr) return { ok: false, slug: p.slug, snapshotVersion, error: `Publish: ${upErr.message}` };
+  await sb.from("coding_problem_tests").delete().eq("problem_slug", p.slug);
+  const { error: tErr } = await sb.from("coding_problem_tests").insert(input.tests.map((t) => ({ ...t, problem_slug: p.slug })));
+  if (tErr) return { ok: false, slug: p.slug, snapshotVersion, error: `Tests: ${tErr.message}` };
+  if (input.starter_code?.length) {
+    await sb.from("coding_problem_starter_code").delete().eq("problem_slug", p.slug);
+    const { error: sErr } = await sb.from("coding_problem_starter_code").insert(input.starter_code.map((s) => ({ ...s, problem_slug: p.slug })));
+    if (sErr) return { ok: false, slug: p.slug, snapshotVersion, error: `Starter: ${sErr.message}` };
+  }
+  const solRows = input.solutions.map((s) => ({
+    problem_slug: p.slug,
+    lang_id: s.lang_id,
+    code: s.code,
+    updated_at: (/* @__PURE__ */ new Date()).toISOString()
+  }));
+  const { error: solErr } = await sb.from("coding_problem_reference_solutions").upsert(solRows, { onConflict: "problem_slug,lang_id" });
+  if (solErr) return { ok: false, slug: p.slug, snapshotVersion, error: `Solutions: ${solErr.message}` };
+  return { ok: true, slug: p.slug, snapshotVersion, overwritten: !!existing };
+}
 var problemSchema2 = z21.object({
   slug: z21.string().min(2).max(80).regex(/^[a-z0-9-]+$/, "slug must be lowercase-with-dashes"),
   title: z21.string().min(3).max(150),
@@ -1100,9 +1148,1095 @@ var ensureAdminAccessTool = defineTool26({
   }
 });
 
-// src/lib/mcp/tools/topic-articles.ts
+// src/lib/mcp/tools/sheets.ts
 import { defineTool as defineTool27 } from "npm:@lovable.dev/mcp-js@0.20.1";
 import { z as z22 } from "npm:zod@^3.23.8";
+var createSheetTool = defineTool27({
+  name: "create_sheet",
+  title: "Create sheet (folder of problems)",
+  description: "Create a new sheet (curated folder) owned by the calling admin. Returns the folder id to use with add_problems_to_sheet.",
+  inputSchema: {
+    name: z22.string().min(2).max(120),
+    description: z22.string().max(1e3).optional(),
+    color: z22.string().max(20).optional().describe("Optional hex or tailwind token.")
+  },
+  annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: false },
+  handler: async ({ name, description, color }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const { data, error } = await gate.sb.from("user_folders").insert({ name, description, color, user_id: ctx.getUserId() }).select("id, name").single();
+    if (error) return errResult(`Create failed: ${error.message}`);
+    return jsonResult(`Created sheet "${data.name}" (id ${data.id}).`, data);
+  }
+});
+var listSheetsTool = defineTool27({
+  name: "list_sheets",
+  title: "List sheets",
+  description: "List sheets visible to the caller (own folders). Use to check for an existing sheet before creating a duplicate.",
+  inputSchema: { search: z22.string().optional() },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ search }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const sb = createUserSupabaseClient3(ctx);
+    let q = sb.from("user_folders").select("id, name, description, color, created_at, updated_at").order("updated_at", { ascending: false }).limit(100);
+    if (search) q = q.ilike("name", `%${search}%`);
+    const { data, error } = await q;
+    if (error) return errResult(error.message);
+    return jsonResult(`Found ${data?.length ?? 0} sheets:`, data);
+  }
+});
+var addProblemsToSheetTool = defineTool27({
+  name: "add_problems_to_sheet",
+  title: "Add coding problems to a sheet",
+  description: "Batch-add Parikshaa coding problems (by slug) to an existing sheet. Skips slugs that don't exist and slugs already present. Returns per-slug status.",
+  inputSchema: {
+    folder_id: z22.string().uuid(),
+    slugs: z22.array(z22.string().min(1)).min(1).max(200),
+    source: z22.string().optional().describe("Question source tag. Defaults to 'parikshaa'.")
+  },
+  annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: false },
+  handler: async ({ folder_id, slugs, source }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const { data: folder, error: fErr } = await sb.from("user_folders").select("id, name").eq("id", folder_id).maybeSingle();
+    if (fErr) return errResult(fErr.message);
+    if (!folder) return errResult(`Folder ${folder_id} not found or not accessible.`);
+    const { data: found, error: pErr } = await sb.from("coding_problems").select("slug").in("slug", slugs);
+    if (pErr) return errResult(`Slug lookup failed: ${pErr.message}`);
+    const foundSet = new Set((found ?? []).map((r) => r.slug));
+    const missing = slugs.filter((s) => !foundSet.has(s));
+    const validSlugs = slugs.filter((s) => foundSet.has(s));
+    if (validSlugs.length === 0) {
+      return errResult(`None of the ${slugs.length} slugs exist in coding_problems. Missing: ${missing.join(", ")}`);
+    }
+    const { data: existing } = await sb.from("user_folder_items").select("question_slug").eq("folder_id", folder_id).in("question_slug", validSlugs);
+    const existingSet = new Set((existing ?? []).map((r) => r.question_slug));
+    const toInsert = validSlugs.filter((s) => !existingSet.has(s));
+    if (toInsert.length === 0) {
+      return jsonResult(`Nothing to add \u2014 all ${validSlugs.length} slugs already in sheet.`, {
+        folder: folder.name,
+        added: 0,
+        skipped_existing: existingSet.size,
+        missing
+      });
+    }
+    const rows = toInsert.map((slug, i) => ({
+      folder_id,
+      question_slug: slug,
+      question_source: source ?? "parikshaa",
+      sort_order: i
+    }));
+    const { error: iErr } = await sb.from("user_folder_items").insert(rows);
+    if (iErr) return errResult(`Insert failed: ${iErr.message}`);
+    return jsonResult(
+      `Added ${toInsert.length} problem(s) to "${folder.name}".`,
+      { folder: folder.name, added: toInsert.length, skipped_existing: existingSet.size, missing }
+    );
+  }
+});
+var removeProblemFromSheetTool = defineTool27({
+  name: "remove_problem_from_sheet",
+  title: "Remove a problem from a sheet",
+  description: "Remove one problem (by slug) from a sheet.",
+  inputSchema: {
+    folder_id: z22.string().uuid(),
+    slug: z22.string().min(1)
+  },
+  annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
+  handler: async ({ folder_id, slug }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const { data, error } = await gate.sb.from("user_folder_items").delete().eq("folder_id", folder_id).eq("question_slug", slug).select();
+    if (error) return errResult(error.message);
+    return jsonResult(`Removed ${data?.length ?? 0} row(s).`, { removed: data?.length ?? 0 });
+  }
+});
+var listSheetItemsTool = defineTool27({
+  name: "list_sheet_items",
+  title: "List problems in a sheet",
+  description: "List all coding problems inside a given sheet, ordered by sort_order.",
+  inputSchema: { folder_id: z22.string().uuid() },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ folder_id }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const sb = createUserSupabaseClient3(ctx);
+    const { data, error } = await sb.from("user_folder_items").select("question_slug, question_id, question_source, sort_order, created_at").eq("folder_id", folder_id).order("sort_order", { ascending: true });
+    if (error) return errResult(error.message);
+    return jsonResult(`Sheet contains ${data?.length ?? 0} items:`, data);
+  }
+});
+var shareSheetTool = defineTool27({
+  name: "share_sheet",
+  title: "Create/refresh a public share link for a sheet",
+  description: "Generate a shareable code for a sheet. If a share row already exists it's reused. Returns the share code.",
+  inputSchema: {
+    folder_id: z22.string().uuid(),
+    is_public: z22.boolean().optional(),
+    allow_copy: z22.boolean().optional()
+  },
+  annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: false },
+  handler: async ({ folder_id, is_public, allow_copy }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const { data: existing } = await sb.from("shared_folders").select("id, share_code").eq("folder_id", folder_id).maybeSingle();
+    if (existing) {
+      return jsonResult(`Sheet already shared.`, existing);
+    }
+    const code = Math.random().toString(36).slice(2, 10) + Math.random().toString(36).slice(2, 6);
+    const { data, error } = await sb.from("shared_folders").insert({
+      folder_id,
+      share_code: code,
+      is_public: is_public ?? true,
+      allow_copy: allow_copy ?? true
+    }).select("id, share_code, is_public, allow_copy").single();
+    if (error) return errResult(error.message);
+    return jsonResult(`Sheet shared with code ${data.share_code}.`, data);
+  }
+});
+var publishRoadmapTool = defineTool27({
+  name: "publish_roadmap",
+  title: "Publish / feature a roadmap",
+  description: "Toggle publish + feature flags for a roadmap by id in roadmap_overrides (upsert). Sort order optional.",
+  inputSchema: {
+    roadmap_id: z22.string().min(1),
+    is_published: z22.boolean().optional(),
+    is_featured: z22.boolean().optional(),
+    sort_order: z22.number().int().optional()
+  },
+  annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: false },
+  handler: async ({ roadmap_id, is_published, is_featured, sort_order }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const patch = { roadmap_id, updated_by: ctx.getUserId() };
+    if (is_published !== void 0) patch.is_published = is_published;
+    if (is_featured !== void 0) patch.is_featured = is_featured;
+    if (sort_order !== void 0) patch.sort_order = sort_order;
+    const { data, error } = await gate.sb.from("roadmap_overrides").upsert(patch, { onConflict: "roadmap_id" }).select();
+    if (error) return errResult(error.message);
+    return jsonResult(`Roadmap "${roadmap_id}" updated.`, data);
+  }
+});
+var listRoadmapsTool = defineTool27({
+  name: "list_roadmap_overrides",
+  title: "List roadmap overrides",
+  description: "List all roadmap_overrides rows (publish/feature flags per roadmap id).",
+  inputSchema: {},
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async (_input, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const sb = createUserSupabaseClient3(ctx);
+    const { data, error } = await sb.from("roadmap_overrides").select("*").order("sort_order", { ascending: true });
+    if (error) return errResult(error.message);
+    return jsonResult(`Found ${data?.length ?? 0} roadmap overrides:`, data);
+  }
+});
+
+// src/lib/mcp/tools/sheet-templates.ts
+import { defineTool as defineTool28 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z23 } from "npm:zod@^3.23.8";
+var TEMPLATES = [
+  {
+    key: "dsa-basics",
+    name: "DSA Basics \u2014 30 Day Starter",
+    description: "Foundational DSA problems across arrays, strings, hashing and two-pointer.",
+    color: "#3B82F6",
+    sections: [
+      { title: "Arrays", slugs: ["two-sum", "best-time-to-buy-and-sell-stock", "maximum-subarray", "move-zeroes"] },
+      { title: "Strings", slugs: ["valid-anagram", "reverse-string", "longest-common-prefix"] },
+      { title: "Hashing", slugs: ["contains-duplicate", "group-anagrams"] },
+      { title: "Two Pointers", slugs: ["valid-palindrome", "3sum"] }
+    ],
+    roadmap_id: "dsa-fundamentals"
+  },
+  {
+    key: "sde-sheet",
+    name: "SDE Sheet \u2014 Interview Ready",
+    description: "Curated problem set covering the interview loop: arrays, LL, trees, graphs, DP.",
+    color: "#8B5CF6",
+    sections: [
+      { title: "Arrays & Hashing", slugs: ["two-sum", "contains-duplicate", "group-anagrams", "top-k-frequent-elements"] },
+      { title: "Linked List", slugs: ["reverse-linked-list", "merge-two-sorted-lists", "linked-list-cycle"] },
+      { title: "Trees", slugs: ["invert-binary-tree", "maximum-depth-of-binary-tree", "same-tree", "binary-tree-level-order-traversal"] },
+      { title: "Graphs", slugs: ["number-of-islands", "clone-graph", "course-schedule"] },
+      { title: "Dynamic Programming", slugs: ["climbing-stairs", "house-robber", "longest-increasing-subsequence", "coin-change"] }
+    ],
+    roadmap_id: "sde-interview"
+  },
+  {
+    key: "top-75",
+    name: "Top 75 \u2014 Blind Curated",
+    description: "The classic 75-question interview list (subset \u2014 extend via clone).",
+    color: "#10B981",
+    sections: [
+      { title: "Array", slugs: ["two-sum", "best-time-to-buy-and-sell-stock", "product-of-array-except-self", "maximum-subarray", "3sum"] },
+      { title: "Binary", slugs: ["number-of-1-bits", "counting-bits", "missing-number", "reverse-bits"] },
+      { title: "DP", slugs: ["climbing-stairs", "coin-change", "longest-increasing-subsequence", "word-break"] },
+      { title: "Interval", slugs: ["merge-intervals", "insert-interval", "non-overlapping-intervals"] }
+    ]
+  }
+];
+var listSheetTemplatesTool = defineTool28({
+  name: "list_sheet_templates",
+  title: "List predefined sheet templates",
+  description: "Return all built-in sheet templates (key, name, description, section titles, slug counts). Use before create_sheet_from_template.",
+  inputSchema: {},
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async () => {
+    const summary = TEMPLATES.map((t) => ({
+      key: t.key,
+      name: t.name,
+      description: t.description,
+      sections: t.sections.map((s) => ({ title: s.title, slug_count: s.slugs.length })),
+      total_slugs: t.sections.reduce((n, s) => n + s.slugs.length, 0),
+      roadmap_id: t.roadmap_id
+    }));
+    return jsonResult(`Available templates: ${TEMPLATES.length}`, summary);
+  }
+});
+var createSheetFromTemplateTool = defineTool28({
+  name: "create_sheet_from_template",
+  title: "One-click sheet from a template",
+  description: "Generate a new sheet using a predefined template. Validates slugs against coding_problems, inserts existing ones in template order, reports missing. Optionally publishes the linked roadmap.",
+  inputSchema: {
+    template_key: z23.string().min(1),
+    name_override: z23.string().max(120).optional(),
+    publish_roadmap: z23.boolean().optional().describe("If template defines a roadmap_id, also mark it published.")
+  },
+  annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: false },
+  handler: async ({ template_key, name_override, publish_roadmap }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const tpl = TEMPLATES.find((t) => t.key === template_key);
+    if (!tpl) return errResult(`Unknown template "${template_key}". Call list_sheet_templates.`);
+    const allSlugs = tpl.sections.flatMap((s) => s.slugs);
+    const { data: found, error: pErr } = await sb.from("coding_problems").select("slug").in("slug", allSlugs);
+    if (pErr) return errResult(`Slug lookup failed: ${pErr.message}`);
+    const foundSet = new Set((found ?? []).map((r) => r.slug));
+    const missing = allSlugs.filter((s) => !foundSet.has(s));
+    const outline = tpl.sections.map((s) => `## ${s.title}
+${s.slugs.map((sl) => `- ${sl}${foundSet.has(sl) ? "" : " (missing)"}`).join("\n")}`).join("\n\n");
+    const { data: folder, error: fErr } = await sb.from("user_folders").insert({
+      user_id: ctx.getUserId(),
+      name: name_override ?? tpl.name,
+      description: `${tpl.description}
+
+${outline}`,
+      color: tpl.color
+    }).select("id, name").single();
+    if (fErr) return errResult(`Folder create failed: ${fErr.message}`);
+    let order = 0;
+    const rows = [];
+    for (const section of tpl.sections) {
+      for (const slug of section.slugs) {
+        if (!foundSet.has(slug)) continue;
+        rows.push({
+          folder_id: folder.id,
+          question_slug: slug,
+          question_source: "parikshaa",
+          sort_order: order++
+        });
+      }
+    }
+    if (rows.length > 0) {
+      const { error: iErr } = await sb.from("user_folder_items").insert(rows);
+      if (iErr) return errResult(`Items insert failed (folder created): ${iErr.message}`);
+    }
+    let roadmapResult = null;
+    if (publish_roadmap && tpl.roadmap_id) {
+      const { data: rm } = await sb.from("roadmap_overrides").upsert(
+        { roadmap_id: tpl.roadmap_id, is_published: true, is_featured: true, updated_by: ctx.getUserId() },
+        { onConflict: "roadmap_id" }
+      ).select();
+      roadmapResult = rm;
+    }
+    return jsonResult(
+      `Created sheet "${folder.name}" from template "${tpl.key}" \u2014 ${rows.length} problems added, ${missing.length} missing.`,
+      { folder_id: folder.id, added: rows.length, missing, roadmap: roadmapResult }
+    );
+  }
+});
+var cloneSheetTool = defineTool28({
+  name: "clone_sheet",
+  title: "Clone an existing sheet",
+  description: "Duplicate an existing sheet's structure and items into a new sheet owned by the caller. Useful to snapshot a template sheet.",
+  inputSchema: {
+    source_folder_id: z23.string().uuid(),
+    new_name: z23.string().min(2).max(120)
+  },
+  annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: false },
+  handler: async ({ source_folder_id, new_name }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const { data: src, error: srcErr } = await sb.from("user_folders").select("description, color").eq("id", source_folder_id).maybeSingle();
+    if (srcErr) return errResult(srcErr.message);
+    if (!src) return errResult(`Source folder ${source_folder_id} not found.`);
+    const { data: items, error: itErr } = await sb.from("user_folder_items").select("question_slug, question_id, question_source, sort_order").eq("folder_id", source_folder_id).order("sort_order", { ascending: true });
+    if (itErr) return errResult(itErr.message);
+    const { data: folder, error: fErr } = await sb.from("user_folders").insert({ user_id: ctx.getUserId(), name: new_name, description: src.description, color: src.color }).select("id, name").single();
+    if (fErr) return errResult(fErr.message);
+    if (items && items.length > 0) {
+      const rows = items.map((i, idx) => ({
+        folder_id: folder.id,
+        question_slug: i.question_slug,
+        question_id: i.question_id,
+        question_source: i.question_source,
+        sort_order: idx
+      }));
+      const { error: iErr } = await sb.from("user_folder_items").insert(rows);
+      if (iErr) return errResult(`Items copy failed (folder created): ${iErr.message}`);
+    }
+    return jsonResult(`Cloned to "${folder.name}" \u2014 ${items?.length ?? 0} items copied.`, {
+      new_folder_id: folder.id,
+      cloned_items: items?.length ?? 0
+    });
+  }
+});
+var reorderSheetItemsTool = defineTool28({
+  name: "reorder_sheet_items",
+  title: "Reorder problems in a sheet (drag-drop equivalent)",
+  description: "Set the exact order of problems in a sheet by passing slugs in the desired order. Any slug in the sheet but omitted from `order` is appended at the end preserving its relative order.",
+  inputSchema: {
+    folder_id: z23.string().uuid(),
+    order: z23.array(z23.string().min(1)).min(1).max(500)
+  },
+  annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: false },
+  handler: async ({ folder_id, order }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const { data: current, error: curErr } = await sb.from("user_folder_items").select("question_slug, sort_order").eq("folder_id", folder_id);
+    if (curErr) return errResult(curErr.message);
+    if (!current || current.length === 0) return errResult("Sheet is empty or not accessible.");
+    const currentSet = new Set(current.map((r) => r.question_slug));
+    const missing = order.filter((s) => !currentSet.has(s));
+    const orderedInSheet = order.filter((s) => currentSet.has(s));
+    const tail = current.filter((r) => !orderedInSheet.includes(r.question_slug)).sort((a, b) => a.sort_order - b.sort_order).map((r) => r.question_slug);
+    const finalOrder = [...orderedInSheet, ...tail];
+    let updated = 0;
+    for (let i = 0; i < finalOrder.length; i++) {
+      const { error } = await sb.from("user_folder_items").update({ sort_order: i }).eq("folder_id", folder_id).eq("question_slug", finalOrder[i]);
+      if (error) return errResult(`Reorder failed at slug "${finalOrder[i]}": ${error.message}`);
+      updated++;
+    }
+    return jsonResult(
+      `Reordered ${updated} items. Missing from sheet (ignored): ${missing.length}. Appended tail: ${tail.length}.`,
+      { updated, missing, appended_tail: tail }
+    );
+  }
+});
+var publishSheetBundleTool = defineTool28({
+  name: "publish_sheet_bundle",
+  title: "Publish coding problems + sheet + roadmap (mega)",
+  description: "One-shot: publish an array of coding_problem bundles (problem + tests + starter + solutions), then create (or reuse) a sheet and add all successfully-published slugs in order, and optionally publish a roadmap. Returns per-slug outcome.",
+  inputSchema: {
+    sheet: z23.object({
+      name: z23.string().min(2).max(120),
+      description: z23.string().max(2e3).optional(),
+      color: z23.string().max(20).optional(),
+      reuse_folder_id: z23.string().uuid().optional().describe("If passed, add problems to this existing sheet instead of creating a new one.")
+    }),
+    problems: z23.array(
+      z23.object({
+        problem: z23.object({
+          slug: z23.string(),
+          title: z23.string(),
+          difficulty: z23.string(),
+          description: z23.string(),
+          topics: z23.array(z23.string()),
+          examples: z23.array(z23.record(z23.unknown())),
+          constraints: z23.array(z23.string()).optional(),
+          hints: z23.array(z23.string()).optional(),
+          cpu_time_limit_sec: z23.number().optional(),
+          memory_limit_kb: z23.number().int().optional(),
+          mcq: z23.record(z23.unknown()).optional(),
+          is_contest_pool: z23.boolean().optional()
+        }),
+        tests: z23.array(
+          z23.object({
+            input: z23.string(),
+            expected_output: z23.string(),
+            is_sample: z23.boolean().optional(),
+            weight: z23.number().optional()
+          })
+        ).min(2),
+        starter_code: z23.array(z23.object({ language: z23.string(), code: z23.string() })).optional(),
+        solutions: z23.array(z23.object({ lang_id: z23.string(), code: z23.string() })).min(1)
+      })
+    ).min(1).max(50),
+    if_exists: z23.enum(["error", "update"]).optional(),
+    roadmap: z23.object({
+      roadmap_id: z23.string(),
+      is_published: z23.boolean().optional(),
+      is_featured: z23.boolean().optional(),
+      sort_order: z23.number().int().optional()
+    }).optional()
+  },
+  annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
+  handler: async ({ sheet, problems, if_exists, roadmap }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const uid = ctx.getUserId();
+    const perProblem = [];
+    for (const p of problems) {
+      const r = await publishBundleCore(sb, uid, {
+        problem: p.problem,
+        tests: p.tests,
+        starter_code: p.starter_code,
+        solutions: p.solutions,
+        if_exists
+      });
+      perProblem.push({ slug: r.slug, ok: r.ok, snapshotVersion: r.snapshotVersion, error: r.error });
+    }
+    const published = perProblem.filter((r) => r.ok).map((r) => r.slug);
+    if (published.length === 0) {
+      return errResult(`All bundles failed:
+${JSON.stringify(perProblem, null, 2)}`);
+    }
+    let folderId = sheet.reuse_folder_id;
+    let folderName = sheet.name;
+    if (!folderId) {
+      const { data: folder, error: fErr } = await sb.from("user_folders").insert({ user_id: uid, name: sheet.name, description: sheet.description, color: sheet.color }).select("id, name").single();
+      if (fErr) return errResult(`Sheet create failed (bundles already published): ${fErr.message}`);
+      folderId = folder.id;
+      folderName = folder.name;
+    } else {
+      const { data: existing } = await sb.from("user_folders").select("name").eq("id", folderId).maybeSingle();
+      folderName = existing?.name ?? folderName;
+    }
+    const { data: existingItems } = await sb.from("user_folder_items").select("question_slug, sort_order").eq("folder_id", folderId);
+    const existingSet = new Set((existingItems ?? []).map((r) => r.question_slug));
+    const maxOrder = (existingItems ?? []).reduce((m, r) => Math.max(m, r.sort_order), -1);
+    const toInsert = published.filter((s) => !existingSet.has(s));
+    if (toInsert.length > 0) {
+      const rows = toInsert.map((slug, i) => ({
+        folder_id: folderId,
+        question_slug: slug,
+        question_source: "parikshaa",
+        sort_order: maxOrder + 1 + i
+      }));
+      const { error: iErr } = await sb.from("user_folder_items").insert(rows);
+      if (iErr) return errResult(`Add-to-sheet failed: ${iErr.message}`);
+    }
+    let roadmapResult = null;
+    if (roadmap) {
+      const patch = { roadmap_id: roadmap.roadmap_id, updated_by: uid };
+      if (roadmap.is_published !== void 0) patch.is_published = roadmap.is_published;
+      if (roadmap.is_featured !== void 0) patch.is_featured = roadmap.is_featured;
+      if (roadmap.sort_order !== void 0) patch.sort_order = roadmap.sort_order;
+      const { data: rm, error: rErr } = await sb.from("roadmap_overrides").upsert(patch, { onConflict: "roadmap_id" }).select();
+      roadmapResult = rErr ? { error: rErr.message } : rm;
+    }
+    return jsonResult(
+      `Mega-published: ${published.length}/${problems.length} problems, sheet "${folderName}" (+${toInsert.length}), roadmap=${roadmap ? "yes" : "no"}.`,
+      {
+        folder_id: folderId,
+        folder_name: folderName,
+        published,
+        failed: perProblem.filter((r) => !r.ok),
+        added_to_sheet: toInsert.length,
+        already_in_sheet: published.length - toInsert.length,
+        roadmap: roadmapResult
+      }
+    );
+  }
+});
+
+// src/lib/mcp/tools/sheet-manage.ts
+import { defineTool as defineTool29 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z24 } from "npm:zod@^3.23.8";
+var parseSections = (description) => {
+  const text = description ?? "";
+  const firstHeader = text.search(/(^|\n)## /);
+  if (firstHeader === -1) return { intro: text.trim(), sections: [] };
+  const intro = text.slice(0, firstHeader).trim();
+  const rest = text.slice(firstHeader).replace(/^\n/, "");
+  const blocks = rest.split(/\n(?=## )/);
+  const sections = blocks.map((b) => {
+    const [head, ...lines] = b.split("\n");
+    const title = head.replace(/^##\s+/, "").trim();
+    const slugs = lines.map((l) => l.trim()).filter((l) => l.startsWith("- ")).map((l) => l.slice(2).replace(/\s*\(missing\)\s*$/i, "").trim()).filter(Boolean);
+    return { title, slugs };
+  }).filter((s) => s.title);
+  return { intro, sections };
+};
+var renderSections = (intro, sections, missingSet) => {
+  const body = sections.map(
+    (s) => `## ${s.title}
+${s.slugs.map((sl) => `- ${sl}${missingSet && !missingSet.has(sl) ? "" : ""}${missingSet && missingSet.has(sl) === false ? " (missing)" : ""}`).join("\n")}`
+  ).join("\n\n");
+  return intro ? `${intro}
+
+${body}` : body;
+};
+var regenerateShareSheetLinkTool = defineTool29({
+  name: "regenerate_share_sheet_link",
+  title: "Revoke + regenerate a sheet's public share link",
+  description: "Delete any existing shared_folders row for the sheet and issue a fresh share code. Old links stop working immediately.",
+  inputSchema: {
+    folder_id: z24.string().uuid(),
+    is_public: z24.boolean().optional(),
+    allow_copy: z24.boolean().optional(),
+    expires_at: z24.string().datetime().optional().describe("ISO timestamp for expiry (optional).")
+  },
+  annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
+  handler: async ({ folder_id, is_public, allow_copy, expires_at }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const { data: folder, error: fErr } = await sb.from("user_folders").select("id, name").eq("id", folder_id).maybeSingle();
+    if (fErr) return errResult(fErr.message);
+    if (!folder) return errResult(`Folder ${folder_id} not found.`);
+    const { data: oldRows, error: delErr } = await sb.from("shared_folders").delete().eq("folder_id", folder_id).select("share_code");
+    if (delErr) return errResult(`Revoke failed: ${delErr.message}`);
+    const code = Math.random().toString(36).slice(2, 10) + Math.random().toString(36).slice(2, 6);
+    const row = {
+      folder_id,
+      share_code: code,
+      is_public: is_public ?? true,
+      allow_copy: allow_copy ?? true
+    };
+    if (expires_at) row.expires_at = expires_at;
+    const { data, error } = await sb.from("shared_folders").insert(row).select("id, share_code, is_public, allow_copy, expires_at").single();
+    if (error) return errResult(`New share failed: ${error.message}`);
+    return jsonResult(
+      `Share link regenerated for "${folder.name}". Revoked ${oldRows?.length ?? 0} old code(s).`,
+      { folder: folder.name, revoked: (oldRows ?? []).map((r) => r.share_code), new_share: data }
+    );
+  }
+});
+var updateSheetSectionsTool = defineTool29({
+  name: "update_sheet_sections",
+  title: "Edit a sheet's section outline (add/remove/rename/reorder)",
+  description: "Persist a new section outline into the sheet's description and, when requested, reorder actual sheet items to match section order (unlisted items append at end). Also inserts any missing slugs (that exist in coding_problems) referenced by the new outline.",
+  inputSchema: {
+    folder_id: z24.string().uuid(),
+    sections: z24.array(z24.object({ title: z24.string().min(1).max(120), slugs: z24.array(z24.string().min(1)).default([]) })).min(1).max(50),
+    intro: z24.string().max(2e3).optional().describe("Optional replacement intro (before section list)."),
+    apply_to_items: z24.boolean().optional().describe("If true (default), also reorder existing sheet items and insert any new outline slugs.")
+  },
+  annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: false },
+  handler: async ({ folder_id, sections, intro, apply_to_items }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const doApply = apply_to_items ?? true;
+    const { data: folder, error: fErr } = await sb.from("user_folders").select("id, name, description").eq("id", folder_id).maybeSingle();
+    if (fErr) return errResult(fErr.message);
+    if (!folder) return errResult(`Folder ${folder_id} not found.`);
+    const preservedIntro = intro !== void 0 ? intro : parseSections(folder.description).intro;
+    const allSlugs = Array.from(new Set(sections.flatMap((s) => s.slugs)));
+    let foundSet = /* @__PURE__ */ new Set();
+    if (allSlugs.length > 0) {
+      const { data: found, error: pErr } = await sb.from("coding_problems").select("slug").in("slug", allSlugs);
+      if (pErr) return errResult(`Slug lookup failed: ${pErr.message}`);
+      foundSet = new Set((found ?? []).map((r) => r.slug));
+    }
+    const missing = allSlugs.filter((s) => !foundSet.has(s));
+    const newDesc = renderSections(preservedIntro, sections, foundSet);
+    const { error: upErr } = await sb.from("user_folders").update({ description: newDesc, updated_at: (/* @__PURE__ */ new Date()).toISOString() }).eq("id", folder_id);
+    if (upErr) return errResult(`Description update failed: ${upErr.message}`);
+    const summary = {
+      folder_id,
+      folder_name: folder.name,
+      sections_written: sections.length,
+      missing_slugs: missing
+    };
+    if (doApply) {
+      const { data: existingItems } = await sb.from("user_folder_items").select("question_slug, sort_order").eq("folder_id", folder_id);
+      const existingSet = new Set((existingItems ?? []).map((r) => r.question_slug));
+      const orderedOutlineSlugs = sections.flatMap((s) => s.slugs).filter((s) => foundSet.has(s));
+      const toInsert = orderedOutlineSlugs.filter((s) => !existingSet.has(s));
+      if (toInsert.length > 0) {
+        const rows = toInsert.map((slug) => ({
+          folder_id,
+          question_slug: slug,
+          question_source: "parikshaa",
+          sort_order: 0
+        }));
+        const { error: iErr } = await sb.from("user_folder_items").insert(rows);
+        if (iErr) return errResult(`Insert missing items failed: ${iErr.message}`);
+        toInsert.forEach((s) => existingSet.add(s));
+      }
+      const listed = orderedOutlineSlugs.filter((s) => existingSet.has(s));
+      const tail = (existingItems ?? []).filter((r) => !listed.includes(r.question_slug)).sort((a, b) => a.sort_order - b.sort_order).map((r) => r.question_slug);
+      const finalOrder = [...listed, ...tail];
+      for (let i = 0; i < finalOrder.length; i++) {
+        const { error } = await sb.from("user_folder_items").update({ sort_order: i }).eq("folder_id", folder_id).eq("question_slug", finalOrder[i]);
+        if (error) return errResult(`Reorder failed at "${finalOrder[i]}": ${error.message}`);
+      }
+      summary.items_inserted = toInsert.length;
+      summary.items_reordered = finalOrder.length;
+      summary.unlisted_tail = tail.length;
+    }
+    return jsonResult(`Outline updated for "${folder.name}" (${sections.length} sections).`, summary);
+  }
+});
+var getSheetDetailsTool = defineTool29({
+  name: "get_sheet_details",
+  title: "Get full sheet structure + ordered items",
+  description: "Return sheet metadata, parsed section outline from description, all ordered sheet items with problem metadata (title, difficulty, topics), and any active share code. Ready for direct UI rendering.",
+  inputSchema: { folder_id: z24.string().uuid() },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ folder_id }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const sb = createUserSupabaseClient3(ctx);
+    const { data: folder, error: fErr } = await sb.from("user_folders").select("id, name, description, color, created_at, updated_at, user_id").eq("id", folder_id).maybeSingle();
+    if (fErr) return errResult(fErr.message);
+    if (!folder) return errResult(`Folder ${folder_id} not found.`);
+    const { data: items, error: iErr } = await sb.from("user_folder_items").select("question_slug, question_id, question_source, sort_order, created_at").eq("folder_id", folder_id).order("sort_order", { ascending: true });
+    if (iErr) return errResult(iErr.message);
+    const slugs = (items ?? []).map((r) => r.question_slug).filter(Boolean);
+    let problemMeta = {};
+    if (slugs.length > 0) {
+      const { data: probs } = await sb.from("coding_problems").select("slug, title, difficulty, topics, is_published").in("slug", slugs);
+      problemMeta = Object.fromEntries((probs ?? []).map((p) => [p.slug, p]));
+    }
+    const enrichedItems = (items ?? []).map((it) => ({
+      slug: it.question_slug,
+      sort_order: it.sort_order,
+      source: it.question_source,
+      created_at: it.created_at,
+      problem: problemMeta[it.question_slug] ?? null
+    }));
+    const { intro, sections } = parseSections(folder.description);
+    const inSheet = new Set(slugs);
+    const sectionsAnnotated = sections.map((s) => ({
+      title: s.title,
+      slugs: s.slugs.map((sl) => ({
+        slug: sl,
+        in_sheet: inSheet.has(sl),
+        problem: problemMeta[sl] ?? null
+      }))
+    }));
+    const { data: share } = await sb.from("shared_folders").select("share_code, is_public, allow_copy, expires_at, created_at").eq("folder_id", folder_id).maybeSingle();
+    return jsonResult(`Sheet "${folder.name}" \u2014 ${enrichedItems.length} items, ${sections.length} sections.`, {
+      folder: {
+        id: folder.id,
+        name: folder.name,
+        color: folder.color,
+        created_at: folder.created_at,
+        updated_at: folder.updated_at,
+        owner_id: folder.user_id
+      },
+      intro,
+      sections: sectionsAnnotated,
+      items: enrichedItems,
+      share: share ?? null
+    });
+  }
+});
+var previewPublishSheetBundleTool = defineTool29({
+  name: "preview_publish_sheet_bundle",
+  title: "Dry-run preview of publish_sheet_bundle",
+  description: "Decode a publish_sheet_bundle payload and report exactly what would happen \u2014 sheets created/reused, problems inserted vs overwritten, items added vs already-in-sheet, and any validation failures \u2014 WITHOUT writing anything.",
+  inputSchema: {
+    sheet: z24.object({
+      name: z24.string().min(2).max(120),
+      description: z24.string().max(2e3).optional(),
+      color: z24.string().max(20).optional(),
+      reuse_folder_id: z24.string().uuid().optional()
+    }),
+    problems: z24.array(
+      z24.object({
+        problem: z24.object({
+          slug: z24.string(),
+          title: z24.string().optional(),
+          difficulty: z24.string().optional()
+        }).passthrough(),
+        tests: z24.array(z24.record(z24.unknown())).optional(),
+        starter_code: z24.array(z24.record(z24.unknown())).optional(),
+        solutions: z24.array(z24.record(z24.unknown())).optional()
+      })
+    ).min(1).max(50),
+    if_exists: z24.enum(["error", "update"]).optional(),
+    roadmap: z24.object({ roadmap_id: z24.string() }).passthrough().optional()
+  },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ sheet, problems, if_exists, roadmap }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const sb = createUserSupabaseClient3(ctx);
+    const perProblem = [];
+    const slugs = problems.map((p) => p.problem.slug);
+    const dupSlugs = slugs.filter((s, i) => slugs.indexOf(s) !== i);
+    const { data: existing } = await sb.from("coding_problems").select("slug").in("slug", slugs);
+    const existingSet = new Set((existing ?? []).map((r) => r.slug));
+    for (const p of problems) {
+      const issues = [];
+      if (!p.problem.slug || !/^[a-z0-9-]+$/.test(p.problem.slug))
+        issues.push("slug must be lowercase-with-dashes");
+      if (!p.tests || p.tests.length < 2) issues.push("needs >= 2 tests");
+      if (!p.solutions || p.solutions.length < 1) issues.push("needs >= 1 solution");
+      const conflictExists = existingSet.has(p.problem.slug);
+      const wouldError = conflictExists && (if_exists ?? "error") === "error";
+      perProblem.push({
+        slug: p.problem.slug,
+        action: wouldError ? "would_fail_slug_exists" : conflictExists ? "would_overwrite_with_snapshot" : "would_create",
+        validation_issues: issues,
+        would_publish: issues.length === 0 && !wouldError
+      });
+    }
+    let sheetInfo = { action: "would_create", name: sheet.name };
+    let existingSheetItems = [];
+    if (sheet.reuse_folder_id) {
+      const { data: folder } = await sb.from("user_folders").select("id, name").eq("id", sheet.reuse_folder_id).maybeSingle();
+      if (!folder) sheetInfo = { action: "reuse_failed_not_found", folder_id: sheet.reuse_folder_id };
+      else {
+        const { data: items } = await sb.from("user_folder_items").select("question_slug").eq("folder_id", folder.id);
+        existingSheetItems = (items ?? []).map((r) => r.question_slug);
+        sheetInfo = { action: "would_reuse", folder_id: folder.id, folder_name: folder.name, current_items: existingSheetItems.length };
+      }
+    }
+    const publishableSlugs = perProblem.filter((r) => r.would_publish).map((r) => r.slug);
+    const alreadyInSheet = publishableSlugs.filter((s) => existingSheetItems.includes(s));
+    const toAdd = publishableSlugs.filter((s) => !existingSheetItems.includes(s));
+    return jsonResult(
+      `Preview: ${perProblem.filter((r) => r.would_publish).length}/${problems.length} would publish, ${toAdd.length} would be added to sheet.`,
+      {
+        sheet: sheetInfo,
+        problems: perProblem,
+        duplicate_slugs_in_payload: Array.from(new Set(dupSlugs)),
+        sheet_add_plan: { would_add: toAdd, already_in_sheet: alreadyInSheet },
+        roadmap: roadmap ? { action: "would_upsert", roadmap_id: roadmap.roadmap_id } : null,
+        dry_run: true,
+        _note: "No writes performed. Call publish_sheet_bundle to apply.",
+        // Reuse imported helper to keep tree-shaking honest — noop:
+        _coreLoaded: typeof publishBundleCore === "function"
+      }
+    );
+  }
+});
+
+// src/lib/mcp/tools/sheet-lifecycle.ts
+import { defineTool as defineTool30 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z25 } from "npm:zod@^3.23.8";
+var bulkRemoveProblemsFromSheetTool = defineTool30({
+  name: "bulk_remove_problems_from_sheet",
+  title: "Remove multiple problems from a sheet in one call",
+  description: "Delete multiple slugs from a sheet in a single request. Returns per-slug status (removed | not_in_sheet | error).",
+  inputSchema: {
+    folder_id: z25.string().uuid(),
+    slugs: z25.array(z25.string().min(1)).min(1).max(500),
+    resequence: z25.boolean().optional().describe("If true (default), re-pack sort_order of remaining items 0..N-1.")
+  },
+  annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
+  handler: async ({ folder_id, slugs, resequence }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const { data: folder, error: fErr } = await sb.from("user_folders").select("id, name").eq("id", folder_id).maybeSingle();
+    if (fErr) return errResult(fErr.message);
+    if (!folder) return errResult(`Folder ${folder_id} not found.`);
+    const uniq = Array.from(new Set(slugs));
+    const { data: existing, error: eErr } = await sb.from("user_folder_items").select("question_slug").eq("folder_id", folder_id).in("question_slug", uniq);
+    if (eErr) return errResult(eErr.message);
+    const inSheet = new Set((existing ?? []).map((r) => r.question_slug));
+    const results = [];
+    const toDelete = uniq.filter((s) => inSheet.has(s));
+    for (const s of uniq.filter((s2) => !inSheet.has(s2))) {
+      results.push({ slug: s, status: "not_in_sheet" });
+    }
+    if (toDelete.length > 0) {
+      const { error: dErr } = await sb.from("user_folder_items").delete().eq("folder_id", folder_id).in("question_slug", toDelete);
+      if (dErr) {
+        for (const s of toDelete) results.push({ slug: s, status: "error", error: dErr.message });
+      } else {
+        for (const s of toDelete) results.push({ slug: s, status: "removed" });
+      }
+    }
+    let resequenced = 0;
+    if ((resequence ?? true) && toDelete.length > 0) {
+      const { data: remaining } = await sb.from("user_folder_items").select("question_slug, sort_order").eq("folder_id", folder_id).order("sort_order", { ascending: true });
+      const ordered = remaining ?? [];
+      for (let i = 0; i < ordered.length; i++) {
+        if (ordered[i].sort_order !== i) {
+          const { error } = await sb.from("user_folder_items").update({ sort_order: i }).eq("folder_id", folder_id).eq("question_slug", ordered[i].question_slug);
+          if (!error) resequenced++;
+        }
+      }
+    }
+    const removed = results.filter((r) => r.status === "removed").length;
+    return jsonResult(
+      `Removed ${removed}/${uniq.length} slug(s) from "${folder.name}".`,
+      { folder_id, folder_name: folder.name, results, removed, not_in_sheet: uniq.length - toDelete.length, resequenced }
+    );
+  }
+});
+var getSheetShareStatusTool = defineTool30({
+  name: "get_sheet_share_status",
+  title: "Get a sheet's active public share status",
+  description: "Return the active share code, is_public, allow_copy, expires_at and expiry flag for a sheet. Returns share:null if the sheet has never been shared.",
+  inputSchema: { folder_id: z25.string().uuid() },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ folder_id }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const sb = createUserSupabaseClient3(ctx);
+    const { data: folder, error: fErr } = await sb.from("user_folders").select("id, name").eq("id", folder_id).maybeSingle();
+    if (fErr) return errResult(fErr.message);
+    if (!folder) return errResult(`Folder ${folder_id} not found.`);
+    const { data: share, error: sErr } = await sb.from("shared_folders").select("id, share_code, is_public, allow_copy, expires_at, created_at").eq("folder_id", folder_id).order("created_at", { ascending: false }).maybeSingle();
+    if (sErr) return errResult(sErr.message);
+    const now = Date.now();
+    const expired = share?.expires_at ? new Date(share.expires_at).getTime() < now : false;
+    return jsonResult(
+      share ? `Sheet "${folder.name}" share is ${expired ? "EXPIRED" : share.is_public ? "PUBLIC" : "PRIVATE"}.` : `Sheet "${folder.name}" has no share link.`,
+      {
+        folder_id,
+        folder_name: folder.name,
+        share: share ?? null,
+        is_expired: expired,
+        is_active: !!share && !expired && !!share.is_public
+      }
+    );
+  }
+});
+var deleteOrArchiveSheetTool = defineTool30({
+  name: "delete_or_archive_sheet",
+  title: "Delete or soft-archive a sheet",
+  description: "mode='archive' (default): mark sheet as archived by prefixing name with [Archived] and setting color to gray \u2014 items/shares preserved. mode='delete': permanently remove the sheet, all its items, and any share links.",
+  inputSchema: {
+    folder_id: z25.string().uuid(),
+    mode: z25.enum(["archive", "delete"]).optional(),
+    unarchive: z25.boolean().optional().describe("With mode='archive', if true removes the [Archived] prefix instead.")
+  },
+  annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
+  handler: async ({ folder_id, mode, unarchive }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const op = mode ?? "archive";
+    const { data: folder, error: fErr } = await sb.from("user_folders").select("id, name, color").eq("id", folder_id).maybeSingle();
+    if (fErr) return errResult(fErr.message);
+    if (!folder) return errResult(`Folder ${folder_id} not found.`);
+    if (op === "delete") {
+      const { data: items } = await sb.from("user_folder_items").select("question_slug").eq("folder_id", folder_id);
+      const { error: sErr } = await sb.from("shared_folders").delete().eq("folder_id", folder_id);
+      if (sErr) return errResult(`Share cleanup failed: ${sErr.message}`);
+      const { error: iErr } = await sb.from("user_folder_items").delete().eq("folder_id", folder_id);
+      if (iErr) return errResult(`Item cleanup failed: ${iErr.message}`);
+      const { error: dErr } = await sb.from("user_folders").delete().eq("id", folder_id);
+      if (dErr) return errResult(`Folder delete failed: ${dErr.message}`);
+      return jsonResult(`Deleted sheet "${folder.name}" and ${items?.length ?? 0} item(s).`, {
+        mode: "delete",
+        folder_id,
+        folder_name: folder.name,
+        items_deleted: items?.length ?? 0
+      });
+    }
+    const isArchived = folder.name.startsWith("[Archived] ");
+    let newName = folder.name;
+    if (unarchive && isArchived) newName = newName.replace(/^\[Archived\]\s+/, "");
+    else if (!unarchive && !isArchived) newName = `[Archived] ${newName}`;
+    const patch = { name: newName, updated_at: (/* @__PURE__ */ new Date()).toISOString() };
+    if (!unarchive) patch.color = "#6b7280";
+    const { data: updated, error: uErr } = await sb.from("user_folders").update(patch).eq("id", folder_id).select("id, name, color").single();
+    if (uErr) return errResult(`Archive update failed: ${uErr.message}`);
+    return jsonResult(
+      `${unarchive ? "Unarchived" : "Archived"} sheet "${folder.name}" \u2192 "${updated.name}".`,
+      { mode: "archive", unarchive: !!unarchive, folder: updated }
+    );
+  }
+});
+
+// src/lib/mcp/tools/sheet-share-ops.ts
+import { defineTool as defineTool31 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z26 } from "npm:zod@^3.23.8";
+var updateSheetShareSettingsTool = defineTool31({
+  name: "update_sheet_share_settings",
+  title: "Update share settings without regenerating share_code",
+  description: "Patch is_public / allow_copy / expires_at on the existing shared_folders row. share_code stays the same unless regenerate:true is set.",
+  inputSchema: {
+    folder_id: z26.string().uuid(),
+    is_public: z26.boolean().optional(),
+    allow_copy: z26.boolean().optional(),
+    expires_at: z26.string().datetime().nullable().optional().describe("ISO timestamp, or null to clear expiry."),
+    regenerate: z26.boolean().optional().describe("If true, also rotate share_code.")
+  },
+  annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: false },
+  handler: async ({ folder_id, is_public, allow_copy, expires_at, regenerate }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const { data: folder, error: fErr } = await sb.from("user_folders").select("id, name").eq("id", folder_id).maybeSingle();
+    if (fErr) return errResult(fErr.message);
+    if (!folder) return errResult(`Folder ${folder_id} not found.`);
+    const { data: share, error: sErr } = await sb.from("shared_folders").select("id, share_code").eq("folder_id", folder_id).order("created_at", { ascending: false }).maybeSingle();
+    if (sErr) return errResult(sErr.message);
+    if (!share) return errResult(`No share link exists for "${folder.name}". Use share_sheet first.`);
+    const patch = {};
+    if (is_public !== void 0) patch.is_public = is_public;
+    if (allow_copy !== void 0) patch.allow_copy = allow_copy;
+    if (expires_at !== void 0) patch.expires_at = expires_at;
+    if (regenerate) patch.share_code = Math.random().toString(36).slice(2, 10) + Math.random().toString(36).slice(2, 6);
+    if (Object.keys(patch).length === 0) return errResult("No fields provided to update.");
+    const { data, error } = await sb.from("shared_folders").update(patch).eq("id", share.id).select("id, share_code, is_public, allow_copy, expires_at").single();
+    if (error) return errResult(`Update failed: ${error.message}`);
+    return jsonResult(
+      `Share settings updated for "${folder.name}"${regenerate ? " (share_code rotated)" : ""}.`,
+      { folder_id, folder_name: folder.name, code_rotated: !!regenerate, share: data }
+    );
+  }
+});
+var duplicateSheetTool = defineTool31({
+  name: "duplicate_sheet",
+  title: "Duplicate a sheet (section template + ordered items)",
+  description: "Create a new user_folder that copies the source sheet's description (section outline) and all sheet items in the same sort_order. Does not copy share links.",
+  inputSchema: {
+    source_folder_id: z26.string().uuid(),
+    new_name: z26.string().min(2).max(120).optional().describe("Defaults to '<source name> (Copy)'."),
+    new_color: z26.string().max(20).optional()
+  },
+  annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: false },
+  handler: async ({ source_folder_id, new_name, new_color }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const userId = ctx.getUserId();
+    const { data: src, error: srcErr } = await sb.from("user_folders").select("id, name, description, color").eq("id", source_folder_id).maybeSingle();
+    if (srcErr) return errResult(srcErr.message);
+    if (!src) return errResult(`Source folder ${source_folder_id} not found.`);
+    const { data: srcItems, error: iErr } = await sb.from("user_folder_items").select("question_slug, question_id, question_source, sort_order").eq("folder_id", source_folder_id).order("sort_order", { ascending: true });
+    if (iErr) return errResult(iErr.message);
+    const targetName = new_name ?? `${src.name} (Copy)`;
+    const { data: newFolder, error: nErr } = await sb.from("user_folders").insert({ user_id: userId, name: targetName, description: src.description, color: new_color ?? src.color }).select("id, name, color").single();
+    if (nErr) return errResult(`Folder create failed: ${nErr.message}`);
+    let inserted = 0;
+    if ((srcItems ?? []).length > 0) {
+      const rows = (srcItems ?? []).map((it, idx) => ({
+        folder_id: newFolder.id,
+        question_slug: it.question_slug,
+        question_id: it.question_id,
+        question_source: it.question_source ?? "parikshaa",
+        sort_order: idx
+      }));
+      const { error: insErr } = await sb.from("user_folder_items").insert(rows);
+      if (insErr) return errResult(`Item copy failed: ${insErr.message} (folder ${newFolder.id} was created).`);
+      inserted = rows.length;
+    }
+    return jsonResult(
+      `Duplicated "${src.name}" \u2192 "${newFolder.name}" (${inserted} items).`,
+      { source: { id: src.id, name: src.name }, new_folder: newFolder, items_copied: inserted }
+    );
+  }
+});
+var csvEscape = (v) => {
+  const s = v === null || v === void 0 ? "" : String(v);
+  return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+};
+var parseSectionsForLookup = (description) => {
+  const text = description ?? "";
+  const firstHeader = text.search(/(^|\n)## /);
+  if (firstHeader === -1) return {};
+  const rest = text.slice(firstHeader).replace(/^\n/, "");
+  const map = {};
+  for (const block of rest.split(/\n(?=## )/)) {
+    const [head, ...lines] = block.split("\n");
+    const title = head.replace(/^##\s+/, "").trim();
+    for (const l of lines) {
+      const t = l.trim();
+      if (t.startsWith("- ")) {
+        const slug = t.slice(2).replace(/\s*\(missing\)\s*$/i, "").trim();
+        if (slug && !map[slug]) map[slug] = title;
+      }
+    }
+  }
+  return map;
+};
+var exportSheetItemsCsvTool = defineTool31({
+  name: "export_sheet_items_csv",
+  title: "Export sheet items to CSV (title, slug, sort_order, section)",
+  description: "Return the sheet's items as a CSV string with columns: sort_order, section, slug, title, difficulty, topics, is_published. Section is derived from the sheet description outline.",
+  inputSchema: { folder_id: z26.string().uuid() },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ folder_id }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const sb = createUserSupabaseClient3(ctx);
+    const { data: folder, error: fErr } = await sb.from("user_folders").select("id, name, description").eq("id", folder_id).maybeSingle();
+    if (fErr) return errResult(fErr.message);
+    if (!folder) return errResult(`Folder ${folder_id} not found.`);
+    const { data: items, error: iErr } = await sb.from("user_folder_items").select("question_slug, sort_order").eq("folder_id", folder_id).order("sort_order", { ascending: true });
+    if (iErr) return errResult(iErr.message);
+    const slugs = (items ?? []).map((r) => r.question_slug).filter(Boolean);
+    let meta = {};
+    if (slugs.length > 0) {
+      const { data: probs } = await sb.from("coding_problems").select("slug, title, difficulty, topics, is_published").in("slug", slugs);
+      meta = Object.fromEntries((probs ?? []).map((p) => [p.slug, p]));
+    }
+    const sectionOf = parseSectionsForLookup(folder.description);
+    const header = ["sort_order", "section", "slug", "title", "difficulty", "topics", "is_published"];
+    const lines = [header.join(",")];
+    for (const it of items ?? []) {
+      const slug = it.question_slug;
+      const m = meta[slug] ?? {};
+      lines.push([
+        it.sort_order,
+        sectionOf[slug] ?? "",
+        slug,
+        m.title ?? "",
+        m.difficulty ?? "",
+        Array.isArray(m.topics) ? m.topics.join("|") : "",
+        m.is_published === void 0 ? "" : String(m.is_published)
+      ].map(csvEscape).join(","));
+    }
+    const csv = lines.join("\n");
+    return jsonResult(
+      `CSV export ready \u2014 ${items?.length ?? 0} rows from "${folder.name}".`,
+      { folder_id, folder_name: folder.name, row_count: items?.length ?? 0, csv, filename: `${folder.name.replace(/[^a-z0-9]+/gi, "_")}.csv` }
+    );
+  }
+});
+var listPublicShareCodesTool = defineTool31({
+  name: "list_public_share_codes",
+  title: "List all active public share codes for my sheets",
+  description: "Return every shared_folders row for the caller's sheets with share_code, is_public, allow_copy, expires_at, and computed is_expired / is_active flags.",
+  inputSchema: {
+    include_private: z26.boolean().optional().describe("If true, also include is_public=false rows."),
+    include_expired: z26.boolean().optional().describe("If true, include already-expired rows.")
+  },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ include_private, include_expired }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const sb = createUserSupabaseClient3(ctx);
+    const userId = ctx.getUserId();
+    const { data: folders, error: fErr } = await sb.from("user_folders").select("id, name").eq("user_id", userId);
+    if (fErr) return errResult(fErr.message);
+    const folderIds = (folders ?? []).map((f) => f.id);
+    if (folderIds.length === 0) return jsonResult("You have no sheets.", { shares: [] });
+    const nameById = Object.fromEntries((folders ?? []).map((f) => [f.id, f.name]));
+    const { data: shares, error: sErr } = await sb.from("shared_folders").select("id, folder_id, share_code, is_public, allow_copy, expires_at, created_at").in("folder_id", folderIds).order("created_at", { ascending: false });
+    if (sErr) return errResult(sErr.message);
+    const now = Date.now();
+    const rows = (shares ?? []).map((s) => {
+      const expired = s.expires_at ? new Date(s.expires_at).getTime() < now : false;
+      return {
+        folder_id: s.folder_id,
+        folder_name: nameById[s.folder_id] ?? "(unknown)",
+        share_code: s.share_code,
+        is_public: s.is_public,
+        allow_copy: s.allow_copy,
+        expires_at: s.expires_at,
+        created_at: s.created_at,
+        is_expired: expired,
+        is_active: !!s.is_public && !expired
+      };
+    });
+    const filtered = rows.filter(
+      (r) => (include_private ? true : r.is_public) && (include_expired ? true : !r.is_expired)
+    );
+    return jsonResult(
+      `${filtered.length} share code(s) across ${folderIds.length} sheet(s).`,
+      { total_sheets: folderIds.length, total_shares: rows.length, returned: filtered.length, shares: filtered }
+    );
+  }
+});
+
+// src/lib/mcp/tools/topic-articles.ts
+import { defineTool as defineTool32 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z27 } from "npm:zod@^3.23.8";
 var kebab = (s) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 80);
 var sheetTagSlug = (folderId) => `sheet-${folderId}`;
 var topicTagSlug = (sectionSlug) => `topic-${sectionSlug}`;
@@ -1120,25 +2254,25 @@ async function detachTag(sb, postId, tagId) {
   await sb.from("blog_post_tags").delete().eq("post_id", postId).eq("tag_id", tagId);
 }
 var readingTime = (md) => Math.max(1, Math.round(md.trim().split(/\s+/).length / 220));
-var publishTopicArticleTool = defineTool27({
+var publishTopicArticleTool = defineTool32({
   name: "publish_topic_article",
   title: "Publish a long-form topic article and link it to a sheet section",
   description: "Upsert a long-form markdown article (with images inline via markdown) as a blog post and link it to a sheet + section. Idempotent by slug: existing post is updated. Set status='draft' to stage without publishing.",
   inputSchema: {
-    slug: z22.string().min(3).max(120).describe("Unique post slug, e.g. 'dbms-normalization-deep-dive'"),
-    title: z22.string().min(3).max(200),
-    content_md: z22.string().min(50).describe("Full markdown body. Reference images with normal ![alt](url) syntax."),
-    excerpt: z22.string().max(400).optional(),
-    cover_image_url: z22.string().url().optional(),
-    status: z22.enum(["draft", "published"]).optional(),
-    is_featured: z22.boolean().optional(),
-    seo_title: z22.string().max(200).optional(),
-    seo_description: z22.string().max(400).optional(),
-    category_slug: z22.string().optional().describe("Existing blog_categories slug (e.g. 'dbms','os','cn'). Auto-created if missing."),
-    category_name: z22.string().optional().describe("Display name if category needs to be created."),
-    sheet_folder_id: z22.string().uuid().describe("user_folders.id for the sheet this article belongs to"),
-    section_title: z22.string().min(1).describe("Section/topic title inside the sheet, e.g. 'Normalization'"),
-    tags: z22.array(z22.string()).max(20).optional().describe("Extra free-form tag names to attach")
+    slug: z27.string().min(3).max(120).describe("Unique post slug, e.g. 'dbms-normalization-deep-dive'"),
+    title: z27.string().min(3).max(200),
+    content_md: z27.string().min(50).describe("Full markdown body. Reference images with normal ![alt](url) syntax."),
+    excerpt: z27.string().max(400).optional(),
+    cover_image_url: z27.string().url().optional(),
+    status: z27.enum(["draft", "published"]).optional(),
+    is_featured: z27.boolean().optional(),
+    seo_title: z27.string().max(200).optional(),
+    seo_description: z27.string().max(400).optional(),
+    category_slug: z27.string().optional().describe("Existing blog_categories slug (e.g. 'dbms','os','cn'). Auto-created if missing."),
+    category_name: z27.string().optional().describe("Display name if category needs to be created."),
+    sheet_folder_id: z27.string().uuid().describe("user_folders.id for the sheet this article belongs to"),
+    section_title: z27.string().min(1).describe("Section/topic title inside the sheet, e.g. 'Normalization'"),
+    tags: z27.array(z27.string()).max(20).optional().describe("Extra free-form tag names to attach")
   },
   annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
   handler: async (input, ctx) => {
@@ -1229,14 +2363,14 @@ var publishTopicArticleTool = defineTool27({
     });
   }
 });
-var listTopicArticlesTool = defineTool27({
+var listTopicArticlesTool = defineTool32({
   name: "list_topic_articles",
   title: "List articles linked to a sheet (optionally filtered by section)",
   description: "Return articles linked to a given sheet folder, optionally narrowed to a specific section title.",
   inputSchema: {
-    sheet_folder_id: z22.string().uuid(),
-    section_title: z22.string().optional(),
-    include_drafts: z22.boolean().optional()
+    sheet_folder_id: z27.string().uuid(),
+    section_title: z27.string().optional(),
+    include_drafts: z27.boolean().optional()
   },
   annotations: { readOnlyHint: true, openWorldHint: false },
   handler: async ({ sheet_folder_id, section_title, include_drafts }, ctx) => {
@@ -1268,14 +2402,14 @@ var listTopicArticlesTool = defineTool27({
     });
   }
 });
-var linkArticleToSheetTopicTool = defineTool27({
+var linkArticleToSheetTopicTool = defineTool32({
   name: "link_article_to_sheet_topic",
   title: "Attach an existing article to a sheet section",
   description: "Link an already-published blog post (by slug) to a sheet folder + section by attaching the sheet/topic tags.",
   inputSchema: {
-    post_slug: z22.string().min(1),
-    sheet_folder_id: z22.string().uuid(),
-    section_title: z22.string().min(1)
+    post_slug: z27.string().min(1),
+    sheet_folder_id: z27.string().uuid(),
+    section_title: z27.string().min(1)
   },
   annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
   handler: async ({ post_slug, sheet_folder_id, section_title }, ctx) => {
@@ -1300,15 +2434,15 @@ var linkArticleToSheetTopicTool = defineTool27({
     });
   }
 });
-var unlinkArticleFromSheetTopicTool = defineTool27({
+var unlinkArticleFromSheetTopicTool = defineTool32({
   name: "unlink_article_from_sheet_topic",
   title: "Detach an article from a sheet section",
   description: "Remove the sheet and/or topic tag from a post. Pass `unlink_sheet:true` to remove the sheet link entirely.",
   inputSchema: {
-    post_slug: z22.string().min(1),
-    sheet_folder_id: z22.string().uuid(),
-    section_title: z22.string().optional(),
-    unlink_sheet: z22.boolean().optional()
+    post_slug: z27.string().min(1),
+    sheet_folder_id: z27.string().uuid(),
+    section_title: z27.string().optional(),
+    unlink_sheet: z27.boolean().optional()
   },
   annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
   handler: async ({ post_slug, sheet_folder_id, section_title, unlink_sheet }, ctx) => {
@@ -1335,16 +2469,16 @@ var unlinkArticleFromSheetTopicTool = defineTool27({
     return jsonResult(`Detached ${removed.length} link(s).`, { post_slug, removed });
   }
 });
-var uploadArticleImageTool = defineTool27({
+var uploadArticleImageTool = defineTool32({
   name: "upload_article_image",
   title: "Upload an image for a topic article",
   description: "Upload a base64-encoded image to the blog-media bucket and return a signed URL you can embed in article markdown as ![alt](url). Signed URL default expiry: 1 year.",
   inputSchema: {
-    filename: z22.string().min(1).describe("e.g. 'normalization-diagram.png'"),
-    base64: z22.string().min(1).describe("Raw base64 (no data: prefix)"),
-    content_type: z22.string().optional(),
-    folder: z22.string().optional().describe("Subpath inside bucket, e.g. 'dbms/normalization'. Defaults to 'articles'."),
-    expires_in_seconds: z22.number().int().min(3600).max(60 * 60 * 24 * 365).optional()
+    filename: z27.string().min(1).describe("e.g. 'normalization-diagram.png'"),
+    base64: z27.string().min(1).describe("Raw base64 (no data: prefix)"),
+    content_type: z27.string().optional(),
+    folder: z27.string().optional().describe("Subpath inside bucket, e.g. 'dbms/normalization'. Defaults to 'articles'."),
+    expires_in_seconds: z27.number().int().min(3600).max(60 * 60 * 24 * 365).optional()
   },
   annotations: { readOnlyHint: false, openWorldHint: false },
   handler: async ({ filename, base64, content_type, folder, expires_in_seconds }, ctx) => {
@@ -1371,11 +2505,11 @@ var uploadArticleImageTool = defineTool27({
     });
   }
 });
-var deleteTopicArticleTool = defineTool27({
+var deleteTopicArticleTool = defineTool32({
   name: "delete_topic_article",
   title: "Delete a topic article",
   description: "Permanently delete a blog post (and its tag links) by slug.",
-  inputSchema: { post_slug: z22.string().min(1) },
+  inputSchema: { post_slug: z27.string().min(1) },
   annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
   handler: async ({ post_slug }, ctx) => {
     const gate = await requireAdmin(ctx);
@@ -1390,13 +2524,13 @@ var deleteTopicArticleTool = defineTool27({
     return jsonResult(`Deleted '${post.title}'.`, { post_slug });
   }
 });
-var setTopicArticleStatusTool = defineTool27({
+var setTopicArticleStatusTool = defineTool32({
   name: "set_topic_article_status",
   title: "Change draft/published status of a topic article",
   description: "Flip a topic article between 'draft' and 'published'. Sets published_at on first publish, clears it when moved back to draft. Idempotent.",
   inputSchema: {
-    post_slug: z22.string().min(1),
-    status: z22.enum(["draft", "published", "archived"])
+    post_slug: z27.string().min(1),
+    status: z27.enum(["draft", "published", "archived"])
   },
   annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
   handler: async ({ post_slug, status }, ctx) => {
@@ -1419,26 +2553,26 @@ var setTopicArticleStatusTool = defineTool27({
     });
   }
 });
-var updateTopicArticleTool = defineTool27({
+var updateTopicArticleTool = defineTool32({
   name: "update_topic_article",
   title: "Update a published topic article (idempotent by slug)",
   description: "Patch a topic article's content, images, metadata, and/or tags without breaking its existing sheet+section linkage. Pass only the fields you want to change. Sheet/section link is preserved unless you pass new sheet_folder_id/section_title to re-link.",
   inputSchema: {
-    slug: z22.string().min(1).describe("Existing post slug (identity)."),
-    title: z22.string().min(3).max(200).optional(),
-    content_md: z22.string().min(50).optional(),
-    excerpt: z22.string().max(400).nullable().optional(),
-    cover_image_url: z22.string().url().nullable().optional(),
-    status: z22.enum(["draft", "published", "archived"]).optional(),
-    is_featured: z22.boolean().optional(),
-    seo_title: z22.string().max(200).nullable().optional(),
-    seo_description: z22.string().max(400).nullable().optional(),
-    add_tags: z22.array(z22.string()).max(20).optional(),
-    remove_tags: z22.array(z22.string()).max(20).optional(),
-    category_slug: z22.string().optional(),
-    category_name: z22.string().optional(),
-    sheet_folder_id: z22.string().uuid().optional().describe("Re-link to this sheet (optional)."),
-    section_title: z22.string().optional().describe("Re-link to this section (optional).")
+    slug: z27.string().min(1).describe("Existing post slug (identity)."),
+    title: z27.string().min(3).max(200).optional(),
+    content_md: z27.string().min(50).optional(),
+    excerpt: z27.string().max(400).nullable().optional(),
+    cover_image_url: z27.string().url().nullable().optional(),
+    status: z27.enum(["draft", "published", "archived"]).optional(),
+    is_featured: z27.boolean().optional(),
+    seo_title: z27.string().max(200).nullable().optional(),
+    seo_description: z27.string().max(400).nullable().optional(),
+    add_tags: z27.array(z27.string()).max(20).optional(),
+    remove_tags: z27.array(z27.string()).max(20).optional(),
+    category_slug: z27.string().optional(),
+    category_name: z27.string().optional(),
+    sheet_folder_id: z27.string().uuid().optional().describe("Re-link to this sheet (optional)."),
+    section_title: z27.string().optional().describe("Re-link to this section (optional).")
   },
   annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
   handler: async (input, ctx) => {
@@ -1523,11 +2657,11 @@ var updateTopicArticleTool = defineTool27({
     });
   }
 });
-var getTopicArticleDetailsTool = defineTool27({
+var getTopicArticleDetailsTool = defineTool32({
   name: "get_topic_article_details",
   title: "Get full details of a topic article",
   description: "Return complete article details in one call: post row, extracted inline images, all tags (including sheet/topic linkage), categories, and resolved sheet+section metadata.",
-  inputSchema: { post_slug: z22.string().min(1) },
+  inputSchema: { post_slug: z27.string().min(1) },
   annotations: { readOnlyHint: true, openWorldHint: false },
   handler: async ({ post_slug }, ctx) => {
     const gate = await requireAdmin(ctx);
@@ -1575,27 +2709,27 @@ var getTopicArticleDetailsTool = defineTool27({
     });
   }
 });
-var bulkPublishTopicArticlesTool = defineTool27({
+var bulkPublishTopicArticlesTool = defineTool32({
   name: "bulk_publish_topic_articles",
   title: "Publish multiple topic articles at once (linked to a sheet)",
   description: "Upsert an array of long-form topic articles in one call. Each is linked to its own section inside the given sheet. Per-article success/failure report. Ideal for seeding a full DBMS/CN/OS sheet with articles.",
   inputSchema: {
-    sheet_folder_id: z22.string().uuid(),
-    category_slug: z22.string().optional(),
-    category_name: z22.string().optional(),
-    default_status: z22.enum(["draft", "published"]).optional(),
-    articles: z22.array(z22.object({
-      slug: z22.string().min(3).max(120),
-      title: z22.string().min(3).max(200),
-      section_title: z22.string().min(1),
-      content_md: z22.string().min(50),
-      excerpt: z22.string().max(400).optional(),
-      cover_image_url: z22.string().url().optional(),
-      status: z22.enum(["draft", "published"]).optional(),
-      is_featured: z22.boolean().optional(),
-      seo_title: z22.string().max(200).optional(),
-      seo_description: z22.string().max(400).optional(),
-      tags: z22.array(z22.string()).max(20).optional()
+    sheet_folder_id: z27.string().uuid(),
+    category_slug: z27.string().optional(),
+    category_name: z27.string().optional(),
+    default_status: z27.enum(["draft", "published"]).optional(),
+    articles: z27.array(z27.object({
+      slug: z27.string().min(3).max(120),
+      title: z27.string().min(3).max(200),
+      section_title: z27.string().min(1),
+      content_md: z27.string().min(50),
+      excerpt: z27.string().max(400).optional(),
+      cover_image_url: z27.string().url().optional(),
+      status: z27.enum(["draft", "published"]).optional(),
+      is_featured: z27.boolean().optional(),
+      seo_title: z27.string().max(200).optional(),
+      seo_description: z27.string().max(400).optional(),
+      tags: z27.array(z27.string()).max(20).optional()
     })).min(1).max(50)
   },
   annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
@@ -1682,13 +2816,13 @@ var bulkPublishTopicArticlesTool = defineTool27({
     );
   }
 });
-var bulkSetTopicArticleStatusTool = defineTool27({
+var bulkSetTopicArticleStatusTool = defineTool32({
   name: "bulk_set_topic_article_status",
   title: "Change status of multiple topic articles at once",
   description: "Set draft/published/archived for many articles by slug in a single call. Per-slug result: status/previous_status or error.",
   inputSchema: {
-    slugs: z22.array(z22.string().min(1)).min(1).max(100),
-    status: z22.enum(["draft", "published", "archived"])
+    slugs: z27.array(z27.string().min(1)).min(1).max(100),
+    status: z27.enum(["draft", "published", "archived"])
   },
   annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
   handler: async ({ slugs, status }, ctx) => {
@@ -1723,13 +2857,13 @@ var bulkSetTopicArticleStatusTool = defineTool27({
     );
   }
 });
-var previewTopicArticleTool = defineTool27({
+var previewTopicArticleTool = defineTool32({
   name: "preview_topic_article",
   title: "Render a topic article to sanitized HTML for visual review",
   description: "Render the article markdown to HTML (with a strict sanitizer: strips <script>/<iframe>/on*=/javascript: URLs) and returns resolved inline image URLs, so you can eyeball it before publishing. Does not modify anything.",
   inputSchema: {
-    post_slug: z22.string().min(1),
-    include_toc: z22.boolean().optional()
+    post_slug: z27.string().min(1),
+    include_toc: z27.boolean().optional()
   },
   annotations: { readOnlyHint: true, openWorldHint: false },
   handler: async ({ post_slug, include_toc }, ctx) => {
@@ -1772,18 +2906,18 @@ var previewTopicArticleTool = defineTool27({
     });
   }
 });
-var searchTopicArticlesTool = defineTool27({
+var searchTopicArticlesTool = defineTool32({
   name: "search_topic_articles",
   title: "Search topic articles by category / sheet / section",
   description: "Filter topic articles by any combination of category slug (dbms/cn/os), sheet folder id, section title, status, and free-text title query. Paginated.",
   inputSchema: {
-    category_slug: z22.string().optional(),
-    sheet_folder_id: z22.string().uuid().optional(),
-    section_title: z22.string().optional(),
-    status: z22.enum(["draft", "published", "archived"]).optional(),
-    query: z22.string().optional().describe("Case-insensitive substring match on title."),
-    limit: z22.number().int().min(1).max(100).optional(),
-    offset: z22.number().int().min(0).optional()
+    category_slug: z27.string().optional(),
+    sheet_folder_id: z27.string().uuid().optional(),
+    section_title: z27.string().optional(),
+    status: z27.enum(["draft", "published", "archived"]).optional(),
+    query: z27.string().optional().describe("Case-insensitive substring match on title."),
+    limit: z27.number().int().min(1).max(100).optional(),
+    offset: z27.number().int().min(0).optional()
   },
   annotations: { readOnlyHint: true, openWorldHint: false },
   handler: async (input, ctx) => {
@@ -1842,13 +2976,13 @@ var searchTopicArticlesTool = defineTool27({
     });
   }
 });
-var verifyTopicArticleLinkageTool = defineTool27({
+var verifyTopicArticleLinkageTool = defineTool32({
   name: "verify_topic_article_linkage",
   title: "Audit topic article linkage for a sheet",
   description: "Scan all articles tagged for a sheet (and optionally a section) and report link health: missing sheet tag, missing topic tag, orphaned topic tags whose section no longer exists in the sheet outline, and articles with no category.",
   inputSchema: {
-    sheet_folder_id: z22.string().uuid(),
-    section_title: z22.string().optional()
+    sheet_folder_id: z27.string().uuid(),
+    section_title: z27.string().optional()
   },
   annotations: { readOnlyHint: true, openWorldHint: false },
   handler: async ({ sheet_folder_id, section_title }, ctx) => {
@@ -1939,8 +3073,8 @@ var verifyTopicArticleLinkageTool = defineTool27({
 });
 
 // src/lib/mcp/tools/topic-articles-extra.ts
-import { defineTool as defineTool28 } from "npm:@lovable.dev/mcp-js@0.20.1";
-import { z as z23 } from "npm:zod@^3.23.8";
+import { defineTool as defineTool33 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z28 } from "npm:zod@^3.23.8";
 var kebab2 = (s) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 80);
 var sheetTagSlug2 = (folderId) => `sheet-${folderId}`;
 var topicTagSlug2 = (sectionSlug) => `topic-${sectionSlug}`;
@@ -1964,13 +3098,13 @@ var extractImageRefs = (md) => {
   while ((m = re.exec(md ?? "")) !== null) out.push({ alt: m[1], url: m[2], full: m[0] });
   return out;
 };
-var getTopicArticlesDetailsBySlugsTool = defineTool28({
+var getTopicArticlesDetailsBySlugsTool = defineTool33({
   name: "get_topic_articles_details_by_slugs",
   title: "Get details for many topic articles at once",
   description: "Return summary + status + tags + linked sheet/section for a list of article slugs in one call. Missing slugs are reported as not_found.",
   inputSchema: {
-    slugs: z23.array(z23.string().min(1)).min(1).max(100),
-    include_content: z23.boolean().optional().describe("Include full content_md (default: excerpt/summary only).")
+    slugs: z28.array(z28.string().min(1)).min(1).max(100),
+    include_content: z28.boolean().optional().describe("Include full content_md (default: excerpt/summary only).")
   },
   annotations: { readOnlyHint: true, openWorldHint: false },
   handler: async ({ slugs, include_content }, ctx) => {
@@ -2032,16 +3166,16 @@ var getTopicArticlesDetailsBySlugsTool = defineTool28({
     });
   }
 });
-var exportTopicArticlesSitemapTool = defineTool28({
+var exportTopicArticlesSitemapTool = defineTool33({
   name: "export_topic_articles_sitemap",
   title: "Export XML sitemap for topic articles",
   description: "Generate an XML sitemap (Sitemap 0.9 spec) for published topic articles. Filter by category slug(s) (e.g. dbms/cn/os) or by sheet. Returns raw XML you can save to public/sitemap-articles.xml or serve directly.",
   inputSchema: {
-    base_url: z23.string().url().describe("e.g. https://www.parikshaa.org"),
-    category_slugs: z23.array(z23.string()).max(20).optional().describe("Restrict to these categories. Default: all."),
-    sheet_folder_id: z23.string().uuid().optional(),
-    path_prefix: z23.string().optional().describe("Path prefix for URLs (default '/blog/')."),
-    include_lastmod: z23.boolean().optional()
+    base_url: z28.string().url().describe("e.g. https://www.parikshaa.org"),
+    category_slugs: z28.array(z28.string()).max(20).optional().describe("Restrict to these categories. Default: all."),
+    sheet_folder_id: z28.string().uuid().optional(),
+    path_prefix: z28.string().optional().describe("Path prefix for URLs (default '/blog/')."),
+    include_lastmod: z28.boolean().optional()
   },
   annotations: { readOnlyHint: true, openWorldHint: false },
   handler: async (input, ctx) => {
@@ -2095,15 +3229,15 @@ ${urls}
     });
   }
 });
-var reresolveTopicArticleImagesTool = defineTool28({
+var reresolveTopicArticleImagesTool = defineTool33({
   name: "reresolve_topic_article_images",
   title: "Re-resolve inline image URLs for a topic article",
   description: "Scan inline markdown images in a topic article, re-issue fresh signed URLs for images stored in the blog-media bucket, and rewrite the article body. Slug-idempotent (same post, updated content). External URLs are left untouched.",
   inputSchema: {
-    post_slug: z23.string().min(1),
-    bucket: z23.string().optional().describe("Storage bucket to re-sign against. Default: 'blog-media'."),
-    expires_in_seconds: z23.number().int().min(3600).max(60 * 60 * 24 * 365).optional(),
-    dry_run: z23.boolean().optional()
+    post_slug: z28.string().min(1),
+    bucket: z28.string().optional().describe("Storage bucket to re-sign against. Default: 'blog-media'."),
+    expires_in_seconds: z28.number().int().min(3600).max(60 * 60 * 24 * 365).optional(),
+    dry_run: z28.boolean().optional()
   },
   annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
   handler: async ({ post_slug, bucket: bucket2 = "blog-media", expires_in_seconds, dry_run }, ctx) => {
@@ -2179,17 +3313,17 @@ var reresolveTopicArticleImagesTool = defineTool28({
     );
   }
 });
-var fixTopicArticleLinkageTool = defineTool28({
+var fixTopicArticleLinkageTool = defineTool33({
   name: "fix_topic_article_linkage",
   title: "Auto-repair sheet+section linkage issues for topic articles",
   description: "Fix issues surfaced by verify_topic_article_linkage: attach missing sheet tag, attach a topic tag when a target section_title is provided, and remove orphaned topic tags whose slug is not present in the sheet outline. Optionally attach a category to articles missing one.",
   inputSchema: {
-    sheet_folder_id: z23.string().uuid(),
-    section_title: z23.string().optional().describe("When set, ensures every audited article carries this topic tag."),
-    default_category_slug: z23.string().optional().describe("Attach this category to articles missing any category."),
-    default_category_name: z23.string().optional(),
-    remove_orphan_topic_tags: z23.boolean().optional().describe("Default: true. Detach topic tags not in sheet outline."),
-    dry_run: z23.boolean().optional()
+    sheet_folder_id: z28.string().uuid(),
+    section_title: z28.string().optional().describe("When set, ensures every audited article carries this topic tag."),
+    default_category_slug: z28.string().optional().describe("Attach this category to articles missing any category."),
+    default_category_name: z28.string().optional(),
+    remove_orphan_topic_tags: z28.boolean().optional().describe("Default: true. Detach topic tags not in sheet outline."),
+    dry_run: z28.boolean().optional()
   },
   annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
   handler: async (input, ctx) => {
@@ -2306,11 +3440,3271 @@ var fixTopicArticleLinkageTool = defineTool28({
   }
 });
 
+// src/lib/mcp/tools/builtin-sheets.ts
+import { defineTool as defineTool34 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z29 } from "npm:zod@^3.23.8";
+
+// src/data/dbmsData.ts
+var dbmsSections = [
+  {
+    id: "dbms-sec-1",
+    title: "Introduction & Basics",
+    subSections: [
+      {
+        id: "dbms-sec-1-sub-1",
+        title: "Introduction & Basics Concepts",
+        topics: [
+          {
+            id: "1",
+            title: "What is DBMS? Mention advantages",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "article",
+            resourceUrl: "/blog/dbms/what-is-dbms",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "2",
+            title: "What is a Database?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "article",
+            resourceUrl: "/blog/dbms/what-is-a-database",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "3",
+            title: "What is a Database System?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "article",
+            resourceUrl: "/blog/dbms/what-is-a-database-system",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "4",
+            title: "What is RDBMS? Properties of RDBMS",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "article",
+            resourceUrl: "/blog/dbms/what-is-rdbms",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "5",
+            title: "Difference between DBMS and RDBMS",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "article",
+            resourceUrl: "/blog/dbms/dbms-vs-rdbms",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "6",
+            title: "Difference between DBMS and File System",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "article",
+            resourceUrl: "/blog/dbms/dbms-vs-file-system",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "7",
+            title: "Types of Database Languages (DDL, DML, DCL, TCL)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "article",
+            resourceUrl: "/blog/dbms/database-languages",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "8",
+            title: "What is DDL (Data Definition Language)? Give examples",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "article",
+            resourceUrl: "/blog/dbms/ddl-data-definition-language",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "9",
+            title: "What is DML (Data Manipulation Language)? Give examples",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "article",
+            resourceUrl: "/blog/dbms/dml-data-manipulation-language",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "10",
+            title: "What is DCL (Data Control Language)?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "article",
+            resourceUrl: "/blog/dbms/dcl-data-control-language",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "11",
+            title: "What is TCL (Transaction Control Language)?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "article",
+            resourceUrl: "/blog/dbms/tcl-transaction-control-language",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "12",
+            title: "Difference between SQL and NoSQL",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "article",
+            resourceUrl: "/blog/dbms/sql-vs-nosql",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "13",
+            title: "What is PostgreSQL?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "article",
+            resourceUrl: "/blog/dbms/postgresql-overview",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "14",
+            title: "What is MySQL?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "article",
+            resourceUrl: "/blog/dbms/mysql-overview",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "dbms-sec-2",
+    title: "Architecture & Abstraction",
+    subSections: [
+      {
+        id: "dbms-sec-2-sub-1",
+        title: "Architecture & Abstraction Concepts",
+        topics: [
+          {
+            id: "15",
+            title: "Data Abstraction in DBMS, Explain three levels",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Data+Abstraction+in+DBMS,+Explain+three+levels",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "16",
+            title: "What is Schema? Difference between Schema and Instance",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Schema?+Difference+between+Schema+and+Instance",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "17",
+            title: "Difference between Intension and Extension in a Database",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+Intension+and+Extension+in+a+Database",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "18",
+            title: "What is 2-Tier Architecture?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+2-Tier+Architecture?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "19",
+            title: "What is 3-Tier Architecture?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+3-Tier+Architecture?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "20",
+            title: "Difference between 2-Tier and 3-Tier Architecture",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+2-Tier+and+3-Tier+Architecture",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "dbms-sec-3",
+    title: "ER Model & Relationships",
+    subSections: [
+      {
+        id: "dbms-sec-3-sub-1",
+        title: "ER Model & Relationships Concepts",
+        topics: [
+          {
+            id: "21",
+            title: "What is ER Model? Explain its components",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+ER+Model?+Explain+its+components",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "22",
+            title: "Entity, Entity Type, Entity Set \u2014 Explain with examples",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Entity,+Entity+Type,+Entity+Set+\u2014+Explain+with+examples",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "23",
+            title: "What is a Weak Entity Set?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Weak+Entity+Set?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "24",
+            title: "Types of Relationships in DBMS (1:1, 1:N, M:N)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Types+of+Relationships+in+DBMS+(1:1,+1:N,+M:N)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "25",
+            title: "What are Attributes? Types of Attributes",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+are+Attributes?+Types+of+Attributes",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "26",
+            title: "Difference between Entity and Attribute",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+Entity+and+Attribute",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "27",
+            title: "What is Participation Constraint? (Total vs Partial)",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Participation+Constraint?+(Total+vs+Partial)",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "28",
+            title: "What is Generalization, Specialization, and Aggregation?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Generalization,+Specialization,+and+Aggregation?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "29",
+            title: "Convert ER Diagram to Relational Schema",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Convert+ER+Diagram+to+Relational+Schema",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "dbms-sec-4",
+    title: "Keys in DBMS",
+    subSections: [
+      {
+        id: "dbms-sec-4-sub-1",
+        title: "Keys in DBMS Concepts",
+        topics: [
+          {
+            id: "30",
+            title: "What are Keys in DBMS? Why are they important?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+are+Keys+in+DBMS?+Why+are+they+important?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "31",
+            title: "What is a Super Key?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Super+Key?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "32",
+            title: "What is a Candidate Key?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Candidate+Key?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "33",
+            title: "What is a Primary Key?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Primary+Key?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "34",
+            title: "What is a Foreign Key?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Foreign+Key?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "35",
+            title: "What is an Alternate Key?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+an+Alternate+Key?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "36",
+            title: "What is a Composite Key?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Composite+Key?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "37",
+            title: "What is a Unique Key? Diff between Primary Key and Unique Key",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Unique+Key?+Diff+between+Primary+Key+and+Unique+Key",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "38",
+            title: "Difference between Primary Key and Foreign Key",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+Primary+Key+and+Foreign+Key",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "dbms-sec-5",
+    title: "Normalization",
+    subSections: [
+      {
+        id: "dbms-sec-5-sub-1",
+        title: "Normalization Concepts",
+        topics: [
+          {
+            id: "39",
+            title: "What is Normalization? Why is it needed?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Normalization?+Why+is+it+needed?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "40",
+            title: "What is First Normal Form (1NF)?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+First+Normal+Form+(1NF)?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "41",
+            title: "What is Second Normal Form (2NF)?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Second+Normal+Form+(2NF)?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "42",
+            title: "What is Third Normal Form (3NF)?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Third+Normal+Form+(3NF)?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "43",
+            title: "What is BCNF (Boyce-Codd Normal Form)?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+BCNF+(Boyce-Codd+Normal+Form)?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "44",
+            title: "What is Fourth Normal Form (4NF)?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Fourth+Normal+Form+(4NF)?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "45",
+            title: "What is Denormalization? When to use it?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Denormalization?+When+to+use+it?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "46",
+            title: "What is a Functional Dependency?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Functional+Dependency?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "47",
+            title: "Types of Functional Dependencies (Partial, Transitive, Trivial)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Types+of+Functional+Dependencies+(Partial,+Transitive,+Trivial)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "48",
+            title: "What is Lossless Decomposition?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Lossless+Decomposition?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "49",
+            title: "What is Dependency Preservation?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Dependency+Preservation?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "50",
+            title: "Difference between Normalization and Denormalization",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+Normalization+and+Denormalization",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "dbms-sec-6",
+    title: "SQL Commands & Queries",
+    subSections: [
+      {
+        id: "dbms-sec-6-sub-1",
+        title: "SQL Commands & Queries Concepts",
+        topics: [
+          {
+            id: "51",
+            title: "What are SQL Commands? Types of them",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+are+SQL+Commands?+Types+of+them",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "52",
+            title: "Difference between TRUNCATE and DELETE command",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+TRUNCATE+and+DELETE+command",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "53",
+            title: "Difference between DELETE and DROP",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+DELETE+and+DROP",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "54",
+            title: "Difference between TRUNCATE, DELETE, and DROP",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+TRUNCATE,+DELETE,+and+DROP",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "55",
+            title: "What is a CLAUSE in SQL?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+CLAUSE+in+SQL?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "56",
+            title: "Difference between HAVING and WHERE clause",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+HAVING+and+WHERE+clause",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "57",
+            title: "What is GROUP BY?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+GROUP+BY?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "58",
+            title: "What is ORDER BY?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+ORDER+BY?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "59",
+            title: "What is a Subquery / Nested Query?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Subquery+/+Nested+Query?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "60",
+            title: "What is a Correlated Subquery?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Correlated+Subquery?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "61",
+            title: "What are Aggregate Functions? (COUNT, SUM, AVG, MIN, MAX)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+are+Aggregate+Functions?+(COUNT,+SUM,+AVG,+MIN,+MAX)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "62",
+            title: "What is UNION? Difference between UNION and UNION ALL",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+UNION?+Difference+between+UNION+and+UNION+ALL",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "63",
+            title: "What is Pattern Matching in SQL? (LIKE, %, _)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Pattern+Matching+in+SQL?+(LIKE,+%,+_)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "64",
+            title: "How to create empty tables with same structure as another table?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+How+to+create+empty+tables+with+same+structure+as+another+table?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "65",
+            title: "What is the difference between IN and BETWEEN?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+the+difference+between+IN+and+BETWEEN?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "66",
+            title: "What is an Alias in SQL?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+an+Alias+in+SQL?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "67",
+            title: "Difference between CHAR and VARCHAR",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+CHAR+and+VARCHAR",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "dbms-sec-7",
+    title: "Joins",
+    subSections: [
+      {
+        id: "dbms-sec-7-sub-1",
+        title: "Joins Concepts",
+        topics: [
+          {
+            id: "68",
+            title: "What is a JOIN in SQL? Why is it used?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+JOIN+in+SQL?+Why+is+it+used?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "69",
+            title: "What is INNER JOIN?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+INNER+JOIN?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "70",
+            title: "What is LEFT (OUTER) JOIN?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+LEFT+(OUTER)+JOIN?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "71",
+            title: "What is RIGHT (OUTER) JOIN?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+RIGHT+(OUTER)+JOIN?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "72",
+            title: "What is FULL (OUTER) JOIN?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+FULL+(OUTER)+JOIN?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "73",
+            title: "What is CROSS JOIN?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+CROSS+JOIN?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "74",
+            title: "What is SELF JOIN?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+SELF+JOIN?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "75",
+            title: "What is NATURAL JOIN?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+NATURAL+JOIN?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "76",
+            title: "Difference between Inner Join and Outer Join",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+Inner+Join+and+Outer+Join",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "77",
+            title: "Difference between JOIN and UNION",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+JOIN+and+UNION",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "dbms-sec-8",
+    title: "Views, Triggers, Procedures",
+    subSections: [
+      {
+        id: "dbms-sec-8-sub-1",
+        title: "Views, Triggers, Procedures Concepts",
+        topics: [
+          {
+            id: "78",
+            title: "What is a View in SQL?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+View+in+SQL?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "79",
+            title: "What are the advantages of Views?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+are+the+advantages+of+Views?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "80",
+            title: "Can we perform DML operations on Views?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Can+we+perform+DML+operations+on+Views?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "81",
+            title: "What are Triggers in SQL?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+are+Triggers+in+SQL?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "82",
+            title: "What is a Stored Procedure?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Stored+Procedure?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "83",
+            title: "Difference between Stored Procedure and Function",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+Stored+Procedure+and+Function",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "84",
+            title: "What is a Cursor in DBMS? Types of Cursors",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Cursor+in+DBMS?+Types+of+Cursors",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "dbms-sec-9",
+    title: "Transactions & ACID",
+    subSections: [
+      {
+        id: "dbms-sec-9-sub-1",
+        title: "Transactions & ACID Concepts",
+        topics: [
+          {
+            id: "85",
+            title: "What is a Transaction in DBMS?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Transaction+in+DBMS?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "86",
+            title: "What are ACID Properties? Explain each",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+are+ACID+Properties?+Explain+each",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "87",
+            title: "What is Atomicity?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Atomicity?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "88",
+            title: "What is Consistency?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Consistency?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "89",
+            title: "What is Isolation?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Isolation?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "90",
+            title: "What is Durability?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Durability?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "91",
+            title: "States of a Transaction (Active, Partially Committed, Committed, Failed, Aborted)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+States+of+a+Transaction+(Active,+Partially+Committed,+Committed,+Failed,+Aborted)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "92",
+            title: "What is COMMIT, ROLLBACK, and SAVEPOINT?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+COMMIT,+ROLLBACK,+and+SAVEPOINT?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "93",
+            title: "What is a Checkpoint in DBMS?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Checkpoint+in+DBMS?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "94",
+            title: "How to implement Atomicity and Durability (Shadow Copy)?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+How+to+implement+Atomicity+and+Durability+(Shadow+Copy)?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "dbms-sec-10",
+    title: "Concurrency Control",
+    subSections: [
+      {
+        id: "dbms-sec-10-sub-1",
+        title: "Concurrency Control Concepts",
+        topics: [
+          {
+            id: "95",
+            title: "What is Concurrency Control? Why is it needed?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Concurrency+Control?+Why+is+it+needed?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "96",
+            title: "Problems of Concurrent Transactions (Dirty Read, Lost Update, Phantom Read)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Problems+of+Concurrent+Transactions+(Dirty+Read,+Lost+Update,+Phantom+Read)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "97",
+            title: "What is a Schedule? Types of Schedules (Serial, Non-Serial)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Schedule?+Types+of+Schedules+(Serial,+Non-Serial)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "98",
+            title: "What is Serializability? Types (Conflict, View)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Serializability?+Types+(Conflict,+View)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "99",
+            title: "What is Conflict Serializability?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Conflict+Serializability?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "100",
+            title: "What is View Serializability?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+View+Serializability?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "101",
+            title: "What is a Lock? Types (Shared Lock, Exclusive Lock)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Lock?+Types+(Shared+Lock,+Exclusive+Lock)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "102",
+            title: "What is Two-Phase Locking Protocol?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Two-Phase+Locking+Protocol?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "103",
+            title: "What is a Deadlock in DBMS?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Deadlock+in+DBMS?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "104",
+            title: "Deadlock Handling Techniques (Prevention, Detection, Avoidance)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Deadlock+Handling+Techniques+(Prevention,+Detection,+Avoidance)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "105",
+            title: "What is Starvation in DBMS?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Starvation+in+DBMS?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "106",
+            title: "Difference between Shared Lock and Exclusive Lock",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+Shared+Lock+and+Exclusive+Lock",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "107",
+            title: "What are Isolation Levels? (Read Uncommitted, Read Committed, Repeatable Read, Serializable)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+are+Isolation+Levels?+(Read+Uncommitted,+Read+Committed,+Repeatable+Read,+Serializable)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "dbms-sec-11",
+    title: "Indexing & Storage",
+    subSections: [
+      {
+        id: "dbms-sec-11-sub-1",
+        title: "Indexing & Storage Concepts",
+        topics: [
+          {
+            id: "108",
+            title: "What is Indexing in DBMS? Why is it used?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Indexing+in+DBMS?+Why+is+it+used?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "109",
+            title: "Types of Indexing (Primary, Secondary, Clustered, Non-Clustered)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Types+of+Indexing+(Primary,+Secondary,+Clustered,+Non-Clustered)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "110",
+            title: "Difference between Clustered and Non-Clustered Index",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+Clustered+and+Non-Clustered+Index",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "111",
+            title: "What is a B-Tree? Why used for Indexing?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+B-Tree?+Why+used+for+Indexing?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "112",
+            title: "What is a B+ Tree? Difference from B-Tree",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+B++Tree?+Difference+from+B-Tree",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "113",
+            title: "What is Hashing in DBMS?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Hashing+in+DBMS?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "114",
+            title: "What is Dense Index vs Sparse Index?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Dense+Index+vs+Sparse+Index?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "115",
+            title: "What are the disadvantages of Indexing?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+are+the+disadvantages+of+Indexing?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "dbms-sec-12",
+    title: "Scaling & Advanced",
+    subSections: [
+      {
+        id: "dbms-sec-12-sub-1",
+        title: "Scaling & Advanced Concepts",
+        topics: [
+          {
+            id: "116",
+            title: "Difference between Vertical Scaling and Horizontal Scaling",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+Vertical+Scaling+and+Horizontal+Scaling",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "117",
+            title: "What is Sharding?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Sharding?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "118",
+            title: "What is Database Partitioning? Types (Horizontal, Vertical)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Database+Partitioning?+Types+(Horizontal,+Vertical)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "119",
+            title: "What is Replication in DBMS?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Replication+in+DBMS?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "120",
+            title: "What is CAP Theorem?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+CAP+Theorem?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "121",
+            title: "Difference between OLTP and OLAP",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+Difference+between+OLTP+and+OLAP",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "122",
+            title: "What is a Data Warehouse?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Data+Warehouse?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "123",
+            title: "What is Database Recovery?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+Database+Recovery?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "124",
+            title: "What is a Materialized View?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+dbms+What+is+a+Materialized+View?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  }
+];
+var dbmsMeta = {
+  id: "dbms-sheet",
+  title: "DBMS Interview Sheet",
+  description: "124 essential DBMS interview questions and concepts from basics to advanced scaling.",
+  lastUpdated: "April 9, 2026",
+  totalProblems: 124,
+  completed: 0,
+  easy: 24,
+  medium: 48,
+  hard: 52
+};
+
+// src/data/cnData.ts
+var cnSections = [
+  {
+    id: "cn-sec-1",
+    title: "Basics & Fundamentals",
+    subSections: [
+      {
+        id: "cn-sec-1-sub-1",
+        title: "Basics & Fundamentals Concepts",
+        topics: [
+          {
+            id: "1",
+            title: "What is a Computer Network?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Computer+Network?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "2",
+            title: "What is the Internet?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+the+Internet?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "3",
+            title: "What is a Protocol in networking?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Protocol+in+networking?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "4",
+            title: "What is a Node, Host, and Link?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Node,+Host,+and+Link?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "5",
+            title: "What is Bandwidth, Throughput, and Latency?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Bandwidth,+Throughput,+and+Latency?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "6",
+            title: "Difference between LAN, MAN, and WAN",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Difference+between+LAN,+MAN,+and+WAN",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "7",
+            title: "What is a Firewall? Types of Firewalls",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Firewall?+Types+of+Firewalls",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "8",
+            title: "What is a VPN? How does it work?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+VPN?+How+does+it+work?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "9",
+            title: "What is a Proxy Server?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Proxy+Server?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "10",
+            title: "What is Network Topology? Types (Bus, Star, Ring, Mesh, Hybrid)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Network+Topology?+Types+(Bus,+Star,+Ring,+Mesh,+Hybrid)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "11",
+            title: "Difference between Peer-to-Peer and Client-Server architecture",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Difference+between+Peer-to-Peer+and+Client-Server+architecture",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "12",
+            title: "What is a Gateway?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Gateway?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "13",
+            title: "What is a Modem? Difference between Modem and Router",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Modem?+Difference+between+Modem+and+Router",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cn-sec-2",
+    title: "OSI Model",
+    subSections: [
+      {
+        id: "cn-sec-2-sub-1",
+        title: "OSI Model Concepts",
+        topics: [
+          {
+            id: "14",
+            title: "What is the OSI Model? Why 7 layers?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+the+OSI+Model?+Why+7+layers?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "15",
+            title: "Explain Physical Layer (Layer 1)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Explain+Physical+Layer+(Layer+1)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "16",
+            title: "Explain Data Link Layer (Layer 2)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Explain+Data+Link+Layer+(Layer+2)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "17",
+            title: "Explain Network Layer (Layer 3)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Explain+Network+Layer+(Layer+3)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "18",
+            title: "Explain Transport Layer (Layer 4)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Explain+Transport+Layer+(Layer+4)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "19",
+            title: "Explain Session Layer (Layer 5)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Explain+Session+Layer+(Layer+5)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "20",
+            title: "Explain Presentation Layer (Layer 6)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Explain+Presentation+Layer+(Layer+6)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "21",
+            title: "Explain Application Layer (Layer 7)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Explain+Application+Layer+(Layer+7)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "22",
+            title: "What protocols work at each layer of OSI?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+protocols+work+at+each+layer+of+OSI?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "23",
+            title: "What are PDUs at each layer? (Bits, Frames, Packets, Segments, Data)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+are+PDUs+at+each+layer?+(Bits,+Frames,+Packets,+Segments,+Data)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cn-sec-3",
+    title: "TCP/IP Model",
+    subSections: [
+      {
+        id: "cn-sec-3-sub-1",
+        title: "TCP/IP Model Concepts",
+        topics: [
+          {
+            id: "24",
+            title: "What is the TCP/IP Model? How many layers?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+the+TCP/IP+Model?+How+many+layers?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "25",
+            title: "Difference between OSI Model and TCP/IP Model",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Difference+between+OSI+Model+and+TCP/IP+Model",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "26",
+            title: "Explain Network Access / Link Layer",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Explain+Network+Access+/+Link+Layer",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "27",
+            title: "Explain Internet Layer",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Explain+Internet+Layer",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "28",
+            title: "Explain Transport Layer (TCP/IP)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Explain+Transport+Layer+(TCP/IP)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "29",
+            title: "Explain Application Layer (TCP/IP)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Explain+Application+Layer+(TCP/IP)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "30",
+            title: "What is Encapsulation and Decapsulation?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Encapsulation+and+Decapsulation?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cn-sec-4",
+    title: "TCP & UDP",
+    subSections: [
+      {
+        id: "cn-sec-4-sub-1",
+        title: "TCP & UDP Concepts",
+        topics: [
+          {
+            id: "31",
+            title: "What is TCP? Features of TCP",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+TCP?+Features+of+TCP",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "32",
+            title: "What is UDP? Features of UDP",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+UDP?+Features+of+UDP",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "33",
+            title: "Difference between TCP and UDP",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Difference+between+TCP+and+UDP",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "34",
+            title: "What is the 3-Way Handshake in TCP? (SYN, SYN-ACK, ACK)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+the+3-Way+Handshake+in+TCP?+(SYN,+SYN-ACK,+ACK)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "35",
+            title: "What is the 4-Way Termination in TCP? (FIN, ACK)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+the+4-Way+Termination+in+TCP?+(FIN,+ACK)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "36",
+            title: "What is Flow Control in TCP?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Flow+Control+in+TCP?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "37",
+            title: "What is Congestion Control in TCP?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Congestion+Control+in+TCP?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "38",
+            title: "What is TCP Sliding Window Protocol?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+TCP+Sliding+Window+Protocol?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "39",
+            title: "What is Piggybacking?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Piggybacking?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "40",
+            title: "When to use TCP vs UDP? Give examples",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+When+to+use+TCP+vs+UDP?+Give+examples",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "41",
+            title: "What is a Socket? What is a Port Number?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Socket?+What+is+a+Port+Number?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "42",
+            title: "What is the difference between a Port and a Socket?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+the+difference+between+a+Port+and+a+Socket?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "43",
+            title: "What are Well-Known Ports? (HTTP-80, HTTPS-443, FTP-21, SSH-22, DNS-53)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+are+Well-Known+Ports?+(HTTP-80,+HTTPS-443,+FTP-21,+SSH-22,+DNS-53)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "44",
+            title: "What is Multiplexing and Demultiplexing in Transport Layer?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Multiplexing+and+Demultiplexing+in+Transport+Layer?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cn-sec-5",
+    title: "IP Addressing",
+    subSections: [
+      {
+        id: "cn-sec-5-sub-1",
+        title: "IP Addressing Concepts",
+        topics: [
+          {
+            id: "45",
+            title: "What is an IP Address?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+an+IP+Address?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "46",
+            title: "Difference between IPv4 and IPv6",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Difference+between+IPv4+and+IPv6",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "47",
+            title: "What are Classes of IP Addresses? (A, B, C, D, E)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+are+Classes+of+IP+Addresses?+(A,+B,+C,+D,+E)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "48",
+            title: "What is a Subnet? What is Subnet Mask?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Subnet?+What+is+Subnet+Mask?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "49",
+            title: "What is Subnetting? How to calculate?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Subnetting?+How+to+calculate?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "50",
+            title: "What is CIDR (Classless Inter-Domain Routing)?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+CIDR+(Classless+Inter-Domain+Routing)?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "51",
+            title: "What is a Private IP vs Public IP?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Private+IP+vs+Public+IP?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "52",
+            title: "What is a Loopback Address (127.0.0.1)?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Loopback+Address+(127.0.0.1)?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "53",
+            title: "What is a MAC Address?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+MAC+Address?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "54",
+            title: "Difference between IP Address and MAC Address",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Difference+between+IP+Address+and+MAC+Address",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "55",
+            title: "What is NAT (Network Address Translation)?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+NAT+(Network+Address+Translation)?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "56",
+            title: "What is APIPA?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+APIPA?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cn-sec-6",
+    title: "DNS",
+    subSections: [
+      {
+        id: "cn-sec-6-sub-1",
+        title: "DNS Concepts",
+        topics: [
+          {
+            id: "57",
+            title: "What is DNS? How does it work?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+DNS?+How+does+it+work?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "58",
+            title: "What are DNS Record Types? (A, AAAA, CNAME, MX, NS, PTR, TXT)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+are+DNS+Record+Types?+(A,+AAAA,+CNAME,+MX,+NS,+PTR,+TXT)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "59",
+            title: "What is a DNS Forwarder?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+DNS+Forwarder?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "60",
+            title: "What is a DNS Resolver?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+DNS+Resolver?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "61",
+            title: "What is Recursive vs Iterative DNS Query?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Recursive+vs+Iterative+DNS+Query?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "62",
+            title: "What is a Domain Name? Explain hierarchy (Root, TLD, SLD)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Domain+Name?+Explain+hierarchy+(Root,+TLD,+SLD)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "63",
+            title: "What happens when you type google.com in the browser?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+happens+when+you+type+google.com+in+the+browser?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cn-sec-7",
+    title: "HTTP & HTTPS",
+    subSections: [
+      {
+        id: "cn-sec-7-sub-1",
+        title: "HTTP & HTTPS Concepts",
+        topics: [
+          {
+            id: "64",
+            title: "What is HTTP? How does it work?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+HTTP?+How+does+it+work?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "65",
+            title: "What is HTTPS? How is it different from HTTP?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+HTTPS?+How+is+it+different+from+HTTP?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "66",
+            title: "What are HTTP Methods? (GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+are+HTTP+Methods?+(GET,+POST,+PUT,+DELETE,+PATCH,+HEAD,+OPTIONS)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "67",
+            title: "Difference between GET and POST",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Difference+between+GET+and+POST",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "68",
+            title: "Difference between PUT and PATCH",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Difference+between+PUT+and+PATCH",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "69",
+            title: "What are HTTP Status Codes? (1xx, 2xx, 3xx, 4xx, 5xx)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+are+HTTP+Status+Codes?+(1xx,+2xx,+3xx,+4xx,+5xx)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "70",
+            title: "What is the difference between HTTP 1.0, HTTP 1.1, and HTTP 2.0?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+the+difference+between+HTTP+1.0,+HTTP+1.1,+and+HTTP+2.0?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "71",
+            title: "What is SSL/TLS? How does SSL Handshake work?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+SSL/TLS?+How+does+SSL+Handshake+work?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "72",
+            title: "What are Cookies? Difference between Cookies and Sessions",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+are+Cookies?+Difference+between+Cookies+and+Sessions",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "73",
+            title: "What is a REST API?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+REST+API?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "74",
+            title: "Difference between Persistent and Non-Persistent HTTP connection",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Difference+between+Persistent+and+Non-Persistent+HTTP+connection",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cn-sec-8",
+    title: "DHCP, ARP, ICMP",
+    subSections: [
+      {
+        id: "cn-sec-8-sub-1",
+        title: "DHCP, ARP, ICMP Concepts",
+        topics: [
+          {
+            id: "75",
+            title: "What is DHCP? How does it work? (DORA Process)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+DHCP?+How+does+it+work?+(DORA+Process)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "76",
+            title: "What is ARP (Address Resolution Protocol)?",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+ARP+(Address+Resolution+Protocol)?",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "77",
+            title: "What is RARP (Reverse ARP)?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+RARP+(Reverse+ARP)?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "78",
+            title: "What is ICMP? What is its use?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+ICMP?+What+is+its+use?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "79",
+            title: "What is Ping? How does it work (uses ICMP)?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Ping?+How+does+it+work+(uses+ICMP)?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "80",
+            title: "What is Traceroute? How does it work?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Traceroute?+How+does+it+work?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cn-sec-9",
+    title: "Routing & Switching",
+    subSections: [
+      {
+        id: "cn-sec-9-sub-1",
+        title: "Routing & Switching Concepts",
+        topics: [
+          {
+            id: "81",
+            title: "What is Routing? Types of Routing (Static, Dynamic)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Routing?+Types+of+Routing+(Static,+Dynamic)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "82",
+            title: "What is a Router? How does it work?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Router?+How+does+it+work?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "83",
+            title: "What is a Switch? Difference between Hub, Switch, and Router",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Switch?+Difference+between+Hub,+Switch,+and+Router",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "84",
+            title: "What is a Bridge? Difference between Bridge and Switch",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Bridge?+Difference+between+Bridge+and+Switch",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "85",
+            title: "What is a Routing Table?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Routing+Table?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "86",
+            title: "What is Distance Vector Routing (RIP)?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Distance+Vector+Routing+(RIP)?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "87",
+            title: "What is Link State Routing (OSPF)?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Link+State+Routing+(OSPF)?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "88",
+            title: "Difference between Distance Vector and Link State Routing",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Difference+between+Distance+Vector+and+Link+State+Routing",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "89",
+            title: "What is BGP (Border Gateway Protocol)?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+BGP+(Border+Gateway+Protocol)?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "90",
+            title: "What is a Default Gateway?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Default+Gateway?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cn-sec-10",
+    title: "Data Link Layer",
+    subSections: [
+      {
+        id: "cn-sec-10-sub-1",
+        title: "Data Link Layer Concepts",
+        topics: [
+          {
+            id: "91",
+            title: "What is Framing in Data Link Layer?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Framing+in+Data+Link+Layer?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "92",
+            title: "What is Error Detection and Correction?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Error+Detection+and+Correction?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "93",
+            title: "What is CRC (Cyclic Redundancy Check)?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+CRC+(Cyclic+Redundancy+Check)?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "94",
+            title: "What is Hamming Code?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Hamming+Code?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "95",
+            title: "What is the difference between Stop-and-Wait, Go-Back-N, and Selective Repeat?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+the+difference+between+Stop-and-Wait,+Go-Back-N,+and+Selective+Repeat?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "96",
+            title: "What is CSMA/CD? (Carrier Sense Multiple Access / Collision Detection)",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+CSMA/CD?+(Carrier+Sense+Multiple+Access+/+Collision+Detection)",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "97",
+            title: "What is CSMA/CA? (Collision Avoidance)",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+CSMA/CA?+(Collision+Avoidance)",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "98",
+            title: "What is Ethernet?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Ethernet?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "99",
+            title: "What is a VLAN (Virtual LAN)?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+VLAN+(Virtual+LAN)?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cn-sec-11",
+    title: "Application Layer Protocols",
+    subSections: [
+      {
+        id: "cn-sec-11-sub-1",
+        title: "Application Layer Protocols Concepts",
+        topics: [
+          {
+            id: "100",
+            title: "What is FTP? How does it work?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+FTP?+How+does+it+work?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "101",
+            title: "What is SMTP? How does email work?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+SMTP?+How+does+email+work?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "102",
+            title: "What is POP3 vs IMAP?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+POP3+vs+IMAP?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "103",
+            title: "What is Telnet? Difference between Telnet and SSH",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Telnet?+Difference+between+Telnet+and+SSH",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "104",
+            title: "What is SSH?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+SSH?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "105",
+            title: "What is SNMP (Simple Network Management Protocol)?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+SNMP+(Simple+Network+Management+Protocol)?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cn-sec-12",
+    title: "Security & Encryption",
+    subSections: [
+      {
+        id: "cn-sec-12-sub-1",
+        title: "Security & Encryption Concepts",
+        topics: [
+          {
+            id: "106",
+            title: "What is Encryption? Types (Symmetric, Asymmetric)",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Encryption?+Types+(Symmetric,+Asymmetric)",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "107",
+            title: "Difference between Symmetric and Asymmetric Encryption",
+            completed: false,
+            difficulty: "Hard",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+Difference+between+Symmetric+and+Asymmetric+Encryption",
+            note: "Importance: Very High",
+            isRevision: false,
+            estTime: "20 min"
+          },
+          {
+            id: "108",
+            title: "What is RSA Algorithm?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+RSA+Algorithm?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "109",
+            title: "What is Digital Signature?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Digital+Signature?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "110",
+            title: "What is Digital Certificate?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Digital+Certificate?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "111",
+            title: "What is a Man-in-the-Middle (MITM) Attack?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+Man-in-the-Middle+(MITM)+Attack?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "112",
+            title: "What is a DDoS Attack?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+a+DDoS+Attack?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          },
+          {
+            id: "113",
+            title: "What is DNS Spoofing / Poisoning?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+DNS+Spoofing+/+Poisoning?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "114",
+            title: "What is Phishing?",
+            completed: false,
+            difficulty: "Easy",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+Phishing?",
+            note: "Importance: Medium",
+            isRevision: false,
+            estTime: "10 min"
+          },
+          {
+            id: "115",
+            title: "What is the difference between Authentication and Authorization?",
+            completed: false,
+            difficulty: "Medium",
+            resourceType: "youtube",
+            resourceUrl: "https://www.youtube.com/results?search_query=striver+computer+networks+What+is+the+difference+between+Authentication+and+Authorization?",
+            note: "Importance: High",
+            isRevision: false,
+            estTime: "15 min"
+          }
+        ]
+      }
+    ]
+  }
+];
+var cnMeta = {
+  id: "cn-sheet",
+  title: "Computer Networks Interview Sheet",
+  description: "115 essential CN interview questions from basics to security & encryption.",
+  lastUpdated: "April 9, 2026",
+  totalProblems: 115,
+  completed: 0,
+  easy: 25,
+  medium: 48,
+  hard: 42
+};
+
+// src/data/osData.ts
+var importanceTodifficulty = (imp) => {
+  if (imp === "Very High") return "Hard";
+  if (imp === "High") return "Medium";
+  return "Easy";
+};
+var estTimeMap = {
+  Easy: "10 min",
+  Medium: "15 min",
+  Hard: "20 min"
+};
+var raw = [
+  { topic: "Introduction & Basics", question: "What is an Operating System? What is its main purpose?", importance: "Very High" },
+  { topic: "Introduction & Basics", question: "Discuss different types of OS (Batch, Distributed, Multitasking, Network, Real-Time, Mobile)", importance: "Very High" },
+  { topic: "Introduction & Basics", question: "What are the functions of an Operating System?", importance: "High" },
+  { topic: "Introduction & Basics", question: "What is a Kernel? Types of Kernels", importance: "Very High" },
+  { topic: "Introduction & Basics", question: "What is a Monolithic Kernel?", importance: "High" },
+  { topic: "Introduction & Basics", question: "What is a Microkernel? Difference between Monolithic and Microkernel", importance: "High" },
+  { topic: "Introduction & Basics", question: "What is a Socket?", importance: "High" },
+  { topic: "Introduction & Basics", question: "What is the difference between User Mode and Kernel Mode?", importance: "Very High" },
+  { topic: "Introduction & Basics", question: "What is a System Call? Give examples", importance: "Very High" },
+  { topic: "Introduction & Basics", question: "Types of System Calls (Process, File, Device, Information, Communication)", importance: "High" },
+  { topic: "Introduction & Basics", question: "What is a Shell?", importance: "Medium" },
+  { topic: "Introduction & Basics", question: "What is Bootstrapping (Booting Process)?", importance: "Medium" },
+  { topic: "Introduction & Basics", question: "What is BIOS?", importance: "Medium" },
+  { topic: "Process Management", question: "What is a Process?", importance: "Very High" },
+  { topic: "Process Management", question: "What is a Program? Difference between Process and Program", importance: "Very High" },
+  { topic: "Process Management", question: "What is a Thread? Difference between Process and Thread", importance: "Very High" },
+  { topic: "Process Management", question: "What is a PCB (Process Control Block)? What does it contain?", importance: "Very High" },
+  { topic: "Process Management", question: "What are the different states of a Process? (New, Ready, Running, Waiting, Terminated)", importance: "Very High" },
+  { topic: "Process Management", question: "What is Process Scheduling? Types of Schedulers (Long-term, Short-term, Medium-term)", importance: "Very High" },
+  { topic: "Process Management", question: "What is Context Switching?", importance: "Very High" },
+  { topic: "Process Management", question: "What is the difference between Preemptive and Non-Preemptive Scheduling?", importance: "Very High" },
+  { topic: "Process Management", question: "What is an Orphan Process?", importance: "High" },
+  { topic: "Process Management", question: "What is a Zombie Process?", importance: "High" },
+  { topic: "Process Management", question: "What is a Daemon Process?", importance: "Medium" },
+  { topic: "Process Management", question: "What is fork() system call?", importance: "High" },
+  { topic: "Process Management", question: "What is Inter-Process Communication (IPC)?", importance: "Very High" },
+  { topic: "Process Management", question: "IPC Methods: Shared Memory, Message Passing, Pipes, Sockets", importance: "Very High" },
+  { topic: "Process Management", question: "What is the difference between Shared Memory and Message Passing?", importance: "High" },
+  { topic: "Process Management", question: "What is a Pipe? Difference between Named Pipe and Unnamed Pipe", importance: "Medium" },
+  { topic: "Threads & Multithreading", question: "What is a Thread? Why use Threads?", importance: "Very High" },
+  { topic: "Threads & Multithreading", question: "Difference between Process and Thread", importance: "Very High" },
+  { topic: "Threads & Multithreading", question: "What is Multithreading?", importance: "Very High" },
+  { topic: "Threads & Multithreading", question: "Types of Threads: User-Level Threads vs Kernel-Level Threads", importance: "Very High" },
+  { topic: "Threads & Multithreading", question: "Multithreading Models: Many-to-One, One-to-One, Many-to-Many", importance: "High" },
+  { topic: "Threads & Multithreading", question: "Benefits of Multithreading", importance: "High" },
+  { topic: "Threads & Multithreading", question: "What is a Thread Pool?", importance: "High" },
+  { topic: "Threads & Multithreading", question: "Difference between Concurrency and Parallelism", importance: "Very High" },
+  { topic: "Threads & Multithreading", question: "What is a Race Condition?", importance: "Very High" },
+  { topic: "Threads & Multithreading", question: "What is Thread Safety?", importance: "High" },
+  { topic: "CPU Scheduling", question: "What is CPU Scheduling? Why is it needed?", importance: "Very High" },
+  { topic: "CPU Scheduling", question: "What is Arrival Time, Burst Time, Completion Time, Turnaround Time, Waiting Time, Response Time?", importance: "Very High" },
+  { topic: "CPU Scheduling", question: "What is FCFS (First Come First Serve) Scheduling?", importance: "Very High" },
+  { topic: "CPU Scheduling", question: "What is SJF (Shortest Job First) Scheduling? Preemptive & Non-Preemptive", importance: "Very High" },
+  { topic: "CPU Scheduling", question: "What is SRTF (Shortest Remaining Time First)?", importance: "High" },
+  { topic: "CPU Scheduling", question: "What is Round Robin Scheduling? Effect of Time Quantum", importance: "Very High" },
+  { topic: "CPU Scheduling", question: "What is Priority Scheduling? Preemptive & Non-Preemptive", importance: "Very High" },
+  { topic: "CPU Scheduling", question: "What is Multilevel Queue Scheduling?", importance: "High" },
+  { topic: "CPU Scheduling", question: "What is Multilevel Feedback Queue Scheduling?", importance: "High" },
+  { topic: "CPU Scheduling", question: "What is Starvation? How to solve it? (Aging)", importance: "Very High" },
+  { topic: "CPU Scheduling", question: "What is Convoy Effect?", importance: "High" },
+  { topic: "CPU Scheduling", question: "Comparison of all CPU Scheduling Algorithms", importance: "Very High" },
+  { topic: "Process Synchronization", question: "What is Process Synchronization? Why is it needed?", importance: "Very High" },
+  { topic: "Process Synchronization", question: "What is the Critical Section Problem?", importance: "Very High" },
+  { topic: "Process Synchronization", question: "What are the conditions for Critical Section Solution? (Mutual Exclusion, Progress, Bounded Waiting)", importance: "Very High" },
+  { topic: "Process Synchronization", question: "What is a Mutex (Mutual Exclusion)?", importance: "Very High" },
+  { topic: "Process Synchronization", question: "What is a Semaphore? Types (Binary, Counting)", importance: "Very High" },
+  { topic: "Process Synchronization", question: "Difference between Mutex and Semaphore", importance: "Very High" },
+  { topic: "Process Synchronization", question: "What is a Spin Lock?", importance: "High" },
+  { topic: "Process Synchronization", question: "Difference between Mutex and Spin Lock", importance: "High" },
+  { topic: "Process Synchronization", question: "What is Peterson's Solution?", importance: "High" },
+  { topic: "Process Synchronization", question: "What is the Producer-Consumer Problem?", importance: "Very High" },
+  { topic: "Process Synchronization", question: "What is the Readers-Writers Problem?", importance: "High" },
+  { topic: "Process Synchronization", question: "What is the Dining Philosophers Problem?", importance: "High" },
+  { topic: "Process Synchronization", question: "What is a Monitor?", importance: "High" },
+  { topic: "Process Synchronization", question: "What is Priority Inversion?", importance: "Medium" },
+  { topic: "Process Synchronization", question: "What is Priority Inheritance?", importance: "Medium" },
+  { topic: "Deadlocks", question: "What is a Deadlock?", importance: "Very High" },
+  { topic: "Deadlocks", question: "What are the necessary conditions for Deadlock? (Mutual Exclusion, Hold & Wait, No Preemption, Circular Wait)", importance: "Very High" },
+  { topic: "Deadlocks", question: "What is Deadlock Prevention? How to prevent each condition?", importance: "Very High" },
+  { topic: "Deadlocks", question: "What is Deadlock Avoidance?", importance: "Very High" },
+  { topic: "Deadlocks", question: "What is the Banker's Algorithm?", importance: "Very High" },
+  { topic: "Deadlocks", question: "What is a Safe State vs Unsafe State?", importance: "Very High" },
+  { topic: "Deadlocks", question: "What is a Resource Allocation Graph (RAG)?", importance: "High" },
+  { topic: "Deadlocks", question: "What is Deadlock Detection?", importance: "High" },
+  { topic: "Deadlocks", question: "What is Deadlock Recovery?", importance: "High" },
+  { topic: "Deadlocks", question: "Difference between Deadlock Prevention and Deadlock Avoidance", importance: "High" },
+  { topic: "Deadlocks", question: "Difference between Starvation and Deadlock", importance: "High" },
+  { topic: "Deadlocks", question: "What is Livelock?", importance: "Medium" },
+  { topic: "Memory Management", question: "What is Memory Management? Why is it needed?", importance: "Very High" },
+  { topic: "Memory Management", question: "What is Main Memory (RAM)? How is it organized?", importance: "High" },
+  { topic: "Memory Management", question: "What is Contiguous Memory Allocation?", importance: "High" },
+  { topic: "Memory Management", question: "What is Fixed Partitioning vs Variable Partitioning?", importance: "High" },
+  { topic: "Memory Management", question: "What is Internal Fragmentation?", importance: "Very High" },
+  { topic: "Memory Management", question: "What is External Fragmentation?", importance: "Very High" },
+  { topic: "Memory Management", question: "Difference between Internal and External Fragmentation", importance: "Very High" },
+  { topic: "Memory Management", question: "What is Compaction?", importance: "Medium" },
+  { topic: "Memory Management", question: "What is Paging?", importance: "Very High" },
+  { topic: "Memory Management", question: "What is a Page Table?", importance: "Very High" },
+  { topic: "Memory Management", question: "What is a Page Fault?", importance: "Very High" },
+  { topic: "Memory Management", question: "What is Segmentation?", importance: "High" },
+  { topic: "Memory Management", question: "Difference between Paging and Segmentation", importance: "Very High" },
+  { topic: "Memory Management", question: "What is Logical Address vs Physical Address?", importance: "Very High" },
+  { topic: "Memory Management", question: "What is the MMU (Memory Management Unit)?", importance: "High" },
+  { topic: "Memory Management", question: "What is a TLB (Translation Lookaside Buffer)?", importance: "Very High" },
+  { topic: "Memory Management", question: "What is Swapping?", importance: "High" },
+  { topic: "Virtual Memory", question: "What is Virtual Memory? Why is it needed?", importance: "Very High" },
+  { topic: "Virtual Memory", question: "How does Virtual Memory work?", importance: "Very High" },
+  { topic: "Virtual Memory", question: "What is Demand Paging?", importance: "Very High" },
+  { topic: "Virtual Memory", question: "Page Replacement Algorithms: FIFO, LRU, Optimal", importance: "Very High" },
+  { topic: "Virtual Memory", question: "What is FIFO Page Replacement? What is Belady's Anomaly?", importance: "Very High" },
+  { topic: "Virtual Memory", question: "What is LRU (Least Recently Used) Page Replacement?", importance: "Very High" },
+  { topic: "Virtual Memory", question: "What is Optimal Page Replacement?", importance: "High" },
+  { topic: "Virtual Memory", question: "Comparison of Page Replacement Algorithms", importance: "High" },
+  { topic: "Virtual Memory", question: "What is Thrashing? Causes and Solutions", importance: "Very High" },
+  { topic: "Virtual Memory", question: "What is the Working Set Model?", importance: "Medium" },
+  { topic: "Virtual Memory", question: "What is a Copy-on-Write (COW)?", importance: "High" },
+  { topic: "File Systems", question: "What is a File System?", importance: "High" },
+  { topic: "File Systems", question: "What are File Attributes? (Name, Type, Size, Location, Protection)", importance: "Medium" },
+  { topic: "File Systems", question: "What is a File Allocation Table (FAT)?", importance: "Medium" },
+  { topic: "File Systems", question: "File Allocation Methods: Contiguous, Linked, Indexed", importance: "High" },
+  { topic: "File Systems", question: "What is a Directory? Types (Single-Level, Two-Level, Tree-Structured)", importance: "High" },
+  { topic: "File Systems", question: "What is an Inode?", importance: "High" },
+  { topic: "File Systems", question: "What is RAID? Types of RAID (0, 1, 5, 6, 10)", importance: "Very High" },
+  { topic: "File Systems", question: "What is Journaling File System?", importance: "Medium" },
+  { topic: "File Systems", question: "Difference between ext3, ext4, NTFS, and FAT32", importance: "Medium" },
+  { topic: "Disk Scheduling", question: "What is Disk Scheduling? Why is it needed?", importance: "High" },
+  { topic: "Disk Scheduling", question: "What is FCFS Disk Scheduling?", importance: "High" },
+  { topic: "Disk Scheduling", question: "What is SSTF (Shortest Seek Time First)?", importance: "High" },
+  { topic: "Disk Scheduling", question: "What is SCAN (Elevator Algorithm)?", importance: "High" },
+  { topic: "Disk Scheduling", question: "What is C-SCAN (Circular SCAN)?", importance: "High" },
+  { topic: "Disk Scheduling", question: "What is LOOK and C-LOOK?", importance: "Medium" },
+  { topic: "Disk Scheduling", question: "Comparison of Disk Scheduling Algorithms", importance: "High" },
+  { topic: "Miscellaneous", question: "What is the difference between 32-bit and 64-bit OS?", importance: "High" },
+  { topic: "Miscellaneous", question: "What is Real-Time Operating System (RTOS)? Hard vs Soft Real-Time", importance: "High" },
+  { topic: "Miscellaneous", question: "What is a Cache? Difference between Cache and RAM", importance: "Very High" },
+  { topic: "Miscellaneous", question: "What is Cache Mapping? (Direct, Associative, Set-Associative)", importance: "High" },
+  { topic: "Miscellaneous", question: "What is Memory Hierarchy? (Registers \u2192 Cache \u2192 RAM \u2192 Disk)", importance: "High" },
+  { topic: "Miscellaneous", question: "What is DMA (Direct Memory Access)?", importance: "Medium" },
+  { topic: "Miscellaneous", question: "What is an Interrupt? Types (Hardware, Software)", importance: "High" },
+  { topic: "Miscellaneous", question: "What is Spooling?", importance: "Medium" },
+  { topic: "Miscellaneous", question: "What is the difference between Process-based and Thread-based Multitasking?", importance: "Medium" },
+  { topic: "Miscellaneous", question: "What is System Throughput?", importance: "Medium" },
+  { topic: "Miscellaneous", question: "What is Busy Waiting (Spinlock vs Sleep)?", importance: "Medium" },
+  { topic: "Miscellaneous", question: "What is Fragmentation in OS context?", importance: "High" },
+  { topic: "Miscellaneous", question: "What is the difference between Multiprogramming, Multitasking, Multiprocessing, and Multithreading?", importance: "Very High" }
+];
+var topicGroups = /* @__PURE__ */ new Map();
+raw.forEach((q) => {
+  if (!topicGroups.has(q.topic)) topicGroups.set(q.topic, []);
+  topicGroups.get(q.topic).push(q);
+});
+var globalIdx = 0;
+var osSections = Array.from(topicGroups.entries()).map(
+  ([topicName, questions], sIdx) => ({
+    id: `os-section-${sIdx + 1}`,
+    title: topicName,
+    subSections: [
+      {
+        id: `os-sub-${sIdx + 1}-1`,
+        title: topicName,
+        topics: questions.map((q) => {
+          globalIdx++;
+          const diff = importanceTodifficulty(q.importance);
+          return {
+            id: `os-${globalIdx}`,
+            title: q.question,
+            completed: false,
+            difficulty: diff,
+            resourceType: "youtube",
+            resourceUrl: `https://www.youtube.com/results?search_query=Operating+System+${encodeURIComponent(q.question.replace(/[?]/g, ""))}`,
+            articleUrl: `https://www.google.com/search?q=OS+${encodeURIComponent(q.question.replace(/[?]/g, ""))}`,
+            note: `Importance: ${q.importance}`,
+            isRevision: false,
+            estTime: estTimeMap[diff]
+          };
+        })
+      }
+    ]
+  })
+);
+var osMeta = {
+  id: "os-sheet",
+  title: "Operating Systems Interview Sheet",
+  description: "135 essential OS interview questions \u2014 from basics to disk scheduling.",
+  lastUpdated: "April 9, 2026",
+  totalProblems: raw.length,
+  completed: 0,
+  easy: raw.filter((q) => q.importance === "Medium").length,
+  medium: raw.filter((q) => q.importance === "High").length,
+  hard: raw.filter((q) => q.importance === "Very High").length
+};
+
+// src/lib/mcp/tools/builtin-sheets.ts
+var BUILTIN_SHEETS = {
+  "dbms-sheet": {
+    slug: "dbms-sheet",
+    route: "/learn/sheets/dbms-sheet",
+    meta: dbmsMeta,
+    sections: dbmsSections
+  },
+  "cn-sheet": {
+    slug: "cn-sheet",
+    route: "/learn/sheets/cn-sheet",
+    meta: cnMeta,
+    sections: cnSections
+  },
+  "os-sheet": {
+    slug: "os-sheet",
+    route: "/learn/sheets/os-sheet",
+    meta: osMeta,
+    sections: osSections
+  }
+};
+var normalize = (value) => value.trim().toLowerCase();
+var summarizeSheet = (sheet) => ({
+  slug: sheet.slug,
+  route: sheet.route,
+  title: sheet.meta.title,
+  description: sheet.meta.description,
+  totalProblems: sheet.meta.totalProblems,
+  difficulty: {
+    easy: sheet.meta.easy,
+    medium: sheet.meta.medium,
+    hard: sheet.meta.hard
+  },
+  sections: sheet.sections.map((section) => ({
+    id: section.id,
+    title: section.title,
+    subSectionCount: section.subSections.length,
+    topicCount: section.subSections.reduce((total, sub) => total + sub.topics.length, 0)
+  }))
+});
+var listBuiltinSheetsTool = defineTool34({
+  name: "list_builtin_sheets",
+  title: "List built-in learning sheets",
+  description: "List static frontend sheets that exist at /learn/sheets/:slug, such as DBMS, CN, and OS. Use this when user_folders has no DB row for an existing app sheet.",
+  inputSchema: {
+    search: z29.string().optional().describe("Optional title/slug search.")
+  },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: ({ search }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const q = search ? normalize(search) : "";
+    const sheets = Object.values(BUILTIN_SHEETS).filter((sheet) => !q || normalize(`${sheet.slug} ${sheet.meta.title}`).includes(q)).map(summarizeSheet);
+    return jsonResult(`Found ${sheets.length} built-in sheet(s).`, sheets);
+  }
+});
+var getBuiltinSheetTool = defineTool34({
+  name: "get_builtin_sheet",
+  title: "Get built-in sheet details",
+  description: "Return the actual static sheet content rendered by /learn/sheets/:slug, including sections, sub-sections, and topics. Supports optional topic search to keep responses compact.",
+  inputSchema: {
+    slug: z29.string().min(1).describe("Sheet slug, for example dbms-sheet, cn-sheet, or os-sheet."),
+    topic_search: z29.string().optional().describe("Optional filter across section, sub-section, and topic titles."),
+    include_topics: z29.boolean().optional().describe("Defaults to true. Set false for structure only.")
+  },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ slug, topic_search, include_topics }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const key = normalize(slug);
+    const base = BUILTIN_SHEETS[key];
+    if (!base) {
+      return errResult(`Unknown built-in sheet "${slug}". Call list_builtin_sheets first.`);
+    }
+    let meta = base.meta;
+    let sourceSections = base.sections;
+    try {
+      const sb = createUserSupabaseClient3(ctx);
+      const { data: ov } = await sb.from("builtin_sheet_overrides").select("title, description, sections").eq("slug", key).maybeSingle();
+      if (ov) {
+        meta = {
+          ...meta,
+          title: ov.title ?? meta.title,
+          description: ov.description ?? meta.description
+        };
+        if (Array.isArray(ov.sections)) sourceSections = ov.sections;
+      }
+    } catch {
+    }
+    const includeTopics = include_topics ?? true;
+    const q = topic_search ? normalize(topic_search) : "";
+    const sections = sourceSections.map((section) => {
+      const sectionMatches = q && normalize(section.title).includes(q);
+      const subSections = section.subSections.map((subSection) => {
+        const subMatches = q && normalize(subSection.title).includes(q);
+        const topics = includeTopics ? subSection.topics.filter(
+          (topic) => !q || sectionMatches || subMatches || normalize(`${topic.id} ${topic.title} ${topic.note}`).includes(q)
+        ) : [];
+        return {
+          id: subSection.id,
+          title: subSection.title,
+          prerequisites: subSection.prerequisites ?? [],
+          topicCount: includeTopics ? topics.length : subSection.topics.length,
+          topics: includeTopics ? topics : void 0
+        };
+      }).filter((subSection) => !q || sectionMatches || normalize(subSection.title).includes(q) || subSection.topicCount > 0);
+      return { id: section.id, title: section.title, subSections };
+    }).filter((section) => !q || normalize(section.title).includes(q) || section.subSections.length > 0);
+    return jsonResult(`Built-in sheet "${meta.title}" (${base.route}).`, {
+      slug: base.slug,
+      route: base.route,
+      meta,
+      sections
+    });
+  }
+});
+
 // src/lib/mcp/tools/auth-debug.ts
-import { defineTool as defineTool29 } from "npm:@lovable.dev/mcp-js@0.20.1";
-import { z as z24 } from "npm:zod@^3.23.8";
+import { defineTool as defineTool35 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z30 } from "npm:zod@^3.23.8";
 var REAUTH_HINT = "If you see a 401, your MCP OAuth token is missing or expired. Reconnect: 1) In Claude, open Settings \u2192 Connectors \u2192 Parikshaa \u2192 Disconnect. 2) Sign in to https://parikshaa.org with an admin/owner account in the same browser. 3) Reconnect the Parikshaa connector \u2014 the OAuth popup will use your active session. 4) After reconnect, call `get_current_user_context` to confirm auth.uid() and roles.";
-var getCurrentUserContextTool = defineTool29({
+var getCurrentUserContextTool = defineTool35({
   name: "get_current_user_context",
   title: "Get current user context",
   description: "Return the caller's auth.uid(), email, and role flags (admin/owner). Use this to debug 401s and confirm the MCP OAuth token is valid.",
@@ -2345,12 +6739,12 @@ ${REAUTH_HINT}`);
     });
   }
 });
-var testSheetAccessTool = defineTool29({
+var testSheetAccessTool = defineTool35({
   name: "test_sheet_access",
   title: "Test sheet read access",
   description: "Check whether the caller can read a sheet by slug. Checks built-in frontend sheets (dbms-sheet, cn-sheet, os-sheet) and DB-backed sheets in user_folders. Explains why access is or is not granted.",
   inputSchema: {
-    slug: z24.string().min(1).describe("Sheet slug, e.g. dbms-sheet")
+    slug: z30.string().min(1).describe("Sheet slug, e.g. dbms-sheet")
   },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ slug }, ctx) => {
@@ -2399,20 +6793,456 @@ ${REAUTH_HINT}`);
   }
 });
 
+// src/lib/mcp/tools/admin-sheets-all.ts
+import { defineTool as defineTool36 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z31 } from "npm:zod@^3.23.8";
+var STATIC = {
+  "dbms-sheet": { meta: dbmsMeta, sections: dbmsSections },
+  "cn-sheet": { meta: cnMeta, sections: cnSections },
+  "os-sheet": { meta: osMeta, sections: osSections }
+};
+var updateBuiltinSheetTool = defineTool36({
+  name: "update_builtin_sheet",
+  title: "Update built-in sheet (admin)",
+  description: "Admin/owner-only. Persist edits to a built-in frontend sheet (dbms-sheet, cn-sheet, os-sheet). Overrides title/description/sections and is merged into get_builtin_sheet responses. Pass reset=true to clear overrides.",
+  inputSchema: {
+    slug: z31.string().min(1),
+    title: z31.string().optional(),
+    description: z31.string().optional(),
+    sections: z31.array(z31.any()).optional().describe("Full replacement for sections array."),
+    reset: z31.boolean().optional()
+  },
+  annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
+  handler: async ({ slug, title, description, sections, reset }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const key = slug.trim().toLowerCase();
+    if (!STATIC[key]) return errResult(`Unknown built-in sheet "${slug}".`);
+    if (reset) {
+      const { error: error2 } = await sb.from("builtin_sheet_overrides").delete().eq("slug", key);
+      if (error2) return errResult(error2.message);
+      return jsonResult("Override cleared.", { slug: key });
+    }
+    const patch = { slug: key, updated_by: ctx.getUserId() };
+    if (title !== void 0) patch.title = title;
+    if (description !== void 0) patch.description = description;
+    if (sections !== void 0) patch.sections = sections;
+    const { data, error } = await sb.from("builtin_sheet_overrides").upsert(patch, { onConflict: "slug" }).select().single();
+    if (error) return errResult(error.message);
+    return jsonResult("Override saved.", data);
+  }
+});
+var syncBuiltinSheetToDbTool = defineTool36({
+  name: "sync_builtin_sheet_to_db",
+  title: "Sync built-in sheet into DB folder (admin)",
+  description: "Admin/owner-only. Create or refresh a user_folders row (owned by caller) mirroring a built-in sheet's topics as folder items. After sync, use all existing sheet tools (add_problems_to_sheet, reorder_sheet_items, share_sheet, etc.) against the returned folder_id.",
+  inputSchema: {
+    slug: z31.string().min(1).describe("dbms-sheet, cn-sheet, or os-sheet"),
+    replace_items: z31.boolean().optional().describe("Default true. Wipes existing items before re-inserting.")
+  },
+  annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
+  handler: async ({ slug, replace_items }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const key = slug.trim().toLowerCase();
+    const src = STATIC[key];
+    if (!src) return errResult(`Unknown built-in sheet "${slug}".`);
+    const uid = ctx.getUserId();
+    const name = `[Builtin] ${src.meta.title}`;
+    const existing = await sb.from("user_folders").select("id").eq("user_id", uid).eq("name", name).maybeSingle();
+    let folderId = existing.data?.id;
+    if (!folderId) {
+      const ins = await sb.from("user_folders").insert({ user_id: uid, name, description: src.meta.description, color: "#f97316" }).select("id").single();
+      if (ins.error) return errResult(ins.error.message);
+      folderId = ins.data.id;
+    }
+    if (replace_items !== false) {
+      await sb.from("user_folder_items").delete().eq("folder_id", folderId);
+    }
+    const items = [];
+    let ord = 0;
+    for (const section of src.sections) {
+      for (const sub of section.subSections ?? []) {
+        for (const topic of sub.topics ?? []) {
+          items.push({
+            folder_id: folderId,
+            question_source: "builtin",
+            question_slug: topic.id ?? topic.slug ?? `${section.id}-${sub.id}-${ord}`,
+            sort_order: ord++
+          });
+        }
+      }
+    }
+    let inserted = 0;
+    if (items.length) {
+      const { error, count } = await sb.from("user_folder_items").insert(items, { count: "exact" });
+      if (error) return errResult(error.message);
+      inserted = count ?? items.length;
+    }
+    return jsonResult(`Synced "${src.meta.title}" into folder ${folderId}.`, {
+      folder_id: folderId,
+      folder_name: name,
+      items_inserted: inserted,
+      slug: key
+    });
+  }
+});
+var listAllSheetsAdminTool = defineTool36({
+  name: "list_all_sheets_admin",
+  title: "List every sheet (admin)",
+  description: "Admin/owner-only. Returns every built-in frontend sheet plus every user_folders row across all users, with owner user_id and item counts. Use to discover sheets you did not create.",
+  inputSchema: {
+    search: z31.string().optional(),
+    limit: z31.number().int().min(1).max(1e3).optional()
+  },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ search, limit }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const sb = gate.sb;
+    const q = (search ?? "").trim().toLowerCase();
+    const builtins = Object.entries(STATIC).filter(([k, v]) => !q || `${k} ${v.meta.title}`.toLowerCase().includes(q)).map(([k, v]) => ({
+      kind: "builtin",
+      slug: k,
+      name: v.meta.title,
+      route: `/learn/sheets/${k}`,
+      total_topics: v.meta.totalProblems
+    }));
+    let folderQuery = sb.from("user_folders").select("id, user_id, name, description, color, created_at, updated_at").order("updated_at", { ascending: false }).limit(limit ?? 200);
+    if (q) folderQuery = folderQuery.ilike("name", `%${q}%`);
+    const { data: folders, error } = await folderQuery;
+    if (error) return errResult(error.message);
+    const results = [];
+    for (const f of folders ?? []) {
+      const { count } = await sb.from("user_folder_items").select("*", { count: "exact", head: true }).eq("folder_id", f.id);
+      results.push({ kind: "db_folder", ...f, item_count: count ?? 0 });
+    }
+    return jsonResult(`Found ${builtins.length} built-in + ${results.length} DB sheets.`, {
+      builtins,
+      db_folders: results
+    });
+  }
+});
+var adminUpdateSheetTool = defineTool36({
+  name: "admin_update_sheet",
+  title: "Update any sheet (admin)",
+  description: "Admin/owner-only. Update name/description/color on any user_folders row across owners. Use folder_id from list_all_sheets_admin.",
+  inputSchema: {
+    folder_id: z31.string().uuid(),
+    name: z31.string().optional(),
+    description: z31.string().optional(),
+    color: z31.string().optional()
+  },
+  annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
+  handler: async ({ folder_id, name, description, color }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    const patch = { updated_at: (/* @__PURE__ */ new Date()).toISOString() };
+    if (name !== void 0) patch.name = name;
+    if (description !== void 0) patch.description = description;
+    if (color !== void 0) patch.color = color;
+    const { data, error } = await gate.sb.from("user_folders").update(patch).eq("id", folder_id).select().single();
+    if (error) return errResult(error.message);
+    return jsonResult("Sheet updated.", data);
+  }
+});
+var adminDeleteSheetTool = defineTool36({
+  name: "admin_delete_sheet",
+  title: "Delete any sheet (admin)",
+  description: "Admin/owner-only. Permanently deletes a user_folders row (and its items via cascade) regardless of owner.",
+  inputSchema: { folder_id: z31.string().uuid() },
+  annotations: { readOnlyHint: false, idempotentHint: false, openWorldHint: false, destructiveHint: true },
+  handler: async ({ folder_id }, ctx) => {
+    const gate = await requireAdmin(ctx);
+    if (!gate.ok) return gate.error;
+    await gate.sb.from("user_folder_items").delete().eq("folder_id", folder_id);
+    const { error } = await gate.sb.from("user_folders").delete().eq("id", folder_id);
+    if (error) return errResult(error.message);
+    return jsonResult("Sheet deleted.", { folder_id });
+  }
+});
+
+// src/lib/mcp/tools/auth-diagnostics.ts
+import { defineTool as defineTool37 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z32 } from "npm:zod@^3.23.8";
+
+// src/lib/mcp/tools/_cache.ts
+var store = globalThis.__mcpCache ?? (globalThis.__mcpCache = /* @__PURE__ */ new Map());
+var DEFAULT_TTL_MS = 6e4;
+function cacheGet(key) {
+  const hit = store.get(key);
+  if (!hit) return void 0;
+  if (hit.expiresAt < Date.now()) {
+    store.delete(key);
+    return void 0;
+  }
+  return hit.value;
+}
+function cacheSet(key, value, ttlMs = DEFAULT_TTL_MS) {
+  store.set(key, { value, expiresAt: Date.now() + ttlMs });
+  return value;
+}
+function cacheKey(user, tool, args) {
+  return `${user}::${tool}::${JSON.stringify(args ?? {})}`;
+}
+
+// src/lib/mcp/tools/auth-diagnostics.ts
+var BUILTINS = [
+  { slug: "dbms-sheet", route: "/learn/sheets/dbms-sheet", title: dbmsMeta.title, sections: dbmsSections },
+  { slug: "cn-sheet", route: "/learn/sheets/cn-sheet", title: cnMeta.title, sections: cnSections },
+  { slug: "os-sheet", route: "/learn/sheets/os-sheet", title: osMeta.title, sections: osSections }
+];
+async function getRoles(ctx) {
+  const sb = createUserSupabaseClient3(ctx);
+  const uid = ctx.getUserId();
+  const [{ data: isAdmin }, { data: isOwner }] = await Promise.all([
+    sb.rpc("has_role", { _user_id: uid, _role: "admin" }),
+    sb.rpc("has_role", { _user_id: uid, _role: "owner" })
+  ]);
+  return { sb, uid, isAdmin: Boolean(isAdmin), isOwner: Boolean(isOwner) };
+}
+var sheetAccessMatrixTool = defineTool37({
+  name: "sheet_access_matrix",
+  title: "Sheet access matrix",
+  description: "List every built-in sheet slug (DBMS / CN / OS) and whether the current caller can read it, with the RLS decision reason for each row.",
+  inputSchema: {
+    include_overrides_check: z32.boolean().optional().describe("Also probe builtin_sheet_overrides read access per slug. Defaults to true.")
+  },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ include_overrides_check }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const uid = ctx.getUserId() ?? "anon";
+    const ck = cacheKey(uid, "sheet_access_matrix", { include_overrides_check });
+    const cached = cacheGet(ck);
+    if (cached) return jsonResult(cached.label + " (cached)", cached.payload);
+    const { sb, isAdmin, isOwner } = await getRoles(ctx);
+    const checkOverrides = include_overrides_check ?? true;
+    const rows = [];
+    for (const b of BUILTINS) {
+      const row = {
+        slug: b.slug,
+        title: b.title,
+        route: b.route,
+        source: "static-frontend",
+        can_read: true,
+        // static bundle — always readable to any authed caller
+        reason: "Static frontend data bundled with the app. Any signed-in user can read via get_builtin_sheet."
+      };
+      if (checkOverrides) {
+        const { data, error } = await sb.from("builtin_sheet_overrides").select("slug").eq("slug", b.slug).maybeSingle();
+        row.overrides_readable = !error;
+        row.overrides_present = Boolean(data);
+        row.overrides_error = error?.message ?? null;
+      }
+      rows.push(row);
+    }
+    const label = `Access matrix for ${rows.length} built-in sheet(s).`;
+    const payload = {
+      caller: { auth_uid: uid, is_admin: isAdmin, is_owner: isOwner, can_write: isAdmin || isOwner },
+      sheets: rows
+    };
+    cacheSet(ck, { label, payload }, 6e4);
+    return jsonResult(label, payload);
+  }
+});
+var debugMcpReadFailureTool = defineTool37({
+  name: "debug_mcp_read_failure",
+  title: "Debug MCP read failure",
+  description: "Explain the RLS/authorization decision path for a failed read: given a table + optional row filter (or a built-in sheet slug), report the requested resource, caller identity, roles, and the likely policy path that blocked it.",
+  inputSchema: {
+    resource_kind: z32.enum(["table", "builtin_sheet", "user_folder", "topic_article"]).describe("Category of resource that returned empty/denied."),
+    resource: z32.string().min(1).describe("Table name, sheet slug, folder id, or article slug."),
+    filter: z32.record(z32.string(), z32.union([z32.string(), z32.number(), z32.boolean(), z32.null()])).optional().describe("Optional column=value filter to re-run and observe.")
+  },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ resource_kind, resource, filter }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated (no OAuth token).");
+    const { sb, uid, isAdmin, isOwner } = await getRoles(ctx);
+    const steps = [];
+    steps.push(`caller auth.uid()=${uid}, is_admin=${isAdmin}, is_owner=${isOwner}`);
+    let probe = {
+      ok: false,
+      error: null,
+      count: null
+    };
+    let policyPath = [];
+    if (resource_kind === "builtin_sheet") {
+      const b = BUILTINS.find((x) => x.slug === resource.trim().toLowerCase());
+      probe = { ok: Boolean(b), error: b ? null : "unknown builtin slug", count: b ? 1 : 0 };
+      policyPath = [
+        "resource type: static-frontend bundle (no RLS)",
+        b ? "found in BUILTIN_SHEETS map \u2192 readable" : "slug not in BUILTIN_SHEETS map \u2192 404-equivalent"
+      ];
+    } else {
+      let q = sb.from(resource).select("*", { count: "exact", head: true });
+      if (filter) for (const [k, v] of Object.entries(filter)) q = q.eq(k, v);
+      const { error, count } = await q;
+      probe = { ok: !error, error: error?.message ?? null, count: count ?? null };
+      if (resource_kind === "user_folder") {
+        policyPath = [
+          "table: public.user_folders",
+          "policy: 'Users can view their own folders' USING (user_id = auth.uid())",
+          "policy: 'Admins can view all' USING (has_role(auth.uid(),'admin') OR has_role(auth.uid(),'owner'))",
+          isAdmin || isOwner ? "\u2192 admin/owner branch should allow; if blocked, check RLS enabled + row exists" : "\u2192 caller is not admin/owner; only rows where user_id = auth.uid() are visible"
+        ];
+      } else if (resource_kind === "topic_article") {
+        policyPath = [
+          "table: topic_articles (published articles readable to authenticated)",
+          "draft/archived: admin/owner only",
+          isAdmin || isOwner ? "\u2192 admin/owner: full read" : "\u2192 non-admin: only status='published' visible"
+        ];
+      } else {
+        policyPath = [
+          `table: public.${resource}`,
+          "Inspect via db_query('SELECT policyname, cmd, qual FROM pg_policies WHERE tablename=$1', [resource])",
+          isAdmin || isOwner ? "caller has admin/owner role" : "caller has only 'authenticated' role"
+        ];
+      }
+    }
+    return jsonResult(`Auth-debug log for ${resource_kind}:${resource}`, {
+      requested_resource: { kind: resource_kind, id: resource, filter: filter ?? null },
+      caller: { auth_uid: uid, is_admin: isAdmin, is_owner: isOwner },
+      probe_result: probe,
+      rls_decision_path: policyPath,
+      steps,
+      hint: probe.ok && (probe.count ?? 0) > 0 ? "Read succeeded at DB level; if the tool still returned empty, check tool-side filters." : "Read denied or empty. Verify the row exists and that a policy grants the caller's role."
+    });
+  }
+});
+var verifySheetArticleAccessTool = defineTool37({
+  name: "verify_sheet_article_access",
+  title: "Verify sheet article read access",
+  description: "For every topic_article linked to the given sheet slug, check whether the current caller can read it. Returns blocked articles with the reason (draft/archived, RLS, missing link).",
+  inputSchema: {
+    sheet_slug: z32.string().min(1).describe("Sheet slug, e.g. dbms-sheet.")
+  },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ sheet_slug }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const uid0 = ctx.getUserId() ?? "anon";
+    const slug = sheet_slug.trim().toLowerCase();
+    const ck = cacheKey(uid0, "verify_sheet_article_access", { slug });
+    const cached = cacheGet(ck);
+    if (cached) return jsonResult(cached.label + " (cached)", cached.payload);
+    const { sb, uid, isAdmin, isOwner } = await getRoles(ctx);
+    const { data: articles, error } = await sb.from("topic_articles").select("slug, title, status, tags, sheet_slug, section_title").or(`sheet_slug.eq.${slug},tags.cs.{${slug}}`);
+    if (error) {
+      return jsonResult(`Could not list articles for ${slug}: ${error.message}`, {
+        sheet_slug: slug,
+        caller: { auth_uid: uid, is_admin: isAdmin, is_owner: isOwner },
+        error: error.message
+      });
+    }
+    const linked = articles ?? [];
+    const results = linked.map((a) => {
+      const status = String(a.status ?? "unknown");
+      const canRead = status === "published" || isAdmin || isOwner;
+      return {
+        slug: a.slug,
+        title: a.title,
+        status,
+        can_read: canRead,
+        blocked_reason: canRead ? null : status === "draft" ? "Draft article \u2014 only admin/owner can read." : status === "archived" ? "Archived \u2014 only admin/owner can read." : `Status '${status}' not visible to non-admin caller.`
+      };
+    });
+    const blocked = results.filter((r) => !r.can_read);
+    const label = `Checked ${results.length} article(s) linked to ${slug}. ${blocked.length} blocked.`;
+    const payload = {
+      sheet_slug: slug,
+      caller: { auth_uid: uid, is_admin: isAdmin, is_owner: isOwner },
+      total: results.length,
+      readable: results.length - blocked.length,
+      blocked,
+      all: results
+    };
+    cacheSet(ck, { label, payload }, 6e4);
+    return jsonResult(label, payload);
+  }
+});
+
+// src/lib/mcp/tools/sheet-write-access.ts
+import { defineTool as defineTool38 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z33 } from "npm:zod@^3.23.8";
+var verifySheetWriteAccessTool = defineTool38({
+  name: "verify_sheet_write_access",
+  title: "Verify sheet write access",
+  description: "For a given sheet slug, check whether the current caller can create/update/delete sections and every linked topic_article. Returns per-item allow/block with reasons.",
+  inputSchema: {
+    sheet_slug: z33.string().min(1).describe("Sheet slug (built-in like dbms-sheet, or DB folder slug).")
+  },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ sheet_slug }, ctx) => {
+    if (!ctx.isAuthenticated()) return errResult("Not authenticated");
+    const sb = createUserSupabaseClient3(ctx);
+    const uid = ctx.getUserId();
+    const [{ data: isAdmin }, { data: isOwner }] = await Promise.all([
+      sb.rpc("has_role", { _user_id: uid, _role: "admin" }),
+      sb.rpc("has_role", { _user_id: uid, _role: "owner" })
+    ]);
+    const canWriteRole = Boolean(isAdmin || isOwner);
+    const results = [];
+    const { error: ovErr } = await sb.from("builtin_sheet_overrides").select("slug", { head: true, count: "exact" }).eq("slug", sheet_slug);
+    results.push({
+      target: "builtin_sheet_overrides",
+      op: "update/delete",
+      allowed: canWriteRole && !ovErr,
+      reason: canWriteRole ? ovErr?.message ?? "admin/owner policy grants write" : "requires admin or owner role"
+    });
+    const { data: folder, error: fErr } = await sb.from("user_folders").select("id, name, user_id").eq("slug", sheet_slug).maybeSingle();
+    if (folder) {
+      const canFolder = canWriteRole || folder.user_id === uid;
+      results.push({
+        target: `user_folders:${folder.id}`,
+        op: "update/delete",
+        allowed: canFolder,
+        reason: canFolder ? "owner of folder or admin/owner role" : "not folder owner and not admin/owner"
+      });
+    } else if (fErr) {
+      results.push({ target: "user_folders", op: "lookup", allowed: false, reason: fErr.message });
+    }
+    const linked = await sb.from("topic_articles").select("id, slug, status, sheet_slug").eq("sheet_slug", sheet_slug);
+    const articles = linked.data ?? [];
+    for (const a of articles) {
+      const canRead = canWriteRole || a.status === "published";
+      const canWrite = canWriteRole;
+      results.push({
+        target: `topic_articles:${a.slug}`,
+        op: "update/delete",
+        allowed: canWrite,
+        reason: canWrite ? "admin/owner policy grants write" : `blocked: needs admin/owner (status=${a.status}, readable=${canRead})`
+      });
+    }
+    const blocked = results.filter((r) => !r.allowed);
+    return jsonResult(
+      `Write-access probe for "${sheet_slug}": ${results.length - blocked.length}/${results.length} allowed.`,
+      {
+        caller: { auth_uid: uid, is_admin: !!isAdmin, is_owner: !!isOwner, can_write: canWriteRole },
+        sheet_slug,
+        checked: results.length,
+        blocked_count: blocked.length,
+        blocked,
+        all: results
+      }
+    );
+  }
+});
+
 // src/lib/mcp/tools/share-links.ts
-import { defineTool as defineTool30 } from "npm:@lovable.dev/mcp-js@0.20.1";
-import { z as z25 } from "npm:zod@^3.23.8";
+import { defineTool as defineTool39 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z34 } from "npm:zod@^3.23.8";
 var genToken = () => (globalThis.crypto?.randomUUID?.() ?? Math.random().toString(36).slice(2)).replace(/-/g, "") + Math.random().toString(36).slice(2, 8);
 var KNOWN_BUILTINS = /* @__PURE__ */ new Set(["dbms-sheet", "cn-sheet", "os-sheet"]);
-var createBuiltinShareLinkTool = defineTool30({
+var createBuiltinShareLinkTool = defineTool39({
   name: "create_builtin_share_link",
   title: "Create read-only share link for a built-in sheet",
   description: "Generate a public read-only share token for a built-in sheet slug (dbms-sheet, cn-sheet, os-sheet). Optionally include linked articles and set an expiry.",
   inputSchema: {
-    slug: z25.string().min(1),
-    include_articles: z25.boolean().optional().default(true),
-    expires_in_hours: z25.number().int().positive().optional(),
-    label: z25.string().optional()
+    slug: z34.string().min(1),
+    include_articles: z34.boolean().optional().default(true),
+    expires_in_hours: z34.number().int().positive().optional(),
+    label: z34.string().optional()
   },
   annotations: { readOnlyHint: false, idempotentHint: false, openWorldHint: false },
   handler: async ({ slug, include_articles, expires_in_hours, label }, ctx) => {
@@ -2437,11 +7267,11 @@ var createBuiltinShareLinkTool = defineTool30({
     });
   }
 });
-var revokeBuiltinShareLinkTool = defineTool30({
+var revokeBuiltinShareLinkTool = defineTool39({
   name: "revoke_builtin_share_link",
   title: "Revoke a built-in sheet share link",
   description: "Set revoked=true on the given share token so it stops resolving.",
-  inputSchema: { token: z25.string().min(1) },
+  inputSchema: { token: z34.string().min(1) },
   annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
   handler: async ({ token }, ctx) => {
     const gate = await requireAdmin(ctx);
@@ -2451,11 +7281,11 @@ var revokeBuiltinShareLinkTool = defineTool30({
     return jsonResult("Revoked.", { link: data });
   }
 });
-var listBuiltinShareLinksTool = defineTool30({
+var listBuiltinShareLinksTool = defineTool39({
   name: "list_builtin_share_links",
   title: "List built-in sheet share links",
   description: "List all share links (optionally filter by slug).",
-  inputSchema: { slug: z25.string().optional() },
+  inputSchema: { slug: z34.string().optional() },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ slug }, ctx) => {
     const gate = await requireAdmin(ctx);
@@ -2467,11 +7297,11 @@ var listBuiltinShareLinksTool = defineTool30({
     return jsonResult(`Found ${data?.length ?? 0} link(s).`, { links: data ?? [] });
   }
 });
-var validateShareLinkAccessTool = defineTool30({
+var validateShareLinkAccessTool = defineTool39({
   name: "validate_share_link_access",
   title: "Validate a share link",
   description: "Public: check whether a share token resolves. Returns the slug, include_articles flag, expiry, revoked state, and whether the caller can currently open it.",
-  inputSchema: { token: z25.string().min(1) },
+  inputSchema: { token: z34.string().min(1) },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ token }, ctx) => {
     const sb = createUserSupabaseClient3(ctx);
@@ -2490,9 +7320,9 @@ var validateShareLinkAccessTool = defineTool30({
 });
 
 // src/lib/mcp/tools/blog-media-tests.ts
-import { defineTool as defineTool31 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { defineTool as defineTool40 } from "npm:@lovable.dev/mcp-js@0.20.1";
 import { createClient as createClient4 } from "npm:@supabase/supabase-js@^2.112.2";
-import { z as z26 } from "npm:zod@^3.23.8";
+import { z as z35 } from "npm:zod@^3.23.8";
 var TINY_PNG_BASE64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
 var getEnv4 = (name) => {
   const deno = globalThis.Deno;
@@ -2513,13 +7343,13 @@ var runOp = async (op, fn) => {
     return { op, ok: false, ms: Date.now() - t0, error: e.message };
   }
 };
-var testBlogMediaAccessTool = defineTool31({
+var testBlogMediaAccessTool = defineTool40({
   name: "test_blog_media_access",
   title: "Automated CRUD test for blog-media as the current user",
   description: "Runs create/read/update/delete against the blog-media bucket using the caller's JWT. Returns per-op result and decision trace. Admins/owners should get all-green; other roles should be blocked on writes.",
   inputSchema: {
-    folder: z26.string().optional().describe("Subpath prefix. Defaults to 'tests/rls-<uid>'."),
-    cleanup: z26.boolean().optional().default(true)
+    folder: z35.string().optional().describe("Subpath prefix. Defaults to 'tests/rls-<uid>'."),
+    cleanup: z35.boolean().optional().default(true)
   },
   annotations: { readOnlyHint: false, openWorldHint: false },
   handler: async ({ folder, cleanup }, ctx) => {
@@ -2590,7 +7420,7 @@ var testBlogMediaAccessTool = defineTool31({
     });
   }
 });
-var runBlogMediaRlsSuiteTool = defineTool31({
+var runBlogMediaRlsSuiteTool = defineTool40({
   name: "run_blog_media_rls_suite",
   title: "Full RLS matrix for blog-media (admin/owner + anonymous)",
   description: "Verifies admin/owner can CRUD and that an unauthenticated client is blocked from writing/listing private paths, while public read of an existing published asset still works. Admin/owner only.",
@@ -2669,8 +7499,8 @@ var runBlogMediaRlsSuiteTool = defineTool31({
 });
 
 // src/lib/mcp/tools/blog-media-retry.ts
-import { defineTool as defineTool32 } from "npm:@lovable.dev/mcp-js@0.20.1";
-import { z as z27 } from "npm:zod@^3.23.8";
+import { defineTool as defineTool41 } from "npm:@lovable.dev/mcp-js@0.20.1";
+import { z as z36 } from "npm:zod@^3.23.8";
 var decodeBase642 = (b64) => {
   const bin = atob(b64);
   const bytes = new Uint8Array(bin.length);
@@ -2689,20 +7519,20 @@ var attemptUpload = async (sb, path, bytes, contentType, upsert = false) => {
   if (sErr) throw sErr;
   return { path, signed_url: signed?.signedUrl };
 };
-var uploadArticleImageWithRetryTool = defineTool32({
+var uploadArticleImageWithRetryTool = defineTool41({
   name: "upload_article_image_with_retry",
   title: "Upload image with exponential-backoff retry + optional queue fallback",
   description: "Upload an image to blog-media. Retries on transient/RLS errors with exponential backoff (base 500ms, factor 2, max 6 tries by default). On persistent RLS failure, optionally enqueues the payload to `blog_media_upload_queue` so a background worker (`process_blog_media_upload_queue`) can retry once policies are fixed, and returns a clear structured error the publish flow can display.",
   inputSchema: {
-    filename: z27.string().min(1),
-    base64: z27.string().min(1),
-    content_type: z27.string().optional(),
-    folder: z27.string().optional(),
-    max_attempts: z27.number().int().min(1).max(10).optional(),
-    base_delay_ms: z27.number().int().min(50).max(5e3).optional(),
-    enqueue_on_failure: z27.boolean().optional().default(true),
-    target_post_slug: z27.string().optional(),
-    target_field: z27.string().optional().describe("e.g. 'cover_image' or 'body_image'")
+    filename: z36.string().min(1),
+    base64: z36.string().min(1),
+    content_type: z36.string().optional(),
+    folder: z36.string().optional(),
+    max_attempts: z36.number().int().min(1).max(10).optional(),
+    base_delay_ms: z36.number().int().min(50).max(5e3).optional(),
+    enqueue_on_failure: z36.boolean().optional().default(true),
+    target_post_slug: z36.string().optional(),
+    target_field: z36.string().optional().describe("e.g. 'cover_image' or 'body_image'")
   },
   annotations: { readOnlyHint: false, openWorldHint: false },
   handler: async (input, ctx) => {
@@ -2763,12 +7593,12 @@ var uploadArticleImageWithRetryTool = defineTool32({
     );
   }
 });
-var processBlogMediaUploadQueueTool = defineTool32({
+var processBlogMediaUploadQueueTool = defineTool41({
   name: "process_blog_media_upload_queue",
   title: "Process pending blog-media upload retries",
   description: "Background-worker style tool. Fetches pending queue entries whose `next_attempt_at` has passed, retries them, updates status, and \u2014 when `target_post_slug` + `target_field` are set \u2014 patches the blog_posts row with the new signed URL. Returns per-entry outcomes. Safe to call repeatedly (idempotent per-row via attempts counter).",
   inputSchema: {
-    limit: z27.number().int().min(1).max(50).optional().default(10)
+    limit: z36.number().int().min(1).max(50).optional().default(10)
   },
   annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
   handler: async ({ limit }, ctx) => {
@@ -2822,13 +7652,13 @@ var processBlogMediaUploadQueueTool = defineTool32({
     });
   }
 });
-var listBlogMediaUploadQueueTool = defineTool32({
+var listBlogMediaUploadQueueTool = defineTool41({
   name: "list_blog_media_upload_queue",
   title: "List queued blog-media upload retries",
   description: "Inspect the retry queue. Filter by status.",
   inputSchema: {
-    status: z27.enum(["pending", "succeeded", "failed", "dead"]).optional(),
-    limit: z27.number().int().min(1).max(200).optional().default(50)
+    status: z36.enum(["pending", "succeeded", "failed", "dead"]).optional(),
+    limit: z36.number().int().min(1).max(200).optional().default(50)
   },
   annotations: { readOnlyHint: true, openWorldHint: false },
   handler: async ({ status, limit }, ctx) => {
@@ -2851,7 +7681,7 @@ var mcp_default = defineMcp({
   name: "parikshaa-mcp",
   title: "Parikshaa",
   version: "0.1.0",
-  instructions: "Parikshaa MCP server for admins/owners. Tools act as the signed-in user (RLS enforced) but admin/owner roles have broad read/write across all features. Start with `ensure_admin_access` then `whoami`. For database-backed folders: list_folders. For any table: db_select (simple), db_query (advanced filters), db_insert/db_update/db_delete. For DB functions: db_rpc. For files: storage_list/upload/delete/signed_url. For business logic: invoke_edge_function. For access control: admin_manage_role. Coding-content publishing: publish_coding_bundle / publish_coding_problem / publish_coding_solution.",
+  instructions: "Parikshaa MCP server for admins/owners. Tools act as the signed-in user (RLS enforced) but admin/owner roles have broad read/write across all features. Start with `ensure_admin_access` then `whoami`. For existing frontend-only sheets like DBMS/CN/OS, use `list_builtin_sheets` and `get_builtin_sheet` instead of checking user_folders. For database-backed folders: list_sheets/get_sheet_details. For any table: db_select (simple), db_query (advanced filters), db_insert/db_update/db_delete. For DB functions: db_rpc. For files: storage_list/upload/delete/signed_url. For business logic: invoke_edge_function. For access control: admin_manage_role. Coding-content publishing: publish_coding_bundle / publish_coding_problem / publish_coding_solution.",
   auth: auth.oauth.issuer({
     issuer: `https://${projectRef}.supabase.co/auth/v1`,
     acceptedAudiences: "authenticated"
@@ -2891,7 +7721,42 @@ var mcp_default = defineMcp({
     publishCodingSolutionTool,
     publishCodingBundleTool,
     ensureAdminAccessTool,
+    listBuiltinSheetsTool,
+    getBuiltinSheetTool,
     getCurrentUserContextTool,
+    testSheetAccessTool,
+    updateBuiltinSheetTool,
+    syncBuiltinSheetToDbTool,
+    listAllSheetsAdminTool,
+    adminUpdateSheetTool,
+    adminDeleteSheetTool,
+    sheetAccessMatrixTool,
+    debugMcpReadFailureTool,
+    verifySheetArticleAccessTool,
+    createSheetTool,
+    listSheetsTool,
+    addProblemsToSheetTool,
+    removeProblemFromSheetTool,
+    listSheetItemsTool,
+    shareSheetTool,
+    publishRoadmapTool,
+    listRoadmapsTool,
+    listSheetTemplatesTool,
+    createSheetFromTemplateTool,
+    cloneSheetTool,
+    reorderSheetItemsTool,
+    publishSheetBundleTool,
+    regenerateShareSheetLinkTool,
+    updateSheetSectionsTool,
+    getSheetDetailsTool,
+    previewPublishSheetBundleTool,
+    bulkRemoveProblemsFromSheetTool,
+    getSheetShareStatusTool,
+    deleteOrArchiveSheetTool,
+    updateSheetShareSettingsTool,
+    duplicateSheetTool,
+    exportSheetItemsCsvTool,
+    listPublicShareCodesTool,
     publishTopicArticleTool,
     listTopicArticlesTool,
     linkArticleToSheetTopicTool,
@@ -2910,6 +7775,7 @@ var mcp_default = defineMcp({
     exportTopicArticlesSitemapTool,
     reresolveTopicArticleImagesTool,
     fixTopicArticleLinkageTool,
+    verifySheetWriteAccessTool,
     createBuiltinShareLinkTool,
     revokeBuiltinShareLinkTool,
     listBuiltinShareLinksTool,

@@ -1424,6 +1424,62 @@
         "outputSchema": null
       },
       {
+        "name": "list_builtin_sheets",
+        "title": "List built-in learning sheets",
+        "description": "List static frontend sheets that exist at /learn/sheets/:slug, such as DBMS, CN, and OS. Use this when user_folders has no DB row for an existing app sheet.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "search": {
+              "type": "string",
+              "description": "Optional title/slug search."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_builtin_sheet",
+        "title": "Get built-in sheet details",
+        "description": "Return the actual static sheet content rendered by /learn/sheets/:slug, including sections, sub-sections, and topics. Supports optional topic search to keep responses compact.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Sheet slug, for example dbms-sheet, cn-sheet, or os-sheet."
+            },
+            "topic_search": {
+              "type": "string",
+              "description": "Optional filter across section, sub-section, and topic titles."
+            },
+            "include_topics": {
+              "type": "boolean",
+              "description": "Defaults to true. Set false for structure only."
+            }
+          },
+          "required": [
+            "slug"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
         "name": "get_current_user_context",
         "title": "Get current user context",
         "description": "Return the caller's auth.uid(), email, and role flags (admin/owner). Use this to debug 401s and confirm the MCP OAuth token is valid.",
@@ -1436,6 +1492,1327 @@
           "$schema": "http://json-schema.org/draft-07/schema#",
           "type": "object",
           "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "test_sheet_access",
+        "title": "Test sheet read access",
+        "description": "Check whether the caller can read a sheet by slug. Checks built-in frontend sheets (dbms-sheet, cn-sheet, os-sheet) and DB-backed sheets in user_folders. Explains why access is or is not granted.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Sheet slug, e.g. dbms-sheet"
+            }
+          },
+          "required": [
+            "slug"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "update_builtin_sheet",
+        "title": "Update built-in sheet (admin)",
+        "description": "Admin/owner-only. Persist edits to a built-in frontend sheet (dbms-sheet, cn-sheet, os-sheet). Overrides title/description/sections and is merged into get_builtin_sheet responses. Pass reset=true to clear overrides.",
+        "annotations": {
+          "readOnlyHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "minLength": 1
+            },
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "sections": {
+              "type": "array",
+              "description": "Full replacement for sections array."
+            },
+            "reset": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "slug"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "sync_builtin_sheet_to_db",
+        "title": "Sync built-in sheet into DB folder (admin)",
+        "description": "Admin/owner-only. Create or refresh a user_folders row (owned by caller) mirroring a built-in sheet's topics as folder items. After sync, use all existing sheet tools (add_problems_to_sheet, reorder_sheet_items, share_sheet, etc.) against the returned folder_id.",
+        "annotations": {
+          "readOnlyHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "minLength": 1,
+              "description": "dbms-sheet, cn-sheet, or os-sheet"
+            },
+            "replace_items": {
+              "type": "boolean",
+              "description": "Default true. Wipes existing items before re-inserting."
+            }
+          },
+          "required": [
+            "slug"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_all_sheets_admin",
+        "title": "List every sheet (admin)",
+        "description": "Admin/owner-only. Returns every built-in frontend sheet plus every user_folders row across all users, with owner user_id and item counts. Use to discover sheets you did not create.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "search": {
+              "type": "string"
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "admin_update_sheet",
+        "title": "Update any sheet (admin)",
+        "description": "Admin/owner-only. Update name/description/color on any user_folders row across owners. Use folder_id from list_all_sheets_admin.",
+        "annotations": {
+          "readOnlyHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "color": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "admin_delete_sheet",
+        "title": "Delete any sheet (admin)",
+        "description": "Admin/owner-only. Permanently deletes a user_folders row (and its items via cascade) regardless of owner.",
+        "annotations": {
+          "readOnlyHint": false,
+          "idempotentHint": false,
+          "openWorldHint": false,
+          "destructiveHint": true
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "required": [
+            "folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "sheet_access_matrix",
+        "title": "Sheet access matrix",
+        "description": "List every built-in sheet slug (DBMS / CN / OS) and whether the current caller can read it, with the RLS decision reason for each row.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "include_overrides_check": {
+              "type": "boolean",
+              "description": "Also probe builtin_sheet_overrides read access per slug. Defaults to true."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "debug_mcp_read_failure",
+        "title": "Debug MCP read failure",
+        "description": "Explain the RLS/authorization decision path for a failed read: given a table + optional row filter (or a built-in sheet slug), report the requested resource, caller identity, roles, and the likely policy path that blocked it.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "resource_kind": {
+              "type": "string",
+              "enum": [
+                "table",
+                "builtin_sheet",
+                "user_folder",
+                "topic_article"
+              ],
+              "description": "Category of resource that returned empty/denied."
+            },
+            "resource": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Table name, sheet slug, folder id, or article slug."
+            },
+            "filter": {
+              "type": "object",
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "null"
+                ]
+              },
+              "description": "Optional column=value filter to re-run and observe."
+            }
+          },
+          "required": [
+            "resource_kind",
+            "resource"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "verify_sheet_article_access",
+        "title": "Verify sheet article read access",
+        "description": "For every topic_article linked to the given sheet slug, check whether the current caller can read it. Returns blocked articles with the reason (draft/archived, RLS, missing link).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "sheet_slug": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Sheet slug, e.g. dbms-sheet."
+            }
+          },
+          "required": [
+            "sheet_slug"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "create_sheet",
+        "title": "Create sheet (folder of problems)",
+        "description": "Create a new sheet (curated folder) owned by the calling admin. Returns the folder id to use with add_problems_to_sheet.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 120
+            },
+            "description": {
+              "type": "string",
+              "maxLength": 1000
+            },
+            "color": {
+              "type": "string",
+              "maxLength": 20,
+              "description": "Optional hex or tailwind token."
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_sheets",
+        "title": "List sheets",
+        "description": "List sheets visible to the caller (own folders). Use to check for an existing sheet before creating a duplicate.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "search": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "add_problems_to_sheet",
+        "title": "Add coding problems to a sheet",
+        "description": "Batch-add Parikshaa coding problems (by slug) to an existing sheet. Skips slugs that don't exist and slugs already present. Returns per-slug status.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "slugs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1,
+              "maxItems": 200
+            },
+            "source": {
+              "type": "string",
+              "description": "Question source tag. Defaults to 'parikshaa'."
+            }
+          },
+          "required": [
+            "folder_id",
+            "slugs"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "remove_problem_from_sheet",
+        "title": "Remove a problem from a sheet",
+        "description": "Remove one problem (by slug) from a sheet.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "slug": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "folder_id",
+            "slug"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_sheet_items",
+        "title": "List problems in a sheet",
+        "description": "List all coding problems inside a given sheet, ordered by sort_order.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "required": [
+            "folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "share_sheet",
+        "title": "Create/refresh a public share link for a sheet",
+        "description": "Generate a shareable code for a sheet. If a share row already exists it's reused. Returns the share code.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "is_public": {
+              "type": "boolean"
+            },
+            "allow_copy": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "publish_roadmap",
+        "title": "Publish / feature a roadmap",
+        "description": "Toggle publish + feature flags for a roadmap by id in roadmap_overrides (upsert). Sort order optional.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "roadmap_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "is_published": {
+              "type": "boolean"
+            },
+            "is_featured": {
+              "type": "boolean"
+            },
+            "sort_order": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "roadmap_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_roadmap_overrides",
+        "title": "List roadmap overrides",
+        "description": "List all roadmap_overrides rows (publish/feature flags per roadmap id).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_sheet_templates",
+        "title": "List predefined sheet templates",
+        "description": "Return all built-in sheet templates (key, name, description, section titles, slug counts). Use before create_sheet_from_template.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "create_sheet_from_template",
+        "title": "One-click sheet from a template",
+        "description": "Generate a new sheet using a predefined template. Validates slugs against coding_problems, inserts existing ones in template order, reports missing. Optionally publishes the linked roadmap.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "template_key": {
+              "type": "string",
+              "minLength": 1
+            },
+            "name_override": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "publish_roadmap": {
+              "type": "boolean",
+              "description": "If template defines a roadmap_id, also mark it published."
+            }
+          },
+          "required": [
+            "template_key"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "clone_sheet",
+        "title": "Clone an existing sheet",
+        "description": "Duplicate an existing sheet's structure and items into a new sheet owned by the caller. Useful to snapshot a template sheet.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "source_folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "new_name": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 120
+            }
+          },
+          "required": [
+            "source_folder_id",
+            "new_name"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "reorder_sheet_items",
+        "title": "Reorder problems in a sheet (drag-drop equivalent)",
+        "description": "Set the exact order of problems in a sheet by passing slugs in the desired order. Any slug in the sheet but omitted from `order` is appended at the end preserving its relative order.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "order": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1,
+              "maxItems": 500
+            }
+          },
+          "required": [
+            "folder_id",
+            "order"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "publish_sheet_bundle",
+        "title": "Publish coding problems + sheet + roadmap (mega)",
+        "description": "One-shot: publish an array of coding_problem bundles (problem + tests + starter + solutions), then create (or reuse) a sheet and add all successfully-published slugs in order, and optionally publish a roadmap. Returns per-slug outcome.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "sheet": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 120
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 2000
+                },
+                "color": {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                "reuse_folder_id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": "If passed, add problems to this existing sheet instead of creating a new one."
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "additionalProperties": false
+            },
+            "problems": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "problem": {
+                    "type": "object",
+                    "properties": {
+                      "slug": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "difficulty": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "topics": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "examples": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": {}
+                        }
+                      },
+                      "constraints": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "hints": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "cpu_time_limit_sec": {
+                        "type": "number"
+                      },
+                      "memory_limit_kb": {
+                        "type": "integer"
+                      },
+                      "mcq": {
+                        "type": "object",
+                        "additionalProperties": {}
+                      },
+                      "is_contest_pool": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "slug",
+                      "title",
+                      "difficulty",
+                      "description",
+                      "topics",
+                      "examples"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "tests": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "input": {
+                          "type": "string"
+                        },
+                        "expected_output": {
+                          "type": "string"
+                        },
+                        "is_sample": {
+                          "type": "boolean"
+                        },
+                        "weight": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "input",
+                        "expected_output"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 2
+                  },
+                  "starter_code": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "language": {
+                          "type": "string"
+                        },
+                        "code": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "language",
+                        "code"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "solutions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "lang_id": {
+                          "type": "string"
+                        },
+                        "code": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "lang_id",
+                        "code"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 1
+                  }
+                },
+                "required": [
+                  "problem",
+                  "tests",
+                  "solutions"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1,
+              "maxItems": 50
+            },
+            "if_exists": {
+              "type": "string",
+              "enum": [
+                "error",
+                "update"
+              ]
+            },
+            "roadmap": {
+              "type": "object",
+              "properties": {
+                "roadmap_id": {
+                  "type": "string"
+                },
+                "is_published": {
+                  "type": "boolean"
+                },
+                "is_featured": {
+                  "type": "boolean"
+                },
+                "sort_order": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "roadmap_id"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "sheet",
+            "problems"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "regenerate_share_sheet_link",
+        "title": "Revoke + regenerate a sheet's public share link",
+        "description": "Delete any existing shared_folders row for the sheet and issue a fresh share code. Old links stop working immediately.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "is_public": {
+              "type": "boolean"
+            },
+            "allow_copy": {
+              "type": "boolean"
+            },
+            "expires_at": {
+              "type": "string",
+              "format": "date-time",
+              "description": "ISO timestamp for expiry (optional)."
+            }
+          },
+          "required": [
+            "folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "update_sheet_sections",
+        "title": "Edit a sheet's section outline (add/remove/rename/reorder)",
+        "description": "Persist a new section outline into the sheet's description and, when requested, reorder actual sheet items to match section order (unlisted items append at end). Also inserts any missing slugs (that exist in coding_problems) referenced by the new outline.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "sections": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  },
+                  "slugs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "default": []
+                  }
+                },
+                "required": [
+                  "title"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1,
+              "maxItems": 50
+            },
+            "intro": {
+              "type": "string",
+              "maxLength": 2000,
+              "description": "Optional replacement intro (before section list)."
+            },
+            "apply_to_items": {
+              "type": "boolean",
+              "description": "If true (default), also reorder existing sheet items and insert any new outline slugs."
+            }
+          },
+          "required": [
+            "folder_id",
+            "sections"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_sheet_details",
+        "title": "Get full sheet structure + ordered items",
+        "description": "Return sheet metadata, parsed section outline from description, all ordered sheet items with problem metadata (title, difficulty, topics), and any active share code. Ready for direct UI rendering.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "required": [
+            "folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "preview_publish_sheet_bundle",
+        "title": "Dry-run preview of publish_sheet_bundle",
+        "description": "Decode a publish_sheet_bundle payload and report exactly what would happen — sheets created/reused, problems inserted vs overwritten, items added vs already-in-sheet, and any validation failures — WITHOUT writing anything.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "sheet": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 120
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 2000
+                },
+                "color": {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                "reuse_folder_id": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "additionalProperties": false
+            },
+            "problems": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "problem": {
+                    "type": "object",
+                    "properties": {
+                      "slug": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "difficulty": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "slug"
+                    ],
+                    "additionalProperties": true
+                  },
+                  "tests": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": {}
+                    }
+                  },
+                  "starter_code": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": {}
+                    }
+                  },
+                  "solutions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": {}
+                    }
+                  }
+                },
+                "required": [
+                  "problem"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1,
+              "maxItems": 50
+            },
+            "if_exists": {
+              "type": "string",
+              "enum": [
+                "error",
+                "update"
+              ]
+            },
+            "roadmap": {
+              "type": "object",
+              "properties": {
+                "roadmap_id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "roadmap_id"
+              ],
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "sheet",
+            "problems"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "bulk_remove_problems_from_sheet",
+        "title": "Remove multiple problems from a sheet in one call",
+        "description": "Delete multiple slugs from a sheet in a single request. Returns per-slug status (removed | not_in_sheet | error).",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "slugs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1,
+              "maxItems": 500
+            },
+            "resequence": {
+              "type": "boolean",
+              "description": "If true (default), re-pack sort_order of remaining items 0..N-1."
+            }
+          },
+          "required": [
+            "folder_id",
+            "slugs"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_sheet_share_status",
+        "title": "Get a sheet's active public share status",
+        "description": "Return the active share code, is_public, allow_copy, expires_at and expiry flag for a sheet. Returns share:null if the sheet has never been shared.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "required": [
+            "folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "delete_or_archive_sheet",
+        "title": "Delete or soft-archive a sheet",
+        "description": "mode='archive' (default): mark sheet as archived by prefixing name with [Archived] and setting color to gray — items/shares preserved. mode='delete': permanently remove the sheet, all its items, and any share links.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "archive",
+                "delete"
+              ]
+            },
+            "unarchive": {
+              "type": "boolean",
+              "description": "With mode='archive', if true removes the [Archived] prefix instead."
+            }
+          },
+          "required": [
+            "folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "update_sheet_share_settings",
+        "title": "Update share settings without regenerating share_code",
+        "description": "Patch is_public / allow_copy / expires_at on the existing shared_folders row. share_code stays the same unless regenerate:true is set.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "is_public": {
+              "type": "boolean"
+            },
+            "allow_copy": {
+              "type": "boolean"
+            },
+            "expires_at": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "ISO timestamp, or null to clear expiry."
+            },
+            "regenerate": {
+              "type": "boolean",
+              "description": "If true, also rotate share_code."
+            }
+          },
+          "required": [
+            "folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "duplicate_sheet",
+        "title": "Duplicate a sheet (section template + ordered items)",
+        "description": "Create a new user_folder that copies the source sheet's description (section outline) and all sheet items in the same sort_order. Does not copy share links.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "source_folder_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "new_name": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 120,
+              "description": "Defaults to '<source name> (Copy)'."
+            },
+            "new_color": {
+              "type": "string",
+              "maxLength": 20
+            }
+          },
+          "required": [
+            "source_folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "export_sheet_items_csv",
+        "title": "Export sheet items to CSV (title, slug, sort_order, section)",
+        "description": "Return the sheet's items as a CSV string with columns: sort_order, section, slug, title, difficulty, topics, is_published. Section is derived from the sheet description outline.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "folder_id": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "required": [
+            "folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_public_share_codes",
+        "title": "List all active public share codes for my sheets",
+        "description": "Return every shared_folders row for the caller's sheets with share_code, is_public, allow_copy, expires_at, and computed is_expired / is_active flags.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "include_private": {
+              "type": "boolean",
+              "description": "If true, also include is_public=false rows."
+            },
+            "include_expired": {
+              "type": "boolean",
+              "description": "If true, include already-expired rows."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
         },
         "outputSchema": null
       },
@@ -2277,6 +3654,32 @@
           },
           "required": [
             "sheet_folder_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "verify_sheet_write_access",
+        "title": "Verify sheet write access",
+        "description": "For a given sheet slug, check whether the current caller can create/update/delete sections and every linked topic_article. Returns per-item allow/block with reasons.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "sheet_slug": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Sheet slug (built-in like dbms-sheet, or DB folder slug)."
+            }
+          },
+          "required": [
+            "sheet_slug"
           ],
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"

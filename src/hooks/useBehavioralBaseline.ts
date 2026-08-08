@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
-
+import { signContestFunctionCall } from "@/hooks/useContestSessionSigner";
 
 /**
  * Layer 4 — Behavioral baselining.
@@ -81,8 +81,17 @@ export function useBehavioralBaseline(sessionId: string | null, enabled: boolean
     };
 
     const send = async (mode: "submit_baseline" | "evaluate") => {
-      // Disabled - contest functionality removed
-      return;
+      const metrics = summarize();
+      if (metrics.sample_n < 8) return; // insufficient data this window
+      try {
+        const body = { mode, sessionId, metrics };
+        const headers = await signContestFunctionCall("contest-behavioral-baseline", body);
+        const { data } = await supabase.functions.invoke("contest-behavioral-baseline", {
+          body,
+          ...(headers ? { headers } : {}),
+        });
+        if (mode === "submit_baseline" && data?.ok) calibratedRef.current = true;
+      } catch { /* silent — engine has other signals */ }
     };
 
     const calibrateAt = window.setTimeout(() => {

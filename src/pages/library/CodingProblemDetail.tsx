@@ -399,7 +399,7 @@ const CodingProblemDetail = () => {
   });
   const lastCodeLenRef = useRef<number>(0);
   const { runs, refetch: refetchRuns } = useCodeRuns(slug, {
-    locked: contestLocks.historyLocked,
+    locked: (contestLocks as any).historyLocked,
     contestId,
   });
   const { toggle: rawToggleBookmark } = useCodingProblemBookmarks();
@@ -426,7 +426,7 @@ const CodingProblemDetail = () => {
     lastSyncedAt: mySolutionLastSyncedAt,
     lastConflictResolvedAt: mySolutionLastConflictAt,
   } = useProblemSolution(slug, mySolutionLanguage, {
-    locked: contestLocks.solutionLocked,
+    locked: (contestLocks as any).solutionLocked,
     contestId,
   });
   const {
@@ -455,7 +455,7 @@ const CodingProblemDetail = () => {
   const shouldLoadReferenceSolution =
     !staticProblem &&
     acceptedExists &&
-    !contestLocks.solutionLocked &&
+    !(contestLocks as any).solutionLocked &&
     (activeTab === "editorial" || activeTab === "solution");
   const { data: dbReferenceSolution = {}, isLoading: referenceSolutionLoading } = useDbProblemReferenceSolutions(
     slug,
@@ -467,11 +467,11 @@ const CodingProblemDetail = () => {
   // Description if the persisted active tab is locked when the contest starts,
   // and (c) decorate trigger labels with a 🔒.
   const isTabLocked = (id: EditorTabId) =>
-    (id === "notes" && contestLocks.notesLocked) ||
-    (id === "my-solution" && contestLocks.solutionLocked) ||
-    (id === "solution" && contestLocks.solutionLocked) ||
-    (id === "editorial" && contestLocks.solutionLocked) ||
-    (id === "runs" && contestLocks.historyLocked);
+    (id === "notes" && (contestLocks as any).notesLocked) ||
+    (id === "my-solution" && (contestLocks as any).solutionLocked) ||
+    (id === "solution" && (contestLocks as any).solutionLocked) ||
+    (id === "editorial" && (contestLocks as any).solutionLocked) ||
+    (id === "runs" && (contestLocks as any).historyLocked);
 
   const setActiveTab = (id: EditorTabId) => {
     if (isTabLocked(id)) {
@@ -707,10 +707,10 @@ const CodingProblemDetail = () => {
           .select("id")
           .eq("slug", contestSlug)
           .maybeSingle();
-        if (cancelled || !contestRow?.id) return;
-        setContestId(contestRow.id);
+        if (cancelled || !(contestRow as any)?.id) return;
+        setContestId((contestRow as any).id);
         const { data: check } = await supabase.rpc("validate_contest_submission", {
-          _contest_id: contestRow.id,
+          _contest_id: (contestRow as any).id,
           _problem_slug: problem.slug,
         });
         if (cancelled) return;
@@ -1153,10 +1153,10 @@ const CodingProblemDetail = () => {
           .select("id")
           .eq("slug", contestSlug)
           .maybeSingle();
-        if (contestRow?.id) {
+        if ((contestRow as any)?.id) {
           const { data: check, error: checkErr } = await supabase.rpc(
             "validate_contest_submission",
-            { _contest_id: contestRow.id, _problem_slug: problem.slug },
+            { _contest_id: (contestRow as any).id, _problem_slug: problem.slug },
           );
           if (checkErr) throw checkErr;
           const v = check as { ok: boolean; message?: string; code?: string } | null;

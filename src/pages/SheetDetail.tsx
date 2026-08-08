@@ -195,7 +195,14 @@ interface SheetData {
   easy: number;
   medium: number;
   hard: number;
-  sections: Section[];
+  sections: (Section & { 
+    part?: string; 
+    ratingBand?: string; 
+    description?: string; 
+    keyConcepts?: string; 
+    resources?: string;
+    notes?: string;
+  })[];
 }
 
 // Mock data for sheets
@@ -952,7 +959,14 @@ function SectionCard({
   persistKey,
   jumpSignal,
 }: { 
-  section: Section; 
+  section: Section & { 
+    part?: string; 
+    ratingBand?: string; 
+    description?: string; 
+    keyConcepts?: string; 
+    resources?: string;
+    notes?: string;
+  }; 
   onToggleTopic: (id: string) => void;
   onOpenNote: (topic: Topic) => void;
   onToggleRevision: (id: string) => void;
@@ -1575,11 +1589,7 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
                 topics: subSection.topics.map(topic => {
                   const saved = progressMap.get(topic.id);
                   if (saved) {
-                    const anySaved = saved as typeof saved & {
-                      revision_count?: number | null;
-                      revision_history?: string[] | null;
-                      last_revised_at?: string | null;
-                    };
+                    const anySaved = saved as any;
                     return {
                       ...topic,
                       completed: saved.completed,

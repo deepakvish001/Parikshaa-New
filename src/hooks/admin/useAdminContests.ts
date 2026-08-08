@@ -29,7 +29,7 @@ export const useAdminContests = () => {
         .select("*")
         .order("created_at", { ascending: false });
       if (error) throw error;
-      const list = (data ?? []) as Contest[];
+      const list = (data as any[] ?? []) as Contest[];
       // Fetch registration counts in one go
       const { data: regs } = await supabase
         .from("contest_registrations")
@@ -51,7 +51,7 @@ export const useAdminContest = (id: string | undefined) => {
     queryFn: async () => {
       const { data, error } = await supabase.from("contests" as any).select("*").eq("id", id!).maybeSingle();
       if (error) throw error;
-      return data as Contest | null;
+      return (data as any) as Contest | null;
     },
   });
 };
@@ -81,7 +81,7 @@ export const useAdminContestProblems = (contestId: string | undefined) => {
         .eq("contest_id", contestId!)
         .order("order_index", { ascending: true });
       if (error) throw error;
-      return (data ?? []) as ContestProblem[];
+      return (data as any[] ?? []) as ContestProblem[];
     },
   });
 };
@@ -118,8 +118,8 @@ export const useSaveContest = () => {
           .select("*")
           .maybeSingle();
         if (error) throw error;
-        if (user && data) await writeAudit("update", data.slug, rest, user.id);
-        return data as Contest;
+        if (user && data) await writeAudit("update", (data as any).slug, rest, user.id);
+        return (data as any) as Contest;
       } else {
         const insertRow: any = { ...payload, created_by: user?.id };
         const { data, error } = await supabase
@@ -128,8 +128,8 @@ export const useSaveContest = () => {
           .select("*")
           .maybeSingle();
         if (error) throw error;
-        if (user && data) await writeAudit("create", data.slug, payload, user.id);
-        return data as Contest;
+        if (user && data) await writeAudit("create", (data as any).slug, payload, user.id);
+        return (data as any) as Contest;
       }
     },
     onSuccess: () => {

@@ -1298,6 +1298,14 @@ function SectionCard({
                   </div>
                 )}
 
+                <div className="p-4 border-b border-border/30 bg-muted/5 flex items-center justify-between">
+                  <h3 className="text-sm font-bold uppercase tracking-widest text-primary/80 flex items-center gap-2">
+                    <CheckSquare className="h-4 w-4" /> Challenge Set
+                  </h3>
+                  <div className="text-[10px] text-muted-foreground font-medium">
+                    {section.subSections.length} modules to master
+                  </div>
+                </div>
 
                 {section.subSections.map((subSection, index) => (
                   <motion.div

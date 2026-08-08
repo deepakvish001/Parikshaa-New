@@ -35,6 +35,7 @@ import {
   Share2,
   Eye,
   BookOpen,
+  Zap,
 } from "lucide-react";
 import {
   Command,
@@ -1126,6 +1127,82 @@ function SectionCard({
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
               className="overflow-hidden"
             >
+              {/* Theory Block (Idea, Pehchano, Padho) */}
+              {(section.description || section.keyConcepts || section.resources || section.notes) && (
+                <div className="mx-4 mt-4 p-5 rounded-2xl bg-gradient-to-br from-primary/5 via-muted/20 to-primary/5 border border-primary/10 shadow-sm space-y-5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    {section.description && (
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2 text-primary">
+                          <div className="p-1 rounded-md bg-primary/10">
+                            <Sparkles className="h-4 w-4" />
+                          </div>
+                          <h4 className="text-xs font-bold uppercase tracking-wider">Idea · Kaam kaise karta hai</h4>
+                        </div>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {section.description}
+                        </p>
+                      </div>
+                    )}
+                    {section.keyConcepts && (
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2 text-amber-400">
+                          <div className="p-1 rounded-md bg-amber-400/10">
+                            <Zap className="h-4 w-4" />
+                          </div>
+                          <h4 className="text-xs font-bold uppercase tracking-wider">Pehchano · Signal</h4>
+                        </div>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {section.keyConcepts}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+
+                  {(section.resources || section.notes) && (
+                    <div className="pt-4 border-t border-border/40 flex flex-col md:flex-row gap-5">
+                      {section.resources && (
+                        <div className="flex-1 space-y-2">
+                          <div className="flex items-center gap-2 text-emerald-400">
+                            <div className="p-1 rounded-md bg-emerald-400/10">
+                              <BookOpen className="h-4 w-4" />
+                            </div>
+                            <h4 className="text-xs font-bold uppercase tracking-wider">Padho · Resources</h4>
+                          </div>
+                          <p className="text-sm text-muted-foreground leading-relaxed italic">
+                            {section.resources}
+                          </p>
+                        </div>
+                      )}
+                      {section.notes && (
+                        <div className="flex-1 space-y-2">
+                          <div className="flex items-center gap-2 text-muted-foreground">
+                            <div className="p-1 rounded-md bg-muted/20">
+                              <Info className="h-4 w-4" />
+                            </div>
+                            <h4 className="text-xs font-bold uppercase tracking-wider">Notes / Cross-ref</h4>
+                          </div>
+                          <p className="text-[13px] text-muted-foreground/80 leading-relaxed">
+                            {section.notes}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {section.ratingBand && (
+                    <div className="flex items-center gap-4 pt-1">
+                      <div className="px-2 py-0.5 rounded bg-muted/40 border border-border/50 text-[10px] font-mono text-muted-foreground uppercase">
+                        Part: {section.part || "N/A"}
+                      </div>
+                      <div className="px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 text-[10px] font-mono text-amber-400 uppercase">
+                        Rating: {section.ratingBand}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
               {section.subSections.length > 1 && (
                 <div className="px-4 pt-3 pb-4 border-b border-border/30 bg-gradient-to-b from-muted/10 to-transparent">
                   <div className="flex items-center gap-2 mb-2">

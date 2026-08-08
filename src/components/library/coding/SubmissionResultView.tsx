@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { CheckCircle2, XCircle, Code2, ChevronDown, ChevronUp, FileText } from "lucide-react";
+import { CheckCircle2, XCircle, Code2, ChevronDown, ChevronUp, FileText, History as HistoryIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";

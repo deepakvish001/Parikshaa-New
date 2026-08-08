@@ -45,6 +45,7 @@ import {
   CloudOff,
   CloudUpload,
   AlertCircle,
+  FileText,
 } from "lucide-react";
 import { MonacoEditor } from "@/components/coding/MonacoEditor";
 import { useToast } from "@/hooks/use-toast";

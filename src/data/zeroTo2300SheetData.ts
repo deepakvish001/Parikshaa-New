@@ -5,9 +5,9 @@ export const zeroTo2300Meta = {
   "lastUpdated": "2026-08-08",
   "totalProblems": 1126,
   "completed": 0,
-  "easy": 0,
-  "medium": 0,
-  "hard": 0
+  "easy": 202,
+  "medium": 377,
+  "hard": 547
 };
 
 export const zeroTo2300Sections: any[] = [
@@ -24,7 +24,258 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-0",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-0-0",
+            "title": "Bit++ (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/372056",
+            "note": "Tags: implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-1",
+            "title": "Next Round (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/332770",
+            "note": "Tags: *special, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-2",
+            "title": "Beautiful Matrix (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/329595",
+            "note": "Tags: implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-3",
+            "title": "Petya and Strings (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/296954",
+            "note": "Tags: implementation, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-4",
+            "title": "Boy or Girl (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/291069",
+            "note": "Tags: brute force, implementation, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-5",
+            "title": "Helpful Maths (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/285168",
+            "note": "Tags: greedy, implementation, sortings, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-6",
+            "title": "Word Capitalization (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/279517",
+            "note": "Tags: implementation, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-7",
+            "title": "Bear and Big Brother (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/266510",
+            "note": "Tags: implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-8",
+            "title": "Football (900)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/198985",
+            "note": "Tags: implementation, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-9",
+            "title": "Gravity Flip (900)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/130311",
+            "note": "Tags: greedy, implementation, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-10",
+            "title": "HQ9+ (900)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/127979",
+            "note": "Tags: implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-11",
+            "title": "Game With Sticks (900)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/77246",
+            "note": "Tags: implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-12",
+            "title": "String Task (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/237229",
+            "note": "Tags: implementation, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-13",
+            "title": "Young Physicist (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/207440",
+            "note": "Tags: implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-14",
+            "title": "cAPS lOCK (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/103433",
+            "note": "Tags: implementation, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-15",
+            "title": "Xenia and Ringroad (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/83293",
+            "note": "Tags: implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-16",
+            "title": "Taxi (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/106721",
+            "note": "Tags: *special, greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-17",
+            "title": "Fancy Fence (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/51693",
+            "note": "Tags: geometry, implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-18",
+            "title": "Vanya and Lanterns (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/92864",
+            "note": "Tags: binary search, implementation, math, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-19",
+            "title": "Cheap Travel (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/79106",
+            "note": "Tags: implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-20",
+            "title": "Chewbaсca and Number (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/74334",
+            "note": "Tags: greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-21",
+            "title": "Worms (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/65928",
+            "note": "Tags: binary search, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-22",
+            "title": "Registration System (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/113634",
+            "note": "Tags: data structures, hashing, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-23",
+            "title": "Sort the Array (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/54260",
+            "note": "Tags: implementation, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-0-24",
+            "title": "Books (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/77393",
+            "note": "Tags: binary search, brute force, implementation, two pointers",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -41,7 +292,258 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-1",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-1-0",
+            "title": "Watermelon (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/713997",
+            "note": "Tags: brute force, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-1",
+            "title": "Domino piling (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/329853",
+            "note": "Tags: greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-2",
+            "title": "Elephant (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/258873",
+            "note": "Tags: math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-3",
+            "title": "Soldier and Bananas (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/243639",
+            "note": "Tags: brute force, implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-4",
+            "title": "Calculating Function (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/159265",
+            "note": "Tags: implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-5",
+            "title": "Drinks (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/153184",
+            "note": "Tags: implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-6",
+            "title": "Divisibility Problem (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/136178",
+            "note": "Tags: math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-7",
+            "title": "Even Odds (900)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/147132",
+            "note": "Tags: math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-8",
+            "title": "Theatre Square (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/328280",
+            "note": "Tags: math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-9",
+            "title": "Expression (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/115050",
+            "note": "Tags: brute force, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-10",
+            "title": "Olesya and Rodion (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/53707",
+            "note": "Tags: math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-11",
+            "title": "Dreamoon and Stairs (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/52768",
+            "note": "Tags: implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-12",
+            "title": "Monsters (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/47873",
+            "note": "Tags: greedy, math, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-13",
+            "title": "Road To Zero (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/47195",
+            "note": "Tags: greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-14",
+            "title": "Olya and Game with Arrays (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/47139",
+            "note": "Tags: constructive algorithms, greedy, math, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-15",
+            "title": "Sum of Odd Integers (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/46804",
+            "note": "Tags: math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-16",
+            "title": "K-th Not Divisible by n (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/72980",
+            "note": "Tags: binary search, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-17",
+            "title": "Same Differences (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/68427",
+            "note": "Tags: data structures, hashing, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-18",
+            "title": "Same Parity Summands (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/46394",
+            "note": "Tags: constructive algorithms, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-19",
+            "title": "Plus Minus Permutation (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/41597",
+            "note": "Tags: math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-20",
+            "title": "Scuza (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/41429",
+            "note": "Tags: binary search, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-21",
+            "title": "Odd Selection (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/41247",
+            "note": "Tags: brute force, implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-22",
+            "title": "Romantic Glasses (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/37024",
+            "note": "Tags: data structures, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-23",
+            "title": "Number of Pairs (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/35771",
+            "note": "Tags: binary search, data structures, math, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-1-24",
+            "title": "Maximum Median (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/35710",
+            "note": "Tags: binary search, greedy, math, sortings",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -58,7 +560,198 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-2",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-2-0",
+            "title": "Team (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/446592",
+            "note": "Tags: brute force, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-2-1",
+            "title": "Beautiful Year (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/183773",
+            "note": "Tags: brute force",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-2-2",
+            "title": "Games (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/106766",
+            "note": "Tags: brute force",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-2-3",
+            "title": "YES or YES? (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/100679",
+            "note": "Tags: brute force, implementation, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-2-4",
+            "title": "I_love_\\%username\\% (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/96047",
+            "note": "Tags: brute force",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-2-5",
+            "title": "New Year and Hurry (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/95139",
+            "note": "Tags: binary search, brute force, implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-2-6",
+            "title": "Buy a Shovel (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/91282",
+            "note": "Tags: brute force, constructive algorithms, implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-2-7",
+            "title": "Lucky Division (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/153738",
+            "note": "Tags: brute force, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-2-8",
+            "title": "Fedor and New Game (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/43782",
+            "note": "Tags: bitmasks, brute force, constructive algorithms, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-2-9",
+            "title": "Sum of Cubes (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/39618",
+            "note": "Tags: binary search, brute force, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-2-10",
+            "title": "Maximum Sum (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/38432",
+            "note": "Tags: brute force, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-2-11",
+            "title": "Coprime (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/36260",
+            "note": "Tags: brute force, greedy, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-2-12",
+            "title": "250 Thousand Tons of TNT (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/35708",
+            "note": "Tags: brute force, implementation, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-2-13",
+            "title": "Yet Another Card Deck (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/34608",
+            "note": "Tags: brute force, data structures, implementation, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-2-14",
+            "title": "Pleasant Pairs (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/40455",
+            "note": "Tags: brute force, implementation, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-2-15",
+            "title": "IQ test (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/106375",
+            "note": "Tags: brute force",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-2-16",
+            "title": "Fadi and LCM (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/28887",
+            "note": "Tags: brute force, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-2-17",
+            "title": "Preparing Olympiad (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/28729",
+            "note": "Tags: bitmasks, brute force",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-2-18",
+            "title": "Hamburgers (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/36453",
+            "note": "Tags: binary search, brute force",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -75,7 +768,198 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-3",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-3-0",
+            "title": "Amusing Joke (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/104224",
+            "note": "Tags: implementation, sortings, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-3-1",
+            "title": "The New Year: Meeting Friends (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/103936",
+            "note": "Tags: implementation, math, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-3-2",
+            "title": "Halloumi Boxes (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/88009",
+            "note": "Tags: brute force, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-3-3",
+            "title": "Remove Smallest (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/83058",
+            "note": "Tags: greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-3-4",
+            "title": "Medium Number (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/82324",
+            "note": "Tags: implementation, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-3-5",
+            "title": "To My Critics (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/76234",
+            "note": "Tags: implementation, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-3-6",
+            "title": "Twins (900)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/148964",
+            "note": "Tags: greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-3-7",
+            "title": "Dragons (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/101783",
+            "note": "Tags: greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-3-8",
+            "title": "Laptops (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/58465",
+            "note": "Tags: sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-3-9",
+            "title": "Building an Aquarium (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/46938",
+            "note": "Tags: binary search, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-3-10",
+            "title": "Two Teams Composing (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/39797",
+            "note": "Tags: binary search, greedy, implementation, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-3-11",
+            "title": "Similar Pairs (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/37317",
+            "note": "Tags: constructive algorithms, graph matchings, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-3-12",
+            "title": "Teleporters (Easy Version) (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/36102",
+            "note": "Tags: greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-3-13",
+            "title": "Less or Equal (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/45131",
+            "note": "Tags: sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-3-14",
+            "title": "Assembly via Minimums (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/44667",
+            "note": "Tags: greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-3-15",
+            "title": "Pashmak and Flowers (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/48664",
+            "note": "Tags: combinatorics, implementation, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-3-16",
+            "title": "Kefa and Company (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/33154",
+            "note": "Tags: binary search, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-3-17",
+            "title": "Smilo and Monsters (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/21653",
+            "note": "Tags: binary search, constructive algorithms, greedy, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-3-18",
+            "title": "Fox And Names (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/23279",
+            "note": "Tags: dfs and similar, graphs, sortings",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -92,7 +976,278 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-4",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-4-0",
+            "title": "I Wanna Be the Guy (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/124746",
+            "note": "Tags: greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-1",
+            "title": "Sereja and Dima (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/93661",
+            "note": "Tags: greedy, implementation, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-2",
+            "title": "How Much Does Daytona Cost? (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/85013",
+            "note": "Tags: greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-3",
+            "title": "Array Coloring (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/84552",
+            "note": "Tags: greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-4",
+            "title": "Line Trip (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/82793",
+            "note": "Tags: greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-5",
+            "title": "Yet Another Two Integers Problem (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/82359",
+            "note": "Tags: greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-6",
+            "title": "Team Olympiad (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/73184",
+            "note": "Tags: greedy, implementation, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-7",
+            "title": "Puzzles (900)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/97487",
+            "note": "Tags: greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-8",
+            "title": "Chat room (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/160007",
+            "note": "Tags: greedy, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-9",
+            "title": "Move Brackets (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/67086",
+            "note": "Tags: greedy, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-10",
+            "title": "Distinct Split (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/52853",
+            "note": "Tags: brute force, greedy, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-11",
+            "title": "Good Prefixes (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/41113",
+            "note": "Tags: greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-12",
+            "title": "Helmets in Night Light (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/38365",
+            "note": "Tags: greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-13",
+            "title": "Add and Divide (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/35340",
+            "note": "Tags: brute force, greedy, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-14",
+            "title": "MEXor Mixup (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/35078",
+            "note": "Tags: bitmasks, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-15",
+            "title": "Quests (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/42577",
+            "note": "Tags: greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-16",
+            "title": "Contrast Value (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/36928",
+            "note": "Tags: greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-17",
+            "title": "Ternary XOR (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/33445",
+            "note": "Tags: greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-18",
+            "title": "Boats Competition (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/33293",
+            "note": "Tags: brute force, greedy, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-19",
+            "title": "Stable Groups (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/33262",
+            "note": "Tags: greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-20",
+            "title": "Friends and the Restaurant (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/32773",
+            "note": "Tags: greedy, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-21",
+            "title": "Product of Three Numbers (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/48631",
+            "note": "Tags: greedy, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-22",
+            "title": "Omkar and Last Class of Math (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/38057",
+            "note": "Tags: greedy, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-23",
+            "title": "Little Girl and Game (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/32690",
+            "note": "Tags: games, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-24",
+            "title": "Two Buttons (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/65181",
+            "note": "Tags: dfs and similar, graphs, greedy, implementation, math, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-25",
+            "title": "Exams (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/33675",
+            "note": "Tags: greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-4-26",
+            "title": "Powered Addition (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/31683",
+            "note": "Tags: greedy, math",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -109,7 +1264,198 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-5",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-5-0",
+            "title": "Prepend and Append (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/79448",
+            "note": "Tags: implementation, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-5-1",
+            "title": "Favorite Sequence (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/50052",
+            "note": "Tags: implementation, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-5-2",
+            "title": "1D Eraser (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/44202",
+            "note": "Tags: greedy, implementation, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-5-3",
+            "title": "Ski Resort (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/51401",
+            "note": "Tags: combinatorics, math, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-5-4",
+            "title": "Black and White Stripe (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/50487",
+            "note": "Tags: implementation, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-5-5",
+            "title": "Traffic Light (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/47559",
+            "note": "Tags: binary search, implementation, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-5-6",
+            "title": "BerSU Ball (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/58874",
+            "note": "Tags: dfs and similar, dp, graph matchings, greedy, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-5-7",
+            "title": "Alternating Subsequence (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/45168",
+            "note": "Tags: dp, greedy, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-5-8",
+            "title": "Queries about less or equal elements (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/40972",
+            "note": "Tags: binary search, data structures, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-5-9",
+            "title": "Find the Different Ones! (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/35512",
+            "note": "Tags: binary search, brute force, data structures, dp, dsu, greedy, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-5-10",
+            "title": "Strange Birthday Party (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/30828",
+            "note": "Tags: binary search, dp, greedy, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-5-11",
+            "title": "Shuffle (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/29413",
+            "note": "Tags: math, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-5-12",
+            "title": "Most socially-distanced subsequence (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/27526",
+            "note": "Tags: greedy, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-5-13",
+            "title": "Pair of Topics (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/35083",
+            "note": "Tags: binary search, data structures, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-5-14",
+            "title": "Zero Remainder Array (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/32482",
+            "note": "Tags: math, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-5-15",
+            "title": "2^Sort (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/27994",
+            "note": "Tags: data structures, dp, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-5-16",
+            "title": "Tracking Segments (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18897",
+            "note": "Tags: binary search, brute force, data structures, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-5-17",
+            "title": "Maximum Sum of Products (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/17901",
+            "note": "Tags: brute force, dp, implementation, math, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-5-18",
+            "title": "Number of Ways (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/42945",
+            "note": "Tags: binary search, brute force, data structures, dp, two pointers",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -126,7 +1472,198 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-6",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-6-0",
+            "title": "Odd Queries (900)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/61546",
+            "note": "Tags: data structures, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-6-1",
+            "title": "Three Indices (900)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/42849",
+            "note": "Tags: brute force, data structures",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-6-2",
+            "title": "Progressive Square (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/32813",
+            "note": "Tags: constructive algorithms, data structures, implementation, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-6-3",
+            "title": "A and B and Compilation Errors (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/44344",
+            "note": "Tags: data structures, implementation, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-6-4",
+            "title": "Eating Candies (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/42513",
+            "note": "Tags: binary search, data structures, greedy, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-6-5",
+            "title": "Bad Prices (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/32207",
+            "note": "Tags: data structures, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-6-6",
+            "title": "Dora and Search (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/35494",
+            "note": "Tags: constructive algorithms, data structures, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-6-7",
+            "title": "Matryoshkas (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/33896",
+            "note": "Tags: data structures, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-6-8",
+            "title": "Box Fitting (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/24740",
+            "note": "Tags: binary search, bitmasks, data structures, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-6-9",
+            "title": "Karen and Coffee (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/29554",
+            "note": "Tags: binary search, data structures, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-6-10",
+            "title": "Phoenix and Beauty (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/27941",
+            "note": "Tags: constructive algorithms, data structures, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-6-11",
+            "title": "Greg and Array (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/27538",
+            "note": "Tags: data structures, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-6-12",
+            "title": "Epic Transformation (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/26054",
+            "note": "Tags: constructive algorithms, data structures, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-6-13",
+            "title": "Array Game (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/25400",
+            "note": "Tags: binary search, brute force, data structures, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-6-14",
+            "title": "Rotation Matching (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/25241",
+            "note": "Tags: constructive algorithms, data structures, greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-6-15",
+            "title": "Little Girl and Maximum Sum (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/42213",
+            "note": "Tags: data structures, greedy, implementation, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-6-16",
+            "title": "Potions (Hard Version) (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/31814",
+            "note": "Tags: data structures, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-6-17",
+            "title": "Orac and LCM (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/22511",
+            "note": "Tags: data structures, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-6-18",
+            "title": "Constructing the Array (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/20689",
+            "note": "Tags: constructive algorithms, data structures, sortings",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -143,7 +1680,258 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-7",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-7-0",
+            "title": "Legs (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/58877",
+            "note": "Tags: binary search, math, ternary search",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-1",
+            "title": "Can I Square? (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/55803",
+            "note": "Tags: binary search, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-2",
+            "title": "Square Year (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/44283",
+            "note": "Tags: binary search, brute force, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-3",
+            "title": "Journey (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/40689",
+            "note": "Tags: binary search, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-4",
+            "title": "K-divisible Sum (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/45778",
+            "note": "Tags: binary search, constructive algorithms, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-5",
+            "title": "Different Divisors (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/42717",
+            "note": "Tags: binary search, constructive algorithms, greedy, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-6",
+            "title": "Interesting drink (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/89129",
+            "note": "Tags: binary search, dp, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-7",
+            "title": "Cardboard for Pictures (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/37436",
+            "note": "Tags: binary search, geometry, implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-8",
+            "title": "T-primes (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/99856",
+            "note": "Tags: binary search, implementation, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-9",
+            "title": "K-th Beautiful String (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/32503",
+            "note": "Tags: binary search, brute force, combinatorics, implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-10",
+            "title": "Yet Another Problem About Pairs Satisfying an Inequality (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/32156",
+            "note": "Tags: binary search, data structures, dp, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-11",
+            "title": "Chat Ban (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/27504",
+            "note": "Tags: binary search, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-12",
+            "title": "Jumping Through Segments (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/25366",
+            "note": "Tags: binary search, constructive algorithms",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-13",
+            "title": "Magic Powder - 1 (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/25221",
+            "note": "Tags: binary search, brute force, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-14",
+            "title": "Schedule Management (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/25156",
+            "note": "Tags: binary search, greedy, implementation, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-15",
+            "title": "Cellular Network (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/24305",
+            "note": "Tags: binary search, implementation, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-16",
+            "title": "To Become Max (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/19311",
+            "note": "Tags: binary search, brute force, data structures, dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-17",
+            "title": "Meeting on the Line (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18106",
+            "note": "Tags: binary search, geometry, greedy, implementation, math, ternary search",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-18",
+            "title": "Erase and Extend (Easy Version) (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/16953",
+            "note": "Tags: binary search, brute force, dp, greedy, hashing, implementation, string suffix structures, strings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-19",
+            "title": "Modified GCD (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/16418",
+            "note": "Tags: binary search, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-20",
+            "title": "Password (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/26203",
+            "note": "Tags: binary search, dp, hashing, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-21",
+            "title": "Multiplication Table (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/17166",
+            "note": "Tags: binary search, brute force",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-22",
+            "title": "Mike and Feet (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11507",
+            "note": "Tags: binary search, data structures, dp, dsu",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-23",
+            "title": "Multiset (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/10587",
+            "note": "Tags: binary search, data structures",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-7-24",
+            "title": "Odd-Even Subsequence (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11215",
+            "note": "Tags: binary search, dp, dsu, greedy, implementation",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -160,7 +1948,198 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-8",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-8-0",
+            "title": "ICPC Balloons (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/68564",
+            "note": "Tags: data structures, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-8-1",
+            "title": "Advantage (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/44796",
+            "note": "Tags: data structures, implementation, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-8-2",
+            "title": "Word Game (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/37015",
+            "note": "Tags: data structures, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-8-3",
+            "title": "Remove Prefix (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/34352",
+            "note": "Tags: data structures, greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-8-4",
+            "title": "Redstone? (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/31956",
+            "note": "Tags: brute force, data structures, implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-8-5",
+            "title": "Numeric String Template (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/32034",
+            "note": "Tags: data structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-8-6",
+            "title": "Sereja and Suffixes (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/51208",
+            "note": "Tags: data structures, dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-8-7",
+            "title": "Erase First or Second Letter (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/39023",
+            "note": "Tags: brute force, combinatorics, data structures, dp, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-8-8",
+            "title": "Balanced Tunnel (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/24213",
+            "note": "Tags: data structures, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-8-9",
+            "title": "Grouping Increases (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/30422",
+            "note": "Tags: data structures, dp, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-8-10",
+            "title": "Berland Regional (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/23538",
+            "note": "Tags: brute force, data structures, greedy, number theory, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-8-11",
+            "title": "Element Extermination (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/23184",
+            "note": "Tags: constructive algorithms, data structures, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-8-12",
+            "title": "Han Solo and Lazer Gun (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/22852",
+            "note": "Tags: brute force, data structures, geometry, implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-8-13",
+            "title": "Journey Planning (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/22835",
+            "note": "Tags: data structures, dp, greedy, math, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-8-14",
+            "title": "Potions (Easy Version) (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/27978",
+            "note": "Tags: brute force, data structures, dp, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-8-15",
+            "title": "Data Structures Fan (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/22649",
+            "note": "Tags: binary search, bitmasks, data structures, dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-8-16",
+            "title": "Good Subarrays (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/38844",
+            "note": "Tags: data structures, dp, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-8-17",
+            "title": "Distinct Characters Queries (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/19374",
+            "note": "Tags: data structures",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-8-18",
+            "title": "Longest Regular Bracket Sequence (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18907",
+            "note": "Tags: constructive algorithms, data structures, dp, greedy, sortings, strings",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -177,7 +2156,198 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-9",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-9-0",
+            "title": "Way Too Long Words (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/521934",
+            "note": "Tags: strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-9-1",
+            "title": "Word (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/236384",
+            "note": "Tags: implementation, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-9-2",
+            "title": "Anton and Danik (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/201964",
+            "note": "Tags: implementation, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-9-3",
+            "title": "Translation (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/194793",
+            "note": "Tags: implementation, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-9-4",
+            "title": "Pangram (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/131730",
+            "note": "Tags: implementation, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-9-5",
+            "title": "Anton and Polyhedrons (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/114254",
+            "note": "Tags: implementation, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-9-6",
+            "title": "Codeforces Checking (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/83199",
+            "note": "Tags: implementation, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-9-7",
+            "title": "Dubstep (900)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/107433",
+            "note": "Tags: strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-9-8",
+            "title": "Make Them Equal (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/30283",
+            "note": "Tags: brute force, greedy, math, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-9-9",
+            "title": "Prinzessin der Verurteilung (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/26402",
+            "note": "Tags: brute force, constructive algorithms, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-9-10",
+            "title": "AccurateLee (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/25733",
+            "note": "Tags: greedy, implementation, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-9-11",
+            "title": "Grandma Capa Knits a Scarf (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/25348",
+            "note": "Tags: brute force, data structures, greedy, strings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-9-12",
+            "title": "Substring and Subsequence (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/23638",
+            "note": "Tags: brute force, greedy, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-9-13",
+            "title": "Removal of Unattractive Pairs (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/23550",
+            "note": "Tags: constructive algorithms, greedy, math, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-9-14",
+            "title": "Anton and currency you all know (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/24182",
+            "note": "Tags: greedy, math, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-9-15",
+            "title": "Subsequence Hate (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/26582",
+            "note": "Tags: implementation, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-9-16",
+            "title": "Codeforces Subsequences (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/21765",
+            "note": "Tags: brute force, constructive algorithms, greedy, math, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-9-17",
+            "title": "K-Complete Word (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/21760",
+            "note": "Tags: dfs and similar, dsu, greedy, implementation, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-9-18",
+            "title": "They Are Everywhere (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/20746",
+            "note": "Tags: binary search, strings, two pointers",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -194,7 +2364,198 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-10",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-10-0",
+            "title": "Random Teams (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/41998",
+            "note": "Tags: combinatorics, constructive algorithms, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-10-1",
+            "title": "Maximal AND (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/31299",
+            "note": "Tags: bitmasks, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-10-2",
+            "title": "Queue (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/30361",
+            "note": "Tags: greedy, implementation, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-10-3",
+            "title": "Rumor (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/29229",
+            "note": "Tags: dfs and similar, graphs, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-10-4",
+            "title": "Arranging The Sheep (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/30027",
+            "note": "Tags: greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-10-5",
+            "title": "Drazil and Factorial (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/29065",
+            "note": "Tags: greedy, math, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-10-6",
+            "title": "Anna and the Valentine's Day Gift (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/27602",
+            "note": "Tags: games, greedy, math, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-10-7",
+            "title": "Regular Bracket Sequence (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/27022",
+            "note": "Tags: greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-10-8",
+            "title": "Product 1 Modulo N (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18832",
+            "note": "Tags: greedy, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-10-9",
+            "title": "Circle of Monsters (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18167",
+            "note": "Tags: brute force, constructive algorithms, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-10-10",
+            "title": "Multiples of Length (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/16837",
+            "note": "Tags: constructive algorithms, greedy, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-10-11",
+            "title": "Keshi Is Throwing a Party (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/16402",
+            "note": "Tags: binary search, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-10-12",
+            "title": "Counting Kangaroos is Fun (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15881",
+            "note": "Tags: binary search, greedy, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-10-13",
+            "title": "Set or Decrease (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15822",
+            "note": "Tags: binary search, brute force, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-10-14",
+            "title": "Doremy's IQ (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15690",
+            "note": "Tags: binary search, constructive algorithms, greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-10-15",
+            "title": "Solve The Maze (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/21404",
+            "note": "Tags: constructive algorithms, dfs and similar, dsu, graphs, greedy, implementation, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-10-16",
+            "title": "Table Decorations (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/20942",
+            "note": "Tags: greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-10-17",
+            "title": "Stoned Game (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13254",
+            "note": "Tags: brute force, constructive algorithms, games, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-10-18",
+            "title": "Prefix-Suffix Palindrome (Hard version) (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12167",
+            "note": "Tags: binary search, greedy, hashing, string suffix structures, strings",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -211,7 +2572,278 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-11",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-11-0",
+            "title": "Difference of GCDs (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/30026",
+            "note": "Tags: constructive algorithms, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-1",
+            "title": "Palindrome Game (easy version) (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/36218",
+            "note": "Tags: constructive algorithms, games",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-2",
+            "title": "Make Almost Equal With Mod (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/33638",
+            "note": "Tags: bitmasks, constructive algorithms, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-3",
+            "title": "Districts Connection (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/32149",
+            "note": "Tags: constructive algorithms, dfs and similar",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-4",
+            "title": "Challenging Cliffs (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/30750",
+            "note": "Tags: constructive algorithms, greedy, implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-5",
+            "title": "Before an Exam (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/30220",
+            "note": "Tags: constructive algorithms, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-6",
+            "title": "k-LCM (easy version) (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/29652",
+            "note": "Tags: constructive algorithms, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-7",
+            "title": "Anti-Sudoku (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/29703",
+            "note": "Tags: constructive algorithms, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-8",
+            "title": "Bracket Coloring (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/23356",
+            "note": "Tags: constructive algorithms, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-9",
+            "title": "Hossam and Friends (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/22693",
+            "note": "Tags: binary search, constructive algorithms, dp, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-10",
+            "title": "Team (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/22006",
+            "note": "Tags: constructive algorithms, greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-11",
+            "title": "Find The Array (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/21368",
+            "note": "Tags: bitmasks, constructive algorithms, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-12",
+            "title": "AND Sequences (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/21063",
+            "note": "Tags: bitmasks, combinatorics, constructive algorithms, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-13",
+            "title": "Plus and Multiply (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/26941",
+            "note": "Tags: constructive algorithms, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-14",
+            "title": "Factorials and Powers of Two (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/20611",
+            "note": "Tags: bitmasks, brute force, constructive algorithms, dp, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-15",
+            "title": "Special Permutation (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/25356",
+            "note": "Tags: constructive algorithms",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-16",
+            "title": "Another Problem About Dividing Numbers (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15540",
+            "note": "Tags: constructive algorithms, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-17",
+            "title": "Prefix Flip (Hard Version) (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/14508",
+            "note": "Tags: constructive algorithms, data structures, implementation, strings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-18",
+            "title": "Baby Ehab Partitions Again (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/14492",
+            "note": "Tags: bitmasks, constructive algorithms, dp, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-19",
+            "title": "Array Destruction (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/14364",
+            "note": "Tags: brute force, constructive algorithms, data structures, greedy, implementation, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-20",
+            "title": "Soldier and Number Game (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/14097",
+            "note": "Tags: constructive algorithms, dp, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-21",
+            "title": "Ehab the Xorcist (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13857",
+            "note": "Tags: bitmasks, constructive algorithms, greedy, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-22",
+            "title": "Bits (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13793",
+            "note": "Tags: bitmasks, constructive algorithms",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-23",
+            "title": "Carousel (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/14708",
+            "note": "Tags: constructive algorithms, dp, graphs, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-24",
+            "title": "Replace by MEX (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/10264",
+            "note": "Tags: brute force, constructive algorithms, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-25",
+            "title": "Two Divisors (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12638",
+            "note": "Tags: constructive algorithms, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-11-26",
+            "title": "Engineer Artem (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11852",
+            "note": "Tags: 2-sat, chinese remainder theorem, constructive algorithms, fft, flows",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -228,7 +2860,198 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-12",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-12-0",
+            "title": "Game with Integers (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/101071",
+            "note": "Tags: games, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-12-1",
+            "title": "Again Twenty Five! (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/96886",
+            "note": "Tags: number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-12-2",
+            "title": "Design Tutorial: Learn from Math (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/72132",
+            "note": "Tags: math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-12-3",
+            "title": "Maximum GCD (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/66896",
+            "note": "Tags: greedy, implementation, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-12-4",
+            "title": "United We Stand (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/58976",
+            "note": "Tags: constructive algorithms, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-12-5",
+            "title": "Bachgold Problem (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/58194",
+            "note": "Tags: greedy, implementation, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-12-6",
+            "title": "Odd Divisor (900)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/91383",
+            "note": "Tags: math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-12-7",
+            "title": "Ilya and Bank Account (900)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/66411",
+            "note": "Tags: implementation, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-12-8",
+            "title": "Buying Shovels (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/45041",
+            "note": "Tags: math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-12-9",
+            "title": "Divisible Pairs (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/32955",
+            "note": "Tags: combinatorics, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-12-10",
+            "title": "Divide and Equalize (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/30501",
+            "note": "Tags: math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-12-11",
+            "title": "Mere Array (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/27404",
+            "note": "Tags: constructive algorithms, math, number theory, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-12-12",
+            "title": "I Hate 1111 (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/37696",
+            "note": "Tags: dp, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-12-13",
+            "title": "Orac and Models (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/30840",
+            "note": "Tags: dp, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-12-14",
+            "title": "Mashmokh and ACM (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/30609",
+            "note": "Tags: combinatorics, dp, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-12-15",
+            "title": "Number Game (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/27579",
+            "note": "Tags: games, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-12-16",
+            "title": "Row GCD (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/26548",
+            "note": "Tags: math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-12-17",
+            "title": "LCM Challenge (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/21533",
+            "note": "Tags: number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-12-18",
+            "title": "Partitioning the Array (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/21065",
+            "note": "Tags: brute force, math, number theory",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -245,7 +3068,198 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-13",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-13-0",
+            "title": "Pasha and Stick (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/28183",
+            "note": "Tags: combinatorics, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-13-1",
+            "title": "Counting Orders (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/30831",
+            "note": "Tags: combinatorics, math, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-13-2",
+            "title": "Lucky Numbers (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/27675",
+            "note": "Tags: combinatorics, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-13-3",
+            "title": "Tavas and SaDDas (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/27088",
+            "note": "Tags: bitmasks, brute force, combinatorics, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-13-4",
+            "title": "AND 0, Sum Big (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/36855",
+            "note": "Tags: bitmasks, combinatorics, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-13-5",
+            "title": "Yet Another Broken Keyboard (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/31403",
+            "note": "Tags: combinatorics, dp, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-13-6",
+            "title": "Dreamoon and WiFi (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/38110",
+            "note": "Tags: bitmasks, brute force, combinatorics, dp, math, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-13-7",
+            "title": "Make it Alternating (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/28985",
+            "note": "Tags: combinatorics, dp, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-13-8",
+            "title": "Ball in Berland (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/28407",
+            "note": "Tags: combinatorics, graphs, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-13-9",
+            "title": "Weird Sum (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/19879",
+            "note": "Tags: combinatorics, data structures, geometry, math, matrices, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-13-10",
+            "title": "The Number of Products (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/19495",
+            "note": "Tags: combinatorics, dp, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-13-11",
+            "title": "Beautiful Triple Pairs (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/19369",
+            "note": "Tags: combinatorics, data structures",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-13-12",
+            "title": "Fun (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/20027",
+            "note": "Tags: binary search, brute force, combinatorics, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-13-13",
+            "title": "Running for Gold (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/17109",
+            "note": "Tags: combinatorics, graphs, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-13-14",
+            "title": "Kuroni and Impossible Calculation (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/19799",
+            "note": "Tags: brute force, combinatorics, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-13-15",
+            "title": "Advertising Agency (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18521",
+            "note": "Tags: combinatorics, math, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-13-16",
+            "title": "Chat Screenshots (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12704",
+            "note": "Tags: combinatorics, dfs and similar, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-13-17",
+            "title": "Modulo Sum (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15716",
+            "note": "Tags: combinatorics, data structures, dp, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-13-18",
+            "title": "Classy Numbers (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/14338",
+            "note": "Tags: combinatorics, dp",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -262,7 +3276,198 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-14",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-14-0",
+            "title": "Odd One Out (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/82343",
+            "note": "Tags: bitmasks, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-14-1",
+            "title": "Not Quite Latin Square (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/51367",
+            "note": "Tags: bitmasks, brute force, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-14-2",
+            "title": "We Need the Zero (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/45693",
+            "note": "Tags: bitmasks, brute force",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-14-3",
+            "title": "And Then There Were K (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/42829",
+            "note": "Tags: bitmasks",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-14-4",
+            "title": "Sum in Binary Tree (800)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/40375",
+            "note": "Tags: bitmasks, combinatorics, math, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-14-5",
+            "title": "Mocha and Math (900)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/48569",
+            "note": "Tags: bitmasks, constructive algorithms, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-14-6",
+            "title": "Raising Bacteria (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/81691",
+            "note": "Tags: bitmasks",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-14-7",
+            "title": "Rock and Lever (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/37866",
+            "note": "Tags: bitmasks, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-14-8",
+            "title": "Johnny and Another Rating Drop (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/24855",
+            "note": "Tags: bitmasks, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-14-9",
+            "title": "Fortune Telling (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/23371",
+            "note": "Tags: bitmasks, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-14-10",
+            "title": "Iva & Pav (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/22482",
+            "note": "Tags: binary search, bitmasks, data structures, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-14-11",
+            "title": "Powers Of Two (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/20179",
+            "note": "Tags: bitmasks, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-14-12",
+            "title": "Bitwise Balancing (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18779",
+            "note": "Tags: bitmasks, hashing, implementation, math, schedules, ternary search",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-14-13",
+            "title": "Adding Powers (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18567",
+            "note": "Tags: bitmasks, greedy, implementation, math, number theory, ternary search",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-14-14",
+            "title": "Vlad and a Pair of Numbers (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/17618",
+            "note": "Tags: bitmasks, constructive algorithms",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-14-15",
+            "title": "XOR-distance (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/17148",
+            "note": "Tags: bitmasks, greedy, implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-14-16",
+            "title": "AND, OR and square sum (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/14215",
+            "note": "Tags: bitmasks, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-14-17",
+            "title": "Cobb (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13952",
+            "note": "Tags: bitmasks, brute force, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-14-18",
+            "title": "Vasiliy's Multiset (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13170",
+            "note": "Tags: binary search, bitmasks, data structures, trees",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -279,7 +3484,198 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-15",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-15-0",
+            "title": "Gold Rush (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/35075",
+            "note": "Tags: brute force, dfs and similar, dp, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-15-1",
+            "title": "Badge (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/25938",
+            "note": "Tags: brute force, dfs and similar, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-15-2",
+            "title": "XOR and Triangle (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/22393",
+            "note": "Tags: bitmasks, brute force, geometry, greedy, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-15-3",
+            "title": "Petr and a Combination Lock (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/37211",
+            "note": "Tags: bitmasks, brute force, dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-15-4",
+            "title": "Ice Skating (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/25334",
+            "note": "Tags: brute force, dfs and similar, dsu, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-15-5",
+            "title": "Secret Box (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/23923",
+            "note": "Tags: brute force, combinatorics, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-15-6",
+            "title": "Johnny and His Hobbies (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/21354",
+            "note": "Tags: bitmasks, brute force",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-15-7",
+            "title": "Arrow Path (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/21572",
+            "note": "Tags: brute force, constructive algorithms, dfs and similar, dp, graphs, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-15-8",
+            "title": "AGAGA XOOORRR (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/26730",
+            "note": "Tags: bitmasks, brute force, dp, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-15-9",
+            "title": "a-Good String (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/22368",
+            "note": "Tags: bitmasks, brute force, divide and conquer, dp, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-15-10",
+            "title": "Unforgivable Curse (hard version) (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15621",
+            "note": "Tags: brute force, constructive algorithms, dfs and similar, dsu, graphs, greedy, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-15-11",
+            "title": "Minimum Ties (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15576",
+            "note": "Tags: brute force, constructive algorithms, dfs and similar, graphs, greedy, implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-15-12",
+            "title": "Good Triples (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/16770",
+            "note": "Tags: brute force, combinatorics, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-15-13",
+            "title": "Boboniu and Bit Operations (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15410",
+            "note": "Tags: bitmasks, brute force, dp, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-15-14",
+            "title": "Remove Exactly Two (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15282",
+            "note": "Tags: brute force, data structures, dfs and similar, dp, graphs, greedy, sortings, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-15-15",
+            "title": "Gardener and Tree (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15182",
+            "note": "Tags: brute force, data structures, dfs and similar, greedy, implementation, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-15-16",
+            "title": "Beautiful Numbers (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12449",
+            "note": "Tags: brute force, combinatorics",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-15-17",
+            "title": "Zigzags (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11525",
+            "note": "Tags: brute force, combinatorics, data structures, math, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-15-18",
+            "title": "Dr. Evil Underscores (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8771",
+            "note": "Tags: bitmasks, brute force, dfs and similar, divide and conquer, dp, greedy, strings, trees",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -296,7 +3692,298 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-16",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-16-0",
+            "title": "Kefa and First Steps (900)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/108476",
+            "note": "Tags: brute force, dp, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-1",
+            "title": "New Year's Number (900)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/58536",
+            "note": "Tags: brute force, dp, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-2",
+            "title": "Raspberries (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/54354",
+            "note": "Tags: dp, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-3",
+            "title": "Fence (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/70325",
+            "note": "Tags: brute force, dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-4",
+            "title": "Ilya and Queries (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/56799",
+            "note": "Tags: dp, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-5",
+            "title": "Negatives and Positives (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/43694",
+            "note": "Tags: dp, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-6",
+            "title": "Kuriyama Mirai's Stones (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/56632",
+            "note": "Tags: dp, implementation, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-7",
+            "title": "Flipping Game (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/51594",
+            "note": "Tags: brute force, dp, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-8",
+            "title": "Cut Ribbon (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/83854",
+            "note": "Tags: brute force, dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-9",
+            "title": "Just Eat It! (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/32595",
+            "note": "Tags: dp, greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-10",
+            "title": "Given Length and Sum of Digits... (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/52697",
+            "note": "Tags: dp, greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-11",
+            "title": "Vacations (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/39704",
+            "note": "Tags: dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-12",
+            "title": "Basketball Exercise (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/36894",
+            "note": "Tags: dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-13",
+            "title": "Boredom (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/74844",
+            "note": "Tags: dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-14",
+            "title": "Two Substrings (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/44503",
+            "note": "Tags: brute force, dp, greedy, implementation, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-15",
+            "title": "Woodcutters (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/34172",
+            "note": "Tags: dp, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-16",
+            "title": "Divisibility by Eight (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/32747",
+            "note": "Tags: brute force, dp, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-17",
+            "title": "Mortal Kombat Tower (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/29888",
+            "note": "Tags: dp, graphs, greedy, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-18",
+            "title": "Array Walk (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/21058",
+            "note": "Tags: brute force, dp, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-19",
+            "title": "Hard problem (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/20135",
+            "note": "Tags: dp, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-20",
+            "title": "Make Them Equal (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/19621",
+            "note": "Tags: dp, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-21",
+            "title": "Sending a Sequence Over the Network (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18734",
+            "note": "Tags: dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-22",
+            "title": "Flowers (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/31937",
+            "note": "Tags: dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-23",
+            "title": "Consecutive Subsequence (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/26088",
+            "note": "Tags: dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-24",
+            "title": "Caesar's Legions (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/21213",
+            "note": "Tags: dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-25",
+            "title": "Greg and Graph (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18647",
+            "note": "Tags: dp, graphs, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-26",
+            "title": "The Sports Festival (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15904",
+            "note": "Tags: dp, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-27",
+            "title": "Zuma (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/17242",
+            "note": "Tags: dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-16-28",
+            "title": "The least round way (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13324",
+            "note": "Tags: dp, math",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -313,7 +4000,198 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-17",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-17-0",
+            "title": "New Year Transportation (1000)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/64545",
+            "note": "Tags: dfs and similar, graphs, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-17-1",
+            "title": "Frog Jumps (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/30874",
+            "note": "Tags: binary search, data structures, dfs and similar, greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-17-2",
+            "title": "The Lakes (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/27803",
+            "note": "Tags: dfs and similar, dsu, graphs, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-17-3",
+            "title": "DZY Loves Chessboard (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/34310",
+            "note": "Tags: dfs and similar, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-17-4",
+            "title": "Fall Down (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/22174",
+            "note": "Tags: dfs and similar, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-17-5",
+            "title": "Forever Winter (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/22441",
+            "note": "Tags: dfs and similar, graphs, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-17-6",
+            "title": "News Distribution (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/27649",
+            "note": "Tags: dfs and similar, dsu, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-17-7",
+            "title": "Learning Languages (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/22211",
+            "note": "Tags: dfs and similar, dsu",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-17-8",
+            "title": "Cyclic Components (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/26805",
+            "note": "Tags: dfs and similar, dsu, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-17-9",
+            "title": "Lunar New Year and a Wander (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/20845",
+            "note": "Tags: data structures, dfs and similar, graphs, greedy, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-17-10",
+            "title": "Binary String Reconstruction (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/19835",
+            "note": "Tags: constructive algorithms, dfs and similar, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-17-11",
+            "title": "Bear and Friendship Condition (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18098",
+            "note": "Tags: dfs and similar, dsu, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-17-12",
+            "title": "Maze (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/28336",
+            "note": "Tags: dfs and similar",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-17-13",
+            "title": "Round Dance (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/19569",
+            "note": "Tags: dfs and similar, dsu, graphs, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-17-14",
+            "title": "Split Into Two Sets (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18847",
+            "note": "Tags: dfs and similar, dsu, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-17-15",
+            "title": "Checkposts (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/17683",
+            "note": "Tags: dfs and similar, graphs, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-17-16",
+            "title": "King's Path (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11557",
+            "note": "Tags: dfs and similar, graphs, hashing, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-17-17",
+            "title": "0-1 MST (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9633",
+            "note": "Tags: dfs and similar, dsu, graphs, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-17-18",
+            "title": "Directing Edges (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9567",
+            "note": "Tags: constructive algorithms, dfs and similar, graphs",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -330,7 +4208,198 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-18",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-18-0",
+            "title": "Begginer's Zelda (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18891",
+            "note": "Tags: greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-18-1",
+            "title": "Christmas Spruce (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/19954",
+            "note": "Tags: implementation, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-18-2",
+            "title": "Strong Vertices (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/31166",
+            "note": "Tags: math, sortings, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-18-3",
+            "title": "Mahmoud and Ehab and the bipartiteness (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/27342",
+            "note": "Tags: dfs and similar, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-18-4",
+            "title": "Masha and a Beautiful Tree (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18730",
+            "note": "Tags: dfs and similar, divide and conquer, graphs, sortings, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-18-5",
+            "title": "Queen (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18659",
+            "note": "Tags: dfs and similar, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-18-6",
+            "title": "Kefa and Park (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/58567",
+            "note": "Tags: dfs and similar, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-18-7",
+            "title": "Ehab and Path-etic MEXs (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/17936",
+            "note": "Tags: constructive algorithms, dfs and similar, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-18-8",
+            "title": "Game On Leaves (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/21543",
+            "note": "Tags: games, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-18-9",
+            "title": "Minimal Height Tree (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/14612",
+            "note": "Tags: graphs, greedy, shortest paths, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-18-10",
+            "title": "Valera and Elections (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12287",
+            "note": "Tags: dfs and similar, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-18-11",
+            "title": "Military Problem (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11992",
+            "note": "Tags: dfs and similar, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-18-12",
+            "title": "Valid BFS? (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/20014",
+            "note": "Tags: dfs and similar, graphs, shortest paths, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-18-13",
+            "title": "Cover it! (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/14026",
+            "note": "Tags: dfs and similar, dsu, graphs, shortest paths, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-18-14",
+            "title": "Link Cut Centroids (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12020",
+            "note": "Tags: constructive algorithms, dfs and similar, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-18-15",
+            "title": "0, 1, 2, Tree! (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11488",
+            "note": "Tags: bitmasks, brute force, greedy, implementation, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-18-16",
+            "title": "Uncle Bogdan and Country Happiness (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/10498",
+            "note": "Tags: dfs and similar, greedy, math, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-18-17",
+            "title": "Roads not only in Berland (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/16550",
+            "note": "Tags: dsu, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-18-18",
+            "title": "Tree Queries (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12420",
+            "note": "Tags: dfs and similar, graphs, trees",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -347,7 +4416,198 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-19",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-19-0",
+            "title": "Double Perspective (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18821",
+            "note": "Tags: constructive algorithms, dp, dsu, graphs, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-19-1",
+            "title": "Books Exchange (hard version) (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18641",
+            "note": "Tags: dfs and similar, dsu, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-19-2",
+            "title": "Kousuke's Assignment (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18612",
+            "note": "Tags: data structures, dp, dsu, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-19-3",
+            "title": "Disappearing Permutation (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/16591",
+            "note": "Tags: dfs and similar, dp, dsu, graphs, greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-19-4",
+            "title": "Mocha and Diana (Easy Version) (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/16523",
+            "note": "Tags: brute force, constructive algorithms, dsu, graphs, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-19-5",
+            "title": "Edgy Trees (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/17476",
+            "note": "Tags: dfs and similar, dsu, graphs, math, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-19-6",
+            "title": "Knight Tournament (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/17190",
+            "note": "Tags: data structures, dsu",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-19-7",
+            "title": "Secret Passwords (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/16655",
+            "note": "Tags: dfs and similar, dsu, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-19-8",
+            "title": "Path Queries (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9962",
+            "note": "Tags: divide and conquer, dsu, graphs, sortings, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-19-9",
+            "title": "Rating System (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9185",
+            "note": "Tags: binary search, brute force, data structures, dp, dsu, greedy, math, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-19-10",
+            "title": "Andrey and Escape from Capygrad (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8085",
+            "note": "Tags: binary search, data structures, dp, dsu, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-19-11",
+            "title": "Shichikuji and Power Grid (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/10159",
+            "note": "Tags: dsu, graphs, greedy, shortest paths, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-19-12",
+            "title": "Replace the Numbers (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9872",
+            "note": "Tags: constructive algorithms, data structures, dsu, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-19-13",
+            "title": "MinOr Tree (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7914",
+            "note": "Tags: bitmasks, dfs and similar, dsu, graphs, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-19-14",
+            "title": "Make It Connected (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7819",
+            "note": "Tags: dsu, graphs, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-19-15",
+            "title": "SUM and REPLACE (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9047",
+            "note": "Tags: brute force, data structures, dsu, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-19-16",
+            "title": "Minimum spanning tree for each edge (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/10821",
+            "note": "Tags: data structures, dfs and similar, dsu, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-19-17",
+            "title": "Lomsat gelral (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/19377",
+            "note": "Tags: data structures, dfs and similar, dsu, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-19-18",
+            "title": "Dominant Indices (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8248",
+            "note": "Tags: data structures, dsu, trees",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -364,7 +4624,198 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-20",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-20-0",
+            "title": "Great Graphs (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15107",
+            "note": "Tags: constructive algorithms, graphs, greedy, shortest paths, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-20-1",
+            "title": "Eastern Exhibition (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/21343",
+            "note": "Tags: binary search, geometry, shortest paths, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-20-2",
+            "title": "Did We Get Everything Covered? (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/17043",
+            "note": "Tags: constructive algorithms, dp, greedy, shortest paths, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-20-3",
+            "title": "Air Conditioners (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/16650",
+            "note": "Tags: data structures, dp, implementation, shortest paths, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-20-4",
+            "title": "The Two Routes (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/14237",
+            "note": "Tags: graphs, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-20-5",
+            "title": "Colored Portals (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13552",
+            "note": "Tags: binary search, brute force, data structures, graphs, greedy, implementation, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-20-6",
+            "title": "Zero Path (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/14569",
+            "note": "Tags: brute force, data structures, dp, graphs, greedy, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-20-7",
+            "title": "Igor In the Museum (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13799",
+            "note": "Tags: dfs and similar, graphs, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-20-8",
+            "title": "Dijkstra? (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/49872",
+            "note": "Tags: graphs, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-20-9",
+            "title": "Roads in Berland (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8638",
+            "note": "Tags: graphs, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-20-10",
+            "title": "Nearest Opposite Parity (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8297",
+            "note": "Tags: dfs and similar, graphs, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-20-11",
+            "title": "Shortest Cycle (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7623",
+            "note": "Tags: bitmasks, brute force, graphs, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-20-12",
+            "title": "Cow and Fields (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7461",
+            "note": "Tags: binary search, data structures, dfs and similar, graphs, greedy, shortest paths, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-20-13",
+            "title": "Jzzhu and Cities (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11268",
+            "note": "Tags: graphs, greedy, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-20-14",
+            "title": "Buy a Ticket (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7427",
+            "note": "Tags: data structures, graphs, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-20-15",
+            "title": "Police Stations (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7875",
+            "note": "Tags: constructive algorithms, dfs and similar, dp, graphs, shortest paths, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-20-16",
+            "title": "Legacy (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8408",
+            "note": "Tags: data structures, graphs, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-20-17",
+            "title": "Minimum Path (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5011",
+            "note": "Tags: graphs, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-20-18",
+            "title": "The Shortest Statement (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3902",
+            "note": "Tags: graphs, shortest paths, trees",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -381,7 +4832,198 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-21",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-21-0",
+            "title": "Journey (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/20943",
+            "note": "Tags: dfs and similar, dp, graphs, probabilities, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-21-1",
+            "title": "NP-Hard Problem (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/16975",
+            "note": "Tags: dfs and similar, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-21-2",
+            "title": "Cut 'em all! (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/16737",
+            "note": "Tags: dfs and similar, dp, graphs, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-21-3",
+            "title": "Add Zeros (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/14185",
+            "note": "Tags: brute force, data structures, dfs and similar, dp, graphs, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-21-4",
+            "title": "Nastya and Potions (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13618",
+            "note": "Tags: dfs and similar, dp, graphs, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-21-5",
+            "title": "Graph Without Long Directed Paths (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/14850",
+            "note": "Tags: dfs and similar, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-21-6",
+            "title": "Choosing Capital for Treeland (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13085",
+            "note": "Tags: dfs and similar, dp, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-21-7",
+            "title": "Maximum White Subtree (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13739",
+            "note": "Tags: dfs and similar, dp, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-21-8",
+            "title": "Bertown roads (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9000",
+            "note": "Tags: dfs and similar, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-21-9",
+            "title": "Reachability from the Capital (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8172",
+            "note": "Tags: dfs and similar, graphs, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-21-10",
+            "title": "Captain Flint and Treasure (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6983",
+            "note": "Tags: data structures, dfs and similar, graphs, greedy, implementation, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-21-11",
+            "title": "Number of Simple Paths (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6825",
+            "note": "Tags: combinatorics, dfs and similar, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-21-12",
+            "title": "Connected Components? (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7996",
+            "note": "Tags: data structures, dfs and similar, dsu, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-21-13",
+            "title": "Water Tree (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7265",
+            "note": "Tags: data structures, dfs and similar, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-21-14",
+            "title": "We Need More Bosses (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7013",
+            "note": "Tags: dfs and similar, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-21-15",
+            "title": "Tree Requests (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9393",
+            "note": "Tags: binary search, bitmasks, constructive algorithms, dfs and similar, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-21-16",
+            "title": "Centroids (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4599",
+            "note": "Tags: data structures, dfs and similar, dp, graphs, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-21-17",
+            "title": "Journey (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4497",
+            "note": "Tags: data structures, dfs and similar, dsu, graphs, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-21-18",
+            "title": "Minimal Labels (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4453",
+            "note": "Tags: data structures, dfs and similar, graphs, greedy",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -398,7 +5040,178 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-22",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-22-0",
+            "title": "Neo's Escape (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15197",
+            "note": "Tags: binary search, brute force, data structures, dp, dsu, graphs, greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-22-1",
+            "title": "Graph Composition (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12881",
+            "note": "Tags: dfs and similar, dsu, graphs, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-22-2",
+            "title": "Cthulhu (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11090",
+            "note": "Tags: dfs and similar, dsu, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-22-3",
+            "title": "Timofey and a tree (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12292",
+            "note": "Tags: dfs and similar, dp, dsu, graphs, implementation, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-22-4",
+            "title": "String Transformation 1 (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11386",
+            "note": "Tags: dsu, graphs, greedy, sortings, strings, trees, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-22-5",
+            "title": "Cow and Snacks (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/10910",
+            "note": "Tags: dfs and similar, dsu, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-22-6",
+            "title": "Harmonious Graph (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/10533",
+            "note": "Tags: constructive algorithms, dfs and similar, dsu, graphs, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-22-7",
+            "title": "The Third Letter (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/10208",
+            "note": "Tags: dfs and similar, dsu, graphs, greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-22-8",
+            "title": "GCD and MST (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6770",
+            "note": "Tags: constructive algorithms, dsu, graphs, greedy, number theory, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-22-9",
+            "title": "The Door Problem (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6482",
+            "note": "Tags: 2-sat, dfs and similar, dsu, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-22-10",
+            "title": "Monopole Magnets (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6401",
+            "note": "Tags: constructive algorithms, dfs and similar, dsu, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-22-11",
+            "title": "By the Assignment (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6127",
+            "note": "Tags: binary search, bitmasks, combinatorics, dfs and similar, dsu, graphs, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-22-12",
+            "title": "Counting Graphs (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5656",
+            "note": "Tags: combinatorics, divide and conquer, dsu, graphs, greedy, sortings, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-22-13",
+            "title": "Count Paths (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5355",
+            "note": "Tags: data structures, dfs and similar, dp, dsu, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-22-14",
+            "title": "Edges in MST (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3569",
+            "note": "Tags: dfs and similar, dsu, graphs, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-22-15",
+            "title": "Imbalance Value of a Tree (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3258",
+            "note": "Tags: data structures, dsu, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-22-16",
+            "title": "Mocha and Diana (Hard Version) (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3220",
+            "note": "Tags: brute force, constructive algorithms, dfs and similar, dsu, graphs, greedy, trees, two pointers",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -415,7 +5228,218 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-23",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-23-0",
+            "title": "Greetings (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/23616",
+            "note": "Tags: data structures, divide and conquer, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-23-1",
+            "title": "Final Boss (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/20572",
+            "note": "Tags: binary search, data structures",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-23-2",
+            "title": "Binary String To Subsequences (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/20088",
+            "note": "Tags: constructive algorithms, data structures, greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-23-3",
+            "title": "Tea Tasting (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/19074",
+            "note": "Tags: binary search, data structures, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-23-4",
+            "title": "Equalize the Array (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18677",
+            "note": "Tags: binary search, data structures, greedy, math, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-23-5",
+            "title": "Non-zero Segments (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/17794",
+            "note": "Tags: constructive algorithms, data structures, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-23-6",
+            "title": "Maximum width (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/17663",
+            "note": "Tags: binary search, data structures, dp, greedy, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-23-7",
+            "title": "k-Amazing Numbers (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/17523",
+            "note": "Tags: binary search, data structures, implementation, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-23-8",
+            "title": "Alternating Current (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18692",
+            "note": "Tags: data structures, greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-23-9",
+            "title": "Xenia and Bit Operations (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/33995",
+            "note": "Tags: data structures, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-23-10",
+            "title": "Sereja and Brackets (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/21014",
+            "note": "Tags: data structures, schedules",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-23-11",
+            "title": "XOR on Segment (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12385",
+            "note": "Tags: bitmasks, data structures",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-23-12",
+            "title": "Yet Another Yet Another Task (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/10933",
+            "note": "Tags: data structures, dp, implementation, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-23-13",
+            "title": "Ant colony (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12333",
+            "note": "Tags: data structures, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-23-14",
+            "title": "Max Median (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/10282",
+            "note": "Tags: binary search, data structures, dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-23-15",
+            "title": "Powerful array (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/17721",
+            "note": "Tags: data structures, implementation, math, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-23-16",
+            "title": "Circular RMQ (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11783",
+            "note": "Tags: data structures",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-23-17",
+            "title": "XOR and Favorite Number (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11061",
+            "note": "Tags: data structures",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-23-18",
+            "title": "The Child and Sequence (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12328",
+            "note": "Tags: data structures, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-23-19",
+            "title": "Xenia and Tree (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11370",
+            "note": "Tags: data structures, divide and conquer, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-23-20",
+            "title": "Tree and Queries (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9362",
+            "note": "Tags: data structures, dfs and similar, trees",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -432,7 +5456,198 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-24",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-24-0",
+            "title": "Little Girl and Maximum XOR (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/16845",
+            "note": "Tags: bitmasks, dp, greedy, implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-24-1",
+            "title": "Spy-string (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13697",
+            "note": "Tags: bitmasks, brute force, constructive algorithms, dp, hashing, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-24-2",
+            "title": "Don't Blame Me (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11326",
+            "note": "Tags: bitmasks, combinatorics, dp, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-24-3",
+            "title": "Sum of XOR Functions (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11114",
+            "note": "Tags: bitmasks, combinatorics, divide and conquer, dp, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-24-4",
+            "title": "Moamen and XOR (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/10949",
+            "note": "Tags: bitmasks, combinatorics, dp, math, matrices",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-24-5",
+            "title": "Distance in Tree (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/20180",
+            "note": "Tags: dfs and similar, dp, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-24-6",
+            "title": "Kefa and Dishes (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12478",
+            "note": "Tags: bitmasks, dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-24-7",
+            "title": "Tree with Maximum Cost (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11555",
+            "note": "Tags: dfs and similar, dp, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-24-8",
+            "title": "Minimax Problem (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8678",
+            "note": "Tags: binary search, bitmasks, dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-24-9",
+            "title": "Square Subsets (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7706",
+            "note": "Tags: bitmasks, combinatorics, dp, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-24-10",
+            "title": "Tree Shuffling (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7604",
+            "note": "Tags: dfs and similar, dp, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-24-11",
+            "title": "Appleman and Tree (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7338",
+            "note": "Tags: dfs and similar, dp, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-24-12",
+            "title": "Tree Painting (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11943",
+            "note": "Tags: dfs and similar, dp, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-24-13",
+            "title": "A and B and Lecture Rooms (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8926",
+            "note": "Tags: binary search, data structures, dfs and similar, dp, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-24-14",
+            "title": "Xor-Paths (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7259",
+            "note": "Tags: bitmasks, brute force, dp, meet-in-the-middle",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-24-15",
+            "title": "Compatible Numbers (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9994",
+            "note": "Tags: bitmasks, brute force, dfs and similar, dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-24-16",
+            "title": "Team Building (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5773",
+            "note": "Tags: bitmasks, dp, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-24-17",
+            "title": "Segment Sum (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3802",
+            "note": "Tags: bitmasks, combinatorics, dp, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-24-18",
+            "title": "Jzzhu and Numbers (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6483",
+            "note": "Tags: bitmasks, combinatorics, dp",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -449,7 +5664,198 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-25",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-25-0",
+            "title": "Two Arrays (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15791",
+            "note": "Tags: combinatorics, dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-25-1",
+            "title": "Triangle Coloring (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13802",
+            "note": "Tags: combinatorics, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-25-2",
+            "title": "Ciel and Flowers (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13329",
+            "note": "Tags: combinatorics, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-25-3",
+            "title": "Carrying Conundrum (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13293",
+            "note": "Tags: bitmasks, combinatorics, dp, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-25-4",
+            "title": "Sum of LDS (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12960",
+            "note": "Tags: brute force, combinatorics, dp, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-25-5",
+            "title": "Decode (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12895",
+            "note": "Tags: combinatorics, data structures, implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-25-6",
+            "title": "D-Function (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12571",
+            "note": "Tags: combinatorics, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-25-7",
+            "title": "How Does the Rook Move? (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12195",
+            "note": "Tags: combinatorics, dp, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-25-8",
+            "title": "Modular Stability (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6856",
+            "note": "Tags: combinatorics, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-25-9",
+            "title": "Number of Subsequences (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6379",
+            "note": "Tags: combinatorics, dp, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-25-10",
+            "title": "Invertible Bracket Sequences (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5928",
+            "note": "Tags: binary search, combinatorics, data structures, divide and conquer, implementation, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-25-11",
+            "title": "Wonderful Lightbulbs (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5713",
+            "note": "Tags: combinatorics, constructive algorithms, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-25-12",
+            "title": "Placing Jinas (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5027",
+            "note": "Tags: combinatorics, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-25-13",
+            "title": "Coprime Subsequences (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4996",
+            "note": "Tags: bitmasks, combinatorics, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-25-14",
+            "title": "Shuffle (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4927",
+            "note": "Tags: combinatorics, math, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-25-15",
+            "title": "Gerald and Giant Chess (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8409",
+            "note": "Tags: combinatorics, dp, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-25-16",
+            "title": "Team Work (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3608",
+            "note": "Tags: combinatorics, dp, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-25-17",
+            "title": "Permutation Blackhole (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3393",
+            "note": "Tags: brute force, combinatorics, dp, implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-25-18",
+            "title": "Vowels (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4670",
+            "note": "Tags: combinatorics, divide and conquer, dp",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -466,7 +5872,288 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-26",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-26-0",
+            "title": "Almost All Divisors (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/20277",
+            "note": "Tags: math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-1",
+            "title": "Hilbert's Hotel (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/16618",
+            "note": "Tags: math, number theory, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-2",
+            "title": "Strange Function (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/16453",
+            "note": "Tags: math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-3",
+            "title": "Taxes (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/16262",
+            "note": "Tags: math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-4",
+            "title": "Factorial Divisibility (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15256",
+            "note": "Tags: math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-5",
+            "title": "Moderate Modular Mode (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15230",
+            "note": "Tags: constructive algorithms, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-6",
+            "title": "Yet Another Counting Problem (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15117",
+            "note": "Tags: math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-7",
+            "title": "Deleting Divisors (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13865",
+            "note": "Tags: games, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-8",
+            "title": "The Football Season (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8453",
+            "note": "Tags: brute force, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-9",
+            "title": "No Cost Too Great (Hard Version) (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5737",
+            "note": "Tags: greedy, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-10",
+            "title": "Small Operations (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5637",
+            "note": "Tags: binary search, brute force, dfs and similar, dp, math, number theory, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-11",
+            "title": "The Number of Pairs (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7273",
+            "note": "Tags: dp, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-12",
+            "title": "GCD of an Array (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5910",
+            "note": "Tags: brute force, data structures, hashing, implementation, math, number theory, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-13",
+            "title": "Multiples and Power Differences (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5727",
+            "note": "Tags: constructive algorithms, graphs, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-14",
+            "title": "DZY Loves Fibonacci Numbers (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4080",
+            "note": "Tags: data structures, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-15",
+            "title": "Beautiful numbers (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4875",
+            "note": "Tags: dp, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-16",
+            "title": "Kuroni and the Punishment (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3369",
+            "note": "Tags: math, number theory, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-17",
+            "title": "Add One (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/16916",
+            "note": "Tags: dp, matrices",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-18",
+            "title": "Permutation of Rows and Columns (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13294",
+            "note": "Tags: constructive algorithms, data structures, greedy, hashing, implementation, math, matrices, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-19",
+            "title": "Quiz (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5271",
+            "note": "Tags: binary search, greedy, math, matrices, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-20",
+            "title": "Barcode (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/10324",
+            "note": "Tags: dp, matrices",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-21",
+            "title": "Infinite Set (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7136",
+            "note": "Tags: bitmasks, dp, math, matrices, number theory, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-22",
+            "title": "Gifts Order (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5556",
+            "note": "Tags: data structures, greedy, implementation, math, matrices",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-23",
+            "title": "Magic Gems (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5554",
+            "note": "Tags: dp, math, matrices",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-24",
+            "title": "Count Pairs (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5398",
+            "note": "Tags: math, matrices, number theory, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-25",
+            "title": "Mahmoud and Ehab and yet another xor task (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2960",
+            "note": "Tags: bitmasks, dp, math, matrices",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-26",
+            "title": "William The Oblivious  (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2513",
+            "note": "Tags: bitmasks, data structures, dp, matrices",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-26-27",
+            "title": "Turtles (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2325",
+            "note": "Tags: dp, matrices",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -483,7 +6170,308 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-27",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-27-0",
+            "title": "String Equality (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/17451",
+            "note": "Tags: dp, greedy, hashing, implementation, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-1",
+            "title": "Torn Lucky Ticket (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13278",
+            "note": "Tags: brute force, dp, hashing, implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-2",
+            "title": "Winner (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/31920",
+            "note": "Tags: hashing, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-3",
+            "title": "Zero Quantity Maximization (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/17381",
+            "note": "Tags: hashing, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-4",
+            "title": "Diluc and Kaeya (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/16361",
+            "note": "Tags: data structures, dp, hashing, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-5",
+            "title": "Prefix-Suffix Palindrome (Easy version) (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13469",
+            "note": "Tags: hashing, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-6",
+            "title": "Sequence Pair Weight (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15274",
+            "note": "Tags: hashing, implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-7",
+            "title": "Binary String Copying (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12745",
+            "note": "Tags: binary search, brute force, data structures, hashing, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-8",
+            "title": "Gargari and Bishops (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9268",
+            "note": "Tags: greedy, hashing, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-9",
+            "title": "Treasure Island (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7208",
+            "note": "Tags: dfs and similar, dp, flows, hashing",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-10",
+            "title": "Strange Definition (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6830",
+            "note": "Tags: bitmasks, graphs, hashing, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-11",
+            "title": "Shuffling Songs (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6355",
+            "note": "Tags: bitmasks, dfs and similar, dp, graphs, hashing, implementation, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-12",
+            "title": "Compress Words (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9868",
+            "note": "Tags: brute force, hashing, implementation, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-13",
+            "title": "Watto and Mechanism (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8439",
+            "note": "Tags: binary search, data structures, hashing, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-14",
+            "title": "Erase and Extend (Hard Version) (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6369",
+            "note": "Tags: binary search, data structures, greedy, hashing, string suffix structures, strings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-15",
+            "title": "Palindrome Degree (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4742",
+            "note": "Tags: hashing, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-16",
+            "title": "Double Profiles (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3467",
+            "note": "Tags: graphs, hashing, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-17",
+            "title": "Message Transmission Error (hard version) (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4782",
+            "note": "Tags: hashing, string suffix structures, strings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-18",
+            "title": "MUH and Cube Walls (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/10894",
+            "note": "Tags: string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-19",
+            "title": "XOR Construction (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7252",
+            "note": "Tags: bitmasks, constructive algorithms, data structures, math, string suffix structures, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-20",
+            "title": "Division + LCP (easy version) (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5452",
+            "note": "Tags: binary search, data structures, dp, hashing, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-21",
+            "title": "Tavas and Malekas (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4881",
+            "note": "Tags: greedy, hashing, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-22",
+            "title": "Spy Syndrome 2 (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3454",
+            "note": "Tags: data structures, dp, hashing, implementation, sortings, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-23",
+            "title": "Prefixes and Suffixes (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12691",
+            "note": "Tags: dp, string suffix structures, strings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-24",
+            "title": "''a'' String Problem (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3979",
+            "note": "Tags: brute force, hashing, implementation, math, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-25",
+            "title": "String (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2934",
+            "note": "Tags: brute force, constructive algorithms, hashing, implementation, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-26",
+            "title": "Messenger (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2493",
+            "note": "Tags: data structures, hashing, implementation, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-27",
+            "title": "Match & Catch (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2743",
+            "note": "Tags: dp, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-28",
+            "title": "You Are Given Some Strings... (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2899",
+            "note": "Tags: brute force, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-27-29",
+            "title": "Frequency of String (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2909",
+            "note": "Tags: hashing, string suffix structures, strings",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -500,7 +6488,238 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-28",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-28-0",
+            "title": "Splitting Items (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/27575",
+            "note": "Tags: games, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-28-1",
+            "title": "Sequential Nim (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/26428",
+            "note": "Tags: dp, games",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-28-2",
+            "title": "Matrix Game (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/25209",
+            "note": "Tags: games, greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-28-3",
+            "title": "Summation Game (1100)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/23446",
+            "note": "Tags: games, greedy, math, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-28-4",
+            "title": "Even-Odd Game (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/31153",
+            "note": "Tags: dp, games, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-28-5",
+            "title": "Swap Game (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/23757",
+            "note": "Tags: games",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-28-6",
+            "title": "Eat the Chip (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11636",
+            "note": "Tags: brute force, games, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-28-7",
+            "title": "Alice and Bob (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9423",
+            "note": "Tags: games, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-28-8",
+            "title": "Circle Game (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/10347",
+            "note": "Tags: games, geometry, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-28-9",
+            "title": "Vasya and Chess (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/10290",
+            "note": "Tags: constructive algorithms, games, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-28-10",
+            "title": "Iris and Game on the Tree (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9797",
+            "note": "Tags: constructive algorithms, dfs and similar, games, graphs, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-28-11",
+            "title": "Mad City (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9769",
+            "note": "Tags: dfs and similar, dsu, games, graphs, shortest paths, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-28-12",
+            "title": "Bag of mice (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9403",
+            "note": "Tags: dp, games, math, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-28-13",
+            "title": "World is Mine (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8895",
+            "note": "Tags: dp, games",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-28-14",
+            "title": "GCD Guess (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4771",
+            "note": "Tags: bitmasks, chinese remainder theorem, constructive algorithms, games, interactive, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-28-15",
+            "title": "Koxia and Game (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4474",
+            "note": "Tags: constructive algorithms, data structures, dfs and similar, dsu, flows, games, graph matchings, graphs, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-28-16",
+            "title": "The Game (Easy Version) (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4418",
+            "note": "Tags: data structures, dfs and similar, games, graphs, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-28-17",
+            "title": "Omkar and Circle (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5937",
+            "note": "Tags: brute force, dp, games, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-28-18",
+            "title": "Not a Nim Problem (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5212",
+            "note": "Tags: brute force, games, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-28-19",
+            "title": "Challenges in school №41 (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4174",
+            "note": "Tags: brute force, constructive algorithms, games, graphs, greedy, implementation, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-28-20",
+            "title": "Tokitsukaze and Duel (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2341",
+            "note": "Tags: brute force, games, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-28-21",
+            "title": "Game on Sum (Hard Version) (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2702",
+            "note": "Tags: combinatorics, dp, games, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-28-22",
+            "title": "Integer Game (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2568",
+            "note": "Tags: constructive algorithms, games, interactive, math",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -517,7 +6736,198 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-29",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-29-0",
+            "title": "Random Events (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12650",
+            "note": "Tags: dp, math, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-29-1",
+            "title": "Little Pony and Expected Maximum (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12881",
+            "note": "Tags: probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-29-2",
+            "title": "Segments Covering (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9643",
+            "note": "Tags: dp, math, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-29-3",
+            "title": "Empty Triangle (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6849",
+            "note": "Tags: geometry, interactive, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-29-4",
+            "title": "Ilya and Escalator (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8478",
+            "note": "Tags: combinatorics, dp, math, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-29-5",
+            "title": "Problem with Random Tests (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8476",
+            "note": "Tags: brute force, dp, greedy, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-29-6",
+            "title": "Santa's Bot (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7508",
+            "note": "Tags: combinatorics, math, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-29-7",
+            "title": "Guess the Cycle Size (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8070",
+            "note": "Tags: interactive, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-29-8",
+            "title": "Fish (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6841",
+            "note": "Tags: bitmasks, dp, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-29-9",
+            "title": "Bad Luck Island (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6794",
+            "note": "Tags: dp, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-29-10",
+            "title": "Need for Pink Slips (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5662",
+            "note": "Tags: bitmasks, brute force, dfs and similar, implementation, math, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-29-11",
+            "title": "Good Trip (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4956",
+            "note": "Tags: combinatorics, dp, math, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-29-12",
+            "title": "Score of a Tree (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4894",
+            "note": "Tags: bitmasks, combinatorics, dfs and similar, dp, math, probabilities, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-29-13",
+            "title": "Wish I Knew How to Sort (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5459",
+            "note": "Tags: dp, math, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-29-14",
+            "title": "Beautiful Mirrors (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4679",
+            "note": "Tags: data structures, dp, math, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-29-15",
+            "title": "Game on Tree (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5439",
+            "note": "Tags: implementation, math, probabilities, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-29-16",
+            "title": "LuoTianyi and the Floating Islands (Hard Version) (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3571",
+            "note": "Tags: combinatorics, dfs and similar, math, probabilities, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-29-17",
+            "title": "Destiny (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4199",
+            "note": "Tags: data structures, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-29-18",
+            "title": "Willem, Chtholly and Seniorious (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4615",
+            "note": "Tags: data structures, probabilities",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -534,7 +6944,178 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-30",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-30-0",
+            "title": "Trapmigiano Reggiano (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9946",
+            "note": "Tags: constructive algorithms, data structures, dfs and similar, dp, greedy, sortings, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-30-1",
+            "title": "Path Prefixes (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9868",
+            "note": "Tags: binary search, data structures, dfs and similar, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-30-2",
+            "title": "Playoff Tournament (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8577",
+            "note": "Tags: data structures, dfs and similar, dp, implementation, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-30-3",
+            "title": "Interesting Array (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7943",
+            "note": "Tags: constructive algorithms, data structures, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-30-4",
+            "title": "Enemy is weak (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/16207",
+            "note": "Tags: data structures, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-30-5",
+            "title": "Fools and Roads (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9832",
+            "note": "Tags: data structures, dfs and similar, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-30-6",
+            "title": "Propagating tree (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7882",
+            "note": "Tags: data structures, dfs and similar, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-30-7",
+            "title": "Blood Cousins (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9533",
+            "note": "Tags: binary search, data structures, dfs and similar, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-30-8",
+            "title": "Duff in the Army (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4987",
+            "note": "Tags: data structures, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-30-9",
+            "title": "Minimal Segment Cover (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4754",
+            "note": "Tags: data structures, dfs and similar, divide and conquer, dp, greedy, implementation, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-30-10",
+            "title": "Sausage Maximization (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4704",
+            "note": "Tags: bitmasks, data structures, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-30-11",
+            "title": "Tree Master (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3524",
+            "note": "Tags: brute force, data structures, dfs and similar, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-30-12",
+            "title": "Qpwoeirut and Vertices (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4004",
+            "note": "Tags: binary search, data structures, dfs and similar, divide and conquer, dsu, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-30-13",
+            "title": "XOR Tree (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4261",
+            "note": "Tags: bitmasks, data structures, dfs and similar, dsu, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-30-14",
+            "title": "Graph and Queries (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2881",
+            "note": "Tags: data structures, dsu, graphs, implementation, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-30-15",
+            "title": "Mike and Friends (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2780",
+            "note": "Tags: data structures, string suffix structures, strings, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-30-16",
+            "title": "You Are Given a Tree (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2485",
+            "note": "Tags: data structures, dp, trees",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -551,7 +7132,198 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-31",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-31-0",
+            "title": "Tree Tag (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8321",
+            "note": "Tags: dfs and similar, dp, games, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-31-1",
+            "title": "Tree XOR (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7328",
+            "note": "Tags: bitmasks, dfs and similar, dp, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-31-2",
+            "title": "A Lot of Games (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7130",
+            "note": "Tags: dfs and similar, dp, games, implementation, strings, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-31-3",
+            "title": "Non-academic Problem (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6813",
+            "note": "Tags: dfs and similar, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-31-4",
+            "title": "Design Tutorial: Inverse the Problem (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6751",
+            "note": "Tags: dfs and similar, dsu, shortest paths, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-31-5",
+            "title": "Three Paths on a Tree (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7202",
+            "note": "Tags: dfs and similar, dp, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-31-6",
+            "title": "Book of Evil (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7090",
+            "note": "Tags: dfs and similar, divide and conquer, dp, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-31-7",
+            "title": "Ciel the Commander (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9805",
+            "note": "Tags: constructive algorithms, dfs and similar, divide and conquer, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-31-8",
+            "title": "Sliding Tree (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3773",
+            "note": "Tags: constructive algorithms, dfs and similar, greedy, implementation, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-31-9",
+            "title": "Pursuit For Artifacts (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3040",
+            "note": "Tags: dfs and similar, dsu, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-31-10",
+            "title": "Trees of Tranquillity (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3039",
+            "note": "Tags: data structures, dfs and similar, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-31-11",
+            "title": "DFS Checker (Hard Version) (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2931",
+            "note": "Tags: binary search, data structures, dfs and similar, graphs, hashing, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-31-12",
+            "title": "Dogeforces (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2864",
+            "note": "Tags: constructive algorithms, data structures, dfs and similar, divide and conquer, dsu, greedy, sortings, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-31-13",
+            "title": "Happy Life in University (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2744",
+            "note": "Tags: data structures, dfs and similar, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-31-14",
+            "title": "Tree Compass (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2722",
+            "note": "Tags: constructive algorithms, dfs and similar, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-31-15",
+            "title": "Hemose in ICPC ? (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2661",
+            "note": "Tags: binary search, dfs and similar, implementation, interactive, math, number theory, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-31-16",
+            "title": "Kingdom and its Cities (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4299",
+            "note": "Tags: dfs and similar, divide and conquer, dp, graphs, sortings, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-31-17",
+            "title": "Case of Computer Network (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3149",
+            "note": "Tags: dfs and similar, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-31-18",
+            "title": "Arpa’s letter-marked tree and Mehrdad’s Dokhtar-kosh paths (2900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3869",
+            "note": "Tags: data structures, dfs and similar, trees",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -568,7 +7340,178 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-32",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-32-0",
+            "title": "CGCDSSQ (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6929",
+            "note": "Tags: brute force, data structures, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-32-1",
+            "title": "Weights Division (easy version) (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6423",
+            "note": "Tags: data structures, dfs and similar, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-32-2",
+            "title": "Money Buys Less Happiness Now  (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6185",
+            "note": "Tags: data structures, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-32-3",
+            "title": "New Year Tree (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7520",
+            "note": "Tags: bitmasks, data structures, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-32-4",
+            "title": "Remainder Problem (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7056",
+            "note": "Tags: brute force, data structures, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-32-5",
+            "title": "The Bakery (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6865",
+            "note": "Tags: binary search, data structures, divide and conquer, dp, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-32-6",
+            "title": "Clear the Multiset (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6515",
+            "note": "Tags: data structures, divide and conquer, dp, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-32-7",
+            "title": "A Simple Task (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7724",
+            "note": "Tags: data structures, sortings, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-32-8",
+            "title": "Buy Low Sell High (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8586",
+            "note": "Tags: constructive algorithms, data structures, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-32-9",
+            "title": "One Occurrence (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5098",
+            "note": "Tags: data structures, divide and conquer",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-32-10",
+            "title": "Blood Cousins Return (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4781",
+            "note": "Tags: binary search, data structures, dfs and similar, dp, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-32-11",
+            "title": "Cats Transport (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4466",
+            "note": "Tags: data structures, dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-32-12",
+            "title": "Lucky Queries (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4165",
+            "note": "Tags: data structures",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-32-13",
+            "title": "Ciel and Gondolas (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6618",
+            "note": "Tags: data structures, divide and conquer, dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-32-14",
+            "title": "Holes (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8466",
+            "note": "Tags: data structures, dsu",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-32-15",
+            "title": "Serega and Fun (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3866",
+            "note": "Tags: data structures",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-32-16",
+            "title": "Pudding Monsters (3000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3672",
+            "note": "Tags: data structures, divide and conquer",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -585,7 +7528,138 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-33",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-33-0",
+            "title": "Array Division (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8405",
+            "note": "Tags: binary search, data structures, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-33-1",
+            "title": "Nikita and LCM (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8186",
+            "note": "Tags: brute force, data structures, dp, greedy, math, number theory, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-33-2",
+            "title": "Beautiful Array (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7920",
+            "note": "Tags: brute force, data structures, divide and conquer, dp, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-33-3",
+            "title": "Painting the Array I (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7537",
+            "note": "Tags: constructive algorithms, data structures, dp, greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-33-4",
+            "title": "Array Stabilization (GCD version) (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7254",
+            "note": "Tags: binary search, brute force, data structures, divide and conquer, number theory, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-33-5",
+            "title": "Smithing Skill (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7242",
+            "note": "Tags: brute force, data structures, dp, greedy, math, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-33-6",
+            "title": "Subarray Sorting (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3067",
+            "note": "Tags: data structures, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-33-7",
+            "title": "Ball (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3043",
+            "note": "Tags: data structures, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-33-8",
+            "title": "Traffic Lights (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2927",
+            "note": "Tags: brute force, data structures, divide and conquer, dp, graphs, greedy, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-33-9",
+            "title": "The Number of Subpermutations (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2900",
+            "note": "Tags: brute force, data structures, divide and conquer, hashing, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-33-10",
+            "title": "Machine Learning (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3613",
+            "note": "Tags: brute force, data structures",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-33-11",
+            "title": "Greedy Shopping (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2301",
+            "note": "Tags: binary search, data structures, divide and conquer, greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-33-12",
+            "title": "Query Jungle (2900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3569",
+            "note": "Tags: data structures, implementation, math, matrices, trees",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -602,7 +7676,178 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-34",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-34-0",
+            "title": "Choosing flowers (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6179",
+            "note": "Tags: binary search, brute force, data structures, dfs and similar, dp, greedy, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-34-1",
+            "title": "Array Queries (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5911",
+            "note": "Tags: brute force, data structures, dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-34-2",
+            "title": "Maximum Subarray (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5579",
+            "note": "Tags: data structures, dp, greedy, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-34-3",
+            "title": "GCD Counting (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5566",
+            "note": "Tags: data structures, dfs and similar, dp, number theory, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-34-4",
+            "title": "String Coloring (hard version) (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5550",
+            "note": "Tags: data structures, dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-34-5",
+            "title": "Kalila and Dimna in the Logging Industry (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6898",
+            "note": "Tags: dp, geometry",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-34-6",
+            "title": "Cut (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5341",
+            "note": "Tags: binary search, data structures, dp, graphs, number theory, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-34-7",
+            "title": "Discrete Centrifugal Jumps (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5969",
+            "note": "Tags: data structures, dp, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-34-8",
+            "title": "The Fair Nut and Rectangles (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5930",
+            "note": "Tags: data structures, dp, geometry",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-34-9",
+            "title": "Thief in a Shop (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3704",
+            "note": "Tags: divide and conquer, dp, fft, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-34-10",
+            "title": "Kindergarten (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3107",
+            "note": "Tags: data structures, dp, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-34-11",
+            "title": "Yet Another Minimization Problem (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5430",
+            "note": "Tags: divide and conquer, dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-34-12",
+            "title": "Product Sum (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3369",
+            "note": "Tags: data structures, dp, geometry",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-34-13",
+            "title": "Escape Through Leaf (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4335",
+            "note": "Tags: data structures, dp, geometry",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-34-14",
+            "title": "Sum (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3116",
+            "note": "Tags: data structures, divide and conquer, dp, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-34-15",
+            "title": "Gosha is hunting (3000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2839",
+            "note": "Tags: brute force, data structures, dp, flows, math, probabilities, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-34-16",
+            "title": "Kia Bakes a Cake (3100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2934",
+            "note": "Tags: data structures, dp, greedy, trees",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -619,7 +7864,288 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-35",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-35-0",
+            "title": "Chef Monocarp (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12544",
+            "note": "Tags: dp, flows, graph matchings, greedy, math, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-1",
+            "title": "Armchairs (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11035",
+            "note": "Tags: dp, flows, graph matchings, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-2",
+            "title": "Rock, Paper, Scissors (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8208",
+            "note": "Tags: brute force, constructive algorithms, flows, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-3",
+            "title": "Problem about GCD (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7914",
+            "note": "Tags: brute force, flows, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-4",
+            "title": "Vasya And The Matrix (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5009",
+            "note": "Tags: constructive algorithms, flows, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-5",
+            "title": "Vlad and Trouble at MIT (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4665",
+            "note": "Tags: dfs and similar, dp, flows, graphs, greedy, implementation, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-6",
+            "title": "Soldier and Traveling (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4442",
+            "note": "Tags: flows, graphs, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-7",
+            "title": "Array and Operations (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4341",
+            "note": "Tags: flows, graph matchings, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-8",
+            "title": "Yet Another Array Counting Problem (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2851",
+            "note": "Tags: binary search, data structures, divide and conquer, dp, flows, math, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-9",
+            "title": "Fox And Dinner (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2529",
+            "note": "Tags: flows",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-10",
+            "title": "Ann and Books (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2452",
+            "note": "Tags: data structures, flows, hashing",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-11",
+            "title": "Petya and Graph (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2825",
+            "note": "Tags: flows, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-12",
+            "title": "Maximize Mex (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2475",
+            "note": "Tags: flows, graph matchings, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-13",
+            "title": "Best Subsequence (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2117",
+            "note": "Tags: bitmasks, dfs and similar, flows, graph matchings, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-14",
+            "title": "Bricks (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1776",
+            "note": "Tags: flows, graph matchings, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-15",
+            "title": "k-Maximum Subsequence Sum (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1760",
+            "note": "Tags: data structures, flows, graphs, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-16",
+            "title": "Goods transportation (2900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2048",
+            "note": "Tags: dp, flows, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-17",
+            "title": "Programming Competition (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5124",
+            "note": "Tags: dfs and similar, dp, graph matchings, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-18",
+            "title": "Two Sets (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5496",
+            "note": "Tags: 2-sat, dfs and similar, dsu, graph matchings, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-19",
+            "title": "Serval and Kaitenzushi Buffet (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5494",
+            "note": "Tags: data structures, graph matchings, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-20",
+            "title": "New Year's Puzzle (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3330",
+            "note": "Tags: brute force, dp, graph matchings, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-21",
+            "title": "Strange Housing (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4292",
+            "note": "Tags: constructive algorithms, dfs and similar, graph matchings, graphs, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-22",
+            "title": "Star MST (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2555",
+            "note": "Tags: combinatorics, dp, graph matchings, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-23",
+            "title": "Twin Polynomials (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3139",
+            "note": "Tags: combinatorics, graph matchings, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-24",
+            "title": "Catowice City (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2671",
+            "note": "Tags: 2-sat, dfs and similar, graph matchings, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-25",
+            "title": "Tree Modification (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2286",
+            "note": "Tags: brute force, constructive algorithms, dfs and similar, graph matchings, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-26",
+            "title": "Alice and Recoloring 2 (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1076",
+            "note": "Tags: constructive algorithms, flows, graph matchings, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-35-27",
+            "title": "Buying Sets (2900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1148",
+            "note": "Tags: flows, graph matchings",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -636,7 +8162,178 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-36",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-36-0",
+            "title": "Simons and Dividing the Rhythm (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1762",
+            "note": "Tags: combinatorics, data structures, dp, dsu, math, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-36-1",
+            "title": "Prefix Function Queries (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2666",
+            "note": "Tags: dfs and similar, dp, hashing, string suffix structures, strings, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-36-2",
+            "title": "Division + LCP (hard version) (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2651",
+            "note": "Tags: binary search, brute force, data structures, dp, hashing, math, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-36-3",
+            "title": "Om Nom and Necklace (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2541",
+            "note": "Tags: hashing, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-36-4",
+            "title": "A Trivial String Problem (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2007",
+            "note": "Tags: brute force, dp, hashing, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-36-5",
+            "title": "Martian Strings (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2586",
+            "note": "Tags: string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-36-6",
+            "title": "Fake News (hard) (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1866",
+            "note": "Tags: string suffix structures",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-36-7",
+            "title": "Games on a CD (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1647",
+            "note": "Tags: data structures, hashing, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-36-8",
+            "title": "String Set Queries (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2667",
+            "note": "Tags: brute force, data structures, hashing, interactive, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-36-9",
+            "title": "A Bit Similar (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2248",
+            "note": "Tags: bitmasks, brute force, hashing, string suffix structures, strings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-36-10",
+            "title": "String Compression (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2110",
+            "note": "Tags: dp, hashing, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-36-11",
+            "title": "Forbidden Indices (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1944",
+            "note": "Tags: dsu, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-36-12",
+            "title": "Rescue Niwen! (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1630",
+            "note": "Tags: dp, greedy, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-36-13",
+            "title": "Cyclical Quest (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2562",
+            "note": "Tags: data structures, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-36-14",
+            "title": "Little Elephant and Strings (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1713",
+            "note": "Tags: data structures, implementation, string suffix structures, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-36-15",
+            "title": "Substrings in a String (3000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2612",
+            "note": "Tags: bitmasks, brute force, data structures, string suffix structures, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-36-16",
+            "title": "Forensic Examination (3100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1741",
+            "note": "Tags: data structures, string suffix structures",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -653,7 +8350,218 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-37",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-37-0",
+            "title": "Rudolph and Christmas Tree (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/22941",
+            "note": "Tags: constructive algorithms, geometry, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-37-1",
+            "title": "Line Segments (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18863",
+            "note": "Tags: geometry, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-37-2",
+            "title": "Fear of the Dark (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18267",
+            "note": "Tags: binary search, geometry, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-37-3",
+            "title": "Diamond Miner (1200)",
+            "completed": false,
+            "difficulty": "Easy",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18029",
+            "note": "Tags: geometry, greedy, math, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-37-4",
+            "title": "Amr and Pins (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/26948",
+            "note": "Tags: geometry, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-37-5",
+            "title": "Satyam and Counting (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/19239",
+            "note": "Tags: geometry, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-37-6",
+            "title": "Maximize the Intersections (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6333",
+            "note": "Tags: combinatorics, constructive algorithms, geometry, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-37-7",
+            "title": "Vasya and Triangle (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6299",
+            "note": "Tags: geometry, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-37-8",
+            "title": "Blackslex and Girls (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6065",
+            "note": "Tags: constructive algorithms, geometry, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-37-9",
+            "title": "Aerodynamic (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5663",
+            "note": "Tags: geometry",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-37-10",
+            "title": "Not So Simple Polygon Embedding (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6414",
+            "note": "Tags: binary search, brute force, geometry, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-37-11",
+            "title": "Game With Triangles (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5183",
+            "note": "Tags: binary search, brute force, data structures, geometry, greedy, implementation, math, ternary search, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-37-12",
+            "title": "Pair Of Lines (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4989",
+            "note": "Tags: geometry",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-37-13",
+            "title": "Ancient Berland Circus (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6657",
+            "note": "Tags: geometry, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-37-14",
+            "title": "Nearest vectors (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5597",
+            "note": "Tags: geometry, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-37-15",
+            "title": "Divide Points (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2777",
+            "note": "Tags: constructive algorithms, geometry, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-37-16",
+            "title": "Divide Square (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2685",
+            "note": "Tags: data structures, geometry, implementation, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-37-17",
+            "title": "Bear and Bowling 4 (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2466",
+            "note": "Tags: binary search, data structures, divide and conquer, geometry, ternary search",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-37-18",
+            "title": "Commentator problem (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2154",
+            "note": "Tags: geometry",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-37-19",
+            "title": "Boboniu and String (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1290",
+            "note": "Tags: binary search, geometry, ternary search",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-37-20",
+            "title": "Omkar and Akmar (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1203",
+            "note": "Tags: chinese remainder theorem, combinatorics, constructive algorithms, fft, games, geometry, math, meet-in-the-middle, string suffix structures",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -670,7 +8578,198 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-38",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-38-0",
+            "title": "Interview (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/17266",
+            "note": "Tags: binary search, implementation, interactive",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-38-1",
+            "title": "PolandBall and Forest (1300)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15457",
+            "note": "Tags: dfs and similar, dsu, graphs, interactive, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-38-2",
+            "title": "Lost Numbers (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/17382",
+            "note": "Tags: brute force, divide and conquer, interactive, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-38-3",
+            "title": "Bear and Prime 100 (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/16006",
+            "note": "Tags: constructive algorithms, interactive, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-38-4",
+            "title": "Password Cracking (1400)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/14881",
+            "note": "Tags: constructive algorithms, interactive, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-38-5",
+            "title": "Ruler (easy version) (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15053",
+            "note": "Tags: binary search, interactive",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-38-6",
+            "title": "Chocolate Bunny (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15316",
+            "note": "Tags: constructive algorithms, interactive, math, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-38-7",
+            "title": "Guess the K-th Zero (Easy version) (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/14800",
+            "note": "Tags: binary search, interactive",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-38-8",
+            "title": "Take a Guess (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8988",
+            "note": "Tags: bitmasks, constructive algorithms, interactive, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-38-9",
+            "title": "Lost Tree (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6969",
+            "note": "Tags: constructive algorithms, interactive, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-38-10",
+            "title": "Rocket (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6476",
+            "note": "Tags: binary search, interactive",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-38-11",
+            "title": "Genokraken (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6350",
+            "note": "Tags: constructive algorithms, data structures, graphs, greedy, implementation, interactive, trees, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-38-12",
+            "title": "Tournament Countdown (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6310",
+            "note": "Tags: constructive algorithms, greedy, interactive, number theory, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-38-13",
+            "title": "Batteries (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6223",
+            "note": "Tags: brute force, constructive algorithms, graph matchings, graphs, interactive, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-38-14",
+            "title": "Guessing the Greatest (hard version) (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/10233",
+            "note": "Tags: binary search, interactive",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-38-15",
+            "title": "XOR Guessing (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6778",
+            "note": "Tags: bitmasks, interactive, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-38-16",
+            "title": "Cat, Fox and Maximum Array Split (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2330",
+            "note": "Tags: brute force, interactive, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-38-17",
+            "title": "Hacking Numbers (Hard Version) (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3343",
+            "note": "Tags: constructive algorithms, interactive, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-38-18",
+            "title": "Hidden Single (Version 1) (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2614",
+            "note": "Tags: divide and conquer, interactive, math, probabilities, sortings",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -687,7 +8786,338 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-39",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-39-0",
+            "title": "Maximum Crossings (Hard Version) (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13507",
+            "note": "Tags: data structures, divide and conquer, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-1",
+            "title": "Guess The Tree (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13086",
+            "note": "Tags: binary search, brute force, dfs and similar, divide and conquer, dsu, greedy, interactive, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-2",
+            "title": "Bewitching Stargazer (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12606",
+            "note": "Tags: bitmasks, divide and conquer, dp, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-3",
+            "title": "Parsa's Humongous Tree (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/19894",
+            "note": "Tags: dfs and similar, divide and conquer, dp, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-4",
+            "title": "Maximum Sum on Even Positions (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18096",
+            "note": "Tags: divide and conquer, dp, greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-5",
+            "title": "Pashmak and Parmida's problem (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13357",
+            "note": "Tags: data structures, divide and conquer, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-6",
+            "title": "XOR Inverse (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5186",
+            "note": "Tags: bitmasks, data structures, divide and conquer, dp, greedy, math, sortings, strings, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-7",
+            "title": "Nene and the Mex Operator (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4870",
+            "note": "Tags: bitmasks, brute force, constructive algorithms, divide and conquer, dp, greedy, implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-8",
+            "title": "No Palindromes (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4609",
+            "note": "Tags: brute force, constructive algorithms, divide and conquer, greedy, hashing, implementation, math, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-9",
+            "title": "Pokémon Army (hard version) (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5275",
+            "note": "Tags: data structures, divide and conquer, dp, greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-10",
+            "title": "Beautiful Subarrays (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4768",
+            "note": "Tags: data structures, divide and conquer, strings, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-11",
+            "title": "0-1-Tree (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4894",
+            "note": "Tags: dfs and similar, divide and conquer, dp, dsu, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-12",
+            "title": "Ivan and Burgers (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3940",
+            "note": "Tags: data structures, divide and conquer, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-13",
+            "title": "Partition Game (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3073",
+            "note": "Tags: binary search, data structures, divide and conquer, dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-14",
+            "title": "Three Occurrences (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2919",
+            "note": "Tags: data structures, divide and conquer, hashing, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-15",
+            "title": "Maximum Subsequence (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9617",
+            "note": "Tags: bitmasks, divide and conquer, meet-in-the-middle",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-16",
+            "title": "Vanya and Scales (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5898",
+            "note": "Tags: brute force, dp, greedy, math, meet-in-the-middle, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-17",
+            "title": "Dasha and Nightmares (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4887",
+            "note": "Tags: bitmasks, hashing, meet-in-the-middle, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-18",
+            "title": "Anya and Cubes (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4392",
+            "note": "Tags: binary search, bitmasks, brute force, dp, math, meet-in-the-middle",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-19",
+            "title": "Red-Black Number (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2719",
+            "note": "Tags: dfs and similar, dp, implementation, math, meet-in-the-middle",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-20",
+            "title": "In Search of Truth (Easy Version) (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2858",
+            "note": "Tags: constructive algorithms, interactive, math, meet-in-the-middle, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-21",
+            "title": "Wise Men (Easy Version) (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1086",
+            "note": "Tags: bitmasks, brute force, dp, meet-in-the-middle",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-22",
+            "title": "Mother of Dragons (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1063",
+            "note": "Tags: brute force, graphs, math, meet-in-the-middle",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-23",
+            "title": "Interesting Sections (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1080",
+            "note": "Tags: data structures, divide and conquer, meet-in-the-middle, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-24",
+            "title": "Billion Players Game (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7885",
+            "note": "Tags: binary search, greedy, math, sortings, ternary search, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-25",
+            "title": "Searching Local Minimum (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/13370",
+            "note": "Tags: binary search, interactive, ternary search",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-26",
+            "title": "Ruler (hard version) (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11566",
+            "note": "Tags: binary search, interactive, ternary search",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-27",
+            "title": "Arithmetics Competition (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7942",
+            "note": "Tags: binary search, data structures, greedy, sortings, ternary search",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-28",
+            "title": "Devu and his Brother (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6999",
+            "note": "Tags: binary search, sortings, ternary search, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-29",
+            "title": "Primitive Primes (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7624",
+            "note": "Tags: constructive algorithms, math, ternary search",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-30",
+            "title": "Joking (Easy Version) (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1828",
+            "note": "Tags: binary search, constructive algorithms, interactive, ternary search",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-31",
+            "title": "No Mind To Think (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1252",
+            "note": "Tags: binary search, divide and conquer, greedy, sortings, ternary search, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-39-32",
+            "title": "Reading Books (hard version) (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1129",
+            "note": "Tags: data structures, greedy, implementation, sortings, ternary search, two pointers",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -704,7 +9134,228 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-40",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-40-0",
+            "title": "2+ doors (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6248",
+            "note": "Tags: 2-sat, bitmasks, graphs, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-40-1",
+            "title": "Unusual Matrix (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5982",
+            "note": "Tags: 2-sat, brute force, constructive algorithms",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-40-2",
+            "title": "Innokenty and a Football League (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3055",
+            "note": "Tags: 2-sat, graphs, greedy, implementation, shortest paths, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-40-3",
+            "title": "The Road to Berland is Paved With Good Intentions (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2866",
+            "note": "Tags: 2-sat, dfs and similar, dsu, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-40-4",
+            "title": "±1 (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2915",
+            "note": "Tags: 2-sat, dfs and similar, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-40-5",
+            "title": "National Property (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2421",
+            "note": "Tags: 2-sat, dfs and similar, graphs, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-40-6",
+            "title": "Ring Road 2 (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3171",
+            "note": "Tags: 2-sat, dfs and similar, dsu, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-40-7",
+            "title": "Cars  (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2860",
+            "note": "Tags: 2-sat, constructive algorithms, dfs and similar, dsu, graphs, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-40-8",
+            "title": "Radio Stations (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1282",
+            "note": "Tags: 2-sat",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-40-9",
+            "title": "One-Four Overload (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/889",
+            "note": "Tags: 2-sat, constructive algorithms, dfs and similar, dsu, graphs, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-40-10",
+            "title": "AquaMoon and Permutations (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/832",
+            "note": "Tags: 2-sat, brute force, combinatorics, constructive algorithms, graph matchings, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-40-11",
+            "title": "Facetook Priority Wall (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3653",
+            "note": "Tags: expression parsing, implementation, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-40-12",
+            "title": "Catch Overflow! (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12759",
+            "note": "Tags: data structures, expression parsing, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-40-13",
+            "title": "Title (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2488",
+            "note": "Tags: expression parsing",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-40-14",
+            "title": "Bill Total Value (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2283",
+            "note": "Tags: expression parsing, implementation, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-40-15",
+            "title": "Text Messaging (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2143",
+            "note": "Tags: expression parsing, greedy, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-40-16",
+            "title": "Bracket Sequence (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2899",
+            "note": "Tags: data structures, expression parsing, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-40-17",
+            "title": "Rebus (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3809",
+            "note": "Tags: constructive algorithms, expression parsing, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-40-18",
+            "title": "Bitwise Formula (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2558",
+            "note": "Tags: bitmasks, brute force, dfs and similar, expression parsing, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-40-19",
+            "title": "Double Bracket Sequence (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1078",
+            "note": "Tags: data structures, dp, expression parsing, flows, greedy, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-40-20",
+            "title": "Defining Macros (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/814",
+            "note": "Tags: dp, expression parsing, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-40-21",
+            "title": "Unambiguous Arithmetic Expression (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/489",
+            "note": "Tags: dp, expression parsing",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -721,7 +9372,178 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-41",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-41-0",
+            "title": "Maple and Tree Beauty (Hard Version) (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3586",
+            "note": "Tags: bitmasks, brute force, dfs and similar, dp, fft, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-41-1",
+            "title": "Mocha and Stars (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2802",
+            "note": "Tags: combinatorics, dp, fft, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-41-2",
+            "title": "Card Game (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2401",
+            "note": "Tags: combinatorics, dp, fft, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-41-3",
+            "title": "Placing Rooks (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3730",
+            "note": "Tags: combinatorics, fft, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-41-4",
+            "title": "Binary Subsequence Value Sum (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2423",
+            "note": "Tags: combinatorics, data structures, dp, fft, math, matrices",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-41-5",
+            "title": "Digital Village (Easy Version) (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1967",
+            "note": "Tags: brute force, data structures, dfs and similar, dp, dsu, fft, graphs, greedy, implementation, math, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-41-6",
+            "title": "Nikita and Order Statistics (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1893",
+            "note": "Tags: chinese remainder theorem, fft, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-41-7",
+            "title": "Lucky Tickets (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2099",
+            "note": "Tags: divide and conquer, dp, fft",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-41-8",
+            "title": "Fuzzy Search (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2989",
+            "note": "Tags: bitmasks, brute force, fft",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-41-9",
+            "title": "The Three Little Pigs (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2247",
+            "note": "Tags: combinatorics, dp, fft, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-41-10",
+            "title": "Binary Table (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2636",
+            "note": "Tags: bitmasks, brute force, divide and conquer, dp, fft, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-41-11",
+            "title": "Running Competition (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1339",
+            "note": "Tags: bitmasks, fft, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-41-12",
+            "title": "PermuTree (hard version) (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1820",
+            "note": "Tags: bitmasks, dfs and similar, dp, fft, greedy, implementation, math, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-41-13",
+            "title": "Clusterization Counting (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1385",
+            "note": "Tags: combinatorics, dp, dsu, fft, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-41-14",
+            "title": "Bandit Blues (2900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1292",
+            "note": "Tags: combinatorics, dp, fft, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-41-15",
+            "title": "The Child and Binary Tree (3100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2362",
+            "note": "Tags: combinatorics, divide and conquer, fft, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-41-16",
+            "title": "PolandBall and Many Other Balls (3200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1150",
+            "note": "Tags: combinatorics, divide and conquer, dp, fft, math, number theory",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -738,7 +9560,178 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-42",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-42-0",
+            "title": "Substring (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/12956",
+            "note": "Tags: dfs and similar, dp, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-42-1",
+            "title": "Beautiful Graph (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11807",
+            "note": "Tags: dfs and similar, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-42-2",
+            "title": "SlavicG's Favorite Problem (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/10868",
+            "note": "Tags: bitmasks, dfs and similar, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-42-3",
+            "title": "Minimum Maximum Distance (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/10009",
+            "note": "Tags: dfs and similar, dp, graphs, shortest paths, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-42-4",
+            "title": "The Number of Imposters (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9856",
+            "note": "Tags: constructive algorithms, dfs and similar, dp, dsu, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-42-5",
+            "title": "Reachability and Tree (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9786",
+            "note": "Tags: constructive algorithms, dfs and similar, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-42-6",
+            "title": "A Wide, Wide Graph (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9648",
+            "note": "Tags: dfs and similar, dp, graphs, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-42-7",
+            "title": "Rendez-vous de Marian et Robin (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9434",
+            "note": "Tags: dfs and similar, graphs, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-42-8",
+            "title": "To Go Or Not To Go? (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4378",
+            "note": "Tags: brute force, dfs and similar, graphs, greedy, implementation, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-42-9",
+            "title": "Almost Acyclic Graph (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4158",
+            "note": "Tags: dfs and similar, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-42-10",
+            "title": "Three States (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3705",
+            "note": "Tags: dfs and similar, graphs, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-42-11",
+            "title": "Balanced Tree (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3636",
+            "note": "Tags: dfs and similar, dp, graphs, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-42-12",
+            "title": "Tourist Reform (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3682",
+            "note": "Tags: dfs and similar, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-42-13",
+            "title": "Tanya and Password (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4414",
+            "note": "Tags: dfs and similar, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-42-14",
+            "title": "Subset with Zero Sum (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3138",
+            "note": "Tags: constructive algorithms, dfs and similar, graphs, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-42-15",
+            "title": "The Hidden Pair (Hard Version) (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1741",
+            "note": "Tags: binary search, dfs and similar, graphs, interactive, shortest paths, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-42-16",
+            "title": "Capitalism (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1548",
+            "note": "Tags: constructive algorithms, dfs and similar, graphs, shortest paths",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -755,7 +9748,178 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-43",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-43-0",
+            "title": "Secret Santa (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/10237",
+            "note": "Tags: constructive algorithms, flows, graphs, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-43-1",
+            "title": "New Year Permutation (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9720",
+            "note": "Tags: dfs and similar, dsu, graphs, greedy, math, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-43-2",
+            "title": "Menorah (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9272",
+            "note": "Tags: brute force, graphs, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-43-3",
+            "title": "Shifting String (1700)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9216",
+            "note": "Tags: graphs, math, number theory, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-43-4",
+            "title": "Book (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/10662",
+            "note": "Tags: binary search, brute force, data structures, dp, graphs, implementation, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-43-5",
+            "title": "Bicycles (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/10373",
+            "note": "Tags: graphs, greedy, implementation, shortest paths, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-43-6",
+            "title": "Friendly Spiders (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8972",
+            "note": "Tags: dfs and similar, graphs, math, number theory, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-43-7",
+            "title": "TediousLee (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9285",
+            "note": "Tags: dp, graphs, greedy, math, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-43-8",
+            "title": "Ehab's Last Corollary (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5132",
+            "note": "Tags: constructive algorithms, dfs and similar, graphs, greedy, implementation, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-43-9",
+            "title": "Turtle and a MEX Problem (Hard Version) (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4723",
+            "note": "Tags: dfs and similar, dp, graphs, greedy, implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-43-10",
+            "title": "Monotone Subsequence (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4421",
+            "note": "Tags: constructive algorithms, graphs, greedy, interactive, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-43-11",
+            "title": "Segment Tree (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4416",
+            "note": "Tags: data structures, dsu, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-43-12",
+            "title": "Timofey and Black-White Tree (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4188",
+            "note": "Tags: brute force, dfs and similar, divide and conquer, graphs, greedy, math, shortest paths, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-43-13",
+            "title": "Monsters (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4001",
+            "note": "Tags: brute force, data structures, dfs and similar, dsu, graphs, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-43-14",
+            "title": "Phoenix and Earthquake (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2199",
+            "note": "Tags: constructive algorithms, dfs and similar, dsu, graphs, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-43-15",
+            "title": "Quantifier Question (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2033",
+            "note": "Tags: dfs and similar, dp, graphs, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-43-16",
+            "title": "Minecraft (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1692",
+            "note": "Tags: bitmasks, brute force, dp, graphs, math",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -772,7 +9936,178 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-44",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-44-0",
+            "title": "Find the Car (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18730",
+            "note": "Tags: binary search, math, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-44-1",
+            "title": "Sagheer and Nubian Market (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/18342",
+            "note": "Tags: binary search, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-44-2",
+            "title": "Air Conditioner (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/17987",
+            "note": "Tags: dp, greedy, implementation, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-44-3",
+            "title": "Sage's Birthday (hard version) (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/17633",
+            "note": "Tags: binary search, brute force, constructive algorithms, greedy, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-44-4",
+            "title": "The Morning Star (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15815",
+            "note": "Tags: combinatorics, data structures, geometry, implementation, math, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-44-5",
+            "title": "Close Tuples (easy version) (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15583",
+            "note": "Tags: binary search, combinatorics, math, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-44-6",
+            "title": "Quests (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15391",
+            "note": "Tags: binary search, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-44-7",
+            "title": "Stay or Mirror (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15611",
+            "note": "Tags: brute force, data structures, dp, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-44-8",
+            "title": "Match Points (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6847",
+            "note": "Tags: binary search, greedy, sortings, ternary search, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-44-9",
+            "title": "Minimizing Difference (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6797",
+            "note": "Tags: binary search, constructive algorithms, greedy, sortings, ternary search, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-44-10",
+            "title": "Pairs of Segments (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5395",
+            "note": "Tags: data structures, greedy, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-44-11",
+            "title": "Maximum Value (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7853",
+            "note": "Tags: binary search, math, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-44-12",
+            "title": "Restorer Distance (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5984",
+            "note": "Tags: binary search, greedy, math, sortings, ternary search",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-44-13",
+            "title": "Physical Education Lessons (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5865",
+            "note": "Tags: data structures, implementation, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-44-14",
+            "title": "Mani and Segments (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2104",
+            "note": "Tags: data structures, implementation, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-44-15",
+            "title": "Another Exercise on Graphs (hard version) (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1993",
+            "note": "Tags: binary search, dfs and similar, dp, dsu, graphs, shortest paths, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-44-16",
+            "title": "Difficult Mountain (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2054",
+            "note": "Tags: data structures, dp, greedy, sortings",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -789,7 +10124,178 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-45",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-45-0",
+            "title": "Sweets Eating (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15612",
+            "note": "Tags: dp, greedy, math, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-45-1",
+            "title": "13th Labour of Heracles (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15296",
+            "note": "Tags: data structures, greedy, sortings, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-45-2",
+            "title": "Boxers (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15212",
+            "note": "Tags: greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-45-3",
+            "title": "Fight with Monsters (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15202",
+            "note": "Tags: greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-45-4",
+            "title": "Breach of Faith (1500)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/14970",
+            "note": "Tags: constructive algorithms, greedy, math, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-45-5",
+            "title": "Linova and Kingdom (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/25610",
+            "note": "Tags: dfs and similar, dp, greedy, sortings, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-45-6",
+            "title": "Phoenix and Distribution (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15626",
+            "note": "Tags: constructive algorithms, greedy, sortings, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-45-7",
+            "title": "Reading Books (easy version) (1600)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/15120",
+            "note": "Tags: data structures, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-45-8",
+            "title": "Weights Distributing (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5856",
+            "note": "Tags: brute force, graphs, greedy, shortest paths, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-45-9",
+            "title": "Present (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4726",
+            "note": "Tags: binary search, bitmasks, constructive algorithms, data structures, math, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-45-10",
+            "title": "Boring Segments (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4715",
+            "note": "Tags: data structures, sortings, trees, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-45-11",
+            "title": "01 Tree (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4638",
+            "note": "Tags: constructive algorithms, data structures, dsu, greedy, sortings, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-45-12",
+            "title": "Kate and imperfection (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4648",
+            "note": "Tags: greedy, implementation, math, number theory, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-45-13",
+            "title": "Carrots for Rabbits (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4357",
+            "note": "Tags: binary search, data structures, greedy, math, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-45-14",
+            "title": "Mice and Holes (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1545",
+            "note": "Tags: data structures, dp, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-45-15",
+            "title": "Velepin and Marketing (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1374",
+            "note": "Tags: binary search, data structures, dp, greedy, sortings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-45-16",
+            "title": "Minimal String Xoration (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1529",
+            "note": "Tags: bitmasks, data structures, divide and conquer, greedy, hashing, sortings, strings",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -806,7 +10312,178 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-46",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-46-0",
+            "title": "Passable Paths (hard version) (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6171",
+            "note": "Tags: data structures, dfs and similar, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-46-1",
+            "title": "1-Trees and Queries (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6078",
+            "note": "Tags: data structures, dfs and similar, shortest paths, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-46-2",
+            "title": "Pair of Numbers (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5882",
+            "note": "Tags: binary search, brute force, data structures, math, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-46-3",
+            "title": "Danil and a Part-time Job (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5831",
+            "note": "Tags: bitmasks, data structures, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-46-4",
+            "title": "R2D2 and Droid Army (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5647",
+            "note": "Tags: binary search, data structures, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-46-5",
+            "title": "New Year Concert (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5441",
+            "note": "Tags: binary search, data structures, greedy, math, number theory, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-46-6",
+            "title": "Empty Graph (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5186",
+            "note": "Tags: binary search, constructive algorithms, data structures, greedy, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-46-7",
+            "title": "Binary Subsequence Rotation (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5285",
+            "note": "Tags: binary search, constructive algorithms, data structures, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-46-8",
+            "title": "Sign on Fence (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3209",
+            "note": "Tags: binary search, constructive algorithms, data structures",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-46-9",
+            "title": "Nastia Plays with a Tree (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2383",
+            "note": "Tags: constructive algorithms, data structures, dfs and similar, dp, dsu, greedy, implementation, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-46-10",
+            "title": "GukiZ and GukiZiana (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2257",
+            "note": "Tags: binary search, data structures, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-46-11",
+            "title": "Stack Exterminable Arrays (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2321",
+            "note": "Tags: data structures, divide and conquer, dp, hashing",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-46-12",
+            "title": "Nearest Leaf (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2190",
+            "note": "Tags: data structures, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-46-13",
+            "title": "e-Government (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2326",
+            "note": "Tags: data structures, dfs and similar, dp, strings, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-46-14",
+            "title": "Pastoral Oddities (3000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1596",
+            "note": "Tags: data structures, divide and conquer, dsu, math, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-46-15",
+            "title": "Archaeology (3100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1705",
+            "note": "Tags: data structures, dfs and similar, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-46-16",
+            "title": "Tourists (3200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3050",
+            "note": "Tags: data structures, dfs and similar, graphs, trees",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -823,7 +10500,138 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-47",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-47-0",
+            "title": "Array Shrinking (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7813",
+            "note": "Tags: dp, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-47-1",
+            "title": "Gellyfish and Camellia Japonica (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5559",
+            "note": "Tags: brute force, constructive algorithms, dfs and similar, dp, graphs, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-47-2",
+            "title": "Watching Fireworks is Fun (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5152",
+            "note": "Tags: data structures, dp, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-47-3",
+            "title": "Nearest Beautiful Number (hard version) (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5094",
+            "note": "Tags: bitmasks, brute force, constructive algorithms, dfs and similar, dp, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-47-4",
+            "title": "Painting the Array II (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4555",
+            "note": "Tags: constructive algorithms, data structures, dp, greedy, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-47-5",
+            "title": "Med-imize (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4555",
+            "note": "Tags: binary search, dp, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-47-6",
+            "title": "Bits And Pieces (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3556",
+            "note": "Tags: bitmasks, dfs and similar, dp, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-47-7",
+            "title": "Greedy Grid Counting (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2662",
+            "note": "Tags: combinatorics, dp, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-47-8",
+            "title": "PolandBall and Gifts (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2007",
+            "note": "Tags: bitmasks, dp, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-47-9",
+            "title": "New Year and Old Subsequence (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1955",
+            "note": "Tags: data structures, divide and conquer, dp, matrices",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-47-10",
+            "title": "Gellyfish and Forget-Me-Not (2900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2654",
+            "note": "Tags: bitmasks, dp, games, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-47-11",
+            "title": "Victorious Coloring (Easy Version) (2900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2296",
+            "note": "Tags: dfs and similar, dp, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-47-12",
+            "title": "23 Rises Again (3100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2455",
+            "note": "Tags: brute force, dfs and similar, dp, flows, graph matchings, graphs, greedy, implementation, probabilities, trees",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -840,7 +10648,178 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-48",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-48-0",
+            "title": "Not Adding (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9534",
+            "note": "Tags: brute force, dp, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-48-1",
+            "title": "Strange Beauty (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8034",
+            "note": "Tags: dp, math, number theory, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-48-2",
+            "title": "Prime XOR Coloring (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8013",
+            "note": "Tags: bitmasks, constructive algorithms, graphs, greedy, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-48-3",
+            "title": "Funny Game (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7772",
+            "note": "Tags: constructive algorithms, dsu, graphs, greedy, math, number theory, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-48-4",
+            "title": "Valuable Cards (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7754",
+            "note": "Tags: brute force, dp, greedy, number theory, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-48-5",
+            "title": "K-good (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7644",
+            "note": "Tags: constructive algorithms, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-48-6",
+            "title": "Divisible Numbers (hard version) (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7005",
+            "note": "Tags: brute force, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-48-7",
+            "title": "XOR-factorization (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6744",
+            "note": "Tags: bitmasks, constructive algorithms, dp, greedy, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-48-8",
+            "title": "Please, another Queries on Array? (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2577",
+            "note": "Tags: bitmasks, data structures, divide and conquer, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-48-9",
+            "title": "GCD Counting (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2428",
+            "note": "Tags: divide and conquer, dp, dsu, number theory, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-48-10",
+            "title": "Hyperregular Bracket Strings (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2336",
+            "note": "Tags: combinatorics, greedy, hashing, math, number theory, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-48-11",
+            "title": "Make It One (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3179",
+            "note": "Tags: bitmasks, combinatorics, dp, math, number theory, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-48-12",
+            "title": "Cards (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2834",
+            "note": "Tags: combinatorics, dp, math, number theory, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-48-13",
+            "title": "Power Tower (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2810",
+            "note": "Tags: chinese remainder theorem, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-48-14",
+            "title": "GCD Table (2900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1504",
+            "note": "Tags: chinese remainder theorem, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-48-15",
+            "title": "Classical? (2900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1400",
+            "note": "Tags: binary search, combinatorics, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-48-16",
+            "title": "Present for Vitalik the Philatelist  (2900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1293",
+            "note": "Tags: combinatorics, math, number theory",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -857,7 +10836,138 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-49",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-49-0",
+            "title": "Height All the Same (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4389",
+            "note": "Tags: combinatorics, constructive algorithms, math, matrices",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-49-1",
+            "title": "Arena (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4312",
+            "note": "Tags: combinatorics, dp, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-49-2",
+            "title": "Monocarp and the Set (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4263",
+            "note": "Tags: combinatorics, data structures, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-49-3",
+            "title": "Phoenix and Computers (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4656",
+            "note": "Tags: combinatorics, dp, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-49-4",
+            "title": "Sum of Paths (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4080",
+            "note": "Tags: combinatorics, dp, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-49-5",
+            "title": "Devu and Flowers (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4766",
+            "note": "Tags: bitmasks, combinatorics, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-49-6",
+            "title": "Crypto Lights (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2012",
+            "note": "Tags: combinatorics, dp, math, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-49-7",
+            "title": "Cowmpany Cowmpensation (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1845",
+            "note": "Tags: combinatorics, dp, math, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-49-8",
+            "title": "Partitions (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1815",
+            "note": "Tags: combinatorics, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-49-9",
+            "title": "Hamed and AghaBalaSar (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2589",
+            "note": "Tags: brute force, combinatorics, dp, math, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-49-10",
+            "title": "Keep XOR Low (3000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1382",
+            "note": "Tags: bitmasks, combinatorics, data structures, divide and conquer, dp, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-49-11",
+            "title": "Lust (3000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1279",
+            "note": "Tags: combinatorics, math, matrices",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-49-12",
+            "title": "Tree Parking (3300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1998",
+            "note": "Tags: combinatorics, fft, math, trees",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -874,7 +10984,228 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-50",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-50-0",
+            "title": "Random Query (1800)",
+            "completed": false,
+            "difficulty": "Medium",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2722",
+            "note": "Tags: data structures, math, probabilities, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-50-1",
+            "title": "Checkpoints (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4474",
+            "note": "Tags: brute force, constructive algorithms, greedy, math, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-50-2",
+            "title": "Edge Split (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4266",
+            "note": "Tags: brute force, constructive algorithms, dfs and similar, dsu, graphs, probabilities, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-50-3",
+            "title": "Guess Game (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3125",
+            "note": "Tags: bitmasks, data structures, games, math, probabilities, sortings, strings, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-50-4",
+            "title": "Buratsuta 3 (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2827",
+            "note": "Tags: binary search, brute force, data structures, divide and conquer, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-50-5",
+            "title": "Beautiful Tree (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2914",
+            "note": "Tags: constructive algorithms, math, probabilities, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-50-6",
+            "title": "Intersection and Union (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1865",
+            "note": "Tags: data structures, dp, matrices, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-50-7",
+            "title": "Hossam and Range Minimum Query (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1677",
+            "note": "Tags: binary search, bitmasks, data structures, hashing, probabilities, strings, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-50-8",
+            "title": "X-OR (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1680",
+            "note": "Tags: bitmasks, constructive algorithms, divide and conquer, interactive, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-50-9",
+            "title": "Tree Queries (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1670",
+            "note": "Tags: data structures, probabilities, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-50-10",
+            "title": "Kazaee (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2829",
+            "note": "Tags: data structures, hashing, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-50-11",
+            "title": "Battalion Strength (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/962",
+            "note": "Tags: data structures, divide and conquer, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-50-12",
+            "title": "Odd Mineral Resource (2900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1418",
+            "note": "Tags: binary search, bitmasks, brute force, data structures, probabilities, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-50-13",
+            "title": "New Year and Conference (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3452",
+            "note": "Tags: binary search, data structures, hashing, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-50-14",
+            "title": "Preorder (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3322",
+            "note": "Tags: combinatorics, divide and conquer, dp, dsu, hashing, sortings, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-50-15",
+            "title": "Funny Substrings (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3278",
+            "note": "Tags: data structures, hashing, implementation, matrices, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-50-16",
+            "title": "Two strings (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3067",
+            "note": "Tags: binary search, hashing, strings, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-50-17",
+            "title": "Check Transcription (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2926",
+            "note": "Tags: brute force, data structures, hashing, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-50-18",
+            "title": "Test (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3432",
+            "note": "Tags: hashing, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-50-19",
+            "title": "Quadratic Set (2900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/982",
+            "note": "Tags: constructive algorithms, hashing, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-50-20",
+            "title": "Misha and LCP on Tree (3000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1100",
+            "note": "Tags: binary search, dfs and similar, hashing, string suffix structures, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-50-21",
+            "title": "Minimum Difference (3100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1025",
+            "note": "Tags: data structures, hashing, sortings, two pointers",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -891,7 +11222,228 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-51",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-51-0",
+            "title": "Grouped Carriages (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2280",
+            "note": "Tags: binary search, data structures, dp, flows, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-51-1",
+            "title": "Paired Payment (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3492",
+            "note": "Tags: binary search, brute force, constructive algorithms, dp, flows, graphs, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-51-2",
+            "title": "Delivery Bears (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3062",
+            "note": "Tags: binary search, flows, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-51-3",
+            "title": "One-Way Reform (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2345",
+            "note": "Tags: constructive algorithms, dfs and similar, flows, graphs, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-51-4",
+            "title": "Little C Loves 3 II (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2333",
+            "note": "Tags: brute force, constructive algorithms, flows, graph matchings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-51-5",
+            "title": "Kirill and Company (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1988",
+            "note": "Tags: bitmasks, brute force, dfs and similar, dp, flows, graphs, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-51-6",
+            "title": "Two Melodies (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1206",
+            "note": "Tags: dp, flows",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-51-7",
+            "title": "Strange Set (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1221",
+            "note": "Tags: flows, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-51-8",
+            "title": "Wine Factory (Hard Version) (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1227",
+            "note": "Tags: data structures, dp, flows, greedy, matrices",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-51-9",
+            "title": "April Fools' Problem (hard) (2900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1314",
+            "note": "Tags: binary search, data structures, flows",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-51-10",
+            "title": "Captain America (3100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1198",
+            "note": "Tags: flows, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-51-11",
+            "title": "ALT (3200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/905",
+            "note": "Tags: data structures, flows, graphs, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-51-12",
+            "title": "Chests and Keys (3200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/875",
+            "note": "Tags: bitmasks, brute force, dfs and similar, dp, flows",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-51-13",
+            "title": "Swap to Rearrange (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2285",
+            "note": "Tags: constructive algorithms, dfs and similar, graph matchings, graphs, greedy, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-51-14",
+            "title": "Moment of Bloom (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2546",
+            "note": "Tags: constructive algorithms, dfs and similar, graph matchings, graphs, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-51-15",
+            "title": "Serge and Dining Room (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2543",
+            "note": "Tags: binary search, data structures, graph matchings, greedy, implementation, math, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-51-16",
+            "title": "Hamiltonian Spanning Tree (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2057",
+            "note": "Tags: dfs and similar, dp, graph matchings, greedy, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-51-17",
+            "title": "Fair Share (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2301",
+            "note": "Tags: constructive algorithms, data structures, dfs and similar, graph matchings, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-51-18",
+            "title": "Session in BSU (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2029",
+            "note": "Tags: binary search, dfs and similar, dsu, graph matchings, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-51-19",
+            "title": "MST with Matching (3100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1006",
+            "note": "Tags: bitmasks, brute force, dsu, graph matchings, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-51-20",
+            "title": "Birthday (3200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/950",
+            "note": "Tags: graph matchings, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-51-21",
+            "title": "Showing Off (3300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/729",
+            "note": "Tags: flows, graph matchings, greedy, implementation",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -908,7 +11460,108 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-52",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-52-0",
+            "title": "Winter is here (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3679",
+            "note": "Tags: combinatorics, dp, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-52-1",
+            "title": "Sasha and Array (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4957",
+            "note": "Tags: data structures, math, matrices",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-52-2",
+            "title": "Anton and School - 2 (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3938",
+            "note": "Tags: combinatorics, dp, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-52-3",
+            "title": "Another Filling the Grid (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3656",
+            "note": "Tags: combinatorics, dp, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-52-4",
+            "title": "Mike and Foam (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3546",
+            "note": "Tags: bitmasks, combinatorics, dp, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-52-5",
+            "title": "Product Oriented Recurrence (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3471",
+            "note": "Tags: dp, math, matrices, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-52-6",
+            "title": "Gellyfish and Eternal Violet (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1802",
+            "note": "Tags: combinatorics, dp, greedy, math, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-52-7",
+            "title": "Latin Square (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1791",
+            "note": "Tags: math, matrices",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-52-8",
+            "title": "Tenzing and Random Operations (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1738",
+            "note": "Tags: combinatorics, dp, math, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-52-9",
+            "title": "Secure Password (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1556",
+            "note": "Tags: bitmasks, combinatorics, constructive algorithms, interactive, math",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -925,7 +11578,108 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-53",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-53-0",
+            "title": "Non-Decreasing Dilemma (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4376",
+            "note": "Tags: data structures, divide and conquer, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-53-1",
+            "title": "Special Segments of Permutation (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4214",
+            "note": "Tags: data structures, divide and conquer, dsu, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-53-2",
+            "title": "Level Up (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3888",
+            "note": "Tags: binary search, brute force, data structures, divide and conquer, implementation",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-53-3",
+            "title": "Unique Median (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3729",
+            "note": "Tags: binary search, brute force, combinatorics, data structures, divide and conquer, dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-53-4",
+            "title": "MEX Queries (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3507",
+            "note": "Tags: binary search, data structures, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-53-5",
+            "title": "Till I Collapse (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3917",
+            "note": "Tags: data structures, divide and conquer",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-53-6",
+            "title": "Close Vertices (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2128",
+            "note": "Tags: data structures, divide and conquer, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-53-7",
+            "title": "Permutation (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1857",
+            "note": "Tags: data structures, divide and conquer, hashing",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-53-8",
+            "title": "Tree Generator™ (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1753",
+            "note": "Tags: data structures, implementation, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-53-9",
+            "title": "Best Edge Weight (2700)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1519",
+            "note": "Tags: data structures, dfs and similar, graphs, trees",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -942,7 +11696,268 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-54",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-54-0",
+            "title": "Orac and Medians (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9031",
+            "note": "Tags: constructive algorithms, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-1",
+            "title": "Another Array Problem (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7967",
+            "note": "Tags: brute force, constructive algorithms, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-2",
+            "title": "Breaking the Wall (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/7833",
+            "note": "Tags: binary search, brute force, constructive algorithms, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-3",
+            "title": "Make Them Equal (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6763",
+            "note": "Tags: constructive algorithms, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-4",
+            "title": "Buying Jewels (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6392",
+            "note": "Tags: constructive algorithms, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-5",
+            "title": "XOR-gun (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6263",
+            "note": "Tags: bitmasks, brute force, constructive algorithms",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-6",
+            "title": "Coloring Edges (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6064",
+            "note": "Tags: constructive algorithms, dfs and similar, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-7",
+            "title": "Xor-MST (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6114",
+            "note": "Tags: bitmasks, constructive algorithms, data structures",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-8",
+            "title": "Omkar and Landslide (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2677",
+            "note": "Tags: binary search, constructive algorithms, data structures, greedy, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-9",
+            "title": "Inversion SwapSort (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3510",
+            "note": "Tags: constructive algorithms, greedy, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-10",
+            "title": "Hack it! (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2814",
+            "note": "Tags: binary search, constructive algorithms, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-11",
+            "title": "Jzzhu and Apples (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2631",
+            "note": "Tags: constructive algorithms, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-12",
+            "title": "Mike and Fish (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3258",
+            "note": "Tags: constructive algorithms, dfs and similar, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-13",
+            "title": "Arpa’s overnight party and Mehrdad’s silent entering (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3240",
+            "note": "Tags: constructive algorithms, dfs and similar, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-14",
+            "title": "Game of Pairs (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1308",
+            "note": "Tags: constructive algorithms, dfs and similar, interactive, math, number theory",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-15",
+            "title": "Double Knapsack (3000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2132",
+            "note": "Tags: constructive algorithms, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-16",
+            "title": "Sergey's problem (3000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1603",
+            "note": "Tags: constructive algorithms, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-17",
+            "title": "Salyg1n and Array (hard version) (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3812",
+            "note": "Tags: constructive algorithms, interactive",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-18",
+            "title": "Guess the K-th Zero (Hard version) (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3418",
+            "note": "Tags: binary search, constructive algorithms, data structures, interactive",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-19",
+            "title": "Arithmetic Progression (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3269",
+            "note": "Tags: binary search, interactive, number theory, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-20",
+            "title": "Gold Transfer (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3147",
+            "note": "Tags: binary search, data structures, dp, greedy, interactive, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-21",
+            "title": "Bitwise Queries (Hard Version) (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3964",
+            "note": "Tags: bitmasks, constructive algorithms, interactive, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-22",
+            "title": "Grid Xor (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3645",
+            "note": "Tags: constructive algorithms, greedy, implementation, interactive, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-23",
+            "title": "Hidden Bipartite Graph (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/878",
+            "note": "Tags: binary search, constructive algorithms, dfs and similar, graphs, interactive",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-24",
+            "title": "Isaac's Queries (2800)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/831",
+            "note": "Tags: bitmasks, brute force, constructive algorithms, dfs and similar, divide and conquer, dp, greedy, interactive, math, probabilities",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-54-25",
+            "title": "Coffee Varieties (hard version) (3000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1010",
+            "note": "Tags: constructive algorithms, graphs, interactive",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -959,7 +11974,168 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-55",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-55-0",
+            "title": "Painting Fence (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11132",
+            "note": "Tags: divide and conquer, dp, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-55-1",
+            "title": "Magic Ship (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9530",
+            "note": "Tags: binary search",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-55-2",
+            "title": "Phoenix and Science (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9395",
+            "note": "Tags: binary search, constructive algorithms, greedy, implementation, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-55-3",
+            "title": "The Values You Can Make (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/9045",
+            "note": "Tags: dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-55-4",
+            "title": "Palindrome Game (hard version) (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8836",
+            "note": "Tags: constructive algorithms, games",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-55-5",
+            "title": "The Best Vacation (1900)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8807",
+            "note": "Tags: binary search, brute force, greedy, implementation, two pointers",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-55-6",
+            "title": "Clear the String (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/11440",
+            "note": "Tags: dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-55-7",
+            "title": "Three Integers (2000)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/10048",
+            "note": "Tags: brute force, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-55-8",
+            "title": "Round Subset (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8030",
+            "note": "Tags: dp, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-55-9",
+            "title": "Zero Remainder Sum  (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6877",
+            "note": "Tags: dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-55-10",
+            "title": "Civilization (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6629",
+            "note": "Tags: dfs and similar, dp, dsu, ternary search, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-55-11",
+            "title": "Errich-Tac-Toe (Easy Version) (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6018",
+            "note": "Tags: constructive algorithms, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-55-12",
+            "title": "Moving to the Capital (2100)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5876",
+            "note": "Tags: dfs and similar, dp, graphs, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-55-13",
+            "title": "Magic Numbers (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/8955",
+            "note": "Tags: dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-55-14",
+            "title": "A Simple Task (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6801",
+            "note": "Tags: bitmasks, dp, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-55-15",
+            "title": "Great Vova Wall (Version 1) (2200)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5853",
+            "note": "Tags: greedy, implementation, math",
+            "isRevision": false
+          }
+        ]
       }
     ]
   },
@@ -976,7 +12152,148 @@ export const zeroTo2300Sections: any[] = [
       {
         "id": "z23-sub-56",
         "title": "Practice Set",
-        "topics": []
+        "topics": [
+          {
+            "id": "z23-p-56-0",
+            "title": "Sonya and Problem Wihtout a Legend (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/6772",
+            "note": "Tags: dp, sortings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-56-1",
+            "title": "Errich-Tac-Toe (Hard Version) (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4386",
+            "note": "Tags: constructive algorithms, math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-56-2",
+            "title": "Anthem of Berland (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4041",
+            "note": "Tags: dp, strings",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-56-3",
+            "title": "Rectangle Painting 1 (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3825",
+            "note": "Tags: dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-56-4",
+            "title": "Complete The Graph (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3825",
+            "note": "Tags: binary search, constructive algorithms, graphs, shortest paths",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-56-5",
+            "title": "Almost Triple Deletions (2300)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3620",
+            "note": "Tags: data structures, dp, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-56-6",
+            "title": "Group Projects (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3765",
+            "note": "Tags: dp",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-56-7",
+            "title": "Karen and Supermarket (2400)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3483",
+            "note": "Tags: brute force, dp, trees",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-56-8",
+            "title": "Mass Change Queries (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4006",
+            "note": "Tags: data structures",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-56-9",
+            "title": "Triple Attack (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/3646",
+            "note": "Tags: data structures, greedy",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-56-10",
+            "title": "Subset Sums (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2898",
+            "note": "Tags: brute force, data structures",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-56-11",
+            "title": "AND Graph (2500)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2795",
+            "note": "Tags: bitmasks, dfs and similar, dsu, graphs",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-56-12",
+            "title": "The Sum of the k-th Powers (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/5135",
+            "note": "Tags: math",
+            "isRevision": false
+          },
+          {
+            "id": "z23-p-56-13",
+            "title": "Least Cost Bracket Sequence (2600)",
+            "completed": false,
+            "difficulty": "Hard",
+            "resourceType": "link",
+            "practiceUrl": "https://codeforces.com/problemset/problem/4297",
+            "note": "Tags: greedy",
+            "isRevision": false
+          }
+        ]
       }
     ]
   }

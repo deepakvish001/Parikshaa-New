@@ -12,16 +12,15 @@ export const zeroTo2300Meta = {
 
 export const zeroTo2300Sections = [
   {
-    "id": "section-0",
+    "id": "z23-0",
     "title": "Implementation & Simulation",
-    "description": "Sabse pehla skill: statement ko bina soch-vichaar ke **exactly** code mein utaar dena. Yahan koi algorithm nahi hai — sirf loop, condition, aur dhyaan. CP mein 800-rated problems ka 60% yahi hai, aur beginners inhe *algorithm dhoondh ke* kharab karte hain.",
     "subSections": [
       {
-        "id": "sub-0",
+        "id": "z23-sub-0",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-cs7shb52v",
+            "id": "z23-p-pdnla670e",
             "title": "Bit++ (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -31,7 +30,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-kh71dfpy8",
+            "id": "z23-p-favlp6ujp",
             "title": "Next Round (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -41,7 +40,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-v5dzdsnfx",
+            "id": "z23-p-znfh96lhe",
             "title": "Beautiful Matrix (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -51,7 +50,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-4arsp6c7t",
+            "id": "z23-p-ctkk1scn9",
             "title": "Petya and Strings (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -61,7 +60,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-y8qhk9f62",
+            "id": "z23-p-rs824skhk",
             "title": "Boy or Girl (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -71,7 +70,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-7qdihbdvs",
+            "id": "z23-p-bgueff5bv",
             "title": "Helpful Maths (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -81,7 +80,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-74m3ajsov",
+            "id": "z23-p-dzxi7bf4a",
             "title": "Word Capitalization (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -91,7 +90,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-brifj0hmv",
+            "id": "z23-p-62h9rzyqj",
             "title": "Bear and Big Brother (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -101,7 +100,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-hwmhhmqfb",
+            "id": "z23-p-oeao7kr81",
             "title": "Football (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -111,7 +110,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-k8tqo8ifv",
+            "id": "z23-p-s0lsk3gmb",
             "title": "Gravity Flip (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -121,7 +120,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-113k8034v",
+            "id": "z23-p-so1kozany",
             "title": "HQ9+ (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -131,7 +130,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-bi8mvjdfh",
+            "id": "z23-p-zrp7221ag",
             "title": "Game With Sticks (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -141,7 +140,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-i51zk1qyw",
+            "id": "z23-p-vu4bvv96a",
             "title": "String Task (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -151,7 +150,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-e25o05od9",
+            "id": "z23-p-glo9bii25",
             "title": "Young Physicist (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -161,7 +160,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-l039w465c",
+            "id": "z23-p-5t1hb4m9b",
             "title": "cAPS lOCK (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -171,7 +170,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zdrb3ktbe",
+            "id": "z23-p-knyuu8wck",
             "title": "Xenia and Ringroad (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -181,7 +180,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zcsizrwzo",
+            "id": "z23-p-4rdmtvdpw",
             "title": "Taxi (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -191,7 +190,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-gtimzuivg",
+            "id": "z23-p-u06yfg6no",
             "title": "Fancy Fence (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -201,7 +200,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-x9mxp1bls",
+            "id": "z23-p-jkassmbeb",
             "title": "Vanya and Lanterns (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -211,7 +210,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-rehk8wqiq",
+            "id": "z23-p-6zi8x76et",
             "title": "Cheap Travel (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -221,7 +220,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-z5zx3zlsc",
+            "id": "z23-p-3rdvtlgmt",
             "title": "Chewbaсca and Number (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -231,7 +230,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-myx393mte",
+            "id": "z23-p-c56bxhmq7",
             "title": "Worms (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -241,7 +240,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-mpu2nb8dw",
+            "id": "z23-p-ftgqumk8b",
             "title": "Registration System (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -251,7 +250,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-3664i23vf",
+            "id": "z23-p-ay4ke2fnh",
             "title": "Sort the Array (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -261,7 +260,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qj6z1jl3z",
+            "id": "z23-p-0v1i0r8i1",
             "title": "Books (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -275,16 +274,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-1",
+    "id": "z23-1",
     "title": "Math Basics — parity, formulas, patterns",
-    "description": "CP ki aadhi easy problems ek **formula ya observation** hain, algorithm nahi. Parity (even/odd), symmetry, invariants, arithmetic series, min/max ka closed form. Loop chalane se pehle 2 minute paper pe chhote cases likho — n=1,2,3,4 — pattern dikh jaata hai.",
     "subSections": [
       {
-        "id": "sub-1",
+        "id": "z23-sub-1",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-p1lrpxbk1",
+            "id": "z23-p-pusik8ntd",
             "title": "Watermelon (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -294,7 +292,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-61tkmicr0",
+            "id": "z23-p-yk4ru52j9",
             "title": "Domino piling (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -304,7 +302,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-99d6uz7ep",
+            "id": "z23-p-en6c7yrsd",
             "title": "Elephant (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -314,7 +312,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-md408uyp5",
+            "id": "z23-p-l5sa4rzdr",
             "title": "Soldier and Bananas (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -324,7 +322,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-gm1nb8y9a",
+            "id": "z23-p-957kyryg1",
             "title": "Calculating Function (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -334,7 +332,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qm25ae42m",
+            "id": "z23-p-qzsqsc10q",
             "title": "Drinks (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -344,7 +342,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qbkyzusy8",
+            "id": "z23-p-ci88n47bv",
             "title": "Divisibility Problem (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -354,7 +352,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-he5ukspyh",
+            "id": "z23-p-x02ugjn5s",
             "title": "Even Odds (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -364,7 +362,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-f9a5fobsh",
+            "id": "z23-p-9glc8q792",
             "title": "Theatre Square (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -374,7 +372,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-4ns33a9gv",
+            "id": "z23-p-nw76kt6np",
             "title": "Expression (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -384,7 +382,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-hub44crxj",
+            "id": "z23-p-vv02t8g6r",
             "title": "Olesya and Rodion (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -394,7 +392,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-wef1bwu3v",
+            "id": "z23-p-013egifw0",
             "title": "Dreamoon and Stairs (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -404,7 +402,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-wlu04i6vi",
+            "id": "z23-p-zwcc2s69q",
             "title": "Monsters (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -414,7 +412,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-i4ujzl753",
+            "id": "z23-p-o9hvohwyh",
             "title": "Road To Zero (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -424,7 +422,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ldyvonhyi",
+            "id": "z23-p-qs9dh0dfc",
             "title": "Olya and Game with Arrays (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -434,7 +432,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-j5n06eu5x",
+            "id": "z23-p-8t23oriez",
             "title": "Sum of Odd Integers (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -444,7 +442,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-pa7t0n49l",
+            "id": "z23-p-nlclckogm",
             "title": "K-th Not Divisible by n (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -454,7 +452,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-kb1fik8a9",
+            "id": "z23-p-xls8o4058",
             "title": "Same Differences (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -464,7 +462,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-g6mw49kog",
+            "id": "z23-p-25syl0ueh",
             "title": "Same Parity Summands (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -474,7 +472,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-mdbmuzstc",
+            "id": "z23-p-587n9okks",
             "title": "Plus Minus Permutation (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -484,7 +482,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-p3l6vhz0p",
+            "id": "z23-p-d64ojjovj",
             "title": "Scuza (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -494,7 +492,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-uk8muc1y4",
+            "id": "z23-p-moxu44b05",
             "title": "Odd Selection (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -504,7 +502,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-5o2g57hm6",
+            "id": "z23-p-p43x0tjxp",
             "title": "Romantic Glasses (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -514,7 +512,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-57srh5uky",
+            "id": "z23-p-87rkd0q45",
             "title": "Number of Pairs (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -524,7 +522,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-rtimwiwcg",
+            "id": "z23-p-sqiv1oh75",
             "title": "Maximum Median (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -538,16 +536,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-2",
+    "id": "z23-2",
     "title": "Brute Force & Complete Search",
-    "description": "Har problem ka pehla honest jawaab: **saare possibilities try karo**. Ye kamzori nahi, baseline hai — aur constraints chhote hon to yahi intended solution hota hai. Aage jaake optimization isi baseline pe lagta hai, isliye pehle brute force *soch* lena habit banao.",
     "subSections": [
       {
-        "id": "sub-2",
+        "id": "z23-sub-2",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-ezdhbrtmu",
+            "id": "z23-p-hhtsy18uw",
             "title": "Team (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -557,7 +554,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-25ayx8z6g",
+            "id": "z23-p-gn6flamia",
             "title": "Beautiful Year (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -567,7 +564,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-i0q0u3sgf",
+            "id": "z23-p-h1fjk6gqy",
             "title": "Games (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -577,7 +574,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-7xbteykmt",
+            "id": "z23-p-178u7wfdc",
             "title": "YES or YES? (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -587,7 +584,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qv3tga1r9",
+            "id": "z23-p-qlfiv47l0",
             "title": "I_love_\\%username\\% (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -597,7 +594,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9gmzoa044",
+            "id": "z23-p-93snjg272",
             "title": "New Year and Hurry (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -607,7 +604,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-43856iau9",
+            "id": "z23-p-f53ip9xgg",
             "title": "Buy a Shovel (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -617,7 +614,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qxm1vx4ht",
+            "id": "z23-p-m7k5hctzk",
             "title": "Lucky Division (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -627,7 +624,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-s1mhvkonq",
+            "id": "z23-p-dxaagkq67",
             "title": "Fedor and New Game (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -637,7 +634,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-7vjcpeifm",
+            "id": "z23-p-fet3akw42",
             "title": "Sum of Cubes (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -647,7 +644,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-64e7iuh4a",
+            "id": "z23-p-z1cv5lfqs",
             "title": "Maximum Sum (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -657,7 +654,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-8rh0rrq90",
+            "id": "z23-p-j6j9li9gr",
             "title": "Coprime (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -667,7 +664,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-2vlynftni",
+            "id": "z23-p-4b2sromoj",
             "title": "250 Thousand Tons of TNT (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -677,7 +674,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-41hkb159r",
+            "id": "z23-p-ujo9oqw33",
             "title": "Yet Another Card Deck (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -687,7 +684,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6bp04mlqh",
+            "id": "z23-p-68z5veczx",
             "title": "Pleasant Pairs (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -697,7 +694,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-dfm4xqyh6",
+            "id": "z23-p-fv1ibrtzf",
             "title": "IQ test (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -707,7 +704,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ynpipr7wr",
+            "id": "z23-p-250j1fm7l",
             "title": "Fadi and LCM (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -717,7 +714,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6g4770ezc",
+            "id": "z23-p-140az422w",
             "title": "Preparing Olympiad (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -727,7 +724,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6fbnq3inz",
+            "id": "z23-p-5mhq0x6xm",
             "title": "Hamburgers (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -741,16 +738,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-3",
+    "id": "z23-3",
     "title": "Sortings & Custom Comparators",
-    "description": "Sorting sirf order lagane ke liye nahi — **problem ki structure reveal karne** ke liye hai. Sort karne ke baad greedy obvious ho jaati hai, duplicates paas aa jaate hain, binary search possible ho jaati hai. 'Kis cheez pe sort karun' ka jawaab hi aadhi problem hota hai.",
     "subSections": [
       {
-        "id": "sub-3",
+        "id": "z23-sub-3",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-kzfzyyp2w",
+            "id": "z23-p-7iebgqdri",
             "title": "Amusing Joke (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -760,7 +756,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6a3n0iafs",
+            "id": "z23-p-jjup5tdwp",
             "title": "The New Year: Meeting Friends (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -770,7 +766,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-jtoa1foqa",
+            "id": "z23-p-8guxq1jfn",
             "title": "Halloumi Boxes (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -780,7 +776,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-wkqvw62ao",
+            "id": "z23-p-dr3r2qbft",
             "title": "Remove Smallest (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -790,7 +786,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-kcxncj03q",
+            "id": "z23-p-i96y7jtzu",
             "title": "Medium Number (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -800,7 +796,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-cwi17iydu",
+            "id": "z23-p-jtyj3l592",
             "title": "To My Critics (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -810,7 +806,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vgbvkp4vy",
+            "id": "z23-p-vq9qoam9y",
             "title": "Twins (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -820,7 +816,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-e22lbjpz9",
+            "id": "z23-p-1owxpsoi2",
             "title": "Dragons (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -830,7 +826,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-hqakd33iy",
+            "id": "z23-p-hlxpyf962",
             "title": "Laptops (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -840,7 +836,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-lxqz3qh5f",
+            "id": "z23-p-48zqpy20q",
             "title": "Building an Aquarium (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -850,7 +846,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-5d7crjmhd",
+            "id": "z23-p-jdj7sdq4h",
             "title": "Two Teams Composing (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -860,7 +856,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-etnkmhgs8",
+            "id": "z23-p-uchbreeox",
             "title": "Similar Pairs (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -870,7 +866,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-rtjahc9d7",
+            "id": "z23-p-2jggcevl6",
             "title": "Teleporters (Easy Version) (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -880,7 +876,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-2988ojy0d",
+            "id": "z23-p-39kktm0ig",
             "title": "Less or Equal (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -890,7 +886,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-up10nvs6v",
+            "id": "z23-p-0fxohxnzw",
             "title": "Assembly via Minimums (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -900,7 +896,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-r25957jab",
+            "id": "z23-p-3bch96p03",
             "title": "Pashmak and Flowers (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -910,7 +906,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-he86g7me7",
+            "id": "z23-p-az896slfk",
             "title": "Kefa and Company (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -920,7 +916,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-tmtlhik9x",
+            "id": "z23-p-gkbg37zyq",
             "title": "Smilo and Monsters (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -930,7 +926,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-l93879lab",
+            "id": "z23-p-qss0y4ymy",
             "title": "Fox And Names (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -944,16 +940,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-4",
+    "id": "z23-4",
     "title": "Greedy — Basics",
-    "description": "Har step pe locally best choice, aur ummeed ye ki wo globally best bhi hai. Greedy easy likhne mein hai, **prove karne mein hard** — aur CP mein ratta yahi maara jaata hai. Beginner level pe pattern yaad rakho: sort karo, phir ek side se le lo.",
     "subSections": [
       {
-        "id": "sub-4",
+        "id": "z23-sub-4",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-m37q5ngbp",
+            "id": "z23-p-p9xf5upax",
             "title": "I Wanna Be the Guy (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -963,7 +958,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-pt4r34lbj",
+            "id": "z23-p-2ddtty0kc",
             "title": "Sereja and Dima (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -973,7 +968,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-wiaoezsti",
+            "id": "z23-p-d61tj5qkv",
             "title": "How Much Does Daytona Cost? (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -983,7 +978,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-uxeeliaif",
+            "id": "z23-p-3p1e4ueb0",
             "title": "Array Coloring (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -993,7 +988,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9mvb4fpfl",
+            "id": "z23-p-m75piu6zf",
             "title": "Line Trip (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1003,7 +998,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-nxkltr340",
+            "id": "z23-p-o7th72leo",
             "title": "Yet Another Two Integers Problem (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1013,7 +1008,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-7cje96b95",
+            "id": "z23-p-ev4fo996q",
             "title": "Team Olympiad (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1023,7 +1018,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-si5m0zmnr",
+            "id": "z23-p-74i2xgxi9",
             "title": "Puzzles (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -1033,7 +1028,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ycymidmzj",
+            "id": "z23-p-rc71cgwjs",
             "title": "Chat room (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1043,7 +1038,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qplght3nk",
+            "id": "z23-p-8z3znu1sh",
             "title": "Move Brackets (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1053,7 +1048,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9hen1vs8g",
+            "id": "z23-p-zrjl8quxc",
             "title": "Distinct Split (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1063,7 +1058,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-nramh5t62",
+            "id": "z23-p-zb2stdvnj",
             "title": "Good Prefixes (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1073,7 +1068,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6m60otc2n",
+            "id": "z23-p-z6ixbdpgo",
             "title": "Helmets in Night Light (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1083,7 +1078,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-fu4vz64jj",
+            "id": "z23-p-efn9nuxqv",
             "title": "Add and Divide (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1093,7 +1088,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9zqsgtwfv",
+            "id": "z23-p-4g61f9tr4",
             "title": "MEXor Mixup (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1103,7 +1098,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-mae7tdshy",
+            "id": "z23-p-839oemn1w",
             "title": "Quests (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -1113,7 +1108,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-8tlef1mze",
+            "id": "z23-p-k4ltic5kq",
             "title": "Contrast Value (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -1123,7 +1118,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-h1jrt95dr",
+            "id": "z23-p-lzakw1sqg",
             "title": "Ternary XOR (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -1133,7 +1128,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-x8rvhraxp",
+            "id": "z23-p-0wpgmitne",
             "title": "Boats Competition (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -1143,7 +1138,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-822n55byo",
+            "id": "z23-p-h120aquw6",
             "title": "Stable Groups (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -1153,7 +1148,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-l5uxvtzc3",
+            "id": "z23-p-uf3vhat4v",
             "title": "Friends and the Restaurant (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -1163,7 +1158,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-b94cdizhy",
+            "id": "z23-p-kwrulc6cr",
             "title": "Product of Three Numbers (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1173,7 +1168,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-kqapy8oqm",
+            "id": "z23-p-k61v8rh1r",
             "title": "Omkar and Last Class of Math (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1183,7 +1178,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-nlw56vpim",
+            "id": "z23-p-lrv5wds6x",
             "title": "Little Girl and Game (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1193,7 +1188,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-e10fnpo5m",
+            "id": "z23-p-fknvmt3lt",
             "title": "Two Buttons (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1203,7 +1198,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-57m3ezhdl",
+            "id": "z23-p-oam3x16wb",
             "title": "Exams (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1213,7 +1208,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-61s2tjwrr",
+            "id": "z23-p-piulswto2",
             "title": "Powered Addition (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -1227,16 +1222,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-5",
+    "id": "z23-5",
     "title": "Two Pointers & Sliding Window",
-    "description": "Do index ek hi direction mein chal rahe hain aur **kabhi peeche nahi jaate** — isliye O(n^2) ka kaam O(n) mein. Sliding window isi ka special case hai jahan window ek condition maintain karti hai (sum ≤ k, distinct ≤ k). Asli sawaal: 'window kab shrink karun?'",
     "subSections": [
       {
-        "id": "sub-5",
+        "id": "z23-sub-5",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-nzem6yxq6",
+            "id": "z23-p-hx2msut69",
             "title": "Prepend and Append (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1246,7 +1240,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-f52ex84b9",
+            "id": "z23-p-dqzbgm90w",
             "title": "Favorite Sequence (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1256,7 +1250,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zd7z5ebei",
+            "id": "z23-p-kqepcv0k2",
             "title": "1D Eraser (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1266,7 +1260,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-4ymx23n5y",
+            "id": "z23-p-7fu9gqy6z",
             "title": "Ski Resort (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1276,7 +1270,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-o8b7rulfa",
+            "id": "z23-p-a8khqgp1w",
             "title": "Black and White Stripe (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1286,7 +1280,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-o305jwuam",
+            "id": "z23-p-ai5qt4rtf",
             "title": "Traffic Light (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1296,7 +1290,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-pghs05cw3",
+            "id": "z23-p-0es1eigj8",
             "title": "BerSU Ball (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -1306,7 +1300,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-85qqstpnm",
+            "id": "z23-p-boyor7kxj",
             "title": "Alternating Subsequence (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -1316,7 +1310,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6riii1bj7",
+            "id": "z23-p-0g6db77ys",
             "title": "Queries about less or equal elements (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1326,7 +1320,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-gkvm699ul",
+            "id": "z23-p-pj58iqfsi",
             "title": "Find the Different Ones! (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1336,7 +1330,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-668vy7yk0",
+            "id": "z23-p-llm6i0j8h",
             "title": "Strange Birthday Party (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1346,7 +1340,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qsx5fe9zc",
+            "id": "z23-p-xgtcgpef4",
             "title": "Shuffle (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1356,7 +1350,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-8j4bnpw4p",
+            "id": "z23-p-jss1vtk6i",
             "title": "Most socially-distanced subsequence (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1366,7 +1360,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ds2cu2y01",
+            "id": "z23-p-rs1c4x6k1",
             "title": "Pair of Topics (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1376,7 +1370,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ddf8xiycc",
+            "id": "z23-p-g8pgytl5u",
             "title": "Zero Remainder Array (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1386,7 +1380,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-egh2gl1n6",
+            "id": "z23-p-qyldjv3hq",
             "title": "2^Sort (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1396,7 +1390,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-lwps7rc49",
+            "id": "z23-p-5xmp1sy7j",
             "title": "Tracking Segments (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -1406,7 +1400,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6nuxdfoce",
+            "id": "z23-p-t8tg05uuj",
             "title": "Maximum Sum of Products (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -1416,7 +1410,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-hda9yjbye",
+            "id": "z23-p-xyeo1ktbo",
             "title": "Number of Ways (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -1430,16 +1424,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-6",
+    "id": "z23-6",
     "title": "Prefix Sums, Difference Arrays & Cumulative Tricks",
-    "description": "Ek baar O(n) precompute karo, phir har range query O(1). `pre[r]−pre[l−1]`. Ulta version — **difference array** — range updates O(1) mein karta hai aur end mein ek prefix sum se final array. Prefix XOR, prefix count, prefix min sab isi family mein.",
     "subSections": [
       {
-        "id": "sub-6",
+        "id": "z23-sub-6",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-s17p411hy",
+            "id": "z23-p-msr0u4lsx",
             "title": "Odd Queries (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -1449,7 +1442,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ecuso8h1z",
+            "id": "z23-p-00z3w2921",
             "title": "Three Indices (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -1459,7 +1452,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-farltyf9u",
+            "id": "z23-p-k6dot0nbm",
             "title": "Progressive Square (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1469,7 +1462,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-o91padiv8",
+            "id": "z23-p-h81lbsupl",
             "title": "A and B and Compilation Errors (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -1479,7 +1472,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-noz83rowr",
+            "id": "z23-p-swrpd75xu",
             "title": "Eating Candies (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -1489,7 +1482,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-x8lkhfufr",
+            "id": "z23-p-0r23ahenl",
             "title": "Bad Prices (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -1499,7 +1492,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-jtrypdb5p",
+            "id": "z23-p-fd3973qc8",
             "title": "Dora and Search (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -1509,7 +1502,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-fzim29iiy",
+            "id": "z23-p-640f1so34",
             "title": "Matryoshkas (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -1519,7 +1512,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vh6d0uizw",
+            "id": "z23-p-p6x6v53e9",
             "title": "Box Fitting (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1529,7 +1522,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ragekg7m2",
+            "id": "z23-p-v8n6z9gdy",
             "title": "Karen and Coffee (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1539,7 +1532,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-1cncbrc73",
+            "id": "z23-p-kr7w13d1i",
             "title": "Phoenix and Beauty (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1549,7 +1542,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-yqiecrwej",
+            "id": "z23-p-xajhgtyv4",
             "title": "Greg and Array (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1559,7 +1552,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-1tkifn8t6",
+            "id": "z23-p-4348x8ist",
             "title": "Epic Transformation (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1569,7 +1562,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-alcecyi5t",
+            "id": "z23-p-u0nmus5i6",
             "title": "Array Game (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1579,7 +1572,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-hqwor6e8s",
+            "id": "z23-p-wf7s6twre",
             "title": "Rotation Matching (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1589,7 +1582,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ylub8gyzk",
+            "id": "z23-p-th3c7fbaj",
             "title": "Little Girl and Maximum Sum (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -1599,7 +1592,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-1uodyuuh8",
+            "id": "z23-p-8ytivrdna",
             "title": "Potions (Hard Version) (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -1609,7 +1602,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-w4paeqevc",
+            "id": "z23-p-ejk27elfk",
             "title": "Orac and LCM (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -1619,7 +1612,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ajayyv45g",
+            "id": "z23-p-oy8fcui9b",
             "title": "Constructing the Array (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -1633,16 +1626,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-7",
+    "id": "z23-7",
     "title": "Binary Search — array pe aur **answer pe**",
-    "description": "Sorted array mein element dhoondhna sirf 10% use hai. Asli power: **binary search on answer**. Agar `check(x)` monotonic hai (x sahi hai to x+1 bhi sahi), to answer pe binary search karo — optimization problem ek decision problem ban jaata hai, jo hamesha aasan hota hai.",
     "subSections": [
       {
-        "id": "sub-7",
+        "id": "z23-sub-7",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-f05ap9cbg",
+            "id": "z23-p-qxdamxn41",
             "title": "Legs (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1652,7 +1644,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-3ljmsznux",
+            "id": "z23-p-wlm0a7lbg",
             "title": "Can I Square? (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1662,7 +1654,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-anc0dgj61",
+            "id": "z23-p-zelunncx2",
             "title": "Square Year (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1672,7 +1664,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-hhqpy4z40",
+            "id": "z23-p-owagva5wn",
             "title": "Journey (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1682,7 +1674,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-0kt5npwyc",
+            "id": "z23-p-fxxgkpvuv",
             "title": "K-divisible Sum (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1692,7 +1684,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-rb7yjpw8f",
+            "id": "z23-p-u52k3gw96",
             "title": "Different Divisors (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1702,7 +1694,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-nsnthriuz",
+            "id": "z23-p-g4obygsxp",
             "title": "Interesting drink (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -1712,7 +1704,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-z7xgvrolk",
+            "id": "z23-p-1oen8gp2r",
             "title": "Cardboard for Pictures (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -1722,7 +1714,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-b5o05dzd1",
+            "id": "z23-p-ckn2go481",
             "title": "T-primes (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1732,7 +1724,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zsntbym8k",
+            "id": "z23-p-ula0vmpac",
             "title": "K-th Beautiful String (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1742,7 +1734,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-1h9rewzce",
+            "id": "z23-p-umikujy1a",
             "title": "Yet Another Problem About Pairs Satisfying an Inequality (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1752,7 +1744,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-2552r7364",
+            "id": "z23-p-r941o5nr7",
             "title": "Chat Ban (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1762,7 +1754,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-wyutg5aq6",
+            "id": "z23-p-hovtfi5nu",
             "title": "Jumping Through Segments (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1772,7 +1764,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-r90hsy86s",
+            "id": "z23-p-273rkifwh",
             "title": "Magic Powder - 1 (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1782,7 +1774,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vqs671g3q",
+            "id": "z23-p-jquh9h3v4",
             "title": "Schedule Management (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -1792,7 +1784,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-jzfurghex",
+            "id": "z23-p-gecobsnod",
             "title": "Cellular Network (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -1802,7 +1794,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-bftcm08gn",
+            "id": "z23-p-feiw2xglk",
             "title": "To Become Max (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -1812,7 +1804,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qa1cj1tat",
+            "id": "z23-p-22xs5p1bw",
             "title": "Meeting on the Line (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -1822,7 +1814,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ppwmanusq",
+            "id": "z23-p-lgdv7phwr",
             "title": "Erase and Extend (Easy Version) (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -1832,7 +1824,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-tbqos28wb",
+            "id": "z23-p-8uz8sjpus",
             "title": "Modified GCD (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -1842,7 +1834,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-lkq2rc0cu",
+            "id": "z23-p-jnprblzpv",
             "title": "Password (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -1852,7 +1844,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9pfysuuew",
+            "id": "z23-p-skn43fh0a",
             "title": "Multiplication Table (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -1862,7 +1854,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-xq8cx1syy",
+            "id": "z23-p-79q1npq8t",
             "title": "Mike and Feet (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -1872,7 +1864,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-84dc2x3y2",
+            "id": "z23-p-hjqij3m1v",
             "title": "Multiset (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -1882,7 +1874,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-nnifkswy6",
+            "id": "z23-p-4r3ekw1w4",
             "title": "Odd-Even Subsequence (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -1896,16 +1888,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-8",
+    "id": "z23-8",
     "title": "STL / Containers — set, map, multiset, priority_queue",
-    "description": "Jitni tez tum sahi container chun sakte ho, utni tez tum implement kar sakte ho. `set` = sorted + unique + O(log n) neighbour queries (`lower_bound`). `multiset` = duplicates allowed, erase karte waqt **iterator se erase karo, value se nahi** (warna saare copies ud jaayenge). `priority_queue` = 'har baar current best nikaalo'. `map` = frequency/index lookup.",
     "subSections": [
       {
-        "id": "sub-8",
+        "id": "z23-sub-8",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-ox4v6yv8r",
+            "id": "z23-p-suspcohfk",
             "title": "ICPC Balloons (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1915,7 +1906,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-fau4v6nbq",
+            "id": "z23-p-zmxfb1htk",
             "title": "Advantage (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1925,7 +1916,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-a24tv1pkb",
+            "id": "z23-p-dt0pklog0",
             "title": "Word Game (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1935,7 +1926,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-p4fbjm098",
+            "id": "z23-p-glnrsrxza",
             "title": "Remove Prefix (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1945,7 +1936,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-c71sarmf5",
+            "id": "z23-p-kqqxnd3bj",
             "title": "Redstone? (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -1955,7 +1946,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-acqb60f52",
+            "id": "z23-p-pse1bh05n",
             "title": "Numeric String Template (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -1965,7 +1956,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-l0akejgwm",
+            "id": "z23-p-uat6uxxau",
             "title": "Sereja and Suffixes (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -1975,7 +1966,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ropdbwadg",
+            "id": "z23-p-wr0x4ebkk",
             "title": "Erase First or Second Letter (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -1985,7 +1976,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-alyjxxlzj",
+            "id": "z23-p-946ztw6ll",
             "title": "Balanced Tunnel (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -1995,7 +1986,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vdxy4s2al",
+            "id": "z23-p-zos32ejrt",
             "title": "Grouping Increases (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2005,7 +1996,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ha6hufg7l",
+            "id": "z23-p-708k7oanb",
             "title": "Berland Regional (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2015,7 +2006,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-uam6h2ilv",
+            "id": "z23-p-09m2t9kfm",
             "title": "Element Extermination (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2025,7 +2016,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-r3tyoqloy",
+            "id": "z23-p-htxslnwcl",
             "title": "Han Solo and Lazer Gun (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2035,7 +2026,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-fbwy8uyxk",
+            "id": "z23-p-9ngn5429m",
             "title": "Journey Planning (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2045,7 +2036,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-pn69jzr3v",
+            "id": "z23-p-id5wa6hpi",
             "title": "Potions (Easy Version) (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -2055,7 +2046,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-p0y5r2vj4",
+            "id": "z23-p-gryjui4ja",
             "title": "Data Structures Fan (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -2065,7 +2056,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-j8rny92xk",
+            "id": "z23-p-tdwv7krve",
             "title": "Good Subarrays (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2075,7 +2066,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-z7eqym1m9",
+            "id": "z23-p-3pnuiybzl",
             "title": "Distinct Characters Queries (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2085,7 +2076,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-p15ddw194",
+            "id": "z23-p-ln197aluc",
             "title": "Longest Regular Bracket Sequence (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -2099,16 +2090,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-9",
+    "id": "z23-9",
     "title": "Strings — Basics",
-    "description": "Beginner-level string problems mein 90% kaam frequency count, character mapping, ya do-pointer comparison hai. `cnt[26]` array tumhara sabse zyada use hone wala tool hai. Anagram, palindrome check, case conversion, token parsing — sab isi mein.",
     "subSections": [
       {
-        "id": "sub-9",
+        "id": "z23-sub-9",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-593uwpezq",
+            "id": "z23-p-8ev590syx",
             "title": "Way Too Long Words (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2118,7 +2108,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-aayb7f890",
+            "id": "z23-p-3kivm3vfq",
             "title": "Word (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2128,7 +2118,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9b23lm33r",
+            "id": "z23-p-nz46cj2x2",
             "title": "Anton and Danik (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2138,7 +2128,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-p5ngk7zpn",
+            "id": "z23-p-i7d1efl10",
             "title": "Translation (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2148,7 +2138,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zqboo2r3p",
+            "id": "z23-p-609jx7mxd",
             "title": "Pangram (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2158,7 +2148,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-8g07nuenj",
+            "id": "z23-p-uc3tuyq8t",
             "title": "Anton and Polyhedrons (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2168,7 +2158,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-mjo7bkddf",
+            "id": "z23-p-prwyf28sp",
             "title": "Codeforces Checking (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2178,7 +2168,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-u0syp709m",
+            "id": "z23-p-e2op8os9h",
             "title": "Dubstep (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -2188,7 +2178,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-cgu5bawuo",
+            "id": "z23-p-l22vynqhc",
             "title": "Make Them Equal (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2198,7 +2188,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-cjq4o06ml",
+            "id": "z23-p-snwhlugxd",
             "title": "Prinzessin der Verurteilung (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2208,7 +2198,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-izbzr47gx",
+            "id": "z23-p-yf1f2m0n9",
             "title": "AccurateLee (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2218,7 +2208,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-yj7bnpuio",
+            "id": "z23-p-xi7wbtsc8",
             "title": "Grandma Capa Knits a Scarf (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2228,7 +2218,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zq7be1ucc",
+            "id": "z23-p-vtntu9qf0",
             "title": "Substring and Subsequence (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2238,7 +2228,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-oo74msj3q",
+            "id": "z23-p-fywvgqoyt",
             "title": "Removal of Unattractive Pairs (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2248,7 +2238,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-xm2f4zcf0",
+            "id": "z23-p-xu9c1ibgd",
             "title": "Anton and currency you all know (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -2258,7 +2248,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-3i407jpwg",
+            "id": "z23-p-w1juutv9z",
             "title": "Subsequence Hate (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2268,7 +2258,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-48127ia43",
+            "id": "z23-p-xx0arc3k4",
             "title": "Codeforces Subsequences (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -2278,7 +2268,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-0nc8x2zcy",
+            "id": "z23-p-krxr6kshn",
             "title": "K-Complete Word (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -2288,7 +2278,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-kh7iph991",
+            "id": "z23-p-h7162rg5r",
             "title": "They Are Everywhere (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -2302,16 +2292,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-10",
+    "id": "z23-10",
     "title": "Greedy with Proof — exchange argument",
-    "description": "Yahan se greedy 'guess karke submit' se 'derive karke submit' ban jaati hai. **Exchange argument**: maan lo optimal answer mein tumhari greedy choice nahi hai — dikhao ki usse swap karke answer kharab nahi hota. Isse proof mil jaata hai. Doosra tool: sorting order ko do adjacent elements compare karke derive karna (Job Sequencing / Fractional Knapsack ka asli reason).",
     "subSections": [
       {
-        "id": "sub-10",
+        "id": "z23-sub-10",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-tkyz5ksxh",
+            "id": "z23-p-puc7z6jy4",
             "title": "Random Teams (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -2321,7 +2310,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-l5ggt6v8g",
+            "id": "z23-p-npgqm2ew7",
             "title": "Maximal AND (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -2331,7 +2320,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-74ilneyb7",
+            "id": "z23-p-fottihr6q",
             "title": "Queue (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -2341,7 +2330,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-eh9ihy2ro",
+            "id": "z23-p-d045z9er2",
             "title": "Rumor (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -2351,7 +2340,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-cv4ve1bd0",
+            "id": "z23-p-nl943cs48",
             "title": "Arranging The Sheep (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2361,7 +2350,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qxgbzagg4",
+            "id": "z23-p-esncpa0lb",
             "title": "Drazil and Factorial (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2371,7 +2360,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-xhpomt2na",
+            "id": "z23-p-rl2sf1sk8",
             "title": "Anna and the Valentine's Day Gift (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2381,7 +2370,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-cd857dq11",
+            "id": "z23-p-y8z75hl4u",
             "title": "Regular Bracket Sequence (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2391,7 +2380,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-0cj8guz7h",
+            "id": "z23-p-yy4al9aan",
             "title": "Product 1 Modulo N (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2401,7 +2390,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-8wuj9yarr",
+            "id": "z23-p-pkggenyzk",
             "title": "Circle of Monsters (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2411,7 +2400,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-0e267a6dv",
+            "id": "z23-p-86g7as06k",
             "title": "Multiples of Length (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2421,7 +2410,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-8z4ex3kxg",
+            "id": "z23-p-pwxt5aq3d",
             "title": "Keshi Is Throwing a Party (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2431,7 +2420,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-67zbev1jf",
+            "id": "z23-p-jmkx8jwjl",
             "title": "Counting Kangaroos is Fun (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2441,7 +2430,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-rli274xm6",
+            "id": "z23-p-21zdzo9vt",
             "title": "Set or Decrease (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2451,7 +2440,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-bdm5ovmiv",
+            "id": "z23-p-v1de5x8ff",
             "title": "Doremy's IQ (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2461,7 +2450,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vjyqd2noz",
+            "id": "z23-p-3whz4nyuy",
             "title": "Solve The Maze (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -2471,7 +2460,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-3ywc7om0u",
+            "id": "z23-p-6ytru0swg",
             "title": "Table Decorations (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -2481,7 +2470,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6f4x817v5",
+            "id": "z23-p-9gm968mfq",
             "title": "Stoned Game (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -2491,7 +2480,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-wue2pbh71",
+            "id": "z23-p-hn0rua5x5",
             "title": "Prefix-Suffix Palindrome (Hard version) (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -2505,16 +2494,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-11",
+    "id": "z23-11",
     "title": "Constructive Algorithms — CP ka signature topic",
-    "description": "Yahan tumhe answer *dhoondhna* nahi, **banana** hai: 'aisa array/graph/string bana do jo ye condition satisfy kare'. Interview DSA mein ye topic bilkul nahi aata — aur CF Div2 A/B/C mein har contest mein aata hai. Recipe: chhote cases haath se bana ke pattern dhoondho, ek simple family (all-same, alternating, 1..n) try karo, aur **impossible kab hai** wo separately prove karo.",
     "subSections": [
       {
-        "id": "sub-11",
+        "id": "z23-sub-11",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-89fhczzzd",
+            "id": "z23-p-ahbmfndrp",
             "title": "Difference of GCDs (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -2524,7 +2512,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-07p2m4sw0",
+            "id": "z23-p-5g8j23sjv",
             "title": "Palindrome Game (easy version) (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2534,7 +2522,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-apfdolfiv",
+            "id": "z23-p-c8ekebkhl",
             "title": "Make Almost Equal With Mod (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2544,7 +2532,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-pg0ecr1il",
+            "id": "z23-p-f1xz71wxj",
             "title": "Districts Connection (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2554,7 +2542,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zuwl5oag6",
+            "id": "z23-p-djy0wzmp8",
             "title": "Challenging Cliffs (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2564,7 +2552,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-m6pagdbo5",
+            "id": "z23-p-5pjw38qh7",
             "title": "Before an Exam (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2574,7 +2562,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-2izl38szd",
+            "id": "z23-p-5t4e5m47w",
             "title": "k-LCM (easy version) (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -2584,7 +2572,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ga87i7w5l",
+            "id": "z23-p-zclu015v0",
             "title": "Anti-Sudoku (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -2594,7 +2582,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vdzp36m37",
+            "id": "z23-p-b36zu3u6s",
             "title": "Bracket Coloring (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2604,7 +2592,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-5vpnrqq3a",
+            "id": "z23-p-1dcpacebs",
             "title": "Hossam and Friends (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2614,7 +2602,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ujci6n7h6",
+            "id": "z23-p-1e8khugey",
             "title": "Team (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2624,7 +2612,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-4ullzdkpb",
+            "id": "z23-p-u2ov5zx0h",
             "title": "Find The Array (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2634,7 +2622,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-gbgfm3hgh",
+            "id": "z23-p-yq1luxkor",
             "title": "AND Sequences (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2644,7 +2632,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-u6b6laz74",
+            "id": "z23-p-s87l0acme",
             "title": "Plus and Multiply (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -2654,7 +2642,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-g8ygt8m58",
+            "id": "z23-p-9vbuhlbjb",
             "title": "Factorials and Powers of Two (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -2664,7 +2652,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-wmn5o3vtl",
+            "id": "z23-p-v1eella2r",
             "title": "Special Permutation (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2674,7 +2662,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-tsag94r00",
+            "id": "z23-p-w06noc6ez",
             "title": "Another Problem About Dividing Numbers (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -2684,7 +2672,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-fgnwrbwur",
+            "id": "z23-p-an7s1rff1",
             "title": "Prefix Flip (Hard Version) (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -2694,7 +2682,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-k7segvkfv",
+            "id": "z23-p-b0o0ssohb",
             "title": "Baby Ehab Partitions Again (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -2704,7 +2692,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ujuiq3ugx",
+            "id": "z23-p-v4dqgnqe5",
             "title": "Array Destruction (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -2714,7 +2702,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-53mmwkzg4",
+            "id": "z23-p-v79kyzeaq",
             "title": "Soldier and Number Game (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -2724,7 +2712,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-2jehhi1l8",
+            "id": "z23-p-kwi8itre7",
             "title": "Ehab the Xorcist (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -2734,7 +2722,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-x3mi0573i",
+            "id": "z23-p-re9bwj6pu",
             "title": "Bits (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -2744,7 +2732,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-haz2pykax",
+            "id": "z23-p-45foak4ut",
             "title": "Carousel (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -2754,7 +2742,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-edfkc63dx",
+            "id": "z23-p-fzbsic1m4",
             "title": "Replace by MEX (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -2764,7 +2752,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-34k8jkwh9",
+            "id": "z23-p-rbhr4wezo",
             "title": "Two Divisors (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -2774,7 +2762,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zywj3y74y",
+            "id": "z23-p-n4fhlsimj",
             "title": "Engineer Artem (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -2788,16 +2776,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-12",
+    "id": "z23-12",
     "title": "Number Theory I — divisors, sieve, GCD, modular arithmetic",
-    "description": "Char cheezein poori tarah pakdo: (1) divisors O(√n) mein — `i*i<=n` loop, (2) **Sieve of Eratosthenes** O(n log log n) + smallest-prime-factor se O(log n) factorization, (3) `gcd(a,b)` Euclid se + `lcm = a/g*b` (pehle divide, warna overflow), (4) modular arithmetic — add/sub/mul mein `%` kab lagana.",
     "subSections": [
       {
-        "id": "sub-12",
+        "id": "z23-sub-12",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-70ykbss63",
+            "id": "z23-p-2yenttrmv",
             "title": "Game with Integers (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2807,7 +2794,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-apalp43ww",
+            "id": "z23-p-obw1qhm4j",
             "title": "Again Twenty Five! (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2817,7 +2804,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-k8c37uzuc",
+            "id": "z23-p-lrn8wk5qo",
             "title": "Design Tutorial: Learn from Math (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2827,7 +2814,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-eqt086tqn",
+            "id": "z23-p-905ubwp1j",
             "title": "Maximum GCD (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2837,7 +2824,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-biwptrp4h",
+            "id": "z23-p-zemyllp2b",
             "title": "United We Stand (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2847,7 +2834,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-bxde402sv",
+            "id": "z23-p-ty5m235tt",
             "title": "Bachgold Problem (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -2857,7 +2844,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-oxr6m55zf",
+            "id": "z23-p-7r3ednb2i",
             "title": "Odd Divisor (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -2867,7 +2854,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-kbjhltn1w",
+            "id": "z23-p-cd3852m5z",
             "title": "Ilya and Bank Account (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -2877,7 +2864,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-u8ichxsjp",
+            "id": "z23-p-nc79wg4tx",
             "title": "Buying Shovels (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -2887,7 +2874,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-l92p3ers8",
+            "id": "z23-p-ry7gn5erx",
             "title": "Divisible Pairs (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -2897,7 +2884,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-4k4oselwr",
+            "id": "z23-p-9iqnma10s",
             "title": "Divide and Equalize (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -2907,7 +2894,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-67l050zun",
+            "id": "z23-p-loqnusbu8",
             "title": "Mere Array (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -2917,7 +2904,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-mt4bsh5nk",
+            "id": "z23-p-yr47tvkxb",
             "title": "I Hate 1111 (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2927,7 +2914,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-gryttx7lg",
+            "id": "z23-p-qyqa3w8f3",
             "title": "Orac and Models (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2937,7 +2924,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-laqg0c1r4",
+            "id": "z23-p-035s9y5i9",
             "title": "Mashmokh and ACM (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2947,7 +2934,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-5w2pjy6nv",
+            "id": "z23-p-75t6rd3j8",
             "title": "Number Game (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -2957,7 +2944,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-83n97npls",
+            "id": "z23-p-tamsyps9c",
             "title": "Row GCD (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2967,7 +2954,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-tfbwek9xi",
+            "id": "z23-p-dceccxhh2",
             "title": "LCM Challenge (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2977,7 +2964,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zyc2duomy",
+            "id": "z23-p-gjg46fyol",
             "title": "Partitioning the Array (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -2991,16 +2978,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-13",
+    "id": "z23-13",
     "title": "Combinatorics I — counting, nCr, pigeonhole",
-    "description": "Counting ki teen buniyaadi lines: multiply rule (independent choices), add rule (disjoint cases), aur 'poora minus bura' (complementary counting — jab 'at least one' dikhe to yahi socho). nCr chhote n ke liye Pascal triangle se; bade n ke liye factorial + modular inverse (§26 mein).",
     "subSections": [
       {
-        "id": "sub-13",
+        "id": "z23-sub-13",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-egq4tdxsr",
+            "id": "z23-p-ktkd7llxc",
             "title": "Pasha and Stick (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -3010,7 +2996,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-0wvm6ljde",
+            "id": "z23-p-5n327nki5",
             "title": "Counting Orders (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -3020,7 +3006,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-osjfm3sjl",
+            "id": "z23-p-lxx7h6d8m",
             "title": "Lucky Numbers (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -3030,7 +3016,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-atzmgdrws",
+            "id": "z23-p-oz6dk1ycr",
             "title": "Tavas and SaDDas (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -3040,7 +3026,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-gzizshy1k",
+            "id": "z23-p-fboa8zcsu",
             "title": "AND 0, Sum Big (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -3050,7 +3036,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-0hxan697r",
+            "id": "z23-p-cegyx9lvf",
             "title": "Yet Another Broken Keyboard (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -3060,7 +3046,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-xfxdqd23l",
+            "id": "z23-p-ybjuzp40n",
             "title": "Dreamoon and WiFi (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -3070,7 +3056,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-sus0u83xt",
+            "id": "z23-p-f6vg4phn3",
             "title": "Make it Alternating (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -3080,7 +3066,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ucjm73ccu",
+            "id": "z23-p-1htbdjyqr",
             "title": "Ball in Berland (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3090,7 +3076,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-elh7ejd5b",
+            "id": "z23-p-dueg4pzah",
             "title": "Weird Sum (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3100,7 +3086,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-tvnfzl0my",
+            "id": "z23-p-t8bf4rplq",
             "title": "The Number of Products (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3110,7 +3096,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ufn5f084j",
+            "id": "z23-p-gdwjndaxi",
             "title": "Beautiful Triple Pairs (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3120,7 +3106,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-xnvf08bo5",
+            "id": "z23-p-uwrn1fgur",
             "title": "Fun (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3130,7 +3116,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-4xak64sgh",
+            "id": "z23-p-fpobm4vpm",
             "title": "Running for Gold (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3140,7 +3126,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qljgr3ryu",
+            "id": "z23-p-dafvxnhy7",
             "title": "Kuroni and Impossible Calculation (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -3150,7 +3136,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-7exgpmi3n",
+            "id": "z23-p-bferufw48",
             "title": "Advertising Agency (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -3160,7 +3146,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-c3xyel4kk",
+            "id": "z23-p-tey82luny",
             "title": "Chat Screenshots (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -3170,7 +3156,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-n9cfq73rf",
+            "id": "z23-p-mpplwcbef",
             "title": "Modulo Sum (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -3180,7 +3166,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-35h793i8c",
+            "id": "z23-p-z90g9cauu",
             "title": "Classy Numbers (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -3194,16 +3180,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-14",
+    "id": "z23-14",
     "title": "Bitmasks & Bit Tricks",
-    "description": "Number ko **set ki tarah** dekhna: i-th bit = i-th element present hai ya nahi. Isse subsets pe iterate karna trivial ho jaata hai (`for m in 0..2^n-1`). Saath hi XOR ki do properties CP mein sona hain: `x^x=0` aur XOR associative — isliye 'ek hi element odd baar aaya hai' O(1) space mein.",
     "subSections": [
       {
-        "id": "sub-14",
+        "id": "z23-sub-14",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-vndm4io1v",
+            "id": "z23-p-wgaco1154",
             "title": "Odd One Out (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -3213,7 +3198,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-yvzkxc1s0",
+            "id": "z23-p-38q5fiu0v",
             "title": "Not Quite Latin Square (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -3223,7 +3208,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-3ge488fil",
+            "id": "z23-p-nevwxtu67",
             "title": "We Need the Zero (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -3233,7 +3218,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-edvyilekg",
+            "id": "z23-p-4gps9d21z",
             "title": "And Then There Were K (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -3243,7 +3228,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-4dyikhun8",
+            "id": "z23-p-x137zo47z",
             "title": "Sum in Binary Tree (800)",
             "completed": false,
             "difficulty": "Easy",
@@ -3253,7 +3238,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-pr3b48o27",
+            "id": "z23-p-suvr09han",
             "title": "Mocha and Math (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -3263,7 +3248,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-8v9czma9d",
+            "id": "z23-p-good38izk",
             "title": "Raising Bacteria (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -3273,7 +3258,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-seb7lcipy",
+            "id": "z23-p-yaqsbexts",
             "title": "Rock and Lever (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -3283,7 +3268,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-2205ro14b",
+            "id": "z23-p-pklzx5zba",
             "title": "Johnny and Another Rating Drop (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3293,7 +3278,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-8dmpwew0q",
+            "id": "z23-p-jcpoyv2o2",
             "title": "Fortune Telling (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3303,7 +3288,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ns5msg21x",
+            "id": "z23-p-xv18nnkm9",
             "title": "Iva & Pav (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3313,7 +3298,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-b2v8lwhlp",
+            "id": "z23-p-fjhctv1kx",
             "title": "Powers Of Two (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3323,7 +3308,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-x7vq29gte",
+            "id": "z23-p-k8vnu5o0q",
             "title": "Bitwise Balancing (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3333,7 +3318,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-o5dd6ws37",
+            "id": "z23-p-dt39iib0z",
             "title": "Adding Powers (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3343,7 +3328,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-7xcfeamzx",
+            "id": "z23-p-ykhuxmlms",
             "title": "Vlad and a Pair of Numbers (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3353,7 +3338,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-2dl57hbhx",
+            "id": "z23-p-hknk5hta3",
             "title": "XOR-distance (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3363,7 +3348,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-xyt2zdias",
+            "id": "z23-p-ux4l5kfup",
             "title": "AND, OR and square sum (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -3373,7 +3358,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-2n7cybklr",
+            "id": "z23-p-v3v3mri6s",
             "title": "Cobb (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -3383,7 +3368,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-459cdipqw",
+            "id": "z23-p-dff2p397i",
             "title": "Vasiliy's Multiset (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -3397,16 +3382,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-15",
+    "id": "z23-15",
     "title": "Recursion, Backtracking & Subset Enumeration",
-    "description": "Recursion = 'ek decision lo, baaki chhote problem pe bharosa karo'. Backtracking = decision try karo → recurse → **undo** karo. CP mein ye pure form mein kam aata hai (n chhota hona chahiye) par DP aur DFS dono ki jad yahi hai, isliye state design yahin seekhna hai.",
     "subSections": [
       {
-        "id": "sub-15",
+        "id": "z23-sub-15",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-1ok0ipisn",
+            "id": "z23-p-wv2ztwjne",
             "title": "Gold Rush (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -3416,7 +3400,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-odxwlm4dn",
+            "id": "z23-p-raj6uolgi",
             "title": "Badge (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -3426,7 +3410,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-c4uktmrjj",
+            "id": "z23-p-gbjmn1e2i",
             "title": "XOR and Triangle (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -3436,7 +3420,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-bzxvbe50q",
+            "id": "z23-p-t35vyo3p9",
             "title": "Petr and a Combination Lock (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -3446,7 +3430,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-cj7ptn1s4",
+            "id": "z23-p-iwajg84jb",
             "title": "Ice Skating (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -3456,7 +3440,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-bj24z6fzg",
+            "id": "z23-p-e35kcut5m",
             "title": "Secret Box (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -3466,7 +3450,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-oi3yja48s",
+            "id": "z23-p-rweezln4e",
             "title": "Johnny and His Hobbies (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -3476,7 +3460,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-gv6mg01hn",
+            "id": "z23-p-ql1jym8pj",
             "title": "Arrow Path (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -3486,7 +3470,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-8bffnsdpw",
+            "id": "z23-p-ybthcdfjd",
             "title": "AGAGA XOOORRR (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3496,7 +3480,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-pk4dk8wu2",
+            "id": "z23-p-xjtb86gqe",
             "title": "a-Good String (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3506,7 +3490,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zulv068ap",
+            "id": "z23-p-9jqxxpxnc",
             "title": "Unforgivable Curse (hard version) (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3516,7 +3500,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-y22qxo1zl",
+            "id": "z23-p-27tm07r8g",
             "title": "Minimum Ties (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3526,7 +3510,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-cquzli9pe",
+            "id": "z23-p-jjvgmm1yv",
             "title": "Good Triples (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -3536,7 +3520,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-0ha4zu1tk",
+            "id": "z23-p-sozaskubn",
             "title": "Boboniu and Bit Operations (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -3546,7 +3530,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ic7q0xl08",
+            "id": "z23-p-3atryeshv",
             "title": "Remove Exactly Two (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -3556,7 +3540,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-02gqaxwrw",
+            "id": "z23-p-ux94vi4aj",
             "title": "Gardener and Tree (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -3566,7 +3550,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-gy4lfpx9u",
+            "id": "z23-p-vp7ndmngq",
             "title": "Beautiful Numbers (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -3576,7 +3560,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-y2zm175za",
+            "id": "z23-p-d4wdqcddk",
             "title": "Zigzags (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -3586,7 +3570,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ty0ifr3c2",
+            "id": "z23-p-zgze1w5ia",
             "title": "Dr. Evil Underscores (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -3600,16 +3584,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-16",
+    "id": "z23-16",
     "title": "DP I — 1D, knapsack, LIS, grid",
-    "description": "DP ek hi sawaal ka jawaab hai: **'meri state kya hai?'** State wo minimum information hai jisse aage ka answer decide ho jaaye. Uske baad transition likhna mechanical hai. Char foundation families: linear DP (`dp[i]` = i tak ka best), knapsack (`dp[i][w]`), LIS, aur grid paths. Ratta nahi — recurrence khud likho, phir base case, phir order.",
     "subSections": [
       {
-        "id": "sub-16",
+        "id": "z23-sub-16",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-r68cout1w",
+            "id": "z23-p-zzkwv0ehs",
             "title": "Kefa and First Steps (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -3619,7 +3602,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-554onchky",
+            "id": "z23-p-7vxivkmmr",
             "title": "New Year's Number (900)",
             "completed": false,
             "difficulty": "Easy",
@@ -3629,7 +3612,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9h30pac5l",
+            "id": "z23-p-5n8690647",
             "title": "Raspberries (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -3639,7 +3622,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-pi7tcjrp2",
+            "id": "z23-p-3r778f6m7",
             "title": "Fence (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -3649,7 +3632,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-06xcx1w0t",
+            "id": "z23-p-uaxtu4ybf",
             "title": "Ilya and Queries (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -3659,7 +3642,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-lf0110x2u",
+            "id": "z23-p-iu4vi82k1",
             "title": "Negatives and Positives (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -3669,7 +3652,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-2vpy4e7le",
+            "id": "z23-p-ijwt9oatu",
             "title": "Kuriyama Mirai's Stones (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -3679,7 +3662,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-n36llfwa2",
+            "id": "z23-p-jnxzbyxx5",
             "title": "Flipping Game (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -3689,7 +3672,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-y3nojynxp",
+            "id": "z23-p-8xjxv8yr6",
             "title": "Cut Ribbon (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -3699,7 +3682,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-glr8s7l0p",
+            "id": "z23-p-dcyjtdzfo",
             "title": "Just Eat It! (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -3709,7 +3692,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-5xgnczerm",
+            "id": "z23-p-s5sitjt4s",
             "title": "Given Length and Sum of Digits... (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3719,7 +3702,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-351z43b3b",
+            "id": "z23-p-76j5mr85s",
             "title": "Vacations (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3729,7 +3712,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-nw7t4bz67",
+            "id": "z23-p-7w93upxrt",
             "title": "Basketball Exercise (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3739,7 +3722,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-n83nz31co",
+            "id": "z23-p-tmm19m6ry",
             "title": "Boredom (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3749,7 +3732,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-gkcf6t0dn",
+            "id": "z23-p-7t9n3yfxg",
             "title": "Two Substrings (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3759,7 +3742,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-a8qiwtyaq",
+            "id": "z23-p-7qj4p95kv",
             "title": "Woodcutters (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3769,7 +3752,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-o4h0l7358",
+            "id": "z23-p-zjmqo5qo5",
             "title": "Divisibility by Eight (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3779,7 +3762,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ybspf24ei",
+            "id": "z23-p-oog7y9zj3",
             "title": "Mortal Kombat Tower (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -3789,7 +3772,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-isyxberp0",
+            "id": "z23-p-zrim4wft0",
             "title": "Array Walk (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -3799,7 +3782,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-n835p6657",
+            "id": "z23-p-c5gvgs43z",
             "title": "Hard problem (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -3809,7 +3792,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-lfxtpkrkk",
+            "id": "z23-p-vnfrt0ulv",
             "title": "Make Them Equal (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -3819,7 +3802,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-86x0akyrn",
+            "id": "z23-p-j641t133o",
             "title": "Sending a Sequence Over the Network (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -3829,7 +3812,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ysip3yam9",
+            "id": "z23-p-css8kwvg5",
             "title": "Flowers (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -3839,7 +3822,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9dc40898d",
+            "id": "z23-p-0h111xleh",
             "title": "Consecutive Subsequence (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -3849,7 +3832,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qabioaa2i",
+            "id": "z23-p-56wm3pocn",
             "title": "Caesar's Legions (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -3859,7 +3842,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-xu3hxmmb3",
+            "id": "z23-p-j6golv5lm",
             "title": "Greg and Graph (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -3869,7 +3852,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ewi81y5d6",
+            "id": "z23-p-nk9axjxzh",
             "title": "The Sports Festival (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -3879,7 +3862,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vy4vhbiy7",
+            "id": "z23-p-ts660q879",
             "title": "Zuma (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -3889,7 +3872,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-8723u02n2",
+            "id": "z23-p-rgmw25wc1",
             "title": "The least round way (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -3903,16 +3886,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-17",
+    "id": "z23-17",
     "title": "Graphs I — modelling, DFS/BFS, components, bipartite",
-    "description": "CP mein sabse bada graph skill algorithm nahi, **modelling** hai: 'ye problem actually graph hai' pehchanna. States = nodes, allowed moves = edges. Uske baad DFS (connectivity, cycle, components) aur BFS (unweighted shortest path, level-by-level) 80% kaam kar dete hain. Grid bhi graph hai — 4/8 directions.",
     "subSections": [
       {
-        "id": "sub-17",
+        "id": "z23-sub-17",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-rw1p9ockm",
+            "id": "z23-p-m4h8cgs1f",
             "title": "New Year Transportation (1000)",
             "completed": false,
             "difficulty": "Easy",
@@ -3922,7 +3904,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-kvxjsve3o",
+            "id": "z23-p-v5j12mm3b",
             "title": "Frog Jumps (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -3932,7 +3914,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-99m2o08gp",
+            "id": "z23-p-k3iuct5t7",
             "title": "The Lakes (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -3942,7 +3924,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zkeuuj27k",
+            "id": "z23-p-ua7wwpj5c",
             "title": "DZY Loves Chessboard (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -3952,7 +3934,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-22yrbias5",
+            "id": "z23-p-ougd8cj97",
             "title": "Fall Down (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -3962,7 +3944,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-2sl6eqfzg",
+            "id": "z23-p-oma3uwvea",
             "title": "Forever Winter (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -3972,7 +3954,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-nh6tl17on",
+            "id": "z23-p-4980rs43z",
             "title": "News Distribution (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3982,7 +3964,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-tcijm8cu6",
+            "id": "z23-p-v31umti4o",
             "title": "Learning Languages (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -3992,7 +3974,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-tocukrime",
+            "id": "z23-p-0uduro0fg",
             "title": "Cyclic Components (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4002,7 +3984,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-jhq08g6lq",
+            "id": "z23-p-fpu38mg42",
             "title": "Lunar New Year and a Wander (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4012,7 +3994,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-bjlm3qo1w",
+            "id": "z23-p-iu4a7kku3",
             "title": "Binary String Reconstruction (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4022,7 +4004,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-a7esrn218",
+            "id": "z23-p-pz7qht2gf",
             "title": "Bear and Friendship Condition (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4032,7 +4014,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-0jyyt91gd",
+            "id": "z23-p-zn1glupxd",
             "title": "Maze (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -4042,7 +4024,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vtyjm3l1d",
+            "id": "z23-p-d41a09bpd",
             "title": "Round Dance (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -4052,7 +4034,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-gdnbme78a",
+            "id": "z23-p-7t062k67g",
             "title": "Split Into Two Sets (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -4062,7 +4044,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-b9pcl0ulk",
+            "id": "z23-p-dcxvg3b1c",
             "title": "Checkposts (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4072,7 +4054,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-59bkc519e",
+            "id": "z23-p-3xa178u1f",
             "title": "King's Path (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -4082,7 +4064,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ki6jlkg67",
+            "id": "z23-p-vf5obc49o",
             "title": "0-1 MST (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4092,7 +4074,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-r27prmw30",
+            "id": "z23-p-f1l7r1k7i",
             "title": "Directing Edges (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -4106,16 +4088,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-18",
+    "id": "z23-18",
     "title": "Trees I — rooting, subtree DP, diameter",
-    "description": "Tree = connected graph with n−1 edges, no cycle — isliye har do nodes ke beech **exactly ek path**. Ye property saari tree problems ki jad hai. Root karke socho: har node ke liye 'mere subtree ka answer' compute karo (bottom-up), phir combine. Diameter = do DFS, ya ek DFS mein top-2 depths.",
     "subSections": [
       {
-        "id": "sub-18",
+        "id": "z23-sub-18",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-lggbo9wgu",
+            "id": "z23-p-q2onifxsu",
             "title": "Begginer's Zelda (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -4125,7 +4106,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-hb1ajce49",
+            "id": "z23-p-1j5zt3mpg",
             "title": "Christmas Spruce (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -4135,7 +4116,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-q9g4gh9do",
+            "id": "z23-p-8ea6yn4uc",
             "title": "Strong Vertices (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -4145,7 +4126,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-lkbygeurp",
+            "id": "z23-p-eyw6l5tdf",
             "title": "Mahmoud and Ehab and the bipartiteness (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -4155,7 +4136,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-8a6bgz42e",
+            "id": "z23-p-75zx77jfa",
             "title": "Masha and a Beautiful Tree (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -4165,7 +4146,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-8kf8yexwn",
+            "id": "z23-p-iepoh6w2w",
             "title": "Queen (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -4175,7 +4156,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9u4m3blv3",
+            "id": "z23-p-xmem5q4kb",
             "title": "Kefa and Park (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4185,7 +4166,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6ojwagb9z",
+            "id": "z23-p-f7yrz8mxa",
             "title": "Ehab and Path-etic MEXs (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4195,7 +4176,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-tu59npypl",
+            "id": "z23-p-l3wf6nk5r",
             "title": "Game On Leaves (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -4205,7 +4186,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-4sl7ncpni",
+            "id": "z23-p-nnirk1sa7",
             "title": "Minimal Height Tree (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -4215,7 +4196,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-8qjp4zz7b",
+            "id": "z23-p-wjognaj1m",
             "title": "Valera and Elections (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -4225,7 +4206,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-siciepzyy",
+            "id": "z23-p-x11ussiyp",
             "title": "Military Problem (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -4235,7 +4216,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-srfm604z1",
+            "id": "z23-p-4h7wo97gx",
             "title": "Valid BFS? (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4245,7 +4226,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-pk1ylykzf",
+            "id": "z23-p-6hpl6y1tz",
             "title": "Cover it! (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4255,7 +4236,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-28ik6ngd1",
+            "id": "z23-p-ixifj17qt",
             "title": "Link Cut Centroids (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4265,7 +4246,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-1zzd5qw83",
+            "id": "z23-p-nudyj3t1r",
             "title": "0, 1, 2, Tree! (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4275,7 +4256,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ukfhp6gt4",
+            "id": "z23-p-4mv0pvmvq",
             "title": "Uncle Bogdan and Country Happiness (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -4285,7 +4266,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-n2utryaua",
+            "id": "z23-p-dmxas4pxy",
             "title": "Roads not only in Berland (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4295,7 +4276,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-hodxtqhyj",
+            "id": "z23-p-kbdp1iyed",
             "title": "Tree Queries (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4309,16 +4290,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-19",
+    "id": "z23-19",
     "title": "DSU (Union–Find) & variants",
-    "description": "Ek hi sawaal ka super-fast jawaab: 'ye do cheezein same group mein hain?' Path compression + union by size/rank ke saath practically O(1). CP mein iska sabse bada use **offline trick** hai: edges hataane wali problem ko ulta chala ke edges *jodne* wali bana do — kyunki DSU delete nahi kar sakta, sirf merge.",
     "subSections": [
       {
-        "id": "sub-19",
+        "id": "z23-sub-19",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-2ohyevnsx",
+            "id": "z23-p-esa96c03g",
             "title": "Double Perspective (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -4328,7 +4308,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-cph4jodx4",
+            "id": "z23-p-rsw3a1kms",
             "title": "Books Exchange (hard version) (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -4338,7 +4318,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-duzxfm5po",
+            "id": "z23-p-brspochsp",
             "title": "Kousuke's Assignment (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -4348,7 +4328,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-bvlzxpacy",
+            "id": "z23-p-0p0vw6lvh",
             "title": "Disappearing Permutation (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -4358,7 +4338,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-c9rt0zp50",
+            "id": "z23-p-f2odozd6q",
             "title": "Mocha and Diana (Easy Version) (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -4368,7 +4348,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-omtitolue",
+            "id": "z23-p-fbhnbxhwn",
             "title": "Edgy Trees (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4378,7 +4358,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-8t9uitv9s",
+            "id": "z23-p-7wzf7vlus",
             "title": "Knight Tournament (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4388,7 +4368,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-grw43u08a",
+            "id": "z23-p-xj069bw60",
             "title": "Secret Passwords (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4398,7 +4378,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-pavcfvggc",
+            "id": "z23-p-jmzmhzrcb",
             "title": "Path Queries (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -4408,7 +4388,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9equgj2u1",
+            "id": "z23-p-yon9aockn",
             "title": "Rating System (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -4418,7 +4398,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-1hoqvfdtr",
+            "id": "z23-p-2djpbzbpx",
             "title": "Andrey and Escape from Capygrad (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -4428,7 +4408,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-wsvq94vhi",
+            "id": "z23-p-ee4zh78zo",
             "title": "Shichikuji and Power Grid (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4438,7 +4418,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-5wfuorp7z",
+            "id": "z23-p-h79kt4b3y",
             "title": "Replace the Numbers (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4448,7 +4428,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-fqltymedx",
+            "id": "z23-p-milm836rw",
             "title": "MinOr Tree (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4458,7 +4438,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-4s3811ztr",
+            "id": "z23-p-pskh783qx",
             "title": "Make It Connected (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4468,7 +4448,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6msbbesvh",
+            "id": "z23-p-nsbluxwjx",
             "title": "SUM and REPLACE (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -4478,7 +4458,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-gtknog9h7",
+            "id": "z23-p-6bsbsvluo",
             "title": "Minimum spanning tree for each edge (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -4488,7 +4468,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-xopqsx1li",
+            "id": "z23-p-5vfvej3l7",
             "title": "Lomsat gelral (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -4498,7 +4478,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-kd8h74lds",
+            "id": "z23-p-d89z24dbh",
             "title": "Dominant Indices (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -4512,16 +4492,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-20",
+    "id": "z23-20",
     "title": "Shortest Paths — Dijkstra, 0-1 BFS, Bellman–Ford, Floyd–Warshall",
-    "description": "Poora topic ek decision table hai: unweighted → **BFS**. Edge weights sirf 0 aur 1 → **0-1 BFS** (deque, front pe 0 push, back pe 1). Non-negative weights → **Dijkstra** with priority_queue, O(E log V). Negative edges ya 'at most k edges' → **Bellman–Ford**. All-pairs with V ≤ 400 → **Floyd–Warshall** O(V^3). Galat algorithm chunna = TLE ya WA, dono.",
     "subSections": [
       {
-        "id": "sub-20",
+        "id": "z23-sub-20",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-euybz3hko",
+            "id": "z23-p-tk4akzik3",
             "title": "Great Graphs (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -4531,7 +4510,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-uab5rtzyt",
+            "id": "z23-p-fy2lqhg3s",
             "title": "Eastern Exhibition (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4541,7 +4520,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zkfraxrle",
+            "id": "z23-p-cs1z2j4hh",
             "title": "Did We Get Everything Covered? (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4551,7 +4530,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-2cd7yury2",
+            "id": "z23-p-08jjpxsa8",
             "title": "Air Conditioners (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4561,7 +4540,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6hr51betb",
+            "id": "z23-p-161nivyqp",
             "title": "The Two Routes (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -4571,7 +4550,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-7x5k81zpw",
+            "id": "z23-p-qs9jfq8dl",
             "title": "Colored Portals (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -4581,7 +4560,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-1ckh0otqs",
+            "id": "z23-p-59v2n6b8d",
             "title": "Zero Path (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4591,7 +4570,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qe3m3hhyx",
+            "id": "z23-p-1rdb5bd14",
             "title": "Igor In the Museum (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4601,7 +4580,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qrd6sfgv1",
+            "id": "z23-p-9oqen0ul7",
             "title": "Dijkstra? (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4611,7 +4590,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-n6fo8rzo0",
+            "id": "z23-p-mrg3zq1lx",
             "title": "Roads in Berland (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4621,7 +4600,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-w0xb9aunz",
+            "id": "z23-p-4wnye5c5p",
             "title": "Nearest Opposite Parity (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4631,7 +4610,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-q3e0qbucf",
+            "id": "z23-p-x9w8vvjrl",
             "title": "Shortest Cycle (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4641,7 +4620,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-htt5kwf61",
+            "id": "z23-p-k0t9vsl82",
             "title": "Cow and Fields (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -4651,7 +4630,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-a4vzohe6p",
+            "id": "z23-p-ec0b2ij74",
             "title": "Jzzhu and Cities (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -4661,7 +4640,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-mhxk8e6py",
+            "id": "z23-p-7a9rql3sm",
             "title": "Buy a Ticket (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -4671,7 +4650,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-jqeeom98m",
+            "id": "z23-p-qp8w2drfu",
             "title": "Police Stations (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -4681,7 +4660,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-4u9dcypt1",
+            "id": "z23-p-u85zh0xos",
             "title": "Legacy (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -4691,7 +4670,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9mbvtnesn",
+            "id": "z23-p-kuwd7k2cy",
             "title": "Minimum Path (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -4701,7 +4680,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-2rzzv4mrz",
+            "id": "z23-p-b998l89ob",
             "title": "The Shortest Statement (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -4715,16 +4694,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-21",
+    "id": "z23-21",
     "title": "Topological Sort, DAG DP & Strongly Connected Components",
-    "description": "DAG (directed acyclic graph) pe cheezein aasaan ho jaati hain: topological order mein process karo aur DP linear ban jaata hai (longest path, count paths — jo general graph mein NP-hard hai). Aur agar graph mein cycles hain? **SCC condense karo** (Kosaraju/Tarjan) — har SCC ek node ban jaata hai aur graph DAG ban jaata hai. Ye 'cycle wali problem ko DAG problem banane' ka standard move hai.",
     "subSections": [
       {
-        "id": "sub-21",
+        "id": "z23-sub-21",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-e4wpixul5",
+            "id": "z23-p-24hwks02m",
             "title": "Journey (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4734,7 +4712,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-hwhoodzbx",
+            "id": "z23-p-il47u74a8",
             "title": "NP-Hard Problem (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4744,7 +4722,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-l4iks1afv",
+            "id": "z23-p-dyisbydia",
             "title": "Cut 'em all! (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4754,7 +4732,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-fs1emzlmm",
+            "id": "z23-p-84h53eonj",
             "title": "Add Zeros (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4764,7 +4742,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-og32wlam5",
+            "id": "z23-p-qj2htxx04",
             "title": "Nastya and Potions (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4774,7 +4752,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-4isy6hvqb",
+            "id": "z23-p-o0gsr85mb",
             "title": "Graph Without Long Directed Paths (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4784,7 +4762,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-kvnsrtaqo",
+            "id": "z23-p-5uxgnydsn",
             "title": "Choosing Capital for Treeland (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4794,7 +4772,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-uj53qctwt",
+            "id": "z23-p-squrc5tmw",
             "title": "Maximum White Subtree (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -4804,7 +4782,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-gkirzvx5x",
+            "id": "z23-p-offn5fqv7",
             "title": "Bertown roads (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -4814,7 +4792,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ggnmvfiiy",
+            "id": "z23-p-mig6t44k5",
             "title": "Reachability from the Capital (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -4824,7 +4802,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ppwdcsn25",
+            "id": "z23-p-64vjw2ubv",
             "title": "Captain Flint and Treasure (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -4834,7 +4812,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zhyka372h",
+            "id": "z23-p-0j2ulfbme",
             "title": "Number of Simple Paths (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -4844,7 +4822,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-pig4bk5cm",
+            "id": "z23-p-mrn8emmjf",
             "title": "Connected Components? (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -4854,7 +4832,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-rtsn29soc",
+            "id": "z23-p-7pu2u3tyv",
             "title": "Water Tree (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -4864,7 +4842,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-mphfi50i1",
+            "id": "z23-p-155sw2heu",
             "title": "We Need More Bosses (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -4874,7 +4852,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-2qj7x8u18",
+            "id": "z23-p-jrhwyegua",
             "title": "Tree Requests (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -4884,7 +4862,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-omffqo6nw",
+            "id": "z23-p-amfrdr2q1",
             "title": "Centroids (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -4894,7 +4872,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-d6iekzkl9",
+            "id": "z23-p-itqp4jt6l",
             "title": "Journey (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -4904,7 +4882,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-erqql290r",
+            "id": "z23-p-gxsri3mmn",
             "title": "Minimal Labels (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -4918,16 +4896,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-22",
+    "id": "z23-22",
     "title": "Minimum Spanning Tree — Kruskal & Prim",
-    "description": "'Sabko jodne ki minimum cost' = MST. Kruskal = edges sort karo + DSU se cycle avoid karo (implement karna aasaan, isliye CP mein default). Prim = Dijkstra jaisa, dense graph pe better. Do properties jo problems mein exploit hoti hain: **cut property** aur ye ki MST har pair ke path ka **maximum edge minimize** karta hai (minimax path) — bahut si problems isi ek line pe khadi hain.",
     "subSections": [
       {
-        "id": "sub-22",
+        "id": "z23-sub-22",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-1fi2xivw2",
+            "id": "z23-p-g5vi1zmr1",
             "title": "Neo's Escape (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4937,7 +4914,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-523s1e4n8",
+            "id": "z23-p-ihixxcgm1",
             "title": "Graph Composition (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4947,7 +4924,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-11xlvuz2b",
+            "id": "z23-p-ei3l32tpi",
             "title": "Cthulhu (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -4957,7 +4934,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-670isk4gm",
+            "id": "z23-p-7md6ta9vq",
             "title": "Timofey and a tree (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -4967,7 +4944,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-fqt5rxgp2",
+            "id": "z23-p-t0jfcvjgt",
             "title": "String Transformation 1 (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4977,7 +4954,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ivob1zak3",
+            "id": "z23-p-gmrz5s3kf",
             "title": "Cow and Snacks (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4987,7 +4964,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-641izsrvb",
+            "id": "z23-p-ai534nr8i",
             "title": "Harmonious Graph (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -4997,7 +4974,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-2v7q7sq7y",
+            "id": "z23-p-ndzzamqx7",
             "title": "The Third Letter (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -5007,7 +4984,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vfdnjlqsm",
+            "id": "z23-p-sfyosbp1j",
             "title": "GCD and MST (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5017,7 +4994,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-a6i6u0pzb",
+            "id": "z23-p-6uhgke6kp",
             "title": "The Door Problem (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5027,7 +5004,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-gakjsala3",
+            "id": "z23-p-7borlnyow",
             "title": "Monopole Magnets (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5037,7 +5014,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-g4i7zz9ze",
+            "id": "z23-p-9j2oc53gr",
             "title": "By the Assignment (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5047,7 +5024,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9qyt2kn9n",
+            "id": "z23-p-epezoqxab",
             "title": "Counting Graphs (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5057,7 +5034,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ri33mlugu",
+            "id": "z23-p-nxs46ve6q",
             "title": "Count Paths (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5067,7 +5044,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-1ugrnwtgi",
+            "id": "z23-p-ktxlnztyh",
             "title": "Edges in MST (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -5077,7 +5054,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-n7ckxrwxf",
+            "id": "z23-p-7rxy7hl0s",
             "title": "Imbalance Value of a Tree (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -5087,7 +5064,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-nl8o66scc",
+            "id": "z23-p-mcz2wg0ak",
             "title": "Mocha and Diana (Hard Version) (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -5101,16 +5078,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-23",
+    "id": "z23-23",
     "title": "Range Queries — Fenwick (BIT) & Segment Tree",
-    "description": "Prefix sum tab tootta hai jab **updates** aane lagte hain. Fenwick tree: point update + prefix query, dono O(log n), code 10 line ka — CP mein sabse zyada type kiya jaane wala DS. Segment tree: zyada general (koi bhi associative merge — min, max, gcd, sum, custom struct) + range update with lazy. Rule: kaam Fenwick se ho raha hai to Fenwick likho, contest mein time bachta hai.",
     "subSections": [
       {
-        "id": "sub-23",
+        "id": "z23-sub-23",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-zdwhw7dey",
+            "id": "z23-p-vwqut9las",
             "title": "Greetings (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -5120,7 +5096,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-f4a81ejwo",
+            "id": "z23-p-9n0wp93xd",
             "title": "Final Boss (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -5130,7 +5106,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-j3wdjgjuk",
+            "id": "z23-p-zd7djw18p",
             "title": "Binary String To Subsequences (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -5140,7 +5116,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-red518c6a",
+            "id": "z23-p-kzof12jrc",
             "title": "Tea Tasting (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -5150,7 +5126,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9hrpdnw2e",
+            "id": "z23-p-ggvkn9rcl",
             "title": "Equalize the Array (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -5160,7 +5136,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-xpc395epc",
+            "id": "z23-p-0sxfgr5c0",
             "title": "Non-zero Segments (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -5170,7 +5146,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-tickd3yam",
+            "id": "z23-p-4707tcopd",
             "title": "Maximum width (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -5180,7 +5156,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vlee567uy",
+            "id": "z23-p-ybghw09mh",
             "title": "k-Amazing Numbers (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -5190,7 +5166,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-v00jw9up0",
+            "id": "z23-p-ord3lo9xi",
             "title": "Alternating Current (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5200,7 +5176,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-80843z97q",
+            "id": "z23-p-4o0uhezbj",
             "title": "Xenia and Bit Operations (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -5210,7 +5186,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-79y72fpjr",
+            "id": "z23-p-11i8539oh",
             "title": "Sereja and Brackets (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5220,7 +5196,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-a0ydvlpa0",
+            "id": "z23-p-tzcnb405s",
             "title": "XOR on Segment (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5230,7 +5206,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-q08ia6d8r",
+            "id": "z23-p-2pylccl7c",
             "title": "Yet Another Yet Another Task (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5240,7 +5216,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9orv5qd79",
+            "id": "z23-p-v9yj9k16q",
             "title": "Ant colony (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -5250,7 +5226,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-79e5ujil8",
+            "id": "z23-p-0k6b1vo82",
             "title": "Max Median (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -5260,7 +5236,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-p79yjmzvv",
+            "id": "z23-p-3seny2efc",
             "title": "Powerful array (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -5270,7 +5246,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-fj29zh0f3",
+            "id": "z23-p-dg3nohn69",
             "title": "Circular RMQ (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -5280,7 +5256,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6a7pupj98",
+            "id": "z23-p-gwt8rkp4v",
             "title": "XOR and Favorite Number (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -5290,7 +5266,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zi3qe0qkx",
+            "id": "z23-p-jbjtfx60a",
             "title": "The Child and Sequence (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -5300,7 +5276,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-re9o2juk1",
+            "id": "z23-p-ag9dqjh5w",
             "title": "Xenia and Tree (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -5310,7 +5286,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-kfeihw8ri",
+            "id": "z23-p-d14iux9hl",
             "title": "Tree and Queries (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -5324,16 +5300,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-24",
+    "id": "z23-24",
     "title": "DP II — bitmask DP, DP on trees, interval DP, digit DP",
-    "description": "Foundation DP ke baad chaar 'state ki shape' seekhni hoti hai: **bitmask DP** (n ≤ 20, state = kaun-kaun visit ho chuke), **tree DP** (state = node + kuch flag, bachchon se merge), **interval DP** (`dp[l][r]`, length pe loop — matrix chain, palindrome partition), aur **digit DP** (number ko digits pe DP, state = position + tight flag + carry/sum). Chaaron ki recognition alag hai, transition nahi.",
     "subSections": [
       {
-        "id": "sub-24",
+        "id": "z23-sub-24",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-qjv6lqe3b",
+            "id": "z23-p-tyuebwck7",
             "title": "Little Girl and Maximum XOR (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -5343,7 +5318,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-nb61cawy1",
+            "id": "z23-p-bfigaep25",
             "title": "Spy-string (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -5353,7 +5328,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-s434kj3yk",
+            "id": "z23-p-evziga2ez",
             "title": "Don't Blame Me (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -5363,7 +5338,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-a11tl50bl",
+            "id": "z23-p-4b8pjun49",
             "title": "Sum of XOR Functions (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -5373,7 +5348,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-0zkaag4an",
+            "id": "z23-p-tbmu6jui5",
             "title": "Moamen and XOR (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -5383,7 +5358,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-aml4uigxl",
+            "id": "z23-p-5c8c6ad47",
             "title": "Distance in Tree (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -5393,7 +5368,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-0oji4obx7",
+            "id": "z23-p-oquzv8ch1",
             "title": "Kefa and Dishes (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -5403,7 +5378,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-mdofn9n59",
+            "id": "z23-p-pvzwrl74d",
             "title": "Tree with Maximum Cost (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -5413,7 +5388,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-t01okvehm",
+            "id": "z23-p-pv65n6u9y",
             "title": "Minimax Problem (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5423,7 +5398,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-3pi178ckk",
+            "id": "z23-p-t10y3g9hd",
             "title": "Square Subsets (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5433,7 +5408,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-im7vqnryx",
+            "id": "z23-p-aj3kkvz2f",
             "title": "Tree Shuffling (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5443,7 +5418,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ym9fksxvu",
+            "id": "z23-p-ssbuhkjfs",
             "title": "Appleman and Tree (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5453,7 +5428,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-u75einej7",
+            "id": "z23-p-5hv6dhy51",
             "title": "Tree Painting (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -5463,7 +5438,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-kbh1c3mq2",
+            "id": "z23-p-jskgkawv6",
             "title": "A and B and Lecture Rooms (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -5473,7 +5448,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vh8dzy23x",
+            "id": "z23-p-3pu0rmxx7",
             "title": "Xor-Paths (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -5483,7 +5458,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-1xpac5vgy",
+            "id": "z23-p-t99p8yttc",
             "title": "Compatible Numbers (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -5493,7 +5468,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9lr4ijlk6",
+            "id": "z23-p-dwr7p8anf",
             "title": "Team Building (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -5503,7 +5478,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-comoa8cyn",
+            "id": "z23-p-pva3vt1ck",
             "title": "Segment Sum (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -5513,7 +5488,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6chwfvlmw",
+            "id": "z23-p-8255am4ec",
             "title": "Jzzhu and Numbers (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -5527,16 +5502,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-25",
+    "id": "z23-25",
     "title": "Combinatorics II — nCr mod p, inclusion–exclusion, Catalan",
-    "description": "Yahan counting industrial ban jaati hai. **nCr mod p**: factorial + inverse factorial precompute (Fermat's little theorem se `inv(x) = x^(p-2)`), phir har nCr O(1). **Inclusion–exclusion**: 'at least one property' ko alternating sum se count karo — bitmask ke saath 2^k terms. Aur classic sequences: Catalan (balanced brackets, BSTs, triangulations), stars-and-bars (n cheezein k boxes mein), derangements.",
     "subSections": [
       {
-        "id": "sub-25",
+        "id": "z23-sub-25",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-alukluu07",
+            "id": "z23-p-2oggiml2p",
             "title": "Two Arrays (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5546,7 +5520,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-e2p0nhabx",
+            "id": "z23-p-y74jxxdt0",
             "title": "Triangle Coloring (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5556,7 +5530,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-lzzfelkto",
+            "id": "z23-p-f3svedxyj",
             "title": "Ciel and Flowers (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5566,7 +5540,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-si1gtz1xp",
+            "id": "z23-p-f4m4gvw00",
             "title": "Carrying Conundrum (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5576,7 +5550,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-wxwj7skj7",
+            "id": "z23-p-ilp17sien",
             "title": "Sum of LDS (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5586,7 +5560,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-0bmf0l4kp",
+            "id": "z23-p-be765czj0",
             "title": "Decode (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5596,7 +5570,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ijaraktzu",
+            "id": "z23-p-65txgf5cl",
             "title": "D-Function (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5606,7 +5580,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ohizzoulq",
+            "id": "z23-p-qiwwzanzz",
             "title": "How Does the Rook Move? (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5616,7 +5590,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9ndq9cfj2",
+            "id": "z23-p-7dk3i1tky",
             "title": "Modular Stability (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5626,7 +5600,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ozi8azjm3",
+            "id": "z23-p-lyi5ioh6z",
             "title": "Number of Subsequences (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5636,7 +5610,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-3qx3lp6ko",
+            "id": "z23-p-gxy2je13d",
             "title": "Invertible Bracket Sequences (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5646,7 +5620,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-w6fms1321",
+            "id": "z23-p-f2dkiprva",
             "title": "Wonderful Lightbulbs (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5656,7 +5630,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ewe4ktloh",
+            "id": "z23-p-fo6jdkysb",
             "title": "Placing Jinas (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5666,7 +5640,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-epbbw6d3d",
+            "id": "z23-p-hq1g4xp63",
             "title": "Coprime Subsequences (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5676,7 +5650,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-uvr4gaiw7",
+            "id": "z23-p-hygrue19h",
             "title": "Shuffle (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5686,7 +5660,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-3368mvpxg",
+            "id": "z23-p-eyl55hslg",
             "title": "Gerald and Giant Chess (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -5696,7 +5670,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-0x0jm6i4f",
+            "id": "z23-p-vrmk9g6d9",
             "title": "Team Work (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -5706,7 +5680,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-djaakiayp",
+            "id": "z23-p-1z4292l5u",
             "title": "Permutation Blackhole (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -5716,7 +5690,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-d5k6goc79",
+            "id": "z23-p-t2kj0zl5t",
             "title": "Vowels (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -5730,16 +5704,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-26",
+    "id": "z23-26",
     "title": "Number Theory II — Euler φ, CRT, modular inverse, matrix exponentiation",
-    "description": "Chaar advanced tools: **Euler's totient** φ(n) (coprime count, multiplicative — sieve se poora array), **modular inverse** (Fermat jab prime, extended Euclid jab nahi), **CRT** (do congruences ko ek mein merge karo), aur **matrix exponentiation** — koi bhi linear recurrence O(log n) mein (Fibonacci at n=10^18, ya k-step transitions ka count).",
     "subSections": [
       {
-        "id": "sub-26",
+        "id": "z23-sub-26",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-ur18rixi5",
+            "id": "z23-p-xu2c48j5x",
             "title": "Almost All Divisors (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5749,7 +5722,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-apqgzynk1",
+            "id": "z23-p-o8scaip31",
             "title": "Hilbert's Hotel (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5759,7 +5732,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-lz5juzxlv",
+            "id": "z23-p-38ynmkjld",
             "title": "Strange Function (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5769,7 +5742,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-jchmcjurn",
+            "id": "z23-p-jxsg99djy",
             "title": "Taxes (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5779,7 +5752,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-n4cj7eong",
+            "id": "z23-p-tekezvwj5",
             "title": "Factorial Divisibility (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5789,7 +5762,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zikk352br",
+            "id": "z23-p-7wf481rf9",
             "title": "Moderate Modular Mode (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5799,7 +5772,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6l0q5gb7b",
+            "id": "z23-p-4e7b8pwb0",
             "title": "Yet Another Counting Problem (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5809,7 +5782,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-3l1i6kvez",
+            "id": "z23-p-h6gkozegm",
             "title": "Deleting Divisors (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -5819,7 +5792,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-34rl25x9r",
+            "id": "z23-p-pozbfpkv1",
             "title": "The Football Season (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5829,7 +5802,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-psxosncok",
+            "id": "z23-p-04joelq8j",
             "title": "No Cost Too Great (Hard Version) (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5839,7 +5812,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-j9fj8oj9z",
+            "id": "z23-p-5yua5t7n0",
             "title": "Small Operations (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5849,7 +5822,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-h33tdewnd",
+            "id": "z23-p-po5jdthu8",
             "title": "The Number of Pairs (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -5859,7 +5832,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-auqppeuf6",
+            "id": "z23-p-x02eq1rok",
             "title": "GCD of an Array (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -5869,7 +5842,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-cwntwa0b8",
+            "id": "z23-p-p7kp0je7a",
             "title": "Multiples and Power Differences (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -5879,7 +5852,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ib9d6bl81",
+            "id": "z23-p-sdy2iquop",
             "title": "DZY Loves Fibonacci Numbers (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -5889,7 +5862,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-m9jaomd8i",
+            "id": "z23-p-3zkp5bo42",
             "title": "Beautiful numbers (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -5899,7 +5872,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-k41qvl6pm",
+            "id": "z23-p-adlwu44b0",
             "title": "Kuroni and the Punishment (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -5909,7 +5882,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-whr0ulvf1",
+            "id": "z23-p-8own9l76t",
             "title": "Add One (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5919,7 +5892,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-or50z0vwt",
+            "id": "z23-p-1sauooh19",
             "title": "Permutation of Rows and Columns (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5929,7 +5902,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-1dyqpjf4h",
+            "id": "z23-p-y289yu2zz",
             "title": "Quiz (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -5939,7 +5912,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-4z8lpwlqa",
+            "id": "z23-p-5q5gpe1lm",
             "title": "Barcode (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -5949,7 +5922,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-sc5xkxgtn",
+            "id": "z23-p-9u4tz0ky1",
             "title": "Infinite Set (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -5959,7 +5932,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-r8ht915wn",
+            "id": "z23-p-gyh966xam",
             "title": "Gifts Order (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -5969,7 +5942,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-cgfecc18c",
+            "id": "z23-p-g9wdhjhcv",
             "title": "Magic Gems (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -5979,7 +5952,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-oyhodq6jz",
+            "id": "z23-p-n6qub4317",
             "title": "Count Pairs (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -5989,7 +5962,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-urkumbeif",
+            "id": "z23-p-wssv2603m",
             "title": "Mahmoud and Ehab and yet another xor task (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -5999,7 +5972,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6j9jcixck",
+            "id": "z23-p-rimixqdyh",
             "title": "William The Oblivious  (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -6009,7 +5982,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ozuwswhaq",
+            "id": "z23-p-oxzty3g7p",
             "title": "Turtles (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -6023,16 +5996,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-27",
+    "id": "z23-27",
     "title": "Strings I — Hashing, KMP, Z-function",
-    "description": "Teen tools jo string comparison ko O(1)/O(n) bana dete hain. **Polynomial hashing**: kisi bhi substring ka hash O(1) mein → do substrings equal? O(1). (CF pe **do mod use karo aur random base** — anti-hash tests real hain.) **KMP**: prefix-function π[i] = longest proper prefix which is also suffix — pattern matching + 'periodicity' problems. **Z-function**: har position se longest match with prefix — KMP ka aasaan cousin.",
     "subSections": [
       {
-        "id": "sub-27",
+        "id": "z23-sub-27",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-eufjsbo8j",
+            "id": "z23-p-v7e6mtdai",
             "title": "String Equality (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -6042,7 +6014,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-jhtxcn6c6",
+            "id": "z23-p-illeqwpex",
             "title": "Torn Lucky Ticket (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -6052,7 +6024,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-2e459l0bm",
+            "id": "z23-p-zl2ahui57",
             "title": "Winner (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -6062,7 +6034,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-j5u767ort",
+            "id": "z23-p-7goqlv593",
             "title": "Zero Quantity Maximization (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -6072,7 +6044,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-jfthylmqe",
+            "id": "z23-p-nt44y11rg",
             "title": "Diluc and Kaeya (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -6082,7 +6054,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-k7saqi865",
+            "id": "z23-p-oy2xzj472",
             "title": "Prefix-Suffix Palindrome (Easy version) (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -6092,7 +6064,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-phfeyvsrv",
+            "id": "z23-p-4hjsqxp4e",
             "title": "Sequence Pair Weight (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -6102,7 +6074,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-0jckbsnio",
+            "id": "z23-p-5lz7ce1qn",
             "title": "Binary String Copying (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -6112,7 +6084,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-oq3vbcdky",
+            "id": "z23-p-5wrp83y0f",
             "title": "Gargari and Bishops (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6122,7 +6094,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-jcfgtj5h8",
+            "id": "z23-p-7e74jxzy0",
             "title": "Treasure Island (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6132,7 +6104,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-2d7z25wky",
+            "id": "z23-p-plpf9nrvy",
             "title": "Strange Definition (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6142,7 +6114,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-agshc6ax0",
+            "id": "z23-p-oa79wnc7y",
             "title": "Shuffling Songs (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6152,7 +6124,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-5xb8oxk5x",
+            "id": "z23-p-003x6hfmj",
             "title": "Compress Words (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -6162,7 +6134,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-84jthz6rp",
+            "id": "z23-p-u7ljgvy9j",
             "title": "Watto and Mechanism (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -6172,7 +6144,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-sc10z468u",
+            "id": "z23-p-l60fi677t",
             "title": "Erase and Extend (Hard Version) (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -6182,7 +6154,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-b4m34yntb",
+            "id": "z23-p-avuiduwzv",
             "title": "Palindrome Degree (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -6192,7 +6164,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-cgxusww91",
+            "id": "z23-p-cdbl8yxsd",
             "title": "Double Profiles (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -6202,7 +6174,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-aa8o9kb4l",
+            "id": "z23-p-7a6c28tyr",
             "title": "Message Transmission Error (hard version) (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -6212,7 +6184,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9zkcnk5tn",
+            "id": "z23-p-r9q55a05k",
             "title": "MUH and Cube Walls (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -6222,7 +6194,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-yfmtlr2o9",
+            "id": "z23-p-pzlb1fgru",
             "title": "XOR Construction (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6232,7 +6204,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-rqy7ab0vc",
+            "id": "z23-p-efr4k9tr6",
             "title": "Division + LCP (easy version) (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6242,7 +6214,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-nqq6p61ho",
+            "id": "z23-p-av5ovquho",
             "title": "Tavas and Malekas (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6252,7 +6224,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-80e6mc3f3",
+            "id": "z23-p-pvhm3tplm",
             "title": "Spy Syndrome 2 (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6262,7 +6234,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qc9vycarp",
+            "id": "z23-p-fa0vi4g15",
             "title": "Prefixes and Suffixes (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -6272,7 +6244,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6dmr72m1l",
+            "id": "z23-p-phrd02ghw",
             "title": "''a'' String Problem (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -6282,7 +6254,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-oj7vgx52l",
+            "id": "z23-p-lp8wf9rjn",
             "title": "String (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -6292,7 +6264,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-wjl0eyego",
+            "id": "z23-p-8mgtfl390",
             "title": "Messenger (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -6302,7 +6274,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-mxtipgqk3",
+            "id": "z23-p-a18e77amn",
             "title": "Match & Catch (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -6312,7 +6284,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-0j6jw7u8l",
+            "id": "z23-p-eswudz2mg",
             "title": "You Are Given Some Strings... (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -6322,7 +6294,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-wurh4w8en",
+            "id": "z23-p-20iyu8fit",
             "title": "Frequency of String (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -6336,16 +6308,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-28",
+    "id": "z23-28",
     "title": "Game Theory — Nim, Sprague–Grundy, DP games",
-    "description": "Do-player optimal play wali problems ka pura structure exist karta hai. Chhote states → **DP/memo pe win-lose**: current state losing hai agar *saare* moves opponent ko winning state pe le jaate hain. Symmetric pile games → **Nim**: XOR of pile sizes ≠ 0 ⟺ first player jeetega. Multiple independent games → **Sprague–Grundy**: har game ka Grundy number nikaalo, phir XOR. Aur bahut si easy problems sirf **parity** hain.",
     "subSections": [
       {
-        "id": "sub-28",
+        "id": "z23-sub-28",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-mq11e8el6",
+            "id": "z23-p-x28uq4hj2",
             "title": "Splitting Items (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -6355,7 +6326,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-le4qaa2id",
+            "id": "z23-p-99cnsqi18",
             "title": "Sequential Nim (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -6365,7 +6336,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-nxf52tfm6",
+            "id": "z23-p-78rh31rjt",
             "title": "Matrix Game (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -6375,7 +6346,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-5gky5yqgj",
+            "id": "z23-p-55mnlvf5m",
             "title": "Summation Game (1100)",
             "completed": false,
             "difficulty": "Easy",
@@ -6385,7 +6356,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-fgvzspfs5",
+            "id": "z23-p-jg7sg66hs",
             "title": "Even-Odd Game (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -6395,7 +6366,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qsltl1rbo",
+            "id": "z23-p-4w2fo7qwa",
             "title": "Swap Game (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -6405,7 +6376,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-cm8d2klls",
+            "id": "z23-p-6ezojtchs",
             "title": "Eat the Chip (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -6415,7 +6386,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ud2b78oh4",
+            "id": "z23-p-0z7r2z8jx",
             "title": "Alice and Bob (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -6425,7 +6396,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-802vu5l0y",
+            "id": "z23-p-0cep63ywk",
             "title": "Circle Game (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -6435,7 +6406,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-om08cmnqv",
+            "id": "z23-p-jd32nr4n7",
             "title": "Vasya and Chess (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -6445,7 +6416,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-cqzkocoav",
+            "id": "z23-p-8bti6y7w6",
             "title": "Iris and Game on the Tree (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -6455,7 +6426,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-r6lramiq7",
+            "id": "z23-p-qeidsn65n",
             "title": "Mad City (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -6465,7 +6436,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-29ni9hqb1",
+            "id": "z23-p-0s5k9b24n",
             "title": "Bag of mice (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -6475,7 +6446,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ofubsdb55",
+            "id": "z23-p-m5tuu5t02",
             "title": "World is Mine (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -6485,7 +6456,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qg8c3sn8e",
+            "id": "z23-p-u3vpeenfq",
             "title": "GCD Guess (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -6495,7 +6466,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-4mt0v3g51",
+            "id": "z23-p-vtl8o9ntv",
             "title": "Koxia and Game (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -6505,7 +6476,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-03l4kcgom",
+            "id": "z23-p-kwfps7kyc",
             "title": "The Game (Easy Version) (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -6515,7 +6486,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-288cbb71h",
+            "id": "z23-p-sab8ugdpb",
             "title": "Omkar and Circle (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -6525,7 +6496,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-a4lp7f0k7",
+            "id": "z23-p-2u7nv52cv",
             "title": "Not a Nim Problem (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -6535,7 +6506,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-z6kzy637o",
+            "id": "z23-p-84ul8u6ps",
             "title": "Challenges in school №41 (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -6545,7 +6516,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ntzoyzj6o",
+            "id": "z23-p-6adlpcei5",
             "title": "Tokitsukaze and Duel (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -6555,7 +6526,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-du7joohgg",
+            "id": "z23-p-kbl6ad24e",
             "title": "Game on Sum (Hard Version) (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -6565,7 +6536,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-3mwai0oh1",
+            "id": "z23-p-68wu9ub9p",
             "title": "Integer Game (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -6579,16 +6550,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-29",
+    "id": "z23-29",
     "title": "Probability & Expected Value",
-    "description": "Expected value ki do properties se 90% problems nikal jaati hain: **linearity** (E[X+Y] = E[X]+E[Y], independence ki zaroorat nahi — isliye har element ka contribution alag se count karo) aur **conditional expectation** (E = Σ p·E[next state], jo aksar DP ban jaata hai). Probability ko mod 10^9+7 mein 'fraction' ke roop mein rakhna hota hai — modular inverse se.",
     "subSections": [
       {
-        "id": "sub-29",
+        "id": "z23-sub-29",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-zqpm4kri0",
+            "id": "z23-p-4j38prtcc",
             "title": "Random Events (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -6598,7 +6568,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-1zs9b9fh1",
+            "id": "z23-p-udn6ryfn6",
             "title": "Little Pony and Expected Maximum (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -6608,7 +6578,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-c73mkqvcw",
+            "id": "z23-p-mzxsajkft",
             "title": "Segments Covering (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -6618,7 +6588,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-knl6vs405",
+            "id": "z23-p-58x40ugpu",
             "title": "Empty Triangle (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -6628,7 +6598,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-sl2hmqatx",
+            "id": "z23-p-o0813dywr",
             "title": "Ilya and Escalator (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -6638,7 +6608,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-imp95n6r1",
+            "id": "z23-p-8zjtoi9f2",
             "title": "Problem with Random Tests (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -6648,7 +6618,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9so7ipg87",
+            "id": "z23-p-p1xtf5w4v",
             "title": "Santa's Bot (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -6658,7 +6628,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-d23mokfwv",
+            "id": "z23-p-2clt6z65t",
             "title": "Guess the Cycle Size (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -6668,7 +6638,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-im6bc4y6r",
+            "id": "z23-p-qt1f1pm89",
             "title": "Fish (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6678,7 +6648,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-noalwtd9c",
+            "id": "z23-p-c4j1hav12",
             "title": "Bad Luck Island (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6688,7 +6658,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-99ac275n3",
+            "id": "z23-p-92njt72wj",
             "title": "Need for Pink Slips (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6698,7 +6668,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zdp57r3gs",
+            "id": "z23-p-tgttecbp2",
             "title": "Good Trip (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6708,7 +6678,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-fewga7tvk",
+            "id": "z23-p-towu3zpn1",
             "title": "Score of a Tree (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6718,7 +6688,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ze55xqttw",
+            "id": "z23-p-2qjonuqms",
             "title": "Wish I Knew How to Sort (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -6728,7 +6698,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-z9o9sy0qp",
+            "id": "z23-p-etpg9lwcz",
             "title": "Beautiful Mirrors (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -6738,7 +6708,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-nq0cnv9bf",
+            "id": "z23-p-cc73j4j6k",
             "title": "Game on Tree (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -6748,7 +6718,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-u2mit6j9e",
+            "id": "z23-p-omzbu8eql",
             "title": "LuoTianyi and the Floating Islands (Hard Version) (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -6758,7 +6728,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-0arj8g77d",
+            "id": "z23-p-ldhp2ovqa",
             "title": "Destiny (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -6768,7 +6738,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6mh3kvstz",
+            "id": "z23-p-64kxufwo3",
             "title": "Willem, Chtholly and Seniorious (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -6782,16 +6752,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-30",
+    "id": "z23-30",
     "title": "Sparse Table, LCA & Binary Lifting",
-    "description": "**Sparse table**: immutable array pe idempotent range query (min/max/gcd) O(1) mein, precompute O(n log n). **Binary lifting**: `up[v][j]` = v ka 2^j-th ancestor → k-th ancestor O(log n), aur **LCA** O(log n). Ek baar LCA aa gaya to tree pe 'path between u,v' wali har problem khul jaati hai (path length, path max, path sum with prefix-from-root).",
     "subSections": [
       {
-        "id": "sub-30",
+        "id": "z23-sub-30",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-yic4xfc6u",
+            "id": "z23-p-uucxivdsu",
             "title": "Trapmigiano Reggiano (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -6801,7 +6770,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-uxwofol90",
+            "id": "z23-p-9c6yk9khk",
             "title": "Path Prefixes (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -6811,7 +6780,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-204zf7go3",
+            "id": "z23-p-w05cgkyxo",
             "title": "Playoff Tournament (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -6821,7 +6790,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-r2t40755u",
+            "id": "z23-p-6wao00zur",
             "title": "Interesting Array (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -6831,7 +6800,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-7nle8ky1e",
+            "id": "z23-p-3l8f2a8e6",
             "title": "Enemy is weak (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6841,7 +6810,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-oeythdkpq",
+            "id": "z23-p-9n5oxo8hp",
             "title": "Fools and Roads (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6851,7 +6820,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-fro3yoa23",
+            "id": "z23-p-pwv8ktm0h",
             "title": "Propagating tree (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -6861,7 +6830,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-n5bqe2hd8",
+            "id": "z23-p-zk7tqaflp",
             "title": "Blood Cousins (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -6871,7 +6840,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vladnaxlr",
+            "id": "z23-p-9jbsggslq",
             "title": "Duff in the Army (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -6881,7 +6850,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-8m8we43pl",
+            "id": "z23-p-dz1mhjvgs",
             "title": "Minimal Segment Cover (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -6891,7 +6860,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-re0wq471e",
+            "id": "z23-p-y1pr0zgnk",
             "title": "Sausage Maximization (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -6901,7 +6870,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-l0p464cgt",
+            "id": "z23-p-cnwjkecy9",
             "title": "Tree Master (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -6911,7 +6880,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-t6w38ipby",
+            "id": "z23-p-7g022g9v6",
             "title": "Qpwoeirut and Vertices (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -6921,7 +6890,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-1kg3koebh",
+            "id": "z23-p-ci88jymio",
             "title": "XOR Tree (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -6931,7 +6900,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-k8ijy7tyz",
+            "id": "z23-p-299s3dw2e",
             "title": "Graph and Queries (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -6941,7 +6910,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-7jv2btk4n",
+            "id": "z23-p-v9lnuawt2",
             "title": "Mike and Friends (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -6951,7 +6920,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-1z5pr7d9r",
+            "id": "z23-p-gehthm7qy",
             "title": "You Are Given a Tree (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -6965,16 +6934,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-31",
+    "id": "z23-31",
     "title": "Trees Advanced — Euler tour, small-to-large, rerooting, HLD, centroid decomposition",
-    "description": "Paanch techniques jo tree problems ka top tier kholti hain. **Euler tour / flattening**: subtree ek contiguous range ban jaata hai → subtree query = range query (BIT/segtree). **Small-to-large merging**: har node pe sets merge karo chhote se bade mein — total O(n log^2 n). **Rerooting DP**: 'har node ko root maan ke answer' ek hi O(n) mein. **HLD**: path queries ko O(log^2 n) range queries mein todo. **Centroid decomposition**: 'saare paths' wali counting problems.",
     "subSections": [
       {
-        "id": "sub-31",
+        "id": "z23-sub-31",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-ytugqprb3",
+            "id": "z23-p-zrhn0yqag",
             "title": "Tree Tag (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6984,7 +6952,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-hhz5k4lm4",
+            "id": "z23-p-95au3vyhn",
             "title": "Tree XOR (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -6994,7 +6962,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qpst4sesv",
+            "id": "z23-p-ahkmwgdl7",
             "title": "A Lot of Games (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7004,7 +6972,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-boazhigm7",
+            "id": "z23-p-zz034ryou",
             "title": "Non-academic Problem (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7014,7 +6982,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-7rk5t70l4",
+            "id": "z23-p-neaumpntq",
             "title": "Design Tutorial: Inverse the Problem (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7024,7 +6992,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-888mp226s",
+            "id": "z23-p-843judsir",
             "title": "Three Paths on a Tree (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7034,7 +7002,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-h3qjbx73m",
+            "id": "z23-p-jol7dp1q1",
             "title": "Book of Evil (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7044,7 +7012,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-jjsgwnyw9",
+            "id": "z23-p-xbowp48zs",
             "title": "Ciel the Commander (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -7054,7 +7022,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-uwss8r1dy",
+            "id": "z23-p-j0rdibnfb",
             "title": "Sliding Tree (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7064,7 +7032,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-pmmalkmei",
+            "id": "z23-p-lzvrpl3w4",
             "title": "Pursuit For Artifacts (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7074,7 +7042,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-79j3yl4vy",
+            "id": "z23-p-vgunvijwa",
             "title": "Trees of Tranquillity (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7084,7 +7052,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-awd9oxnbg",
+            "id": "z23-p-305lyn917",
             "title": "DFS Checker (Hard Version) (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7094,7 +7062,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-w26w1crq5",
+            "id": "z23-p-om88wlnfv",
             "title": "Dogeforces (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7104,7 +7072,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vawt4jzsi",
+            "id": "z23-p-qr8l72i3d",
             "title": "Happy Life in University (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7114,7 +7082,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-w235jbbf5",
+            "id": "z23-p-ndcv6gf4e",
             "title": "Tree Compass (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7124,7 +7092,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zzvlkn1pq",
+            "id": "z23-p-xib2vx6if",
             "title": "Hemose in ICPC ? (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7134,7 +7102,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-99lfarbl7",
+            "id": "z23-p-casd9d1vq",
             "title": "Kingdom and its Cities (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -7144,7 +7112,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-j9az9le0v",
+            "id": "z23-p-vfhelny6b",
             "title": "Case of Computer Network (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -7154,7 +7122,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-u9u52idgu",
+            "id": "z23-p-dcwaphvvi",
             "title": "Arpa’s letter-marked tree and Mehrdad’s Dokhtar-kosh paths (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7168,16 +7136,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-32",
+    "id": "z23-32",
     "title": "Segment Tree Advanced — lazy propagation, merge-sort tree, segment tree on values, Li Chao",
-    "description": "Segment tree ki asli power extensions mein hai. **Lazy propagation**: range update + range query (assignment, add, min-with). **Merge sort tree / segtree on values**: 'kitne elements ≤ x in range' type queries. **Segment tree descent**: tree pe hi binary search karke first-index-with-property O(log n) mein. **Li Chao tree**: lines ka minimum — CHT ka dynamic version (§35). **Segment tree beats**: range chmin/chmax.",
     "subSections": [
       {
-        "id": "sub-32",
+        "id": "z23-sub-32",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-t9uzrqrsw",
+            "id": "z23-p-gp4av7mdm",
             "title": "CGCDSSQ (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7187,7 +7154,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-kh9claagk",
+            "id": "z23-p-vdtah29ts",
             "title": "Weights Division (easy version) (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7197,7 +7164,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-31v7ntd6q",
+            "id": "z23-p-31bbxo9lo",
             "title": "Money Buys Less Happiness Now  (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7207,7 +7174,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-e2rk4mnl3",
+            "id": "z23-p-z031jgphx",
             "title": "New Year Tree (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -7217,7 +7184,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-2rkomla21",
+            "id": "z23-p-5fs04stqt",
             "title": "Remainder Problem (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -7227,7 +7194,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-x1ayrh64k",
+            "id": "z23-p-pe1ykza6i",
             "title": "The Bakery (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -7237,7 +7204,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-r7x5f7lyv",
+            "id": "z23-p-cj7d3hufk",
             "title": "Clear the Multiset (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -7247,7 +7214,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-82jz4jw38",
+            "id": "z23-p-r61nh03mw",
             "title": "A Simple Task (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7257,7 +7224,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-5z1wwwbnq",
+            "id": "z23-p-5t3i6k0qx",
             "title": "Buy Low Sell High (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7267,7 +7234,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-oort3a8xx",
+            "id": "z23-p-vp3t6zcy5",
             "title": "One Occurrence (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7277,7 +7244,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-xksw83gss",
+            "id": "z23-p-bqqm92bj1",
             "title": "Blood Cousins Return (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7287,7 +7254,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-s2a1giew0",
+            "id": "z23-p-sk87ooiy8",
             "title": "Cats Transport (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7297,7 +7264,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vcs2k9k1d",
+            "id": "z23-p-65h6h9fol",
             "title": "Lucky Queries (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7307,7 +7274,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-xjifg4tuw",
+            "id": "z23-p-nccvmn4hg",
             "title": "Ciel and Gondolas (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -7317,7 +7284,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-f91jmg44p",
+            "id": "z23-p-irdi820wc",
             "title": "Holes (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -7327,7 +7294,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-v8633ossv",
+            "id": "z23-p-ml0o41pi9",
             "title": "Serega and Fun (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -7337,7 +7304,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vcog3usmz",
+            "id": "z23-p-u6jg0llb4",
             "title": "Pudding Monsters (3000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7351,16 +7318,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-33",
+    "id": "z23-33",
     "title": "Sqrt Decomposition & Mo's Algorithm",
-    "description": "Jab koi clean DS structure nahi banta, to **√n pe bharosa karo**. Sqrt decomposition: array ko √n blocks mein baanto, query = O(√n). **Mo's algorithm**: offline queries ko block order mein sort karke pointers ko incrementally move karo — total O((n+q)√n), aur 'add/remove one element' likhna aasaan hota hai jahan segment tree merge likhna mushkil. Sqrt ka teesra roop: **rebuilding** (√q operations ke baad structure dobara bana lo).",
     "subSections": [
       {
-        "id": "sub-33",
+        "id": "z23-sub-33",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-hww8yn114",
+            "id": "z23-p-b5t2dm1bx",
             "title": "Array Division (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7370,7 +7336,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-2gza7a3kr",
+            "id": "z23-p-3betuxcg7",
             "title": "Nikita and LCM (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7380,7 +7346,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ahbgyrrqw",
+            "id": "z23-p-bhf3bavih",
             "title": "Beautiful Array (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7390,7 +7356,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-1jipthhio",
+            "id": "z23-p-nrm99nv6i",
             "title": "Painting the Array I (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7400,7 +7366,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-tyyyogoo8",
+            "id": "z23-p-6z7ey9xqj",
             "title": "Array Stabilization (GCD version) (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7410,7 +7376,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-44bkyhpts",
+            "id": "z23-p-y9mf3sax2",
             "title": "Smithing Skill (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7420,7 +7386,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9na9y3h6n",
+            "id": "z23-p-suulbt24b",
             "title": "Subarray Sorting (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7430,7 +7396,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-d98tep80v",
+            "id": "z23-p-23i8lw1ha",
             "title": "Ball (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7440,7 +7406,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-bjmhsckj2",
+            "id": "z23-p-xu3eka95u",
             "title": "Traffic Lights (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7450,7 +7416,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-z5geqt1rc",
+            "id": "z23-p-id4r3cl0l",
             "title": "The Number of Subpermutations (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -7460,7 +7426,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9w67m2qku",
+            "id": "z23-p-zqwvmkvub",
             "title": "Machine Learning (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -7470,7 +7436,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-w1svm89cf",
+            "id": "z23-p-1h7d9h03c",
             "title": "Greedy Shopping (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -7480,7 +7446,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-i6ez09b7m",
+            "id": "z23-p-ca3h5ihgb",
             "title": "Query Jungle (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7494,16 +7460,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-34",
+    "id": "z23-34",
     "title": "DP Optimizations — CHT, divide & conquer, Knuth, SOS, aliens trick",
-    "description": "O(n^2) DP ko O(n log n) banane ke standard tricks. **Convex Hull Trick / Li Chao**: transition `dp[i] = min(dp[j] + a[j]·b[i])` — lines ka minimum. **Divide & conquer optimization**: jab opt[i] monotonic ho. **Knuth optimization**: interval DP mein `opt[i][j-1] ≤ opt[i][j] ≤ opt[i+1][j]`. **SOS DP (subset sum over subsets)**: 2^n·n mein saare subsets ka aggregate. **Aliens trick (Lagrangian)**: 'exactly k groups' constraint ko penalty se hatao + binary search.",
     "subSections": [
       {
-        "id": "sub-34",
+        "id": "z23-sub-34",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-vb7c80aqj",
+            "id": "z23-p-nzbw0oz3p",
             "title": "Choosing flowers (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7513,7 +7478,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-itpllr8vp",
+            "id": "z23-p-ktbb7teb5",
             "title": "Array Queries (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7523,7 +7488,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-tfsp8rs2l",
+            "id": "z23-p-k4qzq521n",
             "title": "Maximum Subarray (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7533,7 +7498,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-4totdnqmn",
+            "id": "z23-p-cp2okikbt",
             "title": "GCD Counting (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7543,7 +7508,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-k26p4yzyv",
+            "id": "z23-p-5gi787pav",
             "title": "String Coloring (hard version) (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7553,7 +7518,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-2m16zzps5",
+            "id": "z23-p-x8u35u1hg",
             "title": "Kalila and Dimna in the Logging Industry (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -7563,7 +7528,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-d73c7hnpx",
+            "id": "z23-p-yuawwck4c",
             "title": "Cut (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -7573,7 +7538,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-v12r6ephz",
+            "id": "z23-p-gf8wbveic",
             "title": "Discrete Centrifugal Jumps (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -7583,7 +7548,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-pvu34vqv0",
+            "id": "z23-p-h6lxu0gjs",
             "title": "The Fair Nut and Rectangles (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7593,7 +7558,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ne5dqux4g",
+            "id": "z23-p-zub4o36gq",
             "title": "Thief in a Shop (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7603,7 +7568,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vmio7cftv",
+            "id": "z23-p-685hzcw7h",
             "title": "Kindergarten (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7613,7 +7578,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6lelpchl5",
+            "id": "z23-p-n2jjx5vs1",
             "title": "Yet Another Minimization Problem (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -7623,7 +7588,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-t3apny7v6",
+            "id": "z23-p-d8f1czixe",
             "title": "Product Sum (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -7633,7 +7598,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-tbstj544j",
+            "id": "z23-p-tgqjjkv2e",
             "title": "Escape Through Leaf (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -7643,7 +7608,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-nhxuvohcp",
+            "id": "z23-p-lond43fqw",
             "title": "Sum (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -7653,7 +7618,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qb1foalzx",
+            "id": "z23-p-1y9o62jjq",
             "title": "Gosha is hunting (3000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7663,7 +7628,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ylxs082t6",
+            "id": "z23-p-gnbx1a1jn",
             "title": "Kia Bakes a Cake (3100)",
             "completed": false,
             "difficulty": "Hard",
@@ -7677,16 +7642,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-35",
+    "id": "z23-35",
     "title": "Flows & Matching — max flow, min cut, bipartite matching, MCMF",
-    "description": "**Max-flow min-cut theorem** CP ka sabse powerful modelling tool hai: 'minimum cost to separate / maximum pairs to match / project selection' jaise bahut se problems ek flow network ban jaate hain. Dinic ka implementation ek baar library mein daal lo. **Bipartite matching** = unit-capacity max flow (Hopcroft–Karp ya Kuhn). **König's theorem**: max matching = min vertex cover — 'minimum rows+columns to cover' wali grid problems isi se. **MCMF** jab cost bhi ho.",
     "subSections": [
       {
-        "id": "sub-35",
+        "id": "z23-sub-35",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-h13f7w1zv",
+            "id": "z23-p-45593a8zv",
             "title": "Chef Monocarp (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -7696,7 +7660,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-lmbgphhd8",
+            "id": "z23-p-wey7vif3l",
             "title": "Armchairs (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -7706,7 +7670,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9e10fk2f5",
+            "id": "z23-p-bwyqyu2bl",
             "title": "Rock, Paper, Scissors (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -7716,7 +7680,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-cylhqs0ju",
+            "id": "z23-p-01x052x1p",
             "title": "Problem about GCD (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -7726,7 +7690,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-th65wmeog",
+            "id": "z23-p-xqk3at7g1",
             "title": "Vasya And The Matrix (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -7736,7 +7700,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-shteir8x6",
+            "id": "z23-p-d1rrtgk9l",
             "title": "Vlad and Trouble at MIT (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7746,7 +7710,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ixudskrvb",
+            "id": "z23-p-sl57togzj",
             "title": "Soldier and Traveling (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -7756,7 +7720,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zd8nh3jnd",
+            "id": "z23-p-rythrcszg",
             "title": "Array and Operations (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -7766,7 +7730,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-gv08vyb8z",
+            "id": "z23-p-nu36mcuds",
             "title": "Yet Another Array Counting Problem (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7776,7 +7740,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-nlb6ammzx",
+            "id": "z23-p-kzvyp5k4i",
             "title": "Fox And Dinner (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7786,7 +7750,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-p8o4wnhv6",
+            "id": "z23-p-sfvo85fr5",
             "title": "Ann and Books (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7796,7 +7760,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-36xqlwozu",
+            "id": "z23-p-jgqqv1m6k",
             "title": "Petya and Graph (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7806,7 +7770,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-runkabe4q",
+            "id": "z23-p-irpv2jtef",
             "title": "Maximize Mex (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7816,7 +7780,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-b8rql7d1b",
+            "id": "z23-p-mk69ijbz7",
             "title": "Best Subsequence (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -7826,7 +7790,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-37ydthnrc",
+            "id": "z23-p-oriq9yxer",
             "title": "Bricks (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -7836,7 +7800,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-xib6fwb47",
+            "id": "z23-p-fsdgolvk7",
             "title": "k-Maximum Subsequence Sum (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -7846,7 +7810,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vnylj79al",
+            "id": "z23-p-9zt41qk0t",
             "title": "Goods transportation (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7856,7 +7820,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-frgwl3fdp",
+            "id": "z23-p-z9owaz4ja",
             "title": "Programming Competition (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7866,7 +7830,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vf488x1z7",
+            "id": "z23-p-nykh25f1m",
             "title": "Two Sets (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7876,7 +7840,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-r75xcwxau",
+            "id": "z23-p-y177mxton",
             "title": "Serval and Kaitenzushi Buffet (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -7886,7 +7850,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-rrm1bzf2e",
+            "id": "z23-p-mshn4nkif",
             "title": "New Year's Puzzle (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -7896,7 +7860,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-db7fc90x2",
+            "id": "z23-p-god476u2w",
             "title": "Strange Housing (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -7906,7 +7870,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-hj29f8lh2",
+            "id": "z23-p-hth3smupr",
             "title": "Star MST (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -7916,7 +7880,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-awqtz2lfd",
+            "id": "z23-p-o4g65xh8a",
             "title": "Twin Polynomials (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -7926,7 +7890,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qj13wmhla",
+            "id": "z23-p-e8a1r0ms8",
             "title": "Catowice City (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -7936,7 +7900,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-cywetedn1",
+            "id": "z23-p-t9mlqpaoa",
             "title": "Tree Modification (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -7946,7 +7910,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6ti70wyjc",
+            "id": "z23-p-uew04624r",
             "title": "Alice and Recoloring 2 (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -7956,7 +7920,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-elwfxm6xc",
+            "id": "z23-p-5r3mjtj45",
             "title": "Buying Sets (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -7970,16 +7934,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-36",
+    "id": "z23-36",
     "title": "Strings II — Suffix Array, Suffix Automaton, Aho–Corasick, Manacher",
-    "description": "String ka heavy artillery. **Manacher**: saare palindromic substrings O(n) mein. **Aho–Corasick**: ek text mein *bahut se* patterns ek saath (trie + KMP failure links). **Suffix array + LCP (Kasai)**: distinct substrings, longest repeated substring, string sorting problems. **Suffix automaton**: sabse powerful — saare distinct substrings ka DAG, O(n) mein banta hai, aur 'count occurrences of every substring' type problems trivially solve karta hai.",
     "subSections": [
       {
-        "id": "sub-36",
+        "id": "z23-sub-36",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-a3ewfb1rd",
+            "id": "z23-p-w6063qujp",
             "title": "Simons and Dividing the Rhythm (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -7989,7 +7952,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-g6dtr2y4e",
+            "id": "z23-p-edyp970nb",
             "title": "Prefix Function Queries (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -7999,7 +7962,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-e1bqbf2jj",
+            "id": "z23-p-l0akwxfda",
             "title": "Division + LCP (hard version) (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -8009,7 +7972,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-m36y2ep3n",
+            "id": "z23-p-p93tiloac",
             "title": "Om Nom and Necklace (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -8019,7 +7982,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-oy7llpet3",
+            "id": "z23-p-muv4phwzo",
             "title": "A Trivial String Problem (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -8029,7 +7992,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vny0g7ayl",
+            "id": "z23-p-vbnt3hhkv",
             "title": "Martian Strings (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -8039,7 +8002,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-i362700zp",
+            "id": "z23-p-5czajzpbi",
             "title": "Fake News (hard) (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -8049,7 +8012,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-jxdnsqum2",
+            "id": "z23-p-m92o8e5vv",
             "title": "Games on a CD (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -8059,7 +8022,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ciyz9hr6e",
+            "id": "z23-p-xzwxosr7y",
             "title": "String Set Queries (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -8069,7 +8032,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-7h313r11q",
+            "id": "z23-p-atykn5xvp",
             "title": "A Bit Similar (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -8079,7 +8042,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-84p4wuhtj",
+            "id": "z23-p-8395u7i70",
             "title": "String Compression (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -8089,7 +8052,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-jxxfbfaal",
+            "id": "z23-p-1i70x0phv",
             "title": "Forbidden Indices (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -8099,7 +8062,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-xkwtdd6ib",
+            "id": "z23-p-vo48b0w7d",
             "title": "Rescue Niwen! (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -8109,7 +8072,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-byndj8tkn",
+            "id": "z23-p-560wohlv5",
             "title": "Cyclical Quest (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -8119,7 +8082,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-a8x7nk65p",
+            "id": "z23-p-f1cpnc564",
             "title": "Little Elephant and Strings (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -8129,7 +8092,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-5dw8gvqr4",
+            "id": "z23-p-u041cnufa",
             "title": "Substrings in a String (3000)",
             "completed": false,
             "difficulty": "Hard",
@@ -8139,7 +8102,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vtxf597qd",
+            "id": "z23-p-69kon6c3s",
             "title": "Forensic Examination (3100)",
             "completed": false,
             "difficulty": "Hard",
@@ -8153,16 +8116,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-37",
+    "id": "z23-37",
     "title": "Computational Geometry",
-    "description": "Geometry mein 90% kaam do primitives se hota hai: **cross product** (orientation — left/right/collinear, aur area) aur **dot product** (angle/projection). Inhi se: point-in-polygon, segment intersection, **convex hull** (Andrew's monotone chain), closest pair (D&C), rotating calipers. Sabse bada rule: **integer arithmetic mein raho jahan tak possible ho** — floating point comparison CP mein WA ka pakka rasta hai (`long long` cross product use karo, `double` nahi).",
     "subSections": [
       {
-        "id": "sub-37",
+        "id": "z23-sub-37",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-mji3vih6p",
+            "id": "z23-p-tobe0sats",
             "title": "Rudolph and Christmas Tree (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -8172,7 +8134,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-b2kit76fc",
+            "id": "z23-p-lizopg6ux",
             "title": "Line Segments (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -8182,7 +8144,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-r67r0xnx2",
+            "id": "z23-p-kqypm4n8p",
             "title": "Fear of the Dark (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -8192,7 +8154,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-hpp3orb3k",
+            "id": "z23-p-8y2rtb3be",
             "title": "Diamond Miner (1200)",
             "completed": false,
             "difficulty": "Easy",
@@ -8202,7 +8164,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-drevqdbpt",
+            "id": "z23-p-ahny82ka3",
             "title": "Amr and Pins (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -8212,7 +8174,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-f35a0xuer",
+            "id": "z23-p-vt9nzmlnf",
             "title": "Satyam and Counting (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -8222,7 +8184,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-w9kihj676",
+            "id": "z23-p-qewvzqdlw",
             "title": "Maximize the Intersections (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8232,7 +8194,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-kwu89n8mb",
+            "id": "z23-p-jkqcow7lh",
             "title": "Vasya and Triangle (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8242,7 +8204,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zvlphfsxe",
+            "id": "z23-p-jlmjdooao",
             "title": "Blackslex and Girls (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8252,7 +8214,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-v8xfhcnx0",
+            "id": "z23-p-2s8vcjgbm",
             "title": "Aerodynamic (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8262,7 +8224,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-mbi5gd7gi",
+            "id": "z23-p-daqlc9p6i",
             "title": "Not So Simple Polygon Embedding (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -8272,7 +8234,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-gchluopqb",
+            "id": "z23-p-9a4s81pai",
             "title": "Game With Triangles (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -8282,7 +8244,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-fp4a5k5qn",
+            "id": "z23-p-3u9r4caj8",
             "title": "Pair Of Lines (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -8292,7 +8254,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-0j86bnn8z",
+            "id": "z23-p-q8libmgy2",
             "title": "Ancient Berland Circus (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -8302,7 +8264,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vq39jccb0",
+            "id": "z23-p-7ctj0fn2m",
             "title": "Nearest vectors (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -8312,7 +8274,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-kogehaonq",
+            "id": "z23-p-7pi0knz83",
             "title": "Divide Points (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -8322,7 +8284,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-al13lwgm2",
+            "id": "z23-p-3n206tcoj",
             "title": "Divide Square (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -8332,7 +8294,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-o5p2jt1n0",
+            "id": "z23-p-viwg2upz2",
             "title": "Bear and Bowling 4 (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -8342,7 +8304,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-3hkbj9h6b",
+            "id": "z23-p-qf3x44d4d",
             "title": "Commentator problem (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -8352,7 +8314,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-dr0qr0joc",
+            "id": "z23-p-kcrto97sp",
             "title": "Boboniu and String (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -8362,7 +8324,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-k4cdzinjd",
+            "id": "z23-p-dzjwppfjd",
             "title": "Omkar and Akmar (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -8376,16 +8338,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-38",
+    "id": "z23-38",
     "title": "Interactive Problems",
-    "description": "Yahan judge tumhare query ka jawaab deta hai — tumhe **limited queries mein** answer nikaalna hai. Do rules jo bhoolne pe har baar 'Idleness limit exceeded' aata hai: har query ke baad **flush** karo (`cout << endl` ya `fflush(stdout)`), aur judge ka response *padho* zaroor. Strategy usually information-theoretic hai: 'log n queries allowed' → binary search, 'n queries' → ek-ek element pooch lo, '2n' → paired comparison.",
     "subSections": [
       {
-        "id": "sub-38",
+        "id": "z23-sub-38",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-3s15tzemi",
+            "id": "z23-p-mc4g3fpdo",
             "title": "Interview (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -8395,7 +8356,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6blw8uys5",
+            "id": "z23-p-g33ztcl4n",
             "title": "PolandBall and Forest (1300)",
             "completed": false,
             "difficulty": "Medium",
@@ -8405,7 +8366,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-dq0vsqise",
+            "id": "z23-p-7gg8rtlzd",
             "title": "Lost Numbers (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -8415,7 +8376,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-jie3gmjcu",
+            "id": "z23-p-8hcu1lpxx",
             "title": "Bear and Prime 100 (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -8425,7 +8386,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-r970h260b",
+            "id": "z23-p-zjrf20agd",
             "title": "Password Cracking (1400)",
             "completed": false,
             "difficulty": "Medium",
@@ -8435,7 +8396,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-oxerd57da",
+            "id": "z23-p-sgapuq5nh",
             "title": "Ruler (easy version) (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -8445,7 +8406,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ws8jwnb80",
+            "id": "z23-p-swaat92ae",
             "title": "Chocolate Bunny (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -8455,7 +8416,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-fi850mbmn",
+            "id": "z23-p-rqfqsne8b",
             "title": "Guess the K-th Zero (Easy version) (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -8465,7 +8426,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-0qedhnkp3",
+            "id": "z23-p-fvy7xi7f3",
             "title": "Take a Guess (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8475,7 +8436,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-wm4tz3vt9",
+            "id": "z23-p-pb9079a0i",
             "title": "Lost Tree (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8485,7 +8446,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-glvz2dyts",
+            "id": "z23-p-e6g629sux",
             "title": "Rocket (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8495,7 +8456,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ywmzqw9mm",
+            "id": "z23-p-35ija6zmk",
             "title": "Genokraken (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8505,7 +8466,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-3umoyfoxm",
+            "id": "z23-p-v2sl3xj9i",
             "title": "Tournament Countdown (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8515,7 +8476,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-i37b5rhu1",
+            "id": "z23-p-v88p5gwmq",
             "title": "Batteries (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8525,7 +8486,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-5mfvgl48k",
+            "id": "z23-p-isv8i36ej",
             "title": "Guessing the Greatest (hard version) (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -8535,7 +8496,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-gvxy0sci9",
+            "id": "z23-p-tj50q8bu7",
             "title": "XOR Guessing (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -8545,7 +8506,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9dvm3xb6z",
+            "id": "z23-p-hf0aclp0p",
             "title": "Cat, Fox and Maximum Array Split (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -8555,7 +8516,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-j8wddbcf6",
+            "id": "z23-p-vz8m99zib",
             "title": "Hacking Numbers (Hard Version) (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -8565,7 +8526,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-badnxqcqq",
+            "id": "z23-p-ud4jwz3w5",
             "title": "Hidden Single (Version 1) (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -8579,16 +8540,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-39",
+    "id": "z23-39",
     "title": "Divide & Conquer, Meet-in-the-Middle, Ternary Search, Bitset",
-    "description": "Chaar independent par high-value tools. **Divide & conquer**: merge sort counting (inversions), CDQ divide & conquer, D&C on answer. **Meet-in-the-middle**: n ≤ 40 → do halves mein todo, 2^20 + 2^20 (2^40 nahi). **Ternary search**: unimodal function ka max/min (convex/concave — is baat ko prove karo, guess na karo). **Bitset**: O(n^2/64) — knapsack, reachability, string matching mein constant factor 64x, jo TLE ko AC bana deta hai.",
     "subSections": [
       {
-        "id": "sub-39",
+        "id": "z23-sub-39",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-nxlqiqbyd",
+            "id": "z23-p-561cjrdj8",
             "title": "Maximum Crossings (Hard Version) (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -8598,7 +8558,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-i33otx07r",
+            "id": "z23-p-zec9qwcac",
             "title": "Guess The Tree (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -8608,7 +8568,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-33ic1kmr1",
+            "id": "z23-p-sumymcazs",
             "title": "Bewitching Stargazer (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -8618,7 +8578,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-r1ikvtnfz",
+            "id": "z23-p-see627cxk",
             "title": "Parsa's Humongous Tree (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -8628,7 +8588,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-lqblloxuy",
+            "id": "z23-p-7mkullhkx",
             "title": "Maximum Sum on Even Positions (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -8638,7 +8598,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-o9dx8vmd8",
+            "id": "z23-p-gew1mo9yz",
             "title": "Pashmak and Parmida's problem (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8648,7 +8608,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ovpas29yp",
+            "id": "z23-p-o12pvxl4w",
             "title": "XOR Inverse (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -8658,7 +8618,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-bni6v44hw",
+            "id": "z23-p-nxyj8ofm5",
             "title": "Nene and the Mex Operator (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -8668,7 +8628,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ql15e84od",
+            "id": "z23-p-6o0qvrooz",
             "title": "No Palindromes (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -8678,7 +8638,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-bh36yzy63",
+            "id": "z23-p-5ijwk1wot",
             "title": "Pokémon Army (hard version) (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -8688,7 +8648,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zv1xl2cng",
+            "id": "z23-p-is4kfae1w",
             "title": "Beautiful Subarrays (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -8698,7 +8658,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-fdoa2oo04",
+            "id": "z23-p-8t939bmkr",
             "title": "0-1-Tree (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -8708,7 +8668,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-fbr948rg0",
+            "id": "z23-p-007g8yfg1",
             "title": "Ivan and Burgers (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -8718,7 +8678,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-601mmsi7s",
+            "id": "z23-p-f0niyd39z",
             "title": "Partition Game (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -8728,7 +8688,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-mk1ck39qx",
+            "id": "z23-p-gh5jnkykk",
             "title": "Three Occurrences (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -8738,7 +8698,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-q6y3yyi4c",
+            "id": "z23-p-jxf8lbnx9",
             "title": "Maximum Subsequence (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8748,7 +8708,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-jz1tz0v20",
+            "id": "z23-p-lbpj2hn51",
             "title": "Vanya and Scales (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -8758,7 +8718,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qsa787x1u",
+            "id": "z23-p-dgbbl9ky2",
             "title": "Dasha and Nightmares (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -8768,7 +8728,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-4wk1w57kt",
+            "id": "z23-p-yyhezzb48",
             "title": "Anya and Cubes (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -8778,7 +8738,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-a7t1zzv5n",
+            "id": "z23-p-boxk2umvz",
             "title": "Red-Black Number (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -8788,7 +8748,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-gzdraeq04",
+            "id": "z23-p-8goiogjin",
             "title": "In Search of Truth (Easy Version) (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -8798,7 +8758,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-mf5ze7bau",
+            "id": "z23-p-ub7c6rdrt",
             "title": "Wise Men (Easy Version) (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -8808,7 +8768,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ghf1qalvk",
+            "id": "z23-p-lhs3chn9h",
             "title": "Mother of Dragons (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -8818,7 +8778,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-60zgq21d2",
+            "id": "z23-p-v9shpqbyd",
             "title": "Interesting Sections (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -8828,7 +8788,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-kk6yq0izy",
+            "id": "z23-p-crzx7ph9k",
             "title": "Billion Players Game (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -8838,7 +8798,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-io2h88y6v",
+            "id": "z23-p-myim6aiaw",
             "title": "Searching Local Minimum (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -8848,7 +8808,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-h958ciloj",
+            "id": "z23-p-r9ofwihmo",
             "title": "Ruler (hard version) (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -8858,7 +8818,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-bi59wd878",
+            "id": "z23-p-vezews8nx",
             "title": "Arithmetics Competition (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -8868,7 +8828,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-pibfurp3s",
+            "id": "z23-p-4jfh50cfl",
             "title": "Devu and his Brother (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -8878,7 +8838,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-m4bkp8j75",
+            "id": "z23-p-qpace5kn8",
             "title": "Primitive Primes (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -8888,7 +8848,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6gtgx72xi",
+            "id": "z23-p-oieioa5qg",
             "title": "Joking (Easy Version) (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -8898,7 +8858,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-fryoyiy8v",
+            "id": "z23-p-siczfhg3l",
             "title": "No Mind To Think (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -8908,7 +8868,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-8jetff78n",
+            "id": "z23-p-9tsirv5hy",
             "title": "Reading Books (hard version) (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -8922,16 +8882,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-40",
+    "id": "z23-40",
     "title": "2-SAT, Expression Parsing & Modelling Oddities",
-    "description": "**2-SAT**: har variable true/false, constraints 'ya' ke form mein → implication graph banao, SCC nikaalo, ek SCC mein x aur ¬x dono hue to impossible. Ye 'har cheez ke do choices hain aur pairs pe constraints hain' wali problems ka exact tool hai. **Expression parsing**: recursive descent ya shunting-yard — CP mein kam par jab aata hai to poore problem ka core hota hai.",
     "subSections": [
       {
-        "id": "sub-40",
+        "id": "z23-sub-40",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-1m7ixwwkv",
+            "id": "z23-p-cild7nu0n",
             "title": "2+ doors (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -8941,7 +8900,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9hu5yqowo",
+            "id": "z23-p-ysckktlsd",
             "title": "Unusual Matrix (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -8951,7 +8910,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-5v6zdtz5k",
+            "id": "z23-p-obe7ladud",
             "title": "Innokenty and a Football League (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -8961,7 +8920,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-1mz6vvge0",
+            "id": "z23-p-b9qj33wnh",
             "title": "The Road to Berland is Paved With Good Intentions (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -8971,7 +8930,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-nj0n0i9w0",
+            "id": "z23-p-2vy0iqp6y",
             "title": "±1 (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -8981,7 +8940,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-m4c7gxg7x",
+            "id": "z23-p-knx3rxi5x",
             "title": "National Property (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -8991,7 +8950,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-7vzpx5snd",
+            "id": "z23-p-hhps9pavm",
             "title": "Ring Road 2 (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -9001,7 +8960,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6gql3v0hl",
+            "id": "z23-p-0z9kbw7z5",
             "title": "Cars  (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -9011,7 +8970,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-dsgtslcgc",
+            "id": "z23-p-zsl9h0og5",
             "title": "Radio Stations (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -9021,7 +8980,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-dkkw0b8md",
+            "id": "z23-p-ybv4phwmw",
             "title": "One-Four Overload (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -9031,7 +8990,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vr9b3zyju",
+            "id": "z23-p-tb5yjbbc0",
             "title": "AquaMoon and Permutations (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -9041,7 +9000,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ntsvpe0sw",
+            "id": "z23-p-f33lbqu9j",
             "title": "Facetook Priority Wall (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9051,7 +9010,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vxhgd9wy9",
+            "id": "z23-p-pdzi0f4oc",
             "title": "Catch Overflow! (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -9061,7 +9020,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-79e5dpk6w",
+            "id": "z23-p-6d5urguft",
             "title": "Title (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -9071,7 +9030,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-bnca2bvnl",
+            "id": "z23-p-ik1aph8fm",
             "title": "Bill Total Value (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -9081,7 +9040,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ytivfh5a0",
+            "id": "z23-p-zxdwn5ti9",
             "title": "Text Messaging (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -9091,7 +9050,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-rziv041qm",
+            "id": "z23-p-8sm5uvhr9",
             "title": "Bracket Sequence (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -9101,7 +9060,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-id0vdkj5t",
+            "id": "z23-p-w6fkcbv7j",
             "title": "Rebus (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -9111,7 +9070,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-hwfc0s3v5",
+            "id": "z23-p-v1gj86mod",
             "title": "Bitwise Formula (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -9121,7 +9080,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-z2jbw16th",
+            "id": "z23-p-0w9k0fg26",
             "title": "Double Bracket Sequence (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -9131,7 +9090,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-3ettgr47c",
+            "id": "z23-p-ezl1v41i3",
             "title": "Defining Macros (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -9141,7 +9100,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-8oa0u6rle",
+            "id": "z23-p-4y0i9qsmk",
             "title": "Unambiguous Arithmetic Expression (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -9155,16 +9114,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-41",
+    "id": "z23-41",
     "title": "FFT / NTT & Polynomial Techniques",
-    "description": "Do polynomials ka product O(n log n) mein — aur CP mein iska matlab hai: **convolution**. 'Kitne pairs (i,j) with a[i]+b[j] = k for every k' — ye ek polynomial multiplication hai. NTT = FFT modulo 998244353 (isliye wo weird mod har jagah dikhta hai). Aage: polynomial inverse, exp/log, divide & conquer convolution, subset-sum convolution.",
     "subSections": [
       {
-        "id": "sub-41",
+        "id": "z23-sub-41",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-jmacjbk7q",
+            "id": "z23-p-vtwwckg0d",
             "title": "Maple and Tree Beauty (Hard Version) (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -9174,7 +9132,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-gbg3n1g74",
+            "id": "z23-p-vhun7fijz",
             "title": "Mocha and Stars (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -9184,7 +9142,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-90wtokjdy",
+            "id": "z23-p-ci460xuwj",
             "title": "Card Game (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -9194,7 +9152,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ydjx47rdv",
+            "id": "z23-p-ila6pn7wc",
             "title": "Placing Rooks (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -9204,7 +9162,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-5aokfu69g",
+            "id": "z23-p-4jxsmqagz",
             "title": "Binary Subsequence Value Sum (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -9214,7 +9172,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-lkkh6tlze",
+            "id": "z23-p-d0b8jfa41",
             "title": "Digital Village (Easy Version) (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -9224,7 +9182,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-xeu12w7db",
+            "id": "z23-p-uqizz13u2",
             "title": "Nikita and Order Statistics (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -9234,7 +9192,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-j9gcmzlvd",
+            "id": "z23-p-3jt7cl5dy",
             "title": "Lucky Tickets (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -9244,7 +9202,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-isi9ugd7l",
+            "id": "z23-p-s691rp3cw",
             "title": "Fuzzy Search (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -9254,7 +9212,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-5b4x0rv97",
+            "id": "z23-p-jckj2dmik",
             "title": "The Three Little Pigs (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -9264,7 +9222,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-7l36appm3",
+            "id": "z23-p-5wtwzgzzb",
             "title": "Binary Table (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -9274,7 +9232,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-jg93hztvg",
+            "id": "z23-p-pmkkkd9bz",
             "title": "Running Competition (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -9284,7 +9242,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-b1ltkwhcl",
+            "id": "z23-p-5kyraxbtn",
             "title": "PermuTree (hard version) (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -9294,7 +9252,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-4n4cnxq96",
+            "id": "z23-p-f50a8yo3n",
             "title": "Clusterization Counting (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -9304,7 +9262,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ol2moqzhy",
+            "id": "z23-p-zarqv4mj5",
             "title": "Bandit Blues (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -9314,7 +9272,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ero04s1fi",
+            "id": "z23-p-vbj0efhnl",
             "title": "The Child and Binary Tree (3100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9324,7 +9282,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-wtq80373s",
+            "id": "z23-p-phg061bun",
             "title": "PolandBall and Many Other Balls (3200)",
             "completed": false,
             "difficulty": "Hard",
@@ -9338,16 +9296,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-42",
+    "id": "z23-42",
     "title": "Bridges, Articulation Points & Connectivity Structure",
-    "description": "Graph ki 'weak spots' nikaalna. **Bridge** = wo edge jise hataane se components badh jaate hain. **Articulation point** = wahi cheez vertex ke liye. Dono ek hi DFS mein `tin[v]` (discovery time) aur `low[v]` (subtree se kitna upar pahunch sakte ho) se milte hain. Iske aage: **bridge tree / 2-edge-connected components** — bridges ko condense karke graph ek tree ban jaata hai, aur phir tree ke saare tools (LCA, path queries) lag jaate hain. Ye 'cycle wale graph ko tree banane' ka standard move hai.",
     "subSections": [
       {
-        "id": "sub-42",
+        "id": "z23-sub-42",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-4ipn5zpys",
+            "id": "z23-p-jw2la6zsu",
             "title": "Substring (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -9357,7 +9314,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-z5808zdu1",
+            "id": "z23-p-rc48ian03",
             "title": "Beautiful Graph (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -9367,7 +9324,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-xaqa24kij",
+            "id": "z23-p-qslfd4yuk",
             "title": "SlavicG's Favorite Problem (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -9377,7 +9334,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-e0yn0da62",
+            "id": "z23-p-ygbi48z8a",
             "title": "Minimum Maximum Distance (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -9387,7 +9344,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-h3a3rl0c2",
+            "id": "z23-p-so2ybnrhy",
             "title": "The Number of Imposters (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -9397,7 +9354,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-scr614nfe",
+            "id": "z23-p-gch5unqsb",
             "title": "Reachability and Tree (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -9407,7 +9364,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-3rnm0x4qk",
+            "id": "z23-p-wsd4fug5h",
             "title": "A Wide, Wide Graph (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -9417,7 +9374,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-avetglkve",
+            "id": "z23-p-lwky3isix",
             "title": "Rendez-vous de Marian et Robin (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -9427,7 +9384,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-2p5ua0w6m",
+            "id": "z23-p-dgucjl4lu",
             "title": "To Go Or Not To Go? (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -9437,7 +9394,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6zyddk5et",
+            "id": "z23-p-jaag4gp8e",
             "title": "Almost Acyclic Graph (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -9447,7 +9404,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-85vgs7i92",
+            "id": "z23-p-83u8s05ll",
             "title": "Three States (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -9457,7 +9414,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6kq929bvb",
+            "id": "z23-p-w6mj28kgd",
             "title": "Balanced Tree (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -9467,7 +9424,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-q4jxrp6cw",
+            "id": "z23-p-tcpc0vvas",
             "title": "Tourist Reform (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -9477,7 +9434,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-w4j5fbv65",
+            "id": "z23-p-euwhcs9dr",
             "title": "Tanya and Password (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -9487,7 +9444,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-4ss298bms",
+            "id": "z23-p-1c8kukn40",
             "title": "Subset with Zero Sum (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -9497,7 +9454,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-4luxtkr54",
+            "id": "z23-p-8hhbeho4g",
             "title": "The Hidden Pair (Hard Version) (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -9507,7 +9464,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-gia8kq5o0",
+            "id": "z23-p-wm5kuyh2g",
             "title": "Capitalism (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -9521,16 +9478,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-43",
+    "id": "z23-43",
     "title": "Functional Graphs, Euler Path & Cycle Structure",
-    "description": "**Functional graph**: har node ka exactly ek outgoing edge (`next[i]`) — structure hamesha 'rho' shape hoti hai: kuch tail phir ek cycle. Isliye 'k steps baad kahan pahunchoge' → binary lifting ya cycle detect + modulo. **Euler path/circuit**: har *edge* exactly ek baar — condition degree pe hai (undirected: 0 ya 2 odd-degree vertices), Hierholzer se construct. Hamiltonian se confuse na karo (wo NP-hard hai, Euler polynomial).",
     "subSections": [
       {
-        "id": "sub-43",
+        "id": "z23-sub-43",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-00079wj7c",
+            "id": "z23-p-pawwl96vu",
             "title": "Secret Santa (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -9540,7 +9496,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-7ixh1if2i",
+            "id": "z23-p-q48b3mbpv",
             "title": "New Year Permutation (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -9550,7 +9506,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-7bygor9z4",
+            "id": "z23-p-419c3zyoa",
             "title": "Menorah (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -9560,7 +9516,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-r1f1f9bao",
+            "id": "z23-p-xa4i6vmwn",
             "title": "Shifting String (1700)",
             "completed": false,
             "difficulty": "Medium",
@@ -9570,7 +9526,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-8ja1ijs9x",
+            "id": "z23-p-j4mwoyajw",
             "title": "Book (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -9580,7 +9536,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-pv1lsjqba",
+            "id": "z23-p-cx06cz5h3",
             "title": "Bicycles (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -9590,7 +9546,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-kxx7nkmr2",
+            "id": "z23-p-fv8mq39wj",
             "title": "Friendly Spiders (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -9600,7 +9556,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-rn2x4ahtn",
+            "id": "z23-p-cjx2o6jue",
             "title": "TediousLee (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -9610,7 +9566,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-3d6il85e7",
+            "id": "z23-p-c86rxnxub",
             "title": "Ehab's Last Corollary (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9620,7 +9576,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-5u1m82cir",
+            "id": "z23-p-sgteyimqm",
             "title": "Turtle and a MEX Problem (Hard Version) (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9630,7 +9586,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-es76ll71o",
+            "id": "z23-p-arz22p9cw",
             "title": "Monotone Subsequence (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9640,7 +9596,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-og0giwnvv",
+            "id": "z23-p-sx0049c91",
             "title": "Segment Tree (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9650,7 +9606,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-q2iv5ybca",
+            "id": "z23-p-e2tl7qmzm",
             "title": "Timofey and Black-White Tree (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9660,7 +9616,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qovsokt8s",
+            "id": "z23-p-hv0fod554",
             "title": "Monsters (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9670,7 +9626,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-oims3pgrs",
+            "id": "z23-p-e2tyr0mxe",
             "title": "Phoenix and Earthquake (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -9680,7 +9636,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-c6hilogql",
+            "id": "z23-p-feis1w9w1",
             "title": "Quantifier Question (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -9690,7 +9646,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-a0atm0mx4",
+            "id": "z23-p-a0ry0ny4o",
             "title": "Minecraft (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -9704,16 +9660,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-44",
+    "id": "z23-44",
     "title": "Coordinate Compression, Offline Processing & Query Sorting",
-    "description": "Do sabse under-rated CP skills. **Coordinate compression**: values 10^9 tak hain par distinct values sirf 10^5 → unhe 0..n−1 pe map karo, ab array-based DS use ho sakta hai. **Offline processing**: saare queries pehle padh lo, unhe *apni marzi ke order* mein solve karo (aksar right endpoint pe sort), phir original order mein answer print karo. Bahut si problems jo online mushkil hain, offline mein trivial ho jaati hain — ye ek mindset shift hai jo 1900+ pe zaroori hai.",
     "subSections": [
       {
-        "id": "sub-44",
+        "id": "z23-sub-44",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-x5noss6oa",
+            "id": "z23-p-59g04mrku",
             "title": "Find the Car (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9723,7 +9678,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-pfrvtyv12",
+            "id": "z23-p-znsx3h57y",
             "title": "Sagheer and Nubian Market (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9733,7 +9688,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9q9j7nbht",
+            "id": "z23-p-9rtdkyz47",
             "title": "Air Conditioner (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9743,7 +9698,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-pnji81h93",
+            "id": "z23-p-d7ch088kq",
             "title": "Sage's Birthday (hard version) (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9753,7 +9708,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-d09877pq5",
+            "id": "z23-p-lgkbkuz3n",
             "title": "The Morning Star (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9763,7 +9718,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-n1t77sanx",
+            "id": "z23-p-wchrsuc1y",
             "title": "Close Tuples (easy version) (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9773,7 +9728,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-rqhb5j34q",
+            "id": "z23-p-mg5xoytse",
             "title": "Quests (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9783,7 +9738,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6qcfwf2h9",
+            "id": "z23-p-72403md16",
             "title": "Stay or Mirror (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -9793,7 +9748,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-uj25yulrv",
+            "id": "z23-p-l66mr38q3",
             "title": "Match Points (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -9803,7 +9758,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-w9ry0lp8l",
+            "id": "z23-p-dimlvdjjr",
             "title": "Minimizing Difference (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -9813,7 +9768,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-571rmtwvn",
+            "id": "z23-p-7qxf2gwyf",
             "title": "Pairs of Segments (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -9823,7 +9778,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-q1p95qdcb",
+            "id": "z23-p-2plrboih2",
             "title": "Maximum Value (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9833,7 +9788,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-a9jjxs1bk",
+            "id": "z23-p-tmb7nfb3m",
             "title": "Restorer Distance (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9843,7 +9798,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-y8j5tv2dz",
+            "id": "z23-p-q7s8nid03",
             "title": "Physical Education Lessons (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -9853,7 +9808,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-bexlgf2rv",
+            "id": "z23-p-fk8w4tmoa",
             "title": "Mani and Segments (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -9863,7 +9818,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-m4uy1i20s",
+            "id": "z23-p-mzx2hgylt",
             "title": "Another Exercise on Graphs (hard version) (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -9873,7 +9828,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-wfna7rwux",
+            "id": "z23-p-k16n10rjh",
             "title": "Difficult Mountain (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -9887,16 +9842,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-45",
+    "id": "z23-45",
     "title": "Sweep Line & Event Processing",
-    "description": "Ek imaginary line (time ya x-axis) pe left-to-right chalo aur events process karo: +1 start pe, −1 end pe. Intervals ke saare classic sawaal isse nikal jaate hain — maximum overlap, union length, intersection count. Geometry mein bhi wahi: rectangle union area = sweep + segment tree, segment intersections = sweep + set. Trick sirf ye hai: **events ka sahi order define karna** (tie pe start pehle ya end pehle — ye problem-dependent hai aur yahin WA aata hai).",
     "subSections": [
       {
-        "id": "sub-45",
+        "id": "z23-sub-45",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-hz4pqdud5",
+            "id": "z23-p-8tzru2oqe",
             "title": "Sweets Eating (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9906,7 +9860,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-bvwu1vkxb",
+            "id": "z23-p-6j1iahqam",
             "title": "13th Labour of Heracles (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9916,7 +9870,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-cyl8bjsmo",
+            "id": "z23-p-z7me3ovxb",
             "title": "Boxers (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9926,7 +9880,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-miedik3jd",
+            "id": "z23-p-wz8i2d48j",
             "title": "Fight with Monsters (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9936,7 +9890,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-f93i56h3l",
+            "id": "z23-p-2mid5ech8",
             "title": "Breach of Faith (1500)",
             "completed": false,
             "difficulty": "Medium",
@@ -9946,7 +9900,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ro4o2sudq",
+            "id": "z23-p-ugwfe9qoc",
             "title": "Linova and Kingdom (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -9956,7 +9910,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9o491earw",
+            "id": "z23-p-fb98x20d3",
             "title": "Phoenix and Distribution (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -9966,7 +9920,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-yy7bugjdq",
+            "id": "z23-p-5s3nidx99",
             "title": "Reading Books (easy version) (1600)",
             "completed": false,
             "difficulty": "Medium",
@@ -9976,7 +9930,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-tp7ks5zyr",
+            "id": "z23-p-4r2hqgm6u",
             "title": "Weights Distributing (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9986,7 +9940,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-tr5qxs60e",
+            "id": "z23-p-egdsy12yv",
             "title": "Present (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -9996,7 +9950,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vi7ma9818",
+            "id": "z23-p-kpv47t8kt",
             "title": "Boring Segments (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10006,7 +9960,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-d51xrgoto",
+            "id": "z23-p-uzh5r8i1d",
             "title": "01 Tree (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10016,7 +9970,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-0cuy5axb1",
+            "id": "z23-p-5cqw84v4s",
             "title": "Kate and imperfection (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -10026,7 +9980,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-xixaxoclg",
+            "id": "z23-p-tn0j485m1",
             "title": "Carrots for Rabbits (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -10036,7 +9990,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-q4t7odyp0",
+            "id": "z23-p-m8m3d2w4e",
             "title": "Mice and Holes (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -10046,7 +10000,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-krz5owltj",
+            "id": "z23-p-021rgdfnp",
             "title": "Velepin and Marketing (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -10056,7 +10010,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-eoweyko1y",
+            "id": "z23-p-glvm47ojj",
             "title": "Minimal String Xoration (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -10070,16 +10024,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-46",
+    "id": "z23-46",
     "title": "Persistent Data Structures & Wavelet Trees",
-    "description": "**Persistence** = har update ke baad structure ka purana version bhi zinda rehta hai, kyunki tum poora tree copy nahi karte, sirf **path pe O(log n) naye nodes** banate ho. Isse: 'k-th smallest in range [l,r]' = version_r minus version_l pe descent (classic). 'Time travel queries' — t-th update ke baad ka state. Wavelet tree isi problem ka alternative hai (range k-th, range count ≤ x) aur aksar likhna aasaan hota hai.",
     "subSections": [
       {
-        "id": "sub-46",
+        "id": "z23-sub-46",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-itf8wod6i",
+            "id": "z23-p-b88yy40xw",
             "title": "Passable Paths (hard version) (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10089,7 +10042,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-lvof2aym2",
+            "id": "z23-p-gat1lyoxx",
             "title": "1-Trees and Queries (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10099,7 +10052,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-7l5kifpn2",
+            "id": "z23-p-k0jersg6w",
             "title": "Pair of Numbers (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10109,7 +10062,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-t1wgasbtn",
+            "id": "z23-p-kgn8gka07",
             "title": "Danil and a Part-time Job (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10119,7 +10072,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-mlgkxhgjw",
+            "id": "z23-p-p7kg5hzld",
             "title": "R2D2 and Droid Army (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10129,7 +10082,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vqa7tjtxq",
+            "id": "z23-p-1itik9r6v",
             "title": "New Year Concert (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10139,7 +10092,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qyzqq5zfg",
+            "id": "z23-p-x1cws8q7s",
             "title": "Empty Graph (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10149,7 +10102,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-p5hicyoa2",
+            "id": "z23-p-n0afdy0k6",
             "title": "Binary Subsequence Rotation (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10159,7 +10112,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-j0nyawd5m",
+            "id": "z23-p-fs5ycjbkd",
             "title": "Sign on Fence (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -10169,7 +10122,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-5j2wm71qt",
+            "id": "z23-p-qh9bw5wby",
             "title": "Nastia Plays with a Tree (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -10179,7 +10132,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qfqxthj2n",
+            "id": "z23-p-5v2yxajmk",
             "title": "GukiZ and GukiZiana (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -10189,7 +10142,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-u5zlvn8sp",
+            "id": "z23-p-sgwl09rq4",
             "title": "Stack Exterminable Arrays (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -10199,7 +10152,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ym6835mgj",
+            "id": "z23-p-i4g1diql1",
             "title": "Nearest Leaf (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -10209,7 +10162,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-k3lt1udex",
+            "id": "z23-p-j2s5g5zcq",
             "title": "e-Government (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -10219,7 +10172,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6ezpx7024",
+            "id": "z23-p-v3tor6lvx",
             "title": "Pastoral Oddities (3000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10229,7 +10182,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-kbomyo9m9",
+            "id": "z23-p-jezv6hzyi",
             "title": "Archaeology (3100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10239,7 +10192,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-h124vnvfg",
+            "id": "z23-p-5hzti3cig",
             "title": "Tourists (3200)",
             "completed": false,
             "difficulty": "Hard",
@@ -10253,16 +10206,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-47",
+    "id": "z23-47",
     "title": "Slope Trick & Convexity in DP",
-    "description": "Ek family of problems jahan `dp` function **convex piecewise-linear** hota hai — aur poora function store karne ke bajaye tum sirf uske **slope change points** ek priority_queue mein rakhte ho. 'Array ko non-decreasing banane ki minimum cost' jaisi problems O(n log n) mein khatam. Ye topic 2300+ pe farq banata hai kyunki isse pata chalta hai ki DP ki *shape* bhi ek exploitable property hai, sirf recurrence nahi.",
     "subSections": [
       {
-        "id": "sub-47",
+        "id": "z23-sub-47",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-y9wqv01d6",
+            "id": "z23-p-5i8wahnlm",
             "title": "Array Shrinking (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10272,7 +10224,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-cw9ge0fsx",
+            "id": "z23-p-ea8mk38zv",
             "title": "Gellyfish and Camellia Japonica (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10282,7 +10234,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-cbfuzm8zm",
+            "id": "z23-p-cisd5fwqy",
             "title": "Watching Fireworks is Fun (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10292,7 +10244,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-7g4fkfl71",
+            "id": "z23-p-gob9coabs",
             "title": "Nearest Beautiful Number (hard version) (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10302,7 +10254,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-z0k94chjg",
+            "id": "z23-p-302e7jxfg",
             "title": "Painting the Array II (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10312,7 +10264,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-jrnvwr61t",
+            "id": "z23-p-0wvu5b4ju",
             "title": "Med-imize (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -10322,7 +10274,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-0ad91r8dk",
+            "id": "z23-p-53use14hm",
             "title": "Bits And Pieces (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -10332,7 +10284,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-p57s86otp",
+            "id": "z23-p-2lntqv33y",
             "title": "Greedy Grid Counting (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -10342,7 +10294,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-rlui0xfz3",
+            "id": "z23-p-7yf7vsw8m",
             "title": "PolandBall and Gifts (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -10352,7 +10304,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-j9i2pkq7p",
+            "id": "z23-p-9cpa8yta9",
             "title": "New Year and Old Subsequence (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -10362,7 +10314,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-sbyfej6dc",
+            "id": "z23-p-1vt3lzh1w",
             "title": "Gellyfish and Forget-Me-Not (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10372,7 +10324,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-c1x7oxtx1",
+            "id": "z23-p-tyiw8bz0g",
             "title": "Victorious Coloring (Easy Version) (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10382,7 +10334,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-v2ozodp2n",
+            "id": "z23-p-60mtg6eti",
             "title": "23 Rises Again (3100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10396,16 +10348,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-48",
+    "id": "z23-48",
     "title": "Mobius Inversion, Divisor Sums & Multiplicative Functions",
-    "description": "Number theory ka counting side. Basic move: **'exactly k' ko 'at least/multiple of k' se count karo aur ulta subtract karo** — `f(d) = Σ_{d|k} g(k)` type. Isse gcd-counting problems (kitne pairs with gcd = d) O(n log n) mein nikal jaate hain, har baar Mobius likhne ki bhi zaroorat nahi (divisor-sieve subtraction kaafi hai). Uske upar: μ function, Dirichlet convolution, divisor-sum sieve, aur multiplicative function ka linear sieve.",
     "subSections": [
       {
-        "id": "sub-48",
+        "id": "z23-sub-48",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-15rgjouru",
+            "id": "z23-p-8izy3n23b",
             "title": "Not Adding (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10415,7 +10366,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-o4u2atdi9",
+            "id": "z23-p-uirmntidx",
             "title": "Strange Beauty (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10425,7 +10376,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-r09ngwtu8",
+            "id": "z23-p-bn2k40cj4",
             "title": "Prime XOR Coloring (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10435,7 +10386,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-m5d048lx6",
+            "id": "z23-p-ciw3ugmsf",
             "title": "Funny Game (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10445,7 +10396,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-j0rriqkg4",
+            "id": "z23-p-nbdtvygh0",
             "title": "Valuable Cards (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10455,7 +10406,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-kab4tlbwm",
+            "id": "z23-p-d26csmuje",
             "title": "K-good (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10465,7 +10416,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-gy2283shg",
+            "id": "z23-p-9c77s35fr",
             "title": "Divisible Numbers (hard version) (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10475,7 +10426,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-dovu654re",
+            "id": "z23-p-6evxxn3rs",
             "title": "XOR-factorization (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10485,7 +10436,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-fza6l79ar",
+            "id": "z23-p-xfube3yt9",
             "title": "Please, another Queries on Array? (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -10495,7 +10446,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-y0s3veykm",
+            "id": "z23-p-fugtt1ja7",
             "title": "GCD Counting (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -10505,7 +10456,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-nna76cu5w",
+            "id": "z23-p-1rcrpywyl",
             "title": "Hyperregular Bracket Strings (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -10515,7 +10466,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-4s7ofbt4e",
+            "id": "z23-p-7ljfwdby8",
             "title": "Make It One (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -10525,7 +10476,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-i517rldh5",
+            "id": "z23-p-ndm44tlk4",
             "title": "Cards (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -10535,7 +10486,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-c0rte0s2z",
+            "id": "z23-p-kcjhrz4wk",
             "title": "Power Tower (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -10545,7 +10496,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-2xo1t4k7v",
+            "id": "z23-p-0kyww3qb2",
             "title": "GCD Table (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10555,7 +10506,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-unbb9j51w",
+            "id": "z23-p-xa0oveutt",
             "title": "Classical? (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10565,7 +10516,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qmhycp2oq",
+            "id": "z23-p-7t28lzn4f",
             "title": "Present for Vitalik the Philatelist  (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10579,16 +10530,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-49",
+    "id": "z23-49",
     "title": "Burnside / Polya — counting up to symmetry",
-    "description": "'Rotations/reflections ko same maana jaaye to kitne distinct objects?' — naive counting yahan double-counts karta hai. **Burnside's lemma**: distinct count = (Σ over each symmetry g of fixed points of g) / |G|. Necklace coloring, cube painting, circular arrangements — sab isi ek formula se. CP mein rare hai par jab aata hai to poora problem yahi hota hai, isliye recognition matter karti hai.",
     "subSections": [
       {
-        "id": "sub-49",
+        "id": "z23-sub-49",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-y20fewjuq",
+            "id": "z23-p-j3zgpwy09",
             "title": "Height All the Same (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10598,7 +10548,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ge7hrr048",
+            "id": "z23-p-2qu2ljlvu",
             "title": "Arena (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10608,7 +10558,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-uycocmujt",
+            "id": "z23-p-esnnebf31",
             "title": "Monocarp and the Set (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10618,7 +10568,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-li8uz457g",
+            "id": "z23-p-0zy0ftu5o",
             "title": "Phoenix and Computers (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -10628,7 +10578,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-nxw8n67l3",
+            "id": "z23-p-hb8q876g9",
             "title": "Sum of Paths (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -10638,7 +10588,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-jb2xd7k05",
+            "id": "z23-p-4sy29v116",
             "title": "Devu and Flowers (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -10648,7 +10598,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-tpwuwqut9",
+            "id": "z23-p-lwb31l1ab",
             "title": "Crypto Lights (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -10658,7 +10608,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-7q7ud3u33",
+            "id": "z23-p-jkjp3gndx",
             "title": "Cowmpany Cowmpensation (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -10668,7 +10618,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-7n18la61n",
+            "id": "z23-p-uf0yzlo78",
             "title": "Partitions (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -10678,7 +10628,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-l38vq8zrs",
+            "id": "z23-p-zfnlldeba",
             "title": "Hamed and AghaBalaSar (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -10688,7 +10638,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-o8xdlernt",
+            "id": "z23-p-3cfpvx438",
             "title": "Keep XOR Low (3000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10698,7 +10648,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ctkid798k",
+            "id": "z23-p-hv33by6wp",
             "title": "Lust (3000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10708,7 +10658,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-47rg7vrh2",
+            "id": "z23-p-pegs9uh1l",
             "title": "Tree Parking (3300)",
             "completed": false,
             "difficulty": "Hard",
@@ -10722,16 +10672,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-50",
+    "id": "z23-50",
     "title": "Randomization — hashing attacks, shuffles, Zobrist, Monte Carlo",
-    "description": "Randomness CP mein defensive aur offensive dono hai. **Defensive**: `unordered_map` aur fixed-base hashing pe CF pe log anti-tests banate hain — `mt19937` se random base/seed use karo, warna O(n^2) TLE. **Offensive**: random shuffle se worst-case tod do (quickselect, nth_element), **Zobrist hashing** se sets/multisets ko ek number mein badlo (XOR of random values — 'ye do subtrees same hain?'), aur Monte Carlo se probabilistic checks (birthday paradox se O(√n) hits).",
     "subSections": [
       {
-        "id": "sub-50",
+        "id": "z23-sub-50",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-tirpzz47f",
+            "id": "z23-p-4pd8r48lc",
             "title": "Random Query (1800)",
             "completed": false,
             "difficulty": "Medium",
@@ -10741,7 +10690,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-53rw0d8r6",
+            "id": "z23-p-70enoftsq",
             "title": "Checkpoints (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10751,7 +10700,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-kwtihs6nd",
+            "id": "z23-p-7gv58jisq",
             "title": "Edge Split (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10761,7 +10710,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-soq5ntti0",
+            "id": "z23-p-xshpz0555",
             "title": "Guess Game (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10771,7 +10720,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-beqlst14h",
+            "id": "z23-p-rv4bahp16",
             "title": "Buratsuta 3 (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10781,7 +10730,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-5xraztkxg",
+            "id": "z23-p-3vh9ptn96",
             "title": "Beautiful Tree (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -10791,7 +10740,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-xrahc16ms",
+            "id": "z23-p-j6s97g7la",
             "title": "Intersection and Union (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -10801,7 +10750,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ewab1mv4q",
+            "id": "z23-p-9ul5oesm0",
             "title": "Hossam and Range Minimum Query (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -10811,7 +10760,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-oxokssxux",
+            "id": "z23-p-87epsqer9",
             "title": "X-OR (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -10821,7 +10770,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9o4hl3frn",
+            "id": "z23-p-h7ih5xml3",
             "title": "Tree Queries (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -10831,7 +10780,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-pt7ups796",
+            "id": "z23-p-nc31r6uzr",
             "title": "Kazaee (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -10841,7 +10790,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ba0b79whn",
+            "id": "z23-p-s40batwq8",
             "title": "Battalion Strength (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -10851,7 +10800,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-y3fizkr77",
+            "id": "z23-p-novmu2feh",
             "title": "Odd Mineral Resource (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10861,7 +10810,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-g0tzqlg14",
+            "id": "z23-p-a1p0bxh8v",
             "title": "New Year and Conference (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10871,7 +10820,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-rump87dby",
+            "id": "z23-p-3rawd8pj3",
             "title": "Preorder (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10881,7 +10830,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-xqjhzyiku",
+            "id": "z23-p-j2k9jenib",
             "title": "Funny Substrings (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10891,7 +10840,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-e3qbfbj6e",
+            "id": "z23-p-9tkklf01o",
             "title": "Two strings (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10901,7 +10850,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9rpr2nrwl",
+            "id": "z23-p-aug21dc6k",
             "title": "Check Transcription (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10911,7 +10860,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-1ss1vs1of",
+            "id": "z23-p-avnbjvroy",
             "title": "Test (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -10921,7 +10870,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-x9jfo8sdl",
+            "id": "z23-p-h3yndorye",
             "title": "Quadratic Set (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -10931,7 +10880,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-jsh7xnpsq",
+            "id": "z23-p-s9nsxxqse",
             "title": "Misha and LCP on Tree (3000)",
             "completed": false,
             "difficulty": "Hard",
@@ -10941,7 +10890,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-5wsnphmld",
+            "id": "z23-p-fgc9lb5di",
             "title": "Minimum Difference (3100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10955,16 +10904,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-51",
+    "id": "z23-51",
     "title": "Advanced Flows — MCMF, Hall's theorem, project selection, matroids",
-    "description": "Flow ka doosra level: **min-cost max-flow** (Johnson potentials ke saath, negative edges handle), **Hall's marriage theorem** (perfect matching kab exist karti hai — 'har subset S ke liye |N(S)| ≥ |S|', ye proofs mein bahut kaam aata hai), **project selection / closure** (profit maximize with prerequisites = min cut), aur **matroid intersection** ka intro. Yahan asli skill algorithm likhna nahi, **problem ko flow network mein translate karna** hai.",
     "subSections": [
       {
-        "id": "sub-51",
+        "id": "z23-sub-51",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-aj2ha3e07",
+            "id": "z23-p-sgsfg7xu7",
             "title": "Grouped Carriages (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -10974,7 +10922,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ebyplq202",
+            "id": "z23-p-uiy5goiyy",
             "title": "Paired Payment (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -10984,7 +10932,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-lkf6257gw",
+            "id": "z23-p-rzj7b0u21",
             "title": "Delivery Bears (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -10994,7 +10942,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-y56scn1f7",
+            "id": "z23-p-fvjbine3d",
             "title": "One-Way Reform (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11004,7 +10952,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-f9unxtlgv",
+            "id": "z23-p-2vu8potzi",
             "title": "Little C Loves 3 II (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11014,7 +10962,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-b5hbtisll",
+            "id": "z23-p-5xjlekrzq",
             "title": "Kirill and Company (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11024,7 +10972,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-rr2uynxi1",
+            "id": "z23-p-2g5owf2rw",
             "title": "Two Melodies (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -11034,7 +10982,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-k6fan1kk3",
+            "id": "z23-p-es8tgmo1q",
             "title": "Strange Set (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -11044,7 +10992,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-3swqdya6p",
+            "id": "z23-p-5um5bqpp2",
             "title": "Wine Factory (Hard Version) (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -11054,7 +11002,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ko84ntr1q",
+            "id": "z23-p-hxpbw4xg3",
             "title": "April Fools' Problem (hard) (2900)",
             "completed": false,
             "difficulty": "Hard",
@@ -11064,7 +11012,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-26ykbo4ow",
+            "id": "z23-p-su28hhwft",
             "title": "Captain America (3100)",
             "completed": false,
             "difficulty": "Hard",
@@ -11074,7 +11022,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ybznkb2dj",
+            "id": "z23-p-5b429u6ho",
             "title": "ALT (3200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11084,7 +11032,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-bgf4kvcsf",
+            "id": "z23-p-02g6rg9j3",
             "title": "Chests and Keys (3200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11094,7 +11042,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vkohklq5j",
+            "id": "z23-p-t9gqgyzs3",
             "title": "Swap to Rearrange (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -11104,7 +11052,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-33rni7jlq",
+            "id": "z23-p-vi2mjln0p",
             "title": "Moment of Bloom (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11114,7 +11062,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-5yawfaqbi",
+            "id": "z23-p-2bini7zga",
             "title": "Serge and Dining Room (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11124,7 +11072,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-fxd9da5zt",
+            "id": "z23-p-0db5g0pdl",
             "title": "Hamiltonian Spanning Tree (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11134,7 +11082,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-nigrascub",
+            "id": "z23-p-lac1h6ega",
             "title": "Fair Share (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -11144,7 +11092,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qiphenmkj",
+            "id": "z23-p-s1dni3orq",
             "title": "Session in BSU (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -11154,7 +11102,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-llr4ysig1",
+            "id": "z23-p-2h04cln23",
             "title": "MST with Matching (3100)",
             "completed": false,
             "difficulty": "Hard",
@@ -11164,7 +11112,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-i93wn5exf",
+            "id": "z23-p-yfmh0qrm0",
             "title": "Birthday (3200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11174,7 +11122,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-7slqlpxxz",
+            "id": "z23-p-80a6kbib4",
             "title": "Showing Off (3300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11188,16 +11136,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-52",
+    "id": "z23-52",
     "title": "Linear Recurrences — Kitamasa & Berlekamp–Massey",
-    "description": "**Kitamasa**: k-order linear recurrence ka n-th term O(k log k log n) mein (matrix expo se tez jab k bada ho). **Berlekamp–Massey**: sequence ke pehle kuch terms se **recurrence khud discover** karo — CP ka legendary shortcut: chhote n ke liye brute force se 20-30 terms nikaalo, BM chala do, aur agar recurrence mil gayi to n = 10^18 ka answer mil gaya, bina poori problem solve karne ke.",
     "subSections": [
       {
-        "id": "sub-52",
+        "id": "z23-sub-52",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-394sjjqm0",
+            "id": "z23-p-2szqsrm8y",
             "title": "Winter is here (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11207,7 +11154,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-4ech3x3o7",
+            "id": "z23-p-zdpjs3op1",
             "title": "Sasha and Array (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11217,7 +11164,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-oznostwl4",
+            "id": "z23-p-asnb0x65g",
             "title": "Anton and School - 2 (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11227,7 +11174,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-4dojmkhj3",
+            "id": "z23-p-9s9ipd5rv",
             "title": "Another Filling the Grid (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11237,7 +11184,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ff9qenhij",
+            "id": "z23-p-3wpe35dy8",
             "title": "Mike and Foam (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11247,7 +11194,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-iqeczc4h5",
+            "id": "z23-p-ivcpzz0dl",
             "title": "Product Oriented Recurrence (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11257,7 +11204,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vhb48dsk5",
+            "id": "z23-p-8f69oro27",
             "title": "Gellyfish and Eternal Violet (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -11267,7 +11214,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-maorgqqe0",
+            "id": "z23-p-gbo0rmr5n",
             "title": "Latin Square (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -11277,7 +11224,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-osf82gf6w",
+            "id": "z23-p-nd55i73iu",
             "title": "Tenzing and Random Operations (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -11287,7 +11234,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-4vswsaqn6",
+            "id": "z23-p-nqbwp1iok",
             "title": "Secure Password (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -11301,16 +11248,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-53",
+    "id": "z23-53",
     "title": "Dynamic Connectivity & Offline D&C on Time",
-    "description": "Problem: edges add **aur** remove ho rahe hain, aur connectivity poochhi ja rahi hai. DSU delete nahi kar sakta. Do standard jawaab: (1) **offline divide & conquer on time** — har edge ek time-interval [l,r] mein zinda hai, segment tree on time pe edge daalo, DFS karo **DSU with rollback** ke saath; (2) **Link-Cut Trees / Euler Tour Trees** — online, par heavy. 99% contests mein (1) hi expected hota hai, aur ye technique offline mindset (§45) ka climax hai.",
     "subSections": [
       {
-        "id": "sub-53",
+        "id": "z23-sub-53",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-9qgz9grlb",
+            "id": "z23-p-2fffmdsqa",
             "title": "Non-Decreasing Dilemma (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11320,7 +11266,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-g7mn4fqsu",
+            "id": "z23-p-onic45l7r",
             "title": "Special Segments of Permutation (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11330,7 +11276,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-xaqm7a3ks",
+            "id": "z23-p-bfgjmnc6g",
             "title": "Level Up (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11340,7 +11286,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-baycthky7",
+            "id": "z23-p-rcfotp9m7",
             "title": "Unique Median (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11350,7 +11296,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-mqm5te1to",
+            "id": "z23-p-y6ct4d2dp",
             "title": "MEX Queries (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11360,7 +11306,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-yqolyqshg",
+            "id": "z23-p-ek6ros9cf",
             "title": "Till I Collapse (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -11370,7 +11316,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ym0n2ccft",
+            "id": "z23-p-h7genuuh7",
             "title": "Close Vertices (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -11380,7 +11326,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-pm61whf5j",
+            "id": "z23-p-zkvb24p56",
             "title": "Permutation (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -11390,7 +11336,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ejhpmtkpy",
+            "id": "z23-p-4ur4dding",
             "title": "Tree Generator™ (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -11400,7 +11346,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vw503vfly",
+            "id": "z23-p-lwql6aoba",
             "title": "Best Edge Weight (2700)",
             "completed": false,
             "difficulty": "Hard",
@@ -11414,16 +11360,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-54",
+    "id": "z23-54",
     "title": "Advanced Constructive & Interactive (Div1 A/B level)",
-    "description": "2000+ pe constructive problems ka flavour badal jaata hai: ab tumhe **invariant** dhoondhna hota hai ya ek clever recursive/binary construction. Standard weapons: induction (n−1 ka answer se n banao), divide the structure in halves, extremal element pe kaam karo (sabse bada/chhota pehle fix karo), aur bounds prove karo (lower bound = answer, phir usko achieve karne ki construction do). Interactive advanced mein query budget theek log n ya 2n hota hai — usse algorithm derive hota hai.",
     "subSections": [
       {
-        "id": "sub-54",
+        "id": "z23-sub-54",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-dras66qlf",
+            "id": "z23-p-1ikvx6g82",
             "title": "Orac and Medians (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -11433,7 +11378,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-rxgy6goqs",
+            "id": "z23-p-61ogqgxca",
             "title": "Another Array Problem (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -11443,7 +11388,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-81vzv1blu",
+            "id": "z23-p-liztkrnqp",
             "title": "Breaking the Wall (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -11453,7 +11398,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qpqgnaovc",
+            "id": "z23-p-rpwtkh69i",
             "title": "Make Them Equal (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -11463,7 +11408,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-f13mbtfo1",
+            "id": "z23-p-0s23om1x2",
             "title": "Buying Jewels (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -11473,7 +11418,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-60x12m8l0",
+            "id": "z23-p-t2fq0mgvj",
             "title": "XOR-gun (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -11483,7 +11428,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-6xhsdq4q3",
+            "id": "z23-p-gbnd4rv2r",
             "title": "Coloring Edges (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -11493,7 +11438,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-gx8qfb1dy",
+            "id": "z23-p-n290mhit5",
             "title": "Xor-MST (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11503,7 +11448,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-xwjkg38pk",
+            "id": "z23-p-741onbm34",
             "title": "Omkar and Landslide (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -11513,7 +11458,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qv63s51a1",
+            "id": "z23-p-sxg1zd4u2",
             "title": "Inversion SwapSort (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -11523,7 +11468,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-iiyxhn5j9",
+            "id": "z23-p-a91rzrlil",
             "title": "Hack it! (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -11533,7 +11478,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-q7wffjqfp",
+            "id": "z23-p-chcvt8plk",
             "title": "Jzzhu and Apples (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -11543,7 +11488,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-3xhf1ctyf",
+            "id": "z23-p-klh9jkh6i",
             "title": "Mike and Fish (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -11553,7 +11498,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-g3ftjr4px",
+            "id": "z23-p-lmca6s1ig",
             "title": "Arpa’s overnight party and Mehrdad’s silent entering (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -11563,7 +11508,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-xkqk5gzsu",
+            "id": "z23-p-79i1acmfo",
             "title": "Game of Pairs (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -11573,7 +11518,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-mb1w1nza7",
+            "id": "z23-p-tzzwd16f0",
             "title": "Double Knapsack (3000)",
             "completed": false,
             "difficulty": "Hard",
@@ -11583,7 +11528,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zgg4xhkfg",
+            "id": "z23-p-uqwsnevj9",
             "title": "Sergey's problem (3000)",
             "completed": false,
             "difficulty": "Hard",
@@ -11593,7 +11538,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-k66lo2q79",
+            "id": "z23-p-ej1tn1395",
             "title": "Salyg1n and Array (hard version) (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11603,7 +11548,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ycft3uxi9",
+            "id": "z23-p-szf6iwfny",
             "title": "Guess the K-th Zero (Hard version) (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11613,7 +11558,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-13fhowdfk",
+            "id": "z23-p-5qt2f3osr",
             "title": "Arithmetic Progression (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11623,7 +11568,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ssc1ae70f",
+            "id": "z23-p-3b4tj2rd9",
             "title": "Gold Transfer (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11633,7 +11578,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zawsyqitu",
+            "id": "z23-p-50hygnvnz",
             "title": "Bitwise Queries (Hard Version) (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11643,7 +11588,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-wnvssoysg",
+            "id": "z23-p-nyki5za26",
             "title": "Grid Xor (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11653,7 +11598,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-xbvavr2lj",
+            "id": "z23-p-axaz9b2s2",
             "title": "Hidden Bipartite Graph (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -11663,7 +11608,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zkarn7dpg",
+            "id": "z23-p-fjwoxvdp1",
             "title": "Isaac's Queries (2800)",
             "completed": false,
             "difficulty": "Hard",
@@ -11673,7 +11618,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-yptvaiht5",
+            "id": "z23-p-2i9te6lb1",
             "title": "Coffee Varieties (hard version) (3000)",
             "completed": false,
             "difficulty": "Hard",
@@ -11687,16 +11632,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-55",
+    "id": "z23-55",
     "title": "Tag-blind Mixed Set — 1900–2200 (Expert → Candidate Master)",
-    "description": "Ab tak har section ne tumhe **tag bata diya** tha — aur real contest mein yahi missing hota hai. Ye set jaan-boojh ke mixed hai: pehle se nahi pata ki kaunsa tool lagega. Rule: **problem se pehle tag mat dekho.** 20 minute khud socho, phir hi editorial. Har problem ke baad ek line likho: 'kaunsa signal main miss kiya?' — 30-40 aisi lines tumhari rating 2000 se 2200 le jaati hain.",
     "subSections": [
       {
-        "id": "sub-55",
+        "id": "z23-sub-55",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-t78jkswa9",
+            "id": "z23-p-d4zx0r0ce",
             "title": "Painting Fence (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -11706,7 +11650,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-w7ooimnpx",
+            "id": "z23-p-yhrr2ruuf",
             "title": "Magic Ship (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -11716,7 +11660,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-qx6z0jd09",
+            "id": "z23-p-8y8jji55e",
             "title": "Phoenix and Science (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -11726,7 +11670,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-yffafsoft",
+            "id": "z23-p-jsgx3bxja",
             "title": "The Values You Can Make (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -11736,7 +11680,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-280t837ks",
+            "id": "z23-p-1iphb9tf7",
             "title": "Palindrome Game (hard version) (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -11746,7 +11690,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-18psjxq3l",
+            "id": "z23-p-auej0tp3e",
             "title": "The Best Vacation (1900)",
             "completed": false,
             "difficulty": "Hard",
@@ -11756,7 +11700,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-agxz1skft",
+            "id": "z23-p-3olboqt8l",
             "title": "Clear the String (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -11766,7 +11710,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-aa3cl1qje",
+            "id": "z23-p-h46wjhopy",
             "title": "Three Integers (2000)",
             "completed": false,
             "difficulty": "Hard",
@@ -11776,7 +11720,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-zfbsdjy78",
+            "id": "z23-p-dh415d92f",
             "title": "Round Subset (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -11786,7 +11730,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-l8nor2jp4",
+            "id": "z23-p-ykp5rz64t",
             "title": "Zero Remainder Sum  (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -11796,7 +11740,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-3ow3y06vw",
+            "id": "z23-p-fdyop74wq",
             "title": "Civilization (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -11806,7 +11750,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-rux598h2w",
+            "id": "z23-p-cq6ca3wf0",
             "title": "Errich-Tac-Toe (Easy Version) (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -11816,7 +11760,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-d258iwwga",
+            "id": "z23-p-rq68g4ahc",
             "title": "Moving to the Capital (2100)",
             "completed": false,
             "difficulty": "Hard",
@@ -11826,7 +11770,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-1m8pg3nq7",
+            "id": "z23-p-anvvi2vxo",
             "title": "Magic Numbers (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11836,7 +11780,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ns73xddhc",
+            "id": "z23-p-hohwdjezu",
             "title": "A Simple Task (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11846,7 +11790,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-j35jglxby",
+            "id": "z23-p-1tv84k4vq",
             "title": "Great Vova Wall (Version 1) (2200)",
             "completed": false,
             "difficulty": "Hard",
@@ -11860,16 +11804,15 @@ export const zeroTo2300Sections = [
     ]
   },
   {
-    "id": "section-56",
+    "id": "z23-56",
     "title": "Tag-blind Mixed Set — 2300+ (Master track)",
-    "description": "Final boss set. 2300+ problems mein aksar **do techniques compose** hoti hain (segment tree + DP, flow + greedy proof, hashing + D&C) — isliye single-tool recognition kaafi nahi, tumhe layering aani chahiye. Yahan rule badalta hai: 45–60 minute ek problem pe dena normal hai, aur ek din mein ek problem karna bhi progress hai. Editorial padhne ke baad **48 ghante baad dobara** khud se implement karo — retention wahin banta hai.",
     "subSections": [
       {
-        "id": "sub-56",
+        "id": "z23-sub-56",
         "title": "Problems",
         "topics": [
           {
-            "id": "prob-795oyqmc3",
+            "id": "z23-p-yb8w3j7st",
             "title": "Sonya and Problem Wihtout a Legend (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11879,7 +11822,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-rkm07rnmx",
+            "id": "z23-p-udrdesmmm",
             "title": "Errich-Tac-Toe (Hard Version) (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11889,7 +11832,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-7bfalwfmv",
+            "id": "z23-p-3351az0r6",
             "title": "Anthem of Berland (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11899,7 +11842,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-sntup89hh",
+            "id": "z23-p-60qmlf988",
             "title": "Rectangle Painting 1 (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11909,7 +11852,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vtocw2xt3",
+            "id": "z23-p-l247hsvek",
             "title": "Complete The Graph (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11919,7 +11862,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-vo4w4j0n1",
+            "id": "z23-p-tk1oms1eo",
             "title": "Almost Triple Deletions (2300)",
             "completed": false,
             "difficulty": "Hard",
@@ -11929,7 +11872,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-7umirgufp",
+            "id": "z23-p-fovjxe78p",
             "title": "Group Projects (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -11939,7 +11882,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-9qt83umcz",
+            "id": "z23-p-236tuhs3m",
             "title": "Karen and Supermarket (2400)",
             "completed": false,
             "difficulty": "Hard",
@@ -11949,7 +11892,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-yb1kssgzx",
+            "id": "z23-p-m382srryl",
             "title": "Mass Change Queries (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -11959,7 +11902,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-p96lds7rb",
+            "id": "z23-p-fj472oy9o",
             "title": "Triple Attack (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -11969,7 +11912,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-itv4t3wme",
+            "id": "z23-p-jocmb652j",
             "title": "Subset Sums (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -11979,7 +11922,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-q8bz9nj8u",
+            "id": "z23-p-lq1bmiatr",
             "title": "AND Graph (2500)",
             "completed": false,
             "difficulty": "Hard",
@@ -11989,7 +11932,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-ijg8s2o7e",
+            "id": "z23-p-59yjictgi",
             "title": "The Sum of the k-th Powers (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -11999,7 +11942,7 @@ export const zeroTo2300Sections = [
             "isRevision": false
           },
           {
-            "id": "prob-yyjztfkmp",
+            "id": "z23-p-go7s3z0kp",
             "title": "Least Cost Bracket Sequence (2600)",
             "completed": false,
             "difficulty": "Hard",
@@ -12012,4 +11955,4 @@ export const zeroTo2300Sections = [
       }
     ]
   }
-];
+] as any;

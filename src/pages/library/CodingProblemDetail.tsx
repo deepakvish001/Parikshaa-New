@@ -1460,26 +1460,49 @@ const CodingProblemDetail = () => {
 
             <div className="flex-1 overflow-y-auto p-4 sm:p-6">
               <TabsContent value="description" className="mt-0 space-y-6">
-                <header className="space-y-4">
-                  <h1 className="text-[26px] sm:text-[32px] font-semibold tracking-tight leading-[1.2] text-foreground">
-                    {problem.title}
-                  </h1>
+                <header className="mb-8 space-y-6">
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6">
+                    <div className="space-y-3 flex-1 min-w-0">
+                      <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-foreground/90 selection:bg-primary/30 leading-tight">
+                        {problem.title}
+                      </h1>
+                      <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+                        <Badge
+                          variant="outline"
+                          className={cn(
+                            "px-3 py-1 font-bold tracking-wide border-2 uppercase text-[10px] sm:text-[11px] shadow-sm",
+                            difficultyClass(problem.difficulty),
+                          )}
+                        >
+                          {problem.difficulty}
+                        </Badge>
+                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground/70 bg-muted/40 px-2.5 py-1 rounded-full border border-border/50">
+                          <Clock className="h-3.5 w-3.5" />
+                          <span>{problem.cpuTimeLimitSec}s limit</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground/70 bg-muted/40 px-2.5 py-1 rounded-full border border-border/50">
+                          <Cpu className="h-3.5 w-3.5" />
+                          <span>{Math.floor(problem.memoryLimitKb / 1024)}MB</span>
+                        </div>
+                      </div>
+                    </div>
 
-                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                    {problem.difficulty && (
-                      <span
-                        className={cn(
-                          "inline-flex items-center text-[12px] font-medium px-3 py-1 rounded-full transition-colors",
-                          problem.difficulty === "Easy"
-                            ? "bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/15"
-                            : problem.difficulty === "Medium"
-                              ? "bg-amber-500/10 text-amber-400 hover:bg-amber-500/15"
-                              : "bg-rose-500/10 text-rose-400 hover:bg-rose-500/15",
-                        )}
-                      >
-                        {problem.difficulty}
-                      </span>
-                    )}
+                    <div className="flex flex-col gap-2 shrink-0 sm:items-end">
+                      <ProblemDetailHeader
+                        isSolved={problemStats.isSolved}
+                        isAttempted={problemStats.isAttempted}
+                        attempts={problemStats.attempts}
+                        solvedAt={problemStats.solvedAt}
+                        isBookmarked={problem.isBookmarked}
+                        onToggleBookmark={() =>
+                          rawToggleBookmark({
+                            problem_id: problem.id,
+                            is_bookmarked: !problem.isBookmarked,
+                          })
+                        }
+                      />
+                    </div>
+                  </div>
                     {problem.companies && problem.companies.length > 0 ? (
                       <Collapsible
                         open={showCompanyTags}
@@ -1492,11 +1515,11 @@ const CodingProblemDetail = () => {
                             aria-expanded={showCompanyTags}
                             aria-controls="company-tags-panel"
                             className={cn(
-                              "inline-flex items-center gap-1 text-[12px] font-medium px-3 py-1 rounded-full border transition-all duration-200",
+                              "inline-flex items-center gap-2 text-[11px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/20 hover:bg-amber-500/20 transition-all duration-200",
                               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                               showCompanyTags
-                                ? "bg-amber-500/15 border-amber-500/40 text-amber-300"
-                                : "border-amber-500/25 text-amber-300/90 hover:bg-amber-500/10 hover:border-amber-500/40",
+                                ? "bg-amber-500/20 border-amber-500/50"
+                                : "",
                             )}
                           >
                             Company Tags

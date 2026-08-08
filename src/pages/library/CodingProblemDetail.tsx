@@ -703,7 +703,7 @@ const CodingProblemDetail = () => {
       try {
         const { supabase } = await import("@/integrations/supabase/client");
         const { data: contestRow } = await supabase
-          .from("contests")
+          .from("contests" as any)
           .select("id")
           .eq("slug", contestSlug)
           .maybeSingle();
@@ -1149,7 +1149,7 @@ const CodingProblemDetail = () => {
       try {
         const { supabase } = await import("@/integrations/supabase/client");
         const { data: contestRow } = await supabase
-          .from("contests")
+          .from("contests" as any)
           .select("id")
           .eq("slug", contestSlug)
           .maybeSingle();

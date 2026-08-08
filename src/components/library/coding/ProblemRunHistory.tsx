@@ -185,12 +185,12 @@ export const ProblemRunHistory = ({ runs }: ProblemRunHistoryProps) => {
       <div className="space-y-3">
         {runs.length > 0 && (
           <Card
-            className="p-3 bg-muted/20"
+            className="p-6 bg-[#0a0a0c]/60 border-border/20 backdrop-blur-xl rounded-[2rem] shadow-2xl shadow-black/20"
             aria-label="Run history summary"
           >
-            <div className="flex items-center justify-between gap-3 flex-wrap">
+            <div className="flex items-center justify-between gap-6 flex-wrap">
               <div
-                className="flex items-center gap-2 flex-wrap"
+                className="flex items-center gap-3 flex-wrap"
                 role="group"
                 aria-label="Verdict counts"
               >
@@ -210,12 +210,6 @@ export const ProblemRunHistory = ({ runs }: ProblemRunHistoryProps) => {
                   <SummaryChip
                     meta={getVerdictMeta("pending")}
                     count={summary.counts.pending}
-                  />
-                )}
-                {summary.counts.unknown > 0 && (
-                  <SummaryChip
-                    meta={getVerdictMeta("unknown")}
-                    count={summary.counts.unknown}
                   />
                 )}
               </div>

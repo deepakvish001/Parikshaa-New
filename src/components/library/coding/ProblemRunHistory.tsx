@@ -23,7 +23,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { ChevronDown, CheckCircle2, XCircle, AlertTriangle, Clock, HelpCircle, type LucideIcon } from "lucide-react";
+import { ChevronDown, CheckCircle2, XCircle, AlertTriangle, Clock, HelpCircle, Cpu, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { CodeRunRow } from "@/hooks/useCodeRuns";
 

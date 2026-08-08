@@ -30,34 +30,36 @@ export const ProblemDetailHeader = ({
       : "text-muted-foreground bg-muted/40 border-border";
 
   return (
-    <Card className="p-3 mb-4">
-      <div className="flex items-center justify-between gap-3 flex-wrap">
-        <div className="flex items-center gap-2 flex-wrap">
-          <Badge variant="outline" className={cn("gap-1.5 font-medium", statusClass)}>
-            <StatusIcon className="h-3.5 w-3.5" />
+    <div className="p-1 mb-0">
+      <div className="flex items-center gap-3">
+        <div className="flex flex-col items-end gap-1">
+          <Badge variant="outline" className={cn("gap-1.5 font-bold tracking-tighter uppercase text-[10px] py-0.5 px-2", statusClass)}>
+            <StatusIcon className="h-3 w-3" />
             {status}
           </Badge>
-          <span className="flex items-center gap-1 text-xs text-muted-foreground">
-            <Activity className="h-3 w-3" />
-            {attempts} {attempts === 1 ? "attempt" : "attempts"}
-          </span>
-          {solvedAt && (
-            <span className="flex items-center gap-1 text-xs text-muted-foreground">
-              <CalendarCheck className="h-3 w-3" />
-              Solved {new Date(solvedAt).toLocaleDateString()}
+          <div className="flex items-center gap-3">
+            <span className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground/60 uppercase tracking-tighter">
+              <Activity className="h-3 w-3" />
+              {attempts} attempts
             </span>
-          )}
+            {solvedAt && (
+              <span className="flex items-center gap-1 text-[10px] font-medium text-emerald-500/70 uppercase tracking-tighter">
+                <CalendarCheck className="h-3 w-3" />
+                {new Date(solvedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+              </span>
+            )}
+          </div>
         </div>
+        <div className="w-px h-8 bg-border/50" />
         <Button
-          variant={isBookmarked ? "default" : "outline"}
-          size="sm"
+          variant={isBookmarked ? "default" : "ghost"}
+          size="icon"
           onClick={onToggleBookmark}
-          className="gap-1.5 h-8"
+          className={cn("h-9 w-9 rounded-2xl transition-all duration-300 hover:scale-110 active:scale-95", isBookmarked ? "bg-amber-500 hover:bg-amber-600 text-white shadow-lg shadow-amber-500/20" : "text-muted-foreground/60 hover:text-amber-500 hover:bg-amber-500/10")}
         >
-          <Star className={cn("h-3.5 w-3.5", isBookmarked && "fill-current")} />
-          {isBookmarked ? "Bookmarked" : "Bookmark"}
+          <Star className={cn("h-4 w-4", isBookmarked && "fill-current")} />
         </Button>
       </div>
-    </Card>
+    </div>
   );
 };

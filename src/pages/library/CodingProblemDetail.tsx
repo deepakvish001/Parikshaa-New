@@ -148,6 +148,7 @@ import { ProblemMcqBlock } from "@/components/library/coding/ProblemMcqBlock";
 import { ProblemFooterBar } from "@/components/library/coding/ProblemFooterBar";
 import { ProblemDiscussion } from "@/components/library/coding/ProblemDiscussion";
 import { SignInGate } from "@/components/library/coding/SignInGate";
+import { ProblemDetailHeader } from "@/components/library/coding/ProblemDetailHeader";
 import {
   ProblemFormatCards,
   ProblemConstraints,
@@ -1460,26 +1461,50 @@ const CodingProblemDetail = () => {
 
             <div className="flex-1 overflow-y-auto p-4 sm:p-6">
               <TabsContent value="description" className="mt-0 space-y-6">
-                <header className="space-y-4">
-                  <h1 className="text-[26px] sm:text-[32px] font-semibold tracking-tight leading-[1.2] text-foreground">
-                    {problem.title}
-                  </h1>
+                <header className="mb-8 space-y-6">
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6">
+                    <div className="space-y-3 flex-1 min-w-0">
+                      <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-foreground/90 selection:bg-primary/30 leading-tight">
+                        {problem.title}
+                      </h1>
+                      <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+                        <Badge
+                          variant="outline"
+                          className={cn(
+                            "px-3 py-1 font-bold tracking-wide border-2 uppercase text-[10px] sm:text-[11px] shadow-sm",
+                            difficultyClass(problem.difficulty),
+                          )}
+                        >
+                          {problem.difficulty}
+                        </Badge>
+                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground/70 bg-muted/40 px-2.5 py-1 rounded-full border border-border/50">
+                          <Clock className="h-3.5 w-3.5" />
+                          <span>{problem.cpuTimeLimitSec}s limit</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground/70 bg-muted/40 px-2.5 py-1 rounded-full border border-border/50">
+                          <Cpu className="h-3.5 w-3.5" />
+                          <span>{Math.floor(problem.memoryLimitKb / 1024)}MB</span>
+                        </div>
+                      </div>
+                    </div>
 
-                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                    {problem.difficulty && (
-                      <span
-                        className={cn(
-                          "inline-flex items-center text-[12px] font-medium px-3 py-1 rounded-full transition-colors",
-                          problem.difficulty === "Easy"
-                            ? "bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/15"
-                            : problem.difficulty === "Medium"
-                              ? "bg-amber-500/10 text-amber-400 hover:bg-amber-500/15"
-                              : "bg-rose-500/10 text-rose-400 hover:bg-rose-500/15",
-                        )}
-                      >
-                        {problem.difficulty}
-                      </span>
-                    )}
+                    <div className="flex flex-col gap-2 shrink-0 sm:items-end">
+                      <ProblemDetailHeader
+                        isSolved={problemStats.isSolved}
+                        isAttempted={problemStats.isAttempted}
+                        attempts={problemStats.attempts}
+                        solvedAt={problemStats.solvedAt}
+                        isBookmarked={(problem as any).isBookmarked || false}
+                        onToggleBookmark={() =>
+                          rawToggleBookmark({
+                            problem_id: (problem as any).id,
+                            is_bookmarked: !(problem as any).isBookmarked,
+                          } as any)
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-3">
                     {problem.companies && problem.companies.length > 0 ? (
                       <Collapsible
                         open={showCompanyTags}
@@ -1492,11 +1517,11 @@ const CodingProblemDetail = () => {
                             aria-expanded={showCompanyTags}
                             aria-controls="company-tags-panel"
                             className={cn(
-                              "inline-flex items-center gap-1 text-[12px] font-medium px-3 py-1 rounded-full border transition-all duration-200",
+                              "inline-flex items-center gap-2 text-[11px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/20 hover:bg-amber-500/20 transition-all duration-200",
                               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                               showCompanyTags
-                                ? "bg-amber-500/15 border-amber-500/40 text-amber-300"
-                                : "border-amber-500/25 text-amber-300/90 hover:bg-amber-500/10 hover:border-amber-500/40",
+                                ? "bg-amber-500/20 border-amber-500/50"
+                                : "",
                             )}
                           >
                             Company Tags
@@ -1532,7 +1557,7 @@ const CodingProblemDetail = () => {
                               navigate(`/library/problems?topics=${encodeURIComponent(t)}`)
                             }
                             title={`Filter problems by #${t}`}
-                            className="inline-flex items-center max-w-[10rem] sm:max-w-[14rem] text-[11px] font-medium px-2.5 py-1 rounded-full bg-foreground/[0.04] text-foreground/70 border border-foreground/10 hover:bg-foreground/[0.08] hover:text-foreground hover:border-foreground/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/50 transition-colors"
+                            className="inline-flex items-center max-w-[10rem] sm:max-w-[14rem] text-[11px] font-bold px-3 py-1 rounded-full bg-foreground/[0.04] text-foreground/60 border border-foreground/10 hover:bg-primary/10 hover:text-primary hover:border-primary/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 transition-all duration-200"
                           >
                             <span className="truncate">#{t}</span>
                           </button>
@@ -1588,18 +1613,41 @@ const CodingProblemDetail = () => {
                   const { main, inputFormat, outputFormat } =
                     splitProblemDescription(problem.description ?? "");
                   return (
-                    <div className="space-y-6">
-                      <div className="prose prose-sm dark:prose-invert max-w-none text-[15px] leading-relaxed text-foreground/90">
-                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{main}</ReactMarkdown>
+                    <div className="space-y-8">
+                      <div className="prose prose-sm dark:prose-invert max-w-none text-[15px] leading-relaxed text-foreground/90 font-sans selection:bg-amber-500/20">
+                        <ReactMarkdown 
+                          remarkPlugins={[remarkGfm]}
+                          components={{
+                            p: ({ children }) => <p className="mb-4 last:mb-0">{children}</p>,
+                            code: ({ inline, className, children, ...props }: any) => {
+                              if (inline) {
+                                return (
+                                  <code className="px-1.5 py-0.5 rounded bg-muted font-mono text-amber-500 text-[0.9em]" {...props}>
+                                    {children}
+                                  </code>
+                                );
+                              }
+                              return (
+                                <code className={className} {...props}>
+                                  {children}
+                                </code>
+                              );
+                            }
+                          }}
+                        >
+                          {main}
+                        </ReactMarkdown>
                       </div>
                       
                       {(inputFormat || outputFormat) && (
-                        <div className="space-y-4">
-                          <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground/80 flex items-center gap-2">
-                            <div className="h-px flex-1 bg-border/50" />
-                            Format
-                            <div className="h-px flex-1 bg-border/50" />
-                          </h3>
+                        <div className="space-y-5 animate-in fade-in slide-in-from-bottom-2 duration-500 delay-150 fill-mode-both">
+                          <div className="flex items-center gap-3">
+                            <div className="h-8 w-1 bg-primary rounded-full" />
+                            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60">
+                              Format Details
+                            </h3>
+                            <div className="h-px flex-1 bg-gradient-to-r from-border/50 to-transparent" />
+                          </div>
                           <ProblemFormatCards
                             inputFormat={inputFormat}
                             outputFormat={outputFormat}
@@ -1621,49 +1669,90 @@ const CodingProblemDetail = () => {
 
                 {/* Examples */}
                 {problem.examples && problem.examples.length > 0 && (
-                  <div className="space-y-4">
-                    <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground/80 flex items-center gap-2">
-                      <div className="h-px flex-1 bg-border/50" />
-                      Examples
-                      <div className="h-px flex-1 bg-border/50" />
-                    </h3>
-                    <div className="space-y-4">
+                  <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500 delay-200 fill-mode-both">
+                    <div className="flex items-center gap-3">
+                      <div className="h-8 w-1 bg-amber-500 rounded-full" />
+                      <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60">
+                        Examples & Explanations
+                      </h3>
+                      <div className="h-px flex-1 bg-gradient-to-r from-border/50 to-transparent" />
+                    </div>
+                    <div className="space-y-5">
                       {problem.examples.map((ex, i) => (
-                        <div key={i} className="rounded-xl bg-muted/30 p-4 border border-border/50 shadow-sm overflow-hidden group">
-                          <div className="flex items-center justify-between mb-3">
-                            <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground/60">
-                              Example {i + 1}
-                            </p>
-                            <Button 
-                              variant="ghost" 
-                              size="icon" 
-                              className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
-                              onClick={() => {
-                                setStdin(ex.input);
-                                toast({ title: "Input copied", description: "Example input loaded into testcase runner." });
-                              }}
-                            >
-                              <Copy className="h-3 w-3" />
-                            </Button>
+                        <div key={i} className="rounded-2xl bg-muted/20 p-5 border border-border/40 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_20px_-4px_rgba(0,0,0,0.3)] overflow-hidden group hover:border-border/80 transition-all duration-300">
+                          <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center gap-2">
+                              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary text-[10px] font-black border border-primary/20">
+                                {i + 1}
+                              </span>
+                              <p className="text-[10px] font-black uppercase tracking-[0.15em] text-muted-foreground/70">
+                                Example Case
+                              </p>
+                            </div>
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Button 
+                                    variant="outline" 
+                                    size="icon" 
+                                    className="h-8 w-8 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-200 hover:scale-110 active:scale-95 border-border/40 bg-background/50"
+                                    onClick={() => {
+                                      setStdin(ex.input);
+                                      toast({ 
+                                        title: "Input copied", 
+                                        description: "Example input loaded into testcase runner.",
+                                        className: "rounded-2xl border-2" 
+                                      });
+                                    }}
+                                  >
+                                    <Copy className="h-3.5 w-3.5" />
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent className="rounded-xl font-medium">Use as Test Case</TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
                           </div>
-                          <div className="space-y-3 font-mono text-[13px] sm:text-sm">
-                            <div className="bg-background/50 rounded-lg p-3 border border-border/30">
-                              <p className="text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-tighter">Input</p>
-                              <pre className="whitespace-pre-wrap break-all text-amber-500/90">{ex.input}</pre>
+                          
+                          <div className="grid gap-4 sm:grid-cols-2">
+                            <div className="space-y-2">
+                              <div className="flex items-center justify-between px-1">
+                                <p className="text-[10px] font-bold text-muted-foreground/50 uppercase tracking-widest flex items-center gap-1.5">
+                                  <div className="w-1.5 h-1.5 rounded-full bg-amber-500/50" />
+                                  Input
+                                </p>
+                              </div>
+                              <div className="bg-background/40 backdrop-blur-sm rounded-xl p-3.5 border border-border/30 font-mono text-[13px] leading-relaxed shadow-inner">
+                                <pre className="whitespace-pre-wrap break-all text-amber-500/90 selection:bg-amber-500/20">{ex.input}</pre>
+                              </div>
                             </div>
-                            <div className="bg-background/50 rounded-lg p-3 border border-border/30">
-                              <p className="text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-tighter">Output</p>
-                              <pre className="whitespace-pre-wrap break-all text-emerald-500/90">{ex.output}</pre>
+                            
+                            <div className="space-y-2">
+                              <div className="flex items-center justify-between px-1">
+                                <p className="text-[10px] font-bold text-muted-foreground/50 uppercase tracking-widest flex items-center gap-1.5">
+                                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/50" />
+                                  Output
+                                </p>
+                              </div>
+                              <div className="bg-background/40 backdrop-blur-sm rounded-xl p-3.5 border border-border/30 font-mono text-[13px] leading-relaxed shadow-inner">
+                                <pre className="whitespace-pre-wrap break-all text-emerald-500/90 selection:bg-emerald-500/20">{ex.output}</pre>
+                              </div>
                             </div>
-                            {ex.explanation && (
-                              <div className="pt-1 px-1">
-                                <p className="text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-tighter font-sans">Explanation</p>
-                                <p className="font-sans text-foreground/80 leading-relaxed italic border-l-2 border-primary/20 pl-3">
+                          </div>
+
+                          {ex.explanation && (
+                            <div className="mt-5 pt-5 border-t border-border/30">
+                              <p className="text-[10px] font-bold text-muted-foreground/50 uppercase tracking-widest mb-2.5 flex items-center gap-1.5">
+                                <BookOpen className="h-3 w-3" />
+                                Explanation
+                              </p>
+                              <div className="relative overflow-hidden rounded-xl bg-primary/[0.03] p-4 border border-primary/10">
+                                <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary/40 to-primary/10" />
+                                <p className="text-sm text-foreground/80 leading-relaxed font-sans selection:bg-primary/20">
                                   {ex.explanation}
                                 </p>
                               </div>
-                            )}
-                          </div>
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>
@@ -1672,12 +1761,14 @@ const CodingProblemDetail = () => {
 
                 {/* Constraints */}
                 {problem.constraints && problem.constraints.length > 0 && (
-                  <div className="space-y-3">
-                    <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground/80 flex items-center gap-2">
-                      <div className="h-px flex-1 bg-border/50" />
-                      Constraints
-                      <div className="h-px flex-1 bg-border/50" />
-                    </h3>
+                  <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-500 delay-300 fill-mode-both">
+                    <div className="flex items-center gap-3">
+                      <div className="h-8 w-1 bg-rose-500 rounded-full" />
+                      <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60">
+                        Operational Constraints
+                      </h3>
+                      <div className="h-px flex-1 bg-gradient-to-r from-border/50 to-transparent" />
+                    </div>
                     <ProblemConstraints constraints={problem.constraints} />
                   </div>
                 )}
@@ -1693,7 +1784,9 @@ const CodingProblemDetail = () => {
                 {(contestLocks as any).hintsLocked ? (
                   <LockedAuxPanel label="Hints" endsAt={(contestLocks as any).endsAt} />
                 ) : (
-                  <ProgressiveHints hints={problem.hints} slug={problem.slug} />
+                    <div className="mt-8 pt-8 border-t border-dashed border-border/50">
+                      <ProgressiveHints hints={problem.hints} slug={problem.slug} />
+                    </div>
                 )}
               </TabsContent>
 

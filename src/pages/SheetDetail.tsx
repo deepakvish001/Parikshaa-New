@@ -115,6 +115,7 @@ import { cnSections, cnMeta } from "@/data/cnData";
 import { osSections, osMeta } from "@/data/osData";
 import { acmIcpcSections, acmIcpcMeta, acmIcpcFaqs, acmIcpcChecklist } from "@/data/acmIcpcTrainingData";
 import { cpLadderSections, cpLadderMeta } from "@/data/cpLadderData";
+import { cpTopicSheetSections, cpTopicSheetMeta } from "@/data/cpTopicSheetData";
 import { striverSDESections, striverSDEMeta } from "@/data/striverSDEData";
 import { striverSDSections, striverSDMeta } from "@/data/striverSDData";
 import { sqlPracticeSections, sqlPracticeMeta } from "@/data/sqlPracticeData";
@@ -251,15 +252,9 @@ const mockSheetData: Record<string, SheetData> = {
     sections: advSqlSections,
   },
   "competitive-programming": {
-    id: "competitive-programming",
-    title: "Competitive Programming Sheet",
-    description: "Master algorithms through structured problem sets from Codeforces, AtCoder & ICPC",
-    lastUpdated: "February 7, 2026",
-    totalProblems: 320,
-    completed: 0,
-    easy: 80,
-    medium: 150,
-    hard: 90,
+    ...cpTopicSheetMeta,
+    sections: cpTopicSheetSections,
+  },
     sections: [
       {
         id: "cp-preliminaries",

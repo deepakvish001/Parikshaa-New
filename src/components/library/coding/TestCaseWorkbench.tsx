@@ -183,9 +183,9 @@ export const TestCaseWorkbench = ({
 
   return (
     <TooltipProvider delayDuration={200}>
-      <div className="space-y-2">
+      <div className="space-y-4">
         {/* Tab strip */}
-        <div className="flex items-center gap-1 flex-wrap">
+        <div className="flex items-center gap-1.5 flex-wrap">
           {sampleTests.map((_, i) => {
             const key: TabKey = `s-${i}`;
             const isActive = active === key;
@@ -196,18 +196,18 @@ export const TestCaseWorkbench = ({
                 type="button"
                 onClick={() => setActive(key)}
                 className={cn(
-                  "h-7 pl-1.5 pr-2.5 rounded-md text-xs font-medium border transition-colors inline-flex items-center gap-1.5",
+                  "h-8 pl-2 pr-3 rounded-xl text-xs font-bold uppercase tracking-tight border transition-all duration-200 inline-flex items-center gap-2",
                   isActive
-                    ? "bg-primary/10 border-primary/40 text-foreground"
-                    : "bg-muted/40 border-transparent text-muted-foreground hover:text-foreground",
+                    ? "bg-primary/10 border-primary/40 text-foreground shadow-sm shadow-primary/5"
+                    : "bg-muted/30 border-transparent text-muted-foreground/60 hover:text-foreground hover:bg-muted/50",
                 )}
               >
                 {statusValue ? (
                   <StatusBadge kind={statusValue} />
                 ) : (
-                  <span className="inline-block h-3.5 w-3.5 shrink-0" aria-hidden />
+                  <div className="h-1.5 w-1.5 rounded-full bg-muted-foreground/30" />
                 )}
-                <span className="leading-none">Case {i + 1}</span>
+                <span>Case {i + 1}</span>
               </button>
             );
             if (!entry) {
@@ -269,10 +269,10 @@ export const TestCaseWorkbench = ({
               <div
                 key={c.id}
                 className={cn(
-                  "group flex items-center gap-1 h-7 pl-2 pr-1 rounded-md text-xs font-medium border transition-colors",
+                  "group flex items-center gap-1 h-8 pl-2.5 pr-1 rounded-xl text-xs font-bold uppercase tracking-tight border transition-all duration-200",
                   isActive
-                    ? "bg-primary/10 border-primary/40 text-foreground"
-                    : "bg-muted/40 border-transparent text-muted-foreground hover:text-foreground",
+                    ? "bg-primary/10 border-primary/40 text-foreground shadow-sm shadow-primary/5"
+                    : "bg-muted/30 border-transparent text-muted-foreground/60 hover:text-foreground hover:bg-muted/50",
                 )}
               >
                 {entry ? (
@@ -329,8 +329,8 @@ export const TestCaseWorkbench = ({
           })}
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="sm" className="h-7 px-2 gap-1 text-xs" onClick={addCustom}>
-                <Plus className="h-3 w-3" />
+              <Button variant="ghost" size="sm" className="h-8 px-3 gap-1.5 text-xs font-bold uppercase tracking-tight rounded-xl" onClick={addCustom}>
+                <Plus className="h-3.5 w-3.5" />
                 Custom
               </Button>
             </TooltipTrigger>
@@ -350,15 +350,15 @@ export const TestCaseWorkbench = ({
               </Button>
             )}
             <Button
-              variant="outline"
+              variant="default"
               size="sm"
-              className="h-7 gap-1.5 text-xs"
+              className="h-8 gap-2 text-xs font-black uppercase tracking-widest rounded-xl px-4 bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20"
               onClick={onRun}
               disabled={isRunning}
               title="Run only the active test"
             >
-              {isRunning ? <Loader2 className="h-3 w-3 animate-spin" /> : <Play className="h-3 w-3" />}
-              Run this
+              {isRunning ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Play className="h-3 w-3 fill-current" />}
+              Run Test
             </Button>
           </div>
         </div>
@@ -373,22 +373,37 @@ export const TestCaseWorkbench = ({
           </div>
         )}
 
-        <p className="text-xs text-muted-foreground">stdin (input passed to your program)</p>
-        <Textarea
-          value={stdin}
-          onChange={(e) => updateActiveInput(e.target.value)}
-          className="font-mono text-xs min-h-[120px] resize-none"
-          placeholder="Enter your test input..."
-        />
+        <div className="space-y-3">
+          <div className="flex items-center gap-2">
+            <div className="h-4 w-0.5 bg-primary/40 rounded-full" />
+            <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground/50">
+              Input Stdin
+            </p>
+          </div>
+          <div className="relative group">
+            <div className="absolute -inset-0.5 bg-gradient-to-br from-primary/10 to-transparent rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500" />
+            <Textarea
+              value={stdin}
+              onChange={(e) => updateActiveInput(e.target.value)}
+              className="relative font-mono text-[13px] min-h-[140px] resize-none rounded-xl border-border/50 bg-[#0a0a0c]/80 backdrop-blur-sm focus:ring-1 focus:ring-primary/30 transition-all selection:bg-primary/20"
+              placeholder="Enter your test input..."
+            />
+          </div>
+        </div>
 
         {active.startsWith("s-") && (() => {
           const i = Number(active.slice(2));
           const expected = sampleTests[i]?.expected ?? sampleTests[i]?.output;
           if (!expected) return null;
           return (
-            <div className="text-xs">
-              <p className="text-muted-foreground mb-1">Expected output</p>
-              <pre className="font-mono bg-muted/50 p-2 rounded border overflow-x-auto whitespace-pre-wrap">
+            <div className="space-y-3 pt-2">
+              <div className="flex items-center gap-2">
+                <div className="h-4 w-0.5 bg-emerald-500/40 rounded-full" />
+                <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground/50">
+                  Expected Output
+                </p>
+              </div>
+              <pre className="font-mono text-[13px] bg-emerald-500/5 p-4 rounded-xl border border-emerald-500/10 text-emerald-500/90 overflow-x-auto whitespace-pre-wrap leading-relaxed">
                 {expected}
               </pre>
             </div>

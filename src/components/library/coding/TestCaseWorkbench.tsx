@@ -230,18 +230,20 @@ export const TestCaseWorkbench = ({
                       Case {i + 1} {isPassTip ? "Accepted" : "Wrong Answer"}
                     </span>
                   </div>
-                  <div>
-                    <div className="text-[10px] uppercase tracking-wide text-muted-foreground font-sans">Input</div>
-                    <div className="text-foreground">{entry.input || "(empty)"}</div>
-                  </div>
-                  <div>
-                    <div className="text-[10px] uppercase tracking-wide text-muted-foreground font-sans">Expected</div>
-                    <div className="text-emerald-400">{entry.expected || "(empty)"}</div>
-                  </div>
-                  <div>
-                    <div className="text-[10px] uppercase tracking-wide text-muted-foreground font-sans">Got</div>
-                    <div className={isPassTip ? "text-emerald-400" : "text-rose-400"}>
-                      {entry.got || "(empty)"}
+                  <div className="space-y-2">
+                    <div>
+                      <div className="text-[9px] font-black uppercase tracking-widest text-muted-foreground/50 mb-1">Input</div>
+                      <div className="text-foreground bg-foreground/5 p-2 rounded-lg text-[10px] border border-border/20">{entry.input || "(empty)"}</div>
+                    </div>
+                    <div>
+                      <div className="text-[9px] font-black uppercase tracking-widest text-muted-foreground/50 mb-1">Expected</div>
+                      <div className="text-emerald-400 bg-emerald-500/5 p-2 rounded-lg text-[10px] border border-emerald-500/20">{entry.expected || "(empty)"}</div>
+                    </div>
+                    <div>
+                      <div className="text-[9px] font-black uppercase tracking-widest text-muted-foreground/50 mb-1">Got</div>
+                      <div className={cn("p-2 rounded-lg text-[10px] border", isPassTip ? "text-emerald-400 bg-emerald-500/5 border-emerald-500/20" : "text-rose-400 bg-rose-500/5 border-rose-500/20")}>
+                        {entry.got || "(empty)"}
+                      </div>
                     </div>
                   </div>
                 </TooltipContent>

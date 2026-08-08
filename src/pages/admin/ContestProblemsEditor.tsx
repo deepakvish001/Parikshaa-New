@@ -145,7 +145,7 @@ export default function ContestProblemsEditor() {
       }
 
       // Replace all
-      const del = await supabase.from("contest_problems").delete().eq("contest_id", id);
+      const del = await supabase.from("contest_problems" as any).delete().eq("contest_id", id);
       if (del.error) throw del.error;
       const insert = rows.map((r, i) => ({
         contest_id: id,
@@ -154,7 +154,7 @@ export default function ContestProblemsEditor() {
         points: r.points,
         unlock_at: r.unlock_at,
       }));
-      const { error } = await supabase.from("contest_problems").insert(insert);
+      const { error } = await supabase.from("contest_problems" as any).insert(insert as any);
       if (error) throw error;
       toast.success("Problems saved");
     } catch (e: any) {

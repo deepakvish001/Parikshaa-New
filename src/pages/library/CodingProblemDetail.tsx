@@ -158,6 +158,17 @@ const difficultyClass = (d: string) =>
       ? "text-amber-500 bg-amber-500/10 border-amber-500/20"
       : "text-rose-500 bg-rose-500/10 border-rose-500/20";
 
+function DifficultyBadge({ difficulty }: { difficulty: string }) {
+  return (
+    <span className={cn(
+      "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border",
+      difficultyClass(difficulty)
+    )}>
+      {difficulty}
+    </span>
+  );
+}
+
 const LAST_OPENED_KEY = "parikshaa:coding-last-opened-submission";
 const LAST_FAILED_KEY = "parikshaa:coding-last-failed-submission";
 

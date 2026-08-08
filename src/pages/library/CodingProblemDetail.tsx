@@ -22,6 +22,7 @@ import {
   MessageCircle,
   Copy,
   NotebookPen,
+  X,
 } from "lucide-react";
 
 import ReactMarkdown from "react-markdown";

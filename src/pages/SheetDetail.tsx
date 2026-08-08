@@ -33,6 +33,8 @@ import {
   ArrowRight,
   ListTree,
   Share2,
+  Eye,
+  BookOpen,
 } from "lucide-react";
 import {
   Command,
@@ -195,7 +197,14 @@ interface SheetData {
   easy: number;
   medium: number;
   hard: number;
-  sections: Section[];
+  sections: (Section & { 
+    part?: string; 
+    ratingBand?: string; 
+    description?: string; 
+    keyConcepts?: string; 
+    resources?: string;
+    notes?: string;
+  })[];
 }
 
 // Mock data for sheets
@@ -952,7 +961,14 @@ function SectionCard({
   persistKey,
   jumpSignal,
 }: { 
-  section: Section; 
+  section: Section & { 
+    part?: string; 
+    ratingBand?: string; 
+    description?: string; 
+    keyConcepts?: string; 
+    resources?: string;
+    notes?: string;
+  }; 
   onToggleTopic: (id: string) => void;
   onOpenNote: (topic: Topic) => void;
   onToggleRevision: (id: string) => void;
@@ -1212,11 +1228,84 @@ function SectionCard({
                 </div>
               )}
               <motion.div 
-                className="ml-4 border-l border-border/30"
+                className="ml-0"
                 initial={{ x: -10 }}
                 animate={{ x: 0 }}
                 transition={{ duration: 0.25, delay: 0.05 }}
               >
+                {/* CP Theory Details - Display inside the expanded collapsible */}
+                {(section.part || section.ratingBand || section.description || section.keyConcepts || section.resources || section.notes) && (
+                  <div className="bg-muted/30 px-6 py-5 space-y-5 border-b border-border/50">
+                    <div className="flex flex-wrap items-center gap-3">
+                      {section.part && (
+                        <Badge variant="outline" className="bg-primary/10 border-primary/20 text-primary font-bold px-3">
+                          {section.part}
+                        </Badge>
+                      )}
+                      {section.ratingBand && (
+                        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary/50 border border-border/50 text-[11px] font-medium text-muted-foreground">
+                          <Flame className="h-3 w-3 text-amber-500" />
+                          Rating: {section.ratingBand}
+                        </div>
+                      )}
+                    </div>
+
+                    {section.description && (
+                      <div className="space-y-1.5">
+                        <h4 className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
+                          <Sparkles className="h-3 w-3" /> Idea (Kaam kaise karta hai)
+                        </h4>
+                        <div className="text-sm leading-relaxed text-foreground antialiased bg-background/40 p-3.5 rounded-xl border border-border/20 prose prose-invert prose-sm max-w-none shadow-sm">
+                          {section.description}
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {section.keyConcepts && (
+                        <div className="space-y-1.5">
+                          <h4 className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
+                            <Eye className="h-3 w-3" /> Pehchano (Signal)
+                          </h4>
+                          <div className="text-sm leading-relaxed text-foreground antialiased bg-amber-500/[0.03] p-3.5 rounded-xl border border-amber-500/10 min-h-[60px] flex items-center">
+                            {section.keyConcepts}
+                          </div>
+                        </div>
+                      )}
+
+                      {section.resources && (
+                        <div className="space-y-1.5">
+                          <h4 className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
+                            <BookOpen className="h-3 w-3" /> Padho (Resources)
+                          </h4>
+                          <div className="text-sm leading-relaxed text-foreground antialiased bg-primary/[0.03] p-3.5 rounded-xl border border-primary/10 min-h-[60px] flex items-center">
+                            {section.resources}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {section.notes && (
+                      <div className="space-y-1.5">
+                        <h4 className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
+                          <Info className="h-3 w-3" /> Cross-ref / Note
+                        </h4>
+                        <div className="text-[11px] italic text-muted-foreground bg-muted/20 p-2.5 rounded-lg border border-border/30">
+                          {section.notes}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                <div className="p-4 border-b border-border/30 bg-muted/5 flex items-center justify-between">
+                  <h3 className="text-sm font-bold uppercase tracking-widest text-primary/80 flex items-center gap-2">
+                    <CheckSquare className="h-4 w-4" /> Challenge Set
+                  </h3>
+                  <div className="text-[10px] text-muted-foreground font-medium">
+                    {section.subSections.length} modules to master
+                  </div>
+                </div>
 
                 {section.subSections.map((subSection, index) => (
                   <motion.div
@@ -1575,11 +1664,7 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
                 topics: subSection.topics.map(topic => {
                   const saved = progressMap.get(topic.id);
                   if (saved) {
-                    const anySaved = saved as typeof saved & {
-                      revision_count?: number | null;
-                      revision_history?: string[] | null;
-                      last_revised_at?: string | null;
-                    };
+                    const anySaved = saved as any;
                     return {
                       ...topic,
                       completed: saved.completed,

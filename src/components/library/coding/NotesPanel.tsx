@@ -19,6 +19,7 @@ import {
   Trash2,
   CheckCircle2,
   Loader2,
+  FileText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";

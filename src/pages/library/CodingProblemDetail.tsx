@@ -1348,9 +1348,9 @@ const CodingProblemDetail = () => {
                   onReorder={(next) => setTabOrder(next)}
                   lockedIds={(["notes", "editorial", "discussion"] as EditorTabId[]).filter(isTabLocked)}
                   reorderDisabled={
-                    contestLocks.notesLocked ||
-                    contestLocks.solutionLocked ||
-                    contestLocks.historyLocked
+                    (contestLocks as any).notesLocked ||
+                    (contestLocks as any).solutionLocked ||
+                    (contestLocks as any).historyLocked
                   }
                   onBlockedReorder={(reason, info) => {
                     logContestLockEvent({
@@ -1690,16 +1690,16 @@ const CodingProblemDetail = () => {
 
 
                 {/* Hints — progressive disclosure */}
-                {contestLocks.hintsLocked ? (
-                  <LockedAuxPanel label="Hints" endsAt={contestLocks.endsAt} />
+                {(contestLocks as any).hintsLocked ? (
+                  <LockedAuxPanel label="Hints" endsAt={(contestLocks as any).endsAt} />
                 ) : (
                   <ProgressiveHints hints={problem.hints} slug={problem.slug} />
                 )}
               </TabsContent>
 
               <TabsContent value="notes" className="mt-0">
-                {contestLocks.notesLocked ? (
-                  <LockedAuxPanel label="Notes" endsAt={contestLocks.endsAt} />
+                {(contestLocks as any).notesLocked ? (
+                  <LockedAuxPanel label="Notes" endsAt={(contestLocks as any).endsAt} />
                 ) : !user ? (
                   <SignInGate action="notes" />
                 ) : (
@@ -1709,8 +1709,8 @@ const CodingProblemDetail = () => {
               </TabsContent>
 
               <TabsContent value="my-solution" className="mt-0">
-                {contestLocks.solutionLocked ? (
-                  <LockedAuxPanel label="My Solution" endsAt={contestLocks.endsAt} />
+                {(contestLocks as any).solutionLocked ? (
+                  <LockedAuxPanel label="My Solution" endsAt={(contestLocks as any).endsAt} />
                 ) : (
                 <MySolutionPanel
                   notes={mySolutionNotes}
@@ -1745,8 +1745,8 @@ const CodingProblemDetail = () => {
               </TabsContent>
 
               <TabsContent value="editorial" className="mt-0">
-                {contestLocks.solutionLocked ? (
-                  <LockedAuxPanel label="Editorial" endsAt={contestLocks.endsAt} />
+                {(contestLocks as any).solutionLocked ? (
+                  <LockedAuxPanel label="Editorial" endsAt={(contestLocks as any).endsAt} />
                 ) : !acceptedExists ? (
                   <Card className="p-8 text-center">
                     <p className="text-muted-foreground">

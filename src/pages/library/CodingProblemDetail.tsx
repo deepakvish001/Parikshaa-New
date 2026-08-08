@@ -148,6 +148,7 @@ import { ProblemMcqBlock } from "@/components/library/coding/ProblemMcqBlock";
 import { ProblemFooterBar } from "@/components/library/coding/ProblemFooterBar";
 import { ProblemDiscussion } from "@/components/library/coding/ProblemDiscussion";
 import { SignInGate } from "@/components/library/coding/SignInGate";
+import { ProblemDetailHeader } from "@/components/library/coding/ProblemDetailHeader";
 import {
   ProblemFormatCards,
   ProblemConstraints,

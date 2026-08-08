@@ -191,7 +191,7 @@ export const TestCaseWorkbench = ({
             const isActive = active === key;
             const entry = sampleCaseStatus?.[i];
             const statusValue = entry?.status;
-            const isPass = statusValue === "passed";
+            const isPassStatus = statusValue === "passed";
             
             const chipButton = (
               <button
@@ -215,7 +215,7 @@ export const TestCaseWorkbench = ({
             if (!entry) {
               return <div key={key}>{chipButton}</div>;
             }
-            const isPass = statusValue === "passed";
+            const isPassTip = statusValue === "passed";
             return (
               <Tooltip key={key}>
                 <TooltipTrigger asChild>{chipButton}</TooltipTrigger>
@@ -227,7 +227,7 @@ export const TestCaseWorkbench = ({
                   <div className="flex items-center gap-1.5 font-sans">
                     <StatusBadge kind={statusValue!} />
                     <span className={cn("text-xs font-semibold", isPass ? "text-emerald-400" : "text-rose-400")}>
-                      Case {i + 1} {isPass ? "Accepted" : "Wrong Answer"}
+                      Case {i + 1} {isPassTip ? "Accepted" : "Wrong Answer"}
                     </span>
                   </div>
                   <div>
@@ -240,7 +240,7 @@ export const TestCaseWorkbench = ({
                   </div>
                   <div>
                     <div className="text-[10px] uppercase tracking-wide text-muted-foreground font-sans">Got</div>
-                    <div className={isPass ? "text-emerald-400" : "text-rose-400"}>
+                    <div className={isPassTip ? "text-emerald-400" : "text-rose-400"}>
                       {entry.got || "(empty)"}
                     </div>
                   </div>

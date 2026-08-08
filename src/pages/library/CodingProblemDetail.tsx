@@ -1588,15 +1588,25 @@ const CodingProblemDetail = () => {
                   const { main, inputFormat, outputFormat } =
                     splitProblemDescription(problem.description ?? "");
                   return (
-                    <>
-                      <div className="prose prose-sm dark:prose-invert max-w-none">
+                    <div className="space-y-6">
+                      <div className="prose prose-sm dark:prose-invert max-w-none text-[15px] leading-relaxed text-foreground/90">
                         <ReactMarkdown remarkPlugins={[remarkGfm]}>{main}</ReactMarkdown>
                       </div>
-                      <ProblemFormatCards
-                        inputFormat={inputFormat}
-                        outputFormat={outputFormat}
-                      />
-                    </>
+                      
+                      {(inputFormat || outputFormat) && (
+                        <div className="space-y-4">
+                          <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground/80 flex items-center gap-2">
+                            <div className="h-px flex-1 bg-border/50" />
+                            Format
+                            <div className="h-px flex-1 bg-border/50" />
+                          </h3>
+                          <ProblemFormatCards
+                            inputFormat={inputFormat}
+                            outputFormat={outputFormat}
+                          />
+                        </div>
+                      )}
+                    </div>
                   );
                 })()}
 
@@ -1610,27 +1620,67 @@ const CodingProblemDetail = () => {
                 )}
 
                 {/* Examples */}
-                <div className="space-y-3">
-                  {problem.examples.map((ex, i) => (
-                    <div key={i} className="rounded-md bg-muted/50 p-3 border">
-                      <p className="text-xs font-semibold mb-1.5 uppercase tracking-wider text-muted-foreground">
-                        Example {i + 1}
-                      </p>
-                      <div className="space-y-1.5 text-sm font-mono">
-                        <p><span className="text-muted-foreground">Input:</span> {ex.input}</p>
-                        <p><span className="text-muted-foreground">Output:</span> {ex.output}</p>
-                        {ex.explanation && (
-                          <p className="font-sans text-muted-foreground italic">
-                            {ex.explanation}
-                          </p>
-                        )}
-                      </div>
+                {problem.examples && problem.examples.length > 0 && (
+                  <div className="space-y-4">
+                    <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground/80 flex items-center gap-2">
+                      <div className="h-px flex-1 bg-border/50" />
+                      Examples
+                      <div className="h-px flex-1 bg-border/50" />
+                    </h3>
+                    <div className="space-y-4">
+                      {problem.examples.map((ex, i) => (
+                        <div key={i} className="rounded-xl bg-muted/30 p-4 border border-border/50 shadow-sm overflow-hidden group">
+                          <div className="flex items-center justify-between mb-3">
+                            <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground/60">
+                              Example {i + 1}
+                            </p>
+                            <Button 
+                              variant="ghost" 
+                              size="icon" 
+                              className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                              onClick={() => {
+                                setStdin(ex.input);
+                                toast({ title: "Input copied", description: "Example input loaded into testcase runner." });
+                              }}
+                            >
+                              <Copy className="h-3 w-3" />
+                            </Button>
+                          </div>
+                          <div className="space-y-3 font-mono text-[13px] sm:text-sm">
+                            <div className="bg-background/50 rounded-lg p-3 border border-border/30">
+                              <p className="text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-tighter">Input</p>
+                              <pre className="whitespace-pre-wrap break-all text-amber-500/90">{ex.input}</pre>
+                            </div>
+                            <div className="bg-background/50 rounded-lg p-3 border border-border/30">
+                              <p className="text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-tighter">Output</p>
+                              <pre className="whitespace-pre-wrap break-all text-emerald-500/90">{ex.output}</pre>
+                            </div>
+                            {ex.explanation && (
+                              <div className="pt-1 px-1">
+                                <p className="text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-tighter font-sans">Explanation</p>
+                                <p className="font-sans text-foreground/80 leading-relaxed italic border-l-2 border-primary/20 pl-3">
+                                  {ex.explanation}
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                )}
 
-                {/* Constraints — styled to match Examples card */}
-                <ProblemConstraints constraints={problem.constraints} />
+                {/* Constraints */}
+                {problem.constraints && problem.constraints.length > 0 && (
+                  <div className="space-y-3">
+                    <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground/80 flex items-center gap-2">
+                      <div className="h-px flex-1 bg-border/50" />
+                      Constraints
+                      <div className="h-px flex-1 bg-border/50" />
+                    </h3>
+                    <ProblemConstraints constraints={problem.constraints} />
+                  </div>
+                )}
 
                 {/* MCQ — "Now your turn!" */}
                 {mcqData && mcqData.options?.length > 0 && (

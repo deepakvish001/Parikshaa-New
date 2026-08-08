@@ -36,7 +36,6 @@ import {
   Eye,
   BookOpen,
   Zap,
-  Info,
 } from "lucide-react";
 import {
   Command,

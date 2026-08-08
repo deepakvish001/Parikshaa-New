@@ -1,48 +1,59 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
 
-/**
- * Returns lock state for auxiliary contest materials (notes, hints, my
- * solution, run history). While a registered participant is in a live
- * contest, all four are locked and unlock as soon as the contest ends.
- * Non-participants and visitors see no lock.
- */
-export function useContestLocks(contestId: string | undefined) {
-  const { user } = useAuth();
-  const [locked, setLocked] = useState<boolean>(!!contestId);
-  const [endsAt, setEndsAt] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(!!contestId);
+export const useContestLocks = (contestId: string | undefined) => {
+  const qc = useQueryClient();
 
   useEffect(() => {
-    if (!contestId) {
-      setLocked(false);
-      setLoading(false);
-      return;
-    }
-    let cancelled = false;
-    (async () => {
-      const [{ data: aux }, { data: contest }] = await Promise.all([
-        supabase.rpc("contest_aux_unlocked" as never, { _contest_id: contestId } as never),
-        supabase.from("contests").select("ends_at").eq("id", contestId).maybeSingle(),
-      ]);
-      if (cancelled) return;
-      const unlocked = (aux as unknown as boolean) ?? true;
-      setLocked(!unlocked);
-      setEndsAt((contest as { ends_at?: string } | null)?.ends_at ?? null);
-      setLoading(false);
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [contestId, user?.id]);
+    if (!contestId) return;
 
-  return {
-    loading,
-    notesLocked: locked,
-    solutionLocked: locked,
-    hintsLocked: locked,
-    historyLocked: locked,
-    endsAt,
-  };
-}
+    const channel = supabase
+      .channel(`contest-locks-${contestId}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "contest_tab_locks",
+          filter: `contest_id=eq.${contestId}`,
+        },
+        () => {
+          qc.invalidateQueries({ queryKey: ["contest-locks", contestId] });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [contestId, qc]);
+
+  return useQuery({
+    queryKey: ["contest-locks", contestId],
+    enabled: !!contestId,
+    queryFn: async () => {
+      // First check if contest has ended
+      const { data: contest, error: contestError } = await supabase
+        .from("contests" as any)
+        .select("ends_at")
+        .eq("id", contestId!)
+        .maybeSingle();
+
+      if (contestError) throw contestError;
+      
+      const hasEnded = (contest as any)?.ends_at && new Date((contest as any).ends_at) < new Date();
+      if (hasEnded) return [];
+
+      const { data, error } = await supabase
+        .from("contest_tab_locks" as any)
+        .select("*")
+        .eq("contest_id", contestId!)
+        .gt("expires_at", new Date().toISOString());
+
+      if (error) throw error;
+      return data || [];
+    },
+    refetchInterval: 30000, // Refresh every 30s as fallback
+  });
+};

@@ -399,7 +399,7 @@ const CodingProblemDetail = () => {
   });
   const lastCodeLenRef = useRef<number>(0);
   const { runs, refetch: refetchRuns } = useCodeRuns(slug, {
-    locked: contestLocks.historyLocked,
+    locked: (contestLocks as any).historyLocked,
     contestId,
   });
   const { toggle: rawToggleBookmark } = useCodingProblemBookmarks();
@@ -426,7 +426,7 @@ const CodingProblemDetail = () => {
     lastSyncedAt: mySolutionLastSyncedAt,
     lastConflictResolvedAt: mySolutionLastConflictAt,
   } = useProblemSolution(slug, mySolutionLanguage, {
-    locked: contestLocks.solutionLocked,
+    locked: (contestLocks as any).solutionLocked,
     contestId,
   });
   const {
@@ -455,7 +455,7 @@ const CodingProblemDetail = () => {
   const shouldLoadReferenceSolution =
     !staticProblem &&
     acceptedExists &&
-    !contestLocks.solutionLocked &&
+    !(contestLocks as any).solutionLocked &&
     (activeTab === "editorial" || activeTab === "solution");
   const { data: dbReferenceSolution = {}, isLoading: referenceSolutionLoading } = useDbProblemReferenceSolutions(
     slug,
@@ -467,11 +467,11 @@ const CodingProblemDetail = () => {
   // Description if the persisted active tab is locked when the contest starts,
   // and (c) decorate trigger labels with a 🔒.
   const isTabLocked = (id: EditorTabId) =>
-    (id === "notes" && contestLocks.notesLocked) ||
-    (id === "my-solution" && contestLocks.solutionLocked) ||
-    (id === "solution" && contestLocks.solutionLocked) ||
-    (id === "editorial" && contestLocks.solutionLocked) ||
-    (id === "runs" && contestLocks.historyLocked);
+    (id === "notes" && (contestLocks as any).notesLocked) ||
+    (id === "my-solution" && (contestLocks as any).solutionLocked) ||
+    (id === "solution" && (contestLocks as any).solutionLocked) ||
+    (id === "editorial" && (contestLocks as any).solutionLocked) ||
+    (id === "runs" && (contestLocks as any).historyLocked);
 
   const setActiveTab = (id: EditorTabId) => {
     if (isTabLocked(id)) {
@@ -547,9 +547,9 @@ const CodingProblemDetail = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     activeTab,
-    contestLocks.notesLocked,
-    contestLocks.solutionLocked,
-    contestLocks.historyLocked,
+    (contestLocks as any).notesLocked,
+    (contestLocks as any).solutionLocked,
+    (contestLocks as any).historyLocked,
   ]);
   const {
     presetId: layoutPresetId,
@@ -703,14 +703,14 @@ const CodingProblemDetail = () => {
       try {
         const { supabase } = await import("@/integrations/supabase/client");
         const { data: contestRow } = await supabase
-          .from("contests")
+          .from("contests" as any)
           .select("id")
           .eq("slug", contestSlug)
           .maybeSingle();
-        if (cancelled || !contestRow?.id) return;
-        setContestId(contestRow.id);
+        if (cancelled || !(contestRow as any)?.id) return;
+        setContestId((contestRow as any).id);
         const { data: check } = await supabase.rpc("validate_contest_submission", {
-          _contest_id: contestRow.id,
+          _contest_id: (contestRow as any).id,
           _problem_slug: problem.slug,
         });
         if (cancelled) return;
@@ -1149,14 +1149,14 @@ const CodingProblemDetail = () => {
       try {
         const { supabase } = await import("@/integrations/supabase/client");
         const { data: contestRow } = await supabase
-          .from("contests")
+          .from("contests" as any)
           .select("id")
           .eq("slug", contestSlug)
           .maybeSingle();
-        if (contestRow?.id) {
+        if ((contestRow as any)?.id) {
           const { data: check, error: checkErr } = await supabase.rpc(
             "validate_contest_submission",
-            { _contest_id: contestRow.id, _problem_slug: problem.slug },
+            { _contest_id: (contestRow as any).id, _problem_slug: problem.slug },
           );
           if (checkErr) throw checkErr;
           const v = check as { ok: boolean; message?: string; code?: string } | null;
@@ -1348,9 +1348,9 @@ const CodingProblemDetail = () => {
                   onReorder={(next) => setTabOrder(next)}
                   lockedIds={(["notes", "editorial", "discussion"] as EditorTabId[]).filter(isTabLocked)}
                   reorderDisabled={
-                    contestLocks.notesLocked ||
-                    contestLocks.solutionLocked ||
-                    contestLocks.historyLocked
+                    (contestLocks as any).notesLocked ||
+                    (contestLocks as any).solutionLocked ||
+                    (contestLocks as any).historyLocked
                   }
                   onBlockedReorder={(reason, info) => {
                     logContestLockEvent({
@@ -1588,15 +1588,25 @@ const CodingProblemDetail = () => {
                   const { main, inputFormat, outputFormat } =
                     splitProblemDescription(problem.description ?? "");
                   return (
-                    <>
-                      <div className="prose prose-sm dark:prose-invert max-w-none">
+                    <div className="space-y-6">
+                      <div className="prose prose-sm dark:prose-invert max-w-none text-[15px] leading-relaxed text-foreground/90">
                         <ReactMarkdown remarkPlugins={[remarkGfm]}>{main}</ReactMarkdown>
                       </div>
-                      <ProblemFormatCards
-                        inputFormat={inputFormat}
-                        outputFormat={outputFormat}
-                      />
-                    </>
+                      
+                      {(inputFormat || outputFormat) && (
+                        <div className="space-y-4">
+                          <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground/80 flex items-center gap-2">
+                            <div className="h-px flex-1 bg-border/50" />
+                            Format
+                            <div className="h-px flex-1 bg-border/50" />
+                          </h3>
+                          <ProblemFormatCards
+                            inputFormat={inputFormat}
+                            outputFormat={outputFormat}
+                          />
+                        </div>
+                      )}
+                    </div>
                   );
                 })()}
 
@@ -1610,27 +1620,67 @@ const CodingProblemDetail = () => {
                 )}
 
                 {/* Examples */}
-                <div className="space-y-3">
-                  {problem.examples.map((ex, i) => (
-                    <div key={i} className="rounded-md bg-muted/50 p-3 border">
-                      <p className="text-xs font-semibold mb-1.5 uppercase tracking-wider text-muted-foreground">
-                        Example {i + 1}
-                      </p>
-                      <div className="space-y-1.5 text-sm font-mono">
-                        <p><span className="text-muted-foreground">Input:</span> {ex.input}</p>
-                        <p><span className="text-muted-foreground">Output:</span> {ex.output}</p>
-                        {ex.explanation && (
-                          <p className="font-sans text-muted-foreground italic">
-                            {ex.explanation}
-                          </p>
-                        )}
-                      </div>
+                {problem.examples && problem.examples.length > 0 && (
+                  <div className="space-y-4">
+                    <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground/80 flex items-center gap-2">
+                      <div className="h-px flex-1 bg-border/50" />
+                      Examples
+                      <div className="h-px flex-1 bg-border/50" />
+                    </h3>
+                    <div className="space-y-4">
+                      {problem.examples.map((ex, i) => (
+                        <div key={i} className="rounded-xl bg-muted/30 p-4 border border-border/50 shadow-sm overflow-hidden group">
+                          <div className="flex items-center justify-between mb-3">
+                            <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground/60">
+                              Example {i + 1}
+                            </p>
+                            <Button 
+                              variant="ghost" 
+                              size="icon" 
+                              className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                              onClick={() => {
+                                setStdin(ex.input);
+                                toast({ title: "Input copied", description: "Example input loaded into testcase runner." });
+                              }}
+                            >
+                              <Copy className="h-3 w-3" />
+                            </Button>
+                          </div>
+                          <div className="space-y-3 font-mono text-[13px] sm:text-sm">
+                            <div className="bg-background/50 rounded-lg p-3 border border-border/30">
+                              <p className="text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-tighter">Input</p>
+                              <pre className="whitespace-pre-wrap break-all text-amber-500/90">{ex.input}</pre>
+                            </div>
+                            <div className="bg-background/50 rounded-lg p-3 border border-border/30">
+                              <p className="text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-tighter">Output</p>
+                              <pre className="whitespace-pre-wrap break-all text-emerald-500/90">{ex.output}</pre>
+                            </div>
+                            {ex.explanation && (
+                              <div className="pt-1 px-1">
+                                <p className="text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-tighter font-sans">Explanation</p>
+                                <p className="font-sans text-foreground/80 leading-relaxed italic border-l-2 border-primary/20 pl-3">
+                                  {ex.explanation}
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                )}
 
-                {/* Constraints — styled to match Examples card */}
-                <ProblemConstraints constraints={problem.constraints} />
+                {/* Constraints */}
+                {problem.constraints && problem.constraints.length > 0 && (
+                  <div className="space-y-3">
+                    <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground/80 flex items-center gap-2">
+                      <div className="h-px flex-1 bg-border/50" />
+                      Constraints
+                      <div className="h-px flex-1 bg-border/50" />
+                    </h3>
+                    <ProblemConstraints constraints={problem.constraints} />
+                  </div>
+                )}
 
                 {/* MCQ — "Now your turn!" */}
                 {mcqData && mcqData.options?.length > 0 && (
@@ -1640,16 +1690,16 @@ const CodingProblemDetail = () => {
 
 
                 {/* Hints — progressive disclosure */}
-                {contestLocks.hintsLocked ? (
-                  <LockedAuxPanel label="Hints" endsAt={contestLocks.endsAt} />
+                {(contestLocks as any).hintsLocked ? (
+                  <LockedAuxPanel label="Hints" endsAt={(contestLocks as any).endsAt} />
                 ) : (
                   <ProgressiveHints hints={problem.hints} slug={problem.slug} />
                 )}
               </TabsContent>
 
               <TabsContent value="notes" className="mt-0">
-                {contestLocks.notesLocked ? (
-                  <LockedAuxPanel label="Notes" endsAt={contestLocks.endsAt} />
+                {(contestLocks as any).notesLocked ? (
+                  <LockedAuxPanel label="Notes" endsAt={(contestLocks as any).endsAt} />
                 ) : !user ? (
                   <SignInGate action="notes" />
                 ) : (
@@ -1659,8 +1709,8 @@ const CodingProblemDetail = () => {
               </TabsContent>
 
               <TabsContent value="my-solution" className="mt-0">
-                {contestLocks.solutionLocked ? (
-                  <LockedAuxPanel label="My Solution" endsAt={contestLocks.endsAt} />
+                {(contestLocks as any).solutionLocked ? (
+                  <LockedAuxPanel label="My Solution" endsAt={(contestLocks as any).endsAt} />
                 ) : (
                 <MySolutionPanel
                   notes={mySolutionNotes}
@@ -1695,8 +1745,8 @@ const CodingProblemDetail = () => {
               </TabsContent>
 
               <TabsContent value="editorial" className="mt-0">
-                {contestLocks.solutionLocked ? (
-                  <LockedAuxPanel label="Editorial" endsAt={contestLocks.endsAt} />
+                {(contestLocks as any).solutionLocked ? (
+                  <LockedAuxPanel label="Editorial" endsAt={(contestLocks as any).endsAt} />
                 ) : !acceptedExists ? (
                   <Card className="p-8 text-center">
                     <p className="text-muted-foreground">
@@ -1729,8 +1779,8 @@ const CodingProblemDetail = () => {
 
               <TabsContent value="solution" className="mt-0">
 
-                {contestLocks.solutionLocked ? (
-                  <LockedAuxPanel label="Reference solution" endsAt={contestLocks.endsAt} />
+                {(contestLocks as any).solutionLocked ? (
+                  <LockedAuxPanel label="Reference solution" endsAt={(contestLocks as any).endsAt} />
                 ) : !acceptedExists ? (
                   <Card className="p-8 text-center">
                     <p className="text-muted-foreground">
@@ -1811,8 +1861,8 @@ const CodingProblemDetail = () => {
               </TabsContent>
 
               <TabsContent value="runs" className="mt-0" aria-label="Run history">
-                {contestLocks.historyLocked ? (
-                  <LockedAuxPanel label="Run history" endsAt={contestLocks.endsAt} />
+                {(contestLocks as any).historyLocked ? (
+                  <LockedAuxPanel label="Run history" endsAt={(contestLocks as any).endsAt} />
                 ) : !user ? (
                   <Card className="p-8 text-center">
                     <p className="text-muted-foreground mb-3">

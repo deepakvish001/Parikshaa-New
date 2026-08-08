@@ -25,11 +25,11 @@ export const useAdminContests = () => {
     placeholderData: keepPreviousData,
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("contests")
+        .from("contests" as any)
         .select("*")
         .order("created_at", { ascending: false });
       if (error) throw error;
-      const list = (data ?? []) as Contest[];
+      const list = (data as any[] ?? []) as Contest[];
       // Fetch registration counts in one go
       const { data: regs } = await supabase
         .from("contest_registrations")
@@ -49,9 +49,9 @@ export const useAdminContest = (id: string | undefined) => {
     enabled: !!id,
     placeholderData: keepPreviousData,
     queryFn: async () => {
-      const { data, error } = await supabase.from("contests").select("*").eq("id", id!).maybeSingle();
+      const { data, error } = await supabase.from("contests" as any).select("*").eq("id", id!).maybeSingle();
       if (error) throw error;
-      return data as Contest | null;
+      return (data as any) as Contest | null;
     },
   });
 };
@@ -76,12 +76,12 @@ export const useAdminContestProblems = (contestId: string | undefined) => {
     placeholderData: keepPreviousData,
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("contest_problems")
+        .from("contest_problems" as any)
         .select("*")
         .eq("contest_id", contestId!)
         .order("order_index", { ascending: true });
       if (error) throw error;
-      return (data ?? []) as ContestProblem[];
+      return (data as any[] ?? []) as ContestProblem[];
     },
   });
 };
@@ -104,32 +104,32 @@ export const useSaveContest = () => {
       if (payload.id) {
         const { id, ...rest } = payload;
         const { data: existing } = await supabase
-          .from("contests")
+          .from("contests" as any)
           .select("status")
           .eq("id", id)
           .maybeSingle();
-        if (existing?.status === "ended" && rest.status && rest.status !== "ended" && rest.status !== "archived") {
+        if ((existing as any)?.status === "ended" && rest.status && rest.status !== "ended" && rest.status !== "archived") {
           throw new Error("Cannot reopen a closed contest");
         }
         const { data, error } = await supabase
-          .from("contests")
-          .update(rest)
+          .from("contests" as any)
+          .update(rest as any)
           .eq("id", id)
           .select("*")
           .maybeSingle();
         if (error) throw error;
-        if (user && data) await writeAudit("update", data.slug, rest, user.id);
-        return data as Contest;
+        if (user && data) await writeAudit("update", (data as any).slug, rest, user.id);
+        return (data as any) as Contest;
       } else {
         const insertRow: any = { ...payload, created_by: user?.id };
         const { data, error } = await supabase
-          .from("contests")
+          .from("contests" as any)
           .insert(insertRow)
           .select("*")
           .maybeSingle();
         if (error) throw error;
-        if (user && data) await writeAudit("create", data.slug, payload, user.id);
-        return data as Contest;
+        if (user && data) await writeAudit("create", (data as any).slug, payload, user.id);
+        return (data as any) as Contest;
       }
     },
     onSuccess: () => {
@@ -146,7 +146,7 @@ export const useDeleteContest = () => {
   const { user } = useAuth();
   return useMutation({
     mutationFn: async (c: { id: string; slug: string }) => {
-      const { error } = await supabase.from("contests").delete().eq("id", c.id);
+      const { error } = await supabase.from("contests" as any).delete().eq("id", c.id);
       if (error) throw error;
       if (user) await writeAudit("delete", c.slug, {}, user.id);
     },
@@ -165,12 +165,12 @@ export const useSetContestProblems = () => {
       contestId: string;
       problems: { problem_slug: string; order_index: number; points: number }[];
     }) => {
-      const del = await supabase.from("contest_problems").delete().eq("contest_id", contestId);
+      const del = await supabase.from("contest_problems" as any).delete().eq("contest_id", contestId);
       if (del.error) throw del.error;
       if (problems.length === 0) return;
       const { error } = await supabase
-        .from("contest_problems")
-        .insert(problems.map((p) => ({ ...p, contest_id: contestId })));
+        .from("contest_problems" as any)
+        .insert(problems.map((p) => ({ ...p, contest_id: contestId })) as any);
       if (error) throw error;
     },
     onSuccess: (_d, vars) => {

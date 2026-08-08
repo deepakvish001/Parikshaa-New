@@ -98,11 +98,11 @@ export const useContests = () => {
     placeholderData: keepPreviousData,
     queryFn: async (): Promise<Contest[]> => {
       const { data, error } = await supabase
-        .from("contests")
+        .from("contests" as any)
         .select("*")
         .order("starts_at", { ascending: false });
       if (error) throw error;
-      return (data ?? []) as Contest[];
+      return (data as any[] ?? []) as Contest[];
     },
   });
 };
@@ -127,12 +127,12 @@ export const useContest = (slug: string | undefined) => {
     placeholderData: keepPreviousData,
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("contests")
+        .from("contests" as any)
         .select("*")
         .eq("slug", slug!)
         .maybeSingle();
       if (error) throw error;
-      return data as Contest | null;
+      return (data as any) as Contest | null;
     },
   });
 };
@@ -144,12 +144,12 @@ export const useContestProblems = (contestId: string | undefined) => {
     placeholderData: keepPreviousData,
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("contest_problems")
+        .from("contest_problems" as any)
         .select("*")
         .eq("contest_id", contestId!)
         .order("order_index", { ascending: true });
       if (error) throw error;
-      return (data ?? []) as ContestProblem[];
+      return (data as any[] ?? []) as ContestProblem[];
     },
   });
 };
@@ -232,7 +232,7 @@ export const useRegisterForContest = () => {
     mutationFn: async ({ contestId, inviteCode }: { contestId: string; inviteCode?: string }) => {
       // Client-side preflight: fetch contest and verify it's in an active lifecycle.
       const { data: c, error: cErr } = await supabase
-        .from("contests")
+        .from("contests" as any)
         .select("status, starts_at, ends_at, registration_closes_at")
         .eq("id", contestId)
         .maybeSingle();
@@ -242,7 +242,7 @@ export const useRegisterForContest = () => {
       if (life !== "active") {
         throw new Error(life === "closed" ? "Contest has ended" : "Contest is not open for registration");
       }
-      if (c.registration_closes_at && new Date(c.registration_closes_at).getTime() < Date.now()) {
+      if ((c as any)?.registration_closes_at && new Date((c as any).registration_closes_at).getTime() < Date.now()) {
         throw new Error("Registration window closed");
       }
       const { data, error } = await supabase.rpc("register_for_contest", {
@@ -268,7 +268,7 @@ export const useWithdrawFromContest = () => {
     mutationFn: async (contestId: string) => {
       // Cannot withdraw from a closed contest.
       const { data: c } = await supabase
-        .from("contests")
+        .from("contests" as any)
         .select("status, starts_at, ends_at")
         .eq("id", contestId)
         .maybeSingle();

@@ -252,6 +252,10 @@ const mockSheetData: Record<string, SheetData> = {
     ...cpTopicSheetMeta,
     sections: cpTopicSheetSections,
   },
+  "zero-to-2300-cp-sheet": {
+    ...zeroTo2300Meta,
+    sections: zeroTo2300Sections,
+  },
   "dsa-level-1": {
     ...dsaLevel1Meta,
     sections: dsaLevel1Sections,

@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { VerdictBadge } from "@/components/coding/VerdictBadge";
-import { Copy, Link2 } from "lucide-react";
+import { Copy, Link2, Activity } from "lucide-react";
 import { toast } from "sonner";
 import { SubmissionPerformancePanel } from "./SubmissionPerformancePanel";
 import type { CodeSubmissionRow } from "@/hooks/useCodingSubmissions";

@@ -1,5 +1,6 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { Cpu } from "lucide-react";
 
 /**
  * Reusable styled cards for a coding problem's Input/Output Format and

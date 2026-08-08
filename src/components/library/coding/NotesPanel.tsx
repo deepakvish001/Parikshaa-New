@@ -199,9 +199,9 @@ export const NotesPanel = ({ slug, title }: Props) => {
 
   return (
     <div className="space-y-3" onKeyDown={onKeyDown}>
-      <div className="flex items-center justify-between gap-2">
+      <div className="flex items-center justify-between gap-2 p-2 rounded-[1.25rem] bg-muted/20 border border-border/30">
         <div
-          className="flex items-center gap-0.5 rounded-md border bg-muted/40 p-1"
+          className="flex items-center gap-0.5"
           role="toolbar"
           aria-label="Formatting"
         >
@@ -211,7 +211,7 @@ export const NotesPanel = ({ slug, title }: Props) => {
               type="button"
               variant="ghost"
               size="icon"
-              className="h-7 w-7"
+              className="h-8 w-8 rounded-xl hover:bg-foreground/5 hover:text-foreground transition-all"
               onClick={t.run}
               aria-label={t.label}
               title={t.label}
@@ -220,12 +220,12 @@ export const NotesPanel = ({ slug, title }: Props) => {
               <t.icon className="h-3.5 w-3.5" aria-hidden />
             </Button>
           ))}
-          <div className="mx-1 h-5 w-px bg-border" aria-hidden />
+          <div className="mx-1 h-5 w-px bg-border/50" aria-hidden />
           <Button
             type="button"
             variant="ghost"
             size="sm"
-            className="h-7 gap-1.5 px-2 text-[11px]"
+            className="h-8 gap-1.5 px-3 rounded-xl text-[11px] font-black uppercase tracking-widest hover:bg-foreground/5 transition-all"
             onClick={() => setMode(mode === "edit" ? "preview" : "edit")}
             aria-pressed={mode === "preview"}
             aria-label={mode === "edit" ? "Show preview" : "Back to edit"}
@@ -233,24 +233,24 @@ export const NotesPanel = ({ slug, title }: Props) => {
           >
             {mode === "edit" ? (
               <>
-                <Eye className="h-3 w-3" aria-hidden /> Preview
+                <Eye className="h-3.5 w-3.5" aria-hidden /> Preview
               </>
             ) : (
               <>
-                <Pencil className="h-3 w-3" aria-hidden /> Edit
+                <Pencil className="h-3.5 w-3.5" aria-hidden /> Edit
               </>
             )}
           </Button>
         </div>
 
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+        <div className="flex items-center gap-3 px-2">
+          <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
             {isSaving ? (
-              <Loader2 className="h-3 w-3 animate-spin opacity-70" />
+              <Loader2 className="h-3.5 w-3.5 animate-spin text-amber-500" />
             ) : savedAt ? (
-              <CheckCircle2 className="h-3 w-3 text-emerald-500" />
+              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
             ) : (
-              <Loader2 className="h-3 w-3 opacity-50" />
+              <Loader2 className="h-3.5 w-3.5 opacity-50" />
             )}
             <span aria-live="polite">{savedLabel}</span>
           </div>
@@ -260,12 +260,11 @@ export const NotesPanel = ({ slug, title }: Props) => {
               type="button"
               size="sm"
               variant="ghost"
-              className="h-7 gap-1.5 text-rose-400 hover:text-rose-300 hover:bg-rose-500/10"
+              className="h-8 px-2 rounded-xl text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 transition-all"
               onClick={() => setConfirmClear(true)}
               aria-label={`Delete note for ${title}`}
             >
               <Trash2 className="h-3.5 w-3.5" aria-hidden />
-              Clear
             </Button>
           )}
         </div>

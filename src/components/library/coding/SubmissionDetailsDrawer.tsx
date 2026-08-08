@@ -115,81 +115,105 @@ export const SubmissionDetailsDrawer = ({ submission, open, onOpenChange, loadin
                 </Button>
               </div>
 
-            <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="rounded-md border p-2">
-                <p className="text-muted-foreground">Runtime</p>
-                <p className="font-mono">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="rounded-[1.5rem] border border-border/20 bg-muted/10 p-4 shadow-lg shadow-black/5 group hover:border-border/40 transition-all">
+                <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/40 mb-1">Runtime</p>
+                <p className="font-mono text-lg font-black text-foreground/90">
                   {submission.runtime_ms !== null ? `${submission.runtime_ms} ms` : "—"}
                 </p>
               </div>
-              <div className="rounded-md border p-2">
-                <p className="text-muted-foreground">Memory</p>
-                <p className="font-mono">
+              <div className="rounded-[1.5rem] border border-border/20 bg-muted/10 p-4 shadow-lg shadow-black/5 group hover:border-border/40 transition-all">
+                <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/40 mb-1">Memory Usage</p>
+                <p className="font-mono text-lg font-black text-foreground/90">
                   {submission.memory_kb !== null
                     ? `${(submission.memory_kb / 1024).toFixed(1)} MB`
                     : "—"}
                 </p>
               </div>
-              <div className="rounded-md border p-2 col-span-2">
-                <p className="text-muted-foreground">Submitted</p>
-                <p>{new Date(submission.created_at).toLocaleString()}</p>
+              <div className="rounded-[1.5rem] border border-border/20 bg-muted/10 p-4 shadow-lg shadow-black/5 col-span-2 group hover:border-border/40 transition-all flex items-center justify-between">
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/40 mb-1">Submission Date</p>
+                  <p className="text-sm font-black text-foreground/80 tracking-tight">
+                    {new Date(submission.created_at).toLocaleString()}
+                  </p>
+                </div>
+                <div className="h-10 w-10 rounded-xl bg-foreground/5 flex items-center justify-center">
+                  <Activity className="h-5 w-5 text-muted-foreground/40" />
+                </div>
               </div>
             </div>
 
             <SubmissionPerformancePanel submission={submission} />
 
-            <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  Source code
-                </p>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between px-1">
+                <div className="flex items-center gap-2">
+                  <div className="h-5 w-1 bg-primary rounded-full" />
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">
+                    Source Code
+                  </p>
+                </div>
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-6 gap-1 text-xs"
+                  className="h-8 px-3 rounded-xl gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-foreground transition-all"
                   onClick={() => copy("Source", submission.source_code)}
                 >
-                  <Copy className="h-3 w-3" /> Copy
+                  <Copy className="h-3.5 w-3.5" /> Copy
                 </Button>
               </div>
-              <pre className="text-xs bg-muted/50 p-3 rounded border overflow-x-auto max-h-72">
-                <code>{submission.source_code}</code>
-              </pre>
+              <div className="relative group rounded-[1.5rem] border border-border/20 bg-black/60 shadow-2xl overflow-hidden transition-all duration-500 hover:border-border/40">
+                <pre className="p-6 text-[13px] font-mono leading-relaxed overflow-x-auto max-h-[400px] scrollbar-thin scrollbar-thumb-muted-foreground/10 scrollbar-track-transparent selection:bg-primary/20">
+                  <code className="text-foreground/80">{submission.source_code}</code>
+                </pre>
+                <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                   <div className="px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-[9px] font-black uppercase tracking-widest text-white/40">
+                     Read Only
+                   </div>
+                </div>
+              </div>
             </div>
 
             {submission.failing_case && (
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">
-                  Failing case
-                </p>
-                <pre className="text-xs bg-destructive/5 border border-destructive/30 p-3 rounded overflow-x-auto whitespace-pre-wrap">
+              <div className="space-y-3 animate-in fade-in slide-in-from-bottom-2 duration-500">
+                <div className="flex items-center gap-2 px-1">
+                  <div className="h-5 w-1 bg-rose-500 rounded-full" />
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-rose-500/60">
+                    Failing Case Analysis
+                  </p>
+                </div>
+                <pre className="text-[12px] font-mono leading-relaxed bg-rose-500/5 border border-rose-500/20 p-5 rounded-[1.5rem] overflow-x-auto whitespace-pre-wrap text-rose-200/80 shadow-inner">
                   {JSON.stringify(submission.failing_case, null, 2)}
                 </pre>
               </div>
             )}
 
             {submission.stderr && (
-              <div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-destructive">
-                    Stderr
-                  </p>
+              <div className="space-y-3 animate-in fade-in slide-in-from-bottom-2 duration-500">
+                <div className="flex items-center justify-between px-1">
+                  <div className="flex items-center gap-2">
+                    <div className="h-5 w-1 bg-rose-600 rounded-full" />
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-rose-600/60">
+                      Standard Error Output
+                    </p>
+                  </div>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-6 gap-1 text-xs"
+                    className="h-8 px-3 rounded-xl gap-2 text-[10px] font-black uppercase tracking-widest text-rose-400 hover:text-rose-300 transition-all"
                     onClick={() => copy("Stderr", submission.stderr ?? "")}
                   >
-                    <Copy className="h-3 w-3" /> Copy
+                    <Copy className="h-3.5 w-3.5" /> Copy
                   </Button>
                 </div>
-                <pre className="text-xs bg-destructive/5 border border-destructive/30 p-3 rounded overflow-x-auto whitespace-pre-wrap">
+                <pre className="text-[12px] font-mono leading-relaxed bg-rose-600/5 border border-rose-600/20 p-5 rounded-[1.5rem] overflow-x-auto whitespace-pre-wrap text-rose-300/80 shadow-inner">
                   {submission.stderr}
                 </pre>
               </div>
             )}
           </div>
         )}
+        </div>
       </SheetContent>
     </Sheet>
   );

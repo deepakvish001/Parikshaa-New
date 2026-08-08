@@ -547,9 +547,9 @@ const CodingProblemDetail = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     activeTab,
-    contestLocks.notesLocked,
-    contestLocks.solutionLocked,
-    contestLocks.historyLocked,
+    (contestLocks as any).notesLocked,
+    (contestLocks as any).solutionLocked,
+    (contestLocks as any).historyLocked,
   ]);
   const {
     presetId: layoutPresetId,
@@ -1779,8 +1779,8 @@ const CodingProblemDetail = () => {
 
               <TabsContent value="solution" className="mt-0">
 
-                {contestLocks.solutionLocked ? (
-                  <LockedAuxPanel label="Reference solution" endsAt={contestLocks.endsAt} />
+                {(contestLocks as any).solutionLocked ? (
+                  <LockedAuxPanel label="Reference solution" endsAt={(contestLocks as any).endsAt} />
                 ) : !acceptedExists ? (
                   <Card className="p-8 text-center">
                     <p className="text-muted-foreground">
@@ -1861,8 +1861,8 @@ const CodingProblemDetail = () => {
               </TabsContent>
 
               <TabsContent value="runs" className="mt-0" aria-label="Run history">
-                {contestLocks.historyLocked ? (
-                  <LockedAuxPanel label="Run history" endsAt={contestLocks.endsAt} />
+                {(contestLocks as any).historyLocked ? (
+                  <LockedAuxPanel label="Run history" endsAt={(contestLocks as any).endsAt} />
                 ) : !user ? (
                   <Card className="p-8 text-center">
                     <p className="text-muted-foreground mb-3">

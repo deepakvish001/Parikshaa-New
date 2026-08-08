@@ -226,7 +226,7 @@ export const TestCaseWorkbench = ({
                 >
                   <div className="flex items-center gap-1.5 font-sans">
                     <StatusBadge kind={statusValue!} />
-                    <span className={cn("text-xs font-semibold", isPass ? "text-emerald-400" : "text-rose-400")}>
+                    <span className={cn("text-xs font-semibold", isPassTip ? "text-emerald-400" : "text-rose-400")}>
                       Case {i + 1} {isPassTip ? "Accepted" : "Wrong Answer"}
                     </span>
                   </div>

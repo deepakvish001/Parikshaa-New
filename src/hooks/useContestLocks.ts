@@ -42,7 +42,7 @@ export const useContestLocks = (contestId: string | undefined) => {
 
       if (contestError) throw contestError;
       
-      const hasEnded = contest?.ends_at && new Date(contest.ends_at) < new Date();
+      const hasEnded = (contest as any)?.ends_at && new Date((contest as any).ends_at) < new Date();
       if (hasEnded) return [];
 
       const { data, error } = await supabase

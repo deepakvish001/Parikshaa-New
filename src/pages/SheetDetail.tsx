@@ -117,6 +117,7 @@ import { acmIcpcSections, acmIcpcMeta, acmIcpcFaqs, acmIcpcChecklist } from "@/d
 import { cpLadderSections, cpLadderMeta } from "@/data/cpLadderData";
 import { cpTopicSheetSections, cpTopicSheetMeta } from "@/data/cpTopicSheetData";
 import { striverSDESections, striverSDEMeta } from "@/data/striverSDEData";
+import { zeroTo2300Sections, zeroTo2300Meta } from "@/data/zeroTo2300SheetData";
 import { striverSDSections, striverSDMeta } from "@/data/striverSDData";
 import { sqlPracticeSections, sqlPracticeMeta } from "@/data/sqlPracticeData";
 import { advSqlSections, advSqlMeta } from "@/data/advSqlData";
@@ -250,6 +251,10 @@ const mockSheetData: Record<string, SheetData> = {
   "competitive-programming": {
     ...cpTopicSheetMeta,
     sections: cpTopicSheetSections,
+  },
+  "zero-to-2300-cp-sheet": {
+    ...zeroTo2300Meta,
+    sections: zeroTo2300Sections,
   },
   "dsa-level-1": {
     ...dsaLevel1Meta,

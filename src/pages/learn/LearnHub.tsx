@@ -156,6 +156,7 @@ const sections: {
     label: "Parikshaa Premium Sheets", icon: Crown,
     items: [
       { title: "SDE Sheet · The Ultimate Guide 💎", subtitle: "Curated roadmap for product-based companies. 180+ problems from top interview patterns.", primary: { label: "Open Sheet", to: "/learn/sheets/sde-sheet" } },
+      { title: "Zero to 2300 · Mastery CP Sheet 🚀", subtitle: "CodingPariksha CP Sheet — 57 techniques, 1100+ Codeforces problems, very basic → Master.", primary: { label: "Open Sheet", to: "/learn/sheets/zero-to-2300-cp-sheet" } },
     ],
   },
   {

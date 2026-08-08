@@ -1494,12 +1494,12 @@ const CodingProblemDetail = () => {
                         isAttempted={problemStats.isAttempted}
                         attempts={problemStats.attempts}
                         solvedAt={problemStats.solvedAt}
-                        isBookmarked={problem.isBookmarked}
+                        isBookmarked={(problem as any).isBookmarked || false}
                         onToggleBookmark={() =>
                           rawToggleBookmark({
-                            problem_id: problem.id,
-                            is_bookmarked: !problem.isBookmarked,
-                          })
+                            problem_id: (problem as any).id,
+                            is_bookmarked: !(problem as any).isBookmarked,
+                          } as any)
                         }
                       />
                     </div>

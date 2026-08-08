@@ -1503,6 +1503,7 @@ const CodingProblemDetail = () => {
                       />
                     </div>
                   </div>
+                  <div className="flex flex-wrap items-center gap-3">
                     {problem.companies && problem.companies.length > 0 ? (
                       <Collapsible
                         open={showCompanyTags}

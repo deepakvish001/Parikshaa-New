@@ -321,6 +321,7 @@ for (const s of sections) {
 // Section grouping — organises sections into logical tabs
 // ─────────────────────────────────────────────────────────────
 const SECTION_GROUPS = [
+  { id: "premium", label: "Premium", icon: Crown, hint: "Exclusive Parikshaa curated sheets", sections: ["Parikshaa Premium Sheets"] },
   { id: "sheets", label: "Sheets", icon: Layers, hint: "Curated sheets across DSA, CS core, SD, CP & SQL", sections: ["Pariksha DSA Sheets", "DSA Sheets", "Core CS Subjects", "System Design", "Competitive Programming", "SQL"] },
   { id: "practice", label: "Practice", icon: BrainCircuit, hint: "Solve, review and revise", sections: ["DSA Studio", "DSA Heatmap", "Coding Problems", "DSA Playlist"] },
   { id: "library", label: "Library", icon: LibraryBig, hint: "Question banks, notes, companies & roles", sections: ["Library"] },

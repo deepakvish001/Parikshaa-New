@@ -286,46 +286,44 @@ export const MySolutionPanel = ({
       : "Empty";
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-start justify-between gap-3 flex-wrap">
-        <div className="min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="text-sm font-semibold">My Solution</h3>
+      <div className="flex items-start justify-between gap-6 flex-wrap bg-[#0a0a0c]/60 p-6 rounded-[2rem] border border-border/20 backdrop-blur-xl shadow-xl">
+        <div className="min-w-0 space-y-2">
+          <div className="flex items-center gap-3 flex-wrap">
+            <h3 className="text-lg font-black uppercase tracking-tighter text-foreground/90">My Solution</h3>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Badge
                     variant="outline"
                     className={cn(
-                      "gap-1.5 text-[10px] uppercase tracking-wider font-semibold transition-colors",
+                      "h-6 gap-2 text-[10px] font-black uppercase tracking-widest px-3 rounded-full border-2 transition-all duration-500",
                       isComplete
-                        ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-500"
+                        ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-500 shadow-[0_0_15px_-5px_rgba(16,185,129,0.3)]"
                         : progressStep === 1
-                          ? "border-amber-500/40 bg-amber-500/10 text-amber-500"
-                          : "border-border text-muted-foreground",
+                          ? "border-amber-500/40 bg-amber-500/10 text-amber-500 shadow-[0_0_15px_-5px_rgba(245,158,11,0.3)]"
+                          : "border-border/40 text-muted-foreground/40 bg-muted/20",
                     )}
                   >
                     {isComplete ? (
-                      <Sparkles className="h-3 w-3" />
+                      <Sparkles className="h-3.5 w-3.5 animate-pulse" />
                     ) : (
-                      <CheckCircle2 className="h-3 w-3" />
+                      <CheckCircle2 className="h-3.5 w-3.5" />
                     )}
                     {progressStep}/2 · {progressLabel}
                   </Badge>
                 </TooltipTrigger>
-                <TooltipContent>
-                  Counts a saved notes writeup and at least one saved code
-                  solution. Persists with your problem meta.
+                <TooltipContent className="rounded-xl p-3 text-[11px] font-medium max-w-[200px] border-border/40">
+                  Complete your approach notes and save a code solution to reach 100% completion.
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
           </div>
-          <p className="text-xs text-muted-foreground mt-1">
-            Personal writeup + per-language solutions.{" "}
+          <p className="text-[11px] font-black uppercase tracking-widest text-muted-foreground/40">
             {isCloudSynced
-              ? "Synced to your account across devices."
-              : "Autosaved locally — sign in to sync across devices."}
+              ? "Cloud Sync Enabled · All Devices Synced"
+              : "Local Persistence · Sign in to Enable Cloud Sync"}
           </p>
         </div>
         <div className="flex items-center gap-2 flex-wrap justify-end">

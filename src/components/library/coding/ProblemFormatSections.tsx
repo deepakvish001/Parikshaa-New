@@ -100,10 +100,18 @@ export function ProblemConstraints({ constraints }: { constraints: string[] }) {
   if (!constraints || constraints.length === 0) return null;
   return (
     <div className={cardCls} data-testid="problem-constraints">
-      <p className={labelCls}>Constraints</p>
-      <ul className="text-sm space-y-1 list-disc list-inside text-foreground/90 font-mono">
+      <p className={labelCls}>
+        <Cpu className="h-3.5 w-3.5 opacity-50" />
+        Constraints
+      </p>
+      <ul className="grid gap-3 list-none">
         {constraints.map((c, i) => (
-          <li key={i}>{c}</li>
+          <li key={i} className="flex items-start gap-3 group/item">
+            <div className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary/40 group-hover/item:bg-primary transition-colors shrink-0 shadow-[0_0_8px_rgba(245,158,11,0.2)]" />
+            <span className="text-[13px] sm:text-[14px] leading-relaxed font-mono text-foreground/80 group-hover/item:text-foreground transition-colors selection:bg-primary/20">
+              {c}
+            </span>
+          </li>
         ))}
       </ul>
     </div>

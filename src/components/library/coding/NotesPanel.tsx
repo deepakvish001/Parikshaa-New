@@ -280,16 +280,29 @@ export const NotesPanel = ({ slug, title }: Props) => {
             "# My approach\n\n- Brute force: O(n²)\n- Optimised with hashmap → O(n)\n\n```py\n# Pseudocode here\n```"
           }
           aria-label={`Markdown note for ${title}`}
-          className={cn("font-mono text-xs min-h-[280px] resize-y leading-relaxed")}
+          className={cn("font-mono text-sm min-h-[400px] rounded-[1.5rem] bg-[#0a0a0c]/80 border-border/40 selection:bg-primary/20 p-6 resize-y leading-relaxed focus-visible:ring-primary/20")}
         />
       ) : (
-        <Card className="p-4 prose prose-sm dark:prose-invert max-w-none min-h-[280px]">
+        <Card className="p-8 rounded-[1.5rem] bg-[#0a0a0c]/80 border-border/40 shadow-2xl shadow-black/40 prose prose-invert max-w-none min-h-[400px] selection:bg-primary/20 overflow-y-auto">
           {hasDraft ? (
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{draft}</ReactMarkdown>
+            <ReactMarkdown 
+              remarkPlugins={[remarkGfm]}
+              components={{
+                code: ({node, ...props}) => <code className="text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded-md border border-amber-500/20 font-mono" {...props} />,
+                pre: ({node, ...props}) => <pre className="bg-black/40 border border-border/20 p-4 rounded-xl overflow-x-auto" {...props} />
+              }}
+            >
+              {draft}
+            </ReactMarkdown>
           ) : (
-            <p className="text-muted-foreground text-sm m-0">
-              Nothing to preview yet. Switch to Edit to add notes.
-            </p>
+            <div className="flex flex-col items-center justify-center h-full py-20 text-center space-y-4">
+              <div className="h-16 w-16 rounded-[2rem] bg-muted/20 flex items-center justify-center">
+                <FileText className="h-8 w-8 text-muted-foreground/20" />
+              </div>
+              <p className="text-muted-foreground/40 text-sm font-black uppercase tracking-[0.2em]">
+                Note is empty
+              </p>
+            </div>
           )}
         </Card>
       )}

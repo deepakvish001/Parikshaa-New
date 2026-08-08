@@ -15,11 +15,11 @@ const theory = dump.theory.filter(row => typeof row.__EMPTY === 'number').map(ro
 
 const problems = dump.problems.filter(row => typeof row.__EMPTY === 'number').map(row => ({
     sNo: row.__EMPTY,
-    topic: row.__EMPTY_1,
-    problem: row.__EMPTY_2,
-    rating: row.__EMPTY_3,
-    link: row.__EMPTY_4,
-    tags: row.__EMPTY_5 || ""
+    topic: row.__EMPTY_3, // __EMPTY_3 is the topic title in the problems sheet
+    problem: row.__EMPTY_5, // __EMPTY_5 is the problem title
+    rating: parseInt(row.__EMPTY_6) || 0, // __EMPTY_6 is the rating
+    link: row.__EMPTY_10 ? `https://codeforces.com/problemset/problem/${row.__EMPTY_10}` : "", // __EMPTY_10 is CF ID
+    tags: row.__EMPTY_9 || "" // __EMPTY_9 is tags
 }));
 
 // Group problems by topic

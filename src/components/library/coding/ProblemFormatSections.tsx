@@ -1,5 +1,6 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { Cpu } from "lucide-react";
 
 /**
  * Reusable styled cards for a coding problem's Input/Output Format and
@@ -53,11 +54,11 @@ export function splitProblemDescription(raw: string): FormatSplit {
 }
 
 const cardCls =
-  "rounded-lg bg-muted/50 border p-3 sm:p-4 min-w-0 overflow-hidden";
+  "relative group overflow-hidden rounded-[1.5rem] border border-border/40 bg-[#0a0a0c]/80 backdrop-blur-2xl p-5 sm:p-6 shadow-2xl shadow-black/40 transition-all duration-300 hover:border-border/60 hover:shadow-black/60";
 const labelCls =
-  "text-[11px] sm:text-xs font-semibold mb-2 uppercase tracking-wider text-muted-foreground";
+  "inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground/40 mb-4 pb-2 border-b border-border/20 w-full";
 const bodyCls =
-  "prose prose-sm dark:prose-invert max-w-none text-[13px] sm:text-sm leading-relaxed font-mono break-words [&_p]:my-0 [&_p+p]:mt-2 [&_ul]:my-1 [&_ol]:my-1 [&_li]:my-0 [&_code]:break-words [&_pre]:whitespace-pre-wrap [&_pre]:break-words";
+  "prose prose-sm dark:prose-invert max-w-none text-[13px] sm:text-[14px] leading-relaxed font-sans text-foreground/80 selection:bg-primary/20 [&_p]:my-0 [&_p+p]:mt-3 [&_ul]:my-2 [&_ol]:my-2 [&_li]:my-1 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:bg-amber-500/10 [&_code]:text-amber-500 [&_code]:border [&_code]:border-amber-500/20 [&_code]:before:content-none [&_code]:after:content-none [&_pre]:p-4 [&_pre]:rounded-xl [&_pre]:bg-black/40 [&_pre]:border [&_pre]:border-border/20";
 
 export function ProblemFormatCards({
   inputFormat,
@@ -100,10 +101,18 @@ export function ProblemConstraints({ constraints }: { constraints: string[] }) {
   if (!constraints || constraints.length === 0) return null;
   return (
     <div className={cardCls} data-testid="problem-constraints">
-      <p className={labelCls}>Constraints</p>
-      <ul className="text-sm space-y-1 list-disc list-inside text-foreground/90 font-mono">
+      <p className={labelCls}>
+        <Cpu className="h-3.5 w-3.5 opacity-50" />
+        Constraints
+      </p>
+      <ul className="grid gap-3 list-none">
         {constraints.map((c, i) => (
-          <li key={i}>{c}</li>
+          <li key={i} className="flex items-start gap-3 group/item">
+            <div className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary/40 group-hover/item:bg-primary transition-colors shrink-0 shadow-[0_0_8px_rgba(245,158,11,0.2)]" />
+            <span className="text-[13px] sm:text-[14px] leading-relaxed font-mono text-foreground/80 group-hover/item:text-foreground transition-colors selection:bg-primary/20">
+              {c}
+            </span>
+          </li>
         ))}
       </ul>
     </div>

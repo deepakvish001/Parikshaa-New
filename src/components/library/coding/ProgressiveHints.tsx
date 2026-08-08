@@ -67,21 +67,31 @@ export const ProgressiveHints = ({ hints, slug }: Props) => {
   const pct = Math.round((revealed / hints.length) * 100);
 
   return (
-    <div className="space-y-2">
-      <div className="flex items-center justify-between gap-3">
-        <h3 className="font-semibold text-sm">Hints</h3>
+    <div className="space-y-6">
+      <div className="flex items-center justify-between gap-4 p-4 rounded-[1.5rem] bg-[#0a0a0c]/40 border border-border/20 shadow-lg shadow-black/10">
+        <div className="flex items-center gap-3">
+          <div className="h-8 w-8 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+            <Lightbulb className="h-4 w-4 text-amber-500" />
+          </div>
+          <div>
+            <h3 className="text-xs font-black uppercase tracking-widest text-foreground/90">
+              Progressive Hints
+            </h3>
+            <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/40 tabular-nums">
+              {revealed} / {hints.length} Disclosed
+            </p>
+          </div>
+        </div>
+        
         <div className="flex items-center gap-2">
-          <span className="text-xs text-muted-foreground tabular-nums">
-            {revealed} / {hints.length} revealed
-          </span>
           {revealed < hints.length && (
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setRevealed(hints.length)}
-              className="h-6 px-2 text-xs"
+              className="h-8 px-3 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-amber-500/10 hover:text-amber-500 transition-all"
             >
-              Reveal all
+              Show All
             </Button>
           )}
           {revealed > 0 && (
@@ -89,16 +99,16 @@ export const ProgressiveHints = ({ hints, slug }: Props) => {
               variant="ghost"
               size="sm"
               onClick={() => setRevealed(0)}
-              className="h-6 px-2 text-xs text-muted-foreground"
+              className="h-8 px-3 rounded-xl text-[10px] font-black uppercase tracking-widest text-muted-foreground/40 hover:text-foreground transition-all"
             >
-              Hide all
+              Reset
             </Button>
           )}
         </div>
       </div>
 
       <div
-        className="h-1 w-full rounded-full bg-muted overflow-hidden"
+        className="h-2 w-full rounded-full bg-[#0a0a0c] border border-border/20 overflow-hidden shadow-inner"
         role="progressbar"
         aria-valuenow={pct}
         aria-valuemin={0}
@@ -106,37 +116,54 @@ export const ProgressiveHints = ({ hints, slug }: Props) => {
         aria-label="Hints revealed"
       >
         <div
-          className="h-full bg-amber-500/70 transition-all duration-500 ease-out"
+          className="h-full bg-gradient-to-r from-amber-600 via-amber-400 to-amber-300 transition-all duration-1000 ease-out shadow-[0_0_15px_rgba(245,158,11,0.5)]"
           style={{ width: `${pct}%` }}
         />
       </div>
 
-      <div className="space-y-2">
+      <div className="grid gap-3">
         {hints.map((h, i) => {
           const isOpen = i < revealed;
           return (
             <div
               key={i}
               className={cn(
-                "rounded-md border p-3 text-sm transition-colors",
-                isOpen ? "bg-amber-500/5 border-amber-500/20" : "bg-muted/30",
+                "group relative overflow-hidden rounded-[1.5rem] border p-5 transition-all duration-500",
+                isOpen 
+                  ? "bg-[#0a0a0c]/60 border-amber-500/30 shadow-[0_0_30px_-10px_rgba(245,158,11,0.1)]" 
+                  : "bg-[#0a0a0c]/20 border-border/10",
               )}
             >
-              <div className="flex items-center gap-2 mb-1">
-                {isOpen ? (
-                  <Lightbulb className="h-3.5 w-3.5 text-amber-500" />
-                ) : (
-                  <Lock className="h-3.5 w-3.5 text-muted-foreground" />
-                )}
-                <span className="font-medium text-xs">Hint {i + 1}</span>
+              <div className="flex items-center gap-3 mb-3">
+                <div className={cn(
+                  "h-7 w-7 rounded-lg flex items-center justify-center transition-all duration-500",
+                  isOpen ? "bg-amber-500/20 text-amber-500 scale-110" : "bg-muted/10 text-muted-foreground/30"
+                )}>
+                  {isOpen ? (
+                    <Lightbulb className="h-4 w-4" />
+                  ) : (
+                    <Lock className="h-4 w-4" />
+                  )}
+                </div>
+                <span className={cn(
+                  "text-[10px] font-black uppercase tracking-widest transition-colors duration-500",
+                  isOpen ? "text-amber-500" : "text-muted-foreground/30"
+                )}>
+                  Module {i + 1}
+                </span>
               </div>
-              {isOpen ? (
-                <p className="text-muted-foreground leading-relaxed">{h}</p>
-              ) : (
-                <p className="text-muted-foreground/70 italic text-xs">
-                  Locked — reveal previous hints to continue.
-                </p>
-              )}
+              
+              <div className="relative">
+                {isOpen ? (
+                  <p className="text-[14px] text-foreground/80 leading-relaxed font-sans animate-in fade-in slide-in-from-top-2 duration-500 selection:bg-amber-500/20">
+                    {h}
+                  </p>
+                ) : (
+                  <p className="text-[11px] font-black uppercase tracking-widest text-muted-foreground/20 italic">
+                    Locked · Disclosure Required
+                  </p>
+                )}
+              </div>
             </div>
           );
         })}
@@ -144,16 +171,15 @@ export const ProgressiveHints = ({ hints, slug }: Props) => {
 
       {revealed < hints.length && (
         <Button
-          variant="outline"
-          size="sm"
+          variant="default"
+          size="lg"
           onClick={() => setRevealed((r) => Math.min(hints.length, r + 1))}
-          className="gap-1.5"
+          className="w-full h-14 rounded-[1.5rem] gap-3 text-[12px] font-black uppercase tracking-[0.2em] bg-gradient-to-br from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 shadow-xl shadow-amber-500/20 transition-all hover:scale-[1.01] active:scale-[0.99] border-t border-amber-300/50"
         >
-          <Lightbulb className="h-3.5 w-3.5" />
-          Reveal hint {revealed + 1}
+          <Lightbulb className="h-5 w-5" />
+          Unlock Next Insight
         </Button>
       )}
-
     </div>
   );
 };

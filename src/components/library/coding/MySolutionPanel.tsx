@@ -45,6 +45,7 @@ import {
   CloudOff,
   CloudUpload,
   AlertCircle,
+  FileText,
 } from "lucide-react";
 import { MonacoEditor } from "@/components/coding/MonacoEditor";
 import { useToast } from "@/hooks/use-toast";
@@ -286,46 +287,44 @@ export const MySolutionPanel = ({
       : "Empty";
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-start justify-between gap-3 flex-wrap">
-        <div className="min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="text-sm font-semibold">My Solution</h3>
+      <div className="flex items-start justify-between gap-6 flex-wrap bg-[#0a0a0c]/60 p-6 rounded-[2rem] border border-border/20 backdrop-blur-xl shadow-xl">
+        <div className="min-w-0 space-y-2">
+          <div className="flex items-center gap-3 flex-wrap">
+            <h3 className="text-lg font-black uppercase tracking-tighter text-foreground/90">My Solution</h3>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Badge
                     variant="outline"
                     className={cn(
-                      "gap-1.5 text-[10px] uppercase tracking-wider font-semibold transition-colors",
+                      "h-6 gap-2 text-[10px] font-black uppercase tracking-widest px-3 rounded-full border-2 transition-all duration-500",
                       isComplete
-                        ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-500"
+                        ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-500 shadow-[0_0_15px_-5px_rgba(16,185,129,0.3)]"
                         : progressStep === 1
-                          ? "border-amber-500/40 bg-amber-500/10 text-amber-500"
-                          : "border-border text-muted-foreground",
+                          ? "border-amber-500/40 bg-amber-500/10 text-amber-500 shadow-[0_0_15px_-5px_rgba(245,158,11,0.3)]"
+                          : "border-border/40 text-muted-foreground/40 bg-muted/20",
                     )}
                   >
                     {isComplete ? (
-                      <Sparkles className="h-3 w-3" />
+                      <Sparkles className="h-3.5 w-3.5 animate-pulse" />
                     ) : (
-                      <CheckCircle2 className="h-3 w-3" />
+                      <CheckCircle2 className="h-3.5 w-3.5" />
                     )}
                     {progressStep}/2 · {progressLabel}
                   </Badge>
                 </TooltipTrigger>
-                <TooltipContent>
-                  Counts a saved notes writeup and at least one saved code
-                  solution. Persists with your problem meta.
+                <TooltipContent className="rounded-xl p-3 text-[11px] font-medium max-w-[200px] border-border/40">
+                  Complete your approach notes and save a code solution to reach 100% completion.
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
           </div>
-          <p className="text-xs text-muted-foreground mt-1">
-            Personal writeup + per-language solutions.{" "}
+          <p className="text-[11px] font-black uppercase tracking-widest text-muted-foreground/40">
             {isCloudSynced
-              ? "Synced to your account across devices."
-              : "Autosaved locally — sign in to sync across devices."}
+              ? "Cloud Sync Enabled · All Devices Synced"
+              : "Local Persistence · Sign in to Enable Cloud Sync"}
           </p>
         </div>
         <div className="flex items-center gap-2 flex-wrap justify-end">
@@ -507,45 +506,59 @@ export const MySolutionPanel = ({
               "# Approach\n\n1. Brute force: O(n²) — iterate every pair.\n2. Optimised: hashmap lookup → O(n).\n\n## Edge cases\n- Empty input\n- Duplicates"
             }
             className={cn(
-              "font-mono text-xs min-h-[200px] resize-y leading-relaxed",
+              "font-mono text-[13px] min-h-[200px] rounded-[1.25rem] bg-[#0a0a0c]/80 border-border/20 selection:bg-primary/20 p-6 resize-y leading-relaxed focus-visible:ring-primary/20",
             )}
           />
         ) : (
-          <Card className="p-4 prose prose-sm dark:prose-invert max-w-none min-h-[200px]">
+          <Card className="p-8 rounded-[1.25rem] bg-[#0a0a0c]/80 border-border/20 shadow-2xl shadow-black/40 prose prose-invert max-w-none min-h-[200px] selection:bg-primary/20 overflow-y-auto">
             {hasNotes ? (
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{notes}</ReactMarkdown>
+              <ReactMarkdown 
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  code: ({node, ...props}) => <code className="text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded-md border border-amber-500/20 font-mono" {...props} />,
+                  pre: ({node, ...props}) => <pre className="bg-black/40 border border-border/20 p-4 rounded-xl overflow-x-auto" {...props} />
+                }}
+              >
+                {notes}
+              </ReactMarkdown>
             ) : (
-              <p className="text-muted-foreground text-sm m-0">
-                Nothing to preview yet. Switch to Edit to add notes.
-              </p>
+              <div className="flex flex-col items-center justify-center h-full py-10 text-center space-y-4">
+                <div className="h-12 w-12 rounded-[1.5rem] bg-muted/20 flex items-center justify-center">
+                  <FileText className="h-6 w-6 text-muted-foreground/20" />
+                </div>
+                <p className="text-muted-foreground/40 text-[10px] font-black uppercase tracking-[0.2em]">
+                  Solution notes empty
+                </p>
+              </div>
             )}
           </Card>
         )}
       </div>
 
       {/* Code block */}
-      <div className="space-y-2">
-        <div className="flex items-center justify-between gap-2 flex-wrap">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+      <div className="space-y-4">
+        <div className="flex items-center justify-between gap-4 flex-wrap">
+          <div className="flex items-center gap-3 flex-wrap">
+            <div className="h-8 w-0.5 bg-gradient-to-b from-primary/40 to-primary/0 rounded-full" />
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/40">
               Final Solution
             </span>
             <Select
               value={language}
               onValueChange={(v) => requestLanguageChange(v as LangId)}
             >
-              <SelectTrigger className="h-7 w-[170px] text-xs">
+              <SelectTrigger className="h-8 w-[170px] text-[11px] font-black uppercase tracking-widest rounded-xl bg-foreground/5 border-border/20">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="rounded-xl border-border/40">
                 {LANGUAGES.map((l) => {
                   const saved = savedLanguages.includes(l.id);
                   return (
-                    <SelectItem key={l.id} value={l.id} className="text-xs">
+                    <SelectItem key={l.id} value={l.id} className="text-[11px] font-black uppercase tracking-widest py-2">
                       <span className="flex items-center gap-2">
                         {l.label}
                         {saved && (
-                          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 inline-block" />
+                          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
                         )}
                       </span>
                     </SelectItem>
@@ -682,8 +695,8 @@ export const MySolutionPanel = ({
           </div>
         )}
 
-        <div className="rounded-md border overflow-hidden bg-muted/20">
-          <div className="h-[260px]">
+        <div className="rounded-[1.5rem] border border-border/20 overflow-hidden bg-[#0a0a0c]/80 shadow-2xl">
+          <div className="h-[320px]">
             <MonacoEditor
               value={code}
               onChange={onCodeChange}

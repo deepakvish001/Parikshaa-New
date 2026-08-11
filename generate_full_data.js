@@ -18,8 +18,9 @@ const problems = dump.problems.filter(row => typeof row.__EMPTY === 'number').ma
     topic: row.__EMPTY_3, // __EMPTY_3 is the topic title in the problems sheet
     problem: row.__EMPTY_5, // __EMPTY_5 is the problem title
     rating: parseInt(row.__EMPTY_6) || 0, // __EMPTY_6 is the rating
-    link: row.__EMPTY_10 ? `https://codeforces.com/problemset/problem/${row.__EMPTY_10}` : "", // __EMPTY_10 is CF ID
+    link: row.__EMPTY_10 ? `https://codeforces.com/problemset/problem/${row.__EMPTY_11}/${row.__EMPTY_12}` : "", // __EMPTY_11 is Contest ID, __EMPTY_12 is Index
     tags: row.__EMPTY_9 || "" // __EMPTY_9 is tags
+
 }));
 
 // Group problems by topic

@@ -400,9 +400,10 @@ const CodingProblemDetail = () => {
   });
   const lastCodeLenRef = useRef<number>(0);
   const { runs, refetch: refetchRuns } = useCodeRuns(slug, {
-    locked: (contestLocks as any).historyLocked,
+    locked: (contestLocks as any).data?.find((l: any) => l.tab_id === "runs") || (contestLocks as any).historyLocked,
     contestId,
   });
+
   const { toggle: rawToggleBookmark } = useCodingProblemBookmarks();
   const { note: notesValue, setNote: setNotesValue, savedAt: notesSavedAt } = useProblemNotes(slug);
   const {
@@ -427,9 +428,10 @@ const CodingProblemDetail = () => {
     lastSyncedAt: mySolutionLastSyncedAt,
     lastConflictResolvedAt: mySolutionLastConflictAt,
   } = useProblemSolution(slug, mySolutionLanguage, {
-    locked: (contestLocks as any).solutionLocked,
+    locked: (contestLocks as any).data?.find((l: any) => l.tab_id === "my-solution") || (contestLocks as any).solutionLocked,
     contestId,
   });
+
   const {
     prefs: editorPrefs,
     incFontSize,
@@ -456,8 +458,9 @@ const CodingProblemDetail = () => {
   const shouldLoadReferenceSolution =
     !staticProblem &&
     acceptedExists &&
-    !(contestLocks as any).solutionLocked &&
+    !((contestLocks as any).data?.some((l: any) => ["solution", "editorial"].includes(l.tab_id)) || (contestLocks as any).solutionLocked) &&
     (activeTab === "editorial" || activeTab === "solution");
+
   const { data: dbReferenceSolution = {}, isLoading: referenceSolutionLoading } = useDbProblemReferenceSolutions(
     slug,
     shouldLoadReferenceSolution,
@@ -467,12 +470,15 @@ const CodingProblemDetail = () => {
   // setActiveTab calls that would land on a locked tab, (b) auto-redirect to
   // Description if the persisted active tab is locked when the contest starts,
   // and (c) decorate trigger labels with a 🔒.
-  const isTabLocked = (id: EditorTabId) =>
-    (id === "notes" && (contestLocks as any).notesLocked) ||
-    (id === "my-solution" && (contestLocks as any).solutionLocked) ||
-    (id === "solution" && (contestLocks as any).solutionLocked) ||
-    (id === "editorial" && (contestLocks as any).solutionLocked) ||
-    (id === "runs" && (contestLocks as any).historyLocked);
+  const isTabLocked = (id: EditorTabId) => {
+    if ((contestLocks as any).data?.some((l: any) => l.tab_id === id)) return true;
+    return (id === "notes" && (contestLocks as any).notesLocked) ||
+      (id === "my-solution" && (contestLocks as any).solutionLocked) ||
+      (id === "solution" && (contestLocks as any).solutionLocked) ||
+      (id === "editorial" && (contestLocks as any).solutionLocked) ||
+      (id === "runs" && (contestLocks as any).historyLocked);
+  };
+
 
   const setActiveTab = (id: EditorTabId) => {
     if (isTabLocked(id)) {
@@ -548,9 +554,11 @@ const CodingProblemDetail = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     activeTab,
+    (contestLocks as any).data,
     (contestLocks as any).notesLocked,
     (contestLocks as any).solutionLocked,
     (contestLocks as any).historyLocked,
+
   ]);
   const {
     presetId: layoutPresetId,
@@ -1349,9 +1357,11 @@ const CodingProblemDetail = () => {
                   onReorder={(next) => setTabOrder(next)}
                   lockedIds={(["notes", "editorial", "discussion"] as EditorTabId[]).filter(isTabLocked)}
                   reorderDisabled={
+                    (contestLocks as any).data?.length > 0 ||
                     (contestLocks as any).notesLocked ||
                     (contestLocks as any).solutionLocked ||
                     (contestLocks as any).historyLocked
+
                   }
                   onBlockedReorder={(reason, info) => {
                     logContestLockEvent({
@@ -1784,8 +1794,9 @@ const CodingProblemDetail = () => {
 
 
                 {/* Hints — progressive disclosure */}
-                {(contestLocks as any).hintsLocked ? (
-                  <LockedAuxPanel label="Hints" endsAt={(contestLocks as any).endsAt} />
+                {((contestLocks as any).data?.some((l: any) => l.tab_id === "hints") || (contestLocks as any).hintsLocked) ? (
+                  <LockedAuxPanel label="Hints" endsAt={(contestLocks as any).data?.find((l: any) => l.tab_id === "hints")?.expires_at || (contestLocks as any).endsAt} />
+
                 ) : (
                     <div className="mt-8 pt-8 border-t border-dashed border-border/50">
                       <ProgressiveHints hints={problem.hints} slug={problem.slug} />
@@ -1794,8 +1805,9 @@ const CodingProblemDetail = () => {
               </TabsContent>
 
               <TabsContent value="notes" className="mt-0">
-                {(contestLocks as any).notesLocked ? (
-                  <LockedAuxPanel label="Notes" endsAt={(contestLocks as any).endsAt} />
+                {((contestLocks as any).data?.some((l: any) => l.tab_id === "notes") || (contestLocks as any).notesLocked) ? (
+                  <LockedAuxPanel label="Notes" endsAt={(contestLocks as any).data?.find((l: any) => l.tab_id === "notes")?.expires_at || (contestLocks as any).endsAt} />
+
                 ) : !user ? (
                   <SignInGate action="notes" />
                 ) : (
@@ -1805,8 +1817,9 @@ const CodingProblemDetail = () => {
               </TabsContent>
 
               <TabsContent value="my-solution" className="mt-0">
-                {(contestLocks as any).solutionLocked ? (
-                  <LockedAuxPanel label="My Solution" endsAt={(contestLocks as any).endsAt} />
+                {((contestLocks as any).data?.some((l: any) => l.tab_id === "my-solution") || (contestLocks as any).solutionLocked) ? (
+                  <LockedAuxPanel label="My Solution" endsAt={(contestLocks as any).data?.find((l: any) => l.tab_id === "my-solution")?.expires_at || (contestLocks as any).endsAt} />
+
                 ) : (
                 <MySolutionPanel
                   notes={mySolutionNotes}
@@ -1841,8 +1854,9 @@ const CodingProblemDetail = () => {
               </TabsContent>
 
               <TabsContent value="editorial" className="mt-0">
-                {(contestLocks as any).solutionLocked ? (
-                  <LockedAuxPanel label="Editorial" endsAt={(contestLocks as any).endsAt} />
+                {((contestLocks as any).data?.some((l: any) => l.tab_id === "editorial") || (contestLocks as any).solutionLocked) ? (
+                  <LockedAuxPanel label="Editorial" endsAt={(contestLocks as any).data?.find((l: any) => l.tab_id === "editorial")?.expires_at || (contestLocks as any).endsAt} />
+
                 ) : !acceptedExists ? (
                   <Card className="p-8 text-center">
                     <p className="text-muted-foreground">
@@ -1875,8 +1889,9 @@ const CodingProblemDetail = () => {
 
               <TabsContent value="solution" className="mt-0">
 
-                {(contestLocks as any).solutionLocked ? (
-                  <LockedAuxPanel label="Reference solution" endsAt={(contestLocks as any).endsAt} />
+                {((contestLocks as any).data?.some((l: any) => l.tab_id === "solution") || (contestLocks as any).solutionLocked) ? (
+                  <LockedAuxPanel label="Reference solution" endsAt={(contestLocks as any).data?.find((l: any) => l.tab_id === "solution")?.expires_at || (contestLocks as any).endsAt} />
+
                 ) : !acceptedExists ? (
                   <Card className="p-8 text-center">
                     <p className="text-muted-foreground">
@@ -1957,8 +1972,9 @@ const CodingProblemDetail = () => {
               </TabsContent>
 
               <TabsContent value="runs" className="mt-0" aria-label="Run history">
-                {(contestLocks as any).historyLocked ? (
-                  <LockedAuxPanel label="Run history" endsAt={(contestLocks as any).endsAt} />
+                {((contestLocks as any).data?.some((l: any) => l.tab_id === "runs") || (contestLocks as any).historyLocked) ? (
+                  <LockedAuxPanel label="Run history" endsAt={(contestLocks as any).data?.find((l: any) => l.tab_id === "runs")?.expires_at || (contestLocks as any).endsAt} />
+
                 ) : !user ? (
                   <Card className="p-8 text-center">
                     <p className="text-muted-foreground mb-3">

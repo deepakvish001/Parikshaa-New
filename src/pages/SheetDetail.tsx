@@ -266,6 +266,11 @@ const mockSheetData: Record<string, SheetData> = {
     ...zeroTo2300Meta,
     sections: zeroTo2300Sections,
   },
+  "adv-sql-practice": {
+    ...advSqlMeta,
+    sections: advSqlSections,
+  },
+
   "dsa-level-1": {
     ...dsaLevel1Meta,
     sections: dsaLevel1Sections,
@@ -1575,7 +1580,7 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
 
 
   const [sheetData, setSheetData] = useState<SheetData | null>(
-    mockSheetData[currentSheetId] || mockSheetData["strivers-sde-sheet"]
+    mockSheetData[currentSheetId] || mockSheetData["adv-sql-practice"] || mockSheetData["strivers-sde-sheet"]
   );
   const [noteModalOpen, setNoteModalOpen] = useState(false);
   const [editingTopic, setEditingTopic] = useState<Topic | null>(null);

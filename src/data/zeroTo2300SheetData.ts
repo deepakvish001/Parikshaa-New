@@ -279,7 +279,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-1",
     "title": "Math Basics — parity, formulas, patterns",
     "part": "A · Foundations",
@@ -547,7 +547,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-2",
     "title": "Brute Force & Complete Search",
     "part": "A · Foundations",
@@ -755,7 +755,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-3",
     "title": "Sortings & Custom Comparators",
     "part": "A · Foundations",
@@ -963,7 +963,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-4",
     "title": "Greedy — Basics",
     "part": "A · Foundations",
@@ -1251,7 +1251,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-5",
     "title": "Two Pointers & Sliding Window",
     "part": "A · Foundations",
@@ -1459,7 +1459,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-6",
     "title": "Prefix Sums, Difference Arrays & Cumulative Tricks",
     "part": "A · Foundations",
@@ -1667,7 +1667,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-7",
     "title": "Binary Search — array pe aur **answer pe**",
     "part": "A · Foundations",
@@ -1935,7 +1935,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-8",
     "title": "STL / Containers — set, map, multiset, priority_queue",
     "part": "A · Foundations",
@@ -2143,7 +2143,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-9",
     "title": "Strings — Basics",
     "part": "A · Foundations",
@@ -2351,7 +2351,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-10",
     "title": "Greedy with Proof — exchange argument",
     "part": "B · Core Techniques",
@@ -2559,7 +2559,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-11",
     "title": "Constructive Algorithms — CP ka signature topic",
     "part": "B · Core Techniques",
@@ -2847,7 +2847,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-12",
     "title": "Number Theory I — divisors, sieve, GCD, modular arithmetic",
     "part": "B · Core Techniques",
@@ -3055,7 +3055,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-13",
     "title": "Combinatorics I — counting, nCr, pigeonhole",
     "part": "B · Core Techniques",
@@ -3263,7 +3263,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-14",
     "title": "Bitmasks & Bit Tricks",
     "part": "B · Core Techniques",
@@ -3471,7 +3471,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-15",
     "title": "Recursion, Backtracking & Subset Enumeration",
     "part": "B · Core Techniques",
@@ -3679,7 +3679,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-16",
     "title": "DP I — 1D, knapsack, LIS, grid",
     "part": "B · Core Techniques",
@@ -3987,7 +3987,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-17",
     "title": "Graphs I — modelling, DFS/BFS, components, bipartite",
     "part": "B · Core Techniques",
@@ -4195,7 +4195,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-18",
     "title": "Trees I — rooting, subtree DP, diameter",
     "part": "B · Core Techniques",
@@ -4403,7 +4403,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-19",
     "title": "DSU (Union–Find) & variants",
     "part": "C · Intermediate",
@@ -4611,7 +4611,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-20",
     "title": "Shortest Paths — Dijkstra, 0-1 BFS, Bellman–Ford, Floyd–Warshall",
     "part": "C · Intermediate",
@@ -4819,7 +4819,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-21",
     "title": "Topological Sort, DAG DP & Strongly Connected Components",
     "part": "C · Intermediate",
@@ -5027,7 +5027,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-22",
     "title": "Minimum Spanning Tree — Kruskal & Prim",
     "part": "C · Intermediate",
@@ -5215,7 +5215,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-23",
     "title": "Range Queries — Fenwick (BIT) & Segment Tree",
     "part": "C · Intermediate",
@@ -5443,7 +5443,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-24",
     "title": "DP II — bitmask DP, DP on trees, interval DP, digit DP",
     "part": "C · Intermediate",
@@ -5651,7 +5651,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-25",
     "title": "Combinatorics II — nCr mod p, inclusion–exclusion, Catalan",
     "part": "C · Intermediate",
@@ -5859,7 +5859,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-26",
     "title": "Number Theory II — Euler φ, CRT, modular inverse, matrix exponentiation",
     "part": "C · Intermediate",
@@ -6157,7 +6157,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-27",
     "title": "Strings I — Hashing, KMP, Z-function",
     "part": "C · Intermediate",
@@ -6475,7 +6475,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-28",
     "title": "Game Theory — Nim, Sprague–Grundy, DP games",
     "part": "C · Intermediate",
@@ -6723,7 +6723,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-29",
     "title": "Probability & Expected Value",
     "part": "C · Intermediate",
@@ -6931,7 +6931,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-30",
     "title": "Sparse Table, LCA & Binary Lifting",
     "part": "D · Advanced",
@@ -7119,7 +7119,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-31",
     "title": "Trees Advanced — Euler tour, small-to-large, rerooting, HLD, centroid decomposition",
     "part": "D · Advanced",
@@ -7327,7 +7327,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-32",
     "title": "Segment Tree Advanced — lazy propagation, merge-sort tree, segment tree on values, Li Chao",
     "part": "D · Advanced",
@@ -7515,7 +7515,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-33",
     "title": "Sqrt Decomposition & Mo's Algorithm",
     "part": "D · Advanced",
@@ -7663,7 +7663,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-34",
     "title": "DP Optimizations — CHT, divide & conquer, Knuth, SOS, aliens trick",
     "part": "D · Advanced",
@@ -7851,7 +7851,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-35",
     "title": "Flows & Matching — max flow, min cut, bipartite matching, MCMF",
     "part": "D · Advanced",
@@ -8149,7 +8149,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-36",
     "title": "Strings II — Suffix Array, Suffix Automaton, Aho–Corasick, Manacher",
     "part": "D · Advanced",
@@ -8337,7 +8337,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-37",
     "title": "Computational Geometry",
     "part": "D · Advanced",
@@ -8565,7 +8565,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-38",
     "title": "Interactive Problems",
     "part": "D · Advanced",
@@ -8773,7 +8773,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-39",
     "title": "Divide & Conquer, Meet-in-the-Middle, Ternary Search, Bitset",
     "part": "D · Advanced",
@@ -9121,7 +9121,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-40",
     "title": "2-SAT, Expression Parsing & Modelling Oddities",
     "part": "D · Advanced",
@@ -9359,7 +9359,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-41",
     "title": "FFT / NTT & Polynomial Techniques",
     "part": "D · Advanced",
@@ -9547,7 +9547,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-42",
     "title": "Bridges, Articulation Points & Connectivity Structure",
     "part": "E · Expert / 2300+",
@@ -9735,7 +9735,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-43",
     "title": "Functional Graphs, Euler Path & Cycle Structure",
     "part": "E · Expert / 2300+",
@@ -9923,7 +9923,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-44",
     "title": "Coordinate Compression, Offline Processing & Query Sorting",
     "part": "E · Expert / 2300+",
@@ -10111,7 +10111,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-45",
     "title": "Sweep Line & Event Processing",
     "part": "E · Expert / 2300+",
@@ -10299,7 +10299,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-46",
     "title": "Persistent Data Structures & Wavelet Trees",
     "part": "E · Expert / 2300+",
@@ -10487,7 +10487,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-47",
     "title": "Slope Trick & Convexity in DP",
     "part": "E · Expert / 2300+",
@@ -10635,7 +10635,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-48",
     "title": "Mobius Inversion, Divisor Sums & Multiplicative Functions",
     "part": "E · Expert / 2300+",
@@ -10823,7 +10823,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-49",
     "title": "Burnside / Polya — counting up to symmetry",
     "part": "E · Expert / 2300+",
@@ -10971,7 +10971,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-50",
     "title": "Randomization — hashing attacks, shuffles, Zobrist, Monte Carlo",
     "part": "E · Expert / 2300+",
@@ -11209,7 +11209,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-51",
     "title": "Advanced Flows — MCMF, Hall's theorem, project selection, matroids",
     "part": "E · Expert / 2300+",
@@ -11447,7 +11447,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-52",
     "title": "Linear Recurrences — Kitamasa & Berlekamp–Massey",
     "part": "E · Expert / 2300+",
@@ -11565,7 +11565,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-53",
     "title": "Dynamic Connectivity & Offline D&C on Time",
     "part": "E · Expert / 2300+",
@@ -11683,7 +11683,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-54",
     "title": "Advanced Constructive & Interactive (Div1 A/B level)",
     "part": "E · Expert / 2300+",
@@ -11961,7 +11961,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-55",
     "title": "Tag-blind Mixed Set — 1900–2200 (Expert → Candidate Master)",
     "part": "F · Tag-blind Consolidation",
@@ -12139,7 +12139,7 @@ export const zeroTo2300Sections: any[] = [
       }
     ]
   },
-  {
+          {
     "id": "z23-56",
     "title": "Tag-blind Mixed Set — 2300+ (Master track)",
     "part": "F · Tag-blind Consolidation",

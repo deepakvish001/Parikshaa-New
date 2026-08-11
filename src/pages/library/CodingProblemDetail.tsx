@@ -1507,9 +1507,10 @@ const CodingProblemDetail = () => {
                     </div>
                   </div>
                   <div className="flex flex-wrap items-center gap-2">
-                    <Badge variant="outline" className={cn("rounded-full px-3 py-0.5 text-[12px] font-medium border-0", difficultyClass(problem.difficulty))}>
+                    <div className={cn("rounded-full px-3 py-1 text-[12px] font-bold uppercase tracking-wider", difficultyClass(problem.difficulty))}>
                       {problem.difficulty}
-                    </Badge>
+                    </div>
+
 
                     {problem.companies && problem.companies.length > 0 ? (
                       <Collapsible

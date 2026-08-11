@@ -1497,17 +1497,15 @@ const CodingProblemDetail = () => {
                         <div className="h-4 w-px bg-border/20 hidden sm:block" />
                         
                         <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground/40 bg-[#0a0a0c]/40 px-3 py-1.5 rounded-[1.25rem] border border-border/20 shadow-lg shadow-black/10 transition-all hover:border-border/40 hover:text-muted-foreground/60">
-                          <Clock className="h-3.5 w-3.5 opacity-60" />
-                          <span>{problem.cpuTimeLimitSec}s limit</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground/40 bg-[#0a0a0c]/40 px-3 py-1.5 rounded-[1.25rem] border border-border/20 shadow-lg shadow-black/10 transition-all hover:border-border/40 hover:text-muted-foreground/60">
-                          <Cpu className="h-3.5 w-3.5 opacity-60" />
+                        <div className="flex items-center gap-1.5 text-[12px] font-medium text-muted-foreground/60">
+                          <span>{problem.cpuTimeLimitSec}s</span>
+                          <span className="text-muted-foreground/20">•</span>
                           <span>{Math.floor(problem.memoryLimitKb / 1024)}MB</span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex flex-col gap-2 shrink-0 sm:items-end bg-[#0a0a0c]/60 p-4 rounded-[2rem] border border-border/20 backdrop-blur-xl shadow-2xl shadow-black/20">
+                    <div className="flex items-center gap-4 shrink-0">
                       <ProblemDetailHeader
                         isSolved={problemStats.isSolved}
                         isAttempted={problemStats.isAttempted}
@@ -1523,7 +1521,11 @@ const CodingProblemDetail = () => {
                       />
                     </div>
                   </div>
-                  <div className="flex flex-wrap items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Badge variant="outline" className={cn("rounded-full px-3 py-0.5 text-[12px] font-medium border-0", difficultyClass(problem.difficulty))}>
+                      {problem.difficulty}
+                    </Badge>
+
                     {problem.companies && problem.companies.length > 0 ? (
                       <Collapsible
                         open={showCompanyTags}
@@ -1536,14 +1538,13 @@ const CodingProblemDetail = () => {
                             aria-expanded={showCompanyTags}
                             aria-controls="company-tags-panel"
                             className={cn(
-                              "inline-flex items-center gap-2 text-[11px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/20 hover:bg-amber-500/20 transition-all duration-200",
-                              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-                              showCompanyTags
-                                ? "bg-amber-500/20 border-amber-500/50"
-                                : "",
+                              "inline-flex items-center gap-1.5 text-[12px] font-medium px-3 py-0.5 rounded-full bg-muted/50 text-muted-foreground hover:bg-muted transition-colors",
+                              showCompanyTags && "bg-muted text-foreground",
                             )}
                           >
-                            Company Tags
+                            <NotebookPen className="h-3.5 w-3.5" />
+                            Companies
+
                             <span className="tabular-nums text-amber-300/70">
                               {problem.companies.length}
                             </span>
@@ -1575,12 +1576,12 @@ const CodingProblemDetail = () => {
                             onClick={() =>
                               navigate(`/library/problems?topics=${encodeURIComponent(t)}`)
                             }
-                            title={`Filter problems by #${t}`}
-                            className="inline-flex items-center max-w-[10rem] sm:max-w-[14rem] text-[11px] font-bold px-3 py-1 rounded-full bg-foreground/[0.04] text-foreground/60 border border-foreground/10 hover:bg-primary/10 hover:text-primary hover:border-primary/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 transition-all duration-200"
+                            className="inline-flex items-center text-[12px] font-medium px-3 py-0.5 rounded-full bg-muted/50 text-muted-foreground hover:bg-muted transition-colors"
                           >
-                            <span className="truncate">#{t}</span>
+                            <span>{t}</span>
                           </button>
                         ))
+
                       : dbProblemLoading ? (
                         <>
                           <Skeleton className="h-6 w-16 rounded-full" />
@@ -1632,8 +1633,8 @@ const CodingProblemDetail = () => {
                   const { main, inputFormat, outputFormat } =
                     splitProblemDescription(problem.description ?? "");
                   return (
-                    <div className="space-y-8">
-                      <div className="prose prose-sm dark:prose-invert max-w-none text-[15px] leading-relaxed text-foreground/90 font-sans selection:bg-amber-500/20">
+                    <div className="space-y-6 pt-2">
+                      <div className="prose prose-sm dark:prose-invert max-w-none text-[14px] leading-relaxed text-foreground/90 font-sans selection:bg-primary/20">
                         <ReactMarkdown 
                           remarkPlugins={[remarkGfm]}
                           components={{
@@ -1641,13 +1642,13 @@ const CodingProblemDetail = () => {
                             code: ({ inline, className, children, ...props }: any) => {
                               if (inline) {
                                 return (
-                                  <code className="px-1.5 py-0.5 rounded bg-muted font-mono text-amber-500 text-[0.9em]" {...props}>
+                                  <code className="px-1.5 py-0.5 rounded bg-muted/80 font-mono text-foreground text-[0.9em] border border-border/40" {...props}>
                                     {children}
                                   </code>
                                 );
                               }
                               return (
-                                <code className={className} {...props}>
+                                <code className={cn("block bg-muted/30 p-4 rounded-xl border border-border/40 font-mono text-[13px]", className)} {...props}>
                                   {children}
                                 </code>
                               );
@@ -1657,6 +1658,7 @@ const CodingProblemDetail = () => {
                           {main}
                         </ReactMarkdown>
                       </div>
+
                       
                       {(inputFormat || outputFormat) && (
                         <div className="space-y-5 animate-in fade-in slide-in-from-bottom-2 duration-500 delay-150 fill-mode-both">

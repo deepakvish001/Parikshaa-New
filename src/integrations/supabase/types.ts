@@ -1934,6 +1934,60 @@ export type Database = {
           },
         ]
       }
+      contests: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          ends_at: string
+          id: string
+          is_weekly_rated: boolean
+          penalty_minutes: number | null
+          registration_closes_at: string | null
+          registration_opens_at: string | null
+          scoring_mode: string
+          slug: string
+          starts_at: string
+          status: string
+          title: string
+          updated_at: string | null
+          visibility: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          ends_at: string
+          id?: string
+          is_weekly_rated?: boolean
+          penalty_minutes?: number | null
+          registration_closes_at?: string | null
+          registration_opens_at?: string | null
+          scoring_mode?: string
+          slug: string
+          starts_at: string
+          status?: string
+          title: string
+          updated_at?: string | null
+          visibility?: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          ends_at?: string
+          id?: string
+          is_weekly_rated?: boolean
+          penalty_minutes?: number | null
+          registration_closes_at?: string | null
+          registration_opens_at?: string | null
+          scoring_mode?: string
+          slug?: string
+          starts_at?: string
+          status?: string
+          title?: string
+          updated_at?: string | null
+          visibility?: string
+        }
+        Relationships: []
+      }
       conversations: {
         Row: {
           created_at: string

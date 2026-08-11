@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef, useContext, createContext, useDeferredValue } from "react";
+import { advSqlFullData } from "@/data/advSqlData";
+
 
 // Lets deeply-nested topic rows open an article inline (DBMS sheet only)
 // without threading a prop through every intermediate component.
@@ -267,9 +269,9 @@ const mockSheetData: Record<string, SheetData> = {
     sections: zeroTo2300Sections,
   },
   "adv-sql-practice": {
-    ...advSqlMeta,
-    sections: advSqlSections,
+    ...advSqlFullData,
   },
+
 
   "dsa-level-1": {
     ...dsaLevel1Meta,
@@ -1461,17 +1463,20 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
     [searchParams, setSearchParams, sheetId]
   );
   const closeArticle = useCallback(() => {
-
-    // Prefer history back so forward navigation stays available, 
-    // but only if the previous entry is within the same SPA session (via state.sheetInline).
-    if (window.history.length > 1 && window.history.state?.sheetInline) navigate(-1);
-    else {
+    // Check if the current history state indicates we entered this article via an SPA navigation
+    const isSpaNav = window.history.state?.usr?.sheetInline || window.history.state?.sheetInline;
+    
+    if (isSpaNav && window.history.length > 1) {
+      navigate(-1);
+    } else {
+      // Deep link or external referral: strip params instead of going "back" to Google
       const next = new URLSearchParams(searchParams);
       next.delete("article");
       next.delete("from");
       setSearchParams(next, { replace: true });
     }
   }, [navigate, searchParams, setSearchParams]);
+
 
   // Show the article's real URL in the address bar while it stays inline.
   // We only rewrite the browser URL (no router navigation), so the sheet
@@ -2039,10 +2044,12 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   );
 
 
+
   // Confetti celebration
   const triggerConfetti = useCallback(() => {
     const duration = 3000;
     const animationEnd = Date.now() + duration;
+
     const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
 
     const randomInRange = (min: number, max: number) =>

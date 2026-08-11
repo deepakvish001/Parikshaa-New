@@ -26,8 +26,7 @@ import { toast } from "sonner";
 
 // Components - Using named imports based on file inspection
 import { ProblemDetailHeader } from "@/components/library/coding/ProblemDetailHeader";
-import { splitProblemDescription } from "@/components/library/coding/ProblemFormatSections";
-import { ProblemFormatSections } from "@/components/library/coding/ProblemFormatSections";
+import { splitProblemDescription, ProblemFormatCards, ProblemConstraints } from "@/components/library/coding/ProblemFormatSections";
 import { ProblemFooterBar } from "@/components/library/coding/ProblemFooterBar";
 import { ProblemRunHistory } from "@/components/library/coding/ProblemRunHistory";
 import { ProgressiveHints } from "@/components/library/coding/ProgressiveHints";

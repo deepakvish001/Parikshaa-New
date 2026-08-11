@@ -1,4 +1,4 @@
-import { Section } from "./dsaLevel1Types";
+import { Section, SheetData } from "./dsaLevel1Types";
 
 export const advSqlMeta = {
   title: "LeetCode Advanced SQL 50",
@@ -25,3 +25,15 @@ export const advSqlSections: Section[] = [
     ]
   }
 ];
+
+export const advSqlFullData: SheetData = {
+  id: "adv-sql-practice",
+  ...advSqlMeta,
+  sections: advSqlSections,
+  lastUpdated: new Date().toISOString(),
+  totalProblems: 50,
+  completed: 0,
+  isPremium: true,
+  topics: [] // Will be populated if needed
+};
+

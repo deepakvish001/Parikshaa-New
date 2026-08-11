@@ -267,9 +267,9 @@ const mockSheetData: Record<string, SheetData> = {
     sections: zeroTo2300Sections,
   },
   "adv-sql-practice": {
-    ...advSqlMeta,
-    sections: advSqlSections,
+    ...advSqlFullData,
   },
+
 
   "dsa-level-1": {
     ...dsaLevel1Meta,

@@ -1656,17 +1656,22 @@ const CodingProblemDetail = () => {
                             code: ({ inline, className, children, ...props }: any) => {
                               if (inline) {
                                 return (
-                                  <code className="px-1.5 py-0.5 rounded bg-muted/80 font-mono text-foreground text-[0.9em] border border-border/40" {...props}>
+                                  <code className="px-1.5 py-0.5 rounded bg-muted/80 font-mono text-foreground text-[13px] border border-border/40" {...props}>
                                     {children}
                                   </code>
                                 );
                               }
                               return (
-                                <code className={cn("block bg-muted/30 p-4 rounded-xl border border-border/40 font-mono text-[13px]", className)} {...props}>
-                                  {children}
-                                </code>
+                                <div className="relative group my-4">
+                                  <pre className="p-4 rounded-xl bg-muted/30 border border-border/40 font-mono text-[13px] overflow-x-auto selection:bg-primary/20">
+                                    <code className={cn("block", className)} {...props}>
+                                      {children}
+                                    </code>
+                                  </pre>
+                                </div>
                               );
                             }
+
                           }}
                         >
                           {main}

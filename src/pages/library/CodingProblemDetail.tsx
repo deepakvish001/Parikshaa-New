@@ -2433,8 +2433,6 @@ const CodingProblemDetail = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-      </div>
-    </div>
   );
 };
 

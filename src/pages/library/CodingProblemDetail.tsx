@@ -1477,12 +1477,11 @@ const CodingProblemDetail = () => {
 
             <div className="flex-1 overflow-y-auto p-4 sm:p-6">
               <TabsContent value="description" className="mt-0 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <header className="mb-10 space-y-8">
-                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-8">
-                    <div className="space-y-4 flex-1 min-w-0">
-                      <h1 className="text-3xl sm:text-4xl font-black tracking-tighter text-foreground selection:bg-primary/30 leading-[1.1] bg-gradient-to-br from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent">
-                        {problem.title}
-                      </h1>
+                <header className="mb-6 space-y-4">
+                  <div className="flex items-center justify-between gap-4">
+                    <h1 className="text-2xl font-bold tracking-tight text-foreground selection:bg-primary/30">
+                      {problem.title}
+                    </h1>
                       <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                         <div className="flex items-center gap-1.5 text-[12px] font-medium text-muted-foreground/60">
                           <span>{problem.cpuTimeLimitSec}s</span>

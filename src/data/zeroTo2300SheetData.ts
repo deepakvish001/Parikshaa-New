@@ -101,7 +101,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/266510",
+            "practiceUrl": "https://codeforces.com/problemset/problem/158/A",
             "note": "Tags: implementation",
             "isRevision": false
           },
@@ -191,7 +191,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/106721",
+            "practiceUrl": "https://codeforces.com/problemset/problem/43/A",
             "note": "Tags: *special, greedy, implementation",
             "isRevision": false
           },
@@ -211,7 +211,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/92864",
+            "practiceUrl": "https://codeforces.com/problemset/problem/270/A",
             "note": "Tags: binary search, implementation, math, sortings",
             "isRevision": false
           },
@@ -251,7 +251,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/113634",
+            "practiceUrl": "https://codeforces.com/problemset/problem/466/A",
             "note": "Tags: data structures, hashing, implementation",
             "isRevision": false
           },
@@ -271,7 +271,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/77393",
+            "practiceUrl": "https://codeforces.com/problemset/problem/451/B",
             "note": "Tags: binary search, brute force, implementation, two pointers",
             "isRevision": false
           }
@@ -349,7 +349,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/153184",
+            "practiceUrl": "https://codeforces.com/problemset/problem/50/A",
             "note": "Tags: implementation, math",
             "isRevision": false
           },
@@ -409,7 +409,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/52768",
+            "practiceUrl": "https://codeforces.com/problemset/problem/318/A",
             "note": "Tags: implementation, math",
             "isRevision": false
           },
@@ -567,7 +567,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/446592",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1849/B",
             "note": "Tags: brute force, greedy",
             "isRevision": false
           },
@@ -597,7 +597,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/100679",
+            "practiceUrl": "https://codeforces.com/problemset/problem/271/A",
             "note": "Tags: brute force, implementation, strings",
             "isRevision": false
           },
@@ -627,7 +627,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/91282",
+            "practiceUrl": "https://codeforces.com/problemset/problem/750/A",
             "note": "Tags: brute force, constructive algorithms, implementation, math",
             "isRevision": false
           },
@@ -775,7 +775,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/104224",
+            "practiceUrl": "https://codeforces.com/problemset/problem/122/A",
             "note": "Tags: implementation, sortings, strings",
             "isRevision": false
           },
@@ -805,7 +805,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/83058",
+            "practiceUrl": "https://codeforces.com/problemset/problem/723/A",
             "note": "Tags: greedy, sortings",
             "isRevision": false
           },
@@ -895,7 +895,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/36102",
+            "practiceUrl": "https://codeforces.com/problemset/problem/160/A",
             "note": "Tags: greedy, sortings",
             "isRevision": false
           },
@@ -983,7 +983,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/124746",
+            "practiceUrl": "https://codeforces.com/problemset/problem/977/C",
             "note": "Tags: greedy, implementation",
             "isRevision": false
           },
@@ -1003,7 +1003,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/85013",
+            "practiceUrl": "https://codeforces.com/problemset/problem/381/A",
             "note": "Tags: greedy",
             "isRevision": false
           },
@@ -1093,7 +1093,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/41113",
+            "practiceUrl": "https://codeforces.com/problemset/problem/490/A",
             "note": "Tags: greedy",
             "isRevision": false
           },
@@ -1153,7 +1153,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/33445",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1567/B",
             "note": "Tags: greedy, implementation",
             "isRevision": false
           },
@@ -1173,7 +1173,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/33262",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1399/C",
             "note": "Tags: greedy, sortings",
             "isRevision": false
           },
@@ -1271,7 +1271,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/79448",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1294/C",
             "note": "Tags: implementation, two pointers",
             "isRevision": false
           },
@@ -1291,7 +1291,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/44202",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1462/A",
             "note": "Tags: greedy, implementation, two pointers",
             "isRevision": false
           },
@@ -1391,7 +1391,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/27526",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1840/C",
             "note": "Tags: greedy, two pointers",
             "isRevision": false
           },
@@ -1451,7 +1451,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/42945",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1324/D",
             "note": "Tags: binary search, brute force, data structures, dp, two pointers",
             "isRevision": false
           }
@@ -1619,7 +1619,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/25241",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1380/A",
             "note": "Tags: constructive algorithms, data structures, greedy, implementation",
             "isRevision": false
           },
@@ -1687,7 +1687,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/58877",
+            "practiceUrl": "https://codeforces.com/problemset/problem/276/C",
             "note": "Tags: binary search, math, ternary search",
             "isRevision": false
           },
@@ -1707,7 +1707,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/44283",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1915/C",
             "note": "Tags: binary search, brute force, math",
             "isRevision": false
           },
@@ -1797,7 +1797,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/27504",
+            "practiceUrl": "https://codeforces.com/problemset/problem/839/C",
             "note": "Tags: binary search, math",
             "isRevision": false
           },
@@ -1817,7 +1817,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/25221",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1907/D",
             "note": "Tags: binary search, brute force, implementation",
             "isRevision": false
           },
@@ -1877,7 +1877,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/16418",
+            "practiceUrl": "https://codeforces.com/problemset/problem/702/C",
             "note": "Tags: binary search, number theory",
             "isRevision": false
           },
@@ -1955,7 +1955,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/68564",
+            "practiceUrl": "https://codeforces.com/problemset/problem/126/B",
             "note": "Tags: data structures, implementation",
             "isRevision": false
           },
@@ -1985,7 +1985,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/34352",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1760/C",
             "note": "Tags: data structures, greedy, implementation",
             "isRevision": false
           },
@@ -2035,7 +2035,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/24213",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2000/C",
             "note": "Tags: data structures, sortings, two pointers",
             "isRevision": false
           },
@@ -2055,7 +2055,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/23538",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1919/C",
             "note": "Tags: brute force, data structures, greedy, number theory, sortings",
             "isRevision": false
           },
@@ -2115,7 +2115,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/38844",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1526/C2",
             "note": "Tags: data structures, dp, math",
             "isRevision": false
           },
@@ -2163,7 +2163,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/521934",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1234/D",
             "note": "Tags: strings",
             "isRevision": false
           },
@@ -2183,7 +2183,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/201964",
+            "practiceUrl": "https://codeforces.com/problemset/problem/59/A",
             "note": "Tags: implementation, strings",
             "isRevision": false
           },
@@ -2223,7 +2223,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/83199",
+            "practiceUrl": "https://codeforces.com/problemset/problem/41/A",
             "note": "Tags: implementation, strings",
             "isRevision": false
           },
@@ -2253,7 +2253,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/26402",
+            "practiceUrl": "https://codeforces.com/problemset/problem/208/A",
             "note": "Tags: brute force, constructive algorithms, strings",
             "isRevision": false
           },
@@ -2371,7 +2371,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/41998",
+            "practiceUrl": "https://codeforces.com/problemset/problem/508/B",
             "note": "Tags: combinatorics, constructive algorithms, greedy, math",
             "isRevision": false
           },
@@ -2391,7 +2391,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/30361",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1669/H",
             "note": "Tags: greedy, implementation, sortings",
             "isRevision": false
           },
@@ -2411,7 +2411,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/30027",
+            "practiceUrl": "https://codeforces.com/problemset/problem/893/C",
             "note": "Tags: greedy, math",
             "isRevision": false
           },
@@ -2431,7 +2431,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/27602",
+            "practiceUrl": "https://codeforces.com/problemset/problem/515/C",
             "note": "Tags: games, greedy, math, sortings",
             "isRevision": false
           },
@@ -2471,7 +2471,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/16837",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1334/C",
             "note": "Tags: constructive algorithms, greedy, number theory",
             "isRevision": false
           },
@@ -2531,7 +2531,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/20942",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1365/D",
             "note": "Tags: greedy",
             "isRevision": false
           },
@@ -2579,7 +2579,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/30026",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1396/B",
             "note": "Tags: constructive algorithms, math",
             "isRevision": false
           },
@@ -2629,7 +2629,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/30220",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1527/B2",
             "note": "Tags: constructive algorithms, greedy",
             "isRevision": false
           },
@@ -2659,7 +2659,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/23356",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1335/D",
             "note": "Tags: constructive algorithms, greedy",
             "isRevision": false
           },
@@ -2689,7 +2689,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/21368",
+            "practiceUrl": "https://codeforces.com/problemset/problem/231/A",
             "note": "Tags: bitmasks, constructive algorithms, greedy",
             "isRevision": false
           },
@@ -2719,7 +2719,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/20611",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1513/B",
             "note": "Tags: bitmasks, brute force, constructive algorithms, dp, math",
             "isRevision": false
           },
@@ -2799,7 +2799,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/13793",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1352/G",
             "note": "Tags: bitmasks, constructive algorithms",
             "isRevision": false
           },
@@ -2867,7 +2867,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/101071",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1328/D",
             "note": "Tags: games, math, number theory",
             "isRevision": false
           },
@@ -2897,7 +2897,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/66896",
+            "practiceUrl": "https://codeforces.com/problemset/problem/630/A",
             "note": "Tags: greedy, implementation, math, number theory",
             "isRevision": false
           },
@@ -2977,7 +2977,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/27404",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1475/A",
             "note": "Tags: constructive algorithms, math, number theory, sortings",
             "isRevision": false
           },
@@ -3075,7 +3075,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/28183",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1526/B",
             "note": "Tags: combinatorics, math",
             "isRevision": false
           },
@@ -3105,7 +3105,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/27088",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1827/A",
             "note": "Tags: bitmasks, brute force, combinatorics, implementation",
             "isRevision": false
           },
@@ -3165,7 +3165,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/19879",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1514/B",
             "note": "Tags: combinatorics, data structures, geometry, math, matrices, sortings",
             "isRevision": false
           },
@@ -3283,7 +3283,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/82343",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1996/D",
             "note": "Tags: bitmasks, implementation",
             "isRevision": false
           },
@@ -3313,7 +3313,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/42829",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1915/B",
             "note": "Tags: bitmasks",
             "isRevision": false
           },
@@ -3373,7 +3373,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/23371",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1843/C",
             "note": "Tags: bitmasks, math",
             "isRevision": false
           },
@@ -3463,7 +3463,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/13170",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1368/D",
             "note": "Tags: binary search, bitmasks, data structures, trees",
             "isRevision": false
           }
@@ -3541,7 +3541,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/23923",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1020/B",
             "note": "Tags: brute force, combinatorics, math",
             "isRevision": false
           },
@@ -3591,7 +3591,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/15621",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1362/B",
             "note": "Tags: brute force, constructive algorithms, dfs and similar, dsu, graphs, greedy, strings",
             "isRevision": false
           },
@@ -3699,7 +3699,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/108476",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1907/E",
             "note": "Tags: brute force, dp, implementation",
             "isRevision": false
           },
@@ -3759,7 +3759,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/56632",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1883/C",
             "note": "Tags: dp, implementation, sortings",
             "isRevision": false
           },
@@ -3829,7 +3829,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/74844",
+            "practiceUrl": "https://codeforces.com/problemset/problem/327/A",
             "note": "Tags: dp",
             "isRevision": false
           },
@@ -3909,7 +3909,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/18734",
+            "practiceUrl": "https://codeforces.com/problemset/problem/550/A",
             "note": "Tags: dp",
             "isRevision": false
           },
@@ -3939,7 +3939,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/21213",
+            "practiceUrl": "https://codeforces.com/problemset/problem/474/D",
             "note": "Tags: dp",
             "isRevision": false
           },
@@ -4007,7 +4007,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/64545",
+            "practiceUrl": "https://codeforces.com/problemset/problem/295/B",
             "note": "Tags: dfs and similar, graphs, implementation",
             "isRevision": false
           },
@@ -4047,7 +4047,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/22174",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1324/C",
             "note": "Tags: dfs and similar, implementation",
             "isRevision": false
           },
@@ -4107,7 +4107,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/19835",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1167/C",
             "note": "Tags: constructive algorithms, dfs and similar, math",
             "isRevision": false
           },
@@ -4167,7 +4167,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/11557",
+            "practiceUrl": "https://codeforces.com/problemset/problem/771/A",
             "note": "Tags: dfs and similar, graphs, hashing, shortest paths",
             "isRevision": false
           },
@@ -4215,7 +4215,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/18891",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1242/B",
             "note": "Tags: greedy, trees",
             "isRevision": false
           },
@@ -4285,7 +4285,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/17936",
+            "practiceUrl": "https://codeforces.com/problemset/problem/913/B",
             "note": "Tags: constructive algorithms, dfs and similar, greedy, trees",
             "isRevision": false
           },
@@ -4315,7 +4315,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/12287",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1363/C",
             "note": "Tags: dfs and similar, graphs, trees",
             "isRevision": false
           },
@@ -4355,7 +4355,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/12020",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1037/D",
             "note": "Tags: constructive algorithms, dfs and similar, graphs, trees",
             "isRevision": false
           },
@@ -4423,7 +4423,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/18821",
+            "practiceUrl": "https://codeforces.com/problemset/problem/25/D",
             "note": "Tags: constructive algorithms, dp, dsu, graphs, greedy, sortings",
             "isRevision": false
           },
@@ -4443,7 +4443,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/18612",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1249/B2",
             "note": "Tags: data structures, dp, dsu, greedy, math",
             "isRevision": false
           },
@@ -4473,7 +4473,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/17476",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1559/D1",
             "note": "Tags: dfs and similar, dsu, graphs, math, trees",
             "isRevision": false
           },
@@ -4513,7 +4513,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/9185",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1213/G",
             "note": "Tags: binary search, brute force, data structures, dp, dsu, greedy, math, two pointers",
             "isRevision": false
           },
@@ -4553,7 +4553,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/7914",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1245/D",
             "note": "Tags: bitmasks, dfs and similar, dsu, graphs, greedy",
             "isRevision": false
           },
@@ -4583,7 +4583,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/10821",
+            "practiceUrl": "https://codeforces.com/problemset/problem/920/F",
             "note": "Tags: data structures, dfs and similar, dsu, graphs, trees",
             "isRevision": false
           },
@@ -4661,7 +4661,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/16650",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1486/B",
             "note": "Tags: data structures, dp, implementation, shortest paths, sortings, two pointers",
             "isRevision": false
           },
@@ -4711,7 +4711,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/49872",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1695/C",
             "note": "Tags: graphs, shortest paths",
             "isRevision": false
           },
@@ -4781,7 +4781,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/7875",
+            "practiceUrl": "https://codeforces.com/problemset/problem/449/B",
             "note": "Tags: constructive algorithms, dfs and similar, dp, graphs, shortest paths, trees",
             "isRevision": false
           },
@@ -4939,7 +4939,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/6983",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1144/F",
             "note": "Tags: data structures, dfs and similar, graphs, greedy, implementation, trees",
             "isRevision": false
           },
@@ -5019,7 +5019,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/4453",
+            "practiceUrl": "https://codeforces.com/problemset/problem/839/C",
             "note": "Tags: data structures, dfs and similar, graphs, greedy",
             "isRevision": false
           }
@@ -5087,7 +5087,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/11386",
+            "practiceUrl": "https://codeforces.com/problemset/problem/763/A",
             "note": "Tags: dsu, graphs, greedy, sortings, strings, trees, two pointers",
             "isRevision": false
           },
@@ -5137,7 +5137,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/6482",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1513/D",
             "note": "Tags: 2-sat, dfs and similar, dsu, graphs",
             "isRevision": false
           },
@@ -5235,7 +5235,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/23616",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1559/D1",
             "note": "Tags: data structures, divide and conquer, sortings",
             "isRevision": false
           },
@@ -5255,7 +5255,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/20088",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1985/F",
             "note": "Tags: constructive algorithms, data structures, greedy, implementation",
             "isRevision": false
           },
@@ -5335,7 +5335,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/21014",
+            "practiceUrl": "https://codeforces.com/problemset/problem/339/D",
             "note": "Tags: data structures, schedules",
             "isRevision": false
           },
@@ -5365,7 +5365,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/12333",
+            "practiceUrl": "https://codeforces.com/problemset/problem/242/E",
             "note": "Tags: data structures, math, number theory",
             "isRevision": false
           },
@@ -5563,7 +5563,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/7604",
+            "practiceUrl": "https://codeforces.com/problemset/problem/161/D",
             "note": "Tags: dfs and similar, dp, greedy, trees",
             "isRevision": false
           },
@@ -5821,7 +5821,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/8409",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1366/B",
             "note": "Tags: combinatorics, dp, math, number theory",
             "isRevision": false
           },
@@ -5969,7 +5969,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/5737",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1537/D",
             "note": "Tags: greedy, math, number theory",
             "isRevision": false
           },
@@ -6207,7 +6207,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/17381",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2/A",
             "note": "Tags: hashing, math, number theory",
             "isRevision": false
           },
@@ -6237,7 +6237,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/15274",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1326/D2",
             "note": "Tags: hashing, implementation, math",
             "isRevision": false
           },
@@ -6267,7 +6267,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/7208",
+            "practiceUrl": "https://codeforces.com/problemset/problem/463/C",
             "note": "Tags: dfs and similar, dp, flows, hashing",
             "isRevision": false
           },
@@ -6327,7 +6327,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/4742",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1200/E",
             "note": "Tags: hashing, strings",
             "isRevision": false
           },
@@ -6417,7 +6417,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/3979",
+            "practiceUrl": "https://codeforces.com/problemset/problem/432/D",
             "note": "Tags: brute force, hashing, implementation, math, string suffix structures, strings",
             "isRevision": false
           },
@@ -6515,7 +6515,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/25209",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1382/B",
             "note": "Tags: games, greedy, implementation",
             "isRevision": false
           },
@@ -6545,7 +6545,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/23757",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1472/D",
             "note": "Tags: games",
             "isRevision": false
           },
@@ -6565,7 +6565,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/9423",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1921/E",
             "note": "Tags: games, math, number theory",
             "isRevision": false
           },
@@ -6585,7 +6585,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/10290",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1695/B",
             "note": "Tags: constructive algorithms, games, math",
             "isRevision": false
           },
@@ -6625,7 +6625,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/8895",
+            "practiceUrl": "https://codeforces.com/problemset/problem/148/D",
             "note": "Tags: dp, games",
             "isRevision": false
           },
@@ -6645,7 +6645,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/4474",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1665/D",
             "note": "Tags: constructive algorithms, data structures, dfs and similar, dsu, flows, games, graph matchings, graphs, implementation",
             "isRevision": false
           },
@@ -6763,7 +6763,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/9643",
+            "practiceUrl": "https://codeforces.com/problemset/problem/453/A",
             "note": "Tags: dp, math, probabilities",
             "isRevision": false
           },
@@ -6803,7 +6803,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/7508",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1743/D",
             "note": "Tags: combinatorics, math, probabilities",
             "isRevision": false
           },
@@ -6833,7 +6833,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/6794",
+            "practiceUrl": "https://codeforces.com/problemset/problem/16/E",
             "note": "Tags: dp, probabilities",
             "isRevision": false
           },
@@ -6883,7 +6883,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/4679",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1753/C",
             "note": "Tags: data structures, dp, math, probabilities",
             "isRevision": false
           },
@@ -7001,7 +7001,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/9832",
+            "practiceUrl": "https://codeforces.com/problemset/problem/61/E",
             "note": "Tags: data structures, dfs and similar, trees",
             "isRevision": false
           },
@@ -7021,7 +7021,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/9533",
+            "practiceUrl": "https://codeforces.com/problemset/problem/383/C",
             "note": "Tags: binary search, data structures, dfs and similar, trees",
             "isRevision": false
           },
@@ -7555,7 +7555,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/7920",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1977/C",
             "note": "Tags: brute force, data structures, divide and conquer, dp, greedy",
             "isRevision": false
           },
@@ -8377,7 +8377,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Easy",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/18267",
+            "practiceUrl": "https://codeforces.com/problemset/problem/2119/B",
             "note": "Tags: binary search, geometry, math",
             "isRevision": false
           },
@@ -8407,7 +8407,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/19239",
+            "practiceUrl": "https://codeforces.com/problemset/problem/507/B",
             "note": "Tags: geometry, math",
             "isRevision": false
           },
@@ -8427,7 +8427,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/6299",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1552/C",
             "note": "Tags: geometry, number theory",
             "isRevision": false
           },
@@ -8467,7 +8467,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/5183",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1354/C2",
             "note": "Tags: binary search, brute force, data structures, geometry, greedy, implementation, math, ternary search, two pointers",
             "isRevision": false
           },
@@ -9409,7 +9409,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/3730",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1999/B",
             "note": "Tags: combinatorics, fft, math",
             "isRevision": false
           },
@@ -9815,7 +9815,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/8972",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1572/A",
             "note": "Tags: dfs and similar, graphs, math, number theory, shortest paths",
             "isRevision": false
           },
@@ -9835,7 +9835,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/5132",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1369/D",
             "note": "Tags: constructive algorithms, dfs and similar, graphs, greedy, implementation, trees",
             "isRevision": false
           },
@@ -9895,7 +9895,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/2199",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1849/B",
             "note": "Tags: constructive algorithms, dfs and similar, dsu, graphs, greedy, trees",
             "isRevision": false
           },
@@ -9993,7 +9993,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/15583",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1850/G",
             "note": "Tags: binary search, combinatorics, math, sortings, two pointers",
             "isRevision": false
           },
@@ -10013,7 +10013,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/15611",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1914/C",
             "note": "Tags: brute force, data structures, dp, greedy, sortings",
             "isRevision": false
           },
@@ -10043,7 +10043,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/5395",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1156/C",
             "note": "Tags: data structures, greedy, sortings, two pointers",
             "isRevision": false
           },
@@ -10191,7 +10191,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Medium",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/15626",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1336/A",
             "note": "Tags: constructive algorithms, greedy, sortings, strings",
             "isRevision": false
           },
@@ -10705,7 +10705,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/7644",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1992/F",
             "note": "Tags: constructive algorithms, math, number theory",
             "isRevision": false
           },
@@ -10785,7 +10785,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/2810",
+            "practiceUrl": "https://codeforces.com/problemset/problem/701/A",
             "note": "Tags: chinese remainder theorem, math, number theory",
             "isRevision": false
           },
@@ -11091,7 +11091,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/2829",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1328/E",
             "note": "Tags: data structures, hashing, probabilities",
             "isRevision": false
           },
@@ -11743,7 +11743,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/6392",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1633/D",
             "note": "Tags: constructive algorithms, greedy, math",
             "isRevision": false
           },
@@ -12011,7 +12011,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/9045",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1348/D",
             "note": "Tags: dp",
             "isRevision": false
           },
@@ -12061,7 +12061,7 @@ export const zeroTo2300Sections: any[] = [
             "completed": false,
             "difficulty": "Hard",
             "resourceType": "link",
-            "practiceUrl": "https://codeforces.com/problemset/problem/8030",
+            "practiceUrl": "https://codeforces.com/problemset/problem/1527/B2",
             "note": "Tags: dp, math",
             "isRevision": false
           },

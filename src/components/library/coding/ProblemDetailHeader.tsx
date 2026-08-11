@@ -30,47 +30,28 @@ export const ProblemDetailHeader = ({
       : "text-muted-foreground bg-muted/20 border-border/50";
 
   return (
-    <div className="p-1 mb-0 flex items-center gap-4">
-      <div className="flex flex-col items-end gap-1.5">
-        <Badge 
-          variant="outline" 
-          className={cn(
-            "h-7 gap-2 font-black tracking-widest uppercase text-[10px] px-3 rounded-2xl border transition-all duration-500", 
-            statusClass
-          )}
-        >
-          <StatusIcon className={cn("h-3.5 w-3.5", isSolved && "animate-pulse")} />
-          {status}
-        </Badge>
-        <div className="flex items-center gap-3 px-1">
-          <span className="flex items-center gap-1.5 text-[9px] font-black text-muted-foreground/40 uppercase tracking-[0.2em]">
-            <Activity className="h-3 w-3 opacity-50" />
-            {attempts} Attempts
-          </span>
-          {solvedAt && (
-            <span className="flex items-center gap-1.5 text-[9px] font-black text-emerald-500/50 uppercase tracking-[0.2em]">
-              <CalendarCheck className="h-3 w-3" />
-              {new Date(solvedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
-            </span>
-          )}
-        </div>
+    <div className="flex items-center gap-3">
+      <div className={cn(
+        "flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-medium transition-colors",
+        isSolved ? "text-emerald-500" : "text-muted-foreground/40"
+      )}>
+        {isSolved && <CheckCircle2 className="h-4 w-4" />}
+        {status}
       </div>
       
-      <div className="w-px h-10 bg-border/20 self-center" />
-      
-      <Button
-        variant={isBookmarked ? "default" : "ghost"}
-        size="icon"
-        onClick={onToggleBookmark}
-        className={cn(
-          "h-11 w-11 rounded-[1.25rem] transition-all duration-500 hover:scale-110 active:scale-90 shadow-xl", 
-          isBookmarked 
-            ? "bg-gradient-to-br from-amber-400 to-amber-600 text-white shadow-amber-500/30 border-t border-amber-300/50" 
-            : "text-muted-foreground/30 hover:text-amber-500 hover:bg-amber-500/10 hover:border-amber-500/20"
-        )}
-      >
-        <Star className={cn("h-5 w-5 transition-transform duration-500", isBookmarked && "fill-current scale-110")} />
-      </Button>
+      <div className="flex items-center gap-1">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={onToggleBookmark}
+          className={cn(
+            "h-8 w-8 text-muted-foreground/60 hover:text-amber-500 hover:bg-transparent",
+            isBookmarked && "text-amber-500"
+          )}
+        >
+          <Star className={cn("h-4 w-4", isBookmarked && "fill-current")} />
+        </Button>
+      </div>
     </div>
   );
 };

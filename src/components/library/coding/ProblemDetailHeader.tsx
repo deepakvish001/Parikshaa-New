@@ -30,26 +30,28 @@ export const ProblemDetailHeader = ({
       : "text-muted-foreground bg-muted/20 border-border/50";
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-2">
       <div className={cn(
-        "flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-medium transition-colors",
-        isSolved ? "text-emerald-500" : "text-muted-foreground/40"
+        "flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-bold uppercase tracking-wider transition-all border",
+        isSolved 
+          ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20" 
+          : "bg-muted/30 text-muted-foreground/40 border-border/40"
       )}>
-        {isSolved && <CheckCircle2 className="h-4 w-4" />}
+        <StatusIcon className={cn("h-3 w-3", isSolved && "animate-pulse")} />
         {status}
       </div>
       
-      <div className="flex items-center gap-1">
+      <div className="flex items-center">
         <Button
           variant="ghost"
           size="icon"
           onClick={onToggleBookmark}
           className={cn(
-            "h-8 w-8 text-muted-foreground/60 hover:text-amber-500 hover:bg-transparent",
+            "h-7 w-7 text-muted-foreground/40 hover:text-amber-500 hover:bg-amber-500/5 transition-colors",
             isBookmarked && "text-amber-500"
           )}
         >
-          <Star className={cn("h-4 w-4", isBookmarked && "fill-current")} />
+          <Star className={cn("h-3.5 w-3.5", isBookmarked && "fill-current")} />
         </Button>
       </div>
     </div>

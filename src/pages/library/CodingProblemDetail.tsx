@@ -1479,15 +1479,14 @@ const CodingProblemDetail = () => {
               <TabsContent value="description" className="mt-0 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <header className="mb-6 space-y-4">
                   <div className="flex items-center justify-between gap-4">
-                    <h1 className="text-2xl font-bold tracking-tight text-foreground selection:bg-primary/30">
-                      {problem.title}
-                    </h1>
-                      <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-                        <div className="flex items-center gap-1.5 text-[12px] font-medium text-muted-foreground/60">
-                          <span>{problem.cpuTimeLimitSec}s</span>
-                          <span className="text-muted-foreground/20">•</span>
-                          <span>{Math.floor(problem.memoryLimitKb / 1024)}MB</span>
-                        </div>
+                    <div className="flex flex-col gap-1">
+                      <h1 className="text-2xl font-bold tracking-tight text-foreground selection:bg-primary/30">
+                        {problem.title}
+                      </h1>
+                      <div className="flex items-center gap-1.5 text-[12px] font-medium text-muted-foreground/60">
+                        <span>{problem.cpuTimeLimitSec}s</span>
+                        <span className="text-muted-foreground/20">•</span>
+                        <span>{Math.floor(problem.memoryLimitKb / 1024)}MB</span>
                       </div>
                     </div>
 

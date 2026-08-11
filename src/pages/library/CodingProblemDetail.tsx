@@ -1675,93 +1675,28 @@ const CodingProblemDetail = () => {
 
                 {/* Examples */}
                 {problem.examples && problem.examples.length > 0 && (
-                  <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500 delay-200 fill-mode-both">
-                    <div className="flex items-center gap-3">
-                      <div className="h-8 w-1 bg-amber-500 rounded-full" />
-                      <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60">
-                        Examples & Explanations
-                      </h3>
-                      <div className="h-px flex-1 bg-gradient-to-r from-border/50 to-transparent" />
-                    </div>
-                    <div className="space-y-5">
-                      {problem.examples.map((ex, i) => (
-                        <div key={i} className="rounded-2xl bg-muted/20 p-5 border border-border/40 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_20px_-4px_rgba(0,0,0,0.3)] overflow-hidden group hover:border-border/80 transition-all duration-300">
-                          <div className="flex items-center justify-between mb-4">
-                            <div className="flex items-center gap-2">
-                              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary text-[10px] font-black border border-primary/20">
-                                {i + 1}
-                              </span>
-                              <p className="text-[10px] font-black uppercase tracking-[0.15em] text-muted-foreground/70">
-                                Example Case
-                              </p>
-                            </div>
-                            <TooltipProvider>
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <Button 
-                                    variant="outline" 
-                                    size="icon" 
-                                    className="h-8 w-8 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-200 hover:scale-110 active:scale-95 border-border/40 bg-background/50"
-                                    onClick={() => {
-                                      setStdin(ex.input);
-                                      toast({ 
-                                        title: "Input copied", 
-                                        description: "Example input loaded into testcase runner.",
-                                        className: "rounded-2xl border-2" 
-                                      });
-                                    }}
-                                  >
-                                    <Copy className="h-3.5 w-3.5" />
-                                  </Button>
-                                </TooltipTrigger>
-                                <TooltipContent className="rounded-xl font-medium">Use as Test Case</TooltipContent>
-                              </Tooltip>
-                            </TooltipProvider>
+                  <div className="space-y-4 pt-4">
+                    {problem.examples.map((ex, i) => (
+                      <div key={i} className="space-y-3">
+                        <p className="text-[14px] font-bold text-foreground">Example {i + 1}:</p>
+                        <div className="rounded-xl bg-muted/30 p-4 border border-border/40 font-mono text-[13px] space-y-2">
+                          <div className="flex gap-2">
+                            <span className="font-bold text-foreground shrink-0">Input:</span>
+                            <span className="text-muted-foreground break-all">{ex.input}</span>
                           </div>
-                          
-                          <div className="grid gap-4 sm:grid-cols-2">
-                            <div className="space-y-2">
-                              <div className="flex items-center justify-between px-1">
-                                <p className="text-[10px] font-bold text-muted-foreground/50 uppercase tracking-widest flex items-center gap-1.5">
-                                  <div className="w-1.5 h-1.5 rounded-full bg-amber-500/50" />
-                                  Input
-                                </p>
-                              </div>
-                              <div className="bg-background/40 backdrop-blur-sm rounded-xl p-3.5 border border-border/30 font-mono text-[13px] leading-relaxed shadow-inner">
-                                <pre className="whitespace-pre-wrap break-all text-amber-500/90 selection:bg-amber-500/20">{ex.input}</pre>
-                              </div>
-                            </div>
-                            
-                            <div className="space-y-2">
-                              <div className="flex items-center justify-between px-1">
-                                <p className="text-[10px] font-bold text-muted-foreground/50 uppercase tracking-widest flex items-center gap-1.5">
-                                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/50" />
-                                  Output
-                                </p>
-                              </div>
-                              <div className="bg-background/40 backdrop-blur-sm rounded-xl p-3.5 border border-border/30 font-mono text-[13px] leading-relaxed shadow-inner">
-                                <pre className="whitespace-pre-wrap break-all text-emerald-500/90 selection:bg-emerald-500/20">{ex.output}</pre>
-                              </div>
-                            </div>
+                          <div className="flex gap-2">
+                            <span className="font-bold text-foreground shrink-0">Output:</span>
+                            <span className="text-muted-foreground break-all">{ex.output}</span>
                           </div>
-
                           {ex.explanation && (
-                            <div className="mt-5 pt-5 border-t border-border/30">
-                              <p className="text-[10px] font-bold text-muted-foreground/50 uppercase tracking-widest mb-2.5 flex items-center gap-1.5">
-                                <BookOpen className="h-3 w-3" />
-                                Explanation
-                              </p>
-                              <div className="relative overflow-hidden rounded-xl bg-primary/[0.03] p-4 border border-primary/10">
-                                <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary/40 to-primary/10" />
-                                <p className="text-sm text-foreground/80 leading-relaxed font-sans selection:bg-primary/20">
-                                  {ex.explanation}
-                                </p>
-                              </div>
+                            <div className="flex gap-2 pt-1 border-t border-border/10 mt-1">
+                              <span className="font-bold text-foreground shrink-0">Explanation:</span>
+                              <span className="text-muted-foreground italic text-[12px] leading-relaxed">{ex.explanation}</span>
                             </div>
                           )}
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    ))}
                   </div>
                 )}
 

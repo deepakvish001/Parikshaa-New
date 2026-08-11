@@ -1786,8 +1786,6 @@ const CodingProblemDetail = () => {
                     </div>
                 )}
                 </TabsContent>
-              </div>
-            </div>
                 <TabsContent value="notes" className="mt-0">
                 {((contestLocks as any).data?.some((l: any) => l.tab_id === "notes") || (contestLocks as any).notesLocked) ? (
                   <LockedAuxPanel label="Notes" endsAt={(contestLocks as any).data?.find((l: any) => l.tab_id === "notes")?.expires_at || (contestLocks as any).endsAt} />

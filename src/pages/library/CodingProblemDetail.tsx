@@ -1973,8 +1973,9 @@ const CodingProblemDetail = () => {
                 )}
                 </TabsContent>
             </Tabs>
+                </Tabs>
+              </div>
             </div>
-          </div>
           <ProblemFooterBar
             slug={problem.slug}
             solved={problemStats.isSolved}

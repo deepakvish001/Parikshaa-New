@@ -1606,6 +1606,35 @@ const CodingProblemDetail = () => {
                   )}
                 </header>
 
+                {/* Sticky TOC */}
+                <nav className="sticky top-0 z-10 flex items-center gap-6 py-3 border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 -mx-6 px-6 mb-4">
+                  {[
+                    { id: "description", label: "Problem" },
+                    { id: "input", label: "Input", hide: !splitProblemDescription(problem.description ?? "").inputFormat },
+                    { id: "output", label: "Output", hide: !splitProblemDescription(problem.description ?? "").outputFormat },
+                    { id: "examples", label: "Examples", hide: !problem.examples?.length },
+                    { id: "constraints", label: "Constraints", hide: !problem.constraints?.length },
+                  ].filter(s => !s.hide).map(section => (
+                    <button
+                      key={section.id}
+                      onClick={() => {
+                        const el = document.getElementById(`section-${section.id}`);
+                        if (el) {
+                          const container = el.closest('[data-state="active"]');
+                          if (container) {
+                            const top = el.offsetTop - 60; // Offset for sticky header
+                            container.scrollTo({ top, behavior: "smooth" });
+                          }
+                        }
+                      }}
+                      className="text-[12px] font-medium text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      {section.label}
+                    </button>
+                  ))}
+                </nav>
+
+
 
 
 

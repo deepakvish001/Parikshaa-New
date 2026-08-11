@@ -1595,7 +1595,7 @@ const CodingProblemDetail = () => {
                                 navigate(`/library/problems?q=${encodeURIComponent(c)}`)
                               }
                               title={`Search problems mentioning ${c}`}
-                              className="inline-flex items-center max-w-[10rem] sm:max-w-[14rem] text-[11px] font-medium px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-200/90 border border-amber-500/20 hover:bg-amber-500/15 hover:border-amber-500/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/50 transition-colors"
+                              className="inline-flex items-center max-w-[10rem] sm:max-w-[14rem] text-[11px] font-medium px-2.5 py-1 rounded-full bg-muted/50 text-muted-foreground border border-border/40 hover:bg-muted hover:text-foreground transition-colors"
                             >
                               <span className="truncate">{c}</span>
                             </button>

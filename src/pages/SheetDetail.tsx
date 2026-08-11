@@ -1463,17 +1463,20 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
     [searchParams, setSearchParams, sheetId]
   );
   const closeArticle = useCallback(() => {
-
-    // Prefer history back so forward navigation stays available, 
-    // but only if the previous entry is within the same SPA session (via state.sheetInline).
-    if (window.history.length > 1 && window.history.state?.sheetInline) navigate(-1);
-    else {
+    // Check if the current history state indicates we entered this article via an SPA navigation
+    const isSpaNav = window.history.state?.usr?.sheetInline || window.history.state?.sheetInline;
+    
+    if (isSpaNav && window.history.length > 1) {
+      navigate(-1);
+    } else {
+      // Deep link or external referral: strip params instead of going "back" to Google
       const next = new URLSearchParams(searchParams);
       next.delete("article");
       next.delete("from");
       setSearchParams(next, { replace: true });
     }
   }, [navigate, searchParams, setSearchParams]);
+
 
   // Show the article's real URL in the address bar while it stays inline.
   // We only rewrite the browser URL (no router navigation), so the sheet
@@ -2041,22 +2044,6 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   );
 
 
-  const closeArticle = useCallback(() => {
-    // Check if the current history state indicates we entered this article via an SPA navigation
-    const isSpaNav = window.history.state?.usr?.sheetInline;
-    
-    if (isSpaNav && window.history.length > 1) {
-      navigate(-1);
-    } else {
-      // Deep link or external referral: strip params instead of going "back" to Google
-      setSearchParams((prev) => {
-        const next = new URLSearchParams(prev);
-        next.delete("article");
-        next.delete("from");
-        return next;
-      });
-    }
-  }, [navigate, setSearchParams]);
 
   // Confetti celebration
   const triggerConfetti = useCallback(() => {

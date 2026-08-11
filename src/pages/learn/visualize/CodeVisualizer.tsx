@@ -585,18 +585,23 @@ export default function CodeVisualizer() {
       if (!source.trim()) {
         setTrace(null);
         setValidationError(null);
+        setRuntimeError(null);
         setLoading(false);
         return;
       }
+
       const key = traceCacheKey(source, selectedLanguage);
       if (!opts.force) {
         const cached = getCachedTrace<Trace>(key);
         if (cached?.steps?.length) {
           requestIdRef.current += 1;
           applyTrace(cached);
+          setRuntimeError(null);
+          setValidationError(null);
           setLoading(false);
           setCacheHit(true);
           setAnalyzedAt(getCachedAt(key));
+
           return;
 
         }
@@ -667,7 +672,10 @@ export default function CodeVisualizer() {
     if (cached?.steps?.length) {
       requestIdRef.current += 1;
       applyTrace(cached);
+      setRuntimeError(null);
+      setValidationError(null);
       setLoading(false);
+
       setCacheHit(true);
       setAnalyzedAt(getCachedAt(key));
       return;

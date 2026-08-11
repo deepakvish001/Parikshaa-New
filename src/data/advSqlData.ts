@@ -34,6 +34,8 @@ export const advSqlFullData: SheetData = {
   totalProblems: 50,
   completed: 0,
   isPremium: true,
-  topics: [] // Will be populated if needed
+  topics: [],
+  easy: 2,
+  medium: 0,
+  hard: 0
 };
-

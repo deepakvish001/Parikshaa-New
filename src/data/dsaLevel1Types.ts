@@ -39,6 +39,10 @@ export interface SheetData {
   totalProblems: number;
   completed: number;
   topics: any[];
+  easy?: number;
+  medium?: number;
+  hard?: number;
 }
+
 
 

@@ -2041,10 +2041,28 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   );
 
 
+  const closeArticle = useCallback(() => {
+    // Check if the current history state indicates we entered this article via an SPA navigation
+    const isSpaNav = window.history.state?.usr?.sheetInline;
+    
+    if (isSpaNav && window.history.length > 1) {
+      navigate(-1);
+    } else {
+      // Deep link or external referral: strip params instead of going "back" to Google
+      setSearchParams((prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete("article");
+        next.delete("from");
+        return next;
+      });
+    }
+  }, [navigate, setSearchParams]);
+
   // Confetti celebration
   const triggerConfetti = useCallback(() => {
     const duration = 3000;
     const animationEnd = Date.now() + duration;
+
     const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
 
     const randomInRange = (min: number, max: number) =>

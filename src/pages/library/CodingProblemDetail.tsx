@@ -1507,9 +1507,10 @@ const CodingProblemDetail = () => {
                     </div>
                   </div>
                   <div className="flex flex-wrap items-center gap-2">
-                    <Badge variant="outline" className={cn("rounded-full px-3 py-0.5 text-[12px] font-medium border-0", difficultyClass(problem.difficulty))}>
+                    <div className={cn("rounded-full px-3 py-1 text-[12px] font-bold uppercase tracking-wider", difficultyClass(problem.difficulty))}>
                       {problem.difficulty}
-                    </Badge>
+                    </div>
+
 
                     {problem.companies && problem.companies.length > 0 ? (
                       <Collapsible
@@ -1606,6 +1607,35 @@ const CodingProblemDetail = () => {
                   )}
                 </header>
 
+                {/* Sticky TOC */}
+                <nav className="sticky top-0 z-10 flex items-center gap-6 py-3 border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 -mx-6 px-6 mb-4">
+                  {[
+                    { id: "description", label: "Problem" },
+                    { id: "input", label: "Input", hide: !splitProblemDescription(problem.description ?? "").inputFormat },
+                    { id: "output", label: "Output", hide: !splitProblemDescription(problem.description ?? "").outputFormat },
+                    { id: "examples", label: "Examples", hide: !problem.examples?.length },
+                    { id: "constraints", label: "Constraints", hide: !problem.constraints?.length },
+                  ].filter(s => !s.hide).map(section => (
+                    <button
+                      key={section.id}
+                      onClick={() => {
+                        const el = document.getElementById(`section-${section.id}`);
+                        if (el) {
+                          const container = el.closest('[data-state="active"]');
+                          if (container) {
+                            const top = el.offsetTop - 60; // Offset for sticky header
+                            container.scrollTo({ top, behavior: "smooth" });
+                          }
+                        }
+                      }}
+                      className="text-[12px] font-medium text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      {section.label}
+                    </button>
+                  ))}
+                </nav>
+
+
 
 
 
@@ -1627,92 +1657,107 @@ const CodingProblemDetail = () => {
                             code: ({ inline, className, children, ...props }: any) => {
                               if (inline) {
                                 return (
-                                  <code className="px-1.5 py-0.5 rounded bg-muted/80 font-mono text-foreground text-[0.9em] border border-border/40" {...props}>
+                                  <code className="px-1.5 py-0.5 rounded bg-muted/80 font-mono text-foreground text-[13px] border border-border/40" {...props}>
                                     {children}
                                   </code>
                                 );
                               }
                               return (
-                                <code className={cn("block bg-muted/30 p-4 rounded-xl border border-border/40 font-mono text-[13px]", className)} {...props}>
-                                  {children}
-                                </code>
+                                <div className="relative group my-4">
+                                  <pre className="p-4 rounded-xl bg-muted/30 border border-border/40 font-mono text-[13px] overflow-x-auto selection:bg-primary/20">
+                                    <code className={cn("block", className)} {...props}>
+                                      {children}
+                                    </code>
+                                  </pre>
+                                </div>
                               );
                             }
+
                           }}
                         >
                           {main}
                         </ReactMarkdown>
                       </div>
 
-                      
-                      {(inputFormat || outputFormat) && (
-                        <div className="space-y-5 animate-in fade-in slide-in-from-bottom-2 duration-500 delay-150 fill-mode-both">
-                          <div className="flex items-center gap-3">
-                            <div className="h-8 w-1 bg-primary rounded-full" />
-                            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60">
-                              Format Details
-                            </h3>
-                            <div className="h-px flex-1 bg-gradient-to-r from-border/50 to-transparent" />
+                      <div id="section-input" className="scroll-mt-20">
+                        {inputFormat && (
+                          <div className="space-y-4">
+                            <h3 className="text-[14px] font-bold text-foreground">Input Format:</h3>
+                            <div className="prose prose-sm dark:prose-invert max-w-none text-[13px] leading-relaxed text-muted-foreground font-mono bg-muted/20 p-4 rounded-xl border border-border/40">
+                              <ReactMarkdown remarkPlugins={[remarkGfm]}>{inputFormat}</ReactMarkdown>
+                            </div>
                           </div>
-                          <ProblemFormatCards
-                            inputFormat={inputFormat}
-                            outputFormat={outputFormat}
-                          />
-                        </div>
-                      )}
+                        )}
+                      </div>
+
+                      <div id="section-output" className="scroll-mt-20">
+                        {outputFormat && (
+                          <div className="space-y-4">
+                            <h3 className="text-[14px] font-bold text-foreground">Output Format:</h3>
+                            <div className="prose prose-sm dark:prose-invert max-w-none text-[13px] leading-relaxed text-muted-foreground font-mono bg-muted/20 p-4 rounded-xl border border-border/40">
+                              <ReactMarkdown remarkPlugins={[remarkGfm]}>{outputFormat}</ReactMarkdown>
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   );
                 })()}
 
-                {/* SQL Schema panel — only for SQL problems */}
-                {problem.sql && (
-                  <SchemaSeedToggle
-                    schema={problem.sql.schema}
-                    seed={problem.sql.seed}
-                    defaultOpen
-                  />
-                )}
+                <div id="section-examples" className="scroll-mt-20">
+                  {/* SQL Schema panel — only for SQL problems */}
+                  {problem.sql && (
+                    <SchemaSeedToggle
+                      schema={problem.sql.schema}
+                      seed={problem.sql.seed}
+                      defaultOpen
+                    />
+                  )}
 
-                {/* Examples */}
-                {problem.examples && problem.examples.length > 0 && (
-                  <div className="space-y-4 pt-4">
-                    {problem.examples.map((ex, i) => (
-                      <div key={i} className="space-y-3">
-                        <p className="text-[14px] font-bold text-foreground">Example {i + 1}:</p>
-                        <div className="rounded-xl bg-muted/30 p-4 border border-border/40 font-mono text-[13px] space-y-2">
-                          <div className="flex gap-2">
-                            <span className="font-bold text-foreground shrink-0">Input:</span>
-                            <span className="text-muted-foreground break-all">{ex.input}</span>
-                          </div>
-                          <div className="flex gap-2">
-                            <span className="font-bold text-foreground shrink-0">Output:</span>
-                            <span className="text-muted-foreground break-all">{ex.output}</span>
-                          </div>
-                          {ex.explanation && (
-                            <div className="flex gap-2 pt-1 border-t border-border/10 mt-1">
-                              <span className="font-bold text-foreground shrink-0">Explanation:</span>
-                              <span className="text-muted-foreground italic text-[12px] leading-relaxed">{ex.explanation}</span>
+                  {/* Examples */}
+                  {problem.examples && problem.examples.length > 0 && (
+                    <div className="space-y-4 pt-4">
+                      {problem.examples.map((ex, i) => (
+                        <div key={i} className="space-y-3">
+                          <p className="text-[14px] font-bold text-foreground">Example {i + 1}:</p>
+                          <div className="rounded-xl bg-muted/30 p-4 border border-border/40 font-mono text-[13px] space-y-2">
+                            <div className="flex flex-col sm:flex-row gap-1 sm:gap-2">
+                              <span className="font-bold text-foreground shrink-0 uppercase text-[11px] tracking-wider opacity-60">Input:</span>
+                              <span className="text-muted-foreground break-all bg-muted/50 px-2 py-1 rounded border border-border/20">{ex.input}</span>
                             </div>
-                          )}
+                            <div className="flex flex-col sm:flex-row gap-1 sm:gap-2">
+                              <span className="font-bold text-foreground shrink-0 uppercase text-[11px] tracking-wider opacity-60">Output:</span>
+                              <span className="text-muted-foreground break-all bg-muted/50 px-2 py-1 rounded border border-border/20">{ex.output}</span>
+                            </div>
+                            {ex.explanation && (
+                              <div className="flex flex-col sm:flex-row gap-1 sm:gap-2 pt-2 border-t border-border/10 mt-1">
+                                <span className="font-bold text-foreground shrink-0 uppercase text-[11px] tracking-wider opacity-60">Explanation:</span>
+                                <span className="text-muted-foreground italic text-[12px] leading-relaxed">{ex.explanation}</span>
+                              </div>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {/* Constraints */}
-                {problem.constraints && problem.constraints.length > 0 && (
-                  <div className="space-y-3 pt-6">
-                    <p className="text-[14px] font-bold text-foreground">Constraints:</p>
-                    <ul className="list-disc list-inside space-y-1.5 ml-1">
-                      {problem.constraints.map((c, i) => (
-                        <li key={i} className="text-[13px] text-muted-foreground leading-relaxed">
-                          <code className="bg-muted px-1.5 py-0.5 rounded text-foreground font-mono">{c}</code>
-                        </li>
                       ))}
-                    </ul>
-                  </div>
-                )}
+                    </div>
+                  )}
+                </div>
+
+                <div id="section-constraints" className="scroll-mt-20">
+                  {/* Constraints */}
+                  {problem.constraints && problem.constraints.length > 0 && (
+                    <div className="space-y-3 pt-6">
+                      <p className="text-[14px] font-bold text-foreground">Constraints:</p>
+                      <ul className="list-disc list-inside space-y-1.5 ml-1">
+                        {problem.constraints.map((c, i) => (
+                          <li key={i} className="text-[13px] text-muted-foreground leading-relaxed">
+                            <code className="bg-muted px-1.5 py-0.5 rounded text-foreground font-mono border border-border/40">{c}</code>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+
 
                 {/* MCQ — "Now your turn!" */}
                 {mcqData && mcqData.options?.length > 0 && (

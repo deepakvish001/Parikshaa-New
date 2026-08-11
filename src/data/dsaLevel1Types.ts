@@ -26,3 +26,19 @@ export interface Section {
   subSections: SubSection[];
 }
 
+export interface SheetData {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  difficulty: string;
+  totalTopics: number;
+  isPremium: boolean;
+  sections: Section[];
+  lastUpdated: string;
+  totalProblems: number;
+  completed: number;
+  topics: any[];
+}
+
+

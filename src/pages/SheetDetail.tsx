@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef, useContext, createContext, useDeferredValue } from "react";
+import { advSqlFullData } from "@/data/advSqlData";
+
 
 // Lets deeply-nested topic rows open an article inline (DBMS sheet only)
 // without threading a prop through every intermediate component.

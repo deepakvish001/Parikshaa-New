@@ -54,11 +54,11 @@ export function splitProblemDescription(raw: string): FormatSplit {
 }
 
 const cardCls =
-  "relative group overflow-hidden rounded-[1.5rem] border border-border/40 bg-[#0a0a0c]/80 backdrop-blur-2xl p-5 sm:p-6 shadow-2xl shadow-black/40 transition-all duration-300 hover:border-border/60 hover:shadow-black/60";
+  "relative group overflow-hidden rounded-[2rem] border border-border/20 bg-[#0a0a0c]/40 backdrop-blur-3xl p-6 sm:p-8 transition-all duration-500 hover:border-border/40 hover:bg-[#0a0a0c]/60";
 const labelCls =
-  "inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground/40 mb-4 pb-2 border-b border-border/20 w-full";
+  "inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.3em] text-muted-foreground/30 mb-6 pb-2 border-b border-border/10 w-full group-hover:text-muted-foreground/50 transition-colors";
 const bodyCls =
-  "prose prose-sm dark:prose-invert max-w-none text-[13px] sm:text-[14px] leading-relaxed font-sans text-foreground/80 selection:bg-primary/20 [&_p]:my-0 [&_p+p]:mt-3 [&_ul]:my-2 [&_ol]:my-2 [&_li]:my-1 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:bg-amber-500/10 [&_code]:text-amber-500 [&_code]:border [&_code]:border-amber-500/20 [&_code]:before:content-none [&_code]:after:content-none [&_pre]:p-4 [&_pre]:rounded-xl [&_pre]:bg-black/40 [&_pre]:border [&_pre]:border-border/20";
+  "prose prose-sm dark:prose-invert max-w-none text-[14px] sm:text-[15px] leading-relaxed font-sans text-foreground/80 selection:bg-primary/20 [&_p]:my-0 [&_p+p]:mt-4 [&_ul]:my-3 [&_ol]:my-3 [&_li]:my-1.5 [&_code]:px-2 [&_code]:py-0.5 [&_code]:rounded-lg [&_code]:bg-primary/5 [&_code]:text-primary [&_code]:border [&_code]:border-primary/10 [&_code]:font-mono [&_code]:before:content-none [&_code]:after:content-none [&_pre]:p-5 [&_pre]:rounded-2xl [&_pre]:bg-black/60 [&_pre]:border [&_pre]:border-border/10 [&_pre]:shadow-inner";
 
 export function ProblemFormatCards({
   inputFormat,

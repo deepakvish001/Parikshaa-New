@@ -1614,8 +1614,6 @@ const CodingProblemDetail = () => {
                     </Collapsible>
                   )}
                 </header>
-                </div>
-              </div>
 
                 {/* Sticky TOC */}
                 <nav className="sticky top-0 z-10 flex items-center gap-6 py-3 border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 -mx-6 px-6 mb-4">

@@ -159,12 +159,13 @@ const CodingProblemDetail = () => {
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>{content.main || problem.description}</ReactMarkdown>
                 </div>
 
-                <ProblemFormatSections content={content} />
+                <ProblemFormatCards 
+                  inputFormat={content.inputFormat} 
+                  outputFormat={content.outputFormat} 
+                />
 
-                {problem.hints && problem.hints.length > 0 && (
-                  <div className="pt-6 border-t border-border/40">
-                    <ProgressiveHints hints={problem.hints} slug={problem.slug} />
-                  </div>
+                {problem.constraints && (
+                  <ProblemConstraints constraints={problem.constraints as any} />
                 )}
               </TabsContent>
 

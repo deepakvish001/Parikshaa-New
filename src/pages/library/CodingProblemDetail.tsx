@@ -1,3 +1,9 @@
+/*
+Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.
+
+coding poblems ka Problems statement design simple best better perfect banao
+*/
+
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useNavigate, useParams, Link, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";

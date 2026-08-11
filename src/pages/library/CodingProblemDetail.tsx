@@ -1972,7 +1972,6 @@ const CodingProblemDetail = () => {
                   <ProblemRunHistory runs={runs} />
                 )}
                 </TabsContent>
-              </div>
             </Tabs>
           <ProblemFooterBar
             slug={problem.slug}

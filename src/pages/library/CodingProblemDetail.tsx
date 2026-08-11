@@ -1530,7 +1530,7 @@ const CodingProblemDetail = () => {
                             <NotebookPen className="h-3.5 w-3.5" />
                             Companies
 
-                            <span className="tabular-nums text-amber-300/70">
+                            <span className="tabular-nums text-muted-foreground/50 ml-1">
                               {problem.companies.length}
                             </span>
                             <ChevronRight

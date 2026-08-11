@@ -1702,15 +1702,15 @@ const CodingProblemDetail = () => {
 
                 {/* Constraints */}
                 {problem.constraints && problem.constraints.length > 0 && (
-                  <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-500 delay-300 fill-mode-both">
-                    <div className="flex items-center gap-3">
-                      <div className="h-8 w-1 bg-rose-500 rounded-full" />
-                      <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60">
-                        Operational Constraints
-                      </h3>
-                      <div className="h-px flex-1 bg-gradient-to-r from-border/50 to-transparent" />
-                    </div>
-                    <ProblemConstraints constraints={problem.constraints} />
+                  <div className="space-y-3 pt-6">
+                    <p className="text-[14px] font-bold text-foreground">Constraints:</p>
+                    <ul className="list-disc list-inside space-y-1.5 ml-1">
+                      {problem.constraints.map((c, i) => (
+                        <li key={i} className="text-[13px] text-muted-foreground leading-relaxed">
+                          <code className="bg-muted px-1.5 py-0.5 rounded text-foreground font-mono">{c}</code>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 )}
 

@@ -26,38 +26,38 @@ export function ProblemMcqBlock({ problemSlug, mcq, className }: ProblemMcqBlock
   };
 
   return (
-    <div className={cn("mt-10 p-6 rounded-[2.5rem] bg-[#0a0a0c]/60 border border-border/20 backdrop-blur-2xl shadow-2xl shadow-black/40 space-y-6 animate-in fade-in slide-in-from-bottom-6 duration-700", className)}>
+    <div className={cn("mt-6 p-5 rounded-2xl bg-muted/5 border border-border/40 space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500", className)}>
       <div className="flex items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="h-10 w-1 bg-gradient-to-b from-amber-400 to-amber-600 rounded-full animate-pulse shadow-[0_0_10px_rgba(245,158,11,0.5)]" />
-          <h3 className="text-xl font-black uppercase tracking-tighter text-foreground/90 leading-none">
-            Now your turn!
+        <div className="flex items-center gap-2">
+          <div className="h-4 w-1 bg-amber-500 rounded-full" />
+          <h3 className="text-[13px] font-bold uppercase tracking-wider text-foreground/80">
+            Check your understanding
           </h3>
         </div>
         
         <div className={cn(
-          "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border transition-all duration-500",
+          "px-2 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-widest border transition-all",
           submitted 
             ? mcq.options[attempt!.selected_index]?.correct
-              ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/30 shadow-[0_0_15px_-5px_rgba(16,185,129,0.3)]"
-              : "bg-rose-500/10 text-rose-500 border-rose-500/30 shadow-[0_0_15px_-5px_rgba(244,63,94,0.3)]"
-            : "bg-amber-500/10 text-amber-500 border-amber-500/30 animate-pulse"
+              ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20"
+              : "bg-rose-500/10 text-rose-500 border-rose-500/20"
+            : "bg-amber-500/10 text-amber-500 border-amber-500/20"
         )}>
           {submitted
             ? mcq.options[attempt!.selected_index]?.correct
-              ? "Correct Answer"
-              : "Incorrect Pick"
-            : "Awaiting Input"}
+              ? "Correct"
+              : "Incorrect"
+            : "Optional"}
         </div>
       </div>
 
       {mcq.question && (
-        <p className="text-[15px] text-foreground/70 font-sans leading-relaxed selection:bg-primary/20 bg-foreground/5 p-4 rounded-2xl border border-border/10">
+        <p className="text-[13px] text-muted-foreground font-sans leading-relaxed px-1">
           {mcq.question}
         </p>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-2">
         {mcq.options.map((opt, idx) => {
           const isSelected = selected === idx;
           const isCorrect = submitted && opt.correct;
@@ -70,38 +70,34 @@ export function ProblemMcqBlock({ problemSlug, mcq, className }: ProblemMcqBlock
               onClick={() => handlePick(idx)}
               disabled={submitted}
               className={cn(
-                "group relative flex items-center gap-4 px-5 py-4 rounded-[1.5rem] border text-left transition-all duration-500 overflow-hidden",
-                !submitted && "bg-[#0a0a0c]/40 border-border/20 hover:bg-foreground/5 hover:border-border/40 hover:scale-[1.02] active:scale-[0.98]",
-                isSelected && !submitted && "border-amber-500/40 bg-amber-500/5 shadow-[0_0_20px_rgba(245,158,11,0.1)]",
-                isCorrect && "border-emerald-500/40 bg-emerald-500/10 shadow-[0_0_20px_rgba(16,185,129,0.1)]",
-                isWrongPick && "border-rose-500/40 bg-rose-500/10 shadow-[0_0_20px_rgba(244,63,94,0.1)]",
+                "group relative flex items-center gap-3 px-4 py-2.5 rounded-xl border text-left transition-all duration-200",
+                !submitted && "bg-muted/20 border-border/40 hover:bg-muted/40 hover:border-border/60",
+                isSelected && !submitted && "border-amber-500/40 bg-amber-500/5",
+                isCorrect && "border-emerald-500/40 bg-emerald-500/10",
+                isWrongPick && "border-rose-500/40 bg-rose-500/10",
                 submitted && "cursor-default",
               )}
             >
               <div className={cn(
-                "h-6 w-6 rounded-[0.75rem] border-2 grid place-items-center shrink-0 transition-all duration-500",
-                isSelected ? "border-amber-400 scale-110" : "border-muted-foreground/20 group-hover:border-muted-foreground/40",
-                isCorrect && "border-emerald-400 bg-emerald-400/20",
-                isWrongPick && "border-rose-400 bg-rose-400/20",
+                "h-4 w-4 rounded-full border grid place-items-center shrink-0 transition-all",
+                isSelected ? "border-amber-500" : "border-muted-foreground/20",
+                isCorrect && "border-emerald-500 bg-emerald-500/20",
+                isWrongPick && "border-rose-500 bg-rose-500/20",
               )}>
                 {isSelected && !submitted && (
-                  <div className="h-2 w-2 rounded-full bg-amber-400 animate-pulse" />
+                  <div className="h-1.5 w-1.5 rounded-full bg-amber-500" />
                 )}
-                {isCorrect && <Check className="h-3.5 w-3.5 text-emerald-400" />}
-                {isWrongPick && <X className="h-3.5 w-3.5 text-rose-400" />}
+                {isCorrect && <Check className="h-2.5 w-2.5 text-emerald-500" />}
+                {isWrongPick && <X className="h-2.5 w-2.5 text-rose-500" />}
               </div>
               <span className={cn(
-                "text-[14px] font-black tracking-tight transition-colors duration-300",
-                isSelected ? "text-foreground" : "text-foreground/60 group-hover:text-foreground",
-                isCorrect && "text-emerald-400",
-                isWrongPick && "text-rose-400"
+                "text-[13px] font-medium transition-colors",
+                isSelected ? "text-foreground" : "text-muted-foreground group-hover:text-foreground",
+                isCorrect && "text-emerald-500",
+                isWrongPick && "text-rose-500"
               )}>
                 {opt.label}
               </span>
-              
-              {isSelected && !submitted && (
-                <div className="absolute inset-0 bg-amber-500/5 pointer-events-none" />
-              )}
             </button>
           );
         })}

@@ -1289,7 +1289,6 @@ const CodingProblemDetail = () => {
 
   return (
     <div className="flex h-[calc(100vh-4rem)] w-full">
-
       <div className="flex-1 flex flex-col min-w-0">
       <Helmet>
         <title>{problem.title} — Coding Problem | Parikshaa</title>
@@ -1475,22 +1474,36 @@ const CodingProblemDetail = () => {
             </div>
 
 
-            <div className="flex-1 overflow-y-auto p-4 sm:p-6">
-              <TabsContent value="description" className="mt-0 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <header className="mb-6 space-y-4">
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="flex flex-col gap-1">
-                      <h1 className="text-2xl font-bold tracking-tight text-foreground selection:bg-primary/30">
-                        {problem.title}
-                      </h1>
-                      <div className="flex items-center gap-1.5 text-[12px] font-medium text-muted-foreground/60">
-                        <span>{problem.cpuTimeLimitSec}s</span>
-                        <span className="text-muted-foreground/20">•</span>
-                        <span>{Math.floor(problem.memoryLimitKb / 1024)}MB</span>
+            <div
+              className="flex-1 overflow-y-auto min-w-0 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent custom-scroll-area bg-muted/[0.02]"
+              data-testid="problem-description-scroll"
+            >
+              <div className="p-4 sm:p-5 max-w-4xl mx-auto space-y-5">
+                <TabsContent value="description" className="mt-0 space-y-5 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                  <header className="mb-4">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="space-y-1.5">
+                      <div className="flex items-center gap-3">
+                        <h1 className="text-xl font-bold tracking-tight text-foreground selection:bg-primary/30">
+                          {problem.title}
+                        </h1>
+                        <div className={cn("rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider border", difficultyClass(problem.difficulty))}>
+                          {problem.difficulty}
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 text-[11px] font-medium text-muted-foreground/50">
+                        <div className="flex items-center gap-1 bg-muted/30 px-1.5 py-0.5 rounded border border-border/20">
+                          <Clock className="h-3 w-3" />
+                          <span>{problem.cpuTimeLimitSec}s</span>
+                        </div>
+                        <div className="flex items-center gap-1 bg-muted/30 px-1.5 py-0.5 rounded border border-border/20">
+                          <Cpu className="h-3 w-3" />
+                          <span>{Math.floor(problem.memoryLimitKb / 1024)}MB</span>
+                        </div>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-4 shrink-0">
+                    <div className="shrink-0 pt-0.5">
                       <ProblemDetailHeader
                         isSolved={problemStats.isSolved}
                         isAttempted={problemStats.isAttempted}
@@ -1506,13 +1519,8 @@ const CodingProblemDetail = () => {
                       />
                     </div>
                   </div>
-                  <div className="flex flex-wrap items-center gap-2">
-                    <div className={cn("rounded-full px-3 py-1 text-[12px] font-bold uppercase tracking-wider", difficultyClass(problem.difficulty))}>
-                      {problem.difficulty}
-                    </div>
-
-
-                    {problem.companies && problem.companies.length > 0 ? (
+                </header>
+                {problem.companies && problem.companies.length > 0 ? (
                       <Collapsible
                         open={showCompanyTags}
                         onOpenChange={setShowCompanyTags}
@@ -1775,9 +1783,8 @@ const CodingProblemDetail = () => {
                       <ProgressiveHints hints={problem.hints} slug={problem.slug} />
                     </div>
                 )}
-              </TabsContent>
-
-              <TabsContent value="notes" className="mt-0">
+                </TabsContent>
+                <TabsContent value="notes" className="mt-0">
                 {((contestLocks as any).data?.some((l: any) => l.tab_id === "notes") || (contestLocks as any).notesLocked) ? (
                   <LockedAuxPanel label="Notes" endsAt={(contestLocks as any).data?.find((l: any) => l.tab_id === "notes")?.expires_at || (contestLocks as any).endsAt} />
 
@@ -1964,9 +1971,8 @@ const CodingProblemDetail = () => {
                 ) : (
                   <ProblemRunHistory runs={runs} />
                 )}
-              </TabsContent>
-            </div>
-          </Tabs>
+                </TabsContent>
+            </Tabs>
           <ProblemFooterBar
             slug={problem.slug}
             solved={problemStats.isSolved}

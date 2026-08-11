@@ -54,11 +54,11 @@ export function splitProblemDescription(raw: string): FormatSplit {
 }
 
 const cardCls =
-  "relative group overflow-hidden rounded-[2rem] border border-border/20 bg-[#0a0a0c]/40 backdrop-blur-3xl p-6 sm:p-8 transition-all duration-500 hover:border-border/40 hover:bg-[#0a0a0c]/60";
+  "relative group overflow-hidden rounded-xl border border-border/40 bg-muted/10 p-4 sm:p-5 transition-all duration-300 hover:border-border/60 hover:bg-muted/20";
 const labelCls =
-  "inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.3em] text-muted-foreground/30 mb-6 pb-2 border-b border-border/10 w-full group-hover:text-muted-foreground/50 transition-colors";
+  "inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/40 mb-3 pb-1 border-b border-border/20 w-full group-hover:text-muted-foreground/60 transition-colors";
 const bodyCls =
-  "prose prose-sm dark:prose-invert max-w-none text-[14px] sm:text-[15px] leading-relaxed font-sans text-foreground/80 selection:bg-primary/20 [&_p]:my-0 [&_p+p]:mt-4 [&_ul]:my-3 [&_ol]:my-3 [&_li]:my-1.5 [&_code]:px-2 [&_code]:py-0.5 [&_code]:rounded-lg [&_code]:bg-primary/5 [&_code]:text-primary [&_code]:border [&_code]:border-primary/10 [&_code]:font-mono [&_code]:before:content-none [&_code]:after:content-none [&_pre]:p-5 [&_pre]:rounded-2xl [&_pre]:bg-black/60 [&_pre]:border [&_pre]:border-border/10 [&_pre]:shadow-inner";
+  "prose prose-sm dark:prose-invert max-w-none text-[13px] leading-relaxed font-sans text-foreground/80 selection:bg-primary/20 [&_p]:my-0 [&_p+p]:mt-3 [&_ul]:my-2 [&_ol]:my-2 [&_li]:my-1 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:bg-muted/80 [&_code]:text-foreground [&_code]:border [&_code]:border-border/40 [&_code]:font-mono [&_code]:before:content-none [&_code]:after:content-none [&_pre]:p-4 [&_pre]:rounded-lg [&_pre]:bg-black/40 [&_pre]:border [&_pre]:border-border/20 [&_pre]:shadow-inner";
 
 export function ProblemFormatCards({
   inputFormat,
@@ -70,7 +70,7 @@ export function ProblemFormatCards({
   if (!inputFormat && !outputFormat) return null;
   return (
     <div
-      className="grid gap-3 sm:gap-4 grid-cols-1 w-full min-w-0"
+      className="grid gap-4 grid-cols-1 w-full min-w-0"
       data-testid="problem-format-cards"
     >
       {inputFormat && (
@@ -102,14 +102,14 @@ export function ProblemConstraints({ constraints }: { constraints: string[] }) {
   return (
     <div className={cardCls} data-testid="problem-constraints">
       <p className={labelCls}>
-        <Cpu className="h-3.5 w-3.5 opacity-50" />
+        <Cpu className="h-3 w-3 opacity-50" />
         Constraints
       </p>
-      <ul className="grid gap-3 list-none">
+      <ul className="grid gap-2 list-none">
         {constraints.map((c, i) => (
-          <li key={i} className="flex items-start gap-3 group/item">
-            <div className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary/40 group-hover/item:bg-primary transition-colors shrink-0 shadow-[0_0_8px_rgba(245,158,11,0.2)]" />
-            <span className="text-[13px] sm:text-[14px] leading-relaxed font-mono text-foreground/80 group-hover/item:text-foreground transition-colors selection:bg-primary/20">
+          <li key={i} className="flex items-start gap-2.5 group/item">
+            <div className="mt-1.5 h-1 w-1 rounded-full bg-muted-foreground/30 group-hover/item:bg-primary/60 transition-colors shrink-0" />
+            <span className="text-[13px] leading-relaxed font-mono text-foreground/70 group-hover/item:text-foreground transition-colors selection:bg-primary/20">
               {c}
             </span>
           </li>

@@ -1484,19 +1484,6 @@ const CodingProblemDetail = () => {
                         {problem.title}
                       </h1>
                       <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-                        <Badge
-                          variant="outline"
-                          className={cn(
-                            "h-7 px-4 font-black tracking-[0.2em] border-2 uppercase text-[10px] rounded-2xl shadow-xl transition-all duration-500",
-                            difficultyClass(problem.difficulty),
-                          )}
-                        >
-                          {problem.difficulty}
-                        </Badge>
-                        
-                        <div className="h-4 w-px bg-border/20 hidden sm:block" />
-                        
-                        <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground/40 bg-[#0a0a0c]/40 px-3 py-1.5 rounded-[1.25rem] border border-border/20 shadow-lg shadow-black/10 transition-all hover:border-border/40 hover:text-muted-foreground/60">
                         <div className="flex items-center gap-1.5 text-[12px] font-medium text-muted-foreground/60">
                           <span>{problem.cpuTimeLimitSec}s</span>
                           <span className="text-muted-foreground/20">•</span>

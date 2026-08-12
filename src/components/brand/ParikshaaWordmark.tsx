@@ -75,7 +75,7 @@ export function ParikshaaWordmark({
               animation: prefersReducedMotion ? "none" : "apex-shimmer 6s linear infinite",
             }}
           >
-            Parikshaa
+            LeetLeague
           </span>
           {/* Serif-style accent dot after the wordmark */}
           {showAccents && (

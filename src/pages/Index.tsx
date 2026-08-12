@@ -23,25 +23,25 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Parikshaa — Master DSA & Competitive Programming</title>
+        <title>LeetLeague — Track. Analyze. Compete.</title>
         <meta
           name="description"
-          content="Track your progress. Master DSA. Compete with your network. Parikshaa brings problem solving, visual analytics, and community-driven learning into one platform."
+          content="Track your progress. Analyze your performance. Compete with your network. LeetLeague brings problem solving, analytics, contests, friends, clans, and real-time coding activity together in one platform."
         />
         <link rel="canonical" href="https://www.parikshaa.org/" />
-        <meta property="og:title" content="Parikshaa — Master DSA & Competitive Programming" />
+        <meta property="og:title" content="LeetLeague — Track. Analyze. Compete." />
         <meta
           property="og:description"
-          content="Transform your coding journey. Monitor solved problems, streaks, and ranks in real-time with Parikshaa."
+          content="Track. Analyze. Compete. — LeetLeague is HERE 🔥. Monitor solved problems, streaks, ratings, and rankings in real-time."
         />
         <meta property="og:url" content="https://www.parikshaa.org/" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Parikshaa" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Parikshaa — Master DSA & Competitive Programming" />
+        <meta name="twitter:title" content="LeetLeague — Track. Analyze. Compete." />
         <meta
           name="twitter:description"
-          content="Master DSA. Track progress. Compete with friends. Build your future."
+          content="Track your progress. Analyze your performance. Compete with your network. Improve together."
         />
       </Helmet>
       <div className="noise-overlay" aria-hidden />

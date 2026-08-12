@@ -16,38 +16,38 @@ const rows: Row[] = [
   {
     kicker: "01",
     feature: "Sync capability",
-    parikshaa: "Real-time sync with LeetCode & Codeforces",
-    others: "Manual entry or single platform only",
+    parikshaa: "Visual logic tracing & pattern-based sheets",
+    others: "Static problem lists & text solutions",
     hero: true,
   },
   {
     kicker: "02",
-    feature: "Social features",
-    parikshaa: "Global clans, friends compare & solve feed",
-    others: "Lone-wolf solving · no network effect",
+    feature: "Prep Ecosystem",
+    parikshaa: "360° coverage (DSA, SD, CS Core, Interviews)",
+    others: "Fragmented resources & single-topic sites",
   },
   {
     kicker: "03",
-    feature: "Contest tracking",
-    parikshaa: "All platforms in one calendar with countdowns",
-    others: "Check 5 different sites daily",
+    feature: "Live Tracking",
+    parikshaa: "Real-time sync with LeetCode & Codeforces",
+    others: "Manual entry or single platform only",
   },
   {
     kicker: "04",
-    feature: "Ranks & Leaderboards",
-    parikshaa: "Metric-dense ranks (Today, Streak, Rating)",
-    others: "Basic solve count leaderboards",
+    feature: "Peer Motivation",
+    parikshaa: "Clans, ranks & real-time global feed",
+    others: "Lone-wolf prep · no networking effect",
   },
   {
     kicker: "05",
-    feature: "DSA Structure",
-    parikshaa: "40+ pattern-grouped interview sheets",
-    others: "Static lists or random problem sets",
+    feature: "Opportunity Pipeline",
+    parikshaa: "Daily-verified job portal & internship hub",
+    others: "Static boards or outdated listings",
   },
   {
     kicker: "06",
-    feature: "What you pay",
-    parikshaa: "₹0 forever — the community builds it",
+    feature: "Cost to Learner",
+    parikshaa: "₹0 forever — community-first protocol",
     others: "₹4k–₹40k subscriptions",
   },
 ];
@@ -107,17 +107,17 @@ export function ParikshaaVsOthers() {
       <div className="mx-auto flex w-full max-w-6xl flex-col">
         <HeroStyleHeading
           eyebrowKicker="03"
-          eyebrowLabel="Head to Head / Why Coders Switch"
+          eyebrowLabel="Head to Head / Why Learners Switch"
           headingId="comparison-heading"
           as="h2"
-          subheadPrimary="Same coding goal. Radically different experience."
-          subheadSecondary=" Six honest checkpoints where legacy platforms fall short — and where LeetLeague delivers."
+          subheadPrimary="Better prep. Radically different outcome."
+          subheadSecondary=" Six honest checkpoints where traditional prep falls short — and where Parikshaa delivers."
         >
           <span className="block">
-            Why pay for <Muted>what should be</Muted>
+            Master patterns <Muted>instead of</Muted>
           </span>
           <span className="block">
-            <Highlight>free</Highlight> &amp; <Shimmer>shipped weekly?</Shimmer>
+            <Highlight>grinding</Highlight> <Shimmer>aimlessly.</Shimmer>
           </span>
         </HeroStyleHeading>
 
@@ -141,7 +141,7 @@ export function ParikshaaVsOthers() {
               aria-describedby="comparison-heading"
             >
               <caption className="sr-only">
-                Feature-by-feature comparison of LeetLeague versus other coding platforms
+                Feature-by-feature comparison of Parikshaa versus other coding platforms
               </caption>
               <thead>
                 <tr className="border-b border-border/60 bg-background/50 text-left text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
@@ -153,7 +153,7 @@ export function ParikshaaVsOthers() {
                         style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}
                         className="text-[12px] font-bold tracking-[0.14em]"
                       >
-                        LeetLeague
+                        Parikshaa
                       </span>
                       <span className="inline-flex items-center gap-1 rounded-full bg-primary/15 px-2 py-0.5 text-[9px] font-bold text-primary ring-1 ring-inset ring-primary/25">
                         <Sparkles className="h-2.5 w-2.5" aria-hidden />
@@ -195,7 +195,7 @@ export function ParikshaaVsOthers() {
             </table>
 
             {/* ================= Mobile: stacked cards ================= */}
-            <ul className="divide-y divide-border/40 sm:hidden" aria-label="LeetLeague vs Others comparison">
+            <ul className="divide-y divide-border/40 sm:hidden" aria-label="Parikshaa vs Others comparison">
               {rows.map((row) => (
                 <li
                   key={row.feature}
@@ -221,7 +221,7 @@ export function ParikshaaVsOthers() {
                   <div className="space-y-2 pl-1">
                     <div>
                       <p className="mb-1 text-[9.5px] font-bold uppercase tracking-[0.18em] text-primary/80">
-                        LeetLeague
+                        Parikshaa
                       </p>
                       <YesCell text={row.parikshaa} />
                     </div>

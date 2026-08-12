@@ -38,7 +38,7 @@ export function ParikshaaBrandLogo({
   asLink = true,
   to = "/",
   onClick,
-  ariaLabel = "LeetLeague home",
+  ariaLabel = "Parikshaa home",
   className,
 }: Props) {
   const inner = (

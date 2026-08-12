@@ -9,6 +9,7 @@ import {
   CalendarDays,
   ArrowUpRight,
   ArrowRight,
+  Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SectionEyebrow } from "./SectionEyebrow";
@@ -27,57 +28,57 @@ type Tile = {
 const tiles: Tile[] = [
   {
     id: "01",
-    title: "League Ranks",
-    tagline: "Compete on global leaderboards across multiple coding metrics.",
-    meta: "Daily · Weekly · All-Time",
-    href: "/league/ranks",
-    icon: Trophy,
-    tag: "Rank",
+    title: "DSA Studio",
+    tagline: "Visualize logic and master data structures with our interactive player.",
+    meta: "Visual · Interactive · Patterns",
+    href: "/learn/visualize",
+    icon: Sparkles,
+    tag: "Studio",
   },
   {
     id: "02",
-    title: "Coding Clans",
-    tagline: "Build or join coding communities and track collective performance.",
-    meta: "Real-time · Social",
-    href: "/league/clans",
-    icon: GraduationCap,
-    tag: "Clan",
+    title: "Interview Library",
+    tagline: "Comprehensive prep across companies, roles, and technical domains.",
+    meta: "10k+ problems · 50+ roles",
+    href: "/library/problems",
+    icon: Briefcase,
+    tag: "Library",
   },
   {
     id: "03",
-    title: "Contest Calendar",
-    tagline: "Sync contests from LeetCode, Codeforces, AtCoder & more.",
-    meta: "All platforms · Countdown",
-    href: "/league/contests",
-    icon: CalendarDays,
-    tag: "Sync",
-  },
-  {
-    id: "04",
-    title: "Activity Feed",
-    tagline: "Real-time solve activity across your network and tracked handles.",
-    meta: "Live · Interactive",
-    href: "/league/feed",
-    icon: Swords,
-    tag: "Feed",
-  },
-  {
-    id: "05",
-    title: "DSA Sheets",
-    tagline: "Curated DSA, SQL, and CS core sheets for structured mastery.",
+    title: "Pattern DSA Sheets",
+    tagline: "Curated sheets grouping problems by pattern for structured mastery.",
     meta: "40+ sheets · 3.5k problems",
     href: "/learn",
     icon: Layers,
     tag: "Learn",
   },
   {
+    id: "04",
+    title: "League Ranks",
+    tagline: "Compete on global leaderboards and track your growth live.",
+    meta: "Global · Real-time · Stats",
+    href: "/league/ranks",
+    icon: Trophy,
+    tag: "Rank",
+  },
+  {
+    id: "05",
+    title: "Coding Clans",
+    tagline: "Build coding communities and level up with your peers.",
+    meta: "Social · Multi-platform",
+    href: "/league/clans",
+    icon: GraduationCap,
+    tag: "Clan",
+  },
+  {
     id: "06",
-    title: "Job Openings",
-    tagline: "Curated internships and fresher openings from top tech boards.",
-    meta: "Verified daily",
+    title: "Job Portals",
+    tagline: "Verified internships and fresher openings updated daily.",
+    meta: "Freshers · Internships",
     href: "/jobs",
     icon: Briefcase,
-    tag: "Apply",
+    tag: "Jobs",
   },
 ];
 
@@ -106,7 +107,7 @@ export function AllInOneHub() {
         {/* Section heading */}
         <div className="mx-auto max-w-4xl text-center">
           <div className="mb-6 flex justify-center">
-            <SectionEyebrow kicker="01" label="The LeetLeague Protocol / Competitive Programming Mastery" />
+            <SectionEyebrow kicker="01" label="The Parikshaa Protocol / Interview Mastery at Scale" />
           </div>
 
           <motion.h2

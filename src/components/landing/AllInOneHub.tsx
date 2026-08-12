@@ -27,57 +27,57 @@ type Tile = {
 const tiles: Tile[] = [
   {
     id: "01",
-    title: "Sheets",
-    tagline: "Curated DSA, SQL, CS core & System Design — mastery in one flow.",
+    title: "League Ranks",
+    tagline: "Compete on global leaderboards across multiple coding metrics.",
+    meta: "Daily · Weekly · All-Time",
+    href: "/league/ranks",
+    icon: Trophy,
+    tag: "Rank",
+  },
+  {
+    id: "02",
+    title: "Coding Clans",
+    tagline: "Build or join coding communities and track collective performance.",
+    meta: "Real-time · Social",
+    href: "/league/clans",
+    icon: GraduationCap,
+    tag: "Clan",
+  },
+  {
+    id: "03",
+    title: "Contest Calendar",
+    tagline: "Sync contests from LeetCode, Codeforces, AtCoder & more.",
+    meta: "All platforms · Countdown",
+    href: "/league/contests",
+    icon: CalendarDays,
+    tag: "Sync",
+  },
+  {
+    id: "04",
+    title: "Activity Feed",
+    tagline: "Real-time solve activity across your network and tracked handles.",
+    meta: "Live · Interactive",
+    href: "/league/feed",
+    icon: Swords,
+    tag: "Feed",
+  },
+  {
+    id: "05",
+    title: "DSA Sheets",
+    tagline: "Curated DSA, SQL, and CS core sheets for structured mastery.",
     meta: "40+ sheets · 3.5k problems",
     href: "/learn",
     icon: Layers,
     tag: "Learn",
   },
   {
-    id: "02",
-    title: "Coding Contests",
-    tagline: "AI-proctored weekly rounds with live leaderboards & ratings.",
-    meta: "Weekly · Rated",
-    href: "/contests",
-    icon: Swords,
-    tag: "Compete",
-  },
-  {
-    id: "03",
-    title: "Hackathons",
-    tagline: "Ship weekend projects, win prizes, build a public portfolio.",
-    meta: "Live & upcoming",
-    href: "/arena/daily",
-    icon: Trophy,
-    tag: "Build",
-  },
-  {
-    id: "04",
-    title: "Jobs",
-    tagline: "Curated full-time roles from India's top product companies.",
-    meta: "Fresh listings",
-    href: "/library/companies",
+    id: "06",
+    title: "Job Openings",
+    tagline: "Curated internships and fresher openings from top tech boards.",
+    meta: "Verified daily",
+    href: "/jobs",
     icon: Briefcase,
     tag: "Apply",
-  },
-  {
-    id: "05",
-    title: "Internships",
-    tagline: "Paid internships and off-campus openings, verified daily.",
-    meta: "Verified openings",
-    href: "/library/recruitment",
-    icon: GraduationCap,
-    tag: "Intern",
-  },
-  {
-    id: "06",
-    title: "Events",
-    tagline: "Workshops, mock interviews and community meetups every week.",
-    meta: "This month",
-    href: "/learn/leaderboard",
-    icon: CalendarDays,
-    tag: "Connect",
   },
 ];
 
@@ -106,7 +106,7 @@ export function AllInOneHub() {
         {/* Section heading */}
         <div className="mx-auto max-w-4xl text-center">
           <div className="mb-6 flex justify-center">
-            <SectionEyebrow kicker="01" label="The Core Stack / Architect Your Prep" />
+            <SectionEyebrow kicker="01" label="The LeetLeague Protocol / Competitive Programming Mastery" />
           </div>
 
           <motion.h2
@@ -124,12 +124,12 @@ export function AllInOneHub() {
                 aria-hidden
                 className="absolute inset-0 -z-10 rounded-lg bg-primary/15 ring-1 ring-inset ring-primary/25"
               />
-              placement
+              coding
             </span>{" "}
             <span className="bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent"
               style={{ backgroundSize: "200% auto", animation: "apex-shimmer 6s linear infinite" }}
             >
-              season.
+              journey.
             </span>
           </motion.h2>
 
@@ -140,8 +140,8 @@ export function AllInOneHub() {
             transition={{ duration: 0.4, delay: 0.15 }}
             className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg"
           >
-            Learn, compete, build and get hired — without stitching together six
-            different tabs. Free forever, structured end-to-end.
+            Track, analyze, compete, and level up — without stitching together six
+            different platforms. Structured end-to-end.
           </motion.p>
         </div>
 
@@ -221,7 +221,7 @@ export function AllInOneHub() {
         {/* Footer CTAs */}
         <div className="mt-14 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
           <Link
-            to="/learn"
+            to="/league"
             className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-lg bg-primary px-8 text-sm font-bold uppercase tracking-[0.14em] text-primary-foreground shadow-[0_0_40px_-8px_hsl(var(--primary)/0.7)] transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_0_60px_-6px_hsl(var(--primary)/0.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             <span
@@ -229,15 +229,15 @@ export function AllInOneHub() {
               className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full motion-reduce:hidden"
             />
             <span className="relative z-10 inline-flex items-center">
-              Open Learn Hub
+              Open League Overview
               <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </span>
           </Link>
           <Link
-            to="/arena/daily"
+            to="/league/ranks"
             className="inline-flex h-12 items-center justify-center rounded-lg border border-border bg-transparent px-8 text-sm font-bold uppercase tracking-[0.14em] text-foreground transition-colors hover:border-primary/50 hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            Join Today's Challenge
+            View Leaderboards
           </Link>
         </div>
       </div>

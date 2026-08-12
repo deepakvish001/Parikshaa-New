@@ -877,6 +877,77 @@ export type Database = {
           },
         ]
       }
+      clan_members: {
+        Row: {
+          clan_id: string
+          joined_at: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          clan_id: string
+          joined_at?: string
+          role?: string
+          user_id: string
+        }
+        Update: {
+          clan_id?: string
+          joined_at?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clan_members_clan_id_fkey"
+            columns: ["clan_id"]
+            isOneToOne: false
+            referencedRelation: "clans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clans: {
+        Row: {
+          banner_url: string | null
+          created_at: string
+          description: string | null
+          id: string
+          invite_code: string
+          is_public: boolean
+          logo_url: string | null
+          name: string
+          owner_id: string
+          tag: string | null
+          updated_at: string
+        }
+        Insert: {
+          banner_url?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          invite_code?: string
+          is_public?: boolean
+          logo_url?: string | null
+          name: string
+          owner_id: string
+          tag?: string | null
+          updated_at?: string
+        }
+        Update: {
+          banner_url?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          invite_code?: string
+          is_public?: boolean
+          logo_url?: string | null
+          name?: string
+          owner_id?: string
+          tag?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       code_drafts: {
         Row: {
           id: string
@@ -2249,6 +2320,39 @@ export type Database = {
           },
         ]
       }
+      external_contests: {
+        Row: {
+          duration_seconds: number
+          external_id: string
+          fetched_at: string
+          id: string
+          platform: string
+          start_time: string
+          title: string
+          url: string | null
+        }
+        Insert: {
+          duration_seconds?: number
+          external_id: string
+          fetched_at?: string
+          id?: string
+          platform: string
+          start_time: string
+          title: string
+          url?: string | null
+        }
+        Update: {
+          duration_seconds?: number
+          external_id?: string
+          fetched_at?: string
+          id?: string
+          platform?: string
+          start_time?: string
+          title?: string
+          url?: string | null
+        }
+        Relationships: []
+      }
       featured_content: {
         Row: {
           ends_at: string | null
@@ -2309,6 +2413,192 @@ export type Database = {
           note?: string | null
           old_value?: Json | null
           rule_key?: string
+        }
+        Relationships: []
+      }
+      handle_contest_history: {
+        Row: {
+          attended: boolean
+          contest_title: string
+          handle: string
+          platform: string
+          ranking: number | null
+          rating: number | null
+          start_time: string
+        }
+        Insert: {
+          attended?: boolean
+          contest_title: string
+          handle: string
+          platform?: string
+          ranking?: number | null
+          rating?: number | null
+          start_time: string
+        }
+        Update: {
+          attended?: boolean
+          contest_title?: string
+          handle?: string
+          platform?: string
+          ranking?: number | null
+          rating?: number | null
+          start_time?: string
+        }
+        Relationships: []
+      }
+      handle_daily_activity: {
+        Row: {
+          day: string
+          handle: string
+          platform: string
+          submissions: number
+        }
+        Insert: {
+          day: string
+          handle: string
+          platform?: string
+          submissions?: number
+        }
+        Update: {
+          day?: string
+          handle?: string
+          platform?: string
+          submissions?: number
+        }
+        Relationships: []
+      }
+      handle_recent_solves: {
+        Row: {
+          difficulty: string | null
+          handle: string
+          id: number
+          lang: string | null
+          platform: string
+          problem_slug: string
+          solved_at: string
+          title: string
+        }
+        Insert: {
+          difficulty?: string | null
+          handle: string
+          id?: number
+          lang?: string | null
+          platform?: string
+          problem_slug: string
+          solved_at: string
+          title: string
+        }
+        Update: {
+          difficulty?: string | null
+          handle?: string
+          id?: number
+          lang?: string | null
+          platform?: string
+          problem_slug?: string
+          solved_at?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      handle_snapshots: {
+        Row: {
+          acceptance_rate: number
+          active_days: number
+          attended_contests: number
+          avatar_url: string | null
+          avg_per_active_day: number
+          badges: Json
+          consistency: number
+          contest_global_ranking: number | null
+          contest_rating: number | null
+          contest_top_percentage: number | null
+          country: string | null
+          current_streak: number
+          display_name: string | null
+          easy_solved: number
+          global_ranking: number | null
+          handle: string
+          hard_solved: number
+          languages: Json
+          longest_streak: number
+          medium_solved: number
+          peak_day: string | null
+          platform: string
+          solved_this_month: number
+          solved_this_week: number
+          solved_today: number
+          topics: Json
+          total_easy: number
+          total_hard: number
+          total_medium: number
+          total_solved: number
+          updated_at: string
+        }
+        Insert: {
+          acceptance_rate?: number
+          active_days?: number
+          attended_contests?: number
+          avatar_url?: string | null
+          avg_per_active_day?: number
+          badges?: Json
+          consistency?: number
+          contest_global_ranking?: number | null
+          contest_rating?: number | null
+          contest_top_percentage?: number | null
+          country?: string | null
+          current_streak?: number
+          display_name?: string | null
+          easy_solved?: number
+          global_ranking?: number | null
+          handle: string
+          hard_solved?: number
+          languages?: Json
+          longest_streak?: number
+          medium_solved?: number
+          peak_day?: string | null
+          platform?: string
+          solved_this_month?: number
+          solved_this_week?: number
+          solved_today?: number
+          topics?: Json
+          total_easy?: number
+          total_hard?: number
+          total_medium?: number
+          total_solved?: number
+          updated_at?: string
+        }
+        Update: {
+          acceptance_rate?: number
+          active_days?: number
+          attended_contests?: number
+          avatar_url?: string | null
+          avg_per_active_day?: number
+          badges?: Json
+          consistency?: number
+          contest_global_ranking?: number | null
+          contest_rating?: number | null
+          contest_top_percentage?: number | null
+          country?: string | null
+          current_streak?: number
+          display_name?: string | null
+          easy_solved?: number
+          global_ranking?: number | null
+          handle?: string
+          hard_solved?: number
+          languages?: Json
+          longest_streak?: number
+          medium_solved?: number
+          peak_day?: string | null
+          platform?: string
+          solved_this_month?: number
+          solved_this_week?: number
+          solved_today?: number
+          topics?: Json
+          total_easy?: number
+          total_hard?: number
+          total_medium?: number
+          total_solved?: number
+          updated_at?: string
         }
         Relationships: []
       }
@@ -2447,6 +2737,30 @@ export type Database = {
           tags?: string[]
           title?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      lc_problem_meta: {
+        Row: {
+          difficulty: string | null
+          fetched_at: string
+          slug: string
+          tags: Json
+          title: string | null
+        }
+        Insert: {
+          difficulty?: string | null
+          fetched_at?: string
+          slug: string
+          tags?: Json
+          title?: string | null
+        }
+        Update: {
+          difficulty?: string | null
+          fetched_at?: string
+          slug?: string
+          tags?: Json
+          title?: string | null
         }
         Relationships: []
       }
@@ -3108,6 +3422,36 @@ export type Database = {
         }
         Relationships: []
       }
+      saved_problems: {
+        Row: {
+          created_at: string
+          difficulty: string | null
+          id: string
+          platform: string
+          problem_slug: string
+          title: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          difficulty?: string | null
+          id?: string
+          platform?: string
+          problem_slug: string
+          title?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          difficulty?: string | null
+          id?: string
+          platform?: string
+          problem_slug?: string
+          title?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       shared_folders: {
         Row: {
           allow_copy: boolean
@@ -3218,6 +3562,51 @@ export type Database = {
           status?: string
           subject?: string
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      tracked_handles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          handle: string
+          id: string
+          is_self: boolean
+          last_synced_at: string | null
+          owner_id: string
+          platform: string
+          sync_error: string | null
+          sync_status: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          handle: string
+          id?: string
+          is_self?: boolean
+          last_synced_at?: string | null
+          owner_id: string
+          platform?: string
+          sync_error?: string | null
+          sync_status?: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          handle?: string
+          id?: string
+          is_self?: boolean
+          last_synced_at?: string | null
+          owner_id?: string
+          platform?: string
+          sync_error?: string | null
+          sync_status?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -4588,6 +4977,14 @@ export type Database = {
         Returns: boolean
       }
       is_blog_editor: { Args: { _uid: string }; Returns: boolean }
+      is_clan_manager: {
+        Args: { _clan: string; _user: string }
+        Returns: boolean
+      }
+      is_clan_member: {
+        Args: { _clan: string; _user: string }
+        Returns: boolean
+      }
       log_client_event: {
         Args: {
           _activity_type: string

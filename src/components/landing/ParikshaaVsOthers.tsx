@@ -111,7 +111,7 @@ export function ParikshaaVsOthers() {
           headingId="comparison-heading"
           as="h2"
           subheadPrimary="Same coding goal. Radically different experience."
-          subheadSecondary=" Six honest checkpoints where legacy platforms fall short — and where LeetLeague delivers."
+          subheadSecondary=" Six honest checkpoints where legacy platforms fall short — and where Parikshaa delivers."
         >
           <span className="block">
             Why pay for <Muted>what should be</Muted>
@@ -141,7 +141,7 @@ export function ParikshaaVsOthers() {
               aria-describedby="comparison-heading"
             >
               <caption className="sr-only">
-                Feature-by-feature comparison of LeetLeague versus other coding platforms
+                Feature-by-feature comparison of Parikshaa versus other coding platforms
               </caption>
               <thead>
                 <tr className="border-b border-border/60 bg-background/50 text-left text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
@@ -153,7 +153,7 @@ export function ParikshaaVsOthers() {
                         style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}
                         className="text-[12px] font-bold tracking-[0.14em]"
                       >
-                        LeetLeague
+                        Parikshaa
                       </span>
                       <span className="inline-flex items-center gap-1 rounded-full bg-primary/15 px-2 py-0.5 text-[9px] font-bold text-primary ring-1 ring-inset ring-primary/25">
                         <Sparkles className="h-2.5 w-2.5" aria-hidden />
@@ -221,7 +221,7 @@ export function ParikshaaVsOthers() {
                   <div className="space-y-2 pl-1">
                     <div>
                       <p className="mb-1 text-[9.5px] font-bold uppercase tracking-[0.18em] text-primary/80">
-                        LeetLeague
+                        Parikshaa
                       </p>
                       <YesCell text={row.parikshaa} />
                     </div>

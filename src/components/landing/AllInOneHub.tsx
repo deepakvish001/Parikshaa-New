@@ -27,39 +27,39 @@ type Tile = {
 const tiles: Tile[] = [
   {
     id: "01",
-    title: "League Ranks",
-    tagline: "Compete on global leaderboards across multiple coding metrics.",
+    title: "DSA Studio",
+    tagline: "Master patterns through our structured problem-solving environment.",
     meta: "Daily · Weekly · All-Time",
-    href: "/league/ranks",
+    href: "/learn/dsa-studio/journal",
     icon: Trophy,
-    tag: "Rank",
+    tag: "Studio",
   },
   {
     id: "02",
-    title: "Coding Clans",
-    tagline: "Build or join coding communities and track collective performance.",
+    title: "Interview Library",
+    tagline: "Topic-wise bank of questions from top tech companies.",
     meta: "Real-time · Social",
-    href: "/league/clans",
+    href: "/library/interview",
     icon: GraduationCap,
-    tag: "Clan",
+    tag: "Library",
   },
   {
     id: "03",
-    title: "Contest Calendar",
-    tagline: "Sync contests from LeetCode, Codeforces, AtCoder & more.",
-    meta: "All platforms · Countdown",
-    href: "/league/contests",
+    title: "CS Fundamentals",
+    tagline: "Master DBMS, OS, and Networks with interactive interview sheets.",
+    meta: "Core CS · Interactive",
+    href: "/library/cs",
     icon: CalendarDays,
-    tag: "Sync",
+    tag: "Core",
   },
   {
     id: "04",
-    title: "Activity Feed",
-    tagline: "Real-time solve activity across your network and tracked handles.",
-    meta: "Live · Interactive",
-    href: "/league/feed",
+    title: "Placement Roadmap",
+    tagline: "A step-by-step flowchart to guide you through your prep journey.",
+    meta: "Fullstack · SDE",
+    href: "/roadmaps/fullstack",
     icon: Swords,
-    tag: "Feed",
+    tag: "Roadmap",
   },
   {
     id: "05",
@@ -106,7 +106,7 @@ export function AllInOneHub() {
         {/* Section heading */}
         <div className="mx-auto max-w-4xl text-center">
           <div className="mb-6 flex justify-center">
-            <SectionEyebrow kicker="01" label="The LeetLeague Protocol / Competitive Programming Mastery" />
+            <SectionEyebrow kicker="01" label="The Parikshaa Protocol / Data Structures & Algorithms Mastery" />
           </div>
 
           <motion.h2
@@ -221,7 +221,7 @@ export function AllInOneHub() {
         {/* Footer CTAs */}
         <div className="mt-14 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
           <Link
-            to="/league"
+            to="/learn"
             className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-lg bg-primary px-8 text-sm font-bold uppercase tracking-[0.14em] text-primary-foreground shadow-[0_0_40px_-8px_hsl(var(--primary)/0.7)] transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_0_60px_-6px_hsl(var(--primary)/0.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             <span
@@ -229,15 +229,15 @@ export function AllInOneHub() {
               className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full motion-reduce:hidden"
             />
             <span className="relative z-10 inline-flex items-center">
-              Open League Overview
+              Explore Learning Hub
               <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </span>
           </Link>
           <Link
-            to="/league/ranks"
+            to="/library/problems"
             className="inline-flex h-12 items-center justify-center rounded-lg border border-border bg-transparent px-8 text-sm font-bold uppercase tracking-[0.14em] text-foreground transition-colors hover:border-primary/50 hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            View Leaderboards
+            Browse All Problems
           </Link>
         </div>
       </div>

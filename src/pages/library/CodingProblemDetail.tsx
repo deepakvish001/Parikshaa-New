@@ -47,6 +47,8 @@ import { Button } from "@/components/ui/button";
 import { useCodeRunner, type SubmitResult } from "@/hooks/useCodeRunner";
 import { useCodingSubmissions } from "@/hooks/useCodingSubmissions";
 import { useAuth } from "@/contexts/AuthContext";
+import { useCodeDraft } from "@/hooks/useCodeDraft";
+import { useCodeRuns } from "@/hooks/useCodeRuns";
 import { findCurriculumLocation } from "@/data/codingCurriculum";
 
 // Types
@@ -78,7 +80,23 @@ const CodingProblemDetail = () => {
   // UI State
   const [activeTab, setActiveTab] = useState<EditorTabId>("description");
   const [language, setLanguage] = useState("cpp");
+  const { draft, saveDraft, draftLoaded } = useCodeDraft(slug || "", language);
   const [code, setCode] = useState(LANG_CONFIGS.cpp.starter);
+
+  // Sync draft to code state
+  useEffect(() => {
+    if (draftLoaded && draft !== null) {
+      setCode(draft);
+    } else if (draftLoaded && draft === null) {
+      setCode(LANG_CONFIGS[language]?.starter || "");
+    }
+  }, [draft, draftLoaded, language]);
+
+  // Save draft on code change
+  const handleCodeChange = (newCode: string) => {
+    setCode(newCode);
+    saveDraft(newCode);
+  };
   const [showLogin, setShowLogin] = useState(false);
   const [notesValue, setNotesValue] = useState("");
   const [consoleOpen, setConsoleOpen] = useState(true);
@@ -91,6 +109,7 @@ const CodingProblemDetail = () => {
   
   const { run, submit, isRunning, isSubmitting } = useCodeRunner();
   const { submissions, refetch: refetchSubmissions } = useCodingSubmissions(slug);
+  const { runs, refetch: refetchRuns } = useCodeRuns(slug);
   
   // Curriculum context for TopBar
   const loc = useMemo(() => slug ? findCurriculumLocation(slug) : null, [slug]);
@@ -129,7 +148,11 @@ const CodingProblemDetail = () => {
         language
       });
       toast.success("Run completed");
-      // Handle status update for UI if needed
+      refetchRuns();
+      
+      // Update custom status for the workbench if it was a custom test
+      // In a real implementation, we'd map the RunResult to CustomCaseStatusEntry
+      // but for now, we just refetch the history.
     } catch (e: any) {
       toast.error(e.message || "Run failed");
     }
@@ -212,7 +235,10 @@ const CodingProblemDetail = () => {
                   <FileText className="h-3 w-3 mr-2 text-primary" /> Statement
                 </TabsTrigger>
                 <TabsTrigger value="submissions" className="h-8 px-4 text-[11px] font-bold uppercase tracking-widest rounded-md data-[state=active]:bg-white/5">
-                  <History className="h-3 w-3 mr-2 text-amber-400" /> Submissions
+                  <Rocket className="h-3 w-3 mr-2 text-primary" /> Submissions
+                </TabsTrigger>
+                <TabsTrigger value="history" className="h-8 px-4 text-[11px] font-bold uppercase tracking-widest rounded-md data-[state=active]:bg-white/5">
+                  <History className="h-3 w-3 mr-2 text-amber-400" /> Runs
                 </TabsTrigger>
                 <TabsTrigger value="editorial" className="h-8 px-4 text-[11px] font-bold uppercase tracking-widest rounded-md data-[state=active]:bg-white/5">
                   <BookOpen className="h-3 w-3 mr-2 text-emerald-400" /> Editorial
@@ -275,7 +301,26 @@ const CodingProblemDetail = () => {
               </TabsContent>
 
               <TabsContent value="submissions" className="m-0 p-6 focus-visible:outline-none">
-                <ProblemRunHistory runs={submissions as any} />
+                <div className="space-y-4">
+                  <h3 className="text-xs font-black uppercase tracking-widest text-primary flex items-center gap-2">
+                    <Rocket className="h-4 w-4" /> Final Submissions
+                  </h3>
+                  <div className="text-sm text-muted-foreground mb-4">
+                    Your official submissions to the hidden test cases.
+                  </div>
+                  {submissions.map((s) => (
+                    <SubmissionResultView key={s.id} result={s as any} />
+                  ))}
+                  {submissions.length === 0 && (
+                    <div className="text-center py-12 text-muted-foreground/40 text-xs font-black uppercase tracking-widest">
+                      No submissions yet
+                    </div>
+                  )}
+                </div>
+              </TabsContent>
+
+              <TabsContent value="history" className="m-0 p-6 focus-visible:outline-none">
+                <ProblemRunHistory runs={runs as any} />
               </TabsContent>
 
               <TabsContent value="notes" className="m-0 p-6 focus-visible:outline-none">
@@ -345,7 +390,7 @@ const CodingProblemDetail = () => {
               <div className="flex-1 min-h-0 bg-[#0a0a0c]">
                 <MonacoEditor 
                   value={code} 
-                  onChange={setCode} 
+                  onChange={handleCodeChange} 
                   language={language}
                   fontSize={14}
                 />

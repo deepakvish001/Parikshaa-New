@@ -51,6 +51,7 @@ import LeagueFriends from "./pages/league/LeagueFriends";
 import LeagueFriendDetail from "./pages/league/LeagueFriendDetail";
 import LeagueRanks from "./pages/league/LeagueRanks";
 import LeagueClans from "./pages/league/LeagueClans";
+import LeagueClanDetail from "./pages/league/LeagueClanDetail";
 import LeagueFeed from "./pages/league/LeagueFeed";
 import LeagueContests from "./pages/league/LeagueContests";
 import LeagueBookmarks from "./pages/league/LeagueBookmarks";
@@ -317,6 +318,7 @@ const App = () => (
                     <Route path="friends/:handle" element={<LeagueFriendDetail />} />
                     <Route path="ranks" element={<LeagueRanks />} />
                     <Route path="clans" element={<LeagueClans />} />
+                    <Route path="clans/:id" element={<LeagueClanDetail />} />
                     <Route path="feed" element={<LeagueFeed />} />
                     <Route path="contests" element={<LeagueContests />} />
                     <Route path="bookmarks" element={<LeagueBookmarks />} />

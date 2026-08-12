@@ -1,5 +1,8 @@
 import { useMemo, useState } from "react";
-import { CheckCircle2, Flame, Trophy, Plus } from "lucide-react";
+import { CheckCircle2, Flame, Trophy, Plus, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import {
   Area,
   AreaChart,
@@ -24,6 +27,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DifficultyBadge, DifficultyRing, MetricCard, StatTile, DailyChallengeCard } from "@/components/league/LeagueBits";
+import { useClanStats, useMyClans, useClanMembers } from "@/hooks/league/useClans";
 import {
   useActivityFeed,
   useAddHandle,
@@ -83,6 +87,10 @@ export default function LeagueOverview() {
   const { data: history = [] } = useContestHistory(self?.handle);
   const allHandles = useMemo(() => handles.map((h) => h.handle), [handles]);
   const { data: feed = [] } = useActivityFeed(allHandles, 20);
+  const { data: myClans = [] } = useMyClans();
+  const primaryClan = myClans[0]?.clan;
+  const { data: clanStats } = useClanStats(primaryClan?.id);
+  const { data: clanMembers = [] } = useClanMembers(primaryClan?.id);
 
   const solveSeries = useMemo(
     () =>
@@ -165,6 +173,35 @@ export default function LeagueOverview() {
           </div>
         </Card>
       </div>
+
+      {primaryClan && (
+        <Card className="p-5 border-primary/20 bg-primary/5">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <Avatar className="h-10 w-10 border-2 border-primary/20">
+                <AvatarImage src={primaryClan.logo_url ?? undefined} />
+                <AvatarFallback>{primaryClan.tag || primaryClan.name.slice(0, 2)}</AvatarFallback>
+              </Avatar>
+              <div>
+                <h3 className="font-bold flex items-center gap-2">
+                  {primaryClan.name}
+                  <Badge variant="secondary" className="text-[10px] font-bold">[{primaryClan.tag}]</Badge>
+                </h3>
+                <p className="text-xs text-muted-foreground">{clanMembers.length} members</p>
+              </div>
+            </div>
+            <Link to={`/league/clans/${primaryClan.id}`}>
+              <Button size="sm" variant="ghost">View Clan Detail <ArrowRight className="h-3 w-3 ml-1.5" /></Button>
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <StatTile label="Clan Solved" value={clanStats?.total_solved ?? "—"} accent="text-emerald-500" />
+            <StatTile label="Avg Rating" value={clanStats?.avg_rating ?? "—"} accent="text-sky-500" />
+            <StatTile label="Active Today" value={clanStats?.active_members ?? "—"} />
+            <StatTile label="Clan Rank" value="N/A" />
+          </div>
+        </Card>
+      )}
 
       <div className="grid gap-4 lg:grid-cols-2">
         <Card className="p-5">

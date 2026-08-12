@@ -2,3 +2,6 @@ project_id = "elzftqnehcmnouptaqee"
 
 [functions.code-trace]
 verify_jwt = false
+
+[functions.export-schema-dump]
+verify_jwt = true

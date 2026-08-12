@@ -195,7 +195,7 @@ export function ParikshaaVsOthers() {
             </table>
 
             {/* ================= Mobile: stacked cards ================= */}
-            <ul className="divide-y divide-border/40 sm:hidden" aria-label="LeetLeague vs Others comparison">
+            <ul className="divide-y divide-border/40 sm:hidden" aria-label="Parikshaa vs Others comparison">
               {rows.map((row) => (
                 <li
                   key={row.feature}

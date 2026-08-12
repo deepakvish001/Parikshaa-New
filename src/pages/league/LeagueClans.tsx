@@ -142,7 +142,7 @@ export default function LeagueClans() {
           clan ? (
             <Link key={clan.id} to={`/league/clans/${clan.id}`} className="block">
               <Card className="overflow-hidden hover:ring-2 hover:ring-primary/20 transition-all cursor-pointer group">
-                <div className="h-28 bg-muted/40 bg-cover bg-center" style={clan.banner_url ? { backgroundImage: `url(${clan.banner_url})` } : undefined} />
+                <div className="relative h-28 bg-muted/40 bg-cover bg-center" style={clan.banner_url ? { backgroundImage: `url(${clan.banner_url})` } : undefined}>
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
                 </div>
                 <div className="p-4 space-y-3 relative">

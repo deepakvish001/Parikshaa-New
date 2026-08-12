@@ -75,10 +75,10 @@ export const useAdminContestProblems = (contestId: string | undefined) => {
     enabled: !!contestId,
     placeholderData: keepPreviousData,
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("contest_problems")
+      const { data, error } = await (supabase
+        .from("contest_problems" as any)
         .select("*")
-        .eq("contest_id", contestId!)
+        .eq("contest_id", contestId!) as any)
         .order("order_index", { ascending: true });
       if (error) throw error;
       return (data ?? []) as ContestProblem[];
@@ -165,11 +165,11 @@ export const useSetContestProblems = () => {
       contestId: string;
       problems: { problem_slug: string; order_index: number; points: number }[];
     }) => {
-      const del = await supabase.from("contest_problems").delete().eq("contest_id", contestId);
+      const del = await (supabase.from("contest_problems" as any).delete().eq("contest_id", contestId) as any);
       if (del.error) throw del.error;
       if (problems.length === 0) return;
-      const { error } = await supabase
-        .from("contest_problems")
+      const { error } = await (supabase
+        .from("contest_problems" as any)
         .insert(problems.map((p) => ({ ...p, contest_id: contestId })) as any);
       if (error) throw error;
     },

@@ -143,10 +143,10 @@ export const useContestProblems = (contestId: string | undefined) => {
     enabled: !!contestId,
     placeholderData: keepPreviousData,
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("contest_problems")
+      const { data, error } = await (supabase
+        .from("contest_problems" as any)
         .select("*")
-        .eq("contest_id", contestId!)
+        .eq("contest_id", contestId!) as any)
         .order("order_index", { ascending: true });
       if (error) throw error;
       return (data ?? []) as ContestProblem[];

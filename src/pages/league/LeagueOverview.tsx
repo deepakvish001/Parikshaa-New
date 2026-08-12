@@ -27,7 +27,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DifficultyBadge, DifficultyRing, MetricCard, StatTile, DailyChallengeCard } from "@/components/league/LeagueBits";
-import { useClanStats, useMyClans } from "@/hooks/league/useClans";
+import { useClanStats, useMyClans, useClanMembers } from "@/hooks/league/useClans";
 import {
   useActivityFeed,
   useAddHandle,

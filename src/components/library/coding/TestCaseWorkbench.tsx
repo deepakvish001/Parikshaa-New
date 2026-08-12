@@ -126,10 +126,24 @@ export const TestCaseWorkbench = ({
     onStdinChange(v);
     if (active.startsWith("c-") && active !== "c-new") {
       const id = active.slice(2);
-      setCustoms((prev) => prev.map((c) => (c.id === id ? { ...c, input: v } : c)));
+      setCustoms((prev) => {
+        const next = prev.map((c) => (c.id === id ? { ...c, input: v } : c));
+        // Explicitly write to local storage as well for immediate persistence
+        const map = readMap();
+        map[slug] = next;
+        writeMap(map);
+        return next;
+      });
     } else if (active === "c-new" && v.length > 0) {
       const id = `${Date.now()}`;
-      setCustoms((prev) => [...prev, { id, input: v }]);
+      const nextItem = { id, input: v };
+      setCustoms((prev) => {
+        const next = [...prev, nextItem];
+        const map = readMap();
+        map[slug] = next;
+        writeMap(map);
+        return next;
+      });
       setActive(`c-${id}` as TabKey);
     }
   };

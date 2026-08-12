@@ -90,6 +90,7 @@ export default function LeagueOverview() {
   const { data: myClans = [] } = useMyClans();
   const primaryClan = myClans[0]?.clan;
   const { data: clanStats } = useClanStats(primaryClan?.id);
+  const { data: clanMembers = [] } = useClanMembers(primaryClan?.id);
 
   const solveSeries = useMemo(
     () =>
@@ -186,7 +187,7 @@ export default function LeagueOverview() {
                   {primaryClan.name}
                   <Badge variant="secondary" className="text-[10px] font-bold">[{primaryClan.tag}]</Badge>
                 </h3>
-                <p className="text-xs text-muted-foreground">{rawMembers?.length ?? 0} members</p>
+                <p className="text-xs text-muted-foreground">{clanMembers.length} members</p>
               </div>
             </div>
             <Link to={`/league/clans/${primaryClan.id}`}>

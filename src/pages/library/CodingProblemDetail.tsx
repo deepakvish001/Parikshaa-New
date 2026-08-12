@@ -464,7 +464,7 @@ const CodingProblemDetail = () => {
                     onRun={handleRun}
                     isRunning={isRunning}
                     sampleCaseStatus={sampleStatus}
-                    customStatus={customStatus}
+                    customCaseStatus={customStatus}
                     onResetResults={() => {
                       setSampleStatus({});
                       setCustomStatus({});

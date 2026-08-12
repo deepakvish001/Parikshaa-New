@@ -55,6 +55,7 @@ import LeagueClanDetail from "./pages/league/LeagueClanDetail";
 import LeagueFeed from "./pages/league/LeagueFeed";
 import LeagueContests from "./pages/league/LeagueContests";
 import LeagueBookmarks from "./pages/league/LeagueBookmarks";
+import LeagueCompare from "./pages/league/LeagueCompare";
 
 
 import Settings from "./pages/Settings";
@@ -322,6 +323,7 @@ const App = () => (
                     <Route path="feed" element={<LeagueFeed />} />
                     <Route path="contests" element={<LeagueContests />} />
                     <Route path="bookmarks" element={<LeagueBookmarks />} />
+                    <Route path="compare" element={<LeagueCompare />} />
                   </Route>
                 </Route>
 

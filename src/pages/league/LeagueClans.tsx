@@ -15,6 +15,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import {
   useBrowseClans,
@@ -139,11 +140,19 @@ export default function LeagueClans() {
 
         {mine.map(({ clan, role }) =>
           clan ? (
-            <Link key={clan.id} to={`/league/clans/${clan.id}`}>
-              <Card className="overflow-hidden hover:ring-1 hover:ring-primary/30 transition-all cursor-pointer">
+            <Link key={clan.id} to={`/league/clans/${clan.id}`} className="block">
+              <Card className="overflow-hidden hover:ring-2 hover:ring-primary/20 transition-all cursor-pointer group">
                 <div className="h-28 bg-muted/40 bg-cover bg-center" style={clan.banner_url ? { backgroundImage: `url(${clan.banner_url})` } : undefined} />
-                <div className="p-4 space-y-3">
-                  <div className="flex items-start justify-between gap-2">
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
+                </div>
+                <div className="p-4 space-y-3 relative">
+                  <div className="absolute -top-6 left-4">
+                    <Avatar className="h-12 w-12 border-2 border-background ring-1 ring-border">
+                      <AvatarImage src={clan.logo_url ?? undefined} />
+                      <AvatarFallback className="font-bold">{clan.tag || clan.name.slice(0, 2)}</AvatarFallback>
+                    </Avatar>
+                  </div>
+                  <div className="pt-4 flex items-start justify-between gap-2">
                     <div>
                       <h3 className="font-bold">{clan.name}</h3>
                       <p className="text-sm text-muted-foreground line-clamp-1">{clan.description}</p>
@@ -152,10 +161,10 @@ export default function LeagueClans() {
                       <span className="text-[10px] font-semibold rounded bg-muted px-2 py-1">[{clan.tag}]</span>
                     )}
                   </div>
-                  <div className="flex items-center justify-between border-t pt-3 text-xs">
-                    <span className="text-muted-foreground">Invite code: <b className="text-foreground">{clan.invite_code}</b></span>
-                    <span className="flex items-center gap-1 rounded-full bg-muted px-2 py-1 capitalize">
-                      {role === "owner" && <Crown className="h-3 w-3 text-amber-400" />} {role}
+                  <div className="flex items-center justify-between border-t border-primary/10 pt-3 text-[10px]">
+                    <span className="text-muted-foreground">Code: <b className="text-foreground font-mono">{clan.invite_code}</b></span>
+                    <span className="flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 capitalize text-primary font-bold">
+                      {role === "owner" && <Crown className="h-3 w-3" />} {role}
                     </span>
                   </div>
                 </div>

@@ -99,24 +99,25 @@ export function ApexHero() {
           style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}
           className="max-w-[16ch] text-[46px] font-bold leading-[0.98] tracking-[-0.035em] text-foreground sm:text-6xl md:text-7xl lg:max-w-[18ch] lg:text-[96px] xl:text-[110px]"
         >
-          <span className="block">Visualize the Pattern.</span>
+          <span className="block">Visualize Logic.</span>
+          <span className="block">Master the Pattern.</span>
           <span className="block">
             <span className="relative inline-block px-3 py-1">
               <span
                 aria-hidden
                 className="absolute inset-0 -z-10 rounded-lg bg-primary/15 ring-1 ring-inset ring-primary/25"
               />
-              Master the Logic.
+              Succeed at Scale.
             </span>{" "}
           </span>
-          <span className="block">
+          <span className="block mt-2 sm:mt-4">
             <span
               className="bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent"
               style={{ backgroundSize: "200% auto", animation: "apex-shimmer 6s linear infinite" }}
             >
               Parikshaa
             </span>{" "}
-            <span className="text-foreground text-[0.8em] sm:text-[0.7em]">is your ultimate edge.</span>
+            <span className="text-foreground text-[0.7em] sm:text-[0.6em] align-middle">is your unfair advantage.</span>
           </span>
         </motion.h1>
 

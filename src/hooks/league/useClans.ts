@@ -151,9 +151,9 @@ export function useTopClans(limit = 10) {
     queryFn: async () => {
       const { data, error } = await db
         .from("clans")
-        .select("*, stats:clan_stats(*)")
+        .select("*, stats:clan_stats_view(*)")
         .eq("is_public", true)
-        .order("stats(total_solved)", { ascending: false })
+        .order("stats(total_solved)", { ascending: false, foreignTable: "stats" })
         .limit(limit);
       if (error) throw error;
       return data as any[];

@@ -17,7 +17,7 @@ const pillars: Pillar[] = [
   {
     id: "01",
     title: "Real-time sync",
-    tagline: "Sync your LeetCode, Codeforces, and more. Track your consistency with real metrics.",
+    tagline: "Sync your LeetCode, Codeforces, and more. Your progress, always live and measurable.",
     meta: "Live · Multi-platform",
     icon: Zap,
     tag: "Sync",
@@ -25,18 +25,18 @@ const pillars: Pillar[] = [
   {
     id: "02",
     title: "Global leaderboards",
-    tagline: "Measure your performance against thousands of learners on ranks that actually matter.",
+    tagline: "Compete on ranks based on solves, ratings, and streaks with the entire community.",
     meta: "Daily · Weekly · Monthly",
     icon: Trophy,
     tag: "Rank",
   },
   {
     id: "03",
-    title: "Career focused",
-    tagline: "Curated company-wise problems and interview questions for placement readiness.",
-    meta: "Placement ready · Pro",
+    title: "Clan competition",
+    tagline: "Join a clan or build your own. Compete collectively and track clan-wide progress.",
+    meta: "Social · Competitive",
     icon: Users,
-    tag: "Career",
+    tag: "Social",
   },
   {
     id: "04",
@@ -90,7 +90,7 @@ export function WhyParikshaa() {
         {/* Section heading */}
         <div className="mx-auto max-w-4xl text-center">
           <div className="mb-6 flex justify-center">
-            <SectionEyebrow kicker="02" label="Why Parikshaa / Six Reasons It Compounds" />
+            <SectionEyebrow kicker="02" label="Why LeetLeague / Six Reasons It Compounds" />
           </div>
 
           <motion.h2

@@ -295,7 +295,7 @@ export function ApexFooter({ freezeAnimations = false }: ApexFooterProps = {}) {
         body: {
           name: parsed.data.name,
           email: parsed.data.email,
-          org: "Parikshaa inquiry",
+          org: "LeetLeague inquiry",
           useCase: "coder",
           candidates: "0-100",
           proctoring: [],
@@ -389,7 +389,7 @@ export function ApexFooter({ freezeAnimations = false }: ApexFooterProps = {}) {
           <StackedSection id="signal-feed">
           <HeroStyleHeading
             eyebrowKicker="07"
-            eyebrowLabel="Parikshaa Signal / Weekly Digest"
+            eyebrowLabel="LeetLeague Feed / Weekly Digest"
             headingId="signal-feed-heading"
             as="h2"
             subheadPrimary="One email, zero fluff."

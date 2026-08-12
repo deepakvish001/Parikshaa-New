@@ -86,7 +86,7 @@ export function ApexHero() {
       <div className="relative z-10 mx-auto flex max-w-6xl flex-col items-center text-center">
         {/* Eyebrow chip */}
         <div className="mb-4 lg:mb-3">
-          <SectionEyebrow kicker="NEW" label="Parikshaa 2.0 is HERE 🔥" />
+          <SectionEyebrow kicker="NEW" label="LeetLeague is HERE 🔥" />
         </div>
 
 
@@ -99,24 +99,25 @@ export function ApexHero() {
           style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}
           className="max-w-[16ch] text-[46px] font-bold leading-[0.98] tracking-[-0.035em] text-foreground sm:text-6xl md:text-7xl lg:max-w-[18ch] lg:text-[96px] xl:text-[110px]"
         >
-          <span className="block">Code with Clarity.</span>
+          <span className="block">Track. Analyze.</span>
           <span className="block">
             <span className="relative inline-block px-3 py-1">
               <span
                 aria-hidden
                 className="absolute inset-0 -z-10 rounded-lg bg-primary/15 ring-1 ring-inset ring-primary/25"
               />
-              Solve with Logic.
-            </span>
+              Compete.
+            </span>{" "}
+            <span className="text-foreground/60">together.</span>
           </span>
-          <span className="block mt-2">
+          <span className="block">
             <span
               className="bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent"
               style={{ backgroundSize: "200% auto", animation: "apex-shimmer 6s linear infinite" }}
             >
-              Parikshaa
+              LeetLeague
             </span>{" "}
-            <span className="text-foreground">is Here.</span>
+            <span className="text-foreground">is HERE.</span>
           </span>
         </motion.h1>
 
@@ -128,10 +129,10 @@ export function ApexHero() {
           className="mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base lg:mt-4 lg:text-base"
         >
           <span className="block font-semibold text-foreground">
-            Master DSA patterns, visualize execution, and own your tech career.
+            Monitor solves, streaks, ratings, and ranks in real-time.
           </span>
           <span className="hidden sm:inline">
-            The simplest way to bridge the gap between solving and understanding. Built for clarity, speed, and mastery.
+            LeetLeague brings problem solving, analytics, contests, friends, clans, and real-time coding activity together in one platform.
           </span>
         </motion.p>
 
@@ -145,7 +146,7 @@ export function ApexHero() {
         >
           <div className="mb-4 flex items-center gap-4">
             <span className="h-px flex-1 bg-gradient-to-r from-transparent to-border/70" />
-            <SectionEyebrow dot label="Advanced Learning Ecosystem" />
+            <SectionEyebrow dot label="Competitive Programming Protocol" />
             <span className="h-px flex-1 bg-gradient-to-l from-transparent to-border/70" />
           </div>
           <div

@@ -23,28 +23,43 @@ export default function LeagueBookmarks() {
         </Card>
       )}
 
-      <div className="space-y-2">
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {saved.map((s) => (
-          <Card key={s.id} className="flex items-center gap-3 p-3">
-            <div className="min-w-0 flex-1">
-              <div className="text-sm font-medium truncate">{s.title ?? s.problem_slug}</div>
-              <div className="text-xs text-muted-foreground">
-                Saved {new Date(s.created_at).toLocaleDateString()}
+          <Card key={s.id} className="p-4 flex flex-col justify-between group hover:border-primary/50 transition-colors">
+            <div className="space-y-3">
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0 flex-1">
+                  <div className="text-sm font-bold truncate group-hover:text-primary transition-colors">
+                    {s.title ?? s.problem_slug}
+                  </div>
+                  <div className="text-[10px] text-muted-foreground uppercase tracking-wider mt-1">
+                    Saved {new Date(s.created_at).toLocaleDateString()}
+                  </div>
+                </div>
+                <DifficultyBadge difficulty={s.difficulty} />
               </div>
             </div>
-            <DifficultyBadge difficulty={s.difficulty} />
-            <a href={`https://leetcode.com/problems/${s.problem_slug}/`} target="_blank" rel="noreferrer">
-              <Button size="sm" variant="outline" className="h-8 text-xs">
-                <Code2 className="h-3 w-3 mr-1" /> Solve
+            
+            <div className="mt-4 pt-4 border-t flex items-center justify-between">
+              <a 
+                href={`https://leetcode.com/problems/${s.problem_slug}/`} 
+                target="_blank" 
+                rel="noreferrer"
+                className="flex-1 mr-2"
+              >
+                <Button size="sm" variant="outline" className="w-full h-8 text-xs bg-emerald-500/5 hover:bg-emerald-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-400">
+                  <Code2 className="h-3.5 w-3.5 mr-1.5" /> Solve
+                </Button>
+              </a>
+              <Button
+                size="icon"
+                variant="ghost"
+                className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                onClick={() => toggle.mutate({ slug: s.problem_slug })}
+              >
+                <Trash2 className="h-4 w-4" />
               </Button>
-            </a>
-            <Button
-              size="icon"
-              variant="ghost"
-              onClick={() => toggle.mutate({ slug: s.problem_slug })}
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
+            </div>
           </Card>
         ))}
       </div>

@@ -9,6 +9,7 @@ import {
   CalendarDays,
   ArrowUpRight,
   ArrowRight,
+  Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SectionEyebrow } from "./SectionEyebrow";

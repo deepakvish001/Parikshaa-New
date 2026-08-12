@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Globe, KeyRound, Plus, Users, Crown } from "lucide-react";
+import { Globe, KeyRound, Plus, Users, Crown, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -138,31 +139,28 @@ export default function LeagueClans() {
 
         {mine.map(({ clan, role }) =>
           clan ? (
-            <Card key={clan.id} className="overflow-hidden">
-              <div className="h-28 bg-muted/40 bg-cover bg-center" style={clan.banner_url ? { backgroundImage: `url(${clan.banner_url})` } : undefined} />
-              <div className="p-4 space-y-3">
-                <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <h3 className="font-bold">{clan.name}</h3>
-                    <p className="text-sm text-muted-foreground">{clan.description}</p>
+            <Link key={clan.id} to={`/league/clans/${clan.id}`}>
+              <Card className="overflow-hidden hover:ring-1 hover:ring-primary/30 transition-all cursor-pointer">
+                <div className="h-28 bg-muted/40 bg-cover bg-center" style={clan.banner_url ? { backgroundImage: `url(${clan.banner_url})` } : undefined} />
+                <div className="p-4 space-y-3">
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <h3 className="font-bold">{clan.name}</h3>
+                      <p className="text-sm text-muted-foreground line-clamp-1">{clan.description}</p>
+                    </div>
+                    {clan.tag && (
+                      <span className="text-[10px] font-semibold rounded bg-muted px-2 py-1">[{clan.tag}]</span>
+                    )}
                   </div>
-                  {clan.tag && (
-                    <span className="text-[10px] font-semibold rounded bg-muted px-2 py-1">[{clan.tag}]</span>
-                  )}
+                  <div className="flex items-center justify-between border-t pt-3 text-xs">
+                    <span className="text-muted-foreground">Invite code: <b className="text-foreground">{clan.invite_code}</b></span>
+                    <span className="flex items-center gap-1 rounded-full bg-muted px-2 py-1 capitalize">
+                      {role === "owner" && <Crown className="h-3 w-3 text-amber-400" />} {role}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex items-center justify-between border-t pt-3 text-xs">
-                  <span className="text-muted-foreground">Invite code: <b className="text-foreground">{clan.invite_code}</b></span>
-                  <span className="flex items-center gap-1 rounded-full bg-muted px-2 py-1 capitalize">
-                    {role === "owner" && <Crown className="h-3 w-3 text-amber-400" />} {role}
-                  </span>
-                </div>
-                {role !== "owner" && (
-                  <Button variant="ghost" size="sm" className="w-full" onClick={() => leave.mutate(clan.id)}>
-                    Leave clan
-                  </Button>
-                )}
-              </div>
-            </Card>
+              </Card>
+            </Link>
           ) : null,
         )}
       </div>

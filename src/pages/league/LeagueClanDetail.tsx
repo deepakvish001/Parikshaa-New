@@ -31,6 +31,7 @@ import {
   useMyClans,
   useClanMembers,
   useLeaveClan,
+  useClanStats,
 } from "@/hooks/league/useClans";
 import { useSnapshots, useTrackedHandles } from "@/hooks/league/useLeague";
 import { MetricCard, StatTile } from "@/components/league/LeagueBits";
@@ -43,6 +44,7 @@ export default function LeagueClanDetail() {
   
   const { data: rawMembers = [] } = useClanMembers(id);
   const leave = useLeaveClan();
+  const { data: clanStats } = useClanStats(id);
   
   // In a real app, we'd fetch profile data for members. 
   // For now, we assume the user_id matches a tracked handle or we fetch handles.

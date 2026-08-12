@@ -170,7 +170,7 @@ export const useSetContestProblems = () => {
       if (problems.length === 0) return;
       const { error } = await (supabase
         .from("contest_problems" as any)
-        .insert(problems.map((p) => ({ ...p, contest_id: contestId })) as any);
+        .insert(problems.map((p) => ({ ...p, contest_id: contestId })) as any) as any);
       if (error) throw error;
     },
     onSuccess: (_d, vars) => {

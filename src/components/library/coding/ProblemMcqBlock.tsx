@@ -26,43 +26,29 @@ export function ProblemMcqBlock({ problemSlug, mcq, className }: ProblemMcqBlock
   };
 
   return (
-    <div className={cn("mt-6 p-5 rounded-2xl bg-muted/5 border border-border/40 space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500", className)}>
-      <div className="flex items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
-          <div className="h-4 w-1 bg-amber-500 rounded-full" />
-          <h3 className="text-[13px] font-bold uppercase tracking-wider text-foreground/80">
-            Check your understanding
-          </h3>
-        </div>
-        
-        <div className={cn(
-          "px-2 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-widest border transition-all",
-          submitted 
-            ? mcq.options[attempt!.selected_index]?.correct
-              ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20"
-              : "bg-rose-500/10 text-rose-500 border-rose-500/20"
-            : "bg-amber-500/10 text-amber-500 border-amber-500/20"
-        )}>
+    <div className={cn("space-y-3", className)}>
+      <div className="flex items-baseline gap-2">
+        <h3 className="text-base font-semibold text-foreground">Now your turn!</h3>
+      </div>
+      {mcq.question && (
+        <p className="text-sm text-muted-foreground whitespace-pre-line">{mcq.question}</p>
+      )}
+      <div className="flex items-center gap-2 text-sm">
+        <span className="text-muted-foreground">Output:</span>
+        <span className="font-medium text-amber-300">
           {submitted
             ? mcq.options[attempt!.selected_index]?.correct
-              ? "Correct"
-              : "Incorrect"
-            : "Optional"}
-        </div>
+              ? "Correct!"
+              : "Try again next time"
+            : "Pick your answer"}
+        </span>
       </div>
 
-      {mcq.question && (
-        <p className="text-[13px] text-muted-foreground font-sans leading-relaxed px-1">
-          {mcq.question}
-        </p>
-      )}
-
-      <div className="grid grid-cols-1 gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {mcq.options.map((opt, idx) => {
           const isSelected = selected === idx;
           const isCorrect = submitted && opt.correct;
           const isWrongPick = submitted && isSelected && !opt.correct;
-          
           return (
             <button
               key={idx}
@@ -70,34 +56,29 @@ export function ProblemMcqBlock({ problemSlug, mcq, className }: ProblemMcqBlock
               onClick={() => handlePick(idx)}
               disabled={submitted}
               className={cn(
-                "group relative flex items-center gap-3 px-4 py-2.5 rounded-xl border text-left transition-all duration-200",
-                !submitted && "bg-muted/20 border-border/40 hover:bg-muted/40 hover:border-border/60",
-                isSelected && !submitted && "border-amber-500/40 bg-amber-500/5",
-                isCorrect && "border-emerald-500/40 bg-emerald-500/10",
-                isWrongPick && "border-rose-500/40 bg-rose-500/10",
+                "flex items-center gap-3 px-4 py-3 rounded-2xl border text-left transition-all",
+                "bg-card/60 border-border/60 hover:bg-card/80 hover:border-border",
+                isSelected && !submitted && "border-amber-400/60 bg-amber-500/5",
+                isCorrect && "border-emerald-500/60 bg-emerald-500/10",
+                isWrongPick && "border-rose-500/60 bg-rose-500/10",
                 submitted && "cursor-default",
               )}
             >
-              <div className={cn(
-                "h-4 w-4 rounded-full border grid place-items-center shrink-0 transition-all",
-                isSelected ? "border-amber-500" : "border-muted-foreground/20",
-                isCorrect && "border-emerald-500 bg-emerald-500/20",
-                isWrongPick && "border-rose-500 bg-rose-500/20",
-              )}>
-                {isSelected && !submitted && (
-                  <div className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+              <span
+                className={cn(
+                  "h-4 w-4 rounded-full border-2 grid place-items-center shrink-0",
+                  isSelected ? "border-amber-300" : "border-muted-foreground/40",
+                  isCorrect && "border-emerald-400 bg-emerald-400/30",
+                  isWrongPick && "border-rose-400 bg-rose-400/30",
                 )}
-                {isCorrect && <Check className="h-2.5 w-2.5 text-emerald-500" />}
-                {isWrongPick && <X className="h-2.5 w-2.5 text-rose-500" />}
-              </div>
-              <span className={cn(
-                "text-[13px] font-medium transition-colors",
-                isSelected ? "text-foreground" : "text-muted-foreground group-hover:text-foreground",
-                isCorrect && "text-emerald-500",
-                isWrongPick && "text-rose-500"
-              )}>
-                {opt.label}
+              >
+                {isSelected && !submitted && (
+                  <span className="h-1.5 w-1.5 rounded-full bg-amber-300" />
+                )}
+                {isCorrect && <Check className="h-2.5 w-2.5 text-emerald-200" />}
+                {isWrongPick && <X className="h-2.5 w-2.5 text-rose-200" />}
               </span>
+              <span className="text-sm font-medium text-foreground">{opt.label}</span>
             </button>
           );
         })}

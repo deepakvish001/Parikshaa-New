@@ -24,36 +24,40 @@ export const ProblemDetailHeader = ({
   const status = isSolved ? "Solved" : isAttempted ? "Attempted" : "Not started";
   const StatusIcon = isSolved ? CheckCircle2 : isAttempted ? CircleDot : Circle;
   const statusClass = isSolved
-    ? "text-emerald-500 bg-emerald-500/10 border-emerald-500/20 shadow-[0_0_15px_-5px_rgba(16,185,129,0.3)]"
+    ? "text-emerald-500 bg-emerald-500/10 border-emerald-500/30"
     : isAttempted
-      ? "text-amber-500 bg-amber-500/10 border-amber-500/20 shadow-[0_0_15px_-5px_rgba(245,158,11,0.3)]"
-      : "text-muted-foreground bg-muted/20 border-border/50";
+      ? "text-amber-500 bg-amber-500/10 border-amber-500/30"
+      : "text-muted-foreground bg-muted/40 border-border";
 
   return (
-    <div className="flex items-center gap-2">
-      <div className={cn(
-        "flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-bold uppercase tracking-wider transition-all border",
-        isSolved 
-          ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20" 
-          : "bg-muted/30 text-muted-foreground/40 border-border/40"
-      )}>
-        <StatusIcon className={cn("h-3 w-3", isSolved && "animate-pulse")} />
-        {status}
-      </div>
-      
-      <div className="flex items-center">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={onToggleBookmark}
-          className={cn(
-            "h-7 w-7 text-muted-foreground/40 hover:text-amber-500 hover:bg-amber-500/5 transition-colors",
-            isBookmarked && "text-amber-500"
+    <Card className="p-3 mb-4">
+      <div className="flex items-center justify-between gap-3 flex-wrap">
+        <div className="flex items-center gap-2 flex-wrap">
+          <Badge variant="outline" className={cn("gap-1.5 font-medium", statusClass)}>
+            <StatusIcon className="h-3.5 w-3.5" />
+            {status}
+          </Badge>
+          <span className="flex items-center gap-1 text-xs text-muted-foreground">
+            <Activity className="h-3 w-3" />
+            {attempts} {attempts === 1 ? "attempt" : "attempts"}
+          </span>
+          {solvedAt && (
+            <span className="flex items-center gap-1 text-xs text-muted-foreground">
+              <CalendarCheck className="h-3 w-3" />
+              Solved {new Date(solvedAt).toLocaleDateString()}
+            </span>
           )}
+        </div>
+        <Button
+          variant={isBookmarked ? "default" : "outline"}
+          size="sm"
+          onClick={onToggleBookmark}
+          className="gap-1.5 h-8"
         >
           <Star className={cn("h-3.5 w-3.5", isBookmarked && "fill-current")} />
+          {isBookmarked ? "Bookmarked" : "Bookmark"}
         </Button>
       </div>
-    </div>
+    </Card>
   );
 };

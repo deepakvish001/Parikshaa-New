@@ -107,7 +107,7 @@ export default function AdminContests() {
               ? new Date(start.getTime() + i * 24 * 3600 * 1000).toISOString()
               : null,
         }));
-        const { error } = await supabase.from("contest_problems" as any).insert(rows as any);
+        const { error } = await supabase.from("contest_problems").insert(rows);
         if (error) throw error;
       }
       toast.success(`Created: ${created.title}`);

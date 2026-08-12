@@ -305,8 +305,8 @@ const AdminProblemsList = () => {
     queryKey: ["admin", "contests", "count"],
     queryFn: async () => {
       const { count, error } = await supabase
-        .from("contests" as any)
-        .select("*", { count: "exact", head: true } as any);
+        .from("contests")
+        .select("*", { count: "exact", head: true });
       if (error) throw error;
       return count ?? 0;
     },

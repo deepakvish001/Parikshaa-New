@@ -153,13 +153,6 @@ const sections: {
   items: CardItem[];
 }[] = [
   {
-    label: "Parikshaa Premium Sheets", icon: Crown,
-    items: [
-      { title: "SDE Sheet · The Ultimate Guide 💎", subtitle: "Curated roadmap for product-based companies. 180+ problems from top interview patterns.", primary: { label: "Open Sheet", to: "/learn/sheets/sde-sheet" } },
-      { title: "Zero to 2300 · Mastery CP Sheet 🚀", subtitle: "CodingPariksha CP Sheet — 57 techniques, 1100+ Codeforces problems, very basic → Master.", primary: { label: "Open Sheet", to: "/learn/sheets/zero-to-2300-cp-sheet" } },
-    ],
-  },
-  {
     label: "Pariksha DSA Sheets", icon: Layers,
     items: [
       { title: "LEVEL 0 · Problem Solving Foundation 🧱", subtitle: "if-else → loops → patterns → digits → primes → strings → arrays → matrices. Build core problem-solving fluency before DSA.", primary: { label: "Open Sheet", to: "/learn/sheets/problem-solving-foundation" } },
@@ -322,7 +315,6 @@ for (const s of sections) {
 // Section grouping — organises sections into logical tabs
 // ─────────────────────────────────────────────────────────────
 const SECTION_GROUPS = [
-  { id: "premium", label: "Premium", icon: Crown, hint: "Exclusive Parikshaa curated sheets", sections: ["Parikshaa Premium Sheets"] },
   { id: "sheets", label: "Sheets", icon: Layers, hint: "Curated sheets across DSA, CS core, SD, CP & SQL", sections: ["Pariksha DSA Sheets", "DSA Sheets", "Core CS Subjects", "System Design", "Competitive Programming", "SQL"] },
   { id: "practice", label: "Practice", icon: BrainCircuit, hint: "Solve, review and revise", sections: ["DSA Studio", "DSA Heatmap", "Coding Problems", "DSA Playlist"] },
   { id: "library", label: "Library", icon: LibraryBig, hint: "Question banks, notes, companies & roles", sections: ["Library"] },

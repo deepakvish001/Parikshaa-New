@@ -1,4 +1,4 @@
-import Editor, { OnMount, type Monaco } from "@monaco-editor/react";
+import Editor, { OnMount } from "@monaco-editor/react";
 import { useTheme } from "next-themes";
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from "react";
 type IStandaloneCodeEditor = Parameters<OnMount>[0];
@@ -10,78 +10,23 @@ interface MonacoEditorProps {
   readOnly?: boolean;
   height?: string | number;
   fontSize?: number;
-  diagnostics?: MonacoDiagnostic[];
-  minimap?: boolean;
-  wordWrap?: boolean;
-  onRunShortcut?: () => void;
-}
-
-
-export interface MonacoDiagnostic {
-  line: number;
-  column?: number;
-  endLine?: number;
-  endColumn?: number;
-  message: string;
-  severity?: "error" | "warning";
 }
 
 export interface MonacoEditorHandle {
   format: () => Promise<void>;
-  lint: () => Promise<MonacoDiagnostic[]>;
   focus: () => void;
   getValue: () => string;
   relayout: () => void;
-  revealPosition: (line: number, column?: number) => void;
 }
-
 
 export const MonacoEditor = forwardRef<MonacoEditorHandle, MonacoEditorProps>(
   (
-    {
-      value,
-      onChange,
-      language,
-      readOnly = false,
-      height = "100%",
-      fontSize = 13,
-      diagnostics = [],
-      minimap = false,
-      wordWrap = true,
-      onRunShortcut,
-
-    },
+    { value, onChange, language, readOnly = false, height = "100%", fontSize = 13 },
     ref,
   ) => {
     const { resolvedTheme } = useTheme();
     const editorRef = useRef<IStandaloneCodeEditor | null>(null);
     const containerRef = useRef<HTMLDivElement | null>(null);
-    const monacoRef = useRef<Monaco | null>(null);
-
-    const applyDiagnostics = useCallback((ed: IStandaloneCodeEditor, monaco: Monaco, next: MonacoDiagnostic[]) => {
-      const model = ed.getModel();
-      if (!model) return;
-      monaco.editor.setModelMarkers(
-        model,
-        "parikshaa-code-diagnostics",
-        next.map((diagnostic) => {
-          const line = Math.max(1, Math.min(diagnostic.line, model.getLineCount()));
-          const maxColumn = model.getLineMaxColumn(line);
-          const column = Math.max(1, Math.min(diagnostic.column ?? 1, maxColumn));
-          return {
-            startLineNumber: line,
-            startColumn: column,
-            endLineNumber: Math.max(line, Math.min(diagnostic.endLine ?? line, model.getLineCount())),
-            endColumn: Math.max(column + 1, Math.min(diagnostic.endColumn ?? maxColumn, maxColumn)),
-            message: diagnostic.message,
-            severity:
-              diagnostic.severity === "warning"
-                ? monaco.MarkerSeverity.Warning
-                : monaco.MarkerSeverity.Error,
-          };
-        }),
-      );
-    }, []);
 
     const relayout = useCallback(() => {
       const ed = editorRef.current;
@@ -97,57 +42,21 @@ export const MonacoEditor = forwardRef<MonacoEditorHandle, MonacoEditorProps>(
       });
     }, []);
 
-    const runRef = useRef(onRunShortcut);
-    runRef.current = onRunShortcut;
-
-    const handleMount: OnMount = useCallback((ed, monaco) => {
+    const handleMount: OnMount = useCallback((ed) => {
       editorRef.current = ed;
-      monacoRef.current = monaco;
       ed.updateOptions({
         fontLigatures: true,
-        fontFamily:
-          "'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, monospace",
+        minimap: { enabled: false },
         scrollBeyondLastLine: false,
         automaticLayout: true,
         tabSize: 4,
         lineNumbers: "on",
         roundedSelection: true,
-        padding: { top: 14, bottom: 20 },
-        bracketPairColorization: { enabled: true },
-        guides: { bracketPairs: true, indentation: true, highlightActiveIndentation: true },
-        renderLineHighlight: "all",
-        cursorSmoothCaretAnimation: "on",
-        autoClosingBrackets: "languageDefined",
-        autoClosingQuotes: "languageDefined",
-        formatOnPaste: true,
-        formatOnType: true,
-        tabCompletion: "on",
-        suggestOnTriggerCharacters: true,
-        quickSuggestions: { other: true, comments: false, strings: false },
-        stickyScroll: { enabled: true },
-        scrollbar: { verticalScrollbarSize: 10, horizontalScrollbarSize: 10 },
-        overviewRulerLanes: 2,
-        matchBrackets: "always",
-        occurrencesHighlight: "singleFile",
-        linkedEditing: true,
+        padding: { top: 12, bottom: 12 },
       });
-      ed.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => runRef.current?.());
-      applyDiagnostics(ed, monaco, diagnostics);
       // Initial layout once mounted into the live grid
       requestAnimationFrame(() => relayout());
-    }, [applyDiagnostics, diagnostics, relayout]);
-
-
-    useEffect(() => {
-      const ed = editorRef.current;
-      const monaco = monacoRef.current;
-      if (!ed || !monaco) return;
-      applyDiagnostics(ed, monaco, diagnostics);
-      const firstError = diagnostics.find((diagnostic) => diagnostic.severity !== "warning");
-      if (firstError) {
-        ed.revealLineInCenter(firstError.line);
-      }
-    }, [applyDiagnostics, diagnostics]);
+    }, [relayout]);
 
     // ResizeObserver on the wrapper — covers the case where the parent grid
     // template changes (e.g. peer join → BattleRoom mounts → siblings appear).
@@ -171,62 +80,7 @@ export const MonacoEditor = forwardRef<MonacoEditorHandle, MonacoEditorProps>(
       focus: () => editorRef.current?.focus(),
       getValue: () => editorRef.current?.getValue() ?? "",
       relayout,
-      revealPosition: (line: number, column = 1) => {
-        const ed = editorRef.current;
-        if (!ed) return;
-        ed.revealLineInCenter(Math.max(1, line));
-        ed.setPosition({ lineNumber: Math.max(1, line), column: Math.max(1, column) });
-        ed.focus();
-      },
-      lint: async () => {
-        const ed = editorRef.current;
-        const monaco = monacoRef.current;
-        if (!ed || !monaco) return [];
-        const code = ed.getValue();
-        const model = ed.getModel();
-        if (!model) return [];
-
-        const nextDiagnostics: MonacoDiagnostic[] = [];
-
-        // Basic Linting Rules
-        const lines = code.split("\n");
-        lines.forEach((line, i) => {
-          const lineNumber = i + 1;
-          
-          // 1. Check for 'debugger'
-          if (line.includes("debugger")) {
-            nextDiagnostics.push({
-              line: lineNumber,
-              message: "Unexpected 'debugger' statement.",
-              severity: "warning"
-            });
-          }
-
-          // 2. Check for print statements in production code (optional, but good for coding platforms)
-          if (language === "python" && (line.includes("print(") || line.includes("print "))) {
-             // Just a hint
-          }
-        });
-
-        // Language-specific basic checks
-        if (language === "cpp" || language === "java") {
-          // Check for balanced braces (simplified)
-          const open = (code.match(/{/g) || []).length;
-          const close = (code.match(/}/g) || []).length;
-          if (open !== close) {
-            nextDiagnostics.push({
-              line: lines.length,
-              message: `Unbalanced braces: ${open} open, ${close} closed.`,
-              severity: "error"
-            });
-          }
-        }
-
-        applyDiagnostics(ed, monaco, nextDiagnostics);
-        return nextDiagnostics;
-      },
     }));
-
 
     return (
       <div ref={containerRef} className="w-full h-full min-w-0" data-testid="monaco-wrapper">
@@ -240,19 +94,16 @@ export const MonacoEditor = forwardRef<MonacoEditorHandle, MonacoEditorProps>(
           onMount={handleMount}
           options={{
             readOnly,
-            wordWrap: wordWrap ? "on" : "off",
-            minimap: { enabled: minimap, renderCharacters: false },
+            wordWrap: "on",
             smoothScrolling: true,
             cursorBlinking: "smooth",
             fontSize,
-            lineHeight: Math.round(fontSize * 1.7),
           }}
           loading={
-            <div className="flex h-full items-center justify-center text-xs text-muted-foreground">
-              Loading editor…
+            <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
+              
             </div>
           }
-
         />
       </div>
     );

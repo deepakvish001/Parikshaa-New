@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef, useContext, createContext, useDeferredValue } from "react";
-import { advSqlFullData } from "@/data/advSqlData";
-
 
 // Lets deeply-nested topic rows open an article inline (DBMS sheet only)
 // without threading a prop through every intermediate component.
@@ -35,9 +33,6 @@ import {
   ArrowRight,
   ListTree,
   Share2,
-  Eye,
-  BookOpen,
-  Zap,
 } from "lucide-react";
 import {
   Command,
@@ -120,9 +115,7 @@ import { cnSections, cnMeta } from "@/data/cnData";
 import { osSections, osMeta } from "@/data/osData";
 import { acmIcpcSections, acmIcpcMeta, acmIcpcFaqs, acmIcpcChecklist } from "@/data/acmIcpcTrainingData";
 import { cpLadderSections, cpLadderMeta } from "@/data/cpLadderData";
-import { cpTopicSheetSections, cpTopicSheetMeta } from "@/data/cpTopicSheetData";
 import { striverSDESections, striverSDEMeta } from "@/data/striverSDEData";
-import { zeroTo2300Sections, zeroTo2300Meta } from "@/data/zeroTo2300SheetData";
 import { striverSDSections, striverSDMeta } from "@/data/striverSDData";
 import { sqlPracticeSections, sqlPracticeMeta } from "@/data/sqlPracticeData";
 import { advSqlSections, advSqlMeta } from "@/data/advSqlData";
@@ -200,14 +193,7 @@ interface SheetData {
   easy: number;
   medium: number;
   hard: number;
-  sections: (Section & { 
-    part?: string; 
-    ratingBand?: string; 
-    description?: string; 
-    keyConcepts?: string; 
-    resources?: string;
-    notes?: string;
-  })[];
+  sections: Section[];
 }
 
 // Mock data for sheets
@@ -260,19 +246,300 @@ const mockSheetData: Record<string, SheetData> = {
     ...sqlPracticeMeta,
     sections: sqlPracticeSections,
   },
-  "competitive-programming": {
-    ...cpTopicSheetMeta,
-    sections: cpTopicSheetSections,
-  },
-  "zero-to-2300-cp-sheet": {
-    ...zeroTo2300Meta,
-    sections: zeroTo2300Sections,
-  },
   "adv-sql-practice": {
-    ...advSqlFullData,
+    ...advSqlMeta,
+    sections: advSqlSections,
   },
-
-
+  "competitive-programming": {
+    id: "competitive-programming",
+    title: "Competitive Programming Sheet",
+    description: "Master algorithms through structured problem sets from Codeforces, AtCoder & ICPC",
+    lastUpdated: "February 7, 2026",
+    totalProblems: 320,
+    completed: 0,
+    easy: 80,
+    medium: 150,
+    hard: 90,
+    sections: [
+      {
+        id: "cp-preliminaries",
+        title: "Preliminaries",
+        subSections: [
+          {
+            id: "cp-lang-basics",
+            title: "Language Basics",
+            topics: [
+              { id: "cp-1", title: "Fast I/O in C++", completed: false, difficulty: "Easy", resourceType: "article", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-2", title: "Template Setup", completed: false, difficulty: "Easy", resourceType: "article", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-3", title: "Debugging Techniques", completed: false, difficulty: "Easy", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-4", title: "Time Complexity Analysis", completed: false, difficulty: "Easy", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-5", title: "Common Pitfalls & Edge Cases", completed: false, difficulty: "Easy", resourceType: "article", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+          {
+            id: "cp-io-practice",
+            title: "Input/Output Practice",
+            topics: [
+              { id: "cp-6", title: "Multiple Test Cases", completed: false, difficulty: "Easy", resourceType: "link", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-7", title: "Reading Until EOF", completed: false, difficulty: "Easy", resourceType: "link", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-8", title: "String Parsing", completed: false, difficulty: "Easy", resourceType: "link", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+        ],
+      },
+      {
+        id: "cp-basics",
+        title: "Basics",
+        subSections: [
+          {
+            id: "cp-sorting",
+            title: "Sorting Algorithms",
+            topics: [
+              { id: "cp-9", title: "Counting Sort", completed: false, difficulty: "Easy", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-10", title: "Radix Sort", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-11", title: "Custom Comparators", completed: false, difficulty: "Easy", resourceType: "article", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-12", title: "Coordinate Compression", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+          {
+            id: "cp-two-pointers",
+            title: "Two Pointers & Sliding Window",
+            topics: [
+              { id: "cp-13", title: "Two Pointers Technique", completed: false, difficulty: "Easy", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-14", title: "Sliding Window Fixed Size", completed: false, difficulty: "Easy", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-15", title: "Sliding Window Variable Size", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-16", title: "Meet in the Middle", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+          {
+            id: "cp-prefix",
+            title: "Prefix Sum & Difference Arrays",
+            topics: [
+              { id: "cp-17", title: "1D Prefix Sum", completed: false, difficulty: "Easy", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-18", title: "2D Prefix Sum", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-19", title: "Difference Array", completed: false, difficulty: "Easy", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-20", title: "Range Update Queries", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+          {
+            id: "cp-greedy",
+            title: "Greedy Algorithms",
+            topics: [
+              { id: "cp-21", title: "Activity Selection", completed: false, difficulty: "Easy", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-22", title: "Fractional Knapsack", completed: false, difficulty: "Easy", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-23", title: "Job Scheduling", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-24", title: "Huffman Coding", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+        ],
+      },
+      {
+        id: "cp-intermediate",
+        title: "Intermediate",
+        subSections: [
+          {
+            id: "cp-binary-search",
+            title: "Binary Search Advanced",
+            topics: [
+              { id: "cp-25", title: "Binary Search on Answer", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-26", title: "Ternary Search", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-27", title: "Parallel Binary Search", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-28", title: "Fractional Binary Search", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+          {
+            id: "cp-dp-intro",
+            title: "Dynamic Programming Introduction",
+            topics: [
+              { id: "cp-29", title: "DP Fundamentals", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-30", title: "1D DP Problems", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-31", title: "2D DP Problems", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-32", title: "Knapsack Variants", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-33", title: "LIS & LCS", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-34", title: "Digit DP", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+          {
+            id: "cp-graphs-basic",
+            title: "Graph Fundamentals",
+            topics: [
+              { id: "cp-35", title: "Graph Representation", completed: false, difficulty: "Easy", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-36", title: "BFS & DFS", completed: false, difficulty: "Easy", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-37", title: "Cycle Detection", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-38", title: "Bipartite Check", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-39", title: "Topological Sort", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-40", title: "Dijkstra's Algorithm", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+          {
+            id: "cp-number-theory",
+            title: "Number Theory",
+            topics: [
+              { id: "cp-41", title: "Prime Sieve", completed: false, difficulty: "Easy", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-42", title: "Prime Factorization", completed: false, difficulty: "Easy", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-43", title: "GCD & LCM", completed: false, difficulty: "Easy", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-44", title: "Modular Arithmetic", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-45", title: "Modular Inverse", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-46", title: "Fast Exponentiation", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+        ],
+      },
+      {
+        id: "cp-advanced-ds",
+        title: "Advanced Data Structures",
+        subSections: [
+          {
+            id: "cp-segment-tree",
+            title: "Segment Tree",
+            topics: [
+              { id: "cp-47", title: "Basic Segment Tree", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-48", title: "Lazy Propagation", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-49", title: "Segment Tree with Merge", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-50", title: "Persistent Segment Tree", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+          {
+            id: "cp-fenwick",
+            title: "Fenwick Tree (BIT)",
+            topics: [
+              { id: "cp-51", title: "Basic BIT", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-52", title: "Range Update Point Query", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-53", title: "2D BIT", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+          {
+            id: "cp-dsu",
+            title: "Disjoint Set Union",
+            topics: [
+              { id: "cp-54", title: "Basic DSU", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-55", title: "DSU by Rank/Size", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-56", title: "Path Compression", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-57", title: "DSU on Trees", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+          {
+            id: "cp-trie",
+            title: "Trie & Suffix Structures",
+            topics: [
+              { id: "cp-58", title: "Basic Trie", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-59", title: "XOR Trie", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-60", title: "Suffix Array", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+        ],
+      },
+      {
+        id: "cp-advanced-algo",
+        title: "Advanced Algorithms",
+        subSections: [
+          {
+            id: "cp-graphs-adv",
+            title: "Advanced Graph Algorithms",
+            topics: [
+              { id: "cp-61", title: "Bellman-Ford", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-62", title: "Floyd-Warshall", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-63", title: "MST (Kruskal & Prim)", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-64", title: "SCC (Kosaraju/Tarjan)", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-65", title: "Bridges & Articulation Points", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-66", title: "LCA & Binary Lifting", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+          {
+            id: "cp-dp-advanced",
+            title: "Advanced DP",
+            topics: [
+              { id: "cp-67", title: "DP on Trees", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-68", title: "Bitmask DP", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-69", title: "SOS DP", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-70", title: "Divide & Conquer DP", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-71", title: "Convex Hull Trick", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+          {
+            id: "cp-strings",
+            title: "String Algorithms",
+            topics: [
+              { id: "cp-72", title: "KMP Algorithm", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-73", title: "Z Algorithm", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-74", title: "Rabin-Karp Hashing", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-75", title: "Aho-Corasick", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+        ],
+      },
+      {
+        id: "cp-math",
+        title: "Advanced Mathematics",
+        subSections: [
+          {
+            id: "cp-combinatorics",
+            title: "Combinatorics",
+            topics: [
+              { id: "cp-76", title: "nCr & nPr", completed: false, difficulty: "Easy", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-77", title: "Pascal's Triangle", completed: false, difficulty: "Easy", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-78", title: "Catalan Numbers", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-79", title: "Inclusion-Exclusion", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-80", title: "Stars and Bars", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+          {
+            id: "cp-game-theory",
+            title: "Game Theory",
+            topics: [
+              { id: "cp-81", title: "Nim Game", completed: false, difficulty: "Medium", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-82", title: "Sprague-Grundy Theorem", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-83", title: "Minimax Algorithm", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+          {
+            id: "cp-fft",
+            title: "FFT & Polynomial",
+            topics: [
+              { id: "cp-84", title: "FFT Basics", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-85", title: "NTT", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-86", title: "Polynomial Multiplication", completed: false, difficulty: "Hard", resourceType: "youtube", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+        ],
+      },
+      {
+        id: "cp-contests",
+        title: "Contest Problem Sets",
+        subSections: [
+          {
+            id: "cp-atcoder",
+            title: "AtCoder Beginner Problems",
+            topics: [
+              { id: "cp-87", title: "ABC 300 - A to D", completed: false, difficulty: "Easy", resourceType: "link", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-88", title: "ABC 310 - A to D", completed: false, difficulty: "Easy", resourceType: "link", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-89", title: "ABC 320 - A to D", completed: false, difficulty: "Medium", resourceType: "link", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-90", title: "ABC E-F Collection", completed: false, difficulty: "Hard", resourceType: "link", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+          {
+            id: "cp-codeforces",
+            title: "Codeforces Educational",
+            topics: [
+              { id: "cp-91", title: "Div 2 A-B Problems", completed: false, difficulty: "Easy", resourceType: "link", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-92", title: "Div 2 C-D Problems", completed: false, difficulty: "Medium", resourceType: "link", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-93", title: "Div 2 E-F Problems", completed: false, difficulty: "Hard", resourceType: "link", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-94", title: "Educational Round Collection", completed: false, difficulty: "Medium", resourceType: "link", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+          {
+            id: "cp-icpc",
+            title: "ICPC Problems",
+            topics: [
+              { id: "cp-95", title: "ICPC Regionals 2023", completed: false, difficulty: "Hard", resourceType: "link", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-96", title: "ICPC World Finals 2022", completed: false, difficulty: "Hard", resourceType: "link", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+              { id: "cp-97", title: "ICPC World Finals 2023", completed: false, difficulty: "Hard", resourceType: "link", resourceUrl: "#", articleUrl: "#", practiceUrl: "#", note: "", isRevision: false },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   "dsa-level-1": {
     ...dsaLevel1Meta,
     sections: dsaLevel1Sections,
@@ -969,14 +1236,7 @@ function SectionCard({
   persistKey,
   jumpSignal,
 }: { 
-  section: Section & { 
-    part?: string; 
-    ratingBand?: string; 
-    description?: string; 
-    keyConcepts?: string; 
-    resources?: string;
-    notes?: string;
-  }; 
+  section: Section; 
   onToggleTopic: (id: string) => void;
   onOpenNote: (topic: Topic) => void;
   onToggleRevision: (id: string) => void;
@@ -1134,82 +1394,6 @@ function SectionCard({
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
               className="overflow-hidden"
             >
-              {/* Theory Block (Idea, Pehchano, Padho) */}
-              {(section.description || section.keyConcepts || section.resources || section.notes) && (
-                <div className="mx-4 mt-4 p-5 rounded-2xl bg-gradient-to-br from-primary/5 via-muted/20 to-primary/5 border border-primary/10 shadow-sm space-y-5">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    {section.description && (
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2 text-primary">
-                          <div className="p-1 rounded-md bg-primary/10">
-                            <Sparkles className="h-4 w-4" />
-                          </div>
-                          <h4 className="text-xs font-bold uppercase tracking-wider">Idea · Kaam kaise karta hai</h4>
-                        </div>
-                        <p className="text-sm text-muted-foreground leading-relaxed">
-                          {section.description}
-                        </p>
-                      </div>
-                    )}
-                    {section.keyConcepts && (
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2 text-amber-400">
-                          <div className="p-1 rounded-md bg-amber-400/10">
-                            <Zap className="h-4 w-4" />
-                          </div>
-                          <h4 className="text-xs font-bold uppercase tracking-wider">Pehchano · Signal</h4>
-                        </div>
-                        <p className="text-sm text-muted-foreground leading-relaxed">
-                          {section.keyConcepts}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-
-                  {(section.resources || section.notes) && (
-                    <div className="pt-4 border-t border-border/40 flex flex-col md:flex-row gap-5">
-                      {section.resources && (
-                        <div className="flex-1 space-y-2">
-                          <div className="flex items-center gap-2 text-emerald-400">
-                            <div className="p-1 rounded-md bg-emerald-400/10">
-                              <BookOpen className="h-4 w-4" />
-                            </div>
-                            <h4 className="text-xs font-bold uppercase tracking-wider">Padho · Resources</h4>
-                          </div>
-                          <p className="text-sm text-muted-foreground leading-relaxed italic">
-                            {section.resources}
-                          </p>
-                        </div>
-                      )}
-                      {section.notes && (
-                        <div className="flex-1 space-y-2">
-                          <div className="flex items-center gap-2 text-muted-foreground">
-                            <div className="p-1 rounded-md bg-muted/20">
-                              <Info className="h-4 w-4" />
-                            </div>
-                            <h4 className="text-xs font-bold uppercase tracking-wider">Notes / Cross-ref</h4>
-                          </div>
-                          <p className="text-[13px] text-muted-foreground/80 leading-relaxed">
-                            {section.notes}
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {section.ratingBand && (
-                    <div className="flex items-center gap-4 pt-1">
-                      <div className="px-2 py-0.5 rounded bg-muted/40 border border-border/50 text-[10px] font-mono text-muted-foreground uppercase">
-                        Part: {section.part || "N/A"}
-                      </div>
-                      <div className="px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 text-[10px] font-mono text-amber-400 uppercase">
-                        Rating: {section.ratingBand}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-
               {section.subSections.length > 1 && (
                 <div className="px-4 pt-3 pb-4 border-b border-border/30 bg-gradient-to-b from-muted/10 to-transparent">
                   <div className="flex items-center gap-2 mb-2">
@@ -1312,84 +1496,11 @@ function SectionCard({
                 </div>
               )}
               <motion.div 
-                className="ml-0"
+                className="ml-4 border-l border-border/30"
                 initial={{ x: -10 }}
                 animate={{ x: 0 }}
                 transition={{ duration: 0.25, delay: 0.05 }}
               >
-                {/* CP Theory Details - Display inside the expanded collapsible */}
-                {(section.part || section.ratingBand || section.description || section.keyConcepts || section.resources || section.notes) && (
-                  <div className="bg-muted/30 px-6 py-5 space-y-5 border-b border-border/50">
-                    <div className="flex flex-wrap items-center gap-3">
-                      {section.part && (
-                        <Badge variant="outline" className="bg-primary/10 border-primary/20 text-primary font-bold px-3">
-                          {section.part}
-                        </Badge>
-                      )}
-                      {section.ratingBand && (
-                        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary/50 border border-border/50 text-[11px] font-medium text-muted-foreground">
-                          <Flame className="h-3 w-3 text-amber-500" />
-                          Rating: {section.ratingBand}
-                        </div>
-                      )}
-                    </div>
-
-                    {section.description && (
-                      <div className="space-y-1.5">
-                        <h4 className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
-                          <Sparkles className="h-3 w-3" /> Idea (Kaam kaise karta hai)
-                        </h4>
-                        <div className="text-sm leading-relaxed text-foreground antialiased bg-background/40 p-3.5 rounded-xl border border-border/20 prose prose-invert prose-sm max-w-none shadow-sm">
-                          {section.description}
-                        </div>
-                      </div>
-                    )}
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {section.keyConcepts && (
-                        <div className="space-y-1.5">
-                          <h4 className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
-                            <Eye className="h-3 w-3" /> Pehchano (Signal)
-                          </h4>
-                          <div className="text-sm leading-relaxed text-foreground antialiased bg-amber-500/[0.03] p-3.5 rounded-xl border border-amber-500/10 min-h-[60px] flex items-center">
-                            {section.keyConcepts}
-                          </div>
-                        </div>
-                      )}
-
-                      {section.resources && (
-                        <div className="space-y-1.5">
-                          <h4 className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
-                            <BookOpen className="h-3 w-3" /> Padho (Resources)
-                          </h4>
-                          <div className="text-sm leading-relaxed text-foreground antialiased bg-primary/[0.03] p-3.5 rounded-xl border border-primary/10 min-h-[60px] flex items-center">
-                            {section.resources}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    {section.notes && (
-                      <div className="space-y-1.5">
-                        <h4 className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
-                          <Info className="h-3 w-3" /> Cross-ref / Note
-                        </h4>
-                        <div className="text-[11px] italic text-muted-foreground bg-muted/20 p-2.5 rounded-lg border border-border/30">
-                          {section.notes}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                <div className="p-4 border-b border-border/30 bg-muted/5 flex items-center justify-between">
-                  <h3 className="text-sm font-bold uppercase tracking-widest text-primary/80 flex items-center gap-2">
-                    <CheckSquare className="h-4 w-4" /> Challenge Set
-                  </h3>
-                  <div className="text-[10px] text-muted-foreground font-medium">
-                    {section.subSections.length} modules to master
-                  </div>
-                </div>
 
                 {section.subSections.map((subSection, index) => (
                   <motion.div
@@ -1463,20 +1574,16 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
     [searchParams, setSearchParams, sheetId]
   );
   const closeArticle = useCallback(() => {
-    // Check if the current history state indicates we entered this article via an SPA navigation
-    const isSpaNav = window.history.state?.usr?.sheetInline || window.history.state?.sheetInline;
-    
-    if (isSpaNav && window.history.length > 1) {
-      navigate(-1);
-    } else {
-      // Deep link or external referral: strip params instead of going "back" to Google
+
+    // Prefer history back so forward navigation stays available.
+    if (window.history.length > 1) navigate(-1);
+    else {
       const next = new URLSearchParams(searchParams);
       next.delete("article");
       next.delete("from");
       setSearchParams(next, { replace: true });
     }
   }, [navigate, searchParams, setSearchParams]);
-
 
   // Show the article's real URL in the address bar while it stays inline.
   // We only rewrite the browser URL (no router navigation), so the sheet
@@ -1585,7 +1692,7 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
 
 
   const [sheetData, setSheetData] = useState<SheetData | null>(
-    mockSheetData[currentSheetId] || mockSheetData["adv-sql-practice"] || mockSheetData["strivers-sde-sheet"]
+    mockSheetData[currentSheetId] || mockSheetData["strivers-sde-sheet"]
   );
   const [noteModalOpen, setNoteModalOpen] = useState(false);
   const [editingTopic, setEditingTopic] = useState<Topic | null>(null);
@@ -1751,7 +1858,11 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
                 topics: subSection.topics.map(topic => {
                   const saved = progressMap.get(topic.id);
                   if (saved) {
-                    const anySaved = saved as any;
+                    const anySaved = saved as typeof saved & {
+                      revision_count?: number | null;
+                      revision_history?: string[] | null;
+                      last_revised_at?: string | null;
+                    };
                     return {
                       ...topic,
                       completed: saved.completed,
@@ -2044,12 +2155,10 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   );
 
 
-
   // Confetti celebration
   const triggerConfetti = useCallback(() => {
     const duration = 3000;
     const animationEnd = Date.now() + duration;
-
     const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
 
     const randomInRange = (min: number, max: number) =>

@@ -12,9 +12,6 @@ Given source code, mentally EXECUTE it and return a step-by-step trace of the ru
 One step = one meaningful executed line (declaration, condition check, call, return, loop iteration, print).
 
 Rules:
-- First validate that the source is syntactically valid for the stated language. If it is invalid, do not invent a trace. Return ONLY this JSON shape:
-  {"valid":false,"error":{"line":4,"column":8,"message":"Clear syntax error message","code":"the offending source line"}}
-- Error line and column are 1-based and must point to the source exactly as provided.
 - Simulate faithfully. Values must be the real values at that moment.
 - Include a step when a function is called (before its body runs) and when it returns.
 - Cap at 120 steps. If the program is longer, trace the first 120 steps and set "truncated": true.
@@ -24,7 +21,6 @@ Rules:
 
 Return ONLY JSON matching this shape (no markdown fence):
 {
-  "valid": true,
   "language": "python",
   "truncated": false,
   "steps": [
@@ -43,21 +39,7 @@ Return ONLY JSON matching this shape (no markdown fence):
     }
   ]
 }
-"line" is 1-based against the code exactly as given. "stdout" is the cumulative program output so far.
-
-You MUST also return a "complexity" object analysing the dominant algorithm in the code:
-"complexity": {
-  "time": "O(n)",
-  "space": "O(n)",
-  "timeReason": "One pass over the array of n elements.",
-  "spaceReason": "Recursion depth grows linearly with n.",
-  "recurrence": "T(n) = T(n-1) + O(1)" or null,
-  "best": "O(1)", "average": "O(n)", "worst": "O(n)",
-  "notes": ["short bullet", "short bullet"]
-}
-Use standard Big-O notation. Keep reasons to one short sentence each.
-
-Language support: handle any mainstream language (Python, JavaScript, TypeScript, Java, C, C++, C#, Go, Rust, Kotlin, Swift, PHP, Ruby, Scala, Dart, R, SQL procedural blocks). Respect that language's real semantics.`;
+"line" is 1-based against the code exactly as given. "stdout" is the cumulative program output so far.`;
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
@@ -75,8 +57,7 @@ Deno.serve(async (req) => {
       method: "POST",
       headers: { "Content-Type": "application/json", "Lovable-API-Key": LOVABLE_API_KEY },
       body: JSON.stringify({
-        model: "google/gemini-3.6-flash",
-        reasoning_effort: "none",
+        model: "google/gemini-2.5-flash",
         response_format: { type: "json_object" },
         messages: [
           { role: "system", content: SYSTEM },
@@ -107,20 +88,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    const result = parsed as { valid?: boolean; steps?: unknown[]; error?: unknown };
-    if (result.valid === false && result.error) {
-      return new Response(JSON.stringify(result), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-    if (!Array.isArray(result.steps) || result.steps.length === 0) {
-      return new Response(JSON.stringify({ error: "No execution steps were generated" }), {
-        status: 502,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
-    return new Response(JSON.stringify({ ...result, valid: true }), {
+    return new Response(JSON.stringify(parsed), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {

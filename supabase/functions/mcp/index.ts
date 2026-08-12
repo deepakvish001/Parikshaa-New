@@ -6,7 +6,7 @@
 import { auth, defineMcp } from "npm:@lovable.dev/mcp-js@0.20.1";
 
 // src/lib/mcp/tools/whoami.ts
-import { createClient } from "npm:@supabase/supabase-js@^2.112.2";
+import { createClient } from "npm:@supabase/supabase-js@^2.110.8";
 import { defineTool } from "npm:@lovable.dev/mcp-js@0.20.1";
 var getEnv = (name) => {
   const deno = globalThis.Deno;
@@ -51,7 +51,7 @@ var whoami_default = defineTool({
 });
 
 // src/lib/mcp/tools/list-folders.ts
-import { createClient as createClient2 } from "npm:@supabase/supabase-js@^2.112.2";
+import { createClient as createClient2 } from "npm:@supabase/supabase-js@^2.110.8";
 import { defineTool as defineTool2 } from "npm:@lovable.dev/mcp-js@0.20.1";
 import { z } from "npm:zod@^3.23.8";
 var getEnv2 = (name) => {
@@ -106,7 +106,7 @@ import { defineTool as defineTool3 } from "npm:@lovable.dev/mcp-js@0.20.1";
 import { z as z2 } from "npm:zod@^3.23.8";
 
 // src/lib/mcp/tools/_shared.ts
-import { createClient as createClient3 } from "npm:@supabase/supabase-js@^2.112.2";
+import { createClient as createClient3 } from "npm:@supabase/supabase-js@^2.110.8";
 var getEnv3 = (name) => {
   const deno = globalThis.Deno;
   return deno?.env?.get?.(name) ?? process.env[name];
@@ -7321,7 +7321,7 @@ var validateShareLinkAccessTool = defineTool39({
 
 // src/lib/mcp/tools/blog-media-tests.ts
 import { defineTool as defineTool40 } from "npm:@lovable.dev/mcp-js@0.20.1";
-import { createClient as createClient4 } from "npm:@supabase/supabase-js@^2.112.2";
+import { createClient as createClient4 } from "npm:@supabase/supabase-js@^2.110.8";
 import { z as z35 } from "npm:zod@^3.23.8";
 var TINY_PNG_BASE64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
 var getEnv4 = (name) => {

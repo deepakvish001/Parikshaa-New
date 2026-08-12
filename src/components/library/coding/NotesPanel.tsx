@@ -19,7 +19,6 @@ import {
   Trash2,
   CheckCircle2,
   Loader2,
-  FileText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -200,9 +199,9 @@ export const NotesPanel = ({ slug, title }: Props) => {
 
   return (
     <div className="space-y-3" onKeyDown={onKeyDown}>
-      <div className="flex items-center justify-between gap-2 p-2 rounded-[1.25rem] bg-muted/20 border border-border/30">
+      <div className="flex items-center justify-between gap-2">
         <div
-          className="flex items-center gap-0.5"
+          className="flex items-center gap-0.5 rounded-md border bg-muted/40 p-1"
           role="toolbar"
           aria-label="Formatting"
         >
@@ -212,7 +211,7 @@ export const NotesPanel = ({ slug, title }: Props) => {
               type="button"
               variant="ghost"
               size="icon"
-              className="h-8 w-8 rounded-xl hover:bg-foreground/5 hover:text-foreground transition-all"
+              className="h-7 w-7"
               onClick={t.run}
               aria-label={t.label}
               title={t.label}
@@ -221,12 +220,12 @@ export const NotesPanel = ({ slug, title }: Props) => {
               <t.icon className="h-3.5 w-3.5" aria-hidden />
             </Button>
           ))}
-          <div className="mx-1 h-5 w-px bg-border/50" aria-hidden />
+          <div className="mx-1 h-5 w-px bg-border" aria-hidden />
           <Button
             type="button"
             variant="ghost"
             size="sm"
-            className="h-8 gap-1.5 px-3 rounded-xl text-[11px] font-black uppercase tracking-widest hover:bg-foreground/5 transition-all"
+            className="h-7 gap-1.5 px-2 text-[11px]"
             onClick={() => setMode(mode === "edit" ? "preview" : "edit")}
             aria-pressed={mode === "preview"}
             aria-label={mode === "edit" ? "Show preview" : "Back to edit"}
@@ -234,24 +233,24 @@ export const NotesPanel = ({ slug, title }: Props) => {
           >
             {mode === "edit" ? (
               <>
-                <Eye className="h-3.5 w-3.5" aria-hidden /> Preview
+                <Eye className="h-3 w-3" aria-hidden /> Preview
               </>
             ) : (
               <>
-                <Pencil className="h-3.5 w-3.5" aria-hidden /> Edit
+                <Pencil className="h-3 w-3" aria-hidden /> Edit
               </>
             )}
           </Button>
         </div>
 
-        <div className="flex items-center gap-3 px-2">
-          <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
             {isSaving ? (
-              <Loader2 className="h-3.5 w-3.5 animate-spin text-amber-500" />
+              <Loader2 className="h-3 w-3 animate-spin opacity-70" />
             ) : savedAt ? (
-              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
+              <CheckCircle2 className="h-3 w-3 text-emerald-500" />
             ) : (
-              <Loader2 className="h-3.5 w-3.5 opacity-50" />
+              <Loader2 className="h-3 w-3 opacity-50" />
             )}
             <span aria-live="polite">{savedLabel}</span>
           </div>
@@ -261,11 +260,12 @@ export const NotesPanel = ({ slug, title }: Props) => {
               type="button"
               size="sm"
               variant="ghost"
-              className="h-8 px-2 rounded-xl text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 transition-all"
+              className="h-7 gap-1.5 text-rose-400 hover:text-rose-300 hover:bg-rose-500/10"
               onClick={() => setConfirmClear(true)}
               aria-label={`Delete note for ${title}`}
             >
               <Trash2 className="h-3.5 w-3.5" aria-hidden />
+              Clear
             </Button>
           )}
         </div>
@@ -281,29 +281,16 @@ export const NotesPanel = ({ slug, title }: Props) => {
             "# My approach\n\n- Brute force: O(n²)\n- Optimised with hashmap → O(n)\n\n```py\n# Pseudocode here\n```"
           }
           aria-label={`Markdown note for ${title}`}
-          className={cn("font-mono text-sm min-h-[400px] rounded-[1.5rem] bg-[#0a0a0c]/80 border-border/40 selection:bg-primary/20 p-6 resize-y leading-relaxed focus-visible:ring-primary/20")}
+          className={cn("font-mono text-xs min-h-[280px] resize-y leading-relaxed")}
         />
       ) : (
-        <Card className="p-8 rounded-[1.5rem] bg-[#0a0a0c]/80 border-border/40 shadow-2xl shadow-black/40 prose prose-invert max-w-none min-h-[400px] selection:bg-primary/20 overflow-y-auto">
+        <Card className="p-4 prose prose-sm dark:prose-invert max-w-none min-h-[280px]">
           {hasDraft ? (
-            <ReactMarkdown 
-              remarkPlugins={[remarkGfm]}
-              components={{
-                code: ({node, ...props}) => <code className="text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded-md border border-amber-500/20 font-mono" {...props} />,
-                pre: ({node, ...props}) => <pre className="bg-black/40 border border-border/20 p-4 rounded-xl overflow-x-auto" {...props} />
-              }}
-            >
-              {draft}
-            </ReactMarkdown>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{draft}</ReactMarkdown>
           ) : (
-            <div className="flex flex-col items-center justify-center h-full py-20 text-center space-y-4">
-              <div className="h-16 w-16 rounded-[2rem] bg-muted/20 flex items-center justify-center">
-                <FileText className="h-8 w-8 text-muted-foreground/20" />
-              </div>
-              <p className="text-muted-foreground/40 text-sm font-black uppercase tracking-[0.2em]">
-                Note is empty
-              </p>
-            </div>
+            <p className="text-muted-foreground text-sm m-0">
+              Nothing to preview yet. Switch to Edit to add notes.
+            </p>
           )}
         </Card>
       )}

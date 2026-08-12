@@ -81,9 +81,9 @@ const SortableTrigger = ({ id, children, locked, reorderDisabled }: SortableTrig
         aria-label={locked ? `${typeof children === "string" ? children : id} — locked during contest` : undefined}
         data-locked={locked || undefined}
         className={cn(
-          "relative group/tab shrink-0 whitespace-nowrap select-none bg-transparent hover:bg-transparent data-[state=active]:bg-transparent data-[state=active]:shadow-none p-0 h-10 transition-all duration-300",
-          isDragging && "ring-2 ring-primary/40 z-50",
-          locked && "opacity-40 cursor-not-allowed grayscale",
+          "group/tab shrink-0 whitespace-nowrap select-none bg-transparent hover:bg-transparent data-[state=active]:bg-transparent data-[state=active]:shadow-none p-0 h-auto",
+          isDragging && "ring-1 ring-primary/40",
+          locked && "opacity-60 cursor-not-allowed text-muted-foreground hover:bg-transparent",
         )}
         // Only spread drag listeners when not locked / reorder allowed
         {...(locked || reorderDisabled ? {} : attributes)}

@@ -1,6 +1,5 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Cpu } from "lucide-react";
 
 /**
  * Reusable styled cards for a coding problem's Input/Output Format and
@@ -54,11 +53,11 @@ export function splitProblemDescription(raw: string): FormatSplit {
 }
 
 const cardCls =
-  "relative group overflow-hidden rounded-xl border border-border/40 bg-muted/10 p-4 sm:p-5 transition-all duration-300 hover:border-border/60 hover:bg-muted/20";
+  "rounded-lg bg-muted/50 border p-3 sm:p-4 min-w-0 overflow-hidden";
 const labelCls =
-  "inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/40 mb-3 pb-1 border-b border-border/20 w-full group-hover:text-muted-foreground/60 transition-colors";
+  "text-[11px] sm:text-xs font-semibold mb-2 uppercase tracking-wider text-muted-foreground";
 const bodyCls =
-  "prose prose-sm dark:prose-invert max-w-none text-[13px] leading-relaxed font-sans text-foreground/80 selection:bg-primary/20 [&_p]:my-0 [&_p+p]:mt-3 [&_ul]:my-2 [&_ol]:my-2 [&_li]:my-1 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:bg-muted/80 [&_code]:text-foreground [&_code]:border [&_code]:border-border/40 [&_code]:font-mono [&_code]:before:content-none [&_code]:after:content-none [&_pre]:p-4 [&_pre]:rounded-lg [&_pre]:bg-black/40 [&_pre]:border [&_pre]:border-border/20 [&_pre]:shadow-inner";
+  "prose prose-sm dark:prose-invert max-w-none text-[13px] sm:text-sm leading-relaxed font-mono break-words [&_p]:my-0 [&_p+p]:mt-2 [&_ul]:my-1 [&_ol]:my-1 [&_li]:my-0 [&_code]:break-words [&_pre]:whitespace-pre-wrap [&_pre]:break-words";
 
 export function ProblemFormatCards({
   inputFormat,
@@ -70,7 +69,7 @@ export function ProblemFormatCards({
   if (!inputFormat && !outputFormat) return null;
   return (
     <div
-      className="grid gap-4 grid-cols-1 w-full min-w-0"
+      className="grid gap-3 sm:gap-4 grid-cols-1 w-full min-w-0"
       data-testid="problem-format-cards"
     >
       {inputFormat && (
@@ -101,18 +100,10 @@ export function ProblemConstraints({ constraints }: { constraints: string[] }) {
   if (!constraints || constraints.length === 0) return null;
   return (
     <div className={cardCls} data-testid="problem-constraints">
-      <p className={labelCls}>
-        <Cpu className="h-3 w-3 opacity-50" />
-        Constraints
-      </p>
-      <ul className="grid gap-2 list-none">
+      <p className={labelCls}>Constraints</p>
+      <ul className="text-sm space-y-1 list-disc list-inside text-foreground/90 font-mono">
         {constraints.map((c, i) => (
-          <li key={i} className="flex items-start gap-2.5 group/item">
-            <div className="mt-1.5 h-1 w-1 rounded-full bg-muted-foreground/30 group-hover/item:bg-primary/60 transition-colors shrink-0" />
-            <span className="text-[13px] leading-relaxed font-mono text-foreground/70 group-hover/item:text-foreground transition-colors selection:bg-primary/20">
-              {c}
-            </span>
-          </li>
+          <li key={i}>{c}</li>
         ))}
       </ul>
     </div>

@@ -4985,6 +4985,16 @@ export type Database = {
         Args: { _clan: string; _user: string }
         Returns: boolean
       }
+      league_leaderboard: {
+        Args: { _handles: string[]; _metric?: string }
+        Returns: {
+          avatar_url: string
+          display_name: string
+          handle: string
+          rank: number
+          value: number
+        }[]
+      }
       log_client_event: {
         Args: {
           _activity_type: string

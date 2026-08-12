@@ -113,6 +113,7 @@ export default function LeagueClans() {
   const [search, setSearch] = useState("");
   const [tab, setTab] = useState<"browse" | "top">("browse");
   const { data: browse = [] } = useBrowseClans(search);
+  const { data: top = [] } = useTopClans();
   const join = useJoinClan();
   const leave = useLeaveClan();
 

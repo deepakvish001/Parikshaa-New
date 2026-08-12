@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Home, User as UserIcon, Briefcase, Swords, Eye, Map as MapIcon, Bell } from "lucide-react";
+import { Home, User as UserIcon, Briefcase, Swords, Eye, Map as MapIcon, Bell, Activity } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ProfileMenuContent } from "@/components/profile/ProfileMenuContent";
@@ -59,6 +59,12 @@ export function ProfileRailLayout({ children }: { children: ReactNode }) {
             label="Contest"
             active={location.pathname.startsWith("/contests")}
             onClick={() => navigate("/contests")}
+          />
+          <RailItem
+            icon={<Activity className="h-[18px] w-[18px]" />}
+            label="League"
+            active={location.pathname.startsWith("/league")}
+            onClick={() => navigate("/league")}
           />
           <RailItem
             icon={<Briefcase className="h-[18px] w-[18px]" />}

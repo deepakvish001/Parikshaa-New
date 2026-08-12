@@ -23,25 +23,25 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Parikshaa — Learn to Code & Hire with AI Proctoring</title>
+        <title>LeetLeague — Track. Analyze. Compete.</title>
         <meta
           name="description"
-          content="Free structured learning for students plus secure AI-proctored hiring assessments for colleges and recruiters. One platform, two outcomes."
+          content="Track your progress. Analyze your performance. Compete with your network. Improve together. LeetLeague brings problem solving, analytics, contests, friends, clans, and real-time coding activity together in one platform."
         />
         <link rel="canonical" href="https://www.parikshaa.org/" />
-        <meta property="og:title" content="Parikshaa — Learn to Code & Hire with AI Proctoring" />
+        <meta property="og:title" content="LeetLeague — Track. Analyze. Compete." />
         <meta
           property="og:description"
-          content="Free DSA, SQL and interview prep for students. Secure AI-proctored coding rounds for colleges and recruiters."
+          content="Track. Analyze. Compete. — LeetLeague is HERE 🔥. Monitor solved problems, streaks, ratings, and rankings in real-time."
         />
         <meta property="og:url" content="https://www.parikshaa.org/" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Parikshaa" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Parikshaa — Learn to Code & Hire with AI Proctoring" />
+        <meta name="twitter:title" content="LeetLeague — Track. Analyze. Compete." />
         <meta
           name="twitter:description"
-          content="Free structured learning for students. AI-proctored hiring assessments for colleges and recruiters."
+          content="Track your progress. Analyze your performance. Compete with your network. Improve together."
         />
       </Helmet>
       <div className="noise-overlay" aria-hidden />

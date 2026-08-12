@@ -48,7 +48,7 @@ export function ApexFinalCTA() {
       >
         {/* Eyebrow */}
         <div className="mb-8">
-          <SectionEyebrow kicker="06" label="Open Access / Zero Friction Forever" />
+          <SectionEyebrow kicker="06" label="Open Access / Competitive Programming for All" />
         </div>
 
         {/* Mega headline */}
@@ -57,16 +57,16 @@ export function ApexFinalCTA() {
           style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}
           className="max-w-[16ch] text-[46px] font-bold leading-[0.98] tracking-[-0.035em] text-foreground sm:text-6xl md:text-7xl lg:max-w-[18ch] lg:text-[96px]"
         >
-          <span className="block">Your next</span>
+          <span className="block">Your coding</span>
           <span className="block">
             <span className="relative inline-block px-3 py-1">
               <span
                 aria-hidden
                 className="absolute inset-0 -z-10 rounded-lg bg-primary/15 ring-1 ring-inset ring-primary/25"
               />
-              offer letter
+              journey
             </span>{" "}
-            starts
+            levels up
           </span>
           <span className="block">
             <span
@@ -81,9 +81,9 @@ export function ApexFinalCTA() {
         {/* Subhead */}
         <p className="mt-10 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
           <span className="block font-semibold text-foreground">
-            10,000+ learners. 200+ institutes. Zero excuses.
+            10,000+ coders. 200+ clans. Zero excuses.
           </span>
-          Sign up in 30 seconds and pick up where India's fastest-shipping engineers left off.
+          Sign up in 30 seconds and start tracking your coding progress with the community.
         </p>
 
         {/* Avatar strip */}
@@ -122,18 +122,17 @@ export function ApexFinalCTA() {
             </span>
           </Link>
           <Link
-            to="/signup"
-            onClick={() => markFinalCtaSource("talk_to_sales")}
-            data-analytics="final-cta-talk-to-sales"
+            to="/league/ranks"
+            onClick={() => markFinalCtaSource("explore_ranks")}
             className="inline-flex h-12 items-center justify-center rounded-lg border border-border bg-transparent px-8 text-sm font-bold uppercase tracking-[0.14em] text-foreground transition-colors hover:border-primary/50 hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            Talk to Sales
+            Explore Ranks
           </Link>
 
         </div>
 
         <p className="mt-8 text-xs text-muted-foreground">
-          No credit card · Cancel anytime · Made for Indian engineering campuses
+          No credit card · Free forever · Made for the global coding community
         </p>
       </motion.div>
     </section>

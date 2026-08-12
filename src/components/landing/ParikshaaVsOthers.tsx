@@ -15,40 +15,40 @@ type Row = {
 const rows: Row[] = [
   {
     kicker: "01",
-    feature: "What you pay",
-    parikshaa: "₹0 forever — every sheet, mock and rank",
-    others: "₹4k–₹40k plans + trial pop-ups",
+    feature: "Sync capability",
+    parikshaa: "Real-time sync with LeetCode & Codeforces",
+    others: "Manual entry or single platform only",
     hero: true,
   },
   {
     kicker: "02",
-    feature: "How you're proctored",
-    parikshaa: "AI eye + phone side-camera + tamper log",
-    others: "Honor-system mocks · no room sweep",
+    feature: "Social features",
+    parikshaa: "Global clans, friends compare & solve feed",
+    others: "Lone-wolf solving · no network effect",
   },
   {
     kicker: "03",
-    feature: "What you can prep",
-    parikshaa: "DSA · CP · SQL · System Design · Aptitude",
-    others: "One topic silo, static PDFs",
+    feature: "Contest tracking",
+    parikshaa: "All platforms in one calendar with countdowns",
+    others: "Check 5 different sites daily",
   },
   {
     kicker: "04",
-    feature: "Company intel",
-    parikshaa: "18+ mass recruiters · fresh drops weekly",
-    others: "Year-old question banks",
+    feature: "Ranks & Leaderboards",
+    parikshaa: "Metric-dense ranks (Today, Streak, Rating)",
+    others: "Basic solve count leaderboards",
   },
   {
     kicker: "05",
-    feature: "When you're stuck",
-    parikshaa: "Real mentors reply in 1 business day",
-    others: "Bot templates or paid upsell",
+    feature: "DSA Structure",
+    parikshaa: "40+ pattern-grouped interview sheets",
+    others: "Static lists or random problem sets",
   },
   {
     kicker: "06",
-    feature: "How progress compounds",
-    parikshaa: "SRS · XP · Streaks · PRS score",
-    others: "Plain checkbox trackers",
+    feature: "What you pay",
+    parikshaa: "₹0 forever — the community builds it",
+    others: "₹4k–₹40k subscriptions",
   },
 ];
 
@@ -107,11 +107,11 @@ export function ParikshaaVsOthers() {
       <div className="mx-auto flex w-full max-w-6xl flex-col">
         <HeroStyleHeading
           eyebrowKicker="03"
-          eyebrowLabel="Head to Head / Why Students Switch"
+          eyebrowLabel="Head to Head / Why Coders Switch"
           headingId="comparison-heading"
           as="h2"
-          subheadPrimary="Same prep goal. Radically different economics."
-          subheadSecondary=" Six honest checkpoints where legacy platforms bill you — and where Parikshaa just ships."
+          subheadPrimary="Same coding goal. Radically different experience."
+          subheadSecondary=" Six honest checkpoints where legacy platforms fall short — and where LeetLeague delivers."
         >
           <span className="block">
             Why pay for <Muted>what should be</Muted>
@@ -141,7 +141,7 @@ export function ParikshaaVsOthers() {
               aria-describedby="comparison-heading"
             >
               <caption className="sr-only">
-                Feature-by-feature comparison of Parikshaa versus other placement prep platforms
+                Feature-by-feature comparison of LeetLeague versus other coding platforms
               </caption>
               <thead>
                 <tr className="border-b border-border/60 bg-background/50 text-left text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
@@ -153,7 +153,7 @@ export function ParikshaaVsOthers() {
                         style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}
                         className="text-[12px] font-bold tracking-[0.14em]"
                       >
-                        Parikshaa
+                        LeetLeague
                       </span>
                       <span className="inline-flex items-center gap-1 rounded-full bg-primary/15 px-2 py-0.5 text-[9px] font-bold text-primary ring-1 ring-inset ring-primary/25">
                         <Sparkles className="h-2.5 w-2.5" aria-hidden />
@@ -195,7 +195,7 @@ export function ParikshaaVsOthers() {
             </table>
 
             {/* ================= Mobile: stacked cards ================= */}
-            <ul className="divide-y divide-border/40 sm:hidden" aria-label="Parikshaa vs Others comparison">
+            <ul className="divide-y divide-border/40 sm:hidden" aria-label="LeetLeague vs Others comparison">
               {rows.map((row) => (
                 <li
                   key={row.feature}
@@ -221,7 +221,7 @@ export function ParikshaaVsOthers() {
                   <div className="space-y-2 pl-1">
                     <div>
                       <p className="mb-1 text-[9.5px] font-bold uppercase tracking-[0.18em] text-primary/80">
-                        Parikshaa
+                        LeetLeague
                       </p>
                       <YesCell text={row.parikshaa} />
                     </div>
@@ -240,7 +240,7 @@ export function ParikshaaVsOthers() {
             <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 border-t border-border/60 bg-background/40 px-4 py-3 text-[10px] font-medium uppercase tracking-[0.16em] text-muted-foreground/80 sm:px-6 sm:py-4 sm:text-[11px]">
               <span className="inline-flex items-center gap-1.5 text-primary">
                 <Sparkles className="h-3 w-3" aria-hidden />
-                Built with students · Not for exit
+                Built with coders · For the community
               </span>
               <span aria-hidden className="h-1 w-1 rounded-full bg-border" />
               <span>No cards · No trials · No lock-in</span>

@@ -16,51 +16,51 @@ type Pillar = {
 const pillars: Pillar[] = [
   {
     id: "01",
-    title: "Free forever",
-    tagline: "Every sheet, every mock, every rank. Zero cards, zero trials, zero upgrade pop-ups.",
-    meta: "No paywall · Ever",
+    title: "Real-time sync",
+    tagline: "Sync your LeetCode, Codeforces, and more. Your progress, always live and measurable.",
+    meta: "Live · Multi-platform",
     icon: Zap,
-    tag: "Access",
+    tag: "Sync",
   },
   {
     id: "02",
-    title: "Recruiter-grade proctoring",
-    tagline: "AI-monitored coding rounds, phone-as-side-camera and tamper logs — on-campus rigor.",
-    meta: "Side-eye · Tamper logs",
-    icon: ShieldCheck,
-    tag: "Trust",
+    title: "Global leaderboards",
+    tagline: "Compete on ranks based on solves, ratings, and streaks with the entire community.",
+    meta: "Daily · Weekly · Monthly",
+    icon: Trophy,
+    tag: "Rank",
   },
   {
     id: "03",
-    title: "Spaced repetition that sticks",
-    tagline: "SM-2 SRS on DSA, SQL and interview theory. Revise what's fading, not what you know.",
-    meta: "SM-2 · Adaptive",
-    icon: Gauge,
-    tag: "Retain",
+    title: "Clan competition",
+    tagline: "Join a clan or build your own. Compete collectively and track clan-wide progress.",
+    meta: "Social · Competitive",
+    icon: Users,
+    tag: "Social",
   },
   {
     id: "04",
-    title: "One public profile, all proof",
-    tagline: "PRS score, solved sheets, XP and streaks — a single link recruiters open in one tap.",
-    meta: "PRS · Shareable",
-    icon: Users,
+    title: "Activity feed",
+    tagline: "A real-time stream of coding activity across your network. See who's solving what.",
+    meta: "Interactive · Feed",
+    icon: Gauge,
     tag: "Signal",
   },
   {
     id: "05",
-    title: "AI that plans your prep",
-    tagline: "Target-company roadmaps, mock interview scorecards, resume analysis — built on Gemini.",
-    meta: "Gemini · Structured",
+    title: "Pattern-wise DSA",
+    tagline: "40+ curated sheets grouping problems by patterns for structured mastery.",
+    meta: "40+ sheets · 3.5k problems",
     icon: Sparkles,
-    tag: "Plan",
+    tag: "Learn",
   },
   {
     id: "06",
-    title: "Built for the daily grind",
-    tagline: "Daily challenge, arena streaks, rotating quests. Placement season becomes a habit loop.",
-    meta: "Daily · Streaks",
-    icon: Trophy,
-    tag: "Habit",
+    title: "Contest tracking",
+    tagline: "Discover and track upcoming contests across all major platforms in one place.",
+    meta: "Centralized · All-in-one",
+    icon: ShieldCheck,
+    tag: "Sync",
   },
 ];
 
@@ -90,7 +90,7 @@ export function WhyParikshaa() {
         {/* Section heading */}
         <div className="mx-auto max-w-4xl text-center">
           <div className="mb-6 flex justify-center">
-            <SectionEyebrow kicker="02" label="Why Parikshaa / Six Reasons It Compounds" />
+            <SectionEyebrow kicker="02" label="Why LeetLeague / Six Reasons It Compounds" />
           </div>
 
           <motion.h2
@@ -125,8 +125,8 @@ export function WhyParikshaa() {
             transition={{ duration: 0.4, delay: 0.15 }}
             className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg"
           >
-            Not another course marketplace. A single, opinionated system that walks you
-            from your first LeetCode to your first offer letter — free, forever.
+            Not another tracker. A single, opinionated system that walks you
+            from your first solve to the top of the leaderboard — free, forever.
           </motion.p>
         </div>
 
@@ -218,7 +218,7 @@ export function WhyParikshaa() {
             onClick={() => scrollToId("testimonials")}
             className="inline-flex h-12 items-center justify-center rounded-lg border border-border bg-transparent px-8 text-sm font-bold uppercase tracking-[0.14em] text-foreground transition-colors hover:border-primary/50 hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            Read Student Wins
+            Read Coder Wins
           </button>
         </div>
       </div>

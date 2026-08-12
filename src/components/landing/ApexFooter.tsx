@@ -99,7 +99,7 @@ const footerLinks: Record<string, { label: string; href: string }[]> = {
   Product: [
     { label: "Learn", href: "/learn" },
     { label: "Problems", href: "/library/problems" },
-    { label: "Sheets", href: "/library" },
+    { label: "League", href: "/league" },
     { label: "Blog", href: "/blog" },
   ],
   Resources: [
@@ -252,8 +252,8 @@ export function ApexFooter({ freezeAnimations = false }: ApexFooterProps = {}) {
     e.preventDefault();
     const baseProps = {
       ...analyticsContext,
-      form_type: "student_contact",
-      source: "footer_student_contact",
+      form_type: "coder_contact",
+      source: "footer_coder_contact",
     };
     const parsed = contactSchema.safeParse(contact);
     if (!parsed.success) {
@@ -295,8 +295,8 @@ export function ApexFooter({ freezeAnimations = false }: ApexFooterProps = {}) {
         body: {
           name: parsed.data.name,
           email: parsed.data.email,
-          org: "Student inquiry",
-          useCase: "student",
+          org: "LeetLeague inquiry",
+          useCase: "coder",
           candidates: "0-100",
           proctoring: [],
           reporting: [],
@@ -318,8 +318,8 @@ export function ApexFooter({ freezeAnimations = false }: ApexFooterProps = {}) {
         trackEvent("student_contact_failed", { ...baseProps, error_reason: code });
         return;
       }
-      await trackLeadEvent("footer_student_contact_submitted", {
-        source: "footer_student_contact",
+      await trackLeadEvent("footer_coder_contact_submitted", {
+        source: "footer_coder_contact",
         lead_id: (res as { id?: string } | null)?.id,
       });
       trackEvent("student_contact_success", {
@@ -389,7 +389,7 @@ export function ApexFooter({ freezeAnimations = false }: ApexFooterProps = {}) {
           <StackedSection id="signal-feed">
           <HeroStyleHeading
             eyebrowKicker="07"
-            eyebrowLabel="Signal Feed / Weekly Digest"
+            eyebrowLabel="LeetLeague Feed / Weekly Digest"
             headingId="signal-feed-heading"
             as="h2"
             subheadPrimary="One email, zero fluff."
@@ -465,7 +465,7 @@ export function ApexFooter({ freezeAnimations = false }: ApexFooterProps = {}) {
 
             <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground/80">
               <span className="inline-flex items-center gap-1.5">
-                <Sparkles className="h-3.5 w-3.5 text-primary" aria-hidden /> 12k+ students
+                <Sparkles className="h-3.5 w-3.5 text-primary" aria-hidden /> 10k+ learners
               </span>
               <span aria-hidden className="h-1 w-1 rounded-full bg-border" />
               <span>No spam · Unsubscribe anytime</span>
@@ -532,7 +532,7 @@ export function ApexFooter({ freezeAnimations = false }: ApexFooterProps = {}) {
                   >
                     <HeroStyleHeading
                       eyebrowKicker="08"
-                      eyebrowLabel="For Students / Mentor Desk"
+                      eyebrowLabel="For Coders / Mentor Desk"
                       headingId="student-contact-heading"
                       as="h3"
                       subheadPrimary="Real mentors. Real replies. Free."

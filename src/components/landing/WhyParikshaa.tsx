@@ -16,51 +16,51 @@ type Pillar = {
 const pillars: Pillar[] = [
   {
     id: "01",
-    title: "Real-time sync",
-    tagline: "Sync your LeetCode, Codeforces, and more. Your progress, always live and measurable.",
-    meta: "Live · Multi-platform",
+    title: "Visual Learning",
+    tagline: "Don't just solve—visualize. See the code execute step-by-step with logic tracing.",
+    meta: "Visual · AI-powered",
     icon: Zap,
-    tag: "Sync",
+    tag: "Visualize",
   },
   {
     id: "02",
-    title: "Global leaderboards",
-    tagline: "Compete on ranks based on solves, ratings, and streaks with the entire community.",
-    meta: "Daily · Weekly · Monthly",
-    icon: Trophy,
-    tag: "Rank",
+    title: "Pattern Mastery",
+    tagline: "Master patterns, not just problems. 40+ sheets grouping DSA by core concept.",
+    meta: "Structured · Effective",
+    icon: Sparkles,
+    tag: "Pattern",
   },
   {
     id: "03",
-    title: "Clan competition",
-    tagline: "Join a clan or build your own. Compete collectively and track clan-wide progress.",
-    meta: "Social · Competitive",
-    icon: Users,
-    tag: "Social",
+    title: "Career Library",
+    tagline: "Everything you need—HLD, LLD, CS core, and company-specific resources.",
+    meta: "360° Prep · All domains",
+    icon: ShieldCheck,
+    tag: "Library",
   },
   {
     id: "04",
-    title: "Activity feed",
-    tagline: "A real-time stream of coding activity across your network. See who's solving what.",
-    meta: "Interactive · Feed",
+    title: "Real-time Tracking",
+    tagline: "Live sync with LeetCode, Codeforces, and more. Track every solve automatically.",
+    meta: "Live · measurable",
     icon: Gauge,
-    tag: "Signal",
+    tag: "Sync",
   },
   {
     id: "05",
-    title: "Pattern-wise DSA",
-    tagline: "40+ curated sheets grouping problems by patterns for structured mastery.",
-    meta: "40+ sheets · 3.5k problems",
-    icon: Sparkles,
-    tag: "Learn",
+    title: "League Ranks",
+    tagline: "Stay motivated with global leaderboards and performance analytics.",
+    meta: "Global · Data-driven",
+    icon: Trophy,
+    tag: "Growth",
   },
   {
     id: "06",
-    title: "Contest tracking",
-    tagline: "Discover and track upcoming contests across all major platforms in one place.",
-    meta: "Centralized · All-in-one",
-    icon: ShieldCheck,
-    tag: "Sync",
+    title: "Clan Communities",
+    tagline: "Level up together. Join or create clans to prep with your network.",
+    meta: "Social · Collaborative",
+    icon: Users,
+    tag: "Social",
   },
 ];
 
@@ -90,7 +90,7 @@ export function WhyParikshaa() {
         {/* Section heading */}
         <div className="mx-auto max-w-4xl text-center">
           <div className="mb-6 flex justify-center">
-            <SectionEyebrow kicker="02" label="Why LeetLeague / Six Reasons It Compounds" />
+            <SectionEyebrow kicker="02" label="Why Parikshaa / Six Reasons It Compounds" />
           </div>
 
           <motion.h2

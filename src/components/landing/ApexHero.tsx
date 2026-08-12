@@ -6,14 +6,14 @@ import { Button } from "@/components/ui/button";
 import { SectionEyebrow } from "./SectionEyebrow";
 
 const programs = [
-  "League Ranks & Leaderboards",
-  "Clan Wars & Communities",
-  "DSA Pattern-wise Sheets",
-  "Global Activity Feed",
-  "Friends Comparison",
+  "DSA Studio & Visualization",
+  "Interview Library & Pattern-wise Sheets",
+  "System Design Roadmaps",
+  "Global Coding Ranks",
+  "Clan Communities",
   "Contest Calendar Sync",
   "SQL Interview Prep",
-  "Core CS Revision",
+  "Core CS Subject Revision",
 ];
 
 export function ApexHero() {
@@ -86,7 +86,7 @@ export function ApexHero() {
       <div className="relative z-10 mx-auto flex max-w-6xl flex-col items-center text-center">
         {/* Eyebrow chip */}
         <div className="mb-4 lg:mb-3">
-          <SectionEyebrow kicker="NEW" label="LeetLeague is HERE 🔥" />
+          <SectionEyebrow kicker="NEW" label="Parikshaa is HERE 🔥" />
         </div>
 
 
@@ -99,23 +99,23 @@ export function ApexHero() {
           style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}
           className="max-w-[16ch] text-[46px] font-bold leading-[0.98] tracking-[-0.035em] text-foreground sm:text-6xl md:text-7xl lg:max-w-[18ch] lg:text-[96px] xl:text-[110px]"
         >
-          <span className="block">Track. Analyze.</span>
+          <span className="block">Visualize Logic.</span>
           <span className="block">
             <span className="relative inline-block px-3 py-1">
               <span
                 aria-hidden
                 className="absolute inset-0 -z-10 rounded-lg bg-primary/15 ring-1 ring-inset ring-primary/25"
               />
-              Compete.
+              Master
             </span>{" "}
-            <span className="text-foreground/60">together.</span>
+            <span className="text-foreground/60">the Pattern.</span>
           </span>
           <span className="block">
             <span
               className="bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent"
               style={{ backgroundSize: "200% auto", animation: "apex-shimmer 6s linear infinite" }}
             >
-              LeetLeague
+              Parikshaa
             </span>{" "}
             <span className="text-foreground">is HERE.</span>
           </span>
@@ -129,10 +129,10 @@ export function ApexHero() {
           className="mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base lg:mt-4 lg:text-base"
         >
           <span className="block font-semibold text-foreground">
-            Monitor solves, streaks, ratings, and ranks in real-time.
+            Visualize logic. Master the pattern. Succeed at scale.
           </span>
           <span className="hidden sm:inline">
-            LeetLeague brings problem solving, analytics, contests, friends, clans, and real-time coding activity together in one platform.
+            Parikshaa is your ultimate edge for technical interviews, bringing together structured learning, visual mastery, and real-time tracking.
           </span>
         </motion.p>
 
@@ -146,7 +146,7 @@ export function ApexHero() {
         >
           <div className="mb-4 flex items-center gap-4">
             <span className="h-px flex-1 bg-gradient-to-r from-transparent to-border/70" />
-            <SectionEyebrow dot label="Competitive Programming Protocol" />
+            <SectionEyebrow dot label="Professional Coding Ecosystem" />
             <span className="h-px flex-1 bg-gradient-to-l from-transparent to-border/70" />
           </div>
           <div

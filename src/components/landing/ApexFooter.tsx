@@ -99,7 +99,7 @@ const footerLinks: Record<string, { label: string; href: string }[]> = {
   Product: [
     { label: "Learn", href: "/learn" },
     { label: "Problems", href: "/library/problems" },
-    { label: "League", href: "/league" },
+    { label: "Ranks", href: "/league" },
     { label: "Blog", href: "/blog" },
   ],
   Resources: [
@@ -295,7 +295,7 @@ export function ApexFooter({ freezeAnimations = false }: ApexFooterProps = {}) {
         body: {
           name: parsed.data.name,
           email: parsed.data.email,
-          org: "LeetLeague inquiry",
+          org: "Parikshaa inquiry",
           useCase: "coder",
           candidates: "0-100",
           proctoring: [],
@@ -389,7 +389,7 @@ export function ApexFooter({ freezeAnimations = false }: ApexFooterProps = {}) {
           <StackedSection id="signal-feed">
           <HeroStyleHeading
             eyebrowKicker="07"
-            eyebrowLabel="LeetLeague Feed / Weekly Digest"
+            eyebrowLabel="Parikshaa Feed / Weekly Digest"
             headingId="signal-feed-heading"
             as="h2"
             subheadPrimary="One email, zero fluff."

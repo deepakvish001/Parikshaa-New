@@ -9,10 +9,13 @@ export default function LeagueBookmarks() {
   const toggle = useToggleSaved();
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-lg font-bold flex items-center gap-2">
-        <Bookmark className="h-5 w-5 text-primary" /> Bookmarks ({saved.length})
-      </h2>
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-bold flex items-center gap-2.5">
+          <Bookmark className="h-6 w-6 text-primary fill-primary/10" /> Bookmarks
+          <span className="text-sm font-normal text-muted-foreground ml-2">({saved.length} problems)</span>
+        </h2>
+      </div>
 
       {saved.length === 0 && (
         <Card className="p-10 text-center text-muted-foreground">

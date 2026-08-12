@@ -55,7 +55,7 @@ import { findCurriculumLocation } from "@/data/codingCurriculum";
 import { Database } from "@/integrations/supabase/types";
 
 type CodingProblem = Database['public']['Tables']['coding_problems']['Row'];
-type EditorTabId = "description" | "editorial" | "submissions" | "discussion" | "notes";
+type EditorTabId = "description" | "editorial" | "submissions" | "history" | "discussion" | "notes";
 
 const LANG_CONFIGS: Record<string, { id: number; label: string; starter: string }> = {
   cpp: { id: 54, label: "C++ 20", starter: "#include <iostream>\nusing namespace std;\n\nint main() {\n    // solve here\n    return 0;\n}" },
@@ -92,11 +92,6 @@ const CodingProblemDetail = () => {
     }
   }, [draft, draftLoaded, language]);
 
-  // Save draft on code change
-  const handleCodeChange = (newCode: string) => {
-    setCode(newCode);
-    saveDraft(newCode);
-  };
   const [showLogin, setShowLogin] = useState(false);
   const [notesValue, setNotesValue] = useState("");
   const [consoleOpen, setConsoleOpen] = useState(true);
@@ -130,10 +125,16 @@ const CodingProblemDetail = () => {
     enabled: !!slug
   });
 
+  // Handle code change and save draft
+  const handleCodeChange = (newCode: string) => {
+    setCode(newCode);
+    saveDraft(newCode);
+  };
+
   // Handle language change
   const handleLanguageChange = (newLang: string) => {
     setLanguage(newLang);
-    setCode(LANG_CONFIGS[newLang]?.starter || "");
+    // Draft hook will trigger and update code via useEffect
   };
 
   const handleRun = async () => {
@@ -149,10 +150,6 @@ const CodingProblemDetail = () => {
       });
       toast.success("Run completed");
       refetchRuns();
-      
-      // Update custom status for the workbench if it was a custom test
-      // In a real implementation, we'd map the RunResult to CustomCaseStatusEntry
-      // but for now, we just refetch the history.
     } catch (e: any) {
       toast.error(e.message || "Run failed");
     }
@@ -185,12 +182,13 @@ const CodingProblemDetail = () => {
       });
       
       setSubmitResult(result);
+      refetchSubmissions();
+      refetchRuns();
       if (result.verdict === "Accepted") {
         toast.success("Problem Solved!");
       } else {
         toast.error(`Submission: ${result.verdict}`);
       }
-      refetchSubmissions();
     } catch (e: any) {
       toast.error(e.message || "Submission failed");
     }
@@ -309,7 +307,27 @@ const CodingProblemDetail = () => {
                     Your official submissions to the hidden test cases.
                   </div>
                   {submissions.map((s) => (
-                    <SubmissionResultView key={s.id} result={s as any} />
+                    <SubmissionResultView 
+                      key={s.id} 
+                      submitResult={{
+                        verdict: s.verdict,
+                        passed: s.passed_tests,
+                        total: s.total_tests,
+                        runtime_ms: s.runtime_ms ?? 0,
+                        memory_kb: s.memory_kb ?? 0,
+                        failing_case: s.failing_case,
+                        stderr: s.stderr,
+                        submission_id: s.id,
+                        case_results: []
+                      }}
+                      problemSlug={problem.slug}
+                      problemTitle={problem.title}
+                      language={s.language}
+                      languageId={s.language_id}
+                      sourceCode={s.source_code}
+                      user={user}
+                      submittedAt={s.created_at}
+                    />
                   ))}
                   {submissions.length === 0 && (
                     <div className="text-center py-12 text-muted-foreground/40 text-xs font-black uppercase tracking-widest">
@@ -424,74 +442,53 @@ const CodingProblemDetail = () => {
                     size="sm" 
                     onClick={handleSubmit}
                     disabled={isRunning || isSubmitting}
-                    className="h-9 px-8 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-500/10 active:scale-95 transition-all"
+                    className="h-9 px-6 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] bg-primary text-primary-foreground hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-primary/20"
                   >
-                    {isSubmitting ? <Skeleton className="h-3 w-3 rounded-full animate-pulse bg-white/40" /> : <Rocket className="h-3 w-3 mr-2" />}
+                    {isSubmitting ? <Skeleton className="h-3 w-3 rounded-full animate-pulse bg-primary-foreground/40" /> : <Rocket className="h-3 w-3 mr-2" />}
                     Submit
                   </Button>
                 </div>
               </div>
             </ResizablePanel>
 
-            {consoleOpen && (
-              <>
-                <ResizableHandle withHandle className="bg-white/5 h-1" />
-                <ResizablePanel defaultSize={35} minSize={20} className="bg-[#0a0a0c] flex flex-col min-h-0">
-                  <div className="flex-1 overflow-y-auto custom-scrollbar p-6">
-                    {submitResult ? (
-                      <SubmissionResultView 
-                        submitResult={submitResult}
-                        problemSlug={problem.slug}
-                        problemTitle={problem.title}
-                        language={LANG_CONFIGS[language].label}
-                        languageId={LANG_CONFIGS[language].id}
-                        sourceCode={code}
-                        user={user}
-                        onBackToCode={() => setSubmitResult(null)}
-                      />
-                    ) : (
-                      <TestCaseWorkbench 
-                        slug={problem.slug}
-                        sampleTests={Array.isArray(problem.examples) ? (problem.examples as any[]) : []}
-                        stdin={stdin}
-                        onStdinChange={setStdin}
-                        onRun={handleRun}
-                        isRunning={isRunning}
-                        sampleCaseStatus={sampleStatus}
-                        customCaseStatus={customStatus}
-                        onResetResults={() => {
-                          setSampleStatus({});
-                          setCustomStatus({});
-                        }}
-                      />
-                    )}
-                  </div>
-                </ResizablePanel>
-              </>
-            )}
+            <ResizableHandle withHandle className="bg-white/5 h-1" />
+
+            <ResizablePanel defaultSize={35} minSize={0} collapsible className="bg-[#0d0d0f]">
+              {consoleOpen && problem && (
+                <div className="h-full border-t border-white/10 bg-[#0a0a0c] overflow-y-auto custom-scrollbar p-6">
+                  <TestCaseWorkbench 
+                    slug={problem.slug}
+                    sampleTests={Array.isArray(problem.examples) ? (problem.examples as any[]) : []}
+                    stdin={stdin}
+                    onStdinChange={setStdin}
+                    onRun={handleRun}
+                    isRunning={isRunning}
+                    sampleCaseStatus={sampleStatus}
+                    customStatus={customStatus}
+                    onResetResults={() => {
+                      setSampleStatus({});
+                      setCustomStatus({});
+                    }}
+                  />
+                </div>
+              )}
+            </ResizablePanel>
           </ResizablePanelGroup>
         </ResizablePanel>
       </ResizablePanelGroup>
 
+      {/* Login Dialog */}
       <Dialog open={showLogin} onOpenChange={setShowLogin}>
         <DialogContent className="bg-[#0d0d0f] border-white/10 text-white">
           <DialogHeader>
-            <DialogTitle className="text-xl font-black uppercase tracking-tighter">Identity Required</DialogTitle>
+            <DialogTitle className="text-xl font-black uppercase tracking-tighter">Login Required</DialogTitle>
           </DialogHeader>
-          <div className="py-8 text-center space-y-6">
-            <div className="h-20 w-20 rounded-[2rem] bg-primary/20 flex items-center justify-center mx-auto shadow-2xl shadow-primary/20">
-              <Info className="h-8 w-8 text-primary" />
+          <div className="space-y-4 py-4">
+            <p className="text-sm text-muted-foreground">Please sign in to submit your solutions and track progress.</p>
+            <div className="flex gap-3 justify-end">
+              <Button variant="ghost" onClick={() => setShowLogin(false)} className="text-[10px] font-black uppercase tracking-widest">Cancel</Button>
+              <Button onClick={() => navigate("/login")} className="bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-widest px-6">Sign In</Button>
             </div>
-            <div className="space-y-2">
-              <p className="text-sm font-bold text-white/90">Sign in to track your mastery</p>
-              <p className="text-xs text-muted-foreground leading-relaxed">Your solutions, run history, and rank will be synced to your profile across all your devices.</p>
-            </div>
-            <Button 
-              className="w-full h-12 rounded-2xl font-black uppercase tracking-widest bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] transition-all"
-              onClick={() => navigate("/auth")}
-            >
-              Sign In Now
-            </Button>
           </div>
         </DialogContent>
       </Dialog>

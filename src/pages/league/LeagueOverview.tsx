@@ -197,8 +197,8 @@ export default function LeagueOverview() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <StatTile label="Clan Solved" value={clanStats?.total_solved ?? "—"} accent="text-emerald-500" />
             <StatTile label="Avg Rating" value={clanStats?.avg_rating ?? "—"} accent="text-sky-500" />
-            <StatTile label="Active Today" value={clanStats?.active_members ?? "—"} />
-            <StatTile label="Clan Rank" value="N/A" />
+            <StatTile label="Active Members" value={clanStats?.active_members ?? "—"} />
+            <StatTile label="Joined" value={new Date(myClans[0].joined_at).toLocaleDateString()} />
           </div>
         </Card>
       )}

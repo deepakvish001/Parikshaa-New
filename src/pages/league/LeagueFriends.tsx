@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { ExternalLink, Plus, RefreshCw, Trash2, Upload } from "lucide-react";
+import { ExternalLink, Plus, RefreshCw, Trash2, Upload, GitCompare } from "lucide-react";
 import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -110,6 +110,11 @@ export default function LeagueFriends() {
             <option value="rating">Sort by: Rating</option>
             <option value="streak">Sort by: Streak</option>
           </select>
+          <Link to="/league/compare">
+            <Button variant="outline" className="rounded-full">
+              <GitCompare className="h-4 w-4 mr-2" /> Compare
+            </Button>
+          </Link>
           <BulkImportDialog />
           <div className="flex gap-2">
             <Input

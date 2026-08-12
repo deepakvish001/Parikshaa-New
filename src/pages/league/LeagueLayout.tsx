@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, GitCompare } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -13,6 +13,7 @@ const TABS = [
   { to: "/league/feed", label: "Feed" },
   { to: "/league/contests", label: "Contests" },
   { to: "/league/bookmarks", label: "Bookmarks" },
+  { to: "/league/compare", label: "Compare" },
 ];
 
 export default function LeagueLayout() {
@@ -41,19 +42,34 @@ export default function LeagueLayout() {
           ))}
         </nav>
 
-        <Button
-          onClick={() =>
-            sync.mutate(undefined, {
-              onSuccess: (r) => toast.success(`Synced ${r?.synced ?? 0} handle(s)`),
-              onError: (e: any) => toast.error(e?.message ?? "Sync failed"),
-            })
-          }
-          disabled={sync.isPending}
-          className="rounded-full"
-        >
-          <RefreshCw className={cn("h-4 w-4 mr-2", sync.isPending && "animate-spin")} />
-          Sync All
-        </Button>
+        <div className="flex items-center gap-2">
+          <NavLink
+            to="/league/compare"
+            className={({ isActive }) =>
+              cn(
+                "h-9 px-4 flex items-center gap-2 rounded-full text-sm font-medium border transition-colors",
+                isActive
+                  ? "bg-primary/10 text-primary border-primary/30"
+                  : "bg-card/60 text-muted-foreground hover:text-foreground",
+              )
+            }
+          >
+            <GitCompare className="h-4 w-4" /> Compare
+          </NavLink>
+          <Button
+            onClick={() =>
+              sync.mutate(undefined, {
+                onSuccess: (r) => toast.success(`Synced ${r?.synced ?? 0} handle(s)`),
+                onError: (e: any) => toast.error(e?.message ?? "Sync failed"),
+              })
+            }
+            disabled={sync.isPending}
+            className="rounded-full"
+          >
+            <RefreshCw className={cn("h-4 w-4 mr-2", sync.isPending && "animate-spin")} />
+            Sync All
+          </Button>
+        </div>
       </div>
 
       <Outlet />

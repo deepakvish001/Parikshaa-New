@@ -33,10 +33,10 @@ export function useMyClans() {
     queryFn: async () => {
       const { data, error } = await db
         .from("clan_members")
-        .select("role, clan_id, clans:clan_id (*)")
+        .select("role, clan_id, joined_at, clans:clan_id (*)")
         .eq("user_id", user.id);
       if (error) throw error;
-      return (data ?? []).map((r: any) => ({ role: r.role as string, clan: r.clans as Clan }));
+      return (data ?? []).map((r: any) => ({ role: r.role as string, clan: r.clans as Clan, joined_at: r.joined_at as string }));
     },
   });
 }

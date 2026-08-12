@@ -31,8 +31,9 @@ import {
   useMyClans,
   useClanMembers,
   useLeaveClan,
+  useClanStats,
 } from "@/hooks/league/useClans";
-import { useSnapshots } from "@/hooks/league/useLeague";
+import { useSnapshots, useTrackedHandles } from "@/hooks/league/useLeague";
 import { MetricCard, StatTile } from "@/components/league/LeagueBits";
 
 export default function LeagueClanDetail() {
@@ -43,13 +44,27 @@ export default function LeagueClanDetail() {
   
   const { data: rawMembers = [] } = useClanMembers(id);
   const leave = useLeaveClan();
+  const { data: clanStats } = useClanStats(id);
   
   // In a real app, we'd fetch profile data for members. 
   // For now, we assume the user_id matches a tracked handle or we fetch handles.
   // This is a simplification.
-  const memberIds = useMemo(() => rawMembers.map(m => m.user_id), [rawMembers]);
-  
+  const { data: handles = [] } = useTrackedHandles();
+  const handleMap = useMemo(() => new Map(handles.map(h => [h.id, h])), [handles]);
+  const memberHandles = useMemo(() => rawMembers.map(m => handleMap.get(m.user_id)?.handle).filter(Boolean) as string[], [rawMembers, handleMap]);
+  const { data: snaps = [] } = useSnapshots(memberHandles);
+  const snapByHandle = useMemo(() => new Map(snaps.map(s => [s.handle, s])), [snaps]);
+
   const [search, setSearch] = useState("");
+
+  const shownMembers = useMemo(() => {
+    return rawMembers.filter(m => {
+      const h = handleMap.get(m.user_id);
+      if (!h) return false;
+      const searchLower = search.toLowerCase();
+      return h.handle.toLowerCase().includes(searchLower) || (h.display_name?.toLowerCase().includes(searchLower) ?? false);
+    });
+  }, [rawMembers, handleMap, search]);
 
   if (!clan) {
     return (
@@ -143,26 +158,35 @@ export default function LeagueClanDetail() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-border">
-                    {rawMembers.map((m) => (
-                      <tr key={m.user_id} className="hover:bg-muted/10 transition-colors">
-                        <td className="px-4 py-4">
-                          <div className="flex items-center gap-3">
-                            <Avatar className="h-8 w-8">
-                              <AvatarFallback>U</AvatarFallback>
-                            </Avatar>
-                            <span className="font-medium">User {m.user_id.slice(0, 5)}</span>
-                          </div>
-                        </td>
-                        <td className="px-4 py-4">
-                          <Badge variant={m.role === 'owner' ? 'default' : 'secondary'} className="capitalize">
-                            {m.role}
-                          </Badge>
-                        </td>
-                        <td className="px-4 py-4 text-right text-muted-foreground">
-                          {new Date(m.joined_at).toLocaleDateString()}
-                        </td>
-                      </tr>
-                    ))}
+                    {shownMembers.map((m) => {
+                      const h = handleMap.get(m.user_id);
+                      const s = h ? snapByHandle.get(h.handle) : null;
+                      return (
+                        <tr key={m.user_id} className="hover:bg-muted/10 transition-colors">
+                          <td className="px-4 py-4">
+                            <Link to={h ? `/league/friends/${h.handle}` : "#"} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                              <Avatar className="h-8 w-8">
+                                <AvatarImage src={s?.avatar_url ?? undefined} />
+                                <AvatarFallback>{h?.handle.slice(0, 2).toUpperCase() ?? "U"}</AvatarFallback>
+                              </Avatar>
+                              <div className="min-w-0">
+                                <div className="font-medium truncate">{s?.display_name ?? h?.handle ?? "User"}</div>
+                                <div className="text-[10px] text-muted-foreground truncate">@{h?.handle}</div>
+                              </div>
+                            </Link>
+                          </td>
+                          <td className="px-4 py-4">
+                            <Badge variant={m.role === 'owner' ? 'default' : 'secondary'} className="capitalize text-[10px]">
+                              {m.role}
+                            </Badge>
+                          </td>
+                          <td className="px-4 py-4 text-right">
+                             <div className="text-sm font-bold text-emerald-500">{s?.total_solved ?? 0}</div>
+                             <div className="text-[10px] text-muted-foreground">Solved</div>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </Card>
@@ -199,9 +223,9 @@ export default function LeagueClanDetail() {
           <Card className="p-5 space-y-4">
             <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground">Clan Stats</h3>
             <div className="grid gap-3">
-              <StatTile label="Total Solved" value="—" accent="text-emerald-500" />
-              <StatTile label="Avg Rating" value="—" accent="text-sky-500" />
-              <StatTile label="Global Rank" value="N/A" />
+              <StatTile label="Total Solved" value={clanStats?.total_solved ?? "—"} accent="text-emerald-500" />
+              <StatTile label="Avg Rating" value={clanStats?.avg_rating ?? "—"} accent="text-sky-500" />
+              <StatTile label="Active Members" value={clanStats?.active_members ?? "—"} />
             </div>
           </Card>
 

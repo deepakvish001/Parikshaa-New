@@ -11,8 +11,8 @@ import { ParikshaaBrandLogo } from "@/components/brand/ParikshaaBrandLogo";
 
 const navItems = [
   { label: "Hub", href: "#all-in-one", kicker: "01" },
-  { label: "Why Parikshaa", href: "#why", kicker: "02" },
-  { label: "Vs Others", href: "#comparison", kicker: "03" },
+  { label: "Why League", href: "#why", kicker: "02" },
+  { label: "Comparison", href: "#comparison", kicker: "03" },
   { label: "Mentor", href: "#mentor-desk", kicker: "04" },
   { label: "Learn", href: "/learn" },
 ];

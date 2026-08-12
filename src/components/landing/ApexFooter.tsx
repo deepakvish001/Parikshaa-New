@@ -99,7 +99,7 @@ const footerLinks: Record<string, { label: string; href: string }[]> = {
   Product: [
     { label: "Learn", href: "/learn" },
     { label: "Problems", href: "/library/problems" },
-    { label: "Sheets", href: "/library" },
+    { label: "League", href: "/league" },
     { label: "Blog", href: "/blog" },
   ],
   Resources: [
@@ -389,7 +389,7 @@ export function ApexFooter({ freezeAnimations = false }: ApexFooterProps = {}) {
           <StackedSection id="signal-feed">
           <HeroStyleHeading
             eyebrowKicker="07"
-            eyebrowLabel="Signal Feed / Weekly Digest"
+            eyebrowLabel="LeetLeague Feed / Weekly Digest"
             headingId="signal-feed-heading"
             as="h2"
             subheadPrimary="One email, zero fluff."

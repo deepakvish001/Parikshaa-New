@@ -30,6 +30,7 @@ import { cn } from "@/lib/utils";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { toast } from "sonner";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 // Components
 import { ProblemDetailHeader } from "@/components/library/coding/ProblemDetailHeader";
@@ -38,7 +39,7 @@ import { ProblemFooterBar } from "@/components/library/coding/ProblemFooterBar";
 import { ProblemRunHistory } from "@/components/library/coding/ProblemRunHistory";
 import { ProblemTopBar } from "@/components/library/coding/ProblemTopBar";
 import { TestCaseWorkbench, type SampleCaseStatusEntry, type CustomCaseStatusEntry } from "@/components/library/coding/TestCaseWorkbench";
-import { MonacoEditor } from "@/components/coding/MonacoEditor";
+import { MonacoEditor, type MonacoEditorHandle } from "@/components/coding/MonacoEditor";
 import { SubmissionResultView } from "@/components/library/coding/SubmissionResultView";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -82,6 +83,9 @@ const CodingProblemDetail = () => {
   const [language, setLanguage] = useState("cpp");
   const { draft, saveDraft, draftLoaded } = useCodeDraft(slug || "", language);
   const [code, setCode] = useState(LANG_CONFIGS.cpp.starter);
+  const editorRef = useRef<MonacoEditorHandle>(null);
+  const [autoFormat, setAutoFormat] = useState(true);
+  const [autoLint, setAutoLint] = useState(true);
 
   // Sync draft to code state
   useEffect(() => {
@@ -137,8 +141,30 @@ const CodingProblemDetail = () => {
     // Draft hook will trigger and update code via useEffect
   };
 
+  const handlePreRun = async () => {
+    if (!editorRef.current) return true;
+
+    if (autoFormat) {
+      await editorRef.current.format();
+    }
+
+    if (autoLint) {
+      const diagnostics = await editorRef.current.lint();
+      const errors = diagnostics.filter(d => d.severity === "error");
+      if (errors.length > 0) {
+        toast.error(`Found ${errors.length} syntax errors. Please fix them before running.`);
+        return false;
+      }
+    }
+    return true;
+  };
+
   const handleRun = async () => {
     if (!problem) return;
+    
+    const ready = await handlePreRun();
+    if (!ready) return;
+
     setConsoleOpen(true);
     try {
       const result = await run({
@@ -161,6 +187,10 @@ const CodingProblemDetail = () => {
       return;
     }
     if (!problem) return;
+
+    const ready = await handlePreRun();
+    if (!ready) return;
+
     setConsoleOpen(true);
     setSubmitResult(null);
     
@@ -395,19 +425,45 @@ const CodingProblemDetail = () => {
                   </select>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg text-muted-foreground/60 hover:text-white">
-                    <Settings className="h-4 w-4" />
-                  </Button>
-                  <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg text-muted-foreground/60 hover:text-white">
-                    <Layout className="h-4 w-4" />
-                  </Button>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        onClick={() => setAutoFormat(!autoFormat)}
+                        className={cn("h-8 w-8 rounded-lg transition-colors", autoFormat ? "text-primary" : "text-muted-foreground/40")}
+                      >
+                        <Layout className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent className="text-[10px] font-bold uppercase tracking-widest">
+                      Auto Format: {autoFormat ? "ON" : "OFF"}
+                    </TooltipContent>
+                  </Tooltip>
+
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        onClick={() => setAutoLint(!autoLint)}
+                        className={cn("h-8 w-8 rounded-lg transition-colors", autoLint ? "text-rose-400" : "text-muted-foreground/40")}
+                      >
+                        <Settings className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent className="text-[10px] font-bold uppercase tracking-widest">
+                      Auto Lint: {autoLint ? "ON" : "OFF"}
+                    </TooltipContent>
+                  </Tooltip>
                 </div>
               </div>
 
               {/* Editor */}
               <div className="flex-1 min-h-0 bg-[#0a0a0c]">
                 <MonacoEditor 
-                  value={code} 
+                  ref={editorRef}
+                  value={code}
                   onChange={handleCodeChange} 
                   language={language}
                   fontSize={14}

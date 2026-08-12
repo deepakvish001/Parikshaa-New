@@ -28,6 +28,7 @@ export interface MonacoDiagnostic {
 
 export interface MonacoEditorHandle {
   format: () => Promise<void>;
+  lint: () => Promise<MonacoDiagnostic[]>;
   focus: () => void;
   getValue: () => string;
   relayout: () => void;
@@ -176,6 +177,53 @@ export const MonacoEditor = forwardRef<MonacoEditorHandle, MonacoEditorProps>(
         ed.revealLineInCenter(Math.max(1, line));
         ed.setPosition({ lineNumber: Math.max(1, line), column: Math.max(1, column) });
         ed.focus();
+      },
+      lint: async () => {
+        const ed = editorRef.current;
+        const monaco = monacoRef.current;
+        if (!ed || !monaco) return [];
+        const code = ed.getValue();
+        const model = ed.getModel();
+        if (!model) return [];
+
+        const nextDiagnostics: MonacoDiagnostic[] = [];
+
+        // Basic Linting Rules
+        const lines = code.split("\n");
+        lines.forEach((line, i) => {
+          const lineNumber = i + 1;
+          
+          // 1. Check for 'debugger'
+          if (line.includes("debugger")) {
+            nextDiagnostics.push({
+              line: lineNumber,
+              message: "Unexpected 'debugger' statement.",
+              severity: "warning"
+            });
+          }
+
+          // 2. Check for print statements in production code (optional, but good for coding platforms)
+          if (language === "python" && (line.includes("print(") || line.includes("print "))) {
+             // Just a hint
+          }
+        });
+
+        // Language-specific basic checks
+        if (language === "cpp" || language === "java") {
+          // Check for balanced braces (simplified)
+          const open = (code.match(/{/g) || []).length;
+          const close = (code.match(/}/g) || []).length;
+          if (open !== close) {
+            nextDiagnostics.push({
+              line: lines.length,
+              message: `Unbalanced braces: ${open} open, ${close} closed.`,
+              severity: "error"
+            });
+          }
+        }
+
+        applyDiagnostics(ed, monaco, nextDiagnostics);
+        return nextDiagnostics;
       },
     }));
 

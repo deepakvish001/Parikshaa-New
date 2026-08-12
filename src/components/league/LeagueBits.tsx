@@ -1,5 +1,7 @@
+import { ExternalLink, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export function MetricCard({
   label,
@@ -130,5 +132,33 @@ export function Heatmap({ data }: { data: { day: string; submissions: number }[]
         />
       ))}
     </div>
+  );
+}
+
+export function DailyChallengeCard() {
+  return (
+    <Card className="p-5 flex flex-col justify-between border-primary/20 bg-primary/5">
+      <div>
+        <div className="flex items-center gap-2 mb-2">
+          <Zap className="h-4 w-4 text-primary fill-primary" />
+          <span className="text-[10px] font-bold tracking-wider uppercase text-primary">Daily Challenge</span>
+        </div>
+        <h3 className="text-lg font-bold leading-tight">Minimum Number of Operations to Sort a Binary Tree by Level</h3>
+        <div className="mt-2 flex items-center gap-2">
+          <DifficultyBadge difficulty="Medium" />
+          <span className="text-[10px] text-muted-foreground uppercase font-semibold">Dec 23, 2024</span>
+        </div>
+      </div>
+      <a 
+        href="https://leetcode.com/problems/minimum-number-of-operations-to-sort-a-binary-tree-by-level/" 
+        target="_blank" 
+        rel="noreferrer"
+        className="mt-4"
+      >
+        <Button className="w-full h-9 text-xs font-bold" variant="default">
+          Solve Problem <ExternalLink className="h-3 w-3 ml-1.5" />
+        </Button>
+      </a>
+    </Card>
   );
 }

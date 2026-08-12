@@ -81,35 +81,35 @@ export default function LeagueFeed() {
                     <span className="text-xs text-muted-foreground">{relative(f.solved_at)}</span>
                   </div>
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-sm truncate">{f.title}</span>
+                    <span className="text-sm truncate font-medium text-foreground/80">{f.title}</span>
                     <DifficultyBadge difficulty={f.difficulty} />
                   </div>
-                  <div className="mt-2 flex gap-2">
+                  <div className="mt-3 flex flex-wrap gap-2">
                     <a href={`https://leetcode.com/problems/${f.problem_slug}/`} target="_blank" rel="noreferrer">
-                      <Button size="sm" variant="outline" className="h-7 text-xs">
-                        <Code2 className="h-3 w-3 mr-1" /> Solve
+                      <Button size="sm" variant="outline" className="h-8 text-xs bg-emerald-500/5 hover:bg-emerald-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-400">
+                        <Code2 className="h-3.5 w-3.5 mr-1.5" /> Solve
                       </Button>
                     </a>
                     <a href={`https://leetcode.com/problems/${f.problem_slug}/solutions/`} target="_blank" rel="noreferrer">
-                      <Button size="sm" variant="outline" className="h-7 text-xs">
-                        <BookOpen className="h-3 w-3 mr-1" /> Solution
+                      <Button size="sm" variant="outline" className="h-8 text-xs bg-sky-500/5 hover:bg-sky-500/10 border-sky-500/20 text-sky-600 dark:text-sky-400">
+                        <BookOpen className="h-3.5 w-3.5 mr-1.5" /> Solution
                       </Button>
                     </a>
                     <Button
                       size="sm"
                       variant="outline"
-                      className="h-7 text-xs"
+                      className="h-8 text-xs hover:bg-primary/5 border-primary/20"
                       onClick={() =>
                         toggle.mutate(
                           { slug: f.problem_slug, title: f.title, difficulty: f.difficulty },
                           {
-                            onSuccess: (r) => toast.success(r === "saved" ? "Saved" : "Removed"),
-                            onError: (e: any) => toast.error(e?.message ?? "Failed"),
+                            onSuccess: (r) => toast.success(r === "saved" ? "Saved to bookmarks" : "Removed from bookmarks"),
+                            onError: (e: any) => toast.error(e?.message ?? "Failed to save"),
                           },
                         )
                       }
                     >
-                      <Bookmark className="h-3 w-3 mr-1" /> Save
+                      <Bookmark className="h-3.5 w-3.5 mr-1.5" /> Save
                     </Button>
                   </div>
                 </div>

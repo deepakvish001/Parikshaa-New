@@ -29,7 +29,7 @@ export const useAdminContests = () => {
         .select("*")
         .order("created_at", { ascending: false });
       if (error) throw error;
-      const list = (data ?? []) as Contest[];
+      const list = (data ?? []) as any as Contest[];
       // Fetch registration counts in one go
       const { data: regs } = await supabase
         .from("contest_registrations")
@@ -51,7 +51,7 @@ export const useAdminContest = (id: string | undefined) => {
     queryFn: async () => {
       const { data, error } = await supabase.from("contests").select("*").eq("id", id!).maybeSingle();
       if (error) throw error;
-      return data as Contest | null;
+      return data as any as Contest | null;
     },
   });
 };
@@ -113,13 +113,13 @@ export const useSaveContest = () => {
         }
         const { data, error } = await supabase
           .from("contests")
-          .update(rest)
+          .update(rest as any)
           .eq("id", id)
           .select("*")
           .maybeSingle();
         if (error) throw error;
         if (user && data) await writeAudit("update", data.slug, rest, user.id);
-        return data as Contest;
+        return data as any as Contest;
       } else {
         const insertRow: any = { ...payload, created_by: user?.id };
         const { data, error } = await supabase
@@ -129,7 +129,7 @@ export const useSaveContest = () => {
           .maybeSingle();
         if (error) throw error;
         if (user && data) await writeAudit("create", data.slug, payload, user.id);
-        return data as Contest;
+        return data as any as Contest;
       }
     },
     onSuccess: () => {
@@ -170,7 +170,7 @@ export const useSetContestProblems = () => {
       if (problems.length === 0) return;
       const { error } = await supabase
         .from("contest_problems")
-        .insert(problems.map((p) => ({ ...p, contest_id: contestId })));
+        .insert(problems.map((p) => ({ ...p, contest_id: contestId })) as any);
       if (error) throw error;
     },
     onSuccess: (_d, vars) => {

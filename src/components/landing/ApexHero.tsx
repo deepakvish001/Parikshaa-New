@@ -99,25 +99,25 @@ export function ApexHero() {
           style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}
           className="max-w-[16ch] text-[46px] font-bold leading-[0.98] tracking-[-0.035em] text-foreground sm:text-6xl md:text-7xl lg:max-w-[18ch] lg:text-[96px] xl:text-[110px]"
         >
-          <span className="block">Visualize. Learn.</span>
+          <span className="block">Visualize Logic.</span>
+          <span className="block">Master the Pattern.</span>
           <span className="block">
             <span className="relative inline-block px-3 py-1">
               <span
                 aria-hidden
                 className="absolute inset-0 -z-10 rounded-lg bg-primary/15 ring-1 ring-inset ring-primary/25"
               />
-              Succeed.
+              Succeed at Scale.
             </span>{" "}
-            <span className="text-foreground/60">at scale.</span>
           </span>
-          <span className="block">
+          <span className="block mt-2 sm:mt-4">
             <span
               className="bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent"
               style={{ backgroundSize: "200% auto", animation: "apex-shimmer 6s linear infinite" }}
             >
               Parikshaa
             </span>{" "}
-            <span className="text-foreground">is HERE.</span>
+            <span className="text-foreground text-[0.7em] sm:text-[0.6em] align-middle">is your unfair advantage.</span>
           </span>
         </motion.h1>
 
@@ -129,10 +129,10 @@ export function ApexHero() {
           className="mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base lg:mt-4 lg:text-base"
         >
           <span className="block font-semibold text-foreground">
-            Master Data Structures & Algorithms with real-time feedback.
+            Stop memorizing. Start visualizing. Turn complex patterns into intuitive mental models.
           </span>
           <span className="hidden sm:inline">
-            Parikshaa combines deep-rewrite sheets, AI-powered visualizers, and curated interview roadmaps to accelerate your tech career.
+            Parikshaa is the only platform that bridges the gap between solving a problem and truly understanding it. Built for coders who want to dominate.
           </span>
         </motion.p>
 

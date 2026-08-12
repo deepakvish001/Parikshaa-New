@@ -4986,7 +4986,7 @@ export type Database = {
         Returns: boolean
       }
       league_leaderboard: {
-        Args: { _handles: string[]; _metric?: string }
+        Args: { _handles: string[]; _metric: string }
         Returns: {
           avatar_url: string
           display_name: string

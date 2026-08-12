@@ -1,5 +1,5 @@
-import React, { useState, useRef } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import React, { useState, useRef, useEffect, useMemo } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -13,30 +13,53 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { 
   FileText, 
   BookOpen, 
-  Clock, 
   NotebookPen, 
   Cpu, 
   Settings,
-  Code2
+  Code2,
+  Terminal,
+  Play,
+  Rocket,
+  ChevronUp,
+  History,
+  Info,
+  Clock,
+  Layout
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { toast } from "sonner";
 
-// Components - Using named imports based on file inspection
+// Components
 import { ProblemDetailHeader } from "@/components/library/coding/ProblemDetailHeader";
 import { splitProblemDescription, ProblemFormatCards, ProblemConstraints } from "@/components/library/coding/ProblemFormatSections";
 import { ProblemFooterBar } from "@/components/library/coding/ProblemFooterBar";
 import { ProblemRunHistory } from "@/components/library/coding/ProblemRunHistory";
-import { ProgressiveHints } from "@/components/library/coding/ProgressiveHints";
+import { ProblemTopBar } from "@/components/library/coding/ProblemTopBar";
+import { TestCaseWorkbench, type SampleCaseStatusEntry, type CustomCaseStatusEntry } from "@/components/library/coding/TestCaseWorkbench";
+import { MonacoEditor } from "@/components/coding/MonacoEditor";
+import { SubmissionResultView } from "@/components/library/coding/SubmissionResultView";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
-// Types & Utils
+// Hooks
+import { useCodeRunner, type SubmitResult } from "@/hooks/useCodeRunner";
+import { useCodingSubmissions } from "@/hooks/useCodingSubmissions";
+import { useAuth } from "@/contexts/AuthContext";
+import { findCurriculumLocation } from "@/data/codingCurriculum";
+
+// Types
 import { Database } from "@/integrations/supabase/types";
 
 type CodingProblem = Database['public']['Tables']['coding_problems']['Row'];
 type EditorTabId = "description" | "editorial" | "submissions" | "discussion" | "notes";
+
+const LANG_CONFIGS: Record<string, { id: number; label: string; starter: string }> = {
+  cpp: { id: 54, label: "C++ 20", starter: "#include <iostream>\nusing namespace std;\n\nint main() {\n    // solve here\n    return 0;\n}" },
+  java: { id: 62, label: "Java 17", starter: "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // solve here\n    }\n}" },
+  python: { id: 71, label: "Python 3", starter: "import sys\n\ndef main():\n    # solve here\n    pass\n\nif __name__ == \"__main__\":\n    main()" },
+};
 
 const difficultyClass = (difficulty: string) => {
   switch (difficulty.toLowerCase()) {
@@ -49,15 +72,30 @@ const difficultyClass = (difficulty: string) => {
 
 const CodingProblemDetail = () => {
   const { slug } = useParams();
-  const [searchParams] = useSearchParams();
-  const horizontalGroupRef = useRef<any>(null);
-
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  
+  // UI State
   const [activeTab, setActiveTab] = useState<EditorTabId>("description");
-  const [tabOrder] = useState<EditorTabId[]>(["description", "submissions", "editorial", "discussion", "notes"]);
   const [language, setLanguage] = useState("cpp");
+  const [code, setCode] = useState(LANG_CONFIGS.cpp.starter);
   const [showLogin, setShowLogin] = useState(false);
   const [notesValue, setNotesValue] = useState("");
-  const [problemStats] = useState({ isSolved: false, isAttempted: false, attempts: 0, solvedAt: null as string | null });
+  const [consoleOpen, setConsoleOpen] = useState(true);
+  
+  // Execution State
+  const [stdin, setStdin] = useState("");
+  const [sampleStatus, setSampleStatus] = useState<Record<number, SampleCaseStatusEntry>>({});
+  const [customStatus, setCustomStatus] = useState<Record<string, CustomCaseStatusEntry>>({});
+  const [submitResult, setSubmitResult] = useState<SubmitResult | null>(null);
+  
+  const { run, submit, isRunning, isSubmitting } = useCodeRunner();
+  const { submissions, refetch: refetchSubmissions } = useCodingSubmissions(slug);
+  
+  // Curriculum context for TopBar
+  const loc = useMemo(() => slug ? findCurriculumLocation(slug) : null, [slug]);
+  const folderSolved = 0; // In a real app, this would be derived from user progress
+  const folderTotal = loc?.folder?.problems?.length || 0;
 
   const { data: problem, isLoading: isProblemLoading } = useQuery({
     queryKey: ["problem", slug],
@@ -73,168 +111,343 @@ const CodingProblemDetail = () => {
     enabled: !!slug
   });
 
-  const handleToggleBookmark = () => {
-    toast.success("Bookmark updated");
+  // Handle language change
+  const handleLanguageChange = (newLang: string) => {
+    setLanguage(newLang);
+    setCode(LANG_CONFIGS[newLang]?.starter || "");
+  };
+
+  const handleRun = async () => {
+    if (!problem) return;
+    setConsoleOpen(true);
+    try {
+      const result = await run({
+        source_code: code,
+        language_id: LANG_CONFIGS[language].id,
+        stdin,
+        problem_slug: problem.slug,
+        language
+      });
+      toast.success("Run completed");
+      // Handle status update for UI if needed
+    } catch (e: any) {
+      toast.error(e.message || "Run failed");
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!user) {
+      setShowLogin(true);
+      return;
+    }
+    if (!problem) return;
+    setConsoleOpen(true);
+    setSubmitResult(null);
+    
+    // Parse sample tests for submission from problem.examples
+    const samples = Array.isArray(problem.examples) ? (problem.examples as any[]) : [];
+    
+    try {
+      const result = await submit({
+        source_code: code,
+        language,
+        language_id: LANG_CONFIGS[language].id,
+        problem_slug: problem.slug,
+        tests: samples.map(c => ({ 
+          input: c.input || "", 
+          expected: c.output || c.expected || "" 
+        })),
+        cpu_time_limit: problem.cpu_time_limit_sec ?? 2,
+        memory_limit: problem.memory_limit_kb ?? 256000
+      });
+      
+      setSubmitResult(result);
+      if (result.verdict === "Accepted") {
+        toast.success("Problem Solved!");
+      } else {
+        toast.error(`Submission: ${result.verdict}`);
+      }
+      refetchSubmissions();
+    } catch (e: any) {
+      toast.error(e.message || "Submission failed");
+    }
   };
 
   if (isProblemLoading) {
     return (
-      <div className="flex h-[calc(100vh-4rem)] w-full items-center justify-center">
+      <div className="flex h-screen w-full items-center justify-center bg-[#0a0a0c]">
         <div className="space-y-4 w-full max-w-2xl px-8">
-          <Skeleton className="h-12 w-3/4" />
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-5/6" />
-          <Skeleton className="h-64 w-full" />
+          <Skeleton className="h-12 w-3/4 bg-white/5" />
+          <Skeleton className="h-4 w-full bg-white/5" />
+          <Skeleton className="h-64 w-full bg-white/5" />
         </div>
       </div>
     );
   }
 
-  if (!problem) return <div>Problem not found</div>;
+  if (!problem) return <div className="p-8 text-center text-muted-foreground">Problem not found</div>;
 
   const content = splitProblemDescription(problem.description || "");
 
   return (
-    <div className="flex h-[calc(100vh-4rem)] w-full overflow-hidden bg-background">
+    <div className="flex flex-col h-screen w-full overflow-hidden bg-[#0a0a0c] text-[#e0e0e0]">
       <Helmet>
-        <title>{problem.title} — Coding Problem</title>
+        <title>{problem.title} — CodingPariksha</title>
       </Helmet>
 
-      <ResizablePanelGroup ref={horizontalGroupRef} direction="horizontal" className="flex-1">
-        <ResizablePanel defaultSize={50} minSize={25} className="flex flex-col border-r border-border/40">
+      <ProblemTopBar 
+        folderSolved={folderSolved}
+        folderTotal={folderTotal}
+        streakDay={7} // Placeholder
+        onAiClick={() => toast.info("AI Help coming soon")}
+      />
+
+      <ResizablePanelGroup direction="horizontal" className="flex-1">
+        {/* Left Panel: Description, Submissions, etc. */}
+        <ResizablePanel defaultSize={45} minSize={30} className="flex flex-col border-r border-white/10">
           <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as EditorTabId)} className="flex-1 flex flex-col min-h-0">
-            <div className="flex items-center justify-between px-2 border-b bg-muted/20 h-10 shrink-0">
+            <div className="flex items-center px-2 border-b border-white/5 bg-[#0d0d0f] h-10 shrink-0">
               <TabsList className="bg-transparent h-9 p-0 gap-1">
-                {tabOrder.map(tab => (
-                  <TabsTrigger 
-                    key={tab} 
-                    value={tab} 
-                    className="h-8 px-3 text-xs font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-md capitalize"
-                  >
-                    {tab === "description" ? "Statement" : tab}
-                  </TabsTrigger>
-                ))}
+                <TabsTrigger value="description" className="h-8 px-4 text-[11px] font-bold uppercase tracking-widest rounded-md data-[state=active]:bg-white/5">
+                  <FileText className="h-3 w-3 mr-2 text-primary" /> Statement
+                </TabsTrigger>
+                <TabsTrigger value="submissions" className="h-8 px-4 text-[11px] font-bold uppercase tracking-widest rounded-md data-[state=active]:bg-white/5">
+                  <History className="h-3 w-3 mr-2 text-amber-400" /> Submissions
+                </TabsTrigger>
+                <TabsTrigger value="editorial" className="h-8 px-4 text-[11px] font-bold uppercase tracking-widest rounded-md data-[state=active]:bg-white/5">
+                  <BookOpen className="h-3 w-3 mr-2 text-emerald-400" /> Editorial
+                </TabsTrigger>
+                <TabsTrigger value="notes" className="h-8 px-4 text-[11px] font-bold uppercase tracking-widest rounded-md data-[state=active]:bg-white/5">
+                  <NotebookPen className="h-3 w-3 mr-2 text-rose-400" /> Notes
+                </TabsTrigger>
               </TabsList>
             </div>
 
-            <div className="flex-1 overflow-y-auto custom-scrollbar">
-              <TabsContent value="description" className="m-0 p-6 space-y-6 focus-visible:outline-none">
-                <header className="space-y-4">
-                  <div className="flex items-start justify-between">
-                    <div className="space-y-2">
-                      <h1 className="text-2xl font-bold tracking-tight text-foreground">{problem.title}</h1>
-                      <div className="flex items-center gap-2">
-                        <span className={cn("px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border", difficultyClass(problem.difficulty))}>
+            <div className="flex-1 overflow-y-auto custom-scrollbar bg-[#0a0a0c]">
+              <TabsContent value="description" className="m-0 p-6 space-y-8 focus-visible:outline-none max-w-4xl mx-auto">
+                <header className="space-y-6">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="space-y-3">
+                      <h1 className="text-3xl font-black tracking-tighter text-white leading-tight">{problem.title}</h1>
+                      <div className="flex items-center gap-3">
+                        <span className={cn("px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border", difficultyClass(problem.difficulty))}>
                           {problem.difficulty}
                         </span>
-                        <div className="flex items-center gap-3 text-xs text-muted-foreground/60 font-medium ml-2">
-                          <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> {problem.cpu_time_limit_sec}s</span>
-                          <span className="flex items-center gap-1"><Cpu className="h-3 w-3" /> {Math.floor(problem.memory_limit_kb / 1024)}MB</span>
+                        <div className="flex items-center gap-4 text-[10px] text-muted-foreground/60 font-black uppercase tracking-widest">
+                          <span className="flex items-center gap-1.5"><Clock className="h-3 w-3" /> {problem.cpu_time_limit_sec}s</span>
+                          <span className="flex items-center gap-1.5"><Cpu className="h-3 w-3" /> {Math.floor(problem.memory_limit_kb / 1024)}MB</span>
                         </div>
                       </div>
                     </div>
-                    <div className="shrink-0 pt-0.5">
-                      <ProblemDetailHeader
-                        isSolved={problemStats.isSolved}
-                        isAttempted={problemStats.isAttempted}
-                        attempts={problemStats.attempts}
-                        solvedAt={problemStats.solvedAt}
-                        isBookmarked={false}
-                        onToggleBookmark={handleToggleBookmark}
-                      />
-                    </div>
+                    <ProblemDetailHeader
+                      isSolved={submissions.some(s => s.verdict === "Accepted")}
+                      isAttempted={submissions.length > 0}
+                      attempts={submissions.length}
+                      solvedAt={submissions.find(s => s.verdict === "Accepted")?.created_at}
+                      isBookmarked={false}
+                      onToggleBookmark={() => toast.success("Bookmark updated")}
+                    />
                   </div>
 
                   <div className="flex flex-wrap gap-2">
                     {problem.topics?.map(topic => (
-                      <span key={topic} className="px-2 py-0.5 bg-muted/50 rounded-md text-[11px] font-medium text-muted-foreground hover:bg-muted cursor-pointer transition-colors">
+                      <span key={topic} className="px-2.5 py-1 bg-white/5 rounded-md text-[9px] font-black uppercase tracking-widest text-muted-foreground hover:text-white hover:bg-white/10 cursor-pointer transition-all border border-white/5">
                         {topic}
                       </span>
                     ))}
                   </div>
                 </header>
 
-                <div className="prose prose-sm prose-invert max-w-none prose-pre:bg-muted/30 prose-pre:border prose-pre:border-border/40">
+                <div className="prose prose-sm prose-invert max-w-none prose-p:text-[#b0b0b0] prose-p:leading-relaxed prose-headings:text-white prose-strong:text-white prose-code:text-amber-200 prose-pre:bg-black/40 prose-pre:border prose-pre:border-white/5 prose-pre:rounded-xl">
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>{content.main || problem.description}</ReactMarkdown>
                 </div>
 
-                <ProblemFormatCards 
-                  inputFormat={content.inputFormat} 
-                  outputFormat={content.outputFormat} 
-                />
+                <div className="space-y-6">
+                  <ProblemFormatCards 
+                    inputFormat={content.inputFormat} 
+                    outputFormat={content.outputFormat} 
+                  />
 
-                {problem.constraints && (
-                  <ProblemConstraints constraints={problem.constraints as any} />
-                )}
+                  {problem.constraints && (
+                    <ProblemConstraints constraints={problem.constraints as any} />
+                  )}
+                </div>
               </TabsContent>
 
               <TabsContent value="submissions" className="m-0 p-6 focus-visible:outline-none">
-                <ProblemRunHistory runs={[]} />
+                <ProblemRunHistory runs={submissions as any} />
               </TabsContent>
 
               <TabsContent value="notes" className="m-0 p-6 focus-visible:outline-none">
                 <div className="space-y-4">
-                  <h3 className="text-sm font-semibold flex items-center gap-2"><NotebookPen className="h-4 w-4" /> Personal Notes</h3>
+                  <div className="flex items-center gap-2">
+                    <NotebookPen className="h-4 w-4 text-rose-400" />
+                    <h3 className="text-xs font-black uppercase tracking-widest">Personal Notes</h3>
+                  </div>
                   <textarea 
                     value={notesValue}
                     onChange={(e) => setNotesValue(e.target.value)}
                     placeholder="Write your thoughts, approach or edge cases here..."
-                    className="w-full h-64 p-4 bg-muted/20 border border-border/40 rounded-xl text-sm focus:ring-1 focus:ring-primary/50 outline-none resize-none"
+                    className="w-full h-[400px] p-6 bg-black/40 border border-white/5 rounded-2xl text-sm font-mono focus:ring-1 focus:ring-primary/50 outline-none resize-none selection:bg-primary/20"
                   />
                 </div>
               </TabsContent>
 
-              <TabsContent value="editorial" className="m-0 p-6 focus-visible:outline-none">
-                <div className="flex flex-col items-center justify-center py-12 text-center space-y-3">
-                  <BookOpen className="h-10 w-10 text-muted-foreground/20" />
-                  <p className="text-sm text-muted-foreground">The official solution is currently unavailable.</p>
-                </div>
+              <TabsContent value="editorial" className="m-0 p-6 focus-visible:outline-none text-center py-20">
+                <BookOpen className="h-12 w-12 text-white/5 mx-auto mb-4" />
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground/40">Editorial is Locked</p>
+                <p className="text-[11px] text-muted-foreground/60 mt-2">Solve the problem first or use tokens to unlock.</p>
               </TabsContent>
             </div>
+
+            <ProblemFooterBar 
+              slug={problem.slug}
+              solved={submissions.some(s => s.verdict === "Accepted")}
+            />
           </Tabs>
-          
-          <ProblemFooterBar 
-            slug={problem.slug}
-            solved={problemStats.isSolved}
-          />
         </ResizablePanel>
 
-        <ResizableHandle withHandle />
+        <ResizableHandle withHandle className="bg-white/5 w-1" />
 
-        <ResizablePanel defaultSize={50} minSize={25} className="flex flex-col bg-[#0d0d0f]">
-          <div className="flex items-center justify-between px-4 h-10 border-b border-border/40 shrink-0">
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 text-xs font-medium text-foreground/80">
-                <Code2 className="h-3.5 w-3.5 text-primary" />
-                <span>Solution</span>
+        {/* Right Panel: Editor + Console */}
+        <ResizablePanel defaultSize={55} minSize={30} className="flex flex-col bg-[#0d0d0f]">
+          <ResizablePanelGroup direction="vertical">
+            <ResizablePanel defaultSize={65} minSize={30} className="flex flex-col min-h-0">
+              {/* Editor Header */}
+              <div className="flex items-center justify-between px-4 h-11 border-b border-white/5 bg-[#0d0d0f] shrink-0">
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-white/90">
+                    <Code2 className="h-3.5 w-3.5 text-primary" />
+                    Solution
+                  </div>
+                  <div className="h-4 w-px bg-white/10 mx-1" />
+                  <select 
+                    value={language}
+                    onChange={(e) => handleLanguageChange(e.target.value)}
+                    className="bg-transparent border-none text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-white focus:ring-0 cursor-pointer outline-none transition-colors"
+                  >
+                    {Object.entries(LANG_CONFIGS).map(([id, cfg]) => (
+                      <option key={id} value={id} className="bg-[#0d0d0f]">{cfg.label}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg text-muted-foreground/60 hover:text-white">
+                    <Settings className="h-4 w-4" />
+                  </Button>
+                  <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg text-muted-foreground/60 hover:text-white">
+                    <Layout className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
-              <div className="h-4 w-px bg-border/40 mx-1" />
-              <select 
-                value={language}
-                onChange={(e) => setLanguage(e.target.value)}
-                className="bg-transparent border-none text-[11px] font-semibold text-muted-foreground hover:text-foreground focus:ring-0 cursor-pointer outline-none uppercase"
-              >
-                <option value="cpp">C++ 20</option>
-                <option value="java">Java 17</option>
-                <option value="python">Python 3</option>
-              </select>
-            </div>
-            <button className="p-1.5 hover:bg-white/5 rounded-md text-muted-foreground transition-colors"><Settings className="h-3.5 w-3.5" /></button>
-          </div>
 
-          <div className="flex-1 min-h-0 relative flex items-center justify-center text-muted-foreground">
-            <div className="text-center space-y-2">
-              <Code2 className="h-12 w-12 mx-auto opacity-20" />
-              <p className="text-sm">Editor Component</p>
-            </div>
-          </div>
+              {/* Editor */}
+              <div className="flex-1 min-h-0 bg-[#0a0a0c]">
+                <MonacoEditor 
+                  value={code} 
+                  onChange={setCode} 
+                  language={language}
+                  fontSize={14}
+                />
+              </div>
+
+              {/* Editor Footer / Quick Actions */}
+              <div className="flex items-center justify-between px-4 h-12 border-t border-white/5 bg-[#0d0d0f] shrink-0">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => setConsoleOpen(!consoleOpen)}
+                  className="h-8 gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-white"
+                >
+                  <Terminal className="h-3.5 w-3.5" />
+                  Console
+                  {consoleOpen ? <ChevronUp className="h-3 w-3 rotate-180 transition-transform" /> : <ChevronUp className="h-3 w-3 transition-transform" />}
+                </Button>
+                
+                <div className="flex items-center gap-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={handleRun}
+                    disabled={isRunning || isSubmitting}
+                    className="h-9 px-6 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] border-white/10 bg-white/5 hover:bg-white/10 active:scale-95 transition-all"
+                  >
+                    {isRunning ? <Skeleton className="h-3 w-3 rounded-full animate-pulse" /> : <Play className="h-3 w-3 mr-2 fill-current" />}
+                    Run
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    onClick={handleSubmit}
+                    disabled={isRunning || isSubmitting}
+                    className="h-9 px-8 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-500/10 active:scale-95 transition-all"
+                  >
+                    {isSubmitting ? <Skeleton className="h-3 w-3 rounded-full animate-pulse bg-white/40" /> : <Rocket className="h-3 w-3 mr-2" />}
+                    Submit
+                  </Button>
+                </div>
+              </div>
+            </ResizablePanel>
+
+            {consoleOpen && (
+              <>
+                <ResizableHandle withHandle className="bg-white/5 h-1" />
+                <ResizablePanel defaultSize={35} minSize={20} className="bg-[#0a0a0c] flex flex-col min-h-0">
+                  <div className="flex-1 overflow-y-auto custom-scrollbar p-6">
+                    {submitResult ? (
+                      <SubmissionResultView 
+                        submitResult={submitResult}
+                        problemSlug={problem.slug}
+                        problemTitle={problem.title}
+                        language={LANG_CONFIGS[language].label}
+                        languageId={LANG_CONFIGS[language].id}
+                        sourceCode={code}
+                        user={user}
+                        onBackToCode={() => setSubmitResult(null)}
+                      />
+                    ) : (
+                      <TestCaseWorkbench 
+                        slug={problem.slug}
+                        sampleTests={Array.isArray(problem.examples) ? (problem.examples as any[]) : []}
+                        stdin={stdin}
+                        onStdinChange={setStdin}
+                        onRun={handleRun}
+                        isRunning={isRunning}
+                        sampleCaseStatus={sampleStatus}
+                        customCaseStatus={customStatus}
+                        onResetResults={() => {
+                          setSampleStatus({});
+                          setCustomStatus({});
+                        }}
+                      />
+                    )}
+                  </div>
+                </ResizablePanel>
+              </>
+            )}
+          </ResizablePanelGroup>
         </ResizablePanel>
       </ResizablePanelGroup>
 
       <Dialog open={showLogin} onOpenChange={setShowLogin}>
-        <DialogContent>
-          <DialogHeader><DialogTitle>Sign in required</DialogTitle></DialogHeader>
-          <div className="py-4 text-center text-sm text-muted-foreground">Please sign in to submit your solution and track progress.</div>
+        <DialogContent className="bg-[#0d0d0f] border-white/10 text-white">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-black uppercase tracking-tighter">Identity Required</DialogTitle>
+          </DialogHeader>
+          <div className="py-8 text-center space-y-6">
+            <div className="h-20 w-20 rounded-[2rem] bg-primary/20 flex items-center justify-center mx-auto shadow-2xl shadow-primary/20">
+              <Info className="h-8 w-8 text-primary" />
+            </div>
+            <div className="space-y-2">
+              <p className="text-sm font-bold text-white/90">Sign in to track your mastery</p>
+              <p className="text-xs text-muted-foreground leading-relaxed">Your solutions, run history, and rank will be synced to your profile across all your devices.</p>
+            </div>
+            <Button 
+              className="w-full h-12 rounded-2xl font-black uppercase tracking-widest bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] transition-all"
+              onClick={() => navigate("/auth")}
+            >
+              Sign In Now
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

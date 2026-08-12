@@ -23,7 +23,7 @@ import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { DifficultyBadge, DifficultyRing, MetricCard, StatTile } from "@/components/league/LeagueBits";
+import { DifficultyBadge, DifficultyRing, MetricCard, StatTile, DailyChallengeCard } from "@/components/league/LeagueBits";
 import {
   useActivityFeed,
   useAddHandle,
@@ -131,7 +131,8 @@ export default function LeagueOverview() {
         />
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="grid gap-4 lg:grid-cols-4">
+        <DailyChallengeCard />
         <Card className="p-5">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-bold tracking-wide uppercase">Difficulty Breakdown</h3>

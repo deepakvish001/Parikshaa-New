@@ -23,6 +23,7 @@ import {
   Timer,
   Sparkles,
   Eye,
+  Activity,
 } from "lucide-react";
 
 
@@ -113,12 +114,14 @@ export function GlobalLeftRail() {
     if (pathname.startsWith("/library")) return { icon: LibraryBig, label: "Library", to: "/library" };
     if (pathname.startsWith("/contests")) return { icon: Swords, label: "Contests", to: "/contests" };
     if (pathname.startsWith("/dashboard")) return { icon: LayoutDashboard, label: "Dashboard", to: "/dashboard" };
+    if (pathname.startsWith("/league")) return { icon: Activity, label: "League", to: "/league" };
     return null;
   })();
 
   const railItems = [
     { icon: HomeIcon, label: "Home", to: "/learn", active: pathname === "/learn" },
     { icon: Swords, label: "Contest", to: "/contests", active: pathname.startsWith("/contests") },
+    { icon: Activity, label: "League", to: "/league", active: pathname.startsWith("/league") },
     
     { icon: Briefcase, label: "Jobs", to: "/jobs", active: pathname.startsWith("/jobs") },
     { icon: Eye, label: "Visualize", to: "/learn/visualize", active: pathname.startsWith("/learn/visualize") },

@@ -144,8 +144,8 @@ const CodingProblemDetail = () => {
     setConsoleOpen(true);
     setSubmitResult(null);
     
-    // Parse sample tests for submission
-    const samples = (problem.sample_cases as any[]) || [];
+    // Parse sample tests for submission from problem.examples
+    const samples = Array.isArray(problem.examples) ? (problem.examples as any[]) : [];
     
     try {
       const result = await submit({
@@ -153,9 +153,12 @@ const CodingProblemDetail = () => {
         language,
         language_id: LANG_CONFIGS[language].id,
         problem_slug: problem.slug,
-        tests: samples.map(c => ({ input: c.input, expected: c.output || c.expected })),
-        cpu_time_limit: problem.cpu_time_limit_sec,
-        memory_limit: problem.memory_limit_kb
+        tests: samples.map(c => ({ 
+          input: c.input || "", 
+          expected: c.output || c.expected || "" 
+        })),
+        cpu_time_limit: problem.cpu_time_limit_sec ?? 2,
+        memory_limit: problem.memory_limit_kb ?? 256000
       });
       
       setSubmitResult(result);
@@ -404,7 +407,7 @@ const CodingProblemDetail = () => {
                     ) : (
                       <TestCaseWorkbench 
                         slug={problem.slug}
-                        sampleTests={(problem.sample_cases as any[]) || []}
+                        sampleTests={Array.isArray(problem.examples) ? (problem.examples as any[]) : []}
                         stdin={stdin}
                         onStdinChange={setStdin}
                         onRun={handleRun}

@@ -95,36 +95,61 @@ export default function LeagueContests() {
 
       <div className="space-y-3">
         {shown.map((c) => (
-          <Card key={c.id} className="p-5 space-y-4">
+          <Card key={c.id} className="p-5 space-y-4 group hover:border-primary/50 transition-colors">
             <div className="flex items-start justify-between gap-3">
               <div className="flex items-center gap-2">
-                <span className="text-[11px] font-semibold rounded-full bg-muted px-2.5 py-1">{c.platform}</span>
+                <span className={cn(
+                  "text-[10px] font-bold uppercase tracking-wider rounded-md px-2 py-1",
+                  c.platform === "LeetCode" ? "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400" :
+                  c.platform === "Codeforces" ? "bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400" :
+                  c.platform === "AtCoder" ? "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300" :
+                  "bg-muted text-muted-foreground"
+                )}>
+                  {c.platform}
+                </span>
                 {new Date(c.start_time).getTime() - Date.now() < 24 * 3600000 && (
-                  <span className="text-[11px] font-bold tracking-wide text-emerald-500">STARTING SOON</span>
+                  <span className="flex items-center gap-1 text-[10px] font-black tracking-widest text-emerald-500 animate-pulse">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                    SOON
+                  </span>
                 )}
               </div>
-              <span className="text-xs rounded-full border px-2.5 py-1">{countdown(c.start_time)}</span>
-            </div>
-            <h3 className="text-lg font-bold">{c.title}</h3>
-            <div className="flex items-center justify-between gap-3 text-sm text-muted-foreground">
-              <div className="flex items-center gap-4">
-                <span className="flex items-center gap-1">
-                  <CalendarDays className="h-4 w-4" />
-                  {new Date(c.start_time).toLocaleString([], {
-                    month: "short",
-                    day: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </span>
-                <span className="flex items-center gap-1">
-                  <Clock className="h-4 w-4" /> {duration(c.duration_seconds)}
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold px-2 py-1 rounded-full bg-primary/10 text-primary">
+                  {countdown(c.start_time)}
                 </span>
               </div>
+            </div>
+            
+            <div className="space-y-1">
+              <h3 className="text-lg font-bold group-hover:text-primary transition-colors leading-tight">{c.title}</h3>
+              <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                <div className="flex items-center gap-1.5">
+                  <CalendarDays className="h-3.5 w-3.5" />
+                  <span className="font-medium">
+                    {new Date(c.start_time).toLocaleString([], {
+                      weekday: "short",
+                      month: "short",
+                      day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </span>
+                </div>
+                <span className="h-1 w-1 rounded-full bg-muted-foreground/30" />
+                <div className="flex items-center gap-1.5">
+                  <Clock className="h-3.5 w-3.5" />
+                  <span>{duration(c.duration_seconds)}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-2">
               {c.url && (
-                <a href={c.url} target="_blank" rel="noreferrer">
-                  <Button size="sm" variant="outline">
-                    View <ExternalLink className="h-3 w-3 ml-1" />
+                <a href={c.url} target="_blank" rel="noreferrer" className="block">
+                  <Button size="sm" variant="outline" className="w-full justify-between group/btn hover:bg-primary hover:text-primary-foreground transition-all">
+                    Register Now
+                    <ExternalLink className="h-3.5 w-3.5 opacity-50 group-hover/btn:opacity-100" />
                   </Button>
                 </a>
               )}

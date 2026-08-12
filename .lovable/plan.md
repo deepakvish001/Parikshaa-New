@@ -1,4 +1,7 @@
-# Lovable Cloud → External Supabase Hot-Mirror Plan
+# '''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
+                                        
+                                            
+                                            i want to build this plan for it ?
 
 Primary = Lovable Cloud (aaj jaisa hai). Secondary = external Supabase project
 in your own account, kept in near-realtime sync as a warm failover.

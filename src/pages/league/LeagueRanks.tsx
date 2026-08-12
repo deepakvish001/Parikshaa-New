@@ -23,9 +23,17 @@ export default function LeagueRanks() {
   const pool = useMemo(() => handles.map((h) => h.handle), [handles]);
   const { data: rows = [] } = useLeaderboard(pool, metric);
 
-  const podium = rows.slice(0, 3);
+  const podium = useMemo(() => {
+    const p = rows.slice(0, 3);
+    // Order for visual display: [2nd, 1st, 3rd]
+    const ordered = [null, null, null] as (typeof rows[0] | null)[];
+    if (p[0]) ordered[1] = p[0]; // 1st
+    if (p[1]) ordered[0] = p[1]; // 2nd
+    if (p[2]) ordered[2] = p[2]; // 3rd
+    return ordered;
+  }, [rows]);
+
   const rest = rows.slice(3);
-  const order = [podium[1], podium[0], podium[2]];
 
   return (
     <div className="space-y-6">
@@ -53,23 +61,47 @@ export default function LeagueRanks() {
       ) : (
         <>
           <div className="grid grid-cols-3 gap-3 items-end">
-            {order.map((p, i) => {
-              if (!p) return <div key={i} />;
-              const heights = ["h-20", "h-28", "h-16"];
+            {podium.map((p, i) => {
+              if (!p) return <div key={i} className="flex flex-col items-center gap-2 opacity-0" />;
+              const heights = ["h-24", "h-32", "h-16"];
               const place = [2, 1, 3][i];
+              const colors = [
+                "bg-slate-300 dark:bg-slate-700",
+                "bg-amber-400 dark:bg-amber-600",
+                "bg-orange-400 dark:bg-orange-800"
+              ];
+              
               return (
                 <div key={p.handle} className="flex flex-col items-center gap-2">
-                  {place === 1 && <Crown className="h-5 w-5 text-amber-400" />}
-                  <Avatar className={cn("h-16 w-16 ring-2", place === 1 ? "ring-amber-400" : "ring-border")}>
-                    <AvatarImage src={p.avatar_url ?? undefined} />
-                    <AvatarFallback>{p.handle.slice(0, 2).toUpperCase()}</AvatarFallback>
-                  </Avatar>
-                  <div className="text-sm font-semibold text-center truncate max-w-[10rem]">
+                  <div className="relative">
+                    {place === 1 && (
+                      <Crown className="h-6 w-6 text-amber-400 absolute -top-5 left-1/2 -translate-x-1/2 drop-shadow-md" />
+                    )}
+                    <Avatar className={cn(
+                      "h-16 w-16 md:h-20 md:w-20 ring-4 transition-transform hover:scale-105",
+                      place === 1 ? "ring-amber-400" : place === 2 ? "ring-slate-300" : "ring-orange-400"
+                    )}>
+                      <AvatarImage src={p.avatar_url ?? undefined} />
+                      <AvatarFallback className="text-lg">{p.handle.slice(0, 2).toUpperCase()}</AvatarFallback>
+                    </Avatar>
+                    <div className={cn(
+                      "absolute -bottom-2 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-full text-[10px] font-bold text-white shadow-sm",
+                      colors[i]
+                    )}>
+                      #{place}
+                    </div>
+                  </div>
+                  <div className="text-sm font-semibold text-center truncate w-full mt-2">
                     {p.display_name ?? p.handle}
                   </div>
-                  <div className="text-lg font-bold text-primary">{Number(p.value)}</div>
-                  <div className={cn("w-full rounded-t-lg bg-muted/40 grid place-items-center text-2xl font-bold text-muted-foreground", heights[i])}>
-                    {place}
+                  <div className="text-lg font-bold text-primary">{Number(p.value).toLocaleString()}</div>
+                  <div className={cn(
+                    "w-full rounded-t-xl bg-gradient-to-b from-muted/60 to-muted/20 flex flex-col items-center justify-end pb-2 overflow-hidden",
+                    heights[i]
+                  )}>
+                    <div className="text-2xl font-black text-muted-foreground/30 select-none">
+                      {place}
+                    </div>
                   </div>
                 </div>
               );

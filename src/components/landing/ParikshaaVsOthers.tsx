@@ -141,7 +141,7 @@ export function ParikshaaVsOthers() {
               aria-describedby="comparison-heading"
             >
               <caption className="sr-only">
-                Feature-by-feature comparison of LeetLeague versus other coding platforms
+                Feature-by-feature comparison of Parikshaa versus other coding platforms
               </caption>
               <thead>
                 <tr className="border-b border-border/60 bg-background/50 text-left text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">

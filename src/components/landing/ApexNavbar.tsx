@@ -154,9 +154,9 @@ export function ApexNavbar() {
           aria-label="Primary"
           className="relative mx-auto flex w-full max-w-7xl items-center justify-between gap-2 px-4 py-3 sm:px-6 lg:px-8"
         >
-          <ParikshaaBrandLogo size="sm" className="sm:hidden" ariaLabel="LeetLeague home" />
-          <ParikshaaBrandLogo size="sm" className="hidden sm:inline-flex lg:hidden" ariaLabel="LeetLeague home" />
-          <ParikshaaBrandLogo size="md" className="hidden lg:inline-flex" ariaLabel="LeetLeague home" />
+          <ParikshaaBrandLogo size="sm" className="sm:hidden" ariaLabel="Parikshaa home" />
+          <ParikshaaBrandLogo size="sm" className="hidden sm:inline-flex lg:hidden" ariaLabel="Parikshaa home" />
+          <ParikshaaBrandLogo size="md" className="hidden lg:inline-flex" ariaLabel="Parikshaa home" />
 
 
           <div className="hidden lg:flex items-center gap-1 relative rounded-full border border-border/50 bg-background/40 p-1 backdrop-blur-md">

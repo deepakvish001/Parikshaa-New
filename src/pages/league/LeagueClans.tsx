@@ -23,6 +23,7 @@ import {
   useJoinClan,
   useLeaveClan,
   useMyClans,
+  useTopClans,
 } from "@/hooks/league/useClans";
 
 function CreateClanDialog() {
@@ -113,6 +114,7 @@ export default function LeagueClans() {
   const [search, setSearch] = useState("");
   const [tab, setTab] = useState<"browse" | "top">("browse");
   const { data: browse = [] } = useBrowseClans(search);
+  const { data: top = [] } = useTopClans();
   const join = useJoinClan();
   const leave = useLeaveClan();
 
@@ -198,38 +200,82 @@ export default function LeagueClans() {
           />
         </div>
 
-        {discoverable.length === 0 ? (
-          <Card className="p-16 text-center">
-            <h3 className="text-lg font-bold">No new clans to discover</h3>
-            <p className="text-sm text-muted-foreground mt-2">
-              You have joined all available public clans, or no clans match your search.
-            </p>
-          </Card>
+        {tab === "browse" ? (
+          discoverable.length === 0 ? (
+            <Card className="p-16 text-center">
+              <h3 className="text-lg font-bold">No new clans to discover</h3>
+              <p className="text-sm text-muted-foreground mt-2">
+                You have joined all available public clans, or no clans match your search.
+              </p>
+            </Card>
+          ) : (
+            <div className="grid gap-4 sm:grid-cols-2">
+              {discoverable.map((c) => (
+                <Card key={c.id} className="p-4 space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Globe className="h-4 w-4 text-emerald-500" />
+                    <h3 className="font-bold">{c.name}</h3>
+                    {c.tag && <span className="text-[10px] rounded bg-muted px-2 py-0.5">[{c.tag}]</span>}
+                  </div>
+                  <p className="text-sm text-muted-foreground line-clamp-2">{c.description}</p>
+                  <Button
+                    size="sm"
+                    className="w-full"
+                    onClick={() =>
+                      join.mutate(
+                        { clanId: c.id },
+                        {
+                          onSuccess: () => toast.success(`Joined ${c.name}`),
+                          onError: (e: any) => toast.error(e?.message ?? "Could not join"),
+                        },
+                      )
+                    }
+                  >
+                    Join clan
+                  </Button>
+                </Card>
+              ))}
+            </div>
+          )
         ) : (
           <div className="grid gap-4 sm:grid-cols-2">
-            {discoverable.map((c) => (
-              <Card key={c.id} className="p-4 space-y-3">
-                <div className="flex items-center gap-2">
-                  <Globe className="h-4 w-4 text-emerald-500" />
-                  <h3 className="font-bold">{c.name}</h3>
+            {top.map((c) => (
+              <Card key={c.id} className="p-4 space-y-3 border-l-4 border-l-amber-400">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Crown className="h-4 w-4 text-amber-500" />
+                    <h3 className="font-bold">{c.name}</h3>
+                  </div>
                   {c.tag && <span className="text-[10px] rounded bg-muted px-2 py-0.5">[{c.tag}]</span>}
                 </div>
-                <p className="text-sm text-muted-foreground line-clamp-2">{c.description}</p>
-                <Button
-                  size="sm"
-                  className="w-full"
-                  onClick={() =>
-                    join.mutate(
-                      { clanId: c.id },
-                      {
-                        onSuccess: () => toast.success(`Joined ${c.name}`),
-                        onError: (e: any) => toast.error(e?.message ?? "Could not join"),
-                      },
-                    )
-                  }
-                >
-                  Join clan
-                </Button>
+                <div className="grid grid-cols-2 gap-2 text-center bg-muted/30 rounded-lg p-2">
+                  <div>
+                    <div className="text-[10px] uppercase text-muted-foreground">Solved</div>
+                    <div className="text-sm font-bold">{c.stats?.[0]?.total_solved?.toLocaleString() || 0}</div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] uppercase text-muted-foreground">Members</div>
+                    <div className="text-sm font-bold">{c.stats?.[0]?.member_count || 0}</div>
+                  </div>
+                </div>
+                {!mineIds.has(c.id) && (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="w-full"
+                    onClick={() =>
+                      join.mutate(
+                        { clanId: c.id },
+                        {
+                          onSuccess: () => toast.success(`Joined ${c.name}`),
+                          onError: (e: any) => toast.error(e?.message ?? "Could not join"),
+                        },
+                      )
+                    }
+                  >
+                    Join Top Clan
+                  </Button>
+                )}
               </Card>
             ))}
           </div>

@@ -901,6 +901,13 @@ export type Database = {
             foreignKeyName: "clan_members_clan_id_fkey"
             columns: ["clan_id"]
             isOneToOne: false
+            referencedRelation: "clan_stats_view"
+            referencedColumns: ["clan_id"]
+          },
+          {
+            foreignKeyName: "clan_members_clan_id_fkey"
+            columns: ["clan_id"]
+            isOneToOne: false
             referencedRelation: "clans"
             referencedColumns: ["id"]
           },
@@ -4403,6 +4410,16 @@ export type Database = {
       }
     }
     Views: {
+      clan_stats_view: {
+        Row: {
+          active_members: number | null
+          avg_rating: number | null
+          clan_id: string | null
+          member_count: number | null
+          total_solved: number | null
+        }
+        Relationships: []
+      }
       leaderboard_view: {
         Row: {
           avatar_url: string | null
@@ -4875,6 +4892,16 @@ export type Database = {
       contest_start_secure_session: {
         Args: { _contest_id: string; _user_agent?: string }
         Returns: string
+      }
+      get_clan_stats: {
+        Args: { _clan_id: string }
+        Returns: {
+          active_members: number
+          avg_rating: number
+          clan_id: string
+          member_count: number
+          total_solved: number
+        }[]
       }
       get_coding_leaderboard: {
         Args: {

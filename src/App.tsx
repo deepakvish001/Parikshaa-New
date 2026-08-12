@@ -45,6 +45,15 @@ import CodePlayground from "./pages/learn/CodePlayground";
 import WeeklyContests from "./pages/contests/WeeklyContests";
 import ContestDetails from "./pages/contests/ContestDetails";
 import ContestRatings from "./pages/contests/ContestRatings";
+import LeagueLayout from "./pages/league/LeagueLayout";
+import LeagueOverview from "./pages/league/LeagueOverview";
+import LeagueFriends from "./pages/league/LeagueFriends";
+import LeagueFriendDetail from "./pages/league/LeagueFriendDetail";
+import LeagueRanks from "./pages/league/LeagueRanks";
+import LeagueClans from "./pages/league/LeagueClans";
+import LeagueFeed from "./pages/league/LeagueFeed";
+import LeagueContests from "./pages/league/LeagueContests";
+import LeagueBookmarks from "./pages/league/LeagueBookmarks";
 
 
 import Settings from "./pages/Settings";
@@ -299,6 +308,22 @@ const App = () => (
                   <Route path="problems/:slug" element={<CodingProblemDetail />} />
                   <Route path="runs" element={<RunHistory />} />
                 </Route>
+
+                {/* League routes - public shell */}
+                <Route path="/league" element={<PublicDashboardWrapper />}>
+                  <Route element={<LeagueLayout />}>
+                    <Route index element={<LeagueOverview />} />
+                    <Route path="friends" element={<LeagueFriends />} />
+                    <Route path="friends/:handle" element={<LeagueFriendDetail />} />
+                    <Route path="ranks" element={<LeagueRanks />} />
+                    <Route path="clans" element={<LeagueClans />} />
+                    <Route path="feed" element={<LeagueFeed />} />
+                    <Route path="contests" element={<LeagueContests />} />
+                    <Route path="bookmarks" element={<LeagueBookmarks />} />
+                  </Route>
+                </Route>
+
+
 
                 {/* Retired routes — redirect to /learn */}
                 <Route path="/contests" element={<ContestThemeLayout />}>

@@ -45,6 +45,15 @@ import CodePlayground from "./pages/learn/CodePlayground";
 import WeeklyContests from "./pages/contests/WeeklyContests";
 import ContestDetails from "./pages/contests/ContestDetails";
 import ContestRatings from "./pages/contests/ContestRatings";
+import LeagueLayout from "./pages/league/LeagueLayout";
+import LeagueOverview from "./pages/league/LeagueOverview";
+import LeagueFriends from "./pages/league/LeagueFriends";
+import LeagueFriendDetail from "./pages/league/LeagueFriendDetail";
+import LeagueRanks from "./pages/league/LeagueRanks";
+import LeagueClans from "./pages/league/LeagueClans";
+import LeagueFeed from "./pages/league/LeagueFeed";
+import LeagueContests from "./pages/league/LeagueContests";
+import LeagueBookmarks from "./pages/league/LeagueBookmarks";
 
 
 import Settings from "./pages/Settings";

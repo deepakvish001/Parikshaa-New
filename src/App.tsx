@@ -300,6 +300,22 @@ const App = () => (
                   <Route path="runs" element={<RunHistory />} />
                 </Route>
 
+                {/* League routes - public shell */}
+                <Route path="/league" element={<PublicDashboardWrapper />}>
+                  <Route element={<LeagueLayout />}>
+                    <Route index element={<LeagueOverview />} />
+                    <Route path="friends" element={<LeagueFriends />} />
+                    <Route path="friends/:handle" element={<LeagueFriendDetail />} />
+                    <Route path="ranks" element={<LeagueRanks />} />
+                    <Route path="clans" element={<LeagueClans />} />
+                    <Route path="feed" element={<LeagueFeed />} />
+                    <Route path="contests" element={<LeagueContests />} />
+                    <Route path="bookmarks" element={<LeagueBookmarks />} />
+                  </Route>
+                </Route>
+
+
+
                 {/* Retired routes — redirect to /learn */}
                 <Route path="/contests" element={<ContestThemeLayout />}>
                   <Route index element={<WeeklyContests />} />

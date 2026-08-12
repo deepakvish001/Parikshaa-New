@@ -171,7 +171,8 @@ export type LeagueMetric =
   | "current_streak"
   | "longest_streak"
   | "hard"
-  | "consistency";
+  | "consistency"
+  | "points";
 
 export function useLeaderboard(handles: string[], metric: LeagueMetric) {
   return useQuery({

@@ -12,7 +12,7 @@ const ProtectedRoute = ({
   requireOnboarding = false,
   allowSkipOnboarding = false 
 }: ProtectedRouteProps) => {
-  const { user, loading, onboardingCompleted } = useAuth();
+  const { user, loading, onboardingCompleted, prepHubOnboardingCompleted } = useAuth();
   const location = useLocation();
 
   if (loading) {
@@ -26,11 +26,15 @@ const ProtectedRoute = ({
   // If route requires onboarding and user hasn't completed it
   // Redirect to onboarding unless coming from onboarding page (to allow skip)
   if (requireOnboarding && !onboardingCompleted && !allowSkipOnboarding) {
-    // Check if user just skipped onboarding (session storage flag)
     const skippedOnboarding = sessionStorage.getItem("skippedOnboarding");
     if (!skippedOnboarding) {
       return <Navigate to="/onboarding" replace />;
     }
+  }
+
+  // Prep Hub specific onboarding
+  if (location.pathname.startsWith('/prephub') && location.pathname !== '/prephub/onboarding' && !prepHubOnboardingCompleted) {
+    return <Navigate to="/prephub/onboarding" replace />;
   }
 
   return <>{children}</>;

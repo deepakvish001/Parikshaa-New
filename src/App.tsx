@@ -148,6 +148,8 @@ import JobsOrDetailDispatcher, { LegacyCategoryRedirect } from "./pages/JobsOrDe
 import JobApply from "./pages/JobApply";
 import BlogIndex from "./pages/blog/BlogIndex";
 import BlogPost from "./pages/blog/BlogPost";
+import PrepHubDashboard from "./pages/prephub/Dashboard";
+import PrepHubOnboarding from "./pages/prephub/Onboarding";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -401,6 +403,15 @@ const App = () => (
                 <Route path="/roadmaps" element={<PublicDashboardWrapper />}>
                   <Route index element={<Roadmaps />} />
                   <Route path=":slug" element={<RoadmapDetail />} />
+                </Route>
+
+                {/* Prep Hub routes */}
+                <Route path="/prephub" element={<PublicDashboardWrapper />}>
+                  <Route index element={<PrepHubDashboard />} />
+                  <Route path="dashboard" element={<PrepHubDashboard />} />
+                  <Route path="onboarding" element={<PrepHubOnboarding />} />
+                  <Route path="aptitude" element={<AptitudeQuestions />} />
+                  <Route path="interview-experiences" element={<InterviewQuestions />} />
                 </Route>
 
                 {/* Settings */}

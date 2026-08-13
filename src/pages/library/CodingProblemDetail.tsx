@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useNavigate, useParams, Link, useSearchParams } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 import { Helmet } from "react-helmet-async";
 import {
   ArrowLeft,
@@ -86,7 +87,7 @@ const humanRunErrorTitle = (stage?: string) => {
   }
 };
 
-import { Cpu, Info } from "lucide-react";
+import { Cpu, Info, Bot } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useCodeDraft } from "@/hooks/useCodeDraft";
 import { useCodingSubmissions } from "@/hooks/useCodingSubmissions";
@@ -175,6 +176,7 @@ const validTabIds: readonly EditorTabId[] = [
   "my-solution",
   "solution",
   "runs",
+  "ai-review",
 ] as const;
 
 const isValidProblemTab = (tab: string | null): tab is EditorTabId =>
@@ -359,6 +361,8 @@ const CodingProblemDetail = () => {
   const restoredFailedRef = useRef(false);
 
   const { run, submit, isRunning, isSubmitting } = useCodeRunner();
+  const [isReviewing, setIsReviewing] = useState(false);
+  const [aiReview, setAiReview] = useState<string | null>(null);
   const {
     draft,
     draftLoaded,
@@ -1253,6 +1257,39 @@ const CodingProblemDetail = () => {
     }
   };
 
+  const handleReviewCode = async () => {
+    if (!user) {
+      toast({ title: "Login required", description: "Sign in to get AI reviews." });
+      return;
+    }
+    setIsReviewing(true);
+    setAiReview(null);
+    try {
+      const { data, error } = await supabase.functions.invoke('review-code', {
+        body: { 
+          code: editorRef.current?.getValue() ?? code,
+          problem_title: problem?.title,
+          language 
+        }
+      });
+      if (error) throw error;
+      setAiReview(data.review);
+      
+      // Save review to DB
+      await supabase.from('problem_ai_reviews').insert({
+        user_id: user.id,
+        submission_id: (submitResult as any)?.id || 'manual_review',
+        review_markdown: data.review
+      });
+      
+      toast({ title: "Review Complete", description: "AI has analyzed your code." });
+    } catch (err: any) {
+      toast({ title: "Review Failed", description: err.message, variant: "destructive" });
+    } finally {
+      setIsReviewing(false);
+    }
+  };
+
   const referenceSolution = staticProblem?.referenceSolution ?? dbReferenceSolution;
 
   // Keep the shortcut bag pointing at the latest closures + busy state.
@@ -1447,6 +1484,14 @@ const CodingProblemDetail = () => {
                             />
                           ) : null,
                         );
+                      case "ai-review":
+                        return chip(
+                          Wand2,
+                          "AI Review",
+                          "group-data-[state=active]/tab:text-indigo-300 group-data-[state=active]/tab:bg-indigo-500/10",
+                          "group-data-[state=active]/tab:text-indigo-400",
+                          "after:bg-gradient-to-r after:from-indigo-400 after:to-purple-500",
+                        );
 
                       default:
                         return null;
@@ -1459,6 +1504,58 @@ const CodingProblemDetail = () => {
 
 
             <div className="flex-1 overflow-y-auto p-4 sm:p-6">
+              <TabsContent value="ai-review" className="mt-0 space-y-6">
+                <div className="flex flex-col gap-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h2 className="text-xl font-bold flex items-center gap-2">
+                        <Bot className="h-5 w-5 text-indigo-400" />
+                        AI Code Review
+                      </h2>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Get instant feedback on your current code logic and efficiency.
+                      </p>
+                    </div>
+                    <Button 
+                      onClick={handleReviewCode} 
+                      disabled={isReviewing}
+                      className="bg-indigo-600 hover:bg-indigo-700"
+                    >
+                      {isReviewing ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Reviewing...
+                        </>
+                      ) : (
+                        <>
+                          <Wand2 className="mr-2 h-4 w-4" />
+                          Review My Code
+                        </>
+                      )}
+                    </Button>
+                  </div>
+
+                  {aiReview ? (
+                    <Card className="bg-slate-900/50 border-slate-800 p-6">
+                      <div className="prose prose-sm dark:prose-invert max-w-none">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                          {aiReview}
+                        </ReactMarkdown>
+                      </div>
+                    </Card>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center py-20 text-center border-2 border-dashed border-slate-800 rounded-xl bg-slate-900/20">
+                      <div className="h-16 w-16 rounded-full bg-indigo-500/10 flex items-center justify-center mb-4">
+                        <Bot className="h-8 w-8 text-indigo-400" />
+                      </div>
+                      <h3 className="text-lg font-medium">Ready for AI Review?</h3>
+                      <p className="text-sm text-muted-foreground max-w-xs mt-2">
+                        Click the button above to have Tufy analyze your code for patterns, complexity, and optimizations.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </TabsContent>
               <TabsContent value="description" className="mt-0 space-y-6">
                 <header className="space-y-4">
                   <h1 className="text-[26px] sm:text-[32px] font-semibold tracking-tight leading-[1.2] text-foreground">

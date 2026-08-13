@@ -242,6 +242,42 @@ export type Database = {
         }
         Relationships: []
       }
+      aptitude_questions: {
+        Row: {
+          correct_option: string
+          created_at: string | null
+          difficulty: string | null
+          explanation: string | null
+          id: string
+          options: Json
+          question: string
+          sub_topic: string | null
+          topic: string
+        }
+        Insert: {
+          correct_option: string
+          created_at?: string | null
+          difficulty?: string | null
+          explanation?: string | null
+          id?: string
+          options: Json
+          question: string
+          sub_topic?: string | null
+          topic: string
+        }
+        Update: {
+          correct_option?: string
+          created_at?: string | null
+          difficulty?: string | null
+          explanation?: string | null
+          id?: string
+          options?: Json
+          question?: string
+          sub_topic?: string | null
+          topic?: string
+        }
+        Relationships: []
+      }
       blog_bookmarks: {
         Row: {
           created_at: string
@@ -3085,6 +3121,33 @@ export type Database = {
         }
         Relationships: []
       }
+      problem_ai_reviews: {
+        Row: {
+          created_at: string | null
+          id: string
+          review_markdown: string
+          submission_id: string
+          suggested_improvements: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          review_markdown: string
+          submission_id: string
+          suggested_improvements?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          review_markdown?: string
+          submission_id?: string
+          suggested_improvements?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       problem_companies: {
         Row: {
           company_domain: string
@@ -3497,6 +3560,50 @@ export type Database = {
           },
         ]
       }
+      sprint_artifacts: {
+        Row: {
+          completed_at: string | null
+          created_at: string | null
+          id: string
+          quiz_data: Json | null
+          quiz_score: number | null
+          revision_notes: string | null
+          roadmap_id: string
+          sprint_number: number
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string | null
+          id?: string
+          quiz_data?: Json | null
+          quiz_score?: number | null
+          revision_notes?: string | null
+          roadmap_id: string
+          sprint_number: number
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string | null
+          id?: string
+          quiz_data?: Json | null
+          quiz_score?: number | null
+          revision_notes?: string | null
+          roadmap_id?: string
+          sprint_number?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sprint_artifacts_roadmap_id_fkey"
+            columns: ["roadmap_id"]
+            isOneToOne: false
+            referencedRelation: "user_roadmaps"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       study_plan_goals: {
         Row: {
           category: string
@@ -3823,6 +3930,42 @@ export type Database = {
           user_id?: string
           weekly_target?: number
           weekly_xp_target?: number | null
+        }
+        Relationships: []
+      }
+      user_onboarding: {
+        Row: {
+          created_at: string | null
+          id: string
+          onboarding_completed: boolean | null
+          skills: string[] | null
+          target_company: string | null
+          target_role: string | null
+          target_timeline: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          onboarding_completed?: boolean | null
+          skills?: string[] | null
+          target_company?: string | null
+          target_role?: string | null
+          target_timeline?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          onboarding_completed?: boolean | null
+          skills?: string[] | null
+          target_company?: string | null
+          target_role?: string | null
+          target_timeline?: string | null
+          updated_at?: string | null
+          user_id?: string
         }
         Relationships: []
       }
@@ -4210,6 +4353,39 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roadmaps: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          status: string | null
+          title: string
+          updated_at: string | null
+          user_id: string
+          weekly_sprints: Json
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          status?: string | null
+          title: string
+          updated_at?: string | null
+          user_id: string
+          weekly_sprints: Json
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          status?: string | null
+          title?: string
+          updated_at?: string | null
+          user_id?: string
+          weekly_sprints?: Json
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -4251,6 +4427,30 @@ export type Database = {
           prefs?: Json
           sheet_id?: string
           updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_streaks: {
+        Row: {
+          current_streak: number | null
+          last_activity_date: string | null
+          max_streak: number | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          current_streak?: number | null
+          last_activity_date?: string | null
+          max_streak?: number | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          current_streak?: number | null
+          last_activity_date?: string | null
+          max_streak?: number | null
+          updated_at?: string | null
           user_id?: string
         }
         Relationships: []

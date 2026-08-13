@@ -28,6 +28,33 @@ type Tile = {
 const tiles: Tile[] = [
   {
     id: "01",
+    title: "Prep Hub",
+    tagline: "Your AI-personalized mission control for roadmaps, streaks, and sprint goals.",
+    meta: "Personalized · Goal-driven",
+    href: "/prephub",
+    icon: Sparkles,
+    tag: "Hub",
+  },
+  {
+    id: "02",
+    title: "Tufy AI Mentor",
+    tagline: "A Socratic guide that hints, nudges, and questions to help you master logic.",
+    meta: "Socratic · AI-Powered",
+    href: "/prephub",
+    icon: GraduationCap,
+    tag: "AI",
+  },
+  {
+    id: "03",
+    title: "Company Hub",
+    tagline: "Practice problems asked by top companies in the last 90 days.",
+    meta: "FAANG · Startups · Fresh",
+    href: "/library/companies",
+    icon: Briefcase,
+    tag: "Career",
+  },
+  {
+    id: "04",
     title: "DSA Studio",
     tagline: "Visualize logic and master data structures with our interactive player.",
     meta: "Visual · Interactive · Patterns",
@@ -36,49 +63,22 @@ const tiles: Tile[] = [
     tag: "Studio",
   },
   {
-    id: "02",
-    title: "Interview Library",
-    tagline: "Comprehensive prep across companies, roles, and technical domains.",
-    meta: "10k+ problems · 50+ roles",
-    href: "/library/problems",
-    icon: Briefcase,
-    tag: "Library",
-  },
-  {
-    id: "03",
-    title: "Pattern DSA Sheets",
-    tagline: "Curated sheets grouping problems by pattern for structured mastery.",
-    meta: "40+ sheets · 3.5k problems",
-    href: "/learn",
-    icon: Layers,
-    tag: "Learn",
-  },
-  {
-    id: "04",
-    title: "League Ranks",
-    tagline: "Compete on global leaderboards and track your growth live.",
-    meta: "Global · Real-time · Stats",
-    href: "/league/ranks",
-    icon: Trophy,
-    tag: "Rank",
-  },
-  {
     id: "05",
-    title: "Coding Clans",
-    tagline: "Build coding communities and level up with your peers.",
-    meta: "Social · Multi-platform",
-    href: "/league/clans",
-    icon: GraduationCap,
-    tag: "Clan",
+    title: "Aptitude Bank",
+    tagline: "2000+ quantitative and logical problems with step-by-step explainers.",
+    meta: "2k+ Problems · Solutions",
+    href: "/library/aptitude",
+    icon: Layers,
+    tag: "Logic",
   },
   {
     id: "06",
-    title: "Job Portals",
-    tagline: "Verified internships and fresher openings updated daily.",
-    meta: "Freshers · Internships",
-    href: "/jobs",
+    title: "Experiences",
+    tagline: "Fresh interview writeups and insights from successful candidates.",
+    meta: "Real-world · Community",
+    href: "/library/interview",
     icon: Briefcase,
-    tag: "Jobs",
+    tag: "Insights",
   },
 ];
 
@@ -222,7 +222,7 @@ export function AllInOneHub() {
         {/* Footer CTAs */}
         <div className="mt-14 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
           <Link
-            to="/league"
+            to="/prephub"
             className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-lg bg-primary px-8 text-sm font-bold uppercase tracking-[0.14em] text-primary-foreground shadow-[0_0_40px_-8px_hsl(var(--primary)/0.7)] transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_0_60px_-6px_hsl(var(--primary)/0.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             <span
@@ -230,7 +230,7 @@ export function AllInOneHub() {
               className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full motion-reduce:hidden"
             />
             <span className="relative z-10 inline-flex items-center">
-              Open League Overview
+              Go to Prep Hub Dashboard
               <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </span>
           </Link>

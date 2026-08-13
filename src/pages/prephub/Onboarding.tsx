@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +11,7 @@ import { toast } from "sonner";
 
 const PrepHubOnboarding = () => {
   const navigate = useNavigate();
+  const { refreshPrepHubOnboarding } = useAuth();
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -38,8 +40,7 @@ const PrepHubOnboarding = () => {
 
       toast.success("Onboarding completed! Generating your roadmap...");
       
-      // In a real app, trigger edge function to generate roadmap
-      // For now, redirect to dashboard
+      await refreshPrepHubOnboarding();
       navigate('/prephub/dashboard');
     } catch (error: any) {
       toast.error(error.message);

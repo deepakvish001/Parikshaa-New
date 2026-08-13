@@ -6,14 +6,14 @@ import { Button } from "@/components/ui/button";
 import { SectionEyebrow } from "./SectionEyebrow";
 
 const programs = [
+  "Personalized Roadmap & Sprint Planning",
+  "Tufy AI Socratic Mentor",
+  "Company-Specific Problem Hub",
+  "Daily Problem of the Day (POTD)",
+  "2000+ Aptitude Questions & Explainers",
+  "Real-time Interview Experiences",
+  "AI-Powered Code Reviews",
   "DSA Studio & Visualization",
-  "Interview Library & Pattern-wise Sheets",
-  "System Design Roadmaps",
-  "Global Coding Ranks",
-  "Clan Communities",
-  "Contest Calendar Sync",
-  "SQL Interview Prep",
-  "Core CS Subject Revision",
 ];
 
 export function ApexHero() {
@@ -189,13 +189,13 @@ export function ApexHero() {
             size="lg"
             className="learn-primary-cta group relative h-12 overflow-hidden rounded-lg bg-primary px-8 text-sm font-bold uppercase tracking-[0.14em] text-primary-foreground shadow-[0_0_40px_-8px_hsl(var(--primary)/0.7)] transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_0_60px_-6px_hsl(var(--primary)/0.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98]"
           >
-            <Link to="/learn">
+            <Link to="/prephub">
               <span
                 aria-hidden
                 className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full motion-reduce:hidden"
               />
               <span className="relative z-10 inline-flex items-center">
-                Start Learning Free
+                Explore Prep Hub Free
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none" />
               </span>
             </Link>

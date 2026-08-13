@@ -222,7 +222,7 @@ export function AllInOneHub() {
         {/* Footer CTAs */}
         <div className="mt-14 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
           <Link
-            to="/league"
+            to="/prephub"
             className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-lg bg-primary px-8 text-sm font-bold uppercase tracking-[0.14em] text-primary-foreground shadow-[0_0_40px_-8px_hsl(var(--primary)/0.7)] transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_0_60px_-6px_hsl(var(--primary)/0.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             <span
@@ -230,7 +230,7 @@ export function AllInOneHub() {
               className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full motion-reduce:hidden"
             />
             <span className="relative z-10 inline-flex items-center">
-              Open League Overview
+              Go to Prep Hub Dashboard
               <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </span>
           </Link>

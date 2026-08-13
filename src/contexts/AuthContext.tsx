@@ -36,15 +36,18 @@ interface AuthContextType {
   session: Session | null;
   profile: Profile | null;
   extendedProfile: ExtendedProfile | null;
+  prepHubOnboarding: any | null;
   loading: boolean;
   authReady: boolean;
   onboardingCompleted: boolean;
+  prepHubOnboardingCompleted: boolean;
   signUp: (email: string, password: string, fullName: string) => Promise<{ error: Error | null }>;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
   signInWithGoogle: () => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
   updateProfile: (updates: Partial<Profile>) => Promise<{ error: Error | null }>;
   refreshExtendedProfile: () => Promise<void>;
+  refreshPrepHubOnboarding: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -62,6 +65,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [extendedProfile, setExtendedProfile] = useState<ExtendedProfile | null>(null);
+  const [prepHubOnboarding, setPrepHubOnboarding] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
   const [authReady, setAuthReady] = useState(false);
 
@@ -93,10 +97,31 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return data as ExtendedProfile | null;
   };
 
+  const fetchPrepHubOnboarding = async (userId: string) => {
+    const { data, error } = await supabase
+      .from("user_onboarding")
+      .select("*")
+      .eq("user_id", userId)
+      .maybeSingle();
+
+    if (error) {
+      console.error("Error fetching Prep Hub onboarding:", error);
+      return null;
+    }
+    return data;
+  };
+
   const refreshExtendedProfile = async () => {
     if (user) {
       const extendedData = await fetchExtendedProfile(user.id);
       setExtendedProfile(extendedData);
+    }
+  };
+
+  const refreshPrepHubOnboarding = async () => {
+    if (user) {
+      const data = await fetchPrepHubOnboarding(user.id);
+      setPrepHubOnboarding(data);
     }
   };
 
@@ -129,15 +154,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (inflightUserId === targetId) return;
         inflightUserId = targetId;
         try {
-          const [profileData, extendedData] = await Promise.all([
+          const [profileData, extendedData, prepHubData] = await Promise.all([
             fetchProfile(targetId),
             fetchExtendedProfile(targetId),
+            fetchPrepHubOnboarding(targetId),
           ]);
           if (cancelled) return;
           // If the user switched again mid-flight, drop these results.
           if (loadedUserId !== targetId) return;
           setProfile(profileData);
           setExtendedProfile(extendedData);
+          setPrepHubOnboarding(prepHubData);
           setLoading(false);
         } finally {
           if (inflightUserId === targetId) inflightUserId = null;
@@ -159,6 +186,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       } else {
         setProfile(null);
         setExtendedProfile(null);
+        setPrepHubOnboarding(null);
         setLoading(false);
       }
     });
@@ -197,6 +225,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           setLoading(true);
           setProfile(null);
           setExtendedProfile(null);
+          setPrepHubOnboarding(null);
           loadedUserId = nextUser.id;
           scheduleProfileFetch(nextUser.id);
         } else if (!nextUser) {
@@ -208,6 +237,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           }
           setProfile(null);
           setExtendedProfile(null);
+          setPrepHubOnboarding(null);
           setLoading(false);
         } else {
           // Same user, token refresh — auth is already ready, no refetch.
@@ -288,21 +318,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const onboardingCompleted = extendedProfile?.onboarding_completed ?? false;
+  const prepHubOnboardingCompleted = prepHubOnboarding?.onboarding_completed ?? false;
 
   const value = {
     user,
     session,
     profile,
     extendedProfile,
+    prepHubOnboarding,
     loading,
     authReady,
     onboardingCompleted,
+    prepHubOnboardingCompleted,
     signUp,
     signIn,
     signInWithGoogle,
     signOut,
     updateProfile,
     refreshExtendedProfile,
+    refreshPrepHubOnboarding,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

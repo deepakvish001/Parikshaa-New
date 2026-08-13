@@ -405,6 +405,15 @@ const App = () => (
                   <Route path=":slug" element={<RoadmapDetail />} />
                 </Route>
 
+                {/* Prep Hub routes */}
+                <Route path="/prephub" element={<PublicDashboardWrapper />}>
+                  <Route index element={<PrepHubDashboard />} />
+                  <Route path="dashboard" element={<PrepHubDashboard />} />
+                  <Route path="onboarding" element={<PrepHubOnboarding />} />
+                  <Route path="aptitude" element={<AptitudeQuestions />} />
+                  <Route path="interview-experiences" element={<InterviewQuestions />} />
+                </Route>
+
                 {/* Settings */}
                 <Route
                   path="/settings"

@@ -87,7 +87,7 @@ const humanRunErrorTitle = (stage?: string) => {
   }
 };
 
-import { Cpu, Info } from "lucide-react";
+import { Cpu, Info, Bot } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useCodeDraft } from "@/hooks/useCodeDraft";
 import { useCodingSubmissions } from "@/hooks/useCodingSubmissions";

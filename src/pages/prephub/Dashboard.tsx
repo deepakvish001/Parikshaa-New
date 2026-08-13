@@ -179,24 +179,30 @@ const PrepHubDashboard = () => {
               </CardHeader>
               <CardContent className="p-0">
                 <div className="divide-y divide-slate-800">
-                  {[1, 2, 3].map((day) => (
-                    <div key={day} className="p-4 flex items-center justify-between hover:bg-slate-800/30 transition-colors">
-                      <div className="flex items-center gap-4">
-                        <div className={`h-8 w-8 rounded-full flex items-center justify-center border-2 ${day === 1 ? 'border-emerald-500 bg-emerald-500/10' : 'border-slate-700'}`}>
-                          <span className="text-xs font-bold">{day === 1 ? '✓' : day}</span>
+                  {roadmap ? (
+                    (roadmap.weekly_sprints?.[0]?.tasks || []).slice(0, 5).map((task: any, idx: number) => (
+                      <div key={idx} className="p-4 flex items-center justify-between hover:bg-slate-800/30 transition-colors">
+                        <div className="flex items-center gap-4">
+                          <div className={`h-8 w-8 rounded-full flex items-center justify-center border-2 ${idx === 0 ? 'border-emerald-500 bg-emerald-500/10' : 'border-slate-700'}`}>
+                            <span className="text-xs font-bold">{idx === 0 ? '✓' : idx + 1}</span>
+                          </div>
+                          <div>
+                            <p className={`font-medium ${idx === 0 ? 'line-through text-slate-500' : ''}`}>
+                              Day {task.day || idx + 1}: {task.title}
+                            </p>
+                            <p className="text-xs text-slate-500">{task.type} • {task.estimated_minutes} mins</p>
+                          </div>
                         </div>
-                        <div>
-                          <p className={`font-medium ${day === 1 ? 'line-through text-slate-500' : ''}`}>
-                            Day {day}: {day === 1 ? 'Dynamic Programming Basics' : day === 2 ? 'Knapsack & Variants' : 'Longest Common Subsequence'}
-                          </p>
-                          <p className="text-xs text-slate-500">2 problems • 1 revision note</p>
-                        </div>
+                        <Button variant="outline" size="sm" className="border-slate-700 h-8">
+                          {idx === 0 ? 'Review' : 'Start'}
+                        </Button>
                       </div>
-                      <Button variant="outline" size="sm" className="border-slate-700 h-8">
-                        {day === 1 ? 'Review' : 'Start'}
-                      </Button>
+                    ))
+                  ) : (
+                    <div className="p-8 text-center text-slate-500">
+                      Generate your roadmap to see your daily plan.
                     </div>
-                  ))}
+                  )}
                 </div>
               </CardContent>
             </Card>

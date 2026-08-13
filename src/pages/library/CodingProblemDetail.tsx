@@ -1278,9 +1278,8 @@ const CodingProblemDetail = () => {
       // Save review to DB
       await supabase.from('problem_ai_reviews').insert({
         user_id: user.id,
-        problem_id: (problem as any).id,
-        submission_code: editorRef.current?.getValue() ?? code,
-        review_note: data.review
+        submission_id: (submitResult as any)?.id || 'manual_review',
+        review_markdown: data.review
       });
       
       toast({ title: "Review Complete", description: "AI has analyzed your code." });

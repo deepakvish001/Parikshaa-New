@@ -13,7 +13,8 @@ export type EditorTabId =
   // longer render in the problem page UI.
   | "my-solution"
   | "solution"
-  | "runs";
+  | "runs"
+  | "ai-review";
 
 export const DEFAULT_TAB_ORDER: EditorTabId[] = [
   "description",

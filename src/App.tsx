@@ -148,6 +148,8 @@ import JobsOrDetailDispatcher, { LegacyCategoryRedirect } from "./pages/JobsOrDe
 import JobApply from "./pages/JobApply";
 import BlogIndex from "./pages/blog/BlogIndex";
 import BlogPost from "./pages/blog/BlogPost";
+import PrepHubDashboard from "./pages/prephub/Dashboard";
+import PrepHubOnboarding from "./pages/prephub/Onboarding";
 
 const queryClient = new QueryClient({
   defaultOptions: {

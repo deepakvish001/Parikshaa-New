@@ -300,6 +300,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setSession(null);
     setProfile(null);
     setExtendedProfile(null);
+    setPrepHubOnboarding(null);
   };
 
   const updateProfile = async (updates: Partial<Profile>) => {

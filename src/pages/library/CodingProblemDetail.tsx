@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useNavigate, useParams, Link, useSearchParams } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 import { Helmet } from "react-helmet-async";
 import {
   ArrowLeft,
@@ -175,6 +176,7 @@ const validTabIds: readonly EditorTabId[] = [
   "my-solution",
   "solution",
   "runs",
+  "ai-review",
 ] as const;
 
 const isValidProblemTab = (tab: string | null): tab is EditorTabId =>
@@ -359,6 +361,8 @@ const CodingProblemDetail = () => {
   const restoredFailedRef = useRef(false);
 
   const { run, submit, isRunning, isSubmitting } = useCodeRunner();
+  const [isReviewing, setIsReviewing] = useState(false);
+  const [aiReview, setAiReview] = useState<string | null>(null);
   const {
     draft,
     draftLoaded,
@@ -1250,6 +1254,40 @@ const CodingProblemDetail = () => {
         description: ce?.message || "Unknown error",
         variant: "destructive",
       });
+    }
+  };
+
+  const handleReviewCode = async () => {
+    if (!user) {
+      toast({ title: "Login required", description: "Sign in to get AI reviews." });
+      return;
+    }
+    setIsReviewing(true);
+    setAiReview(null);
+    try {
+      const { data, error } = await supabase.functions.invoke('review-code', {
+        body: { 
+          code: editorRef.current?.getValue() ?? code,
+          problem_title: problem?.title,
+          language 
+        }
+      });
+      if (error) throw error;
+      setAiReview(data.review);
+      
+      // Save review to DB
+      await supabase.from('problem_ai_reviews').insert({
+        user_id: user.id,
+        problem_id: (problem as any).id,
+        submission_code: editorRef.current?.getValue() ?? code,
+        review_note: data.review
+      });
+      
+      toast({ title: "Review Complete", description: "AI has analyzed your code." });
+    } catch (err: any) {
+      toast({ title: "Review Failed", description: err.message, variant: "destructive" });
+    } finally {
+      setIsReviewing(false);
     }
   };
 

@@ -65,8 +65,8 @@ const PrepHubDashboard = () => {
         .from('user_roadmaps')
         .insert({
           user_id: user.id,
-          target_company: onboarding.target_company,
-          roadmap_data: data.roadmap,
+          title: `Roadmap for ${onboarding.target_company}`,
+          weekly_sprints: data.roadmap.weeks,
           status: 'active'
         })
         .select()

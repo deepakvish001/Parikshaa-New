@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -22,6 +23,7 @@ import { Link } from 'react-router-dom';
 import TufyChat from '@/components/prephub/TufyChat';
 
 const PrepHubDashboard = () => {
+  const { user } = useAuth();
   const [onboarding, setOnboarding] = useState<any>(null);
   const [roadmap, setRoadmap] = useState<any>(null);
   const [streak, setStreak] = useState<any>(null);
@@ -32,12 +34,10 @@ const PrepHubDashboard = () => {
   }, []);
 
   const fetchUserData = async () => {
+    if (!user) return;
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
-
       const [onboardingRes, roadmapRes, streakRes] = await Promise.all([
-        supabase.from('user_onboarding').select('*').eq('user_id', user.id).single(),
+        supabase.from('user_onboarding').select('*').eq('user_id', user.id).maybeSingle(),
         supabase.from('user_roadmaps').select('*').eq('user_id', user.id).maybeSingle(),
         supabase.from('user_streaks').select('*').eq('user_id', user.id).maybeSingle()
       ]);
@@ -52,6 +52,35 @@ const PrepHubDashboard = () => {
     }
   };
 
+  const generateInitialRoadmap = async () => {
+    if (!user || !onboarding) return;
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-roadmap', {
+        body: { user_id: user.id, onboarding_data: onboarding }
+      });
+      if (error) throw error;
+
+      const { data: roadmapData, error: dbError } = await supabase
+        .from('user_roadmaps')
+        .insert({
+          user_id: user.id,
+          target_company: onboarding.target_company,
+          roadmap_data: data.roadmap,
+          status: 'active'
+        })
+        .select()
+        .single();
+
+      if (dbError) throw dbError;
+      setRoadmap(roadmapData);
+    } catch (error) {
+      console.error("Error generating roadmap:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#020617] text-slate-100 p-6">
       <div className="max-w-7xl mx-auto space-y-8">
@@ -60,16 +89,22 @@ const PrepHubDashboard = () => {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Prep Hub Dashboard</h1>
-            <p className="text-slate-400">Welcome back! Here's your personalized prep overview.</p>
+            <p className="text-slate-400">Welcome back, {user?.user_metadata?.full_name || 'Scholar'}! Here's your personalized prep overview.</p>
           </div>
           <div className="flex gap-4">
             <div className="bg-slate-900/50 border border-slate-800 rounded-lg px-4 py-2 flex items-center gap-2">
               <Zap className="h-5 w-5 text-yellow-500 fill-yellow-500" />
               <span className="font-bold">{streak?.current_streak || 0} Day Streak</span>
             </div>
-            <Button className="bg-blue-600 hover:bg-blue-700">
-              <Rocket className="mr-2 h-4 w-4" /> Start Today's Task
-            </Button>
+            {!roadmap ? (
+              <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => generateInitialRoadmap()}>
+                <Rocket className="mr-2 h-4 w-4" /> Generate Roadmap
+              </Button>
+            ) : (
+              <Button className="bg-blue-600 hover:bg-blue-700">
+                <Rocket className="mr-2 h-4 w-4" /> Start Today's Task
+              </Button>
+            )}
           </div>
         </div>
 

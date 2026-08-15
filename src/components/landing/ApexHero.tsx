@@ -121,7 +121,7 @@ export function ApexHero() {
           </span>
           <span className="mt-4 block text-xs font-normal opacity-0 pointer-events-none select-none h-0 overflow-hidden">
             '''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
-            add this new sheet with given content attached
+            CSES Problem Set Tracker sheet me ander striver ki sheet hai Striver ka nhi jo diya hu attached vo karo
           </span>
         </motion.h1>
 

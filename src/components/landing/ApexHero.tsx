@@ -99,6 +99,11 @@ export function ApexHero() {
           style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}
           className="max-w-[16ch] text-[46px] font-bold leading-[0.98] tracking-[-0.035em] text-foreground sm:text-6xl md:text-7xl lg:max-w-[18ch] lg:text-[96px] xl:text-[110px]"
         >
+          <span className="block">'''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''</span>
+          <span className="block">
+                                        
+                                            
+                                            add this new sheet in COMPETITIVE PROGRAMMING with proper name</span>
           <span className="block">Visualize Logic.</span>
           <span className="block">
             <span className="relative inline-block px-3 py-1">

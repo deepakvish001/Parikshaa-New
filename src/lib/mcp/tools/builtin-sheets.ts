@@ -4,6 +4,7 @@ import { createUserSupabaseClient, errResult, jsonResult } from "./_shared";
 import { dbmsSections, dbmsMeta } from "../../../data/dbmsData";
 import { cnSections, cnMeta } from "../../../data/cnData";
 import { osSections, osMeta } from "../../../data/osData";
+import { cpInterviewSections, cpInterviewMeta } from "../../../data/cpInterviewData";
 import type { Section } from "../../../data/dsaLevel1Types";
 
 type BuiltinSheet = {
@@ -41,6 +42,12 @@ const BUILTIN_SHEETS: Record<string, BuiltinSheet> = {
     route: "/learn/sheets/os-sheet",
     meta: osMeta,
     sections: osSections,
+  },
+  "cp-interview-sheet": {
+    slug: "cp-interview-sheet",
+    route: "/learn/sheets/cp-interview-sheet",
+    meta: cpInterviewMeta,
+    sections: cpInterviewSections,
   },
 };
 

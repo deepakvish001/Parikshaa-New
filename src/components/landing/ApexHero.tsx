@@ -103,7 +103,7 @@ export function ApexHero() {
           <span className="block">
                                         
                                             
-                                            add this new sheet in COMPETITIVE PROGRAMMING with proper name</span>
+                                            Become the Engineer India is actually Hiring right now.</span>
           <span className="block">Visualize Logic.</span>
           <span className="block">
             <span className="relative inline-block px-3 py-1">

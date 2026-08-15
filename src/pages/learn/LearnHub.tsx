@@ -258,6 +258,7 @@ const sections: {
       { title: "ACM-ICPC CP Training Sheet", subtitle: "1243 problems across 7 levels — Codeforces, UVA, SPOJ & more", primary: { label: "Start Learning", to: "/learn/sheets/acm-icpc-training" } },
       { title: "Competitive Programming Interview Sheet", subtitle: "Focused CP concepts & problems for high-tier technical interviews", primary: { label: "Start Learning", to: "/learn/sheets/cp-interview-sheet" } },
       { title: "Parikshaa Competitive Programming Sheet", subtitle: "535 handpicked Codeforces problems — rating-wise ladder, climb 800 to 2000", primary: { label: "Start Learning", to: "/learn/sheets/parikshaa-cp-sheet" } },
+      { title: "CSES Problem Set Tracker", subtitle: "Structured tracker for all 300+ CSES problems — Foundations to Advanced", primary: { label: "Start Learning", to: "/learn/sheets/cses-sheet" } },
     ],
   },
   {

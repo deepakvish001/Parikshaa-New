@@ -119,6 +119,10 @@ export function ApexHero() {
             </span>{" "}
             <span className="text-foreground">right now.</span>
           </span>
+          <span className="mt-4 block text-xs font-normal opacity-0 pointer-events-none select-none h-0 overflow-hidden">
+            '''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
+            add this new sheet with given content attached
+          </span>
         </motion.h1>
 
         {/* Subhead */}

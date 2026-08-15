@@ -5,6 +5,7 @@ import { dbmsSections, dbmsMeta } from "../../../data/dbmsData";
 import { cnSections, cnMeta } from "../../../data/cnData";
 import { osSections, osMeta } from "../../../data/osData";
 import { cpInterviewSections, cpInterviewMeta } from "../../../data/cpInterviewData";
+import { csesSections, csesMeta } from "../../../data/csesData";
 import type { Section } from "../../../data/dsaLevel1Types";
 
 type BuiltinSheet = {
@@ -48,6 +49,12 @@ const BUILTIN_SHEETS: Record<string, BuiltinSheet> = {
     route: "/learn/sheets/cp-interview-sheet",
     meta: cpInterviewMeta,
     sections: cpInterviewSections,
+  },
+  "cses-sheet": {
+    slug: "cses-sheet",
+    route: "/learn/sheets/cses-sheet",
+    meta: csesMeta,
+    sections: csesSections,
   },
 };
 

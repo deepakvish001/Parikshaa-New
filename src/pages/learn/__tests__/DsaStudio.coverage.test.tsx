@@ -94,10 +94,9 @@ describe("DSA Studio — every problem renders to its detail route", () => {
   it.each(DSA_TOPICS.map((t) => [t.id, t.label] as const))(
     "topic %s renders all problem cards with correct hrefs",
     (topicId) => {
-      window.localStorage.setItem(
-        "dsaStudio:prefs:v1",
-        JSON.stringify({ activeTopic: topicId, activeTab: "problems", search: "", priority: "all" }),
-      );
+      // No localStorage seeding: the tab comes from the URL and every topic
+      // renders regardless of which one is "active", so the section lookup
+      // below is what selects the topic under test.
       const { unmount } = renderApp();
       const topic = DSA_TOPICS.find((t) => t.id === topicId)!;
       const expected = topic.groups.flatMap((g) => g.problems);

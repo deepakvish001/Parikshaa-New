@@ -532,33 +532,57 @@ function GlobalRatingsPreview() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let cancelled = false;
+
     (async () => {
-      const { data: hist } = await supabase
-        .from("contest_rating_history" as any)
-        .select("user_id,new_rating,created_at")
-        .order("created_at", { ascending: false })
-        .limit(500);
-      const seen = new Map<string, number>();
-      for (const h of ((hist as any) ?? []) as Array<{ user_id: string; new_rating: number }>) {
-        if (!seen.has(h.user_id)) seen.set(h.user_id, h.new_rating);
+      try {
+        const { data: hist, error } = await supabase
+          .from("contest_rating_history" as any)
+          .select("user_id,new_rating,created_at")
+          .order("created_at", { ascending: false })
+          .limit(500);
+        if (error) throw error;
+
+        // `?? []` only covers null and undefined. The `as any` above means a
+        // non-array response type-checks fine and then throws on iteration,
+        // so guard on the shape rather than on nullishness.
+        const history = Array.isArray(hist)
+          ? (hist as Array<{ user_id: string; new_rating: number }>)
+          : [];
+
+        const seen = new Map<string, number>();
+        for (const h of history) {
+          if (!seen.has(h.user_id)) seen.set(h.user_id, h.new_rating);
+        }
+        const top = Array.from(seen.entries()).sort((a, b) => b[1] - a[1]).slice(0, 5);
+        const ids = top.map(([id]) => id);
+
+        let profs: any[] = [];
+        if (ids.length) {
+          const { data } = await supabase
+            .from("user_profiles_extended" as any)
+            .select("user_id,username,full_name,avatar_url")
+            .in("user_id", ids);
+          profs = Array.isArray(data) ? data : [];
+        }
+
+        if (cancelled) return;
+        const pmap = new Map(profs.map((p) => [p.user_id, p]));
+        setRows(top.map(([user_id, rating]) => {
+          const p = pmap.get(user_id) as any;
+          return { user_id, rating, name: p?.full_name ?? null, username: p?.username ?? null, avatar: p?.avatar_url ?? null };
+        }));
+      } catch (err) {
+        // Leave rows empty; the card falls back to "No rating data yet."
+        console.error("Failed to load global rating leaders:", err);
+      } finally {
+        if (!cancelled) setLoading(false);
       }
-      const top = Array.from(seen.entries()).sort((a, b) => b[1] - a[1]).slice(0, 5);
-      const ids = top.map(([id]) => id);
-      let profs: any[] = [];
-      if (ids.length) {
-        const { data } = await supabase
-          .from("user_profiles_extended" as any)
-          .select("user_id,username,full_name,avatar_url")
-          .in("user_id", ids);
-        profs = (data as any) ?? [];
-      }
-      const pmap = new Map(profs.map((p) => [p.user_id, p]));
-      setRows(top.map(([user_id, rating]) => {
-        const p = pmap.get(user_id) as any;
-        return { user_id, rating, name: p?.full_name ?? null, username: p?.username ?? null, avatar: p?.avatar_url ?? null };
-      }));
-      setLoading(false);
     })();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   return (

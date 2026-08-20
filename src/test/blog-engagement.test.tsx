@@ -81,6 +81,15 @@ vi.mock("sonner", () => ({
 }));
 vi.mock("@/hooks/use-toast", () => ({ toast: vi.fn() }));
 
+// The blog hooks read the signed-in user id off useAuth(). The real context
+// throws outside an AuthProvider, and wrapping every render in the full
+// provider would drag the live supabase auth client into these tests — the
+// one thing this file deliberately stubs. Mock the hook instead, with the
+// same user id the supabase stub seeds rows for.
+vi.mock("@/contexts/AuthContext", () => ({
+  useAuth: () => ({ user: { id: "user-1" }, loading: false, authReady: true }),
+}));
+
 import { useBlogLike, useBlogBookmark } from "@/hooks/useBlog";
 
 // ───────── Helpers ─────────

@@ -28,6 +28,18 @@ const renderApp = (path = "/learn/dsa-studio/problems") =>
     </HelmetProvider>,
   );
 
+/**
+ * The problems tab renders every topic as its own <section data-topic-id>,
+ * each with its own "Rendered: x/y" indicator, rather than filtering the page
+ * down to one active topic. Per-topic assertions therefore have to be scoped
+ * to that topic's section — a document-wide getAllByTestId sees all 171 cards.
+ */
+const topicSection = (topicId: string): HTMLElement => {
+  const el = document.querySelector<HTMLElement>(`[data-topic-id="${topicId}"]`);
+  if (!el) throw new Error(`no rendered section for topic "${topicId}"`);
+  return el;
+};
+
 describe("DSA Studio — data integrity", () => {
   it(`contains exactly ${TOTAL_PROBLEMS} problems across all topics`, () => {
     expect(allProblems.length).toBe(TOTAL_PROBLEMS);
@@ -57,18 +69,24 @@ describe("DSA Studio — rendered indicator + grand total", () => {
     expect(badge.textContent).toMatch(new RegExp(`${TOTAL_PROBLEMS}\\s*/\\s*171`));
   });
 
-  it("Rendered: X/Y indicator matches actual cards in DOM for the active topic", () => {
+  it("every topic's Rendered: X/Y indicator matches the cards in its own section", () => {
     renderApp();
-    const indicator = screen.getByTestId("dsa-rendered-indicator");
-    const cards = screen.getAllByTestId("dsa-problem-card");
-    const m = indicator.textContent!.match(/Rendered:\s*(\d+)\s*\/\s*(\d+)/)!;
-    const x = Number(m[1]);
-    const y = Number(m[2]);
-    expect(cards.length).toBe(x);
-    const firstTopic = DSA_TOPICS[0];
-    const expectedTotal = firstTopic.groups.reduce((s, g) => s + g.problems.length, 0);
-    expect(y).toBe(expectedTotal);
-    expect(x).toBe(expectedTotal);
+    for (const t of DSA_TOPICS) {
+      const section = topicSection(t.id);
+      const indicator = within(section).getByTestId("dsa-rendered-indicator");
+      const [, x, y] = indicator.textContent!.match(/Rendered:\s*(\d+)\s*\/\s*(\d+)/)!;
+      const expectedTotal = t.groups.reduce((sum, g) => sum + g.problems.length, 0);
+
+      // Unfiltered, every problem in the topic is on screen.
+      expect(within(section).getAllByTestId("dsa-problem-card")).toHaveLength(Number(x));
+      expect(Number(x)).toBe(expectedTotal);
+      expect(Number(y)).toBe(expectedTotal);
+    }
+  });
+
+  it("renders every indexed problem across all topic sections", () => {
+    renderApp();
+    expect(screen.getAllByTestId("dsa-problem-card")).toHaveLength(TOTAL_PROBLEMS);
   });
 });
 
@@ -83,7 +101,9 @@ describe("DSA Studio — every problem renders to its detail route", () => {
       const { unmount } = renderApp();
       const topic = DSA_TOPICS.find((t) => t.id === topicId)!;
       const expected = topic.groups.flatMap((g) => g.problems);
-      const cards = screen.getAllByTestId("dsa-problem-card") as HTMLAnchorElement[];
+      const cards = within(topicSection(topicId)).getAllByTestId(
+        "dsa-problem-card",
+      ) as HTMLAnchorElement[];
       expect(cards.length).toBe(expected.length);
       const renderedSlugs = new Set(cards.map((c) => c.getAttribute("data-slug")));
       for (const p of expected) {
@@ -99,12 +119,12 @@ describe("DSA Studio — every problem renders to its detail route", () => {
 describe("DSA Studio — filters preserved when navigating to a problem", () => {
   it("active filters/search persist in localStorage so revisiting restores them", () => {
     renderApp();
-    const input = screen.getByPlaceholderText(/search problem/i) as HTMLInputElement;
+    const input = screen.getByPlaceholderText(/search by name or number/i) as HTMLInputElement;
     act(() => {
       fireEvent.change(input, { target: { value: "sum" } });
     });
     act(() => {
-      fireEvent.click(screen.getByRole("button", { name: /^P1 Only$/i }));
+      fireEvent.click(screen.getByRole("button", { name: /^P1$/i }));
     });
     const prefs = JSON.parse(window.localStorage.getItem("dsaStudio:prefs:v1")!);
     expect(prefs.search).toBe("sum");
@@ -122,7 +142,7 @@ describe("DSA Studio — filters preserved when navigating to a problem", () => 
 
 describe("DSA Studio — QA mode", () => {
   it("toggling QA mode does not surface mismatches when data is consistent", () => {
-    renderApp("/learn/dsa-studio?qa=1");
+    renderApp("/learn/dsa-studio/problems?qa=1");
     // If data integrity test passes, no mismatch panel should be present
     expect(screen.queryByTestId("dsa-qa-mismatches")).toBeNull();
   });

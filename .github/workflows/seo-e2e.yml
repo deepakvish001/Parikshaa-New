@@ -11,10 +11,34 @@ jobs:
     name: Playwright SEO spec
     runs-on: ubuntu-latest
     timeout-minutes: 15
+
+    # Vite reads these at dev-server start. They used to arrive via the
+    # committed `.env`; that file is no longer tracked, so CI takes them
+    # from repository secrets instead (same secrets rls-matrix.yml uses).
+    env:
+      VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+      VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
+      VITE_SUPABASE_PROJECT_ID: ${{ secrets.VITE_SUPABASE_PROJECT_ID }}
+
     steps:
+      # Same gate rls-matrix.yml uses: without Supabase config the app cannot
+      # render, so the spec would fail for a reason unrelated to the diff.
+      # Skipping keeps the job safe on forks, where secrets are unavailable.
+      - name: Skip if secrets absent
+        id: gate
+        run: |
+          if [ -z "$VITE_SUPABASE_URL" ] || [ -z "$VITE_SUPABASE_PUBLISHABLE_KEY" ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+            echo "::warning::SEO E2E skipped — VITE_SUPABASE_URL / VITE_SUPABASE_PUBLISHABLE_KEY are not set as repository secrets, so canonical, og:url, JSON-LD and sitemap regressions are NOT being checked. Set them under Settings -> Secrets and variables -> Actions to restore coverage."
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
       - uses: actions/checkout@v4
+        if: steps.gate.outputs.skip != 'true'
 
       - uses: oven-sh/setup-bun@v2
+        if: steps.gate.outputs.skip != 'true'
         with:
           bun-version: latest
 
@@ -22,6 +46,7 @@ jobs:
       # bun install is still invoked so node_modules/ is materialized,
       # but network fetches are skipped when the cache hits.
       - name: Cache Bun dependencies
+        if: steps.gate.outputs.skip != 'true'
         uses: actions/cache@v4
         with:
           path: |
@@ -32,17 +57,20 @@ jobs:
             ${{ runner.os }}-bun-
 
       - name: Install dependencies
+        if: steps.gate.outputs.skip != 'true'
         run: bun install --frozen-lockfile
 
       # Cache the Playwright browser bundle so we skip the ~150 MB Chromium
       # download on every PR. Key on the installed Playwright version.
       - name: Resolve Playwright version
+        if: steps.gate.outputs.skip != 'true'
         id: pw
         run: |
           VERSION=$(node -p "require('@playwright/test/package.json').version")
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Cache Playwright browsers
+        if: steps.gate.outputs.skip != 'true'
         id: pw-cache
         uses: actions/cache@v4
         with:
@@ -52,6 +80,7 @@ jobs:
             ${{ runner.os }}-playwright-
 
       - name: Install Playwright browsers
+        if: steps.gate.outputs.skip != 'true'
         # On a cache hit we still need the OS deps; skip the browser download itself.
         run: |
           if [ "${{ steps.pw-cache.outputs.cache-hit }}" = "true" ]; then
@@ -63,6 +92,7 @@ jobs:
       # Rebuild the sitemap with the latest routes + jobs so the sitemap
       # assertions run against the same artifact production ships.
       - name: Generate sitemap (jobs + categories)
+        if: steps.gate.outputs.skip != 'true'
         run: |
           mkdir -p dist
           cp public/sitemap.xml dist/sitemap.xml
@@ -72,6 +102,7 @@ jobs:
       # Run only the SEO spec — fail the build on any canonical / og:url /
       # redirect / JSON-LD / sitemap regression.
       - name: Run Playwright SEO spec
+        if: steps.gate.outputs.skip != 'true'
         run: bunx playwright test e2e/jobs-seo.spec.ts --reporter=list
         env:
           CI: "true"

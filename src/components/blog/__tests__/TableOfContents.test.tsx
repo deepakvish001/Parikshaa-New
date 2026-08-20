@@ -1,33 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { TableOfContents } from "../TableOfContents";
-
-class MockIO {
-  static instances: MockIO[] = [];
-  cb: IntersectionObserverCallback;
-  observed: Element[] = [];
-  constructor(cb: IntersectionObserverCallback) {
-    this.cb = cb;
-    MockIO.instances.push(this);
-  }
-  observe(el: Element) {
-    this.observed.push(el);
-  }
-  disconnect() {}
-  unobserve() {}
-  takeRecords() {
-    return [];
-  }
-  trigger(entries: Array<Partial<IntersectionObserverEntry> & { target: Element }>) {
-    this.cb(entries as IntersectionObserverEntry[], this as unknown as IntersectionObserver);
-  }
-}
-
-beforeEach(() => {
-  MockIO.instances = [];
-  // @ts-expect-error jsdom
-  window.IntersectionObserver = MockIO;
-});
 
 const items = [
   { depth: 2, text: "Alpha", id: "alpha" },
@@ -35,6 +8,7 @@ const items = [
   { depth: 2, text: "Beta", id: "beta" },
 ];
 
+/** scrollToHeading resolves ids against the real document. */
 function setupHeadings() {
   document.body.innerHTML = "";
   for (const i of items) {
@@ -45,48 +19,58 @@ function setupHeadings() {
   }
 }
 
+beforeEach(setupHeadings);
+afterEach(() => vi.restoreAllMocks());
+
 describe("TableOfContents", () => {
-  it("renders all items and indents H3 entries", () => {
-    setupHeadings();
+  it("renders all items and indents by heading depth", () => {
     const { container } = render(<TableOfContents items={items} />);
     expect(screen.getByRole("navigation", { name: /table of contents/i })).toBeInTheDocument();
-    const links = container.querySelectorAll("a");
-    expect(links).toHaveLength(3);
-    const subItem = container.querySelector("li.pl-3");
-    expect(subItem).toBeTruthy();
-    expect(subItem?.textContent).toContain("Alpha One");
+
+    expect(container.querySelectorAll("a")).toHaveLength(3);
+
+    // Depth drives left padding on the anchor: h2 -> pl-3, h3 -> pl-6.
+    expect(screen.getByRole("link", { name: "Alpha One" })).toHaveClass("pl-6");
+    expect(screen.getByRole("link", { name: "Alpha" })).toHaveClass("pl-3");
   });
 
-  it("sets aria-current=location on the active item when intersection fires", () => {
-    setupHeadings();
-    render(<TableOfContents items={items} />);
-    const beta = document.getElementById("beta")!;
-    const io = MockIO.instances[0];
-    io.trigger([
-      { isIntersecting: true, target: beta, boundingClientRect: { top: 10 } as DOMRectReadOnly },
-    ]);
-    const active = screen.getByRole("link", { name: "Beta" });
-    expect(active).toHaveAttribute("aria-current", "location");
-    const inactive = screen.getByRole("link", { name: "Alpha" });
-    expect(inactive).not.toHaveAttribute("aria-current");
+  it("marks the item named by activeId with aria-current=location", () => {
+    render(<TableOfContents items={items} activeId="beta" />);
+    expect(screen.getByRole("link", { name: "Beta" })).toHaveAttribute(
+      "aria-current",
+      "location",
+    );
+    expect(screen.getByRole("link", { name: "Alpha" })).not.toHaveAttribute("aria-current");
   });
 
-  it("Enter key activates a TOC link, scrolls and focuses the heading", () => {
-    setupHeadings();
-    const scrollSpy = vi.fn();
-    const focusSpy = vi.fn();
+  it("Enter key scrolls to the heading and moves focus to it", () => {
+    const scrollTo = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
     const beta = document.getElementById("beta")!;
-    beta.scrollIntoView = scrollSpy as any;
-    beta.focus = focusSpy as any;
+    const focus = vi.spyOn(beta, "focus").mockImplementation(() => {});
+
     render(<TableOfContents items={items} />);
-    const link = screen.getByRole("link", { name: "Beta" });
-    fireEvent.keyDown(link, { key: "Enter" });
-    expect(scrollSpy).toHaveBeenCalled();
-    expect(focusSpy).toHaveBeenCalled();
+    fireEvent.keyDown(screen.getByRole("link", { name: "Beta" }), { key: "Enter" });
+
+    expect(scrollTo).toHaveBeenCalled();
+    // Focus moves without yanking the viewport a second time.
+    expect(focus).toHaveBeenCalledWith({ preventScroll: true });
+    // The heading is made programmatically focusable for the jump.
     expect(beta.getAttribute("tabindex")).toBe("-1");
   });
 
-  it("returns nothing when items list is empty", () => {
+  it("Space key behaves the same as Enter", () => {
+    const scrollTo = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
+    render(<TableOfContents items={items} />);
+    fireEvent.keyDown(screen.getByRole("link", { name: "Beta" }), { key: " " });
+    expect(scrollTo).toHaveBeenCalled();
+  });
+
+  it("renders nothing for fewer than three items", () => {
+    const { container } = render(<TableOfContents items={items.slice(0, 2)} />);
+    expect(container.firstChild).toBeNull();
+  });
+
+  it("renders nothing when the items list is empty", () => {
     const { container } = render(<TableOfContents items={[]} />);
     expect(container.firstChild).toBeNull();
   });

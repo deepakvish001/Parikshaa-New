@@ -34,13 +34,13 @@ describe("ReadingProgress", () => {
 
   it("renders with width 0% at the top", () => {
     const { container } = render(<ReadingProgress />);
-    const inner = container.querySelector("div > div") as HTMLElement;
+    const inner = container.querySelector("[aria-hidden] > div") as HTMLElement;
     expect(inner.style.width).toBe("0%");
   });
 
   it("updates width on scroll", () => {
     const { container } = render(<ReadingProgress />);
-    const inner = container.querySelector("div > div") as HTMLElement;
+    const inner = container.querySelector("[aria-hidden] > div") as HTMLElement;
     act(() => {
       setScroll({ scrollHeight: 2000, clientHeight: 1000, scrollTop: 500 });
       window.dispatchEvent(new Event("scroll"));
@@ -51,7 +51,7 @@ describe("ReadingProgress", () => {
 
   it("clamps to 100% when scrolled past the bottom", () => {
     const { container } = render(<ReadingProgress />);
-    const inner = container.querySelector("div > div") as HTMLElement;
+    const inner = container.querySelector("[aria-hidden] > div") as HTMLElement;
     act(() => {
       setScroll({ scrollHeight: 2000, clientHeight: 1000, scrollTop: 5000 });
       window.dispatchEvent(new Event("scroll"));

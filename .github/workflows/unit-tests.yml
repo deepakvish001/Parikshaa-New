@@ -1,0 +1,51 @@
+name: Unit tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: unit-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  vitest:
+    name: Vitest
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Non-blocking for now. main carries 28 known failures across 6 files —
+      # 19 in DsaStudio.coverage (per-topic assertions against a redesigned
+      # page), 6 in learn-palette-parity (hardcoded theme classes), 3 in
+      # blog-engagement. Making this blocking today would red every PR.
+      # Drop `|| true` and the `continue-on-error` once those are resolved.
+      #
+      # The tail is written to the run summary either way, so the failure
+      # count is visible on every PR and cannot quietly drift upward.
+      - name: Run vitest
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npm run test 2>&1 | tee /tmp/vitest.log
+        shell: bash
+
+      - name: Publish result to the run summary
+        if: always()
+        run: |
+          {
+            echo '### Vitest'
+            echo '```'
+            tail -20 /tmp/vitest.log 2>/dev/null || echo 'no output captured'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

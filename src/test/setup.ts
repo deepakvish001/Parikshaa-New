@@ -23,3 +23,36 @@ Object.defineProperty(Element.prototype, "scrollIntoView", {
   configurable: true,
   value: () => {},
 });
+
+// jsdom implements neither observer. Components construct them unconditionally,
+// so without stubs the render throws "X is not defined" before any assertion.
+class ResizeObserverStub {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+Object.defineProperty(window, "ResizeObserver", {
+  writable: true,
+  configurable: true,
+  value: ResizeObserverStub,
+});
+globalThis.ResizeObserver = ResizeObserverStub as unknown as typeof ResizeObserver;
+
+class IntersectionObserverStub {
+  readonly root = null;
+  readonly rootMargin = "";
+  readonly thresholds: readonly number[] = [];
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+  takeRecords(): IntersectionObserverEntry[] {
+    return [];
+  }
+}
+Object.defineProperty(window, "IntersectionObserver", {
+  writable: true,
+  configurable: true,
+  value: IntersectionObserverStub,
+});
+globalThis.IntersectionObserver =
+  IntersectionObserverStub as unknown as typeof IntersectionObserver;

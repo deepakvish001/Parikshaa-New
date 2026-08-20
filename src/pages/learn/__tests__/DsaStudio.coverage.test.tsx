@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { render, screen, within, act, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import DsaStudio from "../DsaStudio";
 import { DSA_TOPICS } from "@/data/dsaStudioData";
 
@@ -14,11 +15,17 @@ beforeEach(() => {
   window.localStorage.clear();
 });
 
-const renderApp = (path = "/learn/dsa-studio") =>
+// DsaStudio renders <Helmet>, which needs a HelmetProvider ancestor (same
+// wrapper LoginMfa.test.tsx uses). The tab is derived from the URL via
+// pathToTab(), so the problems tab must be addressed by its own path —
+// "/learn/dsa-studio" resolves to the hub tab, which has no problem cards.
+const renderApp = (path = "/learn/dsa-studio/problems") =>
   render(
-    <MemoryRouter initialEntries={[path]}>
-      <DsaStudio />
-    </MemoryRouter>,
+    <HelmetProvider>
+      <MemoryRouter initialEntries={[path]}>
+        <DsaStudio />
+      </MemoryRouter>
+    </HelmetProvider>,
   );
 
 describe("DSA Studio — data integrity", () => {

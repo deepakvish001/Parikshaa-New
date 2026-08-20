@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState, isValidElement, type ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
@@ -244,6 +244,23 @@ function CalloutBlock({
   );
 }
 
+/**
+ * Flatten a React children tree down to its text.
+ *
+ * A paragraph holding nothing but a bare URL arrives here as a single <a>
+ * element (remark-gfm's autolink-literal), not as a string, so a
+ * string-only filter would see an empty paragraph.
+ */
+function extractTextContent(children: ReactNode): string {
+  if (typeof children === "string") return children;
+  if (typeof children === "number") return String(children);
+  if (Array.isArray(children)) return children.map(extractTextContent).join("");
+  if (isValidElement(children)) {
+    return extractTextContent((children.props as { children?: ReactNode }).children);
+  }
+  return "";
+}
+
 export function BlogContent({ source, className }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [lightbox, setLightbox] = useState<{ images: { src: string; alt?: string }[]; index: number } | null>(null);
@@ -358,13 +375,10 @@ export function BlogContent({ source, className }: Props) {
       },
 
       p({ node, children, ...props }: any) {
-        const txt = String(
-          Array.isArray(children)
-            ? children.filter((c) => typeof c === "string").join("")
-            : typeof children === "string"
-              ? children
-              : "",
-        ).trim();
+        // remark-gfm autolinks a bare URL into an <a> node, so the paragraph's
+        // children are elements rather than strings. Walk them to recover the
+        // text, otherwise every embeddable URL falls through to a plain link.
+        const txt = extractTextContent(children).trim();
         if (txt && /^https?:\/\/\S+$/.test(txt)) {
           const embed = detectEmbed(txt);
           if (embed) {

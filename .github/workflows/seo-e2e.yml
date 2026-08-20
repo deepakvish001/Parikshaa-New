@@ -11,7 +11,24 @@ jobs:
     name: Playwright SEO spec
     runs-on: ubuntu-latest
     timeout-minutes: 15
+
+    # Vite reads these at dev-server start. They used to arrive via the
+    # committed `.env`; that file is no longer tracked, so CI takes them
+    # from repository secrets instead (same secrets rls-matrix.yml uses).
+    env:
+      VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+      VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
+      VITE_SUPABASE_PROJECT_ID: ${{ secrets.VITE_SUPABASE_PROJECT_ID }}
+
     steps:
+      - name: Verify Supabase config is present
+        run: |
+          if [ -z "$VITE_SUPABASE_URL" ] || [ -z "$VITE_SUPABASE_PUBLISHABLE_KEY" ]; then
+            echo "::error::VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY must be set as repository secrets."
+            echo "Settings -> Secrets and variables -> Actions."
+            exit 1
+          fi
+
       - uses: actions/checkout@v4
 
       - uses: oven-sh/setup-bun@v2

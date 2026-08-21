@@ -22,6 +22,9 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          // Lighter mid-stop for accent gradients, so they track --primary
+          // instead of pinning a literal Tailwind orange.
+          bright: "hsl(var(--primary-bright))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",

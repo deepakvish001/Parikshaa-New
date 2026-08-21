@@ -36,6 +36,19 @@ const FORBIDDEN_HARDCODED_THEME_CLASSES = [
   /\bbg-\[#000000\]/,
 ];
 
+/**
+ * Deliberate effect classes that are not theme colors and must survive a
+ * palette change unchanged.
+ *
+ * `via-white/25` is the mid-stop of the button shine sweep — a translucent
+ * specular highlight on a `-translate-x-full ... group-hover:translate-x-full`
+ * overlay. It reads as light glancing off the surface, so it stays white in
+ * any palette; swapping it for `via-foreground/25` would invert the effect the
+ * moment the surface is light. Only the translucent form is exempt: opaque
+ * `via-white` is still theme drift and still fails.
+ */
+const ALLOWED_EFFECT_CLASSES = ["via-white/25"];
+
 function read(p: string): string {
   return readFileSync(resolve(process.cwd(), p), "utf8");
 }
@@ -52,6 +65,13 @@ const SURFACE_PROVIDER = "HeroAmbientBackdrop";
 function mountsUnderLearnSurface(file: string): boolean {
   const src = read(file);
   return /learn-dark-surface/.test(src) || src.includes(`<${SURFACE_PROVIDER}`);
+}
+
+function stripAllowedEffects(src: string): string {
+  return ALLOWED_EFFECT_CLASSES.reduce(
+    (acc, cls) => acc.split(cls).join(""),
+    src,
+  );
 }
 
 describe("theme parity with /learn palette", () => {
@@ -72,7 +92,7 @@ describe("theme parity with /learn palette", () => {
   });
 
   it.each(FILES)("%s uses semantic /learn palette tokens only", (file) => {
-    const src = read(file);
+    const src = stripAllowedEffects(read(file));
     for (const pattern of FORBIDDEN_HARDCODED_THEME_CLASSES) {
       expect(
         src,

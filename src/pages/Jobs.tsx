@@ -489,7 +489,7 @@ export default function Jobs() {
               >
                 Internships &amp; jobs <HeroHighlight>freshers</HeroHighlight> are{" "}
                 <span
-                  className="bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent [box-decoration-break:clone] [-webkit-box-decoration-break:clone]"
+                  className="bg-gradient-to-r from-primary via-primary-bright to-primary bg-clip-text text-transparent [box-decoration-break:clone] [-webkit-box-decoration-break:clone]"
                   style={{ backgroundSize: "200% auto", animation: "apex-shimmer 6s linear infinite" }}
                 >
                   landing

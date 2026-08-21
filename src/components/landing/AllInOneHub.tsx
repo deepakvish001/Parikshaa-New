@@ -127,7 +127,7 @@ export function AllInOneHub() {
               />
               coding
             </span>{" "}
-            <span className="bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent"
+            <span className="bg-gradient-to-r from-primary via-primary-bright to-primary bg-clip-text text-transparent"
               style={{ backgroundSize: "200% auto", animation: "apex-shimmer 6s linear infinite" }}
             >
               journey.

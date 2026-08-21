@@ -25,16 +25,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Non-blocking for now. main carries 28 known failures across 6 files —
-      # 19 in DsaStudio.coverage (per-topic assertions against a redesigned
-      # page), 6 in learn-palette-parity (hardcoded theme classes), 3 in
-      # blog-engagement. Making this blocking today would red every PR.
-      # Drop `|| true` and the `continue-on-error` once those are resolved.
+      # Blocking. The 28 known failures this job was introduced with are all
+      # resolved — DsaStudio.coverage, learn-palette-parity and blog-engagement
+      # are green — so main sits at 358/358 across 46 files, and a red suite now
+      # means the PR broke something.
       #
-      # The tail is written to the run summary either way, so the failure
-      # count is visible on every PR and cannot quietly drift upward.
+      # The tail is still written to the run summary on success and failure
+      # alike, so the count stays visible without opening the job log.
       - name: Run vitest
-        continue-on-error: true
         run: |
           set -o pipefail
           npm run test 2>&1 | tee /tmp/vitest.log

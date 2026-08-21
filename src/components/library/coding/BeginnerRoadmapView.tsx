@@ -874,7 +874,7 @@ function Shimmer({ children }: { children: React.ReactNode }) {
         className="absolute inset-0 -z-10 rounded-lg bg-primary/15 ring-1 ring-inset ring-primary/25"
       />
       <span
-        className="bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent"
+        className="bg-gradient-to-r from-primary via-primary-bright to-primary bg-clip-text text-transparent"
         style={{
           backgroundSize: "200% auto",
           animation: reduced ? "none" : "apex-shimmer 6s linear infinite",
@@ -1202,7 +1202,7 @@ export default function BeginnerRoadmapView({
             className={cn(
               "inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition",
               activeTab === "all"
-                ? "bg-gradient-to-r from-primary via-orange-400 to-primary text-primary-foreground shadow-[0_0_24px_-6px_hsl(var(--primary)/0.55)]"
+                ? "bg-gradient-to-r from-primary via-primary-bright to-primary text-primary-foreground shadow-[0_0_24px_-6px_hsl(var(--primary)/0.55)]"
                 : "text-muted-foreground hover:text-foreground",
             )}
           >
@@ -1214,7 +1214,7 @@ export default function BeginnerRoadmapView({
             className={cn(
               "inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition",
               activeTab === "revision"
-                ? "bg-gradient-to-r from-primary via-orange-400 to-primary text-primary-foreground shadow-[0_0_24px_-6px_hsl(var(--primary)/0.55)]"
+                ? "bg-gradient-to-r from-primary via-primary-bright to-primary text-primary-foreground shadow-[0_0_24px_-6px_hsl(var(--primary)/0.55)]"
                 : "text-muted-foreground hover:text-foreground",
             )}
           >

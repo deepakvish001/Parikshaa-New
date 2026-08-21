@@ -1054,7 +1054,7 @@ export default function LearnHub() {
                             className="absolute inset-0 -z-10 rounded-md bg-primary/15 ring-1 ring-inset ring-primary/25"
                           />
                           <span
-                            className="bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent"
+                            className="bg-gradient-to-r from-primary via-primary-bright to-primary bg-clip-text text-transparent"
                             style={{
                               backgroundSize: "200% auto",
                               animation: "apex-shimmer 6s linear infinite",
@@ -1266,7 +1266,7 @@ export default function LearnHub() {
                                 className="absolute inset-0 -z-10 rounded-md bg-primary/15 ring-1 ring-inset ring-primary/25"
                               />
                               <span
-                                className="bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent tabular-nums"
+                                className="bg-gradient-to-r from-primary via-primary-bright to-primary bg-clip-text text-transparent tabular-nums"
                                 style={{ backgroundSize: "200% auto", animation: "apex-shimmer 6s linear infinite" }}
                               >
                                 {String(g.items.length).padStart(2, "0")}

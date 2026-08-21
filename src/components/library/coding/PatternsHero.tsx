@@ -26,7 +26,7 @@ function Shimmer({ children }: { children: React.ReactNode }) {
         className="absolute inset-0 -z-10 rounded-lg bg-primary/15 ring-1 ring-inset ring-primary/25"
       />
       <span
-        className="bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent"
+        className="bg-gradient-to-r from-primary via-primary-bright to-primary bg-clip-text text-transparent"
         style={{
           backgroundSize: "200% auto",
           animation: reduced ? "none" : "apex-shimmer 6s linear infinite",
@@ -135,7 +135,7 @@ export function PatternsHero({ total, solved, activeRoadmap, onRoadmapChange, to
             initial={{ width: 0 }}
             animate={{ width: `${pct}%` }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-primary via-orange-400 to-primary shadow-[0_0_16px_-2px_hsl(var(--primary)/0.6)]"
+            className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-primary via-primary-bright to-primary shadow-[0_0_16px_-2px_hsl(var(--primary)/0.6)]"
             style={{ backgroundSize: "200% auto", animation: "apex-shimmer 6s linear infinite" }}
           />
         </div>

@@ -40,13 +40,35 @@ function read(p: string): string {
   return readFileSync(resolve(process.cwd(), p), "utf8");
 }
 
+/**
+ * A page can pick up the palette two ways: by carrying `learn-dark-surface`
+ * itself, or by mounting inside a component that carries it. Index.tsx and
+ * AuthLayout.tsx take the second route — both wrap their entire tree in
+ * <HeroAmbientBackdrop>, whose root <main> applies the class. Asserting on the
+ * literal string in each page file reported drift that does not exist.
+ */
+const SURFACE_PROVIDER = "HeroAmbientBackdrop";
+
+function mountsUnderLearnSurface(file: string): boolean {
+  const src = read(file);
+  return /learn-dark-surface/.test(src) || src.includes(`<${SURFACE_PROVIDER}`);
+}
+
 describe("theme parity with /learn palette", () => {
+  // Guards the indirection the next two assertions lean on: if the provider
+  // ever stops applying the class, they must fail rather than pass silently.
+  it(`${SURFACE_PROVIDER} applies learn-dark-surface`, () => {
+    expect(read(`src/components/landing/${SURFACE_PROVIDER}.tsx`)).toMatch(
+      /learn-dark-surface/,
+    );
+  });
+
   it("Index (home) mounts under learn-dark-surface", () => {
-    expect(read("src/pages/Index.tsx")).toMatch(/learn-dark-surface/);
+    expect(mountsUnderLearnSurface("src/pages/Index.tsx")).toBe(true);
   });
 
   it("AuthLayout (login + signup shell) mounts under learn-dark-surface", () => {
-    expect(read("src/components/AuthLayout.tsx")).toMatch(/learn-dark-surface/);
+    expect(mountsUnderLearnSurface("src/components/AuthLayout.tsx")).toBe(true);
   });
 
   it.each(FILES)("%s uses semantic /learn palette tokens only", (file) => {

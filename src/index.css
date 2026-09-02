@@ -14,8 +14,6 @@
     --popover-foreground: 0 0% 9%;
 
     --primary: 22 95% 53%;
-    /* Lighter mid-stop for accent gradients; Tailwind orange-400 equivalent. */
-    --primary-bright: 27 96% 61%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 0 0% 94%;
@@ -78,8 +76,6 @@
     --popover-foreground: 0 0% 98%;
 
     --primary: 22 95% 53%;
-    /* Lighter mid-stop for accent gradients; Tailwind orange-400 equivalent. */
-    --primary-bright: 27 96% 61%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 0 0% 12%;
@@ -171,8 +167,6 @@
     --border: var(--learn-border);
     --input: var(--learn-border);
     --primary: 22 95% 53%;
-    /* Lighter mid-stop for accent gradients; Tailwind orange-400 equivalent. */
-    --primary-bright: 27 96% 61%;
     --ring: 22 95% 53%;
     --shadow-glow: none;
     --shadow-card: none;

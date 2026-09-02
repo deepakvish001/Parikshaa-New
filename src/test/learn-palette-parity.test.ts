@@ -36,63 +36,21 @@ const FORBIDDEN_HARDCODED_THEME_CLASSES = [
   /\bbg-\[#000000\]/,
 ];
 
-/**
- * Deliberate effect classes that are not theme colors and must survive a
- * palette change unchanged.
- *
- * `via-white/25` is the mid-stop of the button shine sweep — a translucent
- * specular highlight on a `-translate-x-full ... group-hover:translate-x-full`
- * overlay. It reads as light glancing off the surface, so it stays white in
- * any palette; swapping it for `via-foreground/25` would invert the effect the
- * moment the surface is light. Only the translucent form is exempt: opaque
- * `via-white` is still theme drift and still fails.
- */
-const ALLOWED_EFFECT_CLASSES = ["via-white/25"];
-
 function read(p: string): string {
   return readFileSync(resolve(process.cwd(), p), "utf8");
 }
 
-/**
- * A page can pick up the palette two ways: by carrying `learn-dark-surface`
- * itself, or by mounting inside a component that carries it. Index.tsx and
- * AuthLayout.tsx take the second route — both wrap their entire tree in
- * <HeroAmbientBackdrop>, whose root <main> applies the class. Asserting on the
- * literal string in each page file reported drift that does not exist.
- */
-const SURFACE_PROVIDER = "HeroAmbientBackdrop";
-
-function mountsUnderLearnSurface(file: string): boolean {
-  const src = read(file);
-  return /learn-dark-surface/.test(src) || src.includes(`<${SURFACE_PROVIDER}`);
-}
-
-function stripAllowedEffects(src: string): string {
-  return ALLOWED_EFFECT_CLASSES.reduce(
-    (acc, cls) => acc.split(cls).join(""),
-    src,
-  );
-}
-
 describe("theme parity with /learn palette", () => {
-  // Guards the indirection the next two assertions lean on: if the provider
-  // ever stops applying the class, they must fail rather than pass silently.
-  it(`${SURFACE_PROVIDER} applies learn-dark-surface`, () => {
-    expect(read(`src/components/landing/${SURFACE_PROVIDER}.tsx`)).toMatch(
-      /learn-dark-surface/,
-    );
-  });
-
   it("Index (home) mounts under learn-dark-surface", () => {
-    expect(mountsUnderLearnSurface("src/pages/Index.tsx")).toBe(true);
+    expect(read("src/pages/Index.tsx")).toMatch(/learn-dark-surface/);
   });
 
   it("AuthLayout (login + signup shell) mounts under learn-dark-surface", () => {
-    expect(mountsUnderLearnSurface("src/components/AuthLayout.tsx")).toBe(true);
+    expect(read("src/components/AuthLayout.tsx")).toMatch(/learn-dark-surface/);
   });
 
   it.each(FILES)("%s uses semantic /learn palette tokens only", (file) => {
-    const src = stripAllowedEffects(read(file));
+    const src = read(file);
     for (const pattern of FORBIDDEN_HARDCODED_THEME_CLASSES) {
       expect(
         src,

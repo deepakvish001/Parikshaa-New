@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { render, screen, within, act, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
 import DsaStudio from "../DsaStudio";
 import { DSA_TOPICS } from "@/data/dsaStudioData";
 
@@ -15,30 +14,12 @@ beforeEach(() => {
   window.localStorage.clear();
 });
 
-// DsaStudio renders <Helmet>, which needs a HelmetProvider ancestor (same
-// wrapper LoginMfa.test.tsx uses). The tab is derived from the URL via
-// pathToTab(), so the problems tab must be addressed by its own path —
-// "/learn/dsa-studio" resolves to the hub tab, which has no problem cards.
-const renderApp = (path = "/learn/dsa-studio/problems") =>
+const renderApp = (path = "/learn/dsa-studio") =>
   render(
-    <HelmetProvider>
-      <MemoryRouter initialEntries={[path]}>
-        <DsaStudio />
-      </MemoryRouter>
-    </HelmetProvider>,
+    <MemoryRouter initialEntries={[path]}>
+      <DsaStudio />
+    </MemoryRouter>,
   );
-
-/**
- * The problems tab renders every topic as its own <section data-topic-id>,
- * each with its own "Rendered: x/y" indicator, rather than filtering the page
- * down to one active topic. Per-topic assertions therefore have to be scoped
- * to that topic's section — a document-wide getAllByTestId sees all 171 cards.
- */
-const topicSection = (topicId: string): HTMLElement => {
-  const el = document.querySelector<HTMLElement>(`[data-topic-id="${topicId}"]`);
-  if (!el) throw new Error(`no rendered section for topic "${topicId}"`);
-  return el;
-};
 
 describe("DSA Studio — data integrity", () => {
   it(`contains exactly ${TOTAL_PROBLEMS} problems across all topics`, () => {
@@ -69,24 +50,18 @@ describe("DSA Studio — rendered indicator + grand total", () => {
     expect(badge.textContent).toMatch(new RegExp(`${TOTAL_PROBLEMS}\\s*/\\s*171`));
   });
 
-  it("every topic's Rendered: X/Y indicator matches the cards in its own section", () => {
+  it("Rendered: X/Y indicator matches actual cards in DOM for the active topic", () => {
     renderApp();
-    for (const t of DSA_TOPICS) {
-      const section = topicSection(t.id);
-      const indicator = within(section).getByTestId("dsa-rendered-indicator");
-      const [, x, y] = indicator.textContent!.match(/Rendered:\s*(\d+)\s*\/\s*(\d+)/)!;
-      const expectedTotal = t.groups.reduce((sum, g) => sum + g.problems.length, 0);
-
-      // Unfiltered, every problem in the topic is on screen.
-      expect(within(section).getAllByTestId("dsa-problem-card")).toHaveLength(Number(x));
-      expect(Number(x)).toBe(expectedTotal);
-      expect(Number(y)).toBe(expectedTotal);
-    }
-  });
-
-  it("renders every indexed problem across all topic sections", () => {
-    renderApp();
-    expect(screen.getAllByTestId("dsa-problem-card")).toHaveLength(TOTAL_PROBLEMS);
+    const indicator = screen.getByTestId("dsa-rendered-indicator");
+    const cards = screen.getAllByTestId("dsa-problem-card");
+    const m = indicator.textContent!.match(/Rendered:\s*(\d+)\s*\/\s*(\d+)/)!;
+    const x = Number(m[1]);
+    const y = Number(m[2]);
+    expect(cards.length).toBe(x);
+    const firstTopic = DSA_TOPICS[0];
+    const expectedTotal = firstTopic.groups.reduce((s, g) => s + g.problems.length, 0);
+    expect(y).toBe(expectedTotal);
+    expect(x).toBe(expectedTotal);
   });
 });
 
@@ -94,15 +69,14 @@ describe("DSA Studio — every problem renders to its detail route", () => {
   it.each(DSA_TOPICS.map((t) => [t.id, t.label] as const))(
     "topic %s renders all problem cards with correct hrefs",
     (topicId) => {
-      // No localStorage seeding: the tab comes from the URL and every topic
-      // renders regardless of which one is "active", so the section lookup
-      // below is what selects the topic under test.
+      window.localStorage.setItem(
+        "dsaStudio:prefs:v1",
+        JSON.stringify({ activeTopic: topicId, activeTab: "problems", search: "", priority: "all" }),
+      );
       const { unmount } = renderApp();
       const topic = DSA_TOPICS.find((t) => t.id === topicId)!;
       const expected = topic.groups.flatMap((g) => g.problems);
-      const cards = within(topicSection(topicId)).getAllByTestId(
-        "dsa-problem-card",
-      ) as HTMLAnchorElement[];
+      const cards = screen.getAllByTestId("dsa-problem-card") as HTMLAnchorElement[];
       expect(cards.length).toBe(expected.length);
       const renderedSlugs = new Set(cards.map((c) => c.getAttribute("data-slug")));
       for (const p of expected) {
@@ -118,12 +92,12 @@ describe("DSA Studio — every problem renders to its detail route", () => {
 describe("DSA Studio — filters preserved when navigating to a problem", () => {
   it("active filters/search persist in localStorage so revisiting restores them", () => {
     renderApp();
-    const input = screen.getByPlaceholderText(/search by name or number/i) as HTMLInputElement;
+    const input = screen.getByPlaceholderText(/search problem/i) as HTMLInputElement;
     act(() => {
       fireEvent.change(input, { target: { value: "sum" } });
     });
     act(() => {
-      fireEvent.click(screen.getByRole("button", { name: /^P1$/i }));
+      fireEvent.click(screen.getByRole("button", { name: /^P1 Only$/i }));
     });
     const prefs = JSON.parse(window.localStorage.getItem("dsaStudio:prefs:v1")!);
     expect(prefs.search).toBe("sum");
@@ -141,7 +115,7 @@ describe("DSA Studio — filters preserved when navigating to a problem", () => 
 
 describe("DSA Studio — QA mode", () => {
   it("toggling QA mode does not surface mismatches when data is consistent", () => {
-    renderApp("/learn/dsa-studio/problems?qa=1");
+    renderApp("/learn/dsa-studio?qa=1");
     // If data integrity test passes, no mismatch panel should be present
     expect(screen.queryByTestId("dsa-qa-mismatches")).toBeNull();
   });

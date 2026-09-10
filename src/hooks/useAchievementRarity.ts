@@ -27,7 +27,7 @@
        try {
          // Get total unique users who have any achievements
          const { data: totalData, error: totalError } = await supabase
-           .from("user_achievements")
+           .from("public_user_achievements")
            .select("user_id")
            .limit(1000);
  
@@ -38,7 +38,7 @@
  
          // Get count per achievement
          const { data: achievementCounts, error: countsError } = await supabase
-           .from("user_achievements")
+           .from("public_user_achievements")
            .select("achievement_id");
  
          if (countsError) throw countsError;

@@ -116,7 +116,7 @@ export const useBlogPost = (slug: string | undefined) =>
       let author = null;
       if (r.author_id) {
         const { data: prof } = await supabase
-          .from("profiles")
+          .from("public_profiles")
           .select("full_name, avatar_url")
           .eq("user_id", r.author_id)
           .maybeSingle();
@@ -368,7 +368,7 @@ export const useBlogComments = (postId: string | undefined) =>
       const userIds = Array.from(new Set(rows.map((r) => r.user_id)));
       if (userIds.length) {
         const { data: profs } = await supabase
-          .from("profiles")
+          .from("public_profiles")
           .select("user_id, full_name, avatar_url")
           .in("user_id", userIds);
         const m = new Map((profs ?? []).map((p: any) => [p.user_id, p]));

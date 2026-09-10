@@ -50,7 +50,7 @@
        // Fetch avatar and full_name from profiles table
        const userIds = data?.map(d => d.user_id) || [];
        const { data: profiles } = await supabase
-         .from("profiles")
+         .from("public_profiles")
          .select("user_id, full_name, avatar_url")
          .in("user_id", userIds);
  

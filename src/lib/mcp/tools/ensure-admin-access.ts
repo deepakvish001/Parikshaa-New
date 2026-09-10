@@ -2,34 +2,38 @@ import { defineTool, type ToolContext } from "@lovable.dev/mcp-js";
 import { createUserSupabaseClient, errResult, jsonResult } from "./_shared";
 
 /**
- * Self-grant admin role for the currently signed-in MCP user.
- * Gated at the MCP layer: only OAuth-client tokens (i.e. Claude / ChatGPT
- * connecting via the MCP server) may call this. Password sessions from the
- * app are rejected — a normal end-user cannot elevate themselves.
+ * Reports whether the signed-in MCP user already holds admin/owner.
  *
- * Backing DB function: public.grant_admin_to_self() (SECURITY DEFINER).
+ * Self-granting was removed: the backing SECURITY DEFINER function
+ * public.grant_admin_to_self() allowed ANY signed-in user to escalate to
+ * admin/owner, so it was dropped. Roles must now be granted by an existing
+ * owner (admin UI or admin_grant_role).
  */
 export const ensureAdminAccessTool = defineTool({
   name: "ensure_admin_access",
-  title: "Ensure admin access for this MCP client",
+  title: "Check admin access for this MCP client",
   description:
-    "Grant the signed-in MCP user the 'admin' role so publish tools work. Idempotent — safe to call at the start of every session. Only OAuth-client tokens (Claude, ChatGPT connectors) are allowed; regular app sessions are rejected.",
+    "Report whether the signed-in MCP user has the 'admin' or 'owner' role. Self-granting is disabled; an existing owner must grant the role.",
   inputSchema: {},
-  annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+  annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   handler: async (_input, ctx: ToolContext) => {
     if (!ctx.isAuthenticated()) return errResult("Not authenticated");
-    const clientId = ctx.getClientId?.();
-    if (!clientId) {
+    const sb = createUserSupabaseClient(ctx);
+    const uid = ctx.getUserId();
+    const [{ data: isAdmin }, { data: isOwner }] = await Promise.all([
+      sb.rpc("has_role", { _user_id: uid, _role: "admin" }),
+      sb.rpc("has_role", { _user_id: uid, _role: "owner" }),
+    ]);
+    if (!isAdmin && !isOwner) {
       return errResult(
-        "This tool is only callable by OAuth MCP clients (Claude, ChatGPT). Your token has no client_id claim.",
+        `User ${uid} has neither 'admin' nor 'owner'. Self-granting is disabled for security; ask an owner to grant the role.`,
       );
     }
-    const sb = createUserSupabaseClient(ctx);
-    const { error } = await sb.rpc("grant_admin_to_self");
-    if (error) return errResult(`grant_admin_to_self failed: ${error.message}`);
-    return jsonResult(
-      `Admin role ensured for user ${ctx.getUserId()} (client=${clientId}).`,
-      { user_id: ctx.getUserId(), client_id: clientId, role: "admin" },
-    );
+    return jsonResult(`Admin access confirmed for user ${uid}.`, {
+      user_id: uid,
+      admin: !!isAdmin,
+      owner: !!isOwner,
+    });
   },
 });
+

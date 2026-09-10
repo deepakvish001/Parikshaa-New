@@ -66,7 +66,7 @@ const PublicProfile = () => {
         if (!ext) { setState({ status: "not_found" }); return; }
 
         const { data: basic, error: basicErr } = await supabase
-          .from("profiles")
+          .from("public_profiles")
           .select("full_name, avatar_url")
           .eq("user_id", ext.user_id)
           .maybeSingle();

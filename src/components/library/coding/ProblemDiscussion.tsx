@@ -231,7 +231,7 @@ export function ProblemDiscussion({ slug }: Props) {
           ? supabase.from("coding_problem_discussion_likes").select("*").in("discussion_id", ids)
           : Promise.resolve({ data: [] as { discussion_id: string; user_id: string }[] }),
         userIds.length
-          ? supabase.from("profiles").select("user_id, full_name, avatar_url").in("user_id", userIds)
+          ? supabase.from("public_profiles").select("user_id, full_name, avatar_url").in("user_id", userIds)
           : Promise.resolve({ data: [] as ProfileLite[] }),
       ]);
       setLikes((likesRes.data ?? []) as { discussion_id: string; user_id: string }[]);

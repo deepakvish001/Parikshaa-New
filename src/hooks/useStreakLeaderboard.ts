@@ -103,7 +103,7 @@
          // Get user profiles
          const userIds = Array.from(userStreaks.keys());
          const { data: profiles, error: profilesError } = await supabase
-           .from("profiles")
+           .from("public_profiles")
            .select("user_id, full_name, avatar_url")
            .in("user_id", userIds);
  

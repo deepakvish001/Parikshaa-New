@@ -24,7 +24,7 @@
      const fetchAchievements = async () => {
        try {
          const { data, error } = await supabase
-           .from("user_achievements")
+           .from("public_user_achievements")
            .select("achievement_id, earned_at")
            .eq("user_id", userId)
            .order("earned_at", { ascending: false });

@@ -228,6 +228,8 @@ const App = () => (
                 <Route path="/dev/topic-palette" element={<TopicPalettePreview />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/terms" element={<Terms />} />
+                <Route path="/privacy" element={<Privacy />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/auth/callback" element={<AuthCallback />} />
                 <Route path="/auth" element={<Navigate to="/login" replace />} />

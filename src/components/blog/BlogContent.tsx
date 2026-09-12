@@ -358,13 +358,16 @@ export function BlogContent({ source, className }: Props) {
       },
 
       p({ node, children, ...props }: any) {
-        const txt = String(
-          Array.isArray(children)
-            ? children.filter((c) => typeof c === "string").join("")
-            : typeof children === "string"
-              ? children
-              : "",
-        ).trim();
+        // Bare URLs become <a> elements via autolink literals, so walk the tree
+        // and collect the visible text rather than only top-level strings.
+        const extractTextContent = (node: any): string => {
+          if (node == null || node === false) return "";
+          if (typeof node === "string" || typeof node === "number") return String(node);
+          if (Array.isArray(node)) return node.map(extractTextContent).join("");
+          if (typeof node === "object" && node.props) return extractTextContent(node.props.children);
+          return "";
+        };
+        const txt = extractTextContent(children).trim();
         if (txt && /^https?:\/\/\S+$/.test(txt)) {
           const embed = detectEmbed(txt);
           if (embed) {

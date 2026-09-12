@@ -123,6 +123,8 @@ import { problemSolvingFoundationSections, problemSolvingFoundationMeta } from "
 import { linkedListSheetSections, linkedListSheetMeta } from "@/data/linkedListSheetData";
 import { stackSheetSections, stackSheetMeta } from "@/data/stackSheetData";
 import { queueSheetSections, queueSheetMeta } from "@/data/queueSheetData";
+import { csesSections, csesMeta } from "@/data/csesData";
+import { cpInterviewSections, cpInterviewMeta } from "@/data/cpInterviewData";
 import { arraySheetSections, arraySheetMeta } from "@/data/arraySheetData";
 import { stringSheetSections, stringSheetMeta } from "@/data/stringSheetData";
 import { binaryTreeSheetSections, binaryTreeSheetMeta } from "@/data/binaryTreeSheetData";
@@ -201,6 +203,14 @@ const mockSheetData: Record<string, SheetData> = {
   "strivers-sde-sheet": {
     ...striverSDEMeta,
     sections: striverSDESections,
+  },
+  "cses-sheet": {
+    ...csesMeta,
+    sections: csesSections,
+  },
+  "cp-interview-sheet": {
+    ...cpInterviewMeta,
+    sections: cpInterviewSections,
   },
   "problem-solving-foundation": {
     ...problemSolvingFoundationMeta,
@@ -1574,15 +1584,17 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
     [searchParams, setSearchParams, sheetId]
   );
   const closeArticle = useCallback(() => {
-
-    // Prefer history back so forward navigation stays available.
-    if (window.history.length > 1) navigate(-1);
-    else {
-      const next = new URLSearchParams(searchParams);
-      next.delete("article");
-      next.delete("from");
-      setSearchParams(next, { replace: true });
+    // Only go back when the previous entry belongs to this SPA session;
+    // otherwise a deep link would send the reader off-site.
+    const idx = (window.history.state as { idx?: number } | null)?.idx ?? 0;
+    if (idx > 0) {
+      navigate(-1);
+      return;
     }
+    const next = new URLSearchParams(searchParams);
+    next.delete("article");
+    next.delete("from");
+    setSearchParams(next, { replace: true });
   }, [navigate, searchParams, setSearchParams]);
 
   // Show the article's real URL in the address bar while it stays inline.

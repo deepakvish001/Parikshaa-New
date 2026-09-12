@@ -1275,12 +1275,17 @@ const CodingProblemDetail = () => {
       if (error) throw error;
       setAiReview(data.review);
       
-      // Save review to DB
-      await supabase.from('problem_ai_reviews').insert({
-        user_id: user.id,
-        submission_id: (submitResult as any)?.id || 'manual_review',
-        review_markdown: data.review
-      });
+      // Save review to DB — only when tied to a real submission (UUID column).
+      const submissionId = (submitResult as any)?.submission_id ?? null;
+      if (submissionId) {
+        const { error: saveError } = await supabase.from('problem_ai_reviews').insert({
+          user_id: user.id,
+          submission_id: submissionId,
+          review_markdown: data.review
+        });
+        if (saveError) console.warn('Failed to save AI review', saveError);
+      }
+      
       
       toast({ title: "Review Complete", description: "AI has analyzed your code." });
     } catch (err: any) {

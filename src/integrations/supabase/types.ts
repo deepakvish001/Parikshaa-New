@@ -2055,6 +2055,7 @@ export type Database = {
           ends_at: string
           id: string
           is_weekly_rated: boolean
+          kind: Database["public"]["Enums"]["contest_kind"]
           penalty_minutes: number | null
           registration_closes_at: string | null
           registration_opens_at: string | null
@@ -2072,6 +2073,7 @@ export type Database = {
           ends_at: string
           id?: string
           is_weekly_rated?: boolean
+          kind?: Database["public"]["Enums"]["contest_kind"]
           penalty_minutes?: number | null
           registration_closes_at?: string | null
           registration_opens_at?: string | null
@@ -2089,6 +2091,7 @@ export type Database = {
           ends_at?: string
           id?: string
           is_weekly_rated?: boolean
+          kind?: Database["public"]["Enums"]["contest_kind"]
           penalty_minutes?: number | null
           registration_closes_at?: string | null
           registration_opens_at?: string | null

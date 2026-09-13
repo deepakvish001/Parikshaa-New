@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { 
-  Rocket, 
-  Target, 
-  Calendar, 
-  BookOpen, 
-  History, 
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Rocket,
+  Target,
+  Calendar,
+  BookOpen,
+  History,
   TrendingUp,
   BrainCircuit,
   Code2,
@@ -17,10 +19,15 @@ import {
   Star,
   Zap,
   ChevronRight,
-  MessageSquare
+  MessageSquare,
+  Sparkles,
+  Info,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import TufyChat from '@/components/prephub/TufyChat';
+
+const cardCx =
+  "relative overflow-hidden rounded-2xl bg-[hsl(var(--card))]/50 border border-white/[0.05]";
 
 const PrepHubDashboard = () => {
   const { user } = useAuth();
@@ -82,233 +89,245 @@ const PrepHubDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-100 p-6">
-      <div className="max-w-7xl mx-auto space-y-8">
-        
-        {/* Header Section */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight">Prep Hub Dashboard</h1>
-            <p className="text-slate-400">Welcome back, {user?.user_metadata?.full_name || 'Scholar'}! Here's your personalized prep overview.</p>
-          </div>
-          <div className="flex gap-4">
-            <div className="bg-slate-900/50 border border-slate-800 rounded-lg px-4 py-2 flex items-center gap-2">
-              <Zap className="h-5 w-5 text-yellow-500 fill-yellow-500" />
-              <span className="font-bold">{streak?.current_streak || 0} Day Streak</span>
-            </div>
-            {!roadmap ? (
-              <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => generateInitialRoadmap()}>
-                <Rocket className="mr-2 h-4 w-4" /> Generate Roadmap
-              </Button>
-            ) : (
-              <Button className="bg-blue-600 hover:bg-blue-700">
-                <Rocket className="mr-2 h-4 w-4" /> Start Today's Task
-              </Button>
-            )}
-          </div>
-        </div>
+    <div className="learn-dark-surface dark relative min-h-svh bg-background text-foreground antialiased subpixel-antialiased [text-rendering:optimizeLegibility]">
+      <Helmet>
+        <title>Prep Hub — Parikshaa</title>
+        <meta name="description" content="Your personalised interview prep dashboard — roadmap, streaks, aptitude and AI mentor." />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&display=swap"
+          rel="stylesheet"
+        />
+      </Helmet>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card className="bg-slate-900/40 border-slate-800">
-            <CardContent className="p-6 flex items-center gap-4">
-              <div className="h-12 w-12 rounded-lg bg-blue-500/10 flex items-center justify-center">
-                <Target className="h-6 w-6 text-blue-500" />
-              </div>
-              <div>
-                <p className="text-sm text-slate-400">Target Company</p>
-                <p className="text-lg font-bold">{onboarding?.target_company || 'Not Set'}</p>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-slate-900/40 border-slate-800">
-            <CardContent className="p-6 flex items-center gap-4">
-              <div className="h-12 w-12 rounded-lg bg-emerald-500/10 flex items-center justify-center">
-                <Trophy className="h-6 w-6 text-emerald-500" />
-              </div>
-              <div>
-                <p className="text-sm text-slate-400">Tasks Completed</p>
-                <p className="text-lg font-bold">12 / 48</p>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-slate-900/40 border-slate-800">
-            <CardContent className="p-6 flex items-center gap-4">
-              <div className="h-12 w-12 rounded-lg bg-purple-500/10 flex items-center justify-center">
-                <BrainCircuit className="h-6 w-6 text-purple-500" />
-              </div>
-              <div>
-                <p className="text-sm text-slate-400">Overall Progress</p>
-                <div className="flex items-center gap-2 mt-1">
-                  <Progress value={25} className="h-2 w-24 bg-slate-800" />
-                  <span className="text-xs font-bold">25%</span>
+      <div className="mx-auto max-w-[1500px] px-3 md:px-4 py-3">
+        <div className="learn-frame relative rounded-2xl border">
+          {/* Sticky hero header — same language as Learn Hub */}
+          <div className="sticky top-0 z-30 px-4 md:px-6 pt-5 pb-4 bg-gradient-to-b from-background via-background to-background/95 backdrop-blur-xl border-b border-white/5">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div className="flex items-center gap-3.5 min-w-0">
+                <div className="relative shrink-0">
+                  <div className="absolute inset-0 bg-primary/40 blur-xl rounded-2xl" />
+                  <div className="relative h-11 w-11 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/30 flex items-center justify-center">
+                    <Sparkles className="h-5 w-5 text-primary" strokeWidth={2} />
+                  </div>
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2">
+                    <h1
+                      style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", textRendering: "optimizeLegibility" }}
+                      className="text-2xl md:text-[28px] font-bold tracking-[-0.02em] text-foreground leading-none"
+                    >
+                      Prep{" "}
+                      <span className="relative inline-block px-2 py-0.5">
+                        <span aria-hidden className="absolute inset-0 -z-10 rounded-md bg-primary/15 ring-1 ring-inset ring-primary/25" />
+                        <span
+                          className="bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent"
+                          style={{ backgroundSize: "200% auto", animation: "apex-shimmer 6s linear infinite" }}
+                        >
+                          Hub
+                        </span>
+                      </span>
+                    </h1>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <button
+                          type="button"
+                          aria-label="About Prep Hub"
+                          className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-primary transition-colors hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+                        >
+                          <Info className="h-3.5 w-3.5" strokeWidth={2} />
+                        </button>
+                      </PopoverTrigger>
+                      <PopoverContent side="bottom" align="start" className="max-w-xs text-[12px] leading-relaxed p-3">
+                        <p>Your personalised prep overview — roadmap, daily tasks, aptitude and interview experiences.</p>
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                  <p className="mt-1.5 text-[13px] text-muted-foreground truncate">
+                    Welcome back, {user?.user_metadata?.full_name || 'Scholar'}!
+                  </p>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-slate-900/40 border-slate-800">
-            <CardContent className="p-6 flex items-center gap-4">
-              <div className="h-12 w-12 rounded-lg bg-orange-500/10 flex items-center justify-center">
-                <Star className="h-6 w-6 text-orange-500" />
-              </div>
-              <div>
-                <p className="text-sm text-slate-400">Prep Score</p>
-                <p className="text-lg font-bold">840/1000</p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
-          {/* Main Progress Section */}
-          <div className="lg:col-span-2 space-y-6">
-            
-            {/* Roadmap Widget */}
-            <Card className="bg-slate-900/40 border-slate-800 overflow-hidden">
-              <CardHeader className="border-b border-slate-800">
-                <div className="flex justify-between items-center">
-                  <CardTitle className="flex items-center gap-2">
-                    <Calendar className="h-5 w-5 text-blue-500" />
-                    Weekly Sprint Plan
-                  </CardTitle>
-                  <Button variant="ghost" size="sm" className="text-blue-500 hover:text-blue-400" asChild>
-                    <Link to="/roadmap">Full Roadmap <ChevronRight className="ml-1 h-4 w-4" /></Link>
+              <div className="flex items-center gap-2.5">
+                <div className="rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 flex items-center gap-2">
+                  <Zap className="h-4 w-4 text-primary fill-primary" />
+                  <span className="text-[13px] font-semibold">{streak?.current_streak || 0} Day Streak</span>
+                </div>
+                {!roadmap ? (
+                  <Button
+                    onClick={() => generateInitialRoadmap()}
+                    className="h-10 px-5 rounded-lg text-[12px] font-bold uppercase tracking-[0.1em] bg-primary text-primary-foreground hover:bg-primary/90 active:scale-[0.98] shadow-[0_0_24px_-6px_hsl(var(--primary)/0.45)] transition-all"
+                  >
+                    <Rocket className="mr-2 h-4 w-4" /> Generate Roadmap
                   </Button>
+                ) : (
+                  <Button className="h-10 px-5 rounded-lg text-[12px] font-bold uppercase tracking-[0.1em] bg-primary text-primary-foreground hover:bg-primary/90 active:scale-[0.98] shadow-[0_0_24px_-6px_hsl(var(--primary)/0.45)] transition-all">
+                    <Rocket className="mr-2 h-4 w-4" /> Start Today's Task
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="px-4 md:px-6 py-6 space-y-6">
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+              {[
+                { icon: Target, label: "Target Company", value: onboarding?.target_company || 'Not Set' },
+                { icon: Trophy, label: "Tasks Completed", value: "12 / 48" },
+                { icon: Star, label: "Prep Score", value: "840/1000" },
+              ].map((s) => (
+                <div key={s.label} className={`${cardCx} p-5 flex items-center gap-4`}>
+                  <div className="h-11 w-11 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+                    <s.icon className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-[11px] font-medium uppercase tracking-[0.1em] text-muted-foreground">{s.label}</p>
+                    <p className="text-[15px] font-bold truncate">{s.value}</p>
+                  </div>
                 </div>
-              </CardHeader>
-              <CardContent className="p-0">
-                <div className="divide-y divide-slate-800">
-                  {roadmap ? (
-                    (roadmap.weekly_sprints?.[0]?.tasks || []).slice(0, 5).map((task: any, idx: number) => (
-                      <div key={idx} className="p-4 flex items-center justify-between hover:bg-slate-800/30 transition-colors">
-                        <div className="flex items-center gap-4">
-                          <div className={`h-8 w-8 rounded-full flex items-center justify-center border-2 ${idx === 0 ? 'border-emerald-500 bg-emerald-500/10' : 'border-slate-700'}`}>
-                            <span className="text-xs font-bold">{idx === 0 ? '✓' : idx + 1}</span>
+              ))}
+              <div className={`${cardCx} p-5 flex items-center gap-4`}>
+                <div className="h-11 w-11 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+                  <BrainCircuit className="h-5 w-5 text-primary" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[11px] font-medium uppercase tracking-[0.1em] text-muted-foreground">Overall Progress</p>
+                  <div className="flex items-center gap-2 mt-1">
+                    <Progress value={25} className="h-1.5 w-24" />
+                    <span className="text-xs font-bold">25%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Main column */}
+              <div className="lg:col-span-2 space-y-6">
+                <Card className={`${cardCx} p-0`}>
+                  <CardHeader className="border-b border-white/[0.05]">
+                    <div className="flex justify-between items-center">
+                      <CardTitle className="flex items-center gap-2 text-[15px]">
+                        <Calendar className="h-4 w-4 text-primary" />
+                        Weekly Sprint Plan
+                      </CardTitle>
+                      <Button variant="ghost" size="sm" className="text-primary hover:text-primary/80" asChild>
+                        <Link to="/roadmap">Full Roadmap <ChevronRight className="ml-1 h-4 w-4" /></Link>
+                      </Button>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="p-0">
+                    <div className="divide-y divide-white/[0.05]">
+                      {roadmap ? (
+                        (roadmap.weekly_sprints?.[0]?.tasks || []).slice(0, 5).map((task: any, idx: number) => (
+                          <div key={idx} className="p-4 flex items-center justify-between hover:bg-white/[0.03] transition-colors">
+                            <div className="flex items-center gap-4">
+                              <div className={`h-8 w-8 rounded-full flex items-center justify-center border ${idx === 0 ? 'border-primary/50 bg-primary/10 text-primary' : 'border-white/10 text-muted-foreground'}`}>
+                                <span className="text-xs font-bold">{idx === 0 ? '✓' : idx + 1}</span>
+                              </div>
+                              <div>
+                                <p className={`text-sm font-medium ${idx === 0 ? 'line-through text-muted-foreground' : ''}`}>
+                                  Day {task.day || idx + 1}: {task.title}
+                                </p>
+                                <p className="text-[11px] text-muted-foreground">{task.type} • {task.estimated_minutes} mins</p>
+                              </div>
+                            </div>
+                            <Button variant="outline" size="sm" className="h-8 rounded-lg border-white/10">
+                              {idx === 0 ? 'Review' : 'Start'}
+                            </Button>
                           </div>
-                          <div>
-                            <p className={`font-medium ${idx === 0 ? 'line-through text-slate-500' : ''}`}>
-                              Day {task.day || idx + 1}: {task.title}
-                            </p>
-                            <p className="text-xs text-slate-500">{task.type} • {task.estimated_minutes} mins</p>
-                          </div>
+                        ))
+                      ) : (
+                        <div className="p-10 text-center text-[13px] text-muted-foreground">
+                          Generate your roadmap to see your daily plan.
                         </div>
-                        <Button variant="outline" size="sm" className="border-slate-700 h-8">
-                          {idx === 0 ? 'Review' : 'Start'}
-                        </Button>
-                      </div>
-                    ))
-                  ) : (
-                    <div className="p-8 text-center text-slate-500">
-                      Generate your roadmap to see your daily plan.
+                      )}
                     </div>
-                  )}
+                  </CardContent>
+                </Card>
+
+                {/* Quick Modules */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {[
+                    { to: "/prephub/aptitude", icon: TrendingUp, tag: "2000+ Topics", title: "Aptitude Module", desc: "Master logical and quantitative reasoning with step-by-step solutions." },
+                    { to: "/prephub/interview-experiences", icon: History, tag: "Daily Updates", title: "Interview Experiences", desc: "Real world insights from recent candidates at top tech firms." },
+                  ].map((m) => (
+                    <Link key={m.to} to={m.to} className="h-full">
+                      <div className={`${cardCx} p-5 h-full transition-colors hover:border-primary/30 group`}>
+                        <div className="flex items-start justify-between">
+                          <div className="h-10 w-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                            <m.icon className="h-5 w-5 text-primary" />
+                          </div>
+                          <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground rounded-full border border-white/10 bg-white/[0.03] px-2 py-1">{m.tag}</span>
+                        </div>
+                        <h3 className="mt-4 font-bold text-[15px] tracking-[-0.01em]">{m.title}</h3>
+                        <p className="text-[13px] leading-relaxed text-muted-foreground mt-1">{m.desc}</p>
+                      </div>
+                    </Link>
+                  ))}
                 </div>
-              </CardContent>
-            </Card>
+              </div>
 
-            {/* Quick Modules */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Link to="/prephub/aptitude">
-                <Card className="bg-slate-900/40 border-slate-800 hover:border-blue-500/50 transition-all group cursor-pointer h-full">
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between">
-                      <div className="h-10 w-10 rounded-lg bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
-                        <TrendingUp className="h-5 w-5 text-blue-500" />
-                      </div>
-                      <span className="text-xs font-medium text-slate-500 bg-slate-800 px-2 py-1 rounded">2000+ Topics</span>
+              {/* Sidebar */}
+              <div className="space-y-6">
+                <div className={`${cardCx} p-5 border-l-2 border-l-primary`}>
+                  <div className="flex items-center gap-2 mb-3">
+                    <Code2 className="h-4 w-4 text-primary" />
+                    <span className="text-[11px] font-bold tracking-[0.1em] text-primary uppercase">Problem of the Day</span>
+                  </div>
+                  <h3 className="text-lg font-bold mb-2 tracking-[-0.01em]">Trapping Rain Water</h3>
+                  <div className="flex items-center gap-3 text-[11px] text-muted-foreground mb-5">
+                    <span className="font-bold text-destructive bg-destructive/10 px-2 py-0.5 rounded">Hard</span>
+                    <span>Accuracy: 42%</span>
+                  </div>
+                  <Button className="w-full h-10 rounded-lg text-[12px] font-bold uppercase tracking-[0.1em] bg-primary text-primary-foreground hover:bg-primary/90">Solve Challenge</Button>
+                </div>
+
+                <div className={`${cardCx} p-5 bg-gradient-to-br from-primary/[0.06] via-transparent to-transparent`}>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="h-10 w-10 rounded-2xl bg-primary/15 border border-primary/25 flex items-center justify-center">
+                      <MessageSquare className="h-5 w-5 text-primary" />
                     </div>
-                    <h3 className="mt-4 font-bold text-lg">Aptitude Module</h3>
-                    <p className="text-sm text-slate-400 mt-1">Master logical and quantitative reasoning with step-by-step solutions.</p>
+                    <div>
+                      <h3 className="font-bold text-[15px]">Ask Tufy AI</h3>
+                      <p className="text-[11px] text-muted-foreground italic">"I'll guide, you'll solve."</p>
+                    </div>
+                  </div>
+                  <p className="text-[13px] leading-relaxed text-muted-foreground mb-4">Stuck on a pattern? Get a hint without spoiling the solution.</p>
+                  <div className="rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1 flex items-center gap-2 focus-within:border-primary/40 transition-colors">
+                    <input
+                      type="text"
+                      placeholder="Ask a hint…"
+                      className="flex-1 bg-transparent h-8 text-[13px] placeholder:text-muted-foreground/60 focus:outline-none"
+                    />
+                    <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                  </div>
+                </div>
+
+                <Card className={`${cardCx}`}>
+                  <CardHeader>
+                    <CardTitle className="text-[15px] flex items-center gap-2">
+                      <BookOpen className="h-4 w-4 text-primary" />
+                      Revision Snippets
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    {['Mastering DFS', 'Complexity Analysis', 'Bitmasking Tips'].map((note) => (
+                      <div key={note} className="flex items-center justify-between group cursor-pointer">
+                        <span className="text-[13px] text-muted-foreground group-hover:text-foreground transition-colors">{note}</span>
+                        <ChevronRight className="h-4 w-4 text-muted-foreground/50" />
+                      </div>
+                    ))}
                   </CardContent>
                 </Card>
-              </Link>
-
-              <Link to="/prephub/interview-experiences">
-                <Card className="bg-slate-900/40 border-slate-800 hover:border-purple-500/50 transition-all group cursor-pointer h-full">
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between">
-                      <div className="h-10 w-10 rounded-lg bg-purple-500/10 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
-                        <History className="h-5 w-5 text-purple-500" />
-                      </div>
-                      <span className="text-xs font-medium text-slate-500 bg-slate-800 px-2 py-1 rounded">Daily Updates</span>
-                    </div>
-                    <h3 className="mt-4 font-bold text-lg">Interview Experiences</h3>
-                    <p className="text-sm text-slate-400 mt-1">Real world insights from recent candidates at top tech firms.</p>
-                  </CardContent>
-                </Card>
-              </Link>
+              </div>
             </div>
-          </div>
-
-          {/* Sidebar Section */}
-          <div className="space-y-6">
-            
-            {/* POTD Widget */}
-            <Card className="bg-slate-900/40 border-slate-800 overflow-hidden border-l-4 border-l-blue-500">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <Code2 className="h-5 w-5 text-blue-500" />
-                  <span className="text-sm font-bold tracking-wider text-blue-500 uppercase">Problem of the Day</span>
-                </div>
-                <h3 className="text-xl font-bold mb-2">Trapping Rain Water</h3>
-                <div className="flex items-center gap-3 text-xs text-slate-400 mb-6">
-                  <span className="text-red-400 font-bold bg-red-400/10 px-2 py-0.5 rounded">Hard</span>
-                  <span>Accuracy: 42%</span>
-                </div>
-                <Button className="w-full bg-blue-600 hover:bg-blue-700">Solve Challenge</Button>
-              </CardContent>
-            </Card>
-
-            {/* AI Mentor Quick Access */}
-            <Card className="bg-gradient-to-br from-indigo-900/20 to-slate-900/40 border-slate-800">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="h-10 w-10 rounded-full bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-                    <MessageSquare className="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold">Ask Tufy AI</h3>
-                    <p className="text-xs text-slate-400 italic">"I'll guide, you'll solve."</p>
-                  </div>
-                </div>
-                <p className="text-sm text-slate-300 mb-4">Stuck on a pattern? Get a hint without spoiling the solution.</p>
-                <div className="relative">
-                  <input 
-                    type="text" 
-                    placeholder="Ask a hint..." 
-                    className="w-full bg-slate-950 border border-slate-800 rounded-md py-2 px-3 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
-                  />
-                  <Button size="icon" className="absolute right-1 top-1 h-7 w-7 bg-blue-600">
-                    <ChevronRight className="h-4 w-4" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Revision Notes */}
-            <Card className="bg-slate-900/40 border-slate-800">
-              <CardHeader>
-                <CardTitle className="text-base flex items-center gap-2">
-                  <BookOpen className="h-4 w-4 text-emerald-500" />
-                  Revision Snippets
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                {['Mastering DFS', 'Complexity Analysis', 'Bitmasking Tips'].map((note) => (
-                  <div key={note} className="flex items-center justify-between group cursor-pointer">
-                    <span className="text-sm text-slate-300 group-hover:text-white transition-colors">{note}</span>
-                    <ChevronRight className="h-4 w-4 text-slate-600" />
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-
           </div>
         </div>
       </div>
-      
-      {/* Floating Chatbot Component */}
+
       <TufyChat />
     </div>
   );

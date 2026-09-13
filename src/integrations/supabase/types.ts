@@ -1597,6 +1597,47 @@ export type Database = {
         }
         Relationships: []
       }
+      contest_problems: {
+        Row: {
+          contest_id: string
+          created_at: string
+          id: string
+          order_index: number
+          points: number
+          problem_slug: string
+          unlock_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          contest_id: string
+          created_at?: string
+          id?: string
+          order_index?: number
+          points?: number
+          problem_slug: string
+          unlock_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          contest_id?: string
+          created_at?: string
+          id?: string
+          order_index?: number
+          points?: number
+          problem_slug?: string
+          unlock_at?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contest_problems_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contest_proctor_snapshots: {
         Row: {
           captured_at: string
@@ -1628,6 +1669,50 @@ export type Database = {
             columns: ["session_id"]
             isOneToOne: false
             referencedRelation: "contest_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contest_rating_history: {
+        Row: {
+          contest_id: string
+          created_at: string
+          delta: number
+          id: string
+          new_rating: number
+          old_rating: number
+          participants: number | null
+          rank: number | null
+          user_id: string
+        }
+        Insert: {
+          contest_id: string
+          created_at?: string
+          delta?: number
+          id?: string
+          new_rating?: number
+          old_rating?: number
+          participants?: number | null
+          rank?: number | null
+          user_id: string
+        }
+        Update: {
+          contest_id?: string
+          created_at?: string
+          delta?: number
+          id?: string
+          new_rating?: number
+          old_rating?: number
+          participants?: number | null
+          rank?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contest_rating_history_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
             referencedColumns: ["id"]
           },
         ]
@@ -1863,6 +1948,65 @@ export type Database = {
           },
         ]
       }
+      contest_submissions: {
+        Row: {
+          code: string | null
+          contest_id: string
+          created_at: string
+          id: string
+          language: string | null
+          memory_kb: number | null
+          passed_tests: number | null
+          problem_slug: string
+          runtime_ms: number | null
+          submitted_at: string
+          total_tests: number | null
+          updated_at: string
+          user_id: string
+          verdict: string
+        }
+        Insert: {
+          code?: string | null
+          contest_id: string
+          created_at?: string
+          id?: string
+          language?: string | null
+          memory_kb?: number | null
+          passed_tests?: number | null
+          problem_slug: string
+          runtime_ms?: number | null
+          submitted_at?: string
+          total_tests?: number | null
+          updated_at?: string
+          user_id: string
+          verdict?: string
+        }
+        Update: {
+          code?: string | null
+          contest_id?: string
+          created_at?: string
+          id?: string
+          language?: string | null
+          memory_kb?: number | null
+          passed_tests?: number | null
+          problem_slug?: string
+          runtime_ms?: number | null
+          submitted_at?: string
+          total_tests?: number | null
+          updated_at?: string
+          user_id?: string
+          verdict?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contest_submissions_contest_id_fkey"
+            columns: ["contest_id"]
+            isOneToOne: false
+            referencedRelation: "contests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contest_tab_locks: {
         Row: {
           claimed_at: string
@@ -2050,16 +2194,22 @@ export type Database = {
       }
       contests: {
         Row: {
+          banner_url: string | null
           created_at: string | null
+          created_by: string | null
           description: string | null
           ends_at: string
           id: string
+          invite_code: string | null
           is_weekly_rated: boolean
           kind: Database["public"]["Enums"]["contest_kind"]
+          max_participants: number | null
           penalty_minutes: number | null
           registration_closes_at: string | null
           registration_opens_at: string | null
+          rules_md: string | null
           scoring_mode: string
+          sequence_no: number | null
           slug: string
           starts_at: string
           status: string
@@ -2068,16 +2218,22 @@ export type Database = {
           visibility: string
         }
         Insert: {
+          banner_url?: string | null
           created_at?: string | null
+          created_by?: string | null
           description?: string | null
           ends_at: string
           id?: string
+          invite_code?: string | null
           is_weekly_rated?: boolean
           kind?: Database["public"]["Enums"]["contest_kind"]
+          max_participants?: number | null
           penalty_minutes?: number | null
           registration_closes_at?: string | null
           registration_opens_at?: string | null
+          rules_md?: string | null
           scoring_mode?: string
+          sequence_no?: number | null
           slug: string
           starts_at: string
           status?: string
@@ -2086,16 +2242,22 @@ export type Database = {
           visibility?: string
         }
         Update: {
+          banner_url?: string | null
           created_at?: string | null
+          created_by?: string | null
           description?: string | null
           ends_at?: string
           id?: string
+          invite_code?: string | null
           is_weekly_rated?: boolean
           kind?: Database["public"]["Enums"]["contest_kind"]
+          max_participants?: number | null
           penalty_minutes?: number | null
           registration_closes_at?: string | null
           registration_opens_at?: string | null
+          rules_md?: string | null
           scoring_mode?: string
+          sequence_no?: number | null
           slug?: string
           starts_at?: string
           status?: string

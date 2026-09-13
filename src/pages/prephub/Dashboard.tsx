@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from "@/integrations/supabase/client";
@@ -25,39 +25,17 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import TufyChat from '@/components/prephub/TufyChat';
+import { usePrepHubDashboard } from '@/hooks/usePrepHubDashboard';
 
 const cardCx =
   "relative overflow-hidden rounded-2xl bg-[hsl(var(--card))]/50 border border-white/[0.05]";
 
 const PrepHubDashboard = () => {
   const { user } = useAuth();
-  const [onboarding, setOnboarding] = useState<any>(null);
-  const [roadmap, setRoadmap] = useState<any>(null);
-  const [streak, setStreak] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchUserData();
-  }, []);
-
-  const fetchUserData = async () => {
-    if (!user) return;
-    try {
-      const [onboardingRes, roadmapRes, streakRes] = await Promise.all([
-        supabase.from('user_onboarding').select('*').eq('user_id', user.id).maybeSingle(),
-        supabase.from('user_roadmaps').select('*').eq('user_id', user.id).maybeSingle(),
-        supabase.from('user_streaks').select('*').eq('user_id', user.id).maybeSingle()
-      ]);
-
-      setOnboarding(onboardingRes.data);
-      setRoadmap(roadmapRes.data);
-      setStreak(streakRes.data);
-    } catch (error) {
-      console.error("Error fetching dashboard data:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { data, isLoading: loading, refetch } = usePrepHubDashboard();
+  const onboarding = data?.onboarding;
+  const roadmap = data?.roadmap;
+  const streak = data?.streak;
 
   const generateInitialRoadmap = async () => {
     if (!user || !onboarding) return;
@@ -80,7 +58,7 @@ const PrepHubDashboard = () => {
         .single();
 
       if (dbError) throw dbError;
-      setRoadmap(roadmapData);
+      await refetch();
     } catch (error) {
       console.error("Error generating roadmap:", error);
     } finally {
@@ -89,7 +67,7 @@ const PrepHubDashboard = () => {
   };
 
   return (
-    <div className="learn-dark-surface dark relative min-h-svh bg-background text-foreground antialiased subpixel-antialiased [text-rendering:optimizeLegibility]">
+    <div className="relative min-h-svh bg-background text-foreground antialiased subpixel-antialiased [text-rendering:optimizeLegibility]">
       <Helmet>
         <title>Prep Hub — Parikshaa</title>
         <meta name="description" content="Your personalised interview prep dashboard — roadmap, streaks, aptitude and AI mentor." />
@@ -103,7 +81,7 @@ const PrepHubDashboard = () => {
       <div className="mx-auto max-w-[1500px] px-3 md:px-4 py-3">
         <div className="learn-frame relative rounded-2xl border">
           {/* Sticky hero header — same language as Learn Hub */}
-          <div className="sticky top-0 z-30 px-4 md:px-6 pt-5 pb-4 bg-gradient-to-b from-background via-background to-background/95 backdrop-blur-xl border-b border-white/5">
+          <div className="sticky top-0 z-40 px-4 md:px-6 pt-5 pb-4 bg-gradient-to-b from-background via-background to-background/95 backdrop-blur-xl border-b border-white/5">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div className="flex items-center gap-3.5 min-w-0">
                 <div className="relative shrink-0">
@@ -176,8 +154,8 @@ const PrepHubDashboard = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
               {[
                 { icon: Target, label: "Target Company", value: onboarding?.target_company || 'Not Set' },
-                { icon: Trophy, label: "Tasks Completed", value: "12 / 48" },
-                { icon: Star, label: "Prep Score", value: "840/1000" },
+                { icon: Trophy, label: "Solved Problems", value: loading ? "…" : `${data?.solved ?? 0}` },
+                { icon: Clock, label: "Time Tracked", value: loading ? "…" : `${Math.floor((data?.timeSeconds ?? 0) / 3600)}h ${Math.floor(((data?.timeSeconds ?? 0) % 3600) / 60)}m` },
               ].map((s) => (
                 <div key={s.label} className={`${cardCx} p-5 flex items-center gap-4`}>
                   <div className="h-11 w-11 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
@@ -196,8 +174,8 @@ const PrepHubDashboard = () => {
                 <div className="min-w-0">
                   <p className="text-[11px] font-medium uppercase tracking-[0.1em] text-muted-foreground">Overall Progress</p>
                   <div className="flex items-center gap-2 mt-1">
-                    <Progress value={25} className="h-1.5 w-24" />
-                    <span className="text-xs font-bold">25%</span>
+                    <Progress value={data?.progressPercent ?? 0} className="h-1.5 w-24" />
+                    <span className="text-xs font-bold">{data?.progressPercent ?? 0}%</span>
                   </div>
                 </div>
               </div>
@@ -248,6 +226,18 @@ const PrepHubDashboard = () => {
                   </CardContent>
                 </Card>
 
+                <Card className={`${cardCx} p-0`}>
+                  <CardHeader className="border-b border-white/[0.05]"><CardTitle className="flex items-center gap-2 text-[15px]"><BookOpen className="h-4 w-4 text-primary" />Sheet Progress</CardTitle></CardHeader>
+                  <CardContent className="divide-y divide-white/[0.05] p-0">
+                    {(data?.sheets ?? []).length === 0 ? <p className="p-6 text-sm text-muted-foreground">Start a sheet to see your progress here.</p> : data?.sheets.slice(0, 5).map((sheet) => (
+                      <Link key={sheet.sheetId} to={`/learn/sheets/${sheet.sheetId}`} className="block p-4 hover:bg-white/[0.03]">
+                        <div className="mb-2 flex items-center justify-between gap-3 text-sm"><span className="font-medium">{sheet.title}</span><span className="text-muted-foreground">{sheet.solved}/{sheet.total || sheet.solved}</span></div>
+                        <Progress value={sheet.total ? Math.round((sheet.solved / sheet.total) * 100) : 0} className="h-1.5" />
+                      </Link>
+                    ))}
+                  </CardContent>
+                </Card>
+
                 {/* Quick Modules */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {[
@@ -277,12 +267,11 @@ const PrepHubDashboard = () => {
                     <Code2 className="h-4 w-4 text-primary" />
                     <span className="text-[11px] font-bold tracking-[0.1em] text-primary uppercase">Problem of the Day</span>
                   </div>
-                  <h3 className="text-lg font-bold mb-2 tracking-[-0.01em]">Trapping Rain Water</h3>
+                  <h3 className="text-lg font-bold mb-2 tracking-[-0.01em]">{data?.contests[0]?.title ?? "No upcoming contest"}</h3>
                   <div className="flex items-center gap-3 text-[11px] text-muted-foreground mb-5">
-                    <span className="font-bold text-destructive bg-destructive/10 px-2 py-0.5 rounded">Hard</span>
-                    <span>Accuracy: 42%</span>
+                    <span>{data?.contests[0] ? new Date(data.contests[0].starts_at).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" }) : "New rounds will appear here."}</span>
                   </div>
-                  <Button className="w-full h-10 rounded-lg text-[12px] font-bold uppercase tracking-[0.1em] bg-primary text-primary-foreground hover:bg-primary/90">Solve Challenge</Button>
+                  <Button asChild disabled={!data?.contests[0]} className="w-full h-10 rounded-lg text-[12px] font-bold uppercase tracking-[0.1em] bg-primary text-primary-foreground hover:bg-primary/90"><Link to={data?.contests[0] ? `/contests/${data.contests[0].slug}` : "/contests"}>View Contests</Link></Button>
                 </div>
 
                 <div className={`${cardCx} p-5 bg-gradient-to-br from-primary/[0.06] via-transparent to-transparent`}>
@@ -314,11 +303,11 @@ const PrepHubDashboard = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
-                    {['Mastering DFS', 'Complexity Analysis', 'Bitmasking Tips'].map((note) => (
-                      <div key={note} className="flex items-center justify-between group cursor-pointer">
-                        <span className="text-[13px] text-muted-foreground group-hover:text-foreground transition-colors">{note}</span>
+                    {(data?.revisions ?? []).length === 0 ? <p className="text-[13px] text-muted-foreground">Mark sheet topics for revision to see them here.</p> : data?.revisions.map((note) => (
+                      <Link to={`/learn/sheets/${note.sheet_id}`} key={`${note.sheet_id}-${note.topic_id}`} className="flex items-center justify-between group">
+                        <span className="text-[13px] text-muted-foreground group-hover:text-foreground transition-colors">{note.note || note.topic_id}</span>
                         <ChevronRight className="h-4 w-4 text-muted-foreground/50" />
-                      </div>
+                      </Link>
                     ))}
                   </CardContent>
                 </Card>

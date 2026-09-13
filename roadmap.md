@@ -5,4 +5,4 @@
 - [x] Track active sheet time and add CSV/JSON downloads.
 - [x] Populate Prep Hub from real progress and contest data.
 - [x] Surface future real contest standings and internal ratings.
-- [ ] Validate types, tests, and mobile/desktop rendering.
+- [x] Validate types, targeted tests, and mobile/desktop rendering.

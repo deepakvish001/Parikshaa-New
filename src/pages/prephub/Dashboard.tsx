@@ -46,7 +46,7 @@ const PrepHubDashboard = () => {
       });
       if (error) throw error;
 
-      const { data: roadmapData, error: dbError } = await supabase
+      const { error: dbError } = await supabase
         .from('user_roadmaps')
         .insert({
           user_id: user.id,
@@ -58,7 +58,6 @@ const PrepHubDashboard = () => {
         .single();
 
       if (dbError) throw dbError;
-      await refetch();
     } catch (error) {
       console.error("Error generating roadmap:", error);
     } finally {

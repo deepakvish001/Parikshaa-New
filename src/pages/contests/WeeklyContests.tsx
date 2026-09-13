@@ -12,6 +12,8 @@ import {
   ChevronRight, Flame, Timer, Radio, Loader2, X,
 } from "lucide-react";
 import { toast } from "sonner";
+import { useRegisterForContest } from "@/hooks/useContests";
+import { useQuery } from "@tanstack/react-query";
 
 interface Contest {
   id: string; slug: string; title: string; description: string | null;
@@ -21,6 +23,7 @@ interface RatingRow {
   contest_id: string; new_rating: number; delta: number; rank: number;
   participants: number; created_at: string;
 }
+interface ResultRow { contest_id: string; rank: number; problems_solved: number; total_penalty_seconds: number; }
 
 const TIERS = [
   { min: 0,    label: "Newbie",           color: "text-muted-foreground", ring: "ring-muted" },
@@ -56,6 +59,19 @@ export default function WeeklyContests() {
   const [myHistory, setMyHistory] = useState<RatingRow[]>([]);
   const [registeredIds, setRegisteredIds] = useState<Set<string>>(new Set());
   const [tick, setTick] = useState(0);
+  const registerMutation = useRegisterForContest();
+  const { data: myResults = [] } = useQuery({
+    queryKey: ["my-weekly-contest-results", user?.id],
+    enabled: Boolean(user?.id),
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("contest_leaderboard_cache")
+        .select("contest_id,rank,problems_solved,total_penalty_seconds")
+        .eq("user_id", user?.id ?? "");
+      if (error) throw error;
+      return (data ?? []) as ResultRow[];
+    },
+  });
 
   useEffect(() => {
     const t = setInterval(() => setTick((x) => x + 1), 30_000);
@@ -104,17 +120,14 @@ export default function WeeklyContests() {
   const register = async (contestId: string) => {
     if (!user) return toast.error("Sign in to register");
     setPendingId(contestId);
-    const { error } = await supabase.from("contest_registrations").upsert(
-      {
-        contest_id: contestId, user_id: user.id, status: "registered",
-        honor_code_accepted_at: new Date().toISOString(),
-      },
-      { onConflict: "contest_id,user_id" },
-    );
+    try {
+      await registerMutation.mutateAsync({ contestId });
+    } catch (error) {
+      setPendingId(null);
+      return;
+    }
     setPendingId(null);
-    if (error) return toast.error(error.message);
     setRegisteredIds((prev) => new Set(prev).add(contestId));
-    toast.success("Registered! See you on contest day.");
   };
 
   const unregister = async (contestId: string) => {
@@ -301,7 +314,7 @@ export default function WeeklyContests() {
                 </Card>
               ) : (
                 <div className="grid gap-3">
-                  {past.map((c) => <ContestRow key={c.id} c={c} kind="past" tick={tick} onRegister={register} onUnregister={unregister} registered={registeredIds.has(c.id)} pending={pendingId === c.id} />)}
+                  {past.map((c) => <ContestRow key={c.id} c={c} kind="past" tick={tick} result={myResults.find((row) => row.contest_id === c.id)} onRegister={register} onUnregister={unregister} registered={registeredIds.has(c.id)} pending={pendingId === c.id} />)}
                 </div>
               )}
             </Section>
@@ -327,7 +340,7 @@ function Section({ title, accent, icon, children }: { title: string; accent: "em
   );
 }
 
-function ContestRow({ c, kind, tick, onRegister, onUnregister, registered, pending }: { c: Contest; kind: "live" | "upcoming" | "past"; tick: number; onRegister: (id: string) => void; onUnregister?: (id: string) => void; registered?: boolean; pending?: boolean }) {
+function ContestRow({ c, kind, tick, result, onRegister, onUnregister, registered, pending }: { c: Contest; kind: "live" | "upcoming" | "past"; tick: number; result?: ResultRow; onRegister: (id: string) => void; onUnregister?: (id: string) => void; registered?: boolean; pending?: boolean }) {
   const starts = new Date(c.starts_at);
   const ends = new Date(c.ends_at);
   const now = Date.now();
@@ -363,6 +376,14 @@ function ContestRow({ c, kind, tick, onRegister, onUnregister, registered, pendi
                   {kind === "live" ? `Ends in ${fmtCountdown(ms)}` : `Starts in ${fmtCountdown(ms)}`}
                 </span>
               )}
+              {kind === "past" && result && (
+                <span className="inline-flex items-center gap-3 font-semibold text-foreground">
+                  <span>Rank #{result.rank}</span>
+                  <span>{result.problems_solved} solved</span>
+                  <span>{Math.floor(result.total_penalty_seconds / 60)} min</span>
+                </span>
+              )}
+              {kind === "past" && !result && <span>No recorded result</span>}
             </div>
           </div>
           <div className="flex items-center gap-2" onClick={(e) => e.preventDefault()}>

@@ -60,6 +60,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { GlobalLeftRail } from "@/components/GlobalLeftRail";
+import { GlobalMobileHeader } from "@/components/GlobalMobileHeader";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Calendar as CalendarPicker } from "@/components/ui/calendar";
@@ -1015,7 +1017,8 @@ export default function LearnHub() {
 
       <div className="learn-dark-surface dark relative h-svh min-h-0 overflow-hidden flex antialiased subpixel-antialiased [text-rendering:optimizeLegibility]">
 
-        <LeftRail />
+        <GlobalMobileHeader />
+        <GlobalLeftRail />
         <div className="relative flex-1 min-w-0 mx-auto max-w-[1500px] h-full min-h-0 px-3 md:px-4 py-3 grid grid-cols-1 min-[900px]:grid-cols-[minmax(0,1fr)_300px] xl:grid-cols-[minmax(0,1fr)_340px] grid-rows-[minmax(0,1fr)] gap-3 items-start overflow-hidden">
 
           {/* Main column — either the LearnHub feed (index) or the active nested route (e.g. a sheet) */}

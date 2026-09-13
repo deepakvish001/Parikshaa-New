@@ -33,6 +33,7 @@ import {
   ArrowRight,
   ListTree,
   Share2,
+  Download,
 } from "lucide-react";
 import {
   Command,
@@ -43,6 +44,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -1712,6 +1714,7 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [activityDates, setActivityDates] = useState<string[]>([]);
+  const [timeSpentSeconds, setTimeSpentSeconds] = useState(0);
   
   // Filters
   const [activeTab, setActiveTab] = useState<"all" | "weekwise" | "revision">("all");
@@ -1852,6 +1855,9 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
       if (error) throw error;
 
       if (data && data.length > 0) {
+        setTimeSpentSeconds(
+          data.reduce((total, row) => total + Number(row.time_spent_seconds ?? 0), 0),
+        );
         const progressMap = new Map(data.map(p => [p.topic_id, p]));
         setActivityDates(
           data
@@ -1904,6 +1910,39 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   useEffect(() => {
     loadProgress();
   }, [user, currentSheetId]);
+
+  // Count only foreground time. Small, capped increments prevent background
+  // tabs or a suspended browser from inflating study totals.
+  useEffect(() => {
+    if (!user || !sheetData) return;
+    let activeSince = document.visibilityState === "visible" ? Date.now() : null;
+    const flush = async () => {
+      if (activeSince === null) return;
+      const seconds = Math.min(300, Math.floor((Date.now() - activeSince) / 1000));
+      activeSince = document.visibilityState === "visible" ? Date.now() : null;
+      if (seconds < 1) return;
+      setTimeSpentSeconds((value) => value + seconds);
+      const { error } = await (supabase.rpc as any)("add_topic_study_time", {
+        _sheet_id: currentSheetId,
+        _topic_id: "__sheet_session__",
+        _seconds: seconds,
+      });
+      if (error) console.error("Failed to save study time:", error);
+    };
+    const onVisibility = () => {
+      if (document.visibilityState === "hidden") void flush();
+      else activeSince = Date.now();
+    };
+    const timer = window.setInterval(() => void flush(), 60_000);
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("pagehide", flush);
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("pagehide", flush);
+      void flush();
+    };
+  }, [currentSheetId, sheetData, user]);
 
   // Save progress to database
   const saveProgress = async (topicId: string, updates: { completed?: boolean; is_revision?: boolean; note?: string; revision_count?: number; revision_history?: string[]; last_revised_at?: string | null }) => {
@@ -1975,6 +2014,34 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   }, [activityDates]);
   const revisionCount = allTopics.filter(t => t.isRevision).length;
   const progressPercent = allTopics.length > 0 ? Math.round((completedCount / allTopics.length) * 100) : 0;
+
+  const downloadSheet = useCallback((format: "csv" | "json") => {
+    if (!sheetData) return;
+    const rows = sheetData.sections.flatMap((section) =>
+      section.subSections.flatMap((subSection) =>
+        subSection.topics.map((topic) => ({
+          section: section.title,
+          module: subSection.title,
+          topic: topic.title,
+          difficulty: topic.difficulty,
+          completed: topic.completed,
+          revision: topic.isRevision,
+          note: topic.note,
+          resource_url: topic.practiceUrl || topic.articleUrl || topic.resourceUrl || "",
+        })),
+      ),
+    );
+    const escapeCsv = (value: unknown) => `"${String(value ?? "").replace(/"/g, '""')}"`;
+    const content = format === "json"
+      ? JSON.stringify({ sheet: sheetData.title, exportedAt: new Date().toISOString(), rows }, null, 2)
+      : [Object.keys(rows[0] ?? {}).join(","), ...rows.map((row) => Object.values(row).map(escapeCsv).join(","))].join("\n");
+    const blob = new Blob([content], { type: format === "json" ? "application/json" : "text/csv;charset=utf-8" });
+    const anchor = document.createElement("a");
+    anchor.href = URL.createObjectURL(blob);
+    anchor.download = `${currentSheetId}-progress.${format}`;
+    anchor.click();
+    URL.revokeObjectURL(anchor.href);
+  }, [currentSheetId, sheetData]);
   
   const easyCompleted = allTopics.filter(t => t.difficulty === "Easy" && t.completed).length;
   const mediumCompleted = allTopics.filter(t => t.difficulty === "Medium" && t.completed).length;
@@ -2712,6 +2779,18 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
             <span className="hidden lg:inline">Share</span>
           </Button>
 
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="icon" aria-label="Download sheet progress">
+                <Download className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => downloadSheet("csv")}>Download CSV</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => downloadSheet("json")}>Download JSON</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           {/* Streak Counter */}
           <StreakCounter variant="mini" />
           
@@ -2742,7 +2821,7 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
         {/* Overall Progress — primary KPI, opens by default */}
         <CollapsibleSection
           title="Overall Progress"
-          description={`${completedCount}/${sheetData.totalProblems} problems · ${progressPercent}% complete`}
+          description={`${completedCount}/${sheetData.totalProblems} solved · ${Math.max(0, sheetData.totalProblems - completedCount)} pending · ${Math.floor(timeSpentSeconds / 3600)}h ${Math.floor((timeSpentSeconds % 3600) / 60)}m tracked`}
           icon={Activity}
           defaultOpen
           badge={

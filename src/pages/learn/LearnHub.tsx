@@ -758,7 +758,9 @@ function LeftRail() {
 
   const railItems = [
     { icon: HomeIcon, label: "Home", to: "/learn", active: pathname === "/learn" },
+    { icon: LayoutGrid, label: "Prep Hub", to: "/prephub", active: pathname.startsWith("/prephub") },
     { icon: Swords, label: "Contest", to: "/contests", active: pathname.startsWith("/contests") },
+    { icon: Activity, label: "Ranks", to: "/league", active: pathname.startsWith("/league") },
     { icon: Briefcase, label: "Jobs", to: "/jobs", active: pathname.startsWith("/jobs") },
     { icon: Eye, label: "Visualize", to: "/learn/visualize", active: pathname.startsWith("/learn/visualize") },
     { icon: MapIcon, label: "Roadmap", to: "/roadmaps", active: pathname.startsWith("/roadmaps") },

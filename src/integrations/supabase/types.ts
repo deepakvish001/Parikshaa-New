@@ -4747,6 +4747,7 @@ export type Database = {
           revision_count: number
           revision_history: Json
           sheet_id: string
+          time_spent_seconds: number
           topic_id: string
           updated_at: string
           user_id: string
@@ -4763,6 +4764,7 @@ export type Database = {
           revision_count?: number
           revision_history?: Json
           sheet_id: string
+          time_spent_seconds?: number
           topic_id: string
           updated_at?: string
           user_id: string
@@ -4779,6 +4781,7 @@ export type Database = {
           revision_count?: number
           revision_history?: Json
           sheet_id?: string
+          time_spent_seconds?: number
           topic_id?: string
           updated_at?: string
           user_id?: string
@@ -4971,6 +4974,10 @@ export type Database = {
       }
     }
     Functions: {
+      add_topic_study_time: {
+        Args: { _seconds: number; _sheet_id: string; _topic_id: string }
+        Returns: number
+      }
       admin_achievement_stats: {
         Args: never
         Returns: {

@@ -181,9 +181,19 @@ const LearnThemeLayout = () => (
 );
 
 const LearnDashboardWrapper = () => (
-  <DashboardLayout>
-    <Outlet />
-  </DashboardLayout>
+  <div className="learn-dark-surface dark relative min-h-screen bg-background text-foreground">
+    <DashboardLayout>
+      <Outlet />
+    </DashboardLayout>
+  </div>
+);
+
+const PrepHubThemeWrapper = () => (
+  <div className="learn-dark-surface dark relative min-h-screen bg-background text-foreground">
+    <DashboardLayout>
+      <Outlet />
+    </DashboardLayout>
+  </div>
 );
 
 // Dedicated theme shell for /contests/* — keeps deep-black + amber palette
@@ -410,7 +420,7 @@ const App = () => (
                 </Route>
 
                 {/* Prep Hub routes */}
-                <Route path="/prephub" element={<PublicDashboardWrapper />}>
+                <Route path="/prephub" element={<PrepHubThemeWrapper />}>
                   <Route index element={<PrepHubDashboard />} />
                   <Route path="dashboard" element={<PrepHubDashboard />} />
                   <Route path="onboarding" element={<PrepHubOnboarding />} />

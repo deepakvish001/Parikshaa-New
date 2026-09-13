@@ -118,17 +118,10 @@ export function GlobalLeftRail() {
     return null;
   })();
 
-  const railItems = [
-    { icon: HomeIcon, label: "Home", to: "/learn", active: pathname === "/learn" },
-    { icon: LayoutDashboard, label: "Prep Hub", to: "/prephub", active: pathname.startsWith("/prephub") },
-    { icon: Swords, label: "Contest", to: "/contests", active: pathname.startsWith("/contests") },
-    { icon: Activity, label: "Ranks", to: "/league", active: pathname.startsWith("/league") },
-    
-    { icon: Briefcase, label: "Jobs", to: "/jobs", active: pathname.startsWith("/jobs") },
-    { icon: Eye, label: "Visualize", to: "/learn/visualize", active: pathname.startsWith("/learn/visualize") },
-    { icon: MapIcon, label: "Roadmap", to: "/roadmaps", active: pathname.startsWith("/roadmaps") },
-    { icon: Bell, label: "Notifier", to: "/contest-notifier", active: pathname.startsWith("/contest-notifier") },
-  ];
+  const railItems = GLOBAL_NAV_ITEMS.map((item) => ({
+    ...item,
+    active: item.matches(pathname),
+  }));
 
   const handleHomeNavigation = () => {
     localStorage.removeItem("lastVisitedRoute");
@@ -280,5 +273,16 @@ export function GlobalLeftRail() {
     </aside>
   );
 }
+
+export const GLOBAL_NAV_ITEMS = [
+  { icon: HomeIcon, label: "Home", to: "/learn", matches: (path: string) => path === "/learn" },
+  { icon: LayoutDashboard, label: "Prep Hub", to: "/prephub", matches: (path: string) => path.startsWith("/prephub") },
+  { icon: Swords, label: "Contest", to: "/contests", matches: (path: string) => path.startsWith("/contests") },
+  { icon: Activity, label: "Ranks", to: "/contests/ratings", matches: (path: string) => path.startsWith("/contests/ratings") || path.startsWith("/league") },
+  { icon: Briefcase, label: "Jobs", to: "/jobs", matches: (path: string) => path.startsWith("/jobs") },
+  { icon: Eye, label: "Visualize", to: "/learn/visualize", matches: (path: string) => path.startsWith("/learn/visualize") },
+  { icon: MapIcon, label: "Roadmap", to: "/roadmaps", matches: (path: string) => path.startsWith("/roadmaps") },
+  { icon: Bell, label: "Notifier", to: "/contest-notifier", matches: (path: string) => path.startsWith("/contest-notifier") },
+] as const;
 
 export default GlobalLeftRail;

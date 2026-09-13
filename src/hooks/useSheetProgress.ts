@@ -3,10 +3,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { startOfDay, differenceInDays, parseISO } from "date-fns";
 
-interface SheetProgressData {
+export interface SheetProgressData {
   sheetId: string;
   completedCount: number;
+  pendingCount: number;
+  trackedTopicCount: number;
   revisionCount: number;
+  timeSpentSeconds: number;
   lastActivityAt: string | null;
   completedAt: string | null; // When sheet was 100% completed
   streak: number; // Consecutive days practiced
@@ -54,7 +57,7 @@ export const useSheetProgress = () => {
 
       const { data, error } = await supabase
         .from("user_topic_progress")
-        .select("sheet_id, completed, is_revision, updated_at, completed_at")
+        .select("sheet_id, completed, is_revision, updated_at, completed_at, time_spent_seconds")
         .eq("user_id", user.id);
 
       if (error) throw error;
@@ -68,7 +71,10 @@ export const useSheetProgress = () => {
           progressMap[item.sheet_id] = {
             sheetId: item.sheet_id,
             completedCount: 0,
+            pendingCount: 0,
+            trackedTopicCount: 0,
             revisionCount: 0,
+            timeSpentSeconds: 0,
             lastActivityAt: null,
             completedAt: null,
             streak: 0,
@@ -76,12 +82,17 @@ export const useSheetProgress = () => {
           activityDates[item.sheet_id] = [];
         }
 
-        if (item.completed) {
+        if (item.topic_id !== "__sheet_session__") {
+          progressMap[item.sheet_id].trackedTopicCount++;
+          if (!item.completed) progressMap[item.sheet_id].pendingCount++;
+        }
+        if (item.completed && item.topic_id !== "__sheet_session__") {
           progressMap[item.sheet_id].completedCount++;
         }
         if (item.is_revision) {
           progressMap[item.sheet_id].revisionCount++;
         }
+        progressMap[item.sheet_id].timeSpentSeconds += Number(item.time_spent_seconds ?? 0);
         
         // Track activity dates for streak calculation
         if (item.updated_at) {

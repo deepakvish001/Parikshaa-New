@@ -1855,6 +1855,9 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
       if (error) throw error;
 
       if (data && data.length > 0) {
+        setTimeSpentSeconds(
+          data.reduce((total, row) => total + Number(row.time_spent_seconds ?? 0), 0),
+        );
         const progressMap = new Map(data.map(p => [p.topic_id, p]));
         setActivityDates(
           data

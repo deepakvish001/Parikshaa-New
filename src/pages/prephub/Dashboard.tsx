@@ -10,6 +10,7 @@ import {
   Rocket,
   Target,
   Calendar,
+  Clock,
   BookOpen,
   History,
   TrendingUp,
@@ -39,7 +40,6 @@ const PrepHubDashboard = () => {
 
   const generateInitialRoadmap = async () => {
     if (!user || !onboarding) return;
-    setLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke('generate-roadmap', {
         body: { user_id: user.id, onboarding_data: onboarding }
@@ -62,7 +62,7 @@ const PrepHubDashboard = () => {
     } catch (error) {
       console.error("Error generating roadmap:", error);
     } finally {
-      setLoading(false);
+      await refetch();
     }
   };
 

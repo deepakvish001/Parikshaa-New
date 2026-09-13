@@ -233,6 +233,8 @@ export function useSyncAll() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (handle?: string) => {
+      const { data: sessionRes } = await supabase.auth.getSession();
+      if (!sessionRes.session) throw new Error("Please sign in to sync handles");
       const { data, error } = await supabase.functions.invoke("handles-sync", {
         body: handle ? { handle } : {},
       });

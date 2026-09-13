@@ -57,7 +57,7 @@ export const useSheetProgress = () => {
 
       const { data, error } = await supabase
         .from("user_topic_progress")
-        .select("sheet_id, completed, is_revision, updated_at, completed_at, time_spent_seconds")
+        .select("sheet_id, topic_id, completed, is_revision, updated_at, completed_at, time_spent_seconds")
         .eq("user_id", user.id);
 
       if (error) throw error;

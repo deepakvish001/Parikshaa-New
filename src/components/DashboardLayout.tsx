@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { GlobalLeftRail } from "@/components/GlobalLeftRail";
+import { GlobalMobileHeader } from "@/components/GlobalMobileHeader";
 import { GlobalRightRail } from "@/components/GlobalRightRail";
 import StreakReminderProvider from "@/components/StreakReminderProvider";
 import { useRoutePersistence } from "@/hooks/useRoutePeristence";
@@ -33,8 +34,9 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     <SidebarProvider className={cn(isHeroRoute && "bg-transparent")}>
       <StreakReminderProvider>
         <RoutePersistenceHandler />
+        <GlobalMobileHeader />
         <GlobalLeftRail />
-        <SidebarInset className={cn(isHeroRoute && "bg-transparent")}>
+        <SidebarInset className={cn("pt-14 md:pt-0", isHeroRoute && "bg-transparent")}>
           <GuestSignupBanner />
           <DelayedLoginPrompt />
           <GuestWelcomeTour />

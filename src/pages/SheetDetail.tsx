@@ -2009,6 +2009,8 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   
   const completedCount = allTopics.filter(t => t.completed).length;
 
+  allTopicsCountRef.current = allTopics.length;
+
   // Persist the canonical sheet total alongside database-derived solved and
   // pending counts. The summary survives long gaps between study sessions.
   useEffect(() => {

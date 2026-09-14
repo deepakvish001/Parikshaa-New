@@ -5304,6 +5304,11 @@ export type Database = {
         Args: { _contest_id: string; _user_agent?: string }
         Returns: string
       }
+      finalize_contest_ratings: {
+        Args: { _contest_id: string }
+        Returns: number
+      }
+      finalize_due_contest_ratings: { Args: never; Returns: number }
       get_clan_stats: {
         Args: { _clan_id: string }
         Returns: {

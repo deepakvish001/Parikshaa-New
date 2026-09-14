@@ -158,6 +158,15 @@ const PrepHubDashboard = () => {
                 { icon: Target, label: "Pending Problems", value: loading ? "…" : `${data?.pending ?? 0}` },
                 { icon: Clock, label: "Time Tracked", value: loading ? "…" : `${Math.floor((data?.timeSeconds ?? 0) / 3600)}h ${Math.floor(((data?.timeSeconds ?? 0) % 3600) / 60)}m` },
                 { icon: Trophy, label: "Contest Solved", value: loading ? "…" : `${data?.contestSolved ?? 0}${(data?.contestPending ?? 0) > 0 ? ` / ${(data?.contestSolved ?? 0) + (data?.contestPending ?? 0)}` : ''}` },
+                {
+                  icon: Trophy,
+                  label: "Contest Rating",
+                  value: loading
+                    ? "…"
+                    : data?.rating != null
+                      ? `${data.rating}${data.ratingDelta != null ? ` (${data.ratingDelta >= 0 ? "+" : ""}${data.ratingDelta})` : ""}`
+                      : "Unrated",
+                },
               ].map((s) => (
                 <div key={s.label} className={`${cardCx} p-5 flex items-center gap-4`}>
                   <div className="h-11 w-11 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">

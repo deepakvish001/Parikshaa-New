@@ -108,6 +108,8 @@ export function usePrepHubDashboard() {
         pending: Math.max(0, total - solved),
         timeSeconds,
         progressPercent: total > 0 ? Math.round((solved / total) * 100) : 0,
+        contestSolved,
+        contestPending,
       };
     },
   });

@@ -154,6 +154,7 @@ const PrepHubDashboard = () => {
               {[
                 { icon: Target, label: "Target Company", value: onboarding?.target_company || 'Not Set' },
                 { icon: Trophy, label: "Solved Problems", value: loading ? "…" : `${data?.solved ?? 0}` },
+                { icon: Target, label: "Pending Problems", value: loading ? "…" : `${data?.pending ?? 0}` },
                 { icon: Clock, label: "Time Tracked", value: loading ? "…" : `${Math.floor((data?.timeSeconds ?? 0) / 3600)}h ${Math.floor(((data?.timeSeconds ?? 0) % 3600) / 60)}m` },
               ].map((s) => (
                 <div key={s.label} className={`${cardCx} p-5 flex items-center gap-4`}>

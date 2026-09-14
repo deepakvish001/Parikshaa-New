@@ -41,7 +41,13 @@ export function usePrepHubDashboard() {
         current.time += Number(row.time_spent_seconds ?? 0);
         sheets.set(row.sheet_id, current);
       }
-      const sheetRows = Array.from(sheets.values()).sort((a, b) => b.solved - a.solved);
+      const sheetRows = Array.from(sheets.values())
+        .map((item) => ({
+          ...item,
+          pending: Math.max(0, item.total - item.solved),
+          percent: item.total > 0 ? Math.round((item.solved / item.total) * 100) : 0,
+        }))
+        .sort((a, b) => b.solved - a.solved);
       const solved = sheetRows.reduce((sum, item) => sum + item.solved, 0);
       const total = sheetRows.reduce((sum, item) => sum + item.total, 0);
       const timeSeconds = sheetRows.reduce((sum, item) => sum + item.time, 0);
@@ -49,13 +55,19 @@ export function usePrepHubDashboard() {
         .filter((row) => row.is_revision && row.topic_id !== "__sheet_session__")
         .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
         .slice(0, 4);
+      const nowMs = Date.now();
+      const contestRows = (contests.data ?? []).map((c) => ({
+        ...c,
+        isLive: new Date(c.starts_at).getTime() <= nowMs && new Date(c.ends_at).getTime() >= nowMs,
+      }));
+
       return {
         onboarding: onboarding.data,
         roadmap: roadmap.data,
         streak: streak.data,
         sheets: sheetRows,
         revisions,
-        contests: contests.data ?? [],
+        contests: contestRows,
         solved,
         total,
         pending: Math.max(0, total - solved),

@@ -227,12 +227,20 @@ const PrepHubDashboard = () => {
                 </Card>
 
                 <Card className={`${cardCx} p-0`}>
-                  <CardHeader className="border-b border-white/[0.05]"><CardTitle className="flex items-center gap-2 text-[15px]"><BookOpen className="h-4 w-4 text-primary" />Sheet Progress</CardTitle></CardHeader>
+                  <CardHeader className="border-b border-white/[0.05]"><CardTitle className="flex items-center gap-2 text-[15px]"><BookOpen className="h-4 w-4 text-primary" />Sheet-wise Progress</CardTitle></CardHeader>
                   <CardContent className="divide-y divide-white/[0.05] p-0">
-                    {(data?.sheets ?? []).length === 0 ? <p className="p-6 text-sm text-muted-foreground">Start a sheet to see your progress here.</p> : data?.sheets.slice(0, 5).map((sheet) => (
+                    {(data?.sheets ?? []).length === 0 ? <p className="p-6 text-sm text-muted-foreground">Start a sheet to see your progress here.</p> : data?.sheets.slice(0, 6).map((sheet) => (
                       <Link key={sheet.sheetId} to={`/learn/sheets/${sheet.sheetId}`} className="block p-4 hover:bg-white/[0.03]">
-                        <div className="mb-2 flex items-center justify-between gap-3 text-sm"><span className="font-medium">{sheet.title}</span><span className="text-muted-foreground">{sheet.solved}/{sheet.total || sheet.solved}</span></div>
-                        <Progress value={sheet.total ? Math.round((sheet.solved / sheet.total) * 100) : 0} className="h-1.5" />
+                        <div className="mb-2 flex items-center justify-between gap-3 text-sm">
+                          <span className="font-medium truncate">{sheet.title}</span>
+                          <span className="text-muted-foreground shrink-0">{sheet.percent}%</span>
+                        </div>
+                        <Progress value={sheet.percent} className="h-1.5" />
+                        <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-muted-foreground">
+                          <span className="inline-flex items-center gap-1"><Trophy className="h-3 w-3 text-primary" />{sheet.solved} solved</span>
+                          <span className="inline-flex items-center gap-1"><Target className="h-3 w-3" />{sheet.pending} pending</span>
+                          <span className="inline-flex items-center gap-1"><Clock className="h-3 w-3" />{Math.floor(sheet.time / 3600)}h {Math.floor((sheet.time % 3600) / 60)}m</span>
+                        </div>
                       </Link>
                     ))}
                   </CardContent>
@@ -263,15 +271,30 @@ const PrepHubDashboard = () => {
               {/* Sidebar */}
               <div className="space-y-6">
                 <div className={`${cardCx} p-5 border-l-2 border-l-primary`}>
-                  <div className="flex items-center gap-2 mb-3">
+                  <div className="flex items-center gap-2 mb-4">
                     <Code2 className="h-4 w-4 text-primary" />
-                    <span className="text-[11px] font-bold tracking-[0.1em] text-primary uppercase">Problem of the Day</span>
+                    <span className="text-[11px] font-bold tracking-[0.1em] text-primary uppercase">Live & Upcoming Rounds</span>
                   </div>
-                  <h3 className="text-lg font-bold mb-2 tracking-[-0.01em]">{data?.contests[0]?.title ?? "No upcoming contest"}</h3>
-                  <div className="flex items-center gap-3 text-[11px] text-muted-foreground mb-5">
-                    <span>{data?.contests[0] ? new Date(data.contests[0].starts_at).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" }) : "New rounds will appear here."}</span>
-                  </div>
-                  <Button asChild disabled={!data?.contests[0]} className="w-full h-10 rounded-lg text-[12px] font-bold uppercase tracking-[0.1em] bg-primary text-primary-foreground hover:bg-primary/90"><Link to={data?.contests[0] ? `/contests/${data.contests[0].slug}` : "/contests"}>View Contests</Link></Button>
+                  {(data?.contests ?? []).length === 0 ? (
+                    <p className="text-[13px] text-muted-foreground mb-5">No scheduled rounds right now. New rounds will appear here.</p>
+                  ) : (
+                    <div className="space-y-3 mb-5">
+                      {data?.contests.map((c) => (
+                        <Link key={c.id} to={`/contests/${c.slug}`} className="block rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 hover:border-primary/30 transition-colors">
+                          <div className="flex items-start justify-between gap-2">
+                            <span className="text-[13px] font-semibold leading-snug">{c.title}</span>
+                            <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${c.isLive ? "bg-primary/15 text-primary border border-primary/30" : "bg-white/[0.04] text-muted-foreground border border-white/10"}`}>
+                              {c.isLive ? "Live" : "Upcoming"}
+                            </span>
+                          </div>
+                          <p className="mt-1 text-[11px] text-muted-foreground">
+                            {new Date(c.starts_at).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}
+                          </p>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                  <Button asChild className="w-full h-10 rounded-lg text-[12px] font-bold uppercase tracking-[0.1em] bg-primary text-primary-foreground hover:bg-primary/90"><Link to="/contests">View All Contests</Link></Button>
                 </div>
 
                 <div className={`${cardCx} p-5 bg-gradient-to-br from-primary/[0.06] via-transparent to-transparent`}>

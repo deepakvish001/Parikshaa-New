@@ -410,7 +410,7 @@ export default function ContestDetails() {
                   );
                   return (
                     <li key={p.problem_slug}>
-                      <Link to={`/library/problems/${p.problem_slug}`}>{inner}</Link>
+                      <Link to={`/library/problems/${p.problem_slug}?contest=${encodeURIComponent(contest.slug)}`}>{inner}</Link>
                     </li>
                   );
                 })}

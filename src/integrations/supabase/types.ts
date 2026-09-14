@@ -5467,6 +5467,7 @@ export type Database = {
         Args: { _err: string; _id: number }
         Returns: undefined
       }
+      process_due_contests: { Args: never; Returns: number }
       recompute_contest_leaderboard: {
         Args: { _contest_id: string }
         Returns: undefined

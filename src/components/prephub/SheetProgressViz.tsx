@@ -78,14 +78,13 @@ export function SheetProgressViz({ sheets, loading }: SheetProgressVizProps) {
   }
 
   if (sheets.length === 0) {
-    return (
-      <p className="p-6 text-sm text-muted-foreground">
-        Start a sheet to see your progress here.
-      </p>
-    );
+    return <SheetProgressVizInner sheets={MOCK_SHEETS} />;
   }
 
-  return (
+  return <SheetProgressVizInner sheets={sheets} />;
+}
+
+function SheetProgressVizInner({ sheets }: { sheets: SheetProgressRow[] }) {
     <div className="space-y-5">
       {/* Stacked bar chart: solved vs pending per sheet */}
       <motion.div

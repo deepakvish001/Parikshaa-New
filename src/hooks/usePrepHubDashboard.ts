@@ -34,6 +34,9 @@ export function usePrepHubDashboard() {
       .on("postgres_changes", { event: "*", schema: "public", table: "contest_submissions", filter: `user_id=eq.${userId}` }, () => {
         queryClient.invalidateQueries({ queryKey: ["prep-hub-dashboard", userId] });
       })
+      .on("postgres_changes", { event: "*", schema: "public", table: "contest_rating_history", filter: `user_id=eq.${userId}` }, () => {
+        queryClient.invalidateQueries({ queryKey: ["prep-hub-dashboard", userId] });
+      })
       .on("postgres_changes", { event: "*", schema: "public", table: "contest_leaderboard_cache", filter: `user_id=eq.${userId}` }, () => {
         queryClient.invalidateQueries({ queryKey: ["prep-hub-dashboard", userId] });
         queryClient.invalidateQueries({ queryKey: ["my-weekly-contest-results"] });

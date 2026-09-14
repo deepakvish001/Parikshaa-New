@@ -160,50 +160,54 @@ export function SheetProgressViz({ sheets, loading }: SheetProgressVizProps) {
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: idx * 0.05, duration: 0.35 }}
-              className="group"
             >
-              <div className="mb-1.5 flex items-center justify-between gap-3 text-sm">
-                <span className="font-medium truncate">{sheet.title}</span>
-                <span className="shrink-0 text-xs font-bold text-primary">
-                  {sheet.percent}%
-                </span>
-              </div>
-
-              {/* Segmented progress bar: solved | pending | remaining */}
-              <div className="relative h-2.5 w-full overflow-hidden rounded-full bg-secondary">
-                <div className="absolute inset-0 flex h-full">
-                  <div
-                    className="h-full bg-primary transition-all duration-700 ease-out"
-                    style={{ width: `${solvedPct}%` }}
-                  />
-                  <div
-                    className="h-full bg-amber-500 transition-all duration-700 ease-out"
-                    style={{ width: `${pendingPct}%` }}
-                  />
-                  <div
-                    className={cn(
-                      "h-full bg-secondary transition-all duration-700 ease-out",
-                      remainingPct > 0 && "border-l border-white/5"
-                    )}
-                    style={{ width: `${remainingPct}%` }}
-                  />
+              <Link
+                to={`/learn/sheets/${sheet.sheetId}`}
+                className="group block rounded-lg p-2 -mx-2 transition-colors hover:bg-white/[0.03]"
+              >
+                <div className="mb-1.5 flex items-center justify-between gap-3 text-sm">
+                  <span className="font-medium truncate">{sheet.title}</span>
+                  <span className="shrink-0 text-xs font-bold text-primary">
+                    {sheet.percent}%
+                  </span>
                 </div>
-              </div>
 
-              <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-muted-foreground">
-                <span className="inline-flex items-center gap-1">
-                  <Trophy className="h-3 w-3 text-primary" />
-                  {sheet.solved} solved
-                </span>
-                <span className="inline-flex items-center gap-1">
-                  <Target className="h-3 w-3 text-amber-500" />
-                  {sheet.pending} pending
-                </span>
-                <span className="inline-flex items-center gap-1">
-                  <Clock className="h-3 w-3 text-muted-foreground" />
-                  {formatDuration(sheet.time)}
-                </span>
-              </div>
+                {/* Segmented progress bar: solved | pending | remaining */}
+                <div className="relative h-2.5 w-full overflow-hidden rounded-full bg-secondary">
+                  <div className="absolute inset-0 flex h-full">
+                    <div
+                      className="h-full bg-primary transition-all duration-700 ease-out"
+                      style={{ width: `${solvedPct}%` }}
+                    />
+                    <div
+                      className="h-full bg-amber-500 transition-all duration-700 ease-out"
+                      style={{ width: `${pendingPct}%` }}
+                    />
+                    <div
+                      className={cn(
+                        "h-full bg-secondary transition-all duration-700 ease-out",
+                        remainingPct > 0 && remainingPct < 100 && "border-l border-white/5"
+                      )}
+                      style={{ width: `${remainingPct}%` }}
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-muted-foreground group-hover:text-foreground/80 transition-colors">
+                  <span className="inline-flex items-center gap-1">
+                    <Trophy className="h-3 w-3 text-primary" />
+                    {sheet.solved} solved
+                  </span>
+                  <span className="inline-flex items-center gap-1">
+                    <Target className="h-3 w-3 text-amber-500" />
+                    {sheet.pending} pending
+                  </span>
+                  <span className="inline-flex items-center gap-1">
+                    <Clock className="h-3 w-3 text-muted-foreground" />
+                    {formatDuration(sheet.time)}
+                  </span>
+                </div>
+              </Link>
             </motion.div>
           );
         })}

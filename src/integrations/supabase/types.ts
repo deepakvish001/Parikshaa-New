@@ -4635,6 +4635,42 @@ export type Database = {
         }
         Relationships: []
       }
+      user_sheet_progress_summary: {
+        Row: {
+          created_at: string
+          id: string
+          pending_count: number
+          sheet_id: string
+          solved_count: number
+          time_spent_seconds: number
+          total_count: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          pending_count?: number
+          sheet_id: string
+          solved_count?: number
+          time_spent_seconds?: number
+          total_count?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          pending_count?: number
+          sheet_id?: string
+          solved_count?: number
+          time_spent_seconds?: number
+          total_count?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_streaks: {
         Row: {
           current_streak: number | null
@@ -5471,6 +5507,26 @@ export type Database = {
       recompute_contest_leaderboard: {
         Args: { _contest_id: string }
         Returns: undefined
+      }
+      refresh_user_sheet_progress_summary: {
+        Args: { _sheet_id: string; _total_count?: number; _user_id?: string }
+        Returns: {
+          created_at: string
+          id: string
+          pending_count: number
+          sheet_id: string
+          solved_count: number
+          time_spent_seconds: number
+          total_count: number
+          updated_at: string
+          user_id: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "user_sheet_progress_summary"
+          isOneToOne: true
+          isSetofReturn: false
+        }
       }
       register_for_contest: {
         Args: { _contest_id: string; _invite_code?: string }

@@ -94,6 +94,15 @@ export function SheetProgressViz({ sheets, loading }: SheetProgressVizProps) {
               interval={0}
             />
             <YAxis
+              yAxisId="count"
+              axisLine={false}
+              tickLine={false}
+              tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }}
+              width={28}
+            />
+            <YAxis
+              yAxisId="time"
+              orientation="right"
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }}
@@ -132,6 +141,7 @@ export function SheetProgressViz({ sheets, loading }: SheetProgressVizProps) {
             <Bar
               dataKey="solved"
               name="Solved"
+              yAxisId="count"
               stackId="a"
               fill="hsl(var(--primary))"
               radius={[0, 0, 0, 0]}
@@ -139,8 +149,16 @@ export function SheetProgressViz({ sheets, loading }: SheetProgressVizProps) {
             <Bar
               dataKey="pending"
               name="Pending"
+              yAxisId="count"
               stackId="a"
               fill="hsl(var(--primary) / 0.22)"
+              radius={[4, 4, 0, 0]}
+            />
+            <Bar
+              dataKey="timeHours"
+              name="Time (h)"
+              yAxisId="time"
+              fill="hsl(var(--muted-foreground) / 0.5)"
               radius={[4, 4, 0, 0]}
             />
           </BarChart>

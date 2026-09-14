@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import TufyChat from '@/components/prephub/TufyChat';
+import { SheetProgressViz } from '@/components/prephub/SheetProgressViz';
 import { usePrepHubDashboard } from '@/hooks/usePrepHubDashboard';
 
 const cardCx =

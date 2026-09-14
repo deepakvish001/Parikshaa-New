@@ -47,6 +47,10 @@ export function usePrepHubDashboard() {
   return useQuery({
     queryKey: ["prep-hub-dashboard", user?.id],
     enabled: Boolean(user?.id),
+    staleTime: 0,
+    refetchOnWindowFocus: true,
+    refetchOnMount: "always",
+
     queryFn: async () => {
       if (!user?.id) throw new Error("Sign in required");
       const now = new Date().toISOString();

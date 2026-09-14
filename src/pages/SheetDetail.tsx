@@ -1977,6 +1977,15 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
         });
 
       if (error) throw error;
+
+      // Auto-submit the sheet summary so solved/pending counts update instantly.
+      if (updates.completed !== undefined) {
+        const { error: summaryError } = await supabase.rpc(
+          "refresh_user_sheet_progress_summary",
+          { _sheet_id: currentSheetId, _total_count: allTopicsCountRef.current },
+        );
+        if (summaryError) console.error("Failed to refresh sheet summary:", summaryError);
+      }
     } catch (error) {
       console.error("Failed to save progress:", error);
       toast({

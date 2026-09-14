@@ -55,6 +55,12 @@ export function usePrepHubDashboard() {
         .filter((row) => row.is_revision && row.topic_id !== "__sheet_session__")
         .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
         .slice(0, 4);
+      const nowMs = Date.now();
+      const contestRows = (contests.data ?? []).map((c) => ({
+        ...c,
+        isLive: new Date(c.starts_at).getTime() <= nowMs && new Date(c.ends_at).getTime() >= nowMs,
+      }));
+
       return {
         onboarding: onboarding.data,
         roadmap: roadmap.data,

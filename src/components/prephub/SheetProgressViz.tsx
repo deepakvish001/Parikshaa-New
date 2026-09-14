@@ -28,16 +28,6 @@ interface SheetProgressVizProps {
   loading?: boolean;
 }
 
-// Temporary mock for preview verification — remove after screenshot
-const MOCK_SHEETS: SheetProgressRow[] = [
-  { sheetId: "strivers-sde-sheet", title: "Striver SDE Sheet", total: 199, solved: 42, pending: 157, time: 7200, percent: 21 },
-  { sheetId: "neetcode-150", title: "NeetCode 150", total: 150, solved: 88, pending: 62, time: 10800, percent: 59 },
-  { sheetId: "blind-75", title: "Blind 75", total: 75, solved: 30, pending: 45, time: 3600, percent: 40 },
-  { sheetId: "cses-sheet", title: "CSES Problem Set", total: 400, solved: 12, pending: 388, time: 1800, percent: 3 },
-  { sheetId: "cp-interview-sheet", title: "CP Interview Sheet", total: 50, solved: 25, pending: 25, time: 5400, percent: 50 },
-  { sheetId: "strivers-a2z-dsa", title: "Striver A2Z DSA", total: 445, solved: 120, pending: 325, time: 14400, percent: 27 },
-];
-
 function formatDuration(seconds: number) {
   const h = Math.floor(seconds / 3600);
   const m = Math.floor((seconds % 3600) / 60);
@@ -46,6 +36,20 @@ function formatDuration(seconds: number) {
 }
 
 export function SheetProgressViz({ sheets, loading }: SheetProgressVizProps) {
+  const chartData = sheets.map((s) => ({
+    name: s.title
+      .replace("Sheet", "")
+      .replace("Problem Set", "")
+      .replace("Training", "")
+      .trim()
+      .split(" ")
+      .slice(0, 2)
+      .join(" "),
+    solved: s.solved,
+    pending: s.pending,
+    timeHours: Math.round(s.time / 3600),
+  }));
+
   if (loading) {
     return (
       <div className="space-y-4">
@@ -63,27 +67,17 @@ export function SheetProgressViz({ sheets, loading }: SheetProgressVizProps) {
     );
   }
 
-  return <SheetProgressVizInner sheets={sheets.length > 0 ? sheets : MOCK_SHEETS} />;
-}
-
-function SheetProgressVizInner({ sheets }: { sheets: SheetProgressRow[] }) {
-  const chartData = sheets.map((s) => ({
-    name: s.title
-      .replace("Sheet", "")
-      .replace("Problem Set", "")
-      .replace("Training", "")
-      .trim()
-      .split(" ")
-      .slice(0, 2)
-      .join(" "),
-    solved: s.solved,
-    pending: s.pending,
-    timeHours: Math.round(s.time / 3600),
-  }));
+  if (sheets.length === 0) {
+    return (
+      <p className="p-6 text-sm text-muted-foreground">
+        Start a sheet to see your progress here.
+      </p>
+    );
+  }
 
   return (
     <div className="space-y-5">
-      {/* Stacked bar chart: solved vs pending per sheet */}
+      {/* Stacked/grouped bar chart: solved, pending and time per sheet */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}

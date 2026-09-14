@@ -67,7 +67,7 @@ export function usePrepHubDashboard() {
         streak: streak.data,
         sheets: sheetRows,
         revisions,
-        contests: contests.data ?? [],
+        contests: contestRows,
         solved,
         total,
         pending: Math.max(0, total - solved),

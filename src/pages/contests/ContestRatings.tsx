@@ -80,8 +80,8 @@ export default function ContestRatings() {
       const ids = Array.from(byUser.keys());
       if (ids.length > 0) {
         const { data: profs } = await supabase
-          .from("user_profiles_extended" as any)
-          .select("user_id,username,full_name,avatar_url")
+          .from("public_profiles")
+          .select("user_id,full_name,avatar_url")
           .in("user_id", ids);
         for (const p of ((profs as any) ?? []) as any[]) {
           const r = byUser.get(p.user_id);
@@ -207,9 +207,11 @@ export default function ContestRatings() {
               {Array.from({ length: 8 }).map((_, i) => <Skeleton key={i} className="h-10 w-full" />)}
             </div>
           ) : paged.length === 0 ? (
-            <div className="p-10 text-center">
+          <div className="p-10 text-center">
               <Trophy className="mx-auto mb-2 h-6 w-6 text-amber-400/60" />
-              <p className="text-sm text-muted-foreground">No coders match your search.</p>
+            <p className="text-sm text-muted-foreground">
+              {q.trim() ? "No coders match your search." : "Ratings will appear after the next real rated round ends."}
+            </p>
             </div>
           ) : (
             <div className="overflow-x-auto">

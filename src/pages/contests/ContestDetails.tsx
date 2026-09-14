@@ -547,8 +547,8 @@ function GlobalRatingsPreview() {
       let profs: any[] = [];
       if (ids.length) {
         const { data } = await supabase
-          .from("user_profiles_extended" as any)
-          .select("user_id,username,full_name,avatar_url")
+          .from("public_profiles")
+          .select("user_id,full_name,avatar_url")
           .in("user_id", ids);
         profs = (data as any) ?? [];
       }

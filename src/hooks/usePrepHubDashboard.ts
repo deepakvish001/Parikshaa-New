@@ -18,21 +18,55 @@ export const SHEET_TOTALS: Record<string, { title: string; total: number }> = {
 
 export function usePrepHubDashboard() {
   const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const userId = user?.id;
+
+  useEffect(() => {
+    if (!userId) return;
+    const channel = supabase
+      .channel(`prep-hub-live-${userId}`)
+      .on("postgres_changes", { event: "*", schema: "public", table: "user_topic_progress", filter: `user_id=eq.${userId}` }, () => {
+        queryClient.invalidateQueries({ queryKey: ["prep-hub-dashboard", userId] });
+      })
+      .on("postgres_changes", { event: "*", schema: "public", table: "contest_submissions", filter: `user_id=eq.${userId}` }, () => {
+        queryClient.invalidateQueries({ queryKey: ["prep-hub-dashboard", userId] });
+      })
+      .on("postgres_changes", { event: "*", schema: "public", table: "contest_leaderboard_cache", filter: `user_id=eq.${userId}` }, () => {
+        queryClient.invalidateQueries({ queryKey: ["prep-hub-dashboard", userId] });
+        queryClient.invalidateQueries({ queryKey: ["my-weekly-contest-results"] });
+      })
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [userId, queryClient]);
+
   return useQuery({
     queryKey: ["prep-hub-dashboard", user?.id],
     enabled: Boolean(user?.id),
     queryFn: async () => {
       if (!user?.id) throw new Error("Sign in required");
       const now = new Date().toISOString();
-      const [onboarding, roadmap, streak, progress, contests] = await Promise.all([
+      const [onboarding, roadmap, streak, progress, contests, contestSubs] = await Promise.all([
         supabase.from("user_onboarding").select("*").eq("user_id", user.id).maybeSingle(),
         supabase.from("user_roadmaps").select("*").eq("user_id", user.id).maybeSingle(),
         supabase.from("user_streaks").select("*").eq("user_id", user.id).maybeSingle(),
         supabase.from("user_topic_progress").select("sheet_id,topic_id,completed,is_revision,note,updated_at,time_spent_seconds").eq("user_id", user.id),
         supabase.from("contests").select("id,slug,title,starts_at,ends_at").gte("ends_at", now).order("starts_at").limit(3),
+        supabase.from("contest_submissions").select("contest_id,problem_slug,verdict").eq("user_id", user.id),
       ]);
-      const error = onboarding.error || roadmap.error || streak.error || progress.error || contests.error;
+      const error = onboarding.error || roadmap.error || streak.error || progress.error || contests.error || contestSubs.error;
       if (error) throw error;
+
+      const contestAttempted = new Set<string>();
+      const contestAccepted = new Set<string>();
+      for (const row of contestSubs.data ?? []) {
+        const key = `${row.contest_id}:${row.problem_slug}`;
+        contestAttempted.add(key);
+        if ((row.verdict ?? "").toLowerCase() === "accepted") contestAccepted.add(key);
+      }
+      const contestSolved = contestAccepted.size;
+      const contestPending = Math.max(0, contestAttempted.size - contestAccepted.size);
 
       const sheets = new Map<string, { sheetId: string; title: string; total: number; solved: number; time: number }>();
       for (const row of progress.data ?? []) {

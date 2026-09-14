@@ -131,6 +131,12 @@ export function usePrepHubDashboard() {
         progressPercent: total > 0 ? Math.round((solved / total) * 100) : 0,
         contestSolved,
         contestPending,
+        rating: latestRating ? Number(latestRating.new_rating) : null,
+        ratingDelta: latestRating ? Number(latestRating.delta ?? 0) : null,
+        ratingRank: latestRating?.rank ?? null,
+        ratingParticipants: latestRating?.participants ?? null,
+        ratedContests: ratingList.length,
+        peakRating,
       };
     },
   });

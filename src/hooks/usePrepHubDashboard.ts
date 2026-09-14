@@ -28,6 +28,9 @@ export function usePrepHubDashboard() {
       .on("postgres_changes", { event: "*", schema: "public", table: "user_topic_progress", filter: `user_id=eq.${userId}` }, () => {
         queryClient.invalidateQueries({ queryKey: ["prep-hub-dashboard", userId] });
       })
+      .on("postgres_changes", { event: "*", schema: "public", table: "user_sheet_progress_summary", filter: `user_id=eq.${userId}` }, () => {
+        queryClient.invalidateQueries({ queryKey: ["prep-hub-dashboard", userId] });
+      })
       .on("postgres_changes", { event: "*", schema: "public", table: "contest_submissions", filter: `user_id=eq.${userId}` }, () => {
         queryClient.invalidateQueries({ queryKey: ["prep-hub-dashboard", userId] });
       })
@@ -47,15 +50,16 @@ export function usePrepHubDashboard() {
     queryFn: async () => {
       if (!user?.id) throw new Error("Sign in required");
       const now = new Date().toISOString();
-      const [onboarding, roadmap, streak, progress, contests, contestSubs] = await Promise.all([
+      const [onboarding, roadmap, streak, progress, sheetSummaries, contests, contestSubs] = await Promise.all([
         supabase.from("user_onboarding").select("*").eq("user_id", user.id).maybeSingle(),
         supabase.from("user_roadmaps").select("*").eq("user_id", user.id).maybeSingle(),
         supabase.from("user_streaks").select("*").eq("user_id", user.id).maybeSingle(),
         supabase.from("user_topic_progress").select("sheet_id,topic_id,completed,is_revision,note,updated_at,time_spent_seconds").eq("user_id", user.id),
+        supabase.from("user_sheet_progress_summary").select("sheet_id,total_count,solved_count,pending_count,time_spent_seconds,updated_at").eq("user_id", user.id),
         supabase.from("contests").select("id,slug,title,starts_at,ends_at").gte("ends_at", now).order("starts_at").limit(3),
         supabase.from("contest_submissions").select("contest_id,problem_slug,verdict").eq("user_id", user.id),
       ]);
-      const error = onboarding.error || roadmap.error || streak.error || progress.error || contests.error || contestSubs.error;
+      const error = onboarding.error || roadmap.error || streak.error || progress.error || sheetSummaries.error || contests.error || contestSubs.error;
       if (error) throw error;
 
       const contestAttempted = new Set<string>();
@@ -68,20 +72,21 @@ export function usePrepHubDashboard() {
       const contestSolved = contestAccepted.size;
       const contestPending = Math.max(0, contestAttempted.size - contestAccepted.size);
 
-      const sheets = new Map<string, { sheetId: string; title: string; total: number; solved: number; time: number }>();
-      for (const row of progress.data ?? []) {
-        const meta = SHEET_TOTALS[row.sheet_id] ?? { title: row.sheet_id.replace(/-/g, " "), total: 0 };
-        const current = sheets.get(row.sheet_id) ?? { sheetId: row.sheet_id, title: meta.title, total: meta.total, solved: 0, time: 0 };
-        if (row.completed && row.topic_id !== "__sheet_session__") current.solved += 1;
-        current.time += Number(row.time_spent_seconds ?? 0);
-        sheets.set(row.sheet_id, current);
-      }
-      const sheetRows = Array.from(sheets.values())
-        .map((item) => ({
-          ...item,
-          pending: Math.max(0, item.total - item.solved),
-          percent: item.total > 0 ? Math.round((item.solved / item.total) * 100) : 0,
-        }))
+      const sheetRows = (sheetSummaries.data ?? [])
+        .map((item) => {
+          const meta = SHEET_TOTALS[item.sheet_id] ?? { title: item.sheet_id.replace(/-/g, " "), total: item.total_count };
+          const total = Math.max(item.total_count, meta.total);
+          const solved = item.solved_count;
+          return {
+            sheetId: item.sheet_id,
+            title: meta.title,
+            total,
+            solved,
+            pending: Math.max(0, total - solved),
+            time: Number(item.time_spent_seconds ?? 0),
+            percent: total > 0 ? Math.round((solved / total) * 100) : 0,
+          };
+        })
         .sort((a, b) => b.solved - a.solved);
       const solved = sheetRows.reduce((sum, item) => sum + item.solved, 0);
       const total = sheetRows.reduce((sum, item) => sum + item.total, 0);

@@ -1997,6 +1997,20 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   
   const completedCount = allTopics.filter(t => t.completed).length;
 
+  // Persist the canonical sheet total alongside database-derived solved and
+  // pending counts. The summary survives long gaps between study sessions.
+  useEffect(() => {
+    if (!user || !sheetData || allTopics.length === 0) return;
+    void supabase
+      .rpc("refresh_user_sheet_progress_summary", {
+        _sheet_id: currentSheetId,
+        _total_count: allTopics.length,
+      })
+      .then(({ error }) => {
+        if (error) console.error("Failed to refresh sheet summary:", error);
+      });
+  }, [allTopics.length, currentSheetId, sheetData, user]);
+
   // Sheet-scoped weekly streak: consecutive days (ending today/yesterday) with at least one completion.
   const sheetStreak = useMemo(() => {
     if (activityDates.length === 0) return 0;

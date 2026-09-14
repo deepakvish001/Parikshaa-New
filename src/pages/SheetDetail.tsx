@@ -1954,6 +1954,9 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
     };
   }, [currentSheetId, sheetData, user]);
 
+  // Live count of all problems in the sheet, used when refreshing the summary.
+  const allTopicsCountRef = useRef(0);
+
   // Save progress to database
   const saveProgress = async (topicId: string, updates: { completed?: boolean; is_revision?: boolean; note?: string; revision_count?: number; revision_history?: string[]; last_revised_at?: string | null }) => {
     if (!user) return;
@@ -1977,6 +1980,15 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
         });
 
       if (error) throw error;
+
+      // Auto-submit the sheet summary so solved/pending counts update instantly.
+      if (updates.completed !== undefined) {
+        const { error: summaryError } = await supabase.rpc(
+          "refresh_user_sheet_progress_summary",
+          { _sheet_id: currentSheetId, _total_count: allTopicsCountRef.current },
+        );
+        if (summaryError) console.error("Failed to refresh sheet summary:", summaryError);
+      }
     } catch (error) {
       console.error("Failed to save progress:", error);
       toast({
@@ -1996,6 +2008,8 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
   );
   
   const completedCount = allTopics.filter(t => t.completed).length;
+
+  allTopicsCountRef.current = allTopics.length;
 
   // Persist the canonical sheet total alongside database-derived solved and
   // pending counts. The summary survives long gaps between study sessions.

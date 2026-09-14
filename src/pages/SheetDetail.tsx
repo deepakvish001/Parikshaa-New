@@ -1152,12 +1152,17 @@ function SubSectionCard({
         </div>
         <div className="flex items-center gap-4 shrink-0 pt-0.5">
           <AnimatedProgress value={(completed / total) * 100} className="w-24" />
-          <span className={cn(
-            "text-sm min-w-[50px] text-right transition-colors",
-            isComplete ? "text-primary font-medium" : "text-muted-foreground"
-          )}>
-            {completed} / {total}
-          </span>
+          <div className="flex flex-col items-end gap-0.5">
+            <span className={cn(
+              "text-sm min-w-[50px] text-right transition-colors",
+              isComplete ? "text-primary font-medium" : "text-muted-foreground"
+            )}>
+              {completed} / {total}
+            </span>
+            <span className="text-[10px] text-muted-foreground/70 whitespace-nowrap">
+              {completed} solved · {total - completed} pending
+            </span>
+          </div>
         </div>
       </CollapsibleTrigger>
 
@@ -1354,12 +1359,17 @@ function SectionCard({
             </motion.button>
           )}
           <AnimatedProgress value={(completed / total) * 100} className="w-32" />
-          <span className={cn(
-            "text-sm min-w-[60px] text-right transition-colors",
-            isComplete ? "text-primary font-medium" : "text-muted-foreground"
-          )}>
-            {completed} / {total}
-          </span>
+          <div className="flex flex-col items-end gap-0.5">
+            <span className={cn(
+              "text-sm min-w-[60px] text-right transition-colors",
+              isComplete ? "text-primary font-medium" : "text-muted-foreground"
+            )}>
+              {completed} / {total}
+            </span>
+            <span className="text-[10px] text-muted-foreground/70 whitespace-nowrap">
+              {completed} solved · {total - completed} pending
+            </span>
+          </div>
           {completed > 0 && onResetSection && (
             <AlertDialog>
               <AlertDialogTrigger asChild>

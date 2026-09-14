@@ -227,12 +227,20 @@ const PrepHubDashboard = () => {
                 </Card>
 
                 <Card className={`${cardCx} p-0`}>
-                  <CardHeader className="border-b border-white/[0.05]"><CardTitle className="flex items-center gap-2 text-[15px]"><BookOpen className="h-4 w-4 text-primary" />Sheet Progress</CardTitle></CardHeader>
+                  <CardHeader className="border-b border-white/[0.05]"><CardTitle className="flex items-center gap-2 text-[15px]"><BookOpen className="h-4 w-4 text-primary" />Sheet-wise Progress</CardTitle></CardHeader>
                   <CardContent className="divide-y divide-white/[0.05] p-0">
-                    {(data?.sheets ?? []).length === 0 ? <p className="p-6 text-sm text-muted-foreground">Start a sheet to see your progress here.</p> : data?.sheets.slice(0, 5).map((sheet) => (
+                    {(data?.sheets ?? []).length === 0 ? <p className="p-6 text-sm text-muted-foreground">Start a sheet to see your progress here.</p> : data?.sheets.slice(0, 6).map((sheet) => (
                       <Link key={sheet.sheetId} to={`/learn/sheets/${sheet.sheetId}`} className="block p-4 hover:bg-white/[0.03]">
-                        <div className="mb-2 flex items-center justify-between gap-3 text-sm"><span className="font-medium">{sheet.title}</span><span className="text-muted-foreground">{sheet.solved}/{sheet.total || sheet.solved}</span></div>
-                        <Progress value={sheet.total ? Math.round((sheet.solved / sheet.total) * 100) : 0} className="h-1.5" />
+                        <div className="mb-2 flex items-center justify-between gap-3 text-sm">
+                          <span className="font-medium truncate">{sheet.title}</span>
+                          <span className="text-muted-foreground shrink-0">{sheet.percent}%</span>
+                        </div>
+                        <Progress value={sheet.percent} className="h-1.5" />
+                        <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-muted-foreground">
+                          <span className="inline-flex items-center gap-1"><Trophy className="h-3 w-3 text-primary" />{sheet.solved} solved</span>
+                          <span className="inline-flex items-center gap-1"><Target className="h-3 w-3" />{sheet.pending} pending</span>
+                          <span className="inline-flex items-center gap-1"><Clock className="h-3 w-3" />{Math.floor(sheet.time / 3600)}h {Math.floor((sheet.time % 3600) / 60)}m</span>
+                        </div>
                       </Link>
                     ))}
                   </CardContent>

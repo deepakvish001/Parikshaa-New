@@ -1954,6 +1954,9 @@ function SheetDetailContent({ sheetId }: { sheetId: string }) {
     };
   }, [currentSheetId, sheetData, user]);
 
+  // Live count of all problems in the sheet, used when refreshing the summary.
+  const allTopicsCountRef = useRef(0);
+
   // Save progress to database
   const saveProgress = async (topicId: string, updates: { completed?: boolean; is_revision?: boolean; note?: string; revision_count?: number; revision_history?: string[]; last_revised_at?: string | null }) => {
     if (!user) return;

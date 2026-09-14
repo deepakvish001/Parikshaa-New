@@ -150,12 +150,13 @@ const PrepHubDashboard = () => {
 
           <div className="px-4 md:px-6 py-6 space-y-6">
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
               {[
                 { icon: Target, label: "Target Company", value: onboarding?.target_company || 'Not Set' },
                 { icon: Trophy, label: "Solved Problems", value: loading ? "…" : `${data?.solved ?? 0}` },
                 { icon: Target, label: "Pending Problems", value: loading ? "…" : `${data?.pending ?? 0}` },
                 { icon: Clock, label: "Time Tracked", value: loading ? "…" : `${Math.floor((data?.timeSeconds ?? 0) / 3600)}h ${Math.floor(((data?.timeSeconds ?? 0) % 3600) / 60)}m` },
+                { icon: Trophy, label: "Contest Solved", value: loading ? "…" : `${data?.contestSolved ?? 0}${(data?.contestPending ?? 0) > 0 ? ` / ${(data?.contestSolved ?? 0) + (data?.contestPending ?? 0)}` : ''}` },
               ].map((s) => (
                 <div key={s.label} className={`${cardCx} p-5 flex items-center gap-4`}>
                   <div className="h-11 w-11 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">

@@ -66,6 +66,18 @@ export function usePrepHubDashboard() {
       const error = onboarding.error || roadmap.error || streak.error || progress.error || sheetSummaries.error || contests.error || contestSubs.error;
       if (error) throw error;
 
+      const { data: ratingRows } = await supabase
+        .from("contest_rating_history")
+        .select("new_rating,delta,rank,participants,created_at,contest_id")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(10);
+      const ratingList = ratingRows ?? [];
+      const latestRating = ratingList[0] ?? null;
+      const peakRating = ratingList.length
+        ? Math.max(...ratingList.map((r) => Number(r.new_rating ?? 0)))
+        : null;
+
       const contestAttempted = new Set<string>();
       const contestAccepted = new Set<string>();
       for (const row of contestSubs.data ?? []) {

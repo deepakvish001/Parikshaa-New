@@ -46,20 +46,6 @@ function formatDuration(seconds: number) {
 }
 
 export function SheetProgressViz({ sheets, loading }: SheetProgressVizProps) {
-  const chartData = sheets.map((s) => ({
-    name: s.title
-      .replace("Sheet", "")
-      .replace("Problem Set", "")
-      .replace("Training", "")
-      .trim()
-      .split(" ")
-      .slice(0, 2)
-      .join(" "),
-    solved: s.solved,
-    pending: s.pending,
-    timeHours: Math.round(s.time / 3600),
-  }));
-
   if (loading) {
     return (
       <div className="space-y-4">
@@ -77,14 +63,25 @@ export function SheetProgressViz({ sheets, loading }: SheetProgressVizProps) {
     );
   }
 
-  if (sheets.length === 0) {
-    return <SheetProgressVizInner sheets={MOCK_SHEETS} />;
-  }
-
-  return <SheetProgressVizInner sheets={sheets} />;
+  return <SheetProgressVizInner sheets={sheets.length > 0 ? sheets : MOCK_SHEETS} />;
 }
 
 function SheetProgressVizInner({ sheets }: { sheets: SheetProgressRow[] }) {
+  const chartData = sheets.map((s) => ({
+    name: s.title
+      .replace("Sheet", "")
+      .replace("Problem Set", "")
+      .replace("Training", "")
+      .trim()
+      .split(" ")
+      .slice(0, 2)
+      .join(" "),
+    solved: s.solved,
+    pending: s.pending,
+    timeHours: Math.round(s.time / 3600),
+  }));
+
+  return (
     <div className="space-y-5">
       {/* Stacked bar chart: solved vs pending per sheet */}
       <motion.div

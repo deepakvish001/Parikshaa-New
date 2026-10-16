@@ -36,6 +36,11 @@ import { Link } from "react-router-dom";
  } from "@/components/ui/select";
  import { cn } from "@/lib/utils";
  import { type SQLQuestion, sqlCategories } from "@/data/sqlQuestionsData";
+import {
+  getCorrectOptionText,
+  getGradeableQuestions,
+  getOptionsForQuestion,
+} from "@/lib/quizGrading";
  import { useAuth } from "@/contexts/AuthContext";
  import { useQuizResults } from "@/hooks/useQuizResults";
 import { useQuizAchievements } from "@/hooks/useQuizAchievements";
@@ -153,22 +158,9 @@ const SQL_TIMED_CHALLENGES: QuizPreset[] = [
   },
 ];
 
- const generateOptionsForQuestion = (question: SQLQuestion): { text: string; isCorrect: boolean }[] => {
-  // Use predefined options if available
-  if (question.options && question.options.length === 4) {
-    return question.options;
-  }
-  // Fallback: generate generic options based on question type
-   const options = [
-    { text: "Use SELECT with proper filtering", isCorrect: false },
-    { text: "Apply JOIN or subquery technique", isCorrect: false },
-    { text: "Utilize aggregation or window function", isCorrect: false },
-    { text: "Implement with constraints or indexes", isCorrect: false },
-   ];
-   const correctIdx = question.id % 4;
-   options[correctIdx].isCorrect = true;
-   return options;
- };
+ // Gradeable questions only: see src/lib/quizGrading.ts. Option-less
+ // questions are excluded from the pool in prepareQuiz instead of
+ // being graded against fabricated options.
  
  const SQLQuizMode: React.FC<SQLQuizModeProps> = ({ questions, onClose }) => {
    const { user } = useAuth();
@@ -183,6 +175,7 @@ const SQL_TIMED_CHALLENGES: QuizPreset[] = [
      difficulty: "all",
    });
    const [quizQuestions, setQuizQuestions] = useState<SQLQuestion[]>([]);
+   const [noGradeableQuestions, setNoGradeableQuestions] = useState(false);
    const [currentIndex, setCurrentIndex] = useState(0);
    const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
    const [timeLeft, setTimeLeft] = useState(0);
@@ -200,8 +193,20 @@ const SQL_TIMED_CHALLENGES: QuizPreset[] = [
      if (config.difficulty !== "all") {
        filtered = filtered.filter((q) => q.difficulty === config.difficulty);
      }
+     // Only questions with real options can be graded. Option-less
+     // questions are excluded instead of being graded against fabricated
+     // options (see src/lib/quizGrading.ts).
+     filtered = getGradeableQuestions(filtered);
      const shuffled = filtered.sort(() => Math.random() - 0.5);
      const selected = shuffled.slice(0, Math.min(config.questionCount, shuffled.length));
+
+     if (selected.length === 0) {
+       // Nothing gradeable for this selection. Stay on the config screen
+       // with a notice instead of starting an empty quiz.
+       setNoGradeableQuestions(true);
+       return;
+     }
+     setNoGradeableQuestions(false);
      setQuizQuestions(selected);
      setCurrentIndex(0);
      setResults([]);
@@ -228,8 +233,7 @@ const SQL_TIMED_CHALLENGES: QuizPreset[] = [
      const currentQuestion = quizQuestions[currentIndex];
      if (!currentQuestion) return;
      const timeTaken = Math.round((Date.now() - questionStartTime) / 1000);
-     const options = generateOptionsForQuestion(currentQuestion);
-     const correctAnswer = options.find((o) => o.isCorrect)?.text || "";
+     const correctAnswer = getCorrectOptionText(currentQuestion);
      const isCorrect = selectedAnswer === correctAnswer;
      const result: QuizResult = {
        questionId: currentQuestion.id,
@@ -442,6 +446,12 @@ const SQL_TIMED_CHALLENGES: QuizPreset[] = [
                  </Select>
                </div>
              </div>
+             {noGradeableQuestions && (
+               <p role="status" className="mb-3 text-sm text-muted-foreground">
+                 No questions with answer options are available for this
+                 category and difficulty yet. Try a different selection.
+               </p>
+             )}
              <div className="flex gap-3">
                <Button variant="outline" onClick={onClose} className="flex-1">Cancel</Button>
                <Button onClick={() => prepareQuiz()} className="flex-1 gap-2"><Play className="h-4 w-4" />Start Custom Quiz</Button>
@@ -545,7 +555,7 @@ const SQL_TIMED_CHALLENGES: QuizPreset[] = [
              <p className="text-sm text-muted-foreground">{currentQuestion?.text?.slice(0, 200)}...</p>
              {currentQuestion && (
                <RadioGroup value={selectedAnswer || ""} onValueChange={setSelectedAnswer} className="space-y-3">
-                 {generateOptionsForQuestion(currentQuestion).map((option, idx) => (
+                 {getOptionsForQuestion(currentQuestion).map((option, idx) => (
                    <div key={idx} className={cn("flex items-center space-x-3 p-4 rounded-lg border cursor-pointer transition-colors", selectedAnswer === option.text ? "border-primary bg-primary/10" : "border-border hover:border-primary/50")} onClick={() => setSelectedAnswer(option.text)}>
                      <RadioGroupItem value={option.text} id={`option-${idx}`} />
                      <Label htmlFor={`option-${idx}`} className="flex-1 cursor-pointer">{option.text}</Label>

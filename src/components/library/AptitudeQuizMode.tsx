@@ -39,25 +39,20 @@ import { Link } from "react-router-dom";
    type AptitudeQuestion,
    aptitudeCategories,
  } from "@/data/aptitudeQuestionsData";
+import {
+  getCorrectOptionText,
+  getGradeableQuestions,
+  getOptionsForQuestion,
+} from "@/lib/quizGrading";
  import { useAuth } from "@/contexts/AuthContext";
  import { useQuizResults } from "@/hooks/useQuizResults";
 import { useQuizAchievements } from "@/hooks/useQuizAchievements";
  import QuizLeaderboard from "./QuizLeaderboard";
 import QuizAchievementToast from "./QuizAchievementToast";
  
- // Generate options for questions that don't have predefined options
- const generateOptionsForQuestion = (question: AptitudeQuestion): { text: string; isCorrect: boolean }[] => {
-   if (question.options && question.options.length > 0) {
-     return question.options;
-   }
-   // Default options for questions without predefined options
-   return [
-     { text: "Option A", isCorrect: false },
-     { text: "Option B", isCorrect: false },
-     { text: "Correct Answer", isCorrect: true },
-     { text: "Option D", isCorrect: false },
-   ];
- };
+ // Gradeable questions only: see src/lib/quizGrading.ts. Option-less
+ // questions are excluded from the pool in prepareQuiz instead of
+ // being graded against fabricated options.
  
  interface QuizConfig {
    questionCount: number;
@@ -178,6 +173,7 @@ const TIMED_CHALLENGES: QuizPreset[] = [
      difficulty: "all",
    });
    const [quizQuestions, setQuizQuestions] = useState<AptitudeQuestion[]>([]);
+   const [noGradeableQuestions, setNoGradeableQuestions] = useState(false);
    const [currentIndex, setCurrentIndex] = useState(0);
    const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
    const [timeLeft, setTimeLeft] = useState(0);
@@ -197,6 +193,10 @@ const TIMED_CHALLENGES: QuizPreset[] = [
      if (config.difficulty !== "all") {
        filtered = filtered.filter((q) => q.difficulty === config.difficulty);
      }
+     // Only questions with real options can be graded. Option-less
+     // questions are excluded instead of being graded against fabricated
+     // options (see src/lib/quizGrading.ts).
+     filtered = getGradeableQuestions(filtered);
  
      // Shuffle and take requested count
      const shuffled = filtered.sort(() => Math.random() - 0.5);
@@ -205,6 +205,15 @@ const TIMED_CHALLENGES: QuizPreset[] = [
        Math.min(config.questionCount, shuffled.length)
      );
  
+     if (selected.length === 0) {
+       // Nothing gradeable for this selection (e.g. an Aptitude category
+       // whose questions have no options yet). Stay on the config screen
+       // with a notice instead of starting an empty quiz.
+       setNoGradeableQuestions(true);
+       return;
+     }
+     setNoGradeableQuestions(false);
+
      setQuizQuestions(selected);
      setCurrentIndex(0);
      setResults([]);
@@ -235,8 +244,7 @@ const TIMED_CHALLENGES: QuizPreset[] = [
      if (!currentQuestion) return;
  
      const timeTaken = Math.round((Date.now() - questionStartTime) / 1000);
-     const options = generateOptionsForQuestion(currentQuestion);
-     const correctAnswer = options.find((o) => o.isCorrect)?.text || "";
+     const correctAnswer = getCorrectOptionText(currentQuestion);
      const isCorrect = selectedAnswer === correctAnswer;
  
      const result: QuizResult = {
@@ -472,6 +480,12 @@ const TIMED_CHALLENGES: QuizPreset[] = [
              </div>
            </div>
  
+             {noGradeableQuestions && (
+               <p role="status" className="mb-3 text-sm text-muted-foreground">
+                 No questions with answer options are available for this
+                 category and difficulty yet. Try a different selection.
+               </p>
+             )}
              <div className="flex gap-3">
              <Button variant="outline" onClick={onClose} className="flex-1">
                Cancel
@@ -681,7 +695,7 @@ const TIMED_CHALLENGES: QuizPreset[] = [
                  onValueChange={setSelectedAnswer}
                  className="space-y-3"
                >
-                 {generateOptionsForQuestion(currentQuestion).map((option, idx) => (
+                 {getOptionsForQuestion(currentQuestion).map((option, idx) => (
                    <div
                      key={idx}
                      className={cn(
